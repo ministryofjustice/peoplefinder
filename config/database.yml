@@ -1,0 +1,16 @@
+
+development:
+  adapter: postgresql
+  encoding: unicode
+  database: parliamentary-questions_dev
+  host: localhost
+  pool: 10
+
+
+test:
+  adapter: postgresql
+  encoding: unicode
+  database: parliamentary-questions_test
+  host: localhost
+  pool: 10
+
