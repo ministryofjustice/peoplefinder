@@ -10,5 +10,8 @@ describe 'QuestionsService' do
     uid = questions[0].xpath("Uin").first.content
     uid.should eq('HL4837')
 
+    uid = questions[1].xpath("Uin").first.content
+    uid.should eq('HL483')
+
   end
 end
