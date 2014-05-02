@@ -5,13 +5,20 @@ describe 'QuestionsService' do
   it 'questions should return a list of questions with data' do
     xml  = Nokogiri::XML(sample_questions)
     xml.remove_namespaces! # easy to parse if we are only using one namespace
-    questions = xml.xpath('//Question')
+    questions_xml = xml.xpath('//Question')
 
-    uid = questions[0].xpath("Uin").first.content
-    uid.should eq('HL4837')
+    questions = Array.new
 
-    uid = questions[1].xpath("Uin").first.content
-    uid.should eq('HL483')
+    questions_xml.each do |q|
+      item = Hash.from_xml(q.to_xml)
+      questions.push(item["Question"])
+    end
+
+    uin = questions[0]["Uin"]
+    uin.should eq('HL4837')
+
+    uin = questions[1]["Uin"]
+    uin.should eq('HL4838')
 
   end
 end
