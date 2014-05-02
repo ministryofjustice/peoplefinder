@@ -1,5 +1,8 @@
 source 'https://rubygems.org'
 
+# XML parsing
+gem 'nokogiri'
+
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.0.3'
 
@@ -43,6 +46,32 @@ end
 
 # Use debugger
 # gem 'debugger', group: [:development, :test]
+
+
+group :test, :development do
+  gem 'rspec-rails'
+  gem 'database_cleaner'
+  gem 'better_errors'
+  gem 'binding_of_caller'
+  gem 'factory_girl_rails'
+  gem 'guard-rspec'
+  gem 'guard'
+  gem 'guard-livereload'
+  gem 'hirb'
+  gem 'wirble'
+  gem 'wirb'
+  gem 'capybara'
+  gem 'capybara-email'
+  gem 'capybara-webkit'
+  gem 'headless'
+  gem 'launchy'
+  gem 'shoulda-matchers'
+  gem 'timecop'
+  gem 'letter_opener'
+  gem 'faker'
+end
+
+
 
 gem 'haml-rails'
 gem 'html2haml'
