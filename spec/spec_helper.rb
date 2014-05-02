@@ -53,7 +53,4 @@ RSpec.configure do |config|
     DatabaseCleaner.strategy = :transaction
   end
 
-  config.after(:each) do
-    set_default_locale
-  end
 end
