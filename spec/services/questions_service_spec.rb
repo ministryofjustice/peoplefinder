@@ -1,9 +1,9 @@
-require 'rspec'
+require 'spec_helper'
 
-describe 'My behaviour' do
+describe 'QuestionsService' do
 
-  it 'should do something' do
+  it 'questions should return a list with data' do
 
-    true.should == false
+    true.should eq(sample_questions.read)
   end
 end
