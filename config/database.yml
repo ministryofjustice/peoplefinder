@@ -14,3 +14,10 @@ test:
   host: localhost
   pool: 10
 
+production:
+  host: <%= ENV['PQ_DB_HOST'] %>
+  encoding: unicode
+  username: <%= ENV['PQ_DB_USERNAME'] %>
+  password: <%= ENV['PQ_DB_PASSWORD'] %>
+  database: parliamentary-questions
+  pool: 15
