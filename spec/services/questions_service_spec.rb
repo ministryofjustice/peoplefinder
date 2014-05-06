@@ -20,5 +20,8 @@ describe 'QuestionsService' do
     uin = questions[1]["Uin"]
     uin.should eq('HL4838')
 
+    update_date = questions[1]["UpdatedDate"]
+    update_date.should eq('2013-02-04T10:30:46.45327Z')
+
   end
 end

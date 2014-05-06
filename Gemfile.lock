@@ -58,9 +58,6 @@ GEM
     capybara-email (2.3.0)
       capybara (~> 2.2.0)
       mail
-    capybara-webkit (1.1.0)
-      capybara (~> 2.0, >= 2.0.2)
-      json
     celluloid (0.15.2)
       timers (~> 1.1.0)
     celluloid-io (0.15.0)
@@ -254,7 +251,6 @@ DEPENDENCIES
   binding_of_caller
   capybara
   capybara-email
-  capybara-webkit
   coffee-rails (~> 4.0.0)
   database_cleaner
   factory_girl_rails

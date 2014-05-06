@@ -62,7 +62,7 @@ group :test, :development do
   gem 'wirb'
   gem 'capybara'
   gem 'capybara-email'
-  gem 'capybara-webkit'
+  #gem 'capybara-webkit'
   gem 'headless'
   gem 'launchy'
   gem 'shoulda-matchers'
