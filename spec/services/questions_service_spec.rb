@@ -30,5 +30,9 @@ describe 'QuestionsService' do
       @questions[0]['TablingMember']['MemberId'].should eq('2479')
       @questions[0]['TablingMember']['MemberName'].should eq('Diana Johnson')
     end
+    it 'should identify which house it is from' do
+      @questions[0]['House']['HouseId'].should eq('2')
+      @questions[0]['House']['HouseName'].should eq('House of Lords')
+    end
 end
 
