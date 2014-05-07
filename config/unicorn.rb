@@ -1,5 +1,9 @@
 worker_processes 4
-listen "/home/vagrant/pq/shared/unicorn.sock", :backlog => 64
+
+rails_env = 'production'
+
+#listen "/home/vagrant/pq/shared/unicorn.sock", :backlog => 64
+listen 3000
 working_directory "/home/vagrant/pq/current"
 pid "/home/vagrant/pq/shared/unicorn.pid"
 stderr_path "/home/vagrant/pq/shared/unicorn.stderr.log"
