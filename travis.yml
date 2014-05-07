@@ -1,0 +1,22 @@
+language: ruby
+rvm:
+  - 2.0.0
+before_install:
+  - sudo apt-get update -qq
+before_script:
+  - psql -c 'create role pq login createdb;' -U postgres
+addons:
+  postgresql: 9.3
+script:
+  - bundle exec rake db:create
+  - bundle exec rake db:migrate
+  - bundle exec rake spec
+#notifications:
+#  hipchat:
+#    rooms:
+#      secure: <token_here>
+#    format: html
+#    template:
+#      - '%{message} (<a href="%{build_url}">details</a>/<a href="%{compare_url}">changes</a>) - build #%{build_number}, branch <a href="https://github.com/%{repository}/tree/%{branch}">%{branch}</a>; of %{repository}'
+addons:
+  postgresql: 9.3
