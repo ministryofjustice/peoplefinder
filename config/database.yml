@@ -15,6 +15,7 @@ test:
   pool: 10
 
 production:
+  adapter: postgresql
   host: <%= ENV['PQ_DB_HOST'] %>
   encoding: unicode
   username: <%= ENV['PQ_DB_USERNAME'] %>
