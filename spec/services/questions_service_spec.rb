@@ -3,7 +3,8 @@ require 'spec_helper'
 describe 'QuestionsService' do
 
   before(:each) do
-    @questions_service = QuestionsService.new(sample_questions)
+    http_client = QuestionsMockHttpClient.new(sample_questions)
+    @questions_service = QuestionsService.new(http_client)
     @questions = @questions_service.questions_by_date()
   end
   it 'should return a list of questions with data' do

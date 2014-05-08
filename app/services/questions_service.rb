@@ -1,13 +1,13 @@
 class QuestionsService
 
-  # now is just a mock service
-  def initialize(sample_file = File.open(Rails.root.join('config/fixtures/questions.xml')))
-    @mock_response = sample_file
+  def initialize(http_client = QuestionsMockHttpClient.new)
+    @http_client = http_client
   end
 
 
   def questions_by_date(date = Date.today)
-    xml  = Nokogiri::XML(@mock_response)
+    response = @http_client.questions_by_date(date)
+    xml  = Nokogiri::XML(response)
     xml.remove_namespaces! # easy to parse if we are only using one namespace
     questions_xml = xml.xpath('//Question')
 
