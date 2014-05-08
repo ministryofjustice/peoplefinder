@@ -119,6 +119,7 @@ GEM
       hpricot (~> 0.8.6)
       ruby_parser (~> 3.1.1)
     http_parser.rb (0.6.0)
+    httpclient (2.3.4.1)
     i18n (0.6.9)
     jbuilder (1.5.3)
       activesupport (>= 3.0.0)
@@ -265,6 +266,7 @@ DEPENDENCIES
   headless
   hirb
   html2haml
+  httpclient
   jbuilder (~> 1.2)
   jquery-rails
   launchy

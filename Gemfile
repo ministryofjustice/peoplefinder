@@ -49,6 +49,8 @@ gem 'unicorn'
 # gem 'debugger', group: [:development, :test]
 
 
+gem 'httpclient'
+
 group :test, :development do
   gem 'rspec-rails'
   gem 'database_cleaner'
