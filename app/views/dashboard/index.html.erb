@@ -1,1 +1,7 @@
-<h1>Hello, Parliamentary Questions!</h1>
+<h1>Parliamentary Questions of the day</h1>
+
+<ul>
+    <% @questions.each do |question| %>
+        <li><%= question['Uin'] %>: <%= question['Text'] %></li>
+    <% end %>
+</ul>

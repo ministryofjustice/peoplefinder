@@ -3,18 +3,10 @@ require 'spec_helper'
 describe 'QuestionsService' do
 
   before(:each) do
-    xml  = Nokogiri::XML(sample_questions)
-    xml.remove_namespaces! # easy to parse if we are only using one namespace
-    questions_xml = xml.xpath('//Question')
-
-    @questions = Array.new
-
-    questions_xml.each do |q|
-      item = Hash.from_xml(q.to_xml)
-      @questions.push(item["Question"])
-    end
+    @questions_service = QuestionsService.new(sample_questions)
+    @questions = @questions_service.questions_by_date()
   end
-  it 'questions should return a list of questions with data' do
+  it 'should return a list of questions with data' do
 
     uin = @questions[0]["Uin"]
     uin.should eq('HL4837')
