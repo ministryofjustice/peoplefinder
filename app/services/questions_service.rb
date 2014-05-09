@@ -4,9 +4,32 @@ class QuestionsService
     @http_client = http_client
   end
 
-  def questions_by_date(dateFrom = Date.today)
-    dateFrom = Date.parse(dateFrom) if dateFrom.is_a? String
-    response = @http_client.questions("dateFrom" => dateFrom.strftime("%Y-%m-%d"))
+  # valid args
+  # :dateFrom  YYYY-MM-DDTHH:mm:ss
+  # :dateTo    YYYY-MM-DDTHH:mm:ss
+  # :status
+  #         "Tabled",
+  #         "Withdrawn"
+  #         "WithdrawnWithoutNotice"
+  #         "AnswerNotExpected"
+  #         "Incomplete"
+  #         "PendingCorrectionReview"
+  #         "PendingAnswerReview"
+  #         "ReturnedVirus"
+  #         "ReturnedCorrection"
+  #         "ReturnedAnswer"
+  #         "Answered"
+  #         "Holding"
+  #         "ScanningForVirus"
+  def questions(args = { dateFrom: Date.today} )
+    format = "%Y-%m-%dT%H:%M:%S"
+    options = {}
+    options["dateFrom"] = args[:dateFrom].strftime(format)
+    options["dateTo"] = args[:dateTo].strftime(format) if args[:dateTo].present?
+    options["status"] = args[:status] if args[:status].present?
+
+    response = @http_client.questions(options)
+
     return parse_questions_xml(response)
   end
 
