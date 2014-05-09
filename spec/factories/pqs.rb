@@ -2,12 +2,12 @@
 
 FactoryGirl.define do
   factory :PQ do
-    PIN 1
-    HouseID 1
-    RaisingMemberID 1
-    DateRaised "2014-05-08 13:45:31"
-    ResponseDue "2014-05-08 13:45:31"
-    Question "MyString"
-    Answer nil
+    pin 1
+    house_id 1
+    raising_member_id 1
+    date_raised "2014-05-08 13:45:31"
+    response_due "2014-05-08 13:45:31"
+    question "MyString"
+    answer nil
   end
 end

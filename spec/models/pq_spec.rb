@@ -9,15 +9,15 @@ describe PQ do
 			expect(newQ).to be_valid
 		end
 		it 'should have a PIN' do
-			newQ.PIN=nil
+			newQ.pin=nil
 			expect(newQ).to be_invalid
 		end
 		it 'should have a Raising MP ID' do
-			newQ.RaisingMemberID=nil
+			newQ.raising_member_id=nil
 			expect(newQ).to be_invalid
 		end
 		it 'should have text' do
-			newQ.Question=nil
+			newQ.question=nil
 			expect(newQ).to be_invalid
 		end
 	end
