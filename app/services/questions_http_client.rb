@@ -10,9 +10,9 @@ class QuestionsHttpClient
 
   end
 
-  def questions_by_date(date = Date.today)
+  def questions(options = {})
     endpoint = URI::join(@base_url, '/api/qais/questions')
-    response = @client.get(endpoint, "dateFrom" => "2014-04-17") # hardcode the date for testing now
+    response = @client.get(endpoint, options)
     response.content
   end
 end

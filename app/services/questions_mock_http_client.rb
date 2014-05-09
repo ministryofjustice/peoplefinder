@@ -4,7 +4,7 @@ class QuestionsMockHttpClient
     @file = file
   end
 
-  def questions_by_date(date = Date.today)
+  def questions(options = {})
     f = File.open(@file)
     content = f.read
     f.close
