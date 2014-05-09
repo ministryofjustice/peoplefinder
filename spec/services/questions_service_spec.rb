@@ -3,7 +3,9 @@ require 'spec_helper'
 describe 'QuestionsService' do
 
   before(:each) do
-    http_client = QuestionsMockHttpClient.new(sample_questions)
+    http_client = double('QuestionsHttpClient')
+    allow(http_client).to receive(:questions) { sample_questions }
+
     @questions_service = QuestionsService.new(http_client)
   end
   describe 'parsing xml questions' do

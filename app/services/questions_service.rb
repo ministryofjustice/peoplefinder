@@ -10,6 +10,7 @@ class QuestionsService
     return parse_questions_xml(response)
   end
 
+
   protected
 
   def parse_questions_xml(response)
