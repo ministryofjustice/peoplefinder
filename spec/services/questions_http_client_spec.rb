@@ -12,4 +12,9 @@ describe 'QuestionsHttpClient' do
     questions_xml.should include("<Questions")
   end
 
+  xit 'should get a question in xml response from the PQ API' do
+    questions_xml = @http_client.question("157551")
+    questions_xml.should include("<Uin>157551</Uin>")
+  end
+
 end

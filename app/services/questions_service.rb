@@ -33,6 +33,11 @@ class QuestionsService
     return parse_questions_xml(response)
   end
 
+  def questions_by_uin(uin)
+    response = @http_client.question(uin)
+    questions = parse_questions_xml(response)
+    questions.first
+  end
 
   protected
 

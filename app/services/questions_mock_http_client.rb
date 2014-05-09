@@ -10,4 +10,7 @@ class QuestionsMockHttpClient
     f.close
     return content
   end
+  def question
+    questions
+  end
 end

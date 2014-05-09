@@ -74,6 +74,18 @@ describe 'QuestionsService' do
 
   end
 
+  describe '#questions_by_uin' do
+    it 'should retrieve the question by Uin' do
+      allow(@http_client).to receive(:question) { sample_questions_by_uin }
+
+      uin = "HL4837"
+      expect(@http_client).to receive(:question).with(uin)
+      question = @questions_service.questions_by_uin(uin)
+      question["Uin"].should eq('HL4837')
+    end
+  end
+
+
 
 end
 
