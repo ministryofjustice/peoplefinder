@@ -56,5 +56,6 @@ ParliamentaryQuestions::Application.routes.draw do
 
   get '/', to: 'dashboard#index'
   get 'dashboard' => 'dashboard#index'
+  get 'dashboard/detail' => 'dashboard#detail'
 
 end

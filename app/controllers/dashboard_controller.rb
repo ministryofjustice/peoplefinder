@@ -6,6 +6,10 @@ class DashboardController < ApplicationController
     @questions = @questions_service.questions()
   end
 
+  def detail
+    @question = @questions_service.questions().first
+  end
+
   protected
 
   def load_questions_service(service = QuestionsService.new)
