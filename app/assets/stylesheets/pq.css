@@ -35,6 +35,7 @@ ul.questions-list {
 
 .questions-list .date {
     font-size: 0.9em;
+    margin: 5px 0 5px 0;
 }
 
 .label {
