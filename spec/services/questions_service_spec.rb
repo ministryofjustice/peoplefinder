@@ -12,26 +12,26 @@ describe 'QuestionsService' do
     it 'should return a list of questions with data' do
       questions = @questions_service.questions()
       uin = questions[0]["Uin"]
-      uin.should eq('HL4837')
+      uin.should eq('174151')
 
       uin = questions[1]["Uin"]
-      uin.should eq('HL4838')
+      uin.should eq('174152')
 
       update_date = questions[1]["UpdatedDate"]
-      update_date.should eq('2013-02-04T10:30:46.45327Z')
+      update_date.should eq('2014-01-17T11:28:02.263Z')
 
     end
 
     it 'should have data for TablingMember (asking MP)' do
       questions = @questions_service.questions()
-      questions[0]['TablingMember']['MemberId'].should eq('2479')
-      questions[0]['TablingMember']['MemberName'].should eq('Diana Johnson')
+      questions[0]['TablingMember']['MemberId'].should eq('308')
+      questions[0]['TablingMember']['MemberName'].should eq('Mr Jim Cunningham')
     end
 
     it 'should identify which house it is from' do
       questions = @questions_service.questions()
-      questions[0]['House']['HouseId'].should eq('2')
-      questions[0]['House']['HouseName'].should eq('House of Lords')
+      questions[0]['House']['HouseId'].should eq('1')
+      questions[0]['House']['HouseName'].should eq('House of Commons')
     end
   end
 

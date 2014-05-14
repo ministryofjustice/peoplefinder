@@ -8,5 +8,4 @@ feature 'Visit the dashboard an show the questions for the day' do
       expect(page).to have_content('Parliamentary Questions of the day')
     end
   end
-
 end

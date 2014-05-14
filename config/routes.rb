@@ -1,4 +1,5 @@
 ParliamentaryQuestions::Application.routes.draw do
+  
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
@@ -56,5 +57,8 @@ ParliamentaryQuestions::Application.routes.draw do
 
   get '/', to: 'dashboard#index'
   get 'dashboard' => 'dashboard#index'
-
+  get 'filter' => 'filter#index'
+  get 'filter/:search' => 'filter#index'
+  get 'dashboard/search' => 'dashboard#search'
+  post 'dashboard/search/:search' => 'dashboard#search'
 end
