@@ -1,7 +1,38 @@
 <h1>Parliamentary Questions of the day</h1>
-
-<ul>
+<h2>Today (<%= @questions.size %>)</h2>
+<ul class="questions-list">
     <% @questions.each do |question| %>
-        <li><%= question['Uin'] %>: <%= question['Text'] %></li>
+        <li>
+			<div>
+				<span><%= question['Uin'] %></span>
+				<span><%= question['DateForAnswer'] %></span>
+				<span><%= question['House']['HouseName'] %></span>
+			    <span><%= question['TablingMember']['MemberName'] %></span>
+				
+				<a href="#" alt="action" class="button">Action 1</a>
+				
+			</div>
+			<div class="panel-indent">
+				<%= question['Text'] %>
+			</div>
+		</li>
+    <% end %>
+</ul>
+<h2>Unanswered (<%= @questions.size %>)</h2>
+<ul class="questions-list">
+    <% @questions.each do |question| %>
+        <li>
+			<div>
+				<%= question['Uin'] %> 
+				<%= question['DateForAnswer'] %>
+				<%= question['House']['HouseName'] %>				
+			    <%= question['TablingMember']['MemberName'] %>
+				
+				<a href="#" alt="action" class="button">Assign to</a>
+			</div>
+			<div class="panel-indent">
+				<%= question['Text'] %>
+			</div>
+		</li>
     <% end %>
 </ul>

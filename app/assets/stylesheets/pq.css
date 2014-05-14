@@ -1,0 +1,30 @@
+.panel-indent {
+	clear: both;
+	border-left: 5px solid #dee0e2;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	padding-left: 20px;
+}
+
+
+
+
+ul.questions-list {
+	list-style: none;	
+}
+
+
+.questions-list li{
+	margin-top: 20px;
+}
+
+
+.questions-list .button {
+	float: right;
+}
+
+
+.questions-list span {
+	margin-right: 10px;
+	font-size: 1.06em;
+}
