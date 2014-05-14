@@ -16,6 +16,8 @@ ul.questions-list {
 
 .questions-list li{
 	margin-top: 20px;
+    border: 1px solid #bfc1c3;
+    padding: 15px;
 }
 
 
@@ -27,4 +29,8 @@ ul.questions-list {
 .questions-list span {
 	margin-right: 10px;
 	font-size: 1.06em;
+}
+
+.questions-list .date {
+    font-size: 0.9em;
 }

@@ -4,9 +4,14 @@
     <% @questions.each do |question| %>
         <li>
 			<div>
-				<span><%= question['Uin'] %></span>
-				<span><%= question['DateForAnswer'] %></span>
-				<span><%= question['House']['HouseName'] %></span>
+                <div>
+				    <span><%= question['Uin'] %></span>
+                </div>
+                <div>
+				    <span class="date">Date For Answer: <%= question['DateForAnswer'].to_date.strftime('%d/%m/%Y') %></span>
+                </div>
+
+				<span><%= question['House']['HouseName'] %>:</span>
 			    <span><%= question['TablingMember']['MemberName'] %></span>
 				
 				<a href="#" alt="action" class="button">Action 1</a>
