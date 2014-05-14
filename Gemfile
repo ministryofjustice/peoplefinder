@@ -81,5 +81,5 @@ gem 'html2haml'
 
 
 # MoJ front-end gems
-gem 'govuk_frontend_toolkit', github: 'alphagov/govuk_frontend_toolkit_gem', submodules: true
-gem 'moj_frontend_toolkit_gem', github: 'ministryofjustice/moj_frontend_toolkit_gem', tag: 'v0.2.1'
+gem 'govuk_frontend_toolkit', '1.1.0'
+gem 'moj_template', '0.11.1'
