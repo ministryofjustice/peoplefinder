@@ -1,20 +1,48 @@
 
 <h2>Question Details</h2>
-<div>
+<div class="questions-detail-outer">
   <div>
-    <span><%= @question['Uin'] %></span>
+    <span>Question: <%= @question['Uin'] %></span>
   </div>
-  <div>
-    <span class="date">Date For Answer: <%= @question['DateForAnswer'].to_date.strftime('%d/%m/%Y') %></span>
-  </div>
-
-  <span><%= @question['House']['HouseName'] %>:</span>
-  <span><%= @question['TablingMember']['MemberName'] %></span>
-
+  <div style="Width:400px; float:left;">
+<div class="member-photo">
+	<img src="http://www.sab.yildiz.edu.tr/login/sys/admin/academic/img/Portrait-icon.jpg" alt="Member's Photo" height="100%" width="100%" >
 </div>
-<div class="panel-indent">
+<div>
+    <div>
+    <span>Tabling Member: <%= @question['TablingMember']['MemberName'] %></span>
+    </div>
+    <div>
+    <span>Constituency: <%= @question['TablingMember']['Constituency'] %></span>
+    </div>
+  	<div>
+	    <span>House: <%= @question['House']['HouseName'] %></span>
+	</div>	
+</div>
+  </div>
+  <div style="float:right";>
+  	<div>
+    	<span class="date">Date For Answer: <%= @question['DateForAnswer'].to_date.strftime('%d/%m/%Y') %></span>
+  	</div>
+  	<div>
+    	<span class="date">Date Tabled: <%= @question['TabledDate'].to_date.strftime('%d/%m/%Y') %></span>
+  	</div>
+  	<div>
+  </div>
+  </div>
+  <div class="panel-indent">
   <%= @question['Text'] %>
 </div>
 
+<% if @question['RegisteredInterest'] == "True" %>
+
+ <div>
+  <span>Member has registered an interest in the Question: <%= @question['RegisteredInterest'] %></span>
+ </div>
+  
+ <% end %>
+  
+  
 <a href="#" alt="action" class="button">Action 1</a>
 
+</div>

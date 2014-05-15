@@ -4,6 +4,7 @@
 	padding-top: 10px;
 	padding-bottom: 10px;
 	padding-left: 20px;
+	
 }
 
 
@@ -34,3 +35,18 @@ ul.questions-list {
 .questions-list .date {
     font-size: 0.9em;
 }
+
+.questions-detail-outer { width: 700px;
+	margin-top: 20px;
+    border: 1px solid #bfc1c3;
+    padding: 15px;
+}
+
+.member-photo
+{
+	margin: 5 5 5 5;
+    border: 1px solid #bfc1c3;
+    height: 90px;
+	width: 70px;
+}
+	
