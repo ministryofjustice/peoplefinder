@@ -10,7 +10,6 @@ describe 'QuestionsHttpClient' do
   xit 'should get an xml response from the PQ API' do
     questions_xml = @http_client.questions("dateFrom" => "2014-04-17")
     questions_xml.should include("<Questions")
-    binding.pry
   end
 
   xit 'should get a question in xml response from the PQ API' do
