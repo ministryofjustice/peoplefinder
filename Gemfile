@@ -51,6 +51,12 @@ gem 'unicorn'
 
 gem 'httpclient'
 
+# Authentication
+gem 'devise'
+# invite users by email
+gem 'devise_invitable'
+
+
 group :test, :development do
   gem 'rspec-rails'
   gem 'database_cleaner'

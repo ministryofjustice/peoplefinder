@@ -77,4 +77,21 @@ ParliamentaryQuestions::Application.configure do
 
   # Use default logging formatter so that PID and timestamp are not suppressed.
   config.log_formatter = ::Logger::Formatter.new
+
+
+  config.after_initialize do
+    sending_host = ENV['SMTP_HOST'] || 'localhost'
+
+    ActionMailer::Base.default_url_options = { host: sending_host, protocol: 'https'}
+    ActionMailer::Base.smtp_settings = {
+        address: ENV['SMTP_HOSTNAME'] || 'localhost',
+        port: ENV['SMTP_PORT'] || 587,
+        domain: sending_host,
+        user_name: ENV['SMTP_USERNAME'] || '',
+        password: ENV['SMTP_PASSWORD'] || '',
+        authentication: :login,
+        enable_starttls_auto: true
+    }
+  end
+
 end
