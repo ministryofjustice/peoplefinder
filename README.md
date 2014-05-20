@@ -36,7 +36,7 @@ It's done using devise and devise invitable:
 * https://github.com/plataformatec/devise
 * https://github.com/scambra/devise_invitable
 
-For development you can create a users with a rake task.
+For development you can create users with a rake task.
 ```
 # email, password, name
 rake "user:create[admin@admin.com, 123456789, admin]"
