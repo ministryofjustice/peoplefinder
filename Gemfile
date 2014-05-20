@@ -56,6 +56,9 @@ gem 'devise'
 # invite users by email
 gem 'devise_invitable'
 
+# pagintation support for models
+gem 'will_paginate'
+gem 'bootstrap-will_paginate'
 
 group :test, :development do
   gem 'rspec-rails'

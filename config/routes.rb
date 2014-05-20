@@ -55,8 +55,8 @@ ParliamentaryQuestions::Application.routes.draw do
   #     resources :products
   #   end
 
-  get '/', to: 'dashboard#index'
+  get '/', to: 'dashboard#index', as: :root
   get 'dashboard' => 'dashboard#index'
   get 'dashboard/detail' => 'dashboard#detail'
-
+  resources :users
 end
