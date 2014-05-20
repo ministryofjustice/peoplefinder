@@ -11,10 +11,14 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
   end
 
+  def show
+    @user = User.find(params[:id])
+  end
+
   def update
     @user = User.find(params[:id])
     flash[:notice] = 'User updated' if @user.update_attributes(user_params)
-    @user
+    render 'show'
   end
 
   def destroy
@@ -26,7 +30,7 @@ class UsersController < ApplicationController
 
   protected
   def user_params
-    params.require(:users).permit(:email, :admin, :name)
+    params.require(:user).permit(:email, :admin, :name)
   end
 
 end
