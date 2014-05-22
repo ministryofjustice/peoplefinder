@@ -8,8 +8,8 @@ describe PQ do
 		it 'should pass onfactory build' do
 			expect(newQ).to be_valid
 		end
-		it 'should have a PIN' do
-			newQ.pin=nil
+		it 'should have a Uin' do
+			newQ.uin=nil
 			expect(newQ).to be_invalid
 		end
 		it 'should have a Raising MP ID' do

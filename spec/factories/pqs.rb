@@ -2,7 +2,7 @@
 
 FactoryGirl.define do
   factory :PQ do
-    pin 1
+    uin 'hl1234'
     house_id 1
     raising_member_id 1
     date_raised "2014-05-08 13:45:31"
