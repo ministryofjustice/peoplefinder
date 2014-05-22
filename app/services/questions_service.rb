@@ -1,6 +1,6 @@
 class QuestionsService
 
-  def initialize(http_client = QuestionsHttpClient.new)
+  def initialize(http_client = QuestionsMockHttpClient.new)
     @http_client = http_client
   end
 

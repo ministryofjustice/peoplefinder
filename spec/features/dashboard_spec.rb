@@ -17,5 +17,4 @@ feature 'Visit the dashboard an show the questions for the day' do
     end
 
   end
-
 end

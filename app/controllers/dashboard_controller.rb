@@ -8,8 +8,13 @@ class DashboardController < ApplicationController
     @questions = @questions_service.questions()
   end
 
+
   def detail
     @question = @questions_service.questions().first
+  end
+
+  def search
+
   end
 
   protected
@@ -17,5 +22,6 @@ class DashboardController < ApplicationController
   def load_questions_service(service = QuestionsService.new)
     @questions_service ||= service
   end
+
 
 end
