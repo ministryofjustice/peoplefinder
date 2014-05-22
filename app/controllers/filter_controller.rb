@@ -4,10 +4,10 @@ class FilterController < ApplicationController
   before_filter :load_questions_service
 
   def index
+    @results = Array.new
   	@message = "Please pick a date to display items"
   	if params[:search] != nil
 
-      @results = Array.new
 
 
       @questions = @questions_service.questions()
