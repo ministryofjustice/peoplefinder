@@ -5,13 +5,13 @@ class ImportService
   	end
 
 	def today_questions
-		qarray = @questionsService.questions
-		qarray.each do |q|
+		questions = @questionsService.questions
+    questions.each do |q|
 			#puts newQ.valid?
 			#save q to database
-			newQ = PQ.create(uin: q['Uin'], raising_member_id: q['TablingMember']['MemberId'],question: q['Text'])
-			puts newQ.valid?
-			newQ.save()
-		end
+      pq = PQ.find_or_initialize_by(uin: q['Uin'])
+			pq.update(uin: q['Uin'], raising_member_id: q['TablingMember']['MemberId'], question: q['Text'])
+    end
+    questions
 	end
 end	
