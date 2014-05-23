@@ -5,7 +5,7 @@
 
 <ul>
     <% if @results.each do |question| %>
-        <li><%= question['Uin'] %>: <%= question['Text'] %></li>
+        <li><%= question.uin %>: <%= question.question %></li>
     <% end.empty? %>
     	
 	<% end %>

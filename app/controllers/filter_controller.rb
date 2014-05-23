@@ -8,15 +8,15 @@ class FilterController < ApplicationController
   	@message = "Please pick a date to display items"
   	if params[:search] != nil
 
+      @results = PQ.where(:tabled_date => params[:search])
+
+      #@questions = @questions_service.questions()
 
 
-      @questions = @questions_service.questions()
+      # @questions.each do |q|
+      # 	@results.push(q) if	q['TabledDate']==params[:search]
 
-
-      @questions.each do |q|
-      	@results.push(q) if	q['TabledDate']==params[:search]
-
-      end
+      # end
 
       @message = "#{pluralize(@results.count,'item')} tabled on #{Date.parse(params[:search]).strftime('%-d %b %Y').to_s}"
 
