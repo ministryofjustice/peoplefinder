@@ -1,5 +1,5 @@
 <h1>Parliamentary Questions of the day</h1>
-<h2 class="section">Today <span class="badge"><%= @questions.size %></span></h2>
+<h2 class="section">Today <span class="badge"><%= @questions.count %></span></h2>
 <ul class="questions-list">
     <% @questions.each do |question| %>
         <li>
@@ -12,41 +12,17 @@
                      <span class="label label-danger">No Response</span>
                 </div>
                 <div class="date">
-				    Date For Answer: <%= question['DateForAnswer'].to_date.strftime('%d/%m/%Y') %>
+				    Date For Answer: <%= question.date_for_answer.to_date.strftime('%d/%m/%Y') unless question.date_for_answer.nil? %>
                 </div>
 
-				<span><%= question['House']['HouseName'] %>:</span>
-			    <span><%= question['TablingMember']['MemberName'] %></span>
+				<span><%= question.house_name %>:</span>
+			    <span><%= question.member_name %></span>
 			</div>
 
 			<div class="panel-indent">
-				<%= question['Text'] %>
+				<%= question.question %>
 			</div>
 		</li>
     <% end %>
 </ul>
-<h2 class="section">Unanswered <span class="badge"><%= @questions.size %></span></h2>
-<ul class="questions-list">
-  <% @questions.each do |question| %>
-      <li>
-        <div>
-          <div>
-            <span><%= question['Uin'] %></span>
-            <%= link_to('Action 1', { controller: 'dashboard', action: 'detail'} , class: 'button') %>
-          </div>
-          <div>
-            <span class="date">Date For Answer: <%= question['DateForAnswer'].to_date.strftime('%d/%m/%Y') %></span>
-          </div>
 
-          <span><%= question['House']['HouseName'] %>:</span>
-          <span><%= question['TablingMember']['MemberName'] %></span>
-
-
-
-        </div>
-        <div class="panel-indent">
-          <%= question['Text'] %>
-        </div>
-      </li>
-  <% end %>
-</ul>

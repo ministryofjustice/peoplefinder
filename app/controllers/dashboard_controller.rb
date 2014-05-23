@@ -1,16 +1,17 @@
 class DashboardController < ApplicationController
   before_action :authenticate_user!
-
-
-  before_filter :load_questions_service
+  before_action :load_import_service
 
   def index
-    @questions = @questions_service.questions()
+    result_imported = @import_service.today_questions()
+    #@questions = result_imported[:questions]
+    @questions = PQ.all
   end
 
 
   def detail
-    @question = @questions_service.questions().first
+    result_imported = @import_service.today_questions()
+    @question = result_imported[:questions].first
   end
 
   def search
@@ -19,8 +20,8 @@ class DashboardController < ApplicationController
 
   protected
 
-  def load_questions_service(service = QuestionsService.new)
-    @questions_service ||= service
+  def load_import_service(service = ImportService.new)
+    @import_service ||= service
   end
 
 
