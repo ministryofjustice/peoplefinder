@@ -15,7 +15,12 @@ class ImportService
 				uin: q['Uin'], 
 				raising_member_id: q['TablingMember']['MemberId'], 
 				question: q['Text'],
-				tabled_date: q['TabledDate']
+				tabled_date: q['TabledDate'],
+				member_name: q['TablingMember']['MemberName'],
+	  		 	member_constituency: q['TablingMember']['Constituency'],
+	  		 	house_name: q['House']['HouseName'],
+	  			date_for_answer: q['DateForAnswer'],
+	  			registered_interest: q['RegisteredInterest']
 				)
 			
 			if pq.errors.empty?			

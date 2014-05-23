@@ -15,14 +15,20 @@ describe 'ImportService' do
       import_result = @import_service.today_questions()
       import_result[:questions].size.should eq(2)
 
+      # first question
       question_one = PQ.find_by(uin: 'HL784845')
       question_one.should_not be_nil
       question_one.raising_member_id.should eql(2479)
       question_one.question.should eql('Hello we are asking questions')
 
-
+      question_one.member_name.should eql('Diana Johnson')
+      question_one.member_constituency.should eql('Kingston upon Hull North')
+      question_one.house_name.should eql('House of Lords')
+      question_one.date_for_answer.strftime("%Y-%m-%d").should eql('2013-01-27')
+      question_one.registered_interest.should eql(false)
       question_one.tabled_date.strftime("%Y-%m-%d").should eql('2013-01-22')
-
+      
+      # second question
       question_two = PQ.find_by(uin: 'HL673892')
       question_two.should_not be_nil
       question_two.raising_member_id.should eql(9742)
