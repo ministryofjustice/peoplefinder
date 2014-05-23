@@ -12,8 +12,8 @@ describe 'ImportService' do
 
   describe '#today_questions' do
     it 'should store today questions into the data model' do
-      today_questions = @import_service.today_questions()
-      today_questions.size.should eq(2)
+      import_result = @import_service.today_questions()
+      import_result[:questions].size.should eq(2)
 
       question_one = PQ.find_by(uin: 'HL784845')
       question_one.should_not be_nil
@@ -30,8 +30,8 @@ describe 'ImportService' do
     it 'should update the question data if #today_questions is called multiple times' do
 
       # First call
-      today_questions = @import_service.today_questions()
-      today_questions.size.should eq(2)
+      import_result = @import_service.today_questions()
+      import_result[:questions].size.should eq(2)
 
       question_one = PQ.find_by(uin: 'HL784845')
       question_one.should_not be_nil
@@ -61,8 +61,8 @@ describe 'ImportService' do
     it 'should create new question, if you get new questions from the api' do
 
       # First call
-      today_questions = @import_service.today_questions()
-      today_questions.size.should eq(2)
+      import_result = @import_service.today_questions()
+      import_result[:questions].size.should eq(2)
 
       question_one = PQ.find_by(uin: 'HL784845')
       question_one.should_not be_nil
@@ -83,6 +83,25 @@ describe 'ImportService' do
       question_new = PQ.find_by(uin: 'HL5151')
       question_new.should_not be_nil
       question_new.question.should eql('New question in the api')
+
+    end
+
+    it 'should return error hash when sent malformed XML from api' do
+      allow(@http_client).to receive(:questions) { import_questions_for_today_with_missing_uin }
+      import_result = @import_service.today_questions()
+
+      import_result[:questions].size.should eql(1)
+
+      errors = import_result[:errors]
+      errors.size.should eql(1)	  
+
+      err = errors.first
+
+	  err[:message].should eql(["Uin can't be blank"])
+	  question_with_error = err[:question]
+
+	  question_with_error['Text'].should eql("I'm asking questions too")
+	  question_with_error['Uin'].should be_nil	  
 
     end
   end
