@@ -14,6 +14,7 @@ In order to run the project local and in production you have to set the followin
 
 ```
 # username and pass for the PQ Rest Api
+PQ_REST_API_URL=<url_for_pq_api>
 PQ_REST_API_USERNAME=<username_here>
 PQ_REST_API_PASSWORD=<password_here>
 

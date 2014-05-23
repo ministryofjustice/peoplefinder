@@ -1,4 +1,4 @@
 pq_rest_api:
-  url: https://api.wqatest.parliament.uk
+  url: <%= ENV['PQ_REST_API_URL'] %>
   username: <%= ENV['PQ_REST_API_USERNAME'] %>
   password: <%= ENV['PQ_REST_API_PASSWORD'] %>
