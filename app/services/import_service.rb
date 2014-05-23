@@ -11,7 +11,12 @@ class ImportService
 		questions = @questionsService.questions
     	questions.each do |q|
 	      	pq = PQ.find_or_initialize_by(uin: q['Uin'])
-			pq.update(uin: q['Uin'], raising_member_id: q['TablingMember']['MemberId'], question: q['Text'])
+			pq.update(
+				uin: q['Uin'], 
+				raising_member_id: q['TablingMember']['MemberId'], 
+				question: q['Text'],
+				tabled_date: q['TabledDate']
+				)
 			
 			if pq.errors.empty?			
 				questions_processed.push(q)			

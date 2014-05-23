@@ -20,6 +20,9 @@ describe 'ImportService' do
       question_one.raising_member_id.should eql(2479)
       question_one.question.should eql('Hello we are asking questions')
 
+
+      question_one.tabled_date.strftime("%Y-%m-%d").should eql('2013-01-22')
+
       question_two = PQ.find_by(uin: 'HL673892')
       question_two.should_not be_nil
       question_two.raising_member_id.should eql(9742)
