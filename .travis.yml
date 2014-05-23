@@ -1,4 +1,6 @@
 language: ruby
+env:
+  - PQ_REST_API_URL=https://api.wqatest.parliament.uk
 rvm:
   - 2.0.0
 before_install:
