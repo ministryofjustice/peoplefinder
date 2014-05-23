@@ -5,14 +5,14 @@
         <li>
 			<div>
                 <div>
-				    <span><%= question['Uin'] %></span>
-                     <%= link_to('Action 1', { controller: 'dashboard', action: 'detail'} , class: 'button') %>
+				    <span><%= question.uin %></span>
+                     <%= link_to('Open', { controller: 'dashboard', action: 'detail', uin: question.uin} , class: 'button') %>
                      <span class="label label-success">Allocated</span>
                      <span class="label label-warning">Not Allocated</span>
                      <span class="label label-danger">No Response</span>
                 </div>
                 <div class="date">
-				    Date For Answer: <%= question.date_for_answer.to_date.strftime('%d/%m/%Y') unless question.date_for_answer.nil? %>
+				    Date For Answer: <%= question.date_for_answer.strftime('%d/%m/%Y') unless question.date_for_answer.nil? %>
                 </div>
 
 				<span><%= question.house_name %>:</span>

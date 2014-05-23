@@ -5,7 +5,7 @@ ParliamentaryQuestions::Application.routes.draw do
 
   get '/', to: 'dashboard#index', as: :root
   get 'dashboard' => 'dashboard#index'
-  get 'dashboard/detail' => 'dashboard#detail'
+  get 'dashboard/detail/:uin' => 'dashboard#detail'
 
   get 'filter' => 'filter#index'
   get 'filter/:search' => 'filter#index'

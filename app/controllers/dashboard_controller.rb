@@ -10,8 +10,7 @@ class DashboardController < ApplicationController
 
 
   def detail
-    result_imported = @import_service.today_questions()
-    @question = result_imported[:questions].first
+    @question = PQ.find_by(uin: params[:uin])
   end
 
   def search
