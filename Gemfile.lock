@@ -35,6 +35,8 @@ GEM
       debug_inspector (>= 0.0.1)
     bootstrap-will_paginate (0.0.10)
       will_paginate
+    bootstrap3-datetimepicker-rails (3.0.0)
+      momentjs-rails (~> 2.5.0)
     builder (3.1.4)
     capybara (2.2.1)
       mime-types (>= 1.16)
@@ -147,6 +149,8 @@ GEM
     minitest (4.7.5)
     moj_template (0.11.1)
       rails (>= 3.1)
+    momentjs-rails (2.5.1)
+      railties (>= 3.1)
     multi_json (1.9.3)
     nio4r (1.0.0)
     nokogiri (1.6.1)
@@ -258,6 +262,7 @@ DEPENDENCIES
   better_errors
   binding_of_caller
   bootstrap-will_paginate
+  bootstrap3-datetimepicker-rails (~> 3.0.0)
   capybara
   capybara-email
   coffee-rails (~> 4.0.0)
@@ -280,6 +285,7 @@ DEPENDENCIES
   launchy
   letter_opener
   moj_template (= 0.11.1)
+  momentjs-rails (~> 2.5.0)
   nokogiri
   pg
   rails (= 4.0.3)

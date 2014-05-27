@@ -8,15 +8,6 @@ class DashboardController < ApplicationController
     @questions = PQ.all
   end
 
-
-  def detail
-    @question = PQ.find_by(uin: params[:uin])
-    if !@question.present?
-      redirect_to action: 'index'
-    end
-    @question
-  end
-
   def search
 
   end

@@ -2,10 +2,10 @@ ParliamentaryQuestions::Application.routes.draw do
   devise_for :users
 
   resources :users
+  resources :pqs
 
   get '/', to: 'dashboard#index', as: :root
   get 'dashboard' => 'dashboard#index'
-  get 'dashboard/detail/:uin' => 'dashboard#detail'
 
   get 'filter' => 'filter#index'
   get 'filter/:search' => 'filter#index'

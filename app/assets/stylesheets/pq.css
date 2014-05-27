@@ -11,6 +11,15 @@ h2.section {
     border-bottom: solid 1px;
 }
 
+.uin {
+    font-family: "nta", Arial, sans-serif;
+    font-size: 18px;
+    line-height: 1.25;
+    font-weight: 300;
+    text-transform: none;
+    font-weight: 700;
+}
+
 
 ul.questions-list {
 	list-style: none;
@@ -53,50 +62,12 @@ ul.questions-list {
     height: 90px;
 	width: 70px;
 }
-	
 
 
-.label {
-    display: inline;
-    padding: .2em .6em .3em;
-    font-size: 75%;
-    font-weight: 700;
-    line-height: 1;
-    color: #fff;
-    text-align: center;
-    white-space: nowrap;
-    vertical-align: baseline;
-    border-radius: .25em;
+.deadline_input {
+    width: 192px;
 }
 
-.label-warning {
-    background-color: #f0ad4e;
-}
 
-.label-success {
-    background-color: #5cb85c;
-}
 
-.label-danger {
-    background-color: #d9534f;
-}
-
-.label-primary {
-    background-color: #428bca;
-}
-
-.badge {
-    display: inline-block;
-    min-width: 10px;
-    padding: 3px 7px;
-    font-size: 13px;
-    font-weight: 700;
-    color: #fff;
-    line-height: 1;
-    vertical-align: baseline;
-    white-space: nowrap;
-    text-align: center;
-    background-color: #999;
-    border-radius: 10px;
-}
 

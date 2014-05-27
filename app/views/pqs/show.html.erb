@@ -1,0 +1,60 @@
+
+<h2>Question Details</h2>
+<div class="questions-detail-outer">
+  <div>
+    <span class="uin"><%= @pq.uin %></span>
+  </div>
+  <div style="Width:400px; float:left;">
+<div class="member-photo">
+	<img src="http://www.sab.yildiz.edu.tr/login/sys/admin/academic/img/Portrait-icon.jpg" alt="Member's Photo" height="100%" width="100%" >
+</div>
+<div>
+    <div>
+    <span>Tabling Member: <%= @pq.member_name %></span>
+    </div>
+    <div>
+    <span>Constituency: <%= @pq.member_constituency %></span>
+    </div>
+  	<div>
+	    <span>House: <%= @pq.house_name %></span>
+	</div>	
+</div>
+  </div>
+  <div style="float:right";>
+
+
+    <div class="deadline_input">
+      <label for="internal_deadline">Deadline</label>
+      <div class='input-group date' id='datetimepicker' data-date-format="DD/MM/YYYY HH:mm">
+
+        <input type='text' class="form-control" name="internal_deadline"/>
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+      </div>
+    </div>
+
+  	<div>
+    	<span class="date">Date For Answer: <%= @pq.date_for_answer.strftime('%d/%m/%Y') unless @pq.date_for_answer.nil? %></span>
+  	</div>
+  	<div>
+    	<span class="date">Date Tabled: <%= @pq.tabled_date.strftime('%d/%m/%Y') unless @pq.tabled_date.nil? %></span>
+  	</div>
+  	<div>
+  </div>
+  </div>
+  <div class="panel-indent">
+  <%= @pq.question %>
+</div>
+
+<% if @pq['RegisteredInterest'] == "True" %>
+
+ <div>
+  <span>Member has registered an interest in the Question: <%= @pq['RegisteredInterest'] %></span>
+ </div>
+  
+ <% end %>
+  
+  
+<a href="#" alt="action" class="button">Action 1</a>
+
+</div>
