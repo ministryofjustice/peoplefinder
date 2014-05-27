@@ -5,7 +5,7 @@ class DashboardController < ApplicationController
   def index
     result_imported = @import_service.today_questions()
     #@questions = result_imported[:questions]
-    @questions = PQ.all
+    @questions = PQ.order(:internal_deadline).all
   end
 
   def search
