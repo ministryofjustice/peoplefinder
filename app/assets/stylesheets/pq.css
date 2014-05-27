@@ -1,10 +1,22 @@
 .panel-indent {
+	
+	
+	/* Deprecated old style
+		
 	clear: both;
 	border-left: 5px solid #dee0e2;
 	padding-top: 10px;
 	padding-bottom: 10px;
 	padding-left: 20px;
-	
+	*/
+	clear: both;
+	border: 1px solid #dee0e2;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	padding-left: 10px;
+	padding-right: 10px;
+	width: 510px;
+	margin: 0px;
 }
 
 h2.section {
@@ -31,6 +43,7 @@ ul.questions-list {
 	margin-top: 20px;
     border: 1px solid #bfc1c3;
     padding: 15px;
+	margin-bottom: 20px;
 }
 
 
@@ -38,6 +51,12 @@ ul.questions-list {
 	float: right;
 }
 
+.label-success{
+	line-height:2;
+}
+.label-danger{
+	line-height:2;
+}
 
 .questions-list span {
 	margin-right: 10px;

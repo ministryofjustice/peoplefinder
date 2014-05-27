@@ -3,14 +3,10 @@
 
 <ul class="questions-list">
     <% @questions.each do |question| %>
-        <li>
-			<div>
-                <div>
+        <li style="overflow:auto;">
+			    <div>
 				    <span class="uin"><%= question.uin %></span>
                      <%= link_to('Open', { controller: 'pqs', action: 'show', id: question.uin} , class: 'button') %>
-                     <span class="label label-success">Allocated</span>
-                     <span class="label label-warning">Not Allocated</span>
-                     <span class="label label-danger">No Response</span>
                 </div>
                 <div class="date">
 				    Date For Answer:<%= question.date_for_answer.strftime('%d/%m/%Y') unless question.date_for_answer.nil? %>
@@ -22,11 +18,34 @@
 
 				<span><%= question.house_name %>:</span>
 			    <span><%= question.member_name %></span>
-			</div>
+				
+				<div class = "panel-indent" style="float: left; width= 66%;">
+					<%= question.question %>
+				</div>
+				<div style = "float: left; width= 33%;">
+					<% if question.seen_by_finance %>
+					<div >
+						<span class = "label label-success">Seen By Finance</span>
+					</div>
+					<%else%>
+					<div >
+						<span class = "label label-danger" style="line-height:2;">Not Seen By Finance</span>
+					</div>
+						
+					<% end %>
+					<% if question.press_interest %>
+					<div>
+						<span class = "label label-success">Press Interest</span>
+					</div>
+					<% end %>
+					<% if question.finance_interest %>
+					<div>
+						<span class = "label label-success">Finance Interest</span>
+					</div>
+					<% end %>
+				</div>
 
-			<div class="panel-indent">
-				<%= question.question %>
-			</div>
+		
 		</li>
     <% end %>
 </ul>

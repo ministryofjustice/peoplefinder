@@ -1,6 +1,6 @@
 
 <h2>Question Details</h2>
-<div class="questions-detail-outer">
+<div class="questions-detail-outer" style="overflow:auto;">
   <div>
     <span class="uin"><%= @pq.uin %></span>
   </div>
@@ -42,8 +42,31 @@
   	<div>
   </div>
   </div>
-  <div class="panel-indent">
+  <div class = "panel-indent" style="float: left; width= 66%;">
   <%= @pq.question %>
+</div>
+<div style = "float: left; width= 33%;">
+	<% if @pq.seen_by_finance %>
+	<div >
+		<span class = "label label-success">Seen By Finance</span>
+	</div>
+	<%else%>
+	<div >
+		<span class = "label label-danger" style="line-height:2;">Not Seen By Finance</span>
+	</div>
+		
+	<% end %>
+	<% if @pq.press_interest %>
+	<div>
+		<span class = "label label-success">Press Interest</span>
+	</div>
+	<% end %>
+	<% if @pq.finance_interest %>
+	<div>
+		<span class = "label label-success">Finance Interest</span>
+	</div>
+	<% end %>
+</div>
 </div>
 
 <% if @pq['RegisteredInterest'] == "True" %>
