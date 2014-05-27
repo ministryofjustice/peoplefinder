@@ -8,14 +8,14 @@
 				    <span class="uin"><%= question.uin %></span>
                      <%= link_to('Open', { controller: 'pqs', action: 'show', id: question.uin} , class: 'button') %>
                 </div>
+                <div>
+                   <span class="glyphicon glyphicon-calendar"></span>
+                   Deadline: <span class="deadline"><%= question.internal_deadline.strftime('%d/%m/%Y %H:%M') unless question.internal_deadline.nil? %>
+                   </span>
+                </div>
                 <div class="date">
 				    Date For Answer:<%= question.date_for_answer.strftime('%d/%m/%Y') unless question.date_for_answer.nil? %>
                 </div>
-
-                <div class="date">
-                   Deadline:  <%= question.internal_deadline.strftime('%d/%m/%Y %H:%M') unless question.internal_deadline.nil? %>
-                </div>
-
 				<span><%= question.house_name %>:</span>
 			    <span><%= question.member_name %></span>
 				
@@ -25,13 +25,12 @@
 				<div style = "float: left; width= 33%;">
 					<% if question.seen_by_finance %>
 					<div >
-						<span class = "label label-success">Seen By Finance</span>
+						<span class = "label label-success"><span class="glyphicon glyphicon-eye-open"></span> Seen By Finance</span>
 					</div>
 					<%else%>
 					<div >
-						<span class = "label label-danger" style="line-height:2;">Not Seen By Finance</span>
+						<span class = "label label-default" style="line-height:2;"><span class="glyphicon glyphicon-eye-close"></span> Not Seen By Finance</span>
 					</div>
-						
 					<% end %>
 					<% if question.press_interest %>
 					<div>

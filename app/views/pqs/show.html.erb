@@ -63,11 +63,13 @@
 <div style = "float: left; width= 33%;">
 	<% if @pq.seen_by_finance %>
 	<div >
-		<span class = "label label-success">Seen By Finance</span>
+
+
+      <span class = "label label-success"><span class="glyphicon glyphicon-eye-open"></span> Seen By Finance</span>
 	</div>
 	<%else%>
 	<div >
-		<span class = "label label-danger" style="line-height:2;">Not Seen By Finance</span>
+		<span class = "label label-default" style="line-height:2;"><span class="glyphicon glyphicon-eye-close"></span> Not Seen By Finance</span>
 	</div>
 		
 	<% end %>
