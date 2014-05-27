@@ -1,5 +1,10 @@
-
 <h2>Question Details</h2>
+
+
+<%= render partial: "shared/flash_messages", flash: flash %>
+
+<%= form_for @pq, :url => { :action => "update", :id => @pq[:uin] } do |f| %>
+
 <div class="questions-detail-outer">
   <div>
     <span class="uin"><%= @pq.uin %></span>
@@ -27,9 +32,10 @@
       <label for="internal_deadline">Deadline</label>
       <div class='input-group date' id='datetimepicker' data-date-format="DD/MM/YYYY HH:mm">
 
-        <input type='text' class="form-control" name="internal_deadline"/>
-                    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
-                    </span>
+        <input class="form-control" id="pq_internal_deadline" name="pq[internal_deadline]" type="text" value="<%= @pq.internal_deadline.strftime('%d/%m/%Y %H:%M') unless @pq.internal_deadline.nil? %>">
+
+        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
+        </span>
       </div>
     </div>
 
@@ -53,8 +59,8 @@
  </div>
   
  <% end %>
-  
-  
-<a href="#" alt="action" class="button">Action 1</a>
 
-</div>
+
+ <%= f.submit 'Update', :class => 'button' %>
+
+<% end %>

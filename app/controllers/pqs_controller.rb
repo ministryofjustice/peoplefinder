@@ -2,6 +2,10 @@ class PqsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_pq, only: [:show, :update]
 
+  def index
+    redirect_to controller: 'dashboard'
+  end
+
   # GET /pqs/1
   # GET /pqs/1.json
   def show
@@ -12,12 +16,15 @@ class PqsController < ApplicationController
     @pq
   end
 
+
+
   # PATCH/PUT /pqs/1
   # PATCH/PUT /pqs/1.json
   def update
     respond_to do |format|
       if @pq.update(pq_params)
-        format.html { redirect_to @pq, notice: 'Pq was successfully updated.' }
+        flash[:success] = 'Successfully updated'
+        format.html { redirect_to action: 'show', id: @pq.uin }
         format.json { head :no_content }
       else
         format.html { render action: 'edit' }
