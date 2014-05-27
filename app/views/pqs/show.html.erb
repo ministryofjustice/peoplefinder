@@ -44,7 +44,18 @@
     	<span class="date">Date Tabled: <%= @pq.tabled_date.strftime('%d/%m/%Y') unless @pq.tabled_date.nil? %></span>
   	</div>
   	<div>
-  </div>
+      <%= f.label(:seen_by_finance) %>
+      <%= f.check_box(:seen_by_finance) %>
+    </div>
+    <div>
+      <%= f.label(:press_interest) %>
+      <%= f.check_box(:press_interest) %>
+    </div>
+    <div>
+      <%= f.label(:finance_interest) %>
+      <%= f.check_box(:finance_interest) %>
+    </div>
+
   </div>
   <div class = "panel-indent" style="float: left; width= 66%;">
   <%= @pq.question %>

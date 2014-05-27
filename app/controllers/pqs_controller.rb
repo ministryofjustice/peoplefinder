@@ -49,6 +49,6 @@ class PqsController < ApplicationController
     end
 
     def pq_params
-      params.require(:pq).permit(:internal_deadline)
+      params.require(:pq).permit(:internal_deadline, :seen_by_finance, :press_interest, :finance_interest)
     end
 end
