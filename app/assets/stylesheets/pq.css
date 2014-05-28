@@ -23,6 +23,10 @@ h2.section {
     border-bottom: solid 1px;
 }
 
+h2.section .badge {
+	vertical-align: middle;
+}
+
 .uin {
     font-family: "nta", Arial, sans-serif;
     font-size: 18px;
