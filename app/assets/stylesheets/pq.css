@@ -93,6 +93,15 @@ ul.questions-list {
 
 }
 
+.deadline-overdue {
+    color: #d9534f;
+}
+
+.deadline-ok {
+    color: #428bca;
+}
+
+
 
 
 
