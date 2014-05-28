@@ -4,20 +4,16 @@
 <ul class="questions-list">
     <% @questions.each do |question| %>
         <li style="overflow:auto;">
-			    <div>
-				    <span class="uin"><%= question.uin %></span>
+			    <div class="pq-header">
+				    <span class="uin"><%= question.uin %></span> <span class="deadline">Deadline: <%= question.internal_deadline.strftime('%d/%m/%Y %H:%M') unless question.internal_deadline.nil? %>
+                   </span>
                      <%= link_to('Open', { controller: 'pqs', action: 'show', id: question.uin} , class: 'button') %>
                 </div>
+                
                 <div>
-                   <span class="glyphicon glyphicon-calendar"></span>
-                   Deadline: <span class="deadline"><%= question.internal_deadline.strftime('%d/%m/%Y %H:%M') unless question.internal_deadline.nil? %>
-                   </span>
+				    Date For Answer: <%= question.date_for_answer.strftime('%d/%m/%Y') unless question.date_for_answer.nil? %>
                 </div>
-                <div class="date">
-				    Date For Answer:<%= question.date_for_answer.strftime('%d/%m/%Y') unless question.date_for_answer.nil? %>
-                </div>
-				<span><%= question.house_name %>:</span>
-			    <span><%= question.member_name %></span>
+				<span><%= question.house_name %>: <%= question.member_name %></span>
 				
 				<div class = "panel-indent" style="float: left; width= 66%;">
 					<%= question.question %>

@@ -31,7 +31,9 @@ h2.section {
     text-transform: none;
     font-weight: 700;
 }
-
+.pq-header {
+	padding-bottom:1em;
+}
 
 ul.questions-list {
 	list-style: none;
