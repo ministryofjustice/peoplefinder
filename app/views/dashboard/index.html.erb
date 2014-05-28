@@ -7,20 +7,7 @@
 			    <div class="pq-header">
 				    <span class="uin"><%= question.uin %></span>
                     <span class="deadline">
-
-                      <% from_time = DateTime.now.change ({:offset => 0}) %>
-                      <% overdue = (from_time -  question.internal_deadline.to_datetime) > 0 %>
-                      <% if overdue %>
-                        <span class="deadline-overdue">(<i class="fa fa-exclamation-triangle"></i>
-                        <%= distance_of_time_in_words(from_time, question.internal_deadline) unless question.internal_deadline.nil? %>
-                          overdue)</span>
-                      <% else %>
-                        <span class="deadline-ok">
-                        (<i class="fa fa-info-circle"></i>
-                          <%= distance_of_time_in_words(from_time, question.internal_deadline) unless question.internal_deadline.nil? %>
-                        left)</span>
-                      <% end %>
-
+                      <%= render partial: 'shared/deadline_time', locals: {internal_deadline: question.internal_deadline} %>
                       <%= question.internal_deadline.strftime('%d/%m/%Y %H:%M') unless question.internal_deadline.nil? %>
                     </span>
                      <%= link_to('Open', { controller: 'pqs', action: 'show', id: question.uin} , class: 'button') %>

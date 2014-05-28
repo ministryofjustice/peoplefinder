@@ -1,0 +1,16 @@
+
+<% if !internal_deadline.nil? %>
+    <% from_time = DateTime.now.change ({:offset => 0}) %>
+    <% overdue = (from_time -  internal_deadline.to_datetime) > 0 %>
+    <% if overdue %>
+        <span class="deadline-overdue">(<i class="fa fa-exclamation-triangle"></i>
+          <%= distance_of_time_in_words(from_time, internal_deadline) %>
+          overdue)</span>
+    <% else %>
+        <span class="deadline-ok">
+                            (<i class="fa fa-info-circle"></i>
+          <%= distance_of_time_in_words(from_time, internal_deadline) %>
+          left)</span>
+    <% end %>
+
+<% end %>

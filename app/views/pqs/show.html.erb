@@ -8,6 +8,7 @@
 <div class="questions-detail-outer" style="overflow:auto;">
   <div>
     <span class="uin"><%= @pq.uin %></span>
+    <%= render partial: 'shared/deadline_time', locals: {internal_deadline: @pq.internal_deadline} %>
   </div>
   <div style="Width:400px; float:left;">
     <div class="member-photo">
