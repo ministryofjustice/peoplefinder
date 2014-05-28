@@ -10,23 +10,22 @@
     <span class="uin"><%= @pq.uin %></span>
   </div>
   <div style="Width:400px; float:left;">
-<div class="member-photo">
-	<img src="http://www.sab.yildiz.edu.tr/login/sys/admin/academic/img/Portrait-icon.jpg" alt="Member's Photo" height="100%" width="100%" >
-</div>
-<div>
-    <div>
-    <span>Tabling Member: <%= @pq.member_name %></span>
+    <div class="member-photo">
+        <img src="http://www.sab.yildiz.edu.tr/login/sys/admin/academic/img/Portrait-icon.jpg" alt="Member's Photo" height="100%" width="100%" >
     </div>
     <div>
-    <span>Constituency: <%= @pq.member_constituency %></span>
+        <div>
+        Tabling Member: <%= @pq.member_name %>
+        </div>
+        <div>
+        Constituency: <%= @pq.member_constituency %>
+        </div>
+        <div>
+        House: <%= @pq.house_name %>
+        </div>
     </div>
-  	<div>
-	    <span>House: <%= @pq.house_name %></span>
-	</div>	
-</div>
   </div>
-  <div style="float:right";>
-
+  <div style="float:right;">
 
     <div class="deadline_input">
       <label for="internal_deadline">Deadline</label>
@@ -43,47 +42,47 @@
   	<div>
     	<span class="date">Date Tabled: <%= @pq.tabled_date.strftime('%d/%m/%Y') unless @pq.tabled_date.nil? %></span>
   	</div>
-  	<div>
+
+    <div class="checkbox">
       <%= f.label(:seen_by_finance) %>
       <%= f.check_box(:seen_by_finance) %>
     </div>
-    <div>
+    <div class="checkbox">
       <%= f.label(:press_interest) %>
       <%= f.check_box(:press_interest) %>
     </div>
-    <div>
+    <div class="checkbox">
       <%= f.label(:finance_interest) %>
       <%= f.check_box(:finance_interest) %>
     </div>
 
   </div>
   <div class = "panel-indent" style="float: left; width= 66%;">
-  <%= @pq.question %>
-</div>
-<div style = "float: left; width= 33%;">
+    <%= @pq.question %>
+  </div>
+
+  <div style = "float: left; width= 33%;">
 	<% if @pq.seen_by_finance %>
-	<div >
-
-
-      <span class = "label label-success"><span class="glyphicon glyphicon-eye-open"></span> Seen By Finance</span>
-	</div>
+        <div>
+          <span class = "label label-success"><span class="glyphicon glyphicon-eye-open"></span> Seen By Finance</span>
+        </div>
 	<%else%>
-	<div >
-		<span class = "label label-default" style="line-height:2;"><span class="glyphicon glyphicon-eye-close"></span> Not Seen By Finance</span>
-	</div>
-		
+        <div>
+            <span class = "label label-default" style="line-height:2;"><span class="glyphicon glyphicon-eye-close"></span> Not Seen By Finance</span>
+        </div>
 	<% end %>
 	<% if @pq.press_interest %>
-	<div>
-		<span class = "label label-success">Press Interest</span>
-	</div>
+        <div>
+            <span class = "label label-success">Press Interest</span>
+        </div>
 	<% end %>
 	<% if @pq.finance_interest %>
-	<div>
-		<span class = "label label-success">Finance Interest</span>
-	</div>
+        <div>
+            <span class = "label label-success">Finance Interest</span>
+        </div>
 	<% end %>
-</div>
+  </div>
+
 </div>
 
 <% if @pq['RegisteredInterest'] == "True" %>
