@@ -1,4 +1,6 @@
 ParliamentaryQuestions::Application.routes.draw do
+  resources :action_officers
+
   devise_for :users
 
   resources :users
