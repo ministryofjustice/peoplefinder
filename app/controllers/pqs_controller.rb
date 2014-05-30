@@ -30,7 +30,7 @@ class PqsController < ApplicationController
       if @assignment.save
         @pq = PQ.find_by(id: params[:id])
         @ao = ActionOfficer.find(params[:action_officers_pq][:action_officer_id])
-        PqMailer.commit_email(@ao,@pq).deliver
+        #PqMailer.commit_email(@ao,@pq).deliver
         flash[:success] = "Successfully allocated #{@pq.uin} to #{@ao.name}"
         format.html { redirect_to action: 'show', id: @pq.uin }
         format.json { head :no_content }
