@@ -18,14 +18,28 @@ class PqsController < ApplicationController
 
   def commission
     @pq = PQ.find_by(uin: params[:id])
-    if !@pq.present?
-      redirect_to action: 'index'
-    end
-    # TODO move into put action
-    # @user = User.find(1)
-    # PqMailer.commit_email(@user,@pq).deliver
-    @pq 
+    @aap = ActionOfficersPq.new
+    @aap.pq_id = @pq.id
+    @aap
   end
+
+  def assign
+    @assignment = ActionOfficersPq.new(assignment_params)
+
+    respond_to do |format|
+      if @assignment.save
+        @pq = PQ.find_by(id: params[:id])
+        @ao = ActionOfficer.find(params[:action_officers_pq][:action_officer_id])
+        PqMailer.commit_email(@ao,@pq).deliver
+        flash[:success] = "Successfully allocated #{@pq.uin} to #{@ao.name}"
+        format.html { redirect_to action: 'show', id: @pq.uin }
+        format.json { head :no_content }
+      else
+        format.html { render action: 'edit' }
+        format.json { render json: @pq.errors, status: :unprocessable_entity }
+      end
+    end
+  end    
 
   # PATCH/PUT /pqs/1
   # PATCH/PUT /pqs/1.json
@@ -59,5 +73,8 @@ class PqsController < ApplicationController
 
     def pq_params
       params.require(:pq).permit(:internal_deadline, :seen_by_finance, :press_interest, :finance_interest)
+    end
+    def assignment_params
+      params.require(:action_officers_pq).permit(:action_officer_id, :pq_id)
     end
 end

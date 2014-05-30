@@ -1,9 +1,13 @@
 ParliamentaryQuestions::Application.routes.draw do
+
+  resources :action_officers
+
   devise_for :users
 
   resources :users
-  resources :pqs
+  resources :pqs  
   get 'pqs/commission/:id' => 'pqs#commission'
+  post 'pqs/assign/:id' => 'pqs#assign'
 
   get '/', to: 'dashboard#index', as: :root
   get 'dashboard' => 'dashboard#index'

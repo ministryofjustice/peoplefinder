@@ -87,6 +87,7 @@ group :test, :development do
   gem 'timecop'
   gem 'letter_opener'
   gem 'faker'
+  gem 'annotate'
 end
 
 

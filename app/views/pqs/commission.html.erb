@@ -1,43 +1,15 @@
-<h2>Commission <%= @pq.uin %></h2>
+<h2>Commission </h2>
 
 <%= render partial: "shared/flash_messages", flash: flash %>
 
-<%= form_for @pq, :url => { :action => "update", :id => @pq[:uin] } do |f| %>
-    <div>
-	    Date For Answer: <%= @pq.date_for_answer.strftime('%d/%m/%Y') unless @pq.date_for_answer.nil? %>
-    </div>
-	<div><%= @pq.house_name %>: <%= @pq.member_name %></div>
-	
-	<div class = "panel-indent" style="float: left; width= 66%;">
-		<%= @pq.question %>
-	</div>
-	<div style = "float: left; width= 33%;">
-		<% if @pq.seen_by_finance %>
-		<div >
-			<span class = "label label-success"><span class="glyphicon glyphicon-eye-open"></span> Seen By Finance</span>
-		</div>
-		<%else%>
-		<div >
-			<span class = "label label-default" style="line-height:2;"><span class="glyphicon glyphicon-eye-close"></span> Not Seen By Finance</span>
-		</div>
-		<% end %>
-		<% if @pq.press_interest %>
-		<div>
-			<span class = "label label-success">Press Interest</span>
-		</div>
-		<% end %>
-		<% if @pq.finance_interest %>
-		<div>
-			<span class = "label label-success">Finance Interest</span>
-		</div>
-		<% end %>
-	</div>
+<%= form_for @aap, :url => { :action => "assign", :id => @aap[:pq_id] } do |f| %>
+
 
     <div class="textbox" style="clear:both;">
-    	<label>Allocate to :</label>
-    	<input type="textbox" id="action_officer"></input>
+      <%= f.label(:action_officer_id) %>
+      <%= f.text_field(:action_officer_id) %>
     </div>
-
+	<%= f.hidden_field(:pq_id) %>
 <%= f.submit 'Commission', :class => 'button' %>
 
 <% end %>

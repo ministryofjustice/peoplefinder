@@ -11,7 +11,6 @@
                       <%= question.internal_deadline.strftime('%d/%m/%Y %H:%M') unless question.internal_deadline.nil? %>
                     </span>
                      <%= link_to('Open', { controller: 'pqs', action: 'show', id: question.uin} , class: 'button') %>
-                     <%= link_to('Commission', { controller: 'pqs', action: 'commission', id: question.uin} , class: 'button') %>
                 </div>
                 
                 <div>
@@ -43,8 +42,15 @@
 					</div>
 					<% end %>
 				</div>
-
-		
+				<div style="clear:both;">
+				<% if question.seen_by_finance && question.action_officers_pq.size==0 %>
+                     <%= link_to('Commission', { controller: 'pqs', action: 'commission', id: question.uin} , class: 'button commission') %>
+                 <% elsif question.action_officers_pq.size==1 %>
+                 	Currently assigned to <%= question.action_officers.first.name %>
+                 <% elsif question.action_officers_pq.size>0 %>
+                 	Current Action Officer count: <%= question.action_officers_pq.size %> (click to expand?)
+				<% end %>
+                </div>	
 		</li>
     <% end %>
 </ul>
