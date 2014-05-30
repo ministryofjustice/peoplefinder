@@ -8,8 +8,8 @@ describe 'TokenService' do
 
   describe '#generate_token' do
     it 'should generate a token and store the token digest in the database' do
-      # Wed, 20 Jan 2016 10:00:00 +0000
-      expire_on = DateTime.new(2016, 01, 20, 10, 0, 0)
+      # Wed, 20 Jan 2026 10:00:00 +0000
+      expire_on = DateTime.new(2026, 01, 20, 10, 0, 0)
       token_to_send = @token_service.generate_token('/path/one', 'entity_one', expire_on)
 
       token_to_send.should_not be nil
@@ -24,7 +24,7 @@ describe 'TokenService' do
     end
 
     it 'should store only one token for the same path and entity' do
-      expire_on = DateTime.new(2016, 01, 20, 10, 0, 0)
+      expire_on = DateTime.new(2026, 01, 20, 10, 0, 0)
 
       @token_service.generate_token('/path/one', 'entity_one', expire_on)
       # call the service twice
@@ -40,7 +40,7 @@ describe 'TokenService' do
 
   describe '#is_valid' do
     it 'should return true if valid token is provided' do
-      expire_on = DateTime.new(2016, 01, 20, 10, 0, 0)
+      expire_on = DateTime.new(2026, 01, 20, 10, 0, 0)
       token_to_send = @token_service.generate_token('/path/one', 'entity_one', expire_on)
 
       is_valid = @token_service.is_valid(token_to_send, '/path/one', 'entity_one')
@@ -49,7 +49,7 @@ describe 'TokenService' do
     end
 
     it 'should return false if the token is not correct' do
-      expire_on = DateTime.new(2016, 01, 20, 10, 0, 0)
+      expire_on = DateTime.new(2026, 01, 20, 10, 0, 0)
       @token_service.generate_token('/path/one', 'entity_one', expire_on)
 
       is_valid = @token_service.is_valid('invalid', '/path/one', 'entity_one')
@@ -58,7 +58,7 @@ describe 'TokenService' do
     end
 
     it 'should return false if the path is not correct' do
-      expire_on = DateTime.new(2016, 01, 20, 10, 0, 0)
+      expire_on = DateTime.new(2026, 01, 20, 10, 0, 0)
       token_to_send = @token_service.generate_token('/path/one', 'entity_one', expire_on)
 
       is_valid = @token_service.is_valid(token_to_send, '/invalid', 'entity_one')
@@ -67,7 +67,7 @@ describe 'TokenService' do
     end
 
     it 'should return false if the entity is not correct' do
-      expire_on = DateTime.new(2016, 01, 20, 10, 0, 0)
+      expire_on = DateTime.new(2026, 01, 20, 10, 0, 0)
       token_to_send = @token_service.generate_token('/path/one', 'entity_one', expire_on)
 
       is_valid = @token_service.is_valid(token_to_send, '/path/one', 'invalid')
@@ -87,7 +87,7 @@ describe 'TokenService' do
 
 
     it 'should be valid only the last token generated given a path, entity' do
-      expire_on = DateTime.new(2016, 01, 20, 10, 0, 0)
+      expire_on = DateTime.new(2026, 01, 20, 10, 0, 0)
 
       first_token = @token_service.generate_token('/path/one', 'entity_one', expire_on)
       second_token = @token_service.generate_token('/path/one', 'entity_one', expire_on)
@@ -102,4 +102,27 @@ describe 'TokenService' do
 
   end
 
-end
+  describe '#delete_expired' do
+    it 'should delete expired tokens' do
+      expire_on = DateTime.new(2013, 01, 20, 10, 0, 0)
+
+      expire_on_future = DateTime.new(2026, 01, 20, 10, 0, 0)
+
+      @token_service.generate_token('/path/one', 'entity_one', expire_on)
+      @token_service.generate_token('/path/two', 'entity_one', expire_on)
+
+      @token_service.generate_token('/path/three', 'entity_one', expire_on_future)
+
+      tokens = Token.where(entity: 'entity_one')
+      tokens.size.should eq(3)
+
+
+      @token_service.delete_expired
+      tokens = Token.where(entity: 'entity_one')
+      tokens.size.should eq(1)
+
+    end
+
+  end
+
+  end

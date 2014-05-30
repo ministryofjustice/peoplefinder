@@ -27,4 +27,9 @@ class TokenService
     return Devise.secure_compare(token_dec, t.token_digest)
   end
 
+  def delete_expired
+    now_no_time_zone = DateTime.now.change({:offset => 0})
+    Token.where('expire < ?', now_no_time_zone).destroy_all
+  end
+
 end
