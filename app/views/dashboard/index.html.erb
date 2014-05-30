@@ -11,6 +11,7 @@
                       <%= question.internal_deadline.strftime('%d/%m/%Y %H:%M') unless question.internal_deadline.nil? %>
                     </span>
                      <%= link_to('Open', { controller: 'pqs', action: 'show', id: question.uin} , class: 'button') %>
+                     <%= link_to('Commission', { controller: 'pqs', action: 'commission', id: question.uin} , class: 'button') %>
                 </div>
                 
                 <div>

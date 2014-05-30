@@ -3,6 +3,7 @@ ParliamentaryQuestions::Application.routes.draw do
 
   resources :users
   resources :pqs
+  get 'pqs/commission/:id' => 'pqs#commission'
 
   get '/', to: 'dashboard#index', as: :root
   get 'dashboard' => 'dashboard#index'
@@ -11,5 +12,4 @@ ParliamentaryQuestions::Application.routes.draw do
   get 'filter/:search' => 'filter#index'
   get 'dashboard/search' => 'dashboard#search'
   post 'dashboard/search/:search' => 'dashboard#search'
-
 end

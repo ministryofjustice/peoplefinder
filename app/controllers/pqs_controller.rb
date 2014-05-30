@@ -16,7 +16,16 @@ class PqsController < ApplicationController
     @pq
   end
 
-
+  def commission
+    @pq = PQ.find_by(uin: params[:id])
+    if !@pq.present?
+      redirect_to action: 'index'
+    end
+    # TODO move into put action
+    # @user = User.find(1)
+    # PqMailer.commit_email(@user,@pq).deliver
+    @pq 
+  end
 
   # PATCH/PUT /pqs/1
   # PATCH/PUT /pqs/1.json

@@ -51,5 +51,10 @@ describe PQ do
 			newQ.finance_interest=false
 			expect(newQ).to be_valid
 		end
+		xit 'should allow an Action Officer to be assigned' do
+			# TODO Define proper links to Action Officer many-to-many tables
+			#newQ.action_officer_email='test@account.com'
+			expect(newQ).to be_valid
+		end
 	end
 end
