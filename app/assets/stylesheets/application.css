@@ -12,6 +12,8 @@
  *= require_tree .
  *= require bootstrap
  *= require bootstrap-datetimepicker
+ *= require select2
+ *= require select2-bootstrap
  *= require pq
  *= require font-awesome
  */

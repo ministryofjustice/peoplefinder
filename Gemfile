@@ -29,6 +29,8 @@ gem 'jquery-rails'
 gem 'momentjs-rails', '~> 2.5.0'
 gem 'bootstrap3-datetimepicker-rails', '~> 3.0.0'
 gem 'font-awesome-rails'
+# Select multiple with autocomplete
+gem "select2-rails"
 
 
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
