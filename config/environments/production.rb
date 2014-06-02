@@ -80,7 +80,7 @@ ParliamentaryQuestions::Application.configure do
 
 
   config.after_initialize do
-    sending_host = ENV['SMTP_HOST'] || 'localhost'
+    sending_host = ENV['SENDING_HOST'] || 'localhost'
 
     ActionMailer::Base.default_url_options = { host: sending_host, protocol: 'https'}
     ActionMailer::Base.smtp_settings = {

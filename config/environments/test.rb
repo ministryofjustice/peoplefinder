@@ -35,7 +35,7 @@ ParliamentaryQuestions::Application.configure do
   config.active_support.deprecation = :stderr
 
   config.after_initialize do
-    sending_host = ENV['SMTP_HOST'] || 'localhost'
+    sending_host = ENV['SENDING_HOST'] || 'localhost'
 
     ActionMailer::Base.default_url_options = { host: sending_host, protocol: 'https', port:'3000'}
     ActionMailer::Base.smtp_settings = {

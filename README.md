@@ -23,6 +23,7 @@ DEVISE_SECRET=<secret_devise_token>
 DEVISE_SENDER=<email_for_email_invitation>
 
 # email smtp server config
+SENDING_HOST=<host_for_urls_in_emails>
 SMTP_HOSTNAME=<host>
 SMTP_PORT=<port>
 SMTP_USERNAME=
