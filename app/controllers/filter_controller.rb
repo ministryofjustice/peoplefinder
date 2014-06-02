@@ -1,6 +1,7 @@
 include ActionView::Helpers::TextHelper
 
 class FilterController < ApplicationController
+  before_action :authenticate_user!
   before_filter :load_questions_service
 
   def index

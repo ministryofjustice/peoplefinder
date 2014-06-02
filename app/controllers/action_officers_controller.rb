@@ -1,4 +1,5 @@
 class ActionOfficersController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_action_officer, only: [:show, :edit, :update, :destroy]
 
   # GET /action_officers
