@@ -12,7 +12,7 @@ describe 'AOTokenFilter' do
     request = double('request')
 
     allow(request).to receive(:path) { '/test/this' }
-    allow(controller).to receive(:params) { {token: 'mytoken', e: 'test'} }
+    allow(controller).to receive(:params) { {token: 'mytoken', entity: 'test'} }
     allow(controller).to receive(:request) { request }
 
     has_access = AOTokenFilter.has_access(controller)
@@ -30,7 +30,7 @@ describe 'AOTokenFilter' do
     token = @token_service.generate_token(path, entity, DateTime.now.at_end_of_day)
 
     allow(request).to receive(:path) { path }
-    allow(controller).to receive(:params) { {token: token, e: entity} }
+    allow(controller).to receive(:params) { {token: token, entity: entity} }
     allow(controller).to receive(:request) { request }
 
     has_access = AOTokenFilter.has_access(controller)
@@ -43,7 +43,7 @@ describe 'AOTokenFilter' do
     request = double('request')
 
     allow(request).to receive(:path) { '/test/this' }
-    allow(controller).to receive(:params) { { e: 'test'} }
+    allow(controller).to receive(:params) { { entity: 'test'} }
     allow(controller).to receive(:request) { request }
 
     has_access = AOTokenFilter.has_access(controller)
@@ -74,7 +74,7 @@ describe 'AOTokenFilter' do
     token = @token_service.generate_token(path, entity, DateTime.now.at_end_of_day)
 
     allow(request).to receive(:path) { '/other' }
-    allow(controller).to receive(:params) { {token: token, e: entity} }
+    allow(controller).to receive(:params) { {token: token, entity: entity} }
     allow(controller).to receive(:request) { request }
 
     has_access = AOTokenFilter.has_access(controller)

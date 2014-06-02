@@ -37,7 +37,7 @@ ParliamentaryQuestions::Application.configure do
   config.after_initialize do
     sending_host = ENV['SMTP_HOST'] || 'localhost'
 
-    ActionMailer::Base.default_url_options = { host: sending_host, protocol: 'https'}
+    ActionMailer::Base.default_url_options = { host: sending_host, protocol: 'https', port:'3000'}
     ActionMailer::Base.smtp_settings = {
         address: ENV['SMTP_HOSTNAME'] || 'localhost',
         port: ENV['SMTP_PORT'] || 587,
