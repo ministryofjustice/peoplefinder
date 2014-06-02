@@ -26,18 +26,17 @@ class PqsController < ApplicationController
   def assign
     @assignment = ActionOfficersPq.new(assignment_params)
 
-    respond_to do |format|
-      if @assignment.save
-        @pq = PQ.find_by(id: params[:id])
-        @ao = ActionOfficer.find(params[:action_officers_pq][:action_officer_id])
-        #PqMailer.commit_email(@ao,@pq).deliver
-        flash[:success] = "Successfully allocated #{@pq.uin} to #{@ao.name}"
-        format.html { redirect_to action: 'show', id: @pq.uin }
-        format.json { head :no_content }
-      else
-        format.html { render action: 'edit' }
-        format.json { render json: @pq.errors, status: :unprocessable_entity }
-      end
+    comm_service = CommissioningService.new
+
+    result = comm_service.send(@assignment)
+
+    if result
+      @pq = PQ.find_by(id: assignment_params[:pq_id])
+
+      flash[:success] = "Successfully allocated #{@pq.uin}"
+      redirect_to action: 'show', id: @pq.uin 
+    else
+      render action: 'edit' 
     end
   end    
 

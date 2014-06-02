@@ -42,18 +42,25 @@ describe 'CommissioningService' do
 
  	mail = ActionMailer::Base.deliveries.first
 
+
+	token_param = {token: sentToken}.to_query
+	entity = {entity: action_officer.email }.to_query
+	url = "/assignment/HL789"
+
  	mail.html_part.body.should include pq.question
  	mail.html_part.body.should include action_officer.name
- 	mail.html_part.body.should include "/assignment/HL789/#{sentToken}/#{action_officer.email}"
+ 	mail.html_part.body.should include url
+ 	mail.html_part.body.should include token_param
+ 	mail.html_part.body.should include entity
 
 	mail.text_part.body.should include pq.question
  	mail.text_part.body.should include action_officer.name
- 	mail.text_part.body.should include "/assignment/HL789/#{sentToken}/#{action_officer.email}"
+ 	mail.text_part.body.should include url
+ 	mail.text_part.body.should include token_param
+ 	mail.text_part.body.should include entity
 
  	mail.to.should include action_officer.email
 
   end
-
-
 
 end

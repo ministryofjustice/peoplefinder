@@ -16,5 +16,5 @@ ParliamentaryQuestions::Application.routes.draw do
   get 'filter/:search' => 'filter#index'
   get 'dashboard/search' => 'dashboard#search'
   post 'dashboard/search/:search' => 'dashboard#search'
-  get 'assignment/:uin/:token/:entity' => 'assignment#index'
+  get 'assignment/:uin' => 'assignment#index'
 end
