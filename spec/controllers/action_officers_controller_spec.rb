@@ -19,142 +19,150 @@ require 'spec_helper'
 # that an instance is receiving a specific message.
 
 describe ActionOfficersController do
+  let(:user) { create(:user, name: 'admin', email:'admin@admin.com', password: 'password123') }
 
-  # This should return the minimal set of attributes required to create a valid
-  # ActionOfficer. As you add validations to ActionOfficer, be sure to
-  # adjust the attributes here as well.
-  let(:valid_attributes) { { "name" => "MyString" } }
-
-  # This should return the minimal set of values that should be in the session
-  # in order to pass any filters (e.g. authentication) defined in
-  # ActionOfficersController. Be sure to keep this updated too.
-  let(:valid_session) { {} }
-
-  describe "GET index" do
-    it "assigns all action_officers as @action_officers" do
-      action_officer = ActionOfficer.create! valid_attributes
-      get :index, {}, valid_session
-      assigns(:action_officers).should eq([action_officer])
-    end
-  end
-
-  describe "GET show" do
-    it "assigns the requested action_officer as @action_officer" do
-      action_officer = ActionOfficer.create! valid_attributes
-      get :show, {:id => action_officer.to_param}, valid_session
-      assigns(:action_officer).should eq(action_officer)
-    end
-  end
-
-  describe "GET new" do
-    it "assigns a new action_officer as @action_officer" do
-      get :new, {}, valid_session
-      assigns(:action_officer).should be_a_new(ActionOfficer)
-    end
-  end
-
-  describe "GET edit" do
-    it "assigns the requested action_officer as @action_officer" do
-      action_officer = ActionOfficer.create! valid_attributes
-      get :edit, {:id => action_officer.to_param}, valid_session
-      assigns(:action_officer).should eq(action_officer)
-    end
-  end
-
-  describe "POST create" do
-    describe "with valid params" do
-      it "creates a new ActionOfficer" do
-        expect {
-          post :create, {:action_officer => valid_attributes}, valid_session
-        }.to change(ActionOfficer, :count).by(1)
-      end
-
-      it "assigns a newly created action_officer as @action_officer" do
-        post :create, {:action_officer => valid_attributes}, valid_session
-        assigns(:action_officer).should be_a(ActionOfficer)
-        assigns(:action_officer).should be_persisted
-      end
-
-      it "redirects to the created action_officer" do
-        post :create, {:action_officer => valid_attributes}, valid_session
-        response.should redirect_to(ActionOfficer.last)
-      end
+  context  'as pq user' do
+    before do
+      sign_in user
     end
 
-    describe "with invalid params" do
-      it "assigns a newly created but unsaved action_officer as @action_officer" do
-        # Trigger the behavior that occurs when invalid params are submitted
-        ActionOfficer.any_instance.stub(:save).and_return(false)
-        post :create, {:action_officer => { "name" => "invalid value" }}, valid_session
-        assigns(:action_officer).should be_a_new(ActionOfficer)
-      end
 
-      it "re-renders the 'new' template" do
-        # Trigger the behavior that occurs when invalid params are submitted
-        ActionOfficer.any_instance.stub(:save).and_return(false)
-        post :create, {:action_officer => { "name" => "invalid value" }}, valid_session
-        response.should render_template("new")
-      end
-    end
-  end
+    # This should return the minimal set of attributes required to create a valid
+    # ActionOfficer. As you add validations to ActionOfficer, be sure to
+    # adjust the attributes here as well.
+    let(:valid_attributes) { { "name" => "MyString" } }
 
-  describe "PUT update" do
-    describe "with valid params" do
-      it "updates the requested action_officer" do
+    # This should return the minimal set of values that should be in the session
+    # in order to pass any filters (e.g. authentication) defined in
+    # ActionOfficersController. Be sure to keep this updated too.
+    let(:valid_session) { {} }
+
+    describe "GET index" do
+      it "assigns all action_officers as @action_officers" do
         action_officer = ActionOfficer.create! valid_attributes
-        # Assuming there are no other action_officers in the database, this
-        # specifies that the ActionOfficer created on the previous line
-        # receives the :update_attributes message with whatever params are
-        # submitted in the request.
-        ActionOfficer.any_instance.should_receive(:update).with({ "name" => "MyString" })
-        put :update, {:id => action_officer.to_param, :action_officer => { "name" => "MyString" }}, valid_session
+        get :index, {}, valid_session
+        assigns(:action_officers).should eq([action_officer])
       end
+    end
 
+    describe "GET show" do
       it "assigns the requested action_officer as @action_officer" do
         action_officer = ActionOfficer.create! valid_attributes
-        put :update, {:id => action_officer.to_param, :action_officer => valid_attributes}, valid_session
+        get :show, {:id => action_officer.to_param}, valid_session
         assigns(:action_officer).should eq(action_officer)
-      end
-
-      it "redirects to the action_officer" do
-        action_officer = ActionOfficer.create! valid_attributes
-        put :update, {:id => action_officer.to_param, :action_officer => valid_attributes}, valid_session
-        response.should redirect_to(action_officer)
       end
     end
 
-    describe "with invalid params" do
-      it "assigns the action_officer as @action_officer" do
-        action_officer = ActionOfficer.create! valid_attributes
-        # Trigger the behavior that occurs when invalid params are submitted
-        ActionOfficer.any_instance.stub(:save).and_return(false)
-        put :update, {:id => action_officer.to_param, :action_officer => { "name" => "invalid value" }}, valid_session
-        assigns(:action_officer).should eq(action_officer)
-      end
-
-      it "re-renders the 'edit' template" do
-        action_officer = ActionOfficer.create! valid_attributes
-        # Trigger the behavior that occurs when invalid params are submitted
-        ActionOfficer.any_instance.stub(:save).and_return(false)
-        put :update, {:id => action_officer.to_param, :action_officer => { "name" => "invalid value" }}, valid_session
-        response.should render_template("edit")
+    describe "GET new" do
+      it "assigns a new action_officer as @action_officer" do
+        get :new, {}, valid_session
+        assigns(:action_officer).should be_a_new(ActionOfficer)
       end
     end
-  end
 
-  describe "DELETE destroy" do
-    it "destroys the requested action_officer" do
-      action_officer = ActionOfficer.create! valid_attributes
-      expect {
+    describe "GET edit" do
+      it "assigns the requested action_officer as @action_officer" do
+        action_officer = ActionOfficer.create! valid_attributes
+        get :edit, {:id => action_officer.to_param}, valid_session
+        assigns(:action_officer).should eq(action_officer)
+      end
+    end
+
+    describe "POST create" do
+      describe "with valid params" do
+        it "creates a new ActionOfficer" do
+          expect {
+            post :create, {:action_officer => valid_attributes}, valid_session
+          }.to change(ActionOfficer, :count).by(1)
+        end
+
+        it "assigns a newly created action_officer as @action_officer" do
+          post :create, {:action_officer => valid_attributes}, valid_session
+          assigns(:action_officer).should be_a(ActionOfficer)
+          assigns(:action_officer).should be_persisted
+        end
+
+        it "redirects to the created action_officer" do
+          post :create, {:action_officer => valid_attributes}, valid_session
+          response.should redirect_to(ActionOfficer.last)
+        end
+      end
+
+      describe "with invalid params" do
+        it "assigns a newly created but unsaved action_officer as @action_officer" do
+          # Trigger the behavior that occurs when invalid params are submitted
+          ActionOfficer.any_instance.stub(:save).and_return(false)
+          post :create, {:action_officer => { "name" => "invalid value" }}, valid_session
+          assigns(:action_officer).should be_a_new(ActionOfficer)
+        end
+
+        it "re-renders the 'new' template" do
+          # Trigger the behavior that occurs when invalid params are submitted
+          ActionOfficer.any_instance.stub(:save).and_return(false)
+          post :create, {:action_officer => { "name" => "invalid value" }}, valid_session
+          response.should render_template("new")
+        end
+      end
+    end
+
+    describe "PUT update" do
+      describe "with valid params" do
+        it "updates the requested action_officer" do
+          action_officer = ActionOfficer.create! valid_attributes
+          # Assuming there are no other action_officers in the database, this
+          # specifies that the ActionOfficer created on the previous line
+          # receives the :update_attributes message with whatever params are
+          # submitted in the request.
+          ActionOfficer.any_instance.should_receive(:update).with({ "name" => "MyString" })
+          put :update, {:id => action_officer.to_param, :action_officer => { "name" => "MyString" }}, valid_session
+        end
+
+        it "assigns the requested action_officer as @action_officer" do
+          action_officer = ActionOfficer.create! valid_attributes
+          put :update, {:id => action_officer.to_param, :action_officer => valid_attributes}, valid_session
+          assigns(:action_officer).should eq(action_officer)
+        end
+
+        it "redirects to the action_officer" do
+          action_officer = ActionOfficer.create! valid_attributes
+          put :update, {:id => action_officer.to_param, :action_officer => valid_attributes}, valid_session
+          response.should redirect_to(action_officer)
+        end
+      end
+
+      describe "with invalid params" do
+        it "assigns the action_officer as @action_officer" do
+          action_officer = ActionOfficer.create! valid_attributes
+          # Trigger the behavior that occurs when invalid params are submitted
+          ActionOfficer.any_instance.stub(:save).and_return(false)
+          put :update, {:id => action_officer.to_param, :action_officer => { "name" => "invalid value" }}, valid_session
+          assigns(:action_officer).should eq(action_officer)
+        end
+
+        it "re-renders the 'edit' template" do
+          action_officer = ActionOfficer.create! valid_attributes
+          # Trigger the behavior that occurs when invalid params are submitted
+          ActionOfficer.any_instance.stub(:save).and_return(false)
+          put :update, {:id => action_officer.to_param, :action_officer => { "name" => "invalid value" }}, valid_session
+          response.should render_template("edit")
+        end
+      end
+    end
+
+    describe "DELETE destroy" do
+      it "destroys the requested action_officer" do
+        action_officer = ActionOfficer.create! valid_attributes
+        expect {
+          delete :destroy, {:id => action_officer.to_param}, valid_session
+        }.to change(ActionOfficer, :count).by(-1)
+      end
+
+      it "redirects to the action_officers list" do
+        action_officer = ActionOfficer.create! valid_attributes
         delete :destroy, {:id => action_officer.to_param}, valid_session
-      }.to change(ActionOfficer, :count).by(-1)
+        response.should redirect_to(action_officers_url)
+      end
     end
 
-    it "redirects to the action_officers list" do
-      action_officer = ActionOfficer.create! valid_attributes
-      delete :destroy, {:id => action_officer.to_param}, valid_session
-      response.should redirect_to(action_officers_url)
-    end
   end
-
 end
