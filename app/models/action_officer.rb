@@ -8,7 +8,7 @@ class ActionOfficer < ActiveRecord::Base
   before_validation :strip_whitespace
 
   def strip_whitespace
-    self.name = self.name.strip
-    self.email = self.email.strip
+    self.name = self.name.strip unless self.name.nil?
+    self.email = self.email.strip unless self.email.nil?
   end
 end
