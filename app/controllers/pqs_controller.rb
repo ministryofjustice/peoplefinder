@@ -11,6 +11,7 @@ class PqsController < ApplicationController
   def show
     @pq = PQ.find_by(uin: params[:id])
     if !@pq.present?
+      flash[:notice] = 'Question not found'
       redirect_to action: 'index'
     end
     @pq
@@ -18,9 +19,14 @@ class PqsController < ApplicationController
 
   def commission
     @pq = PQ.find_by(uin: params[:id])
-    @aap = ActionOfficersPq.new
-    @aap.pq_id = @pq.id
-    @aap
+    if @pq.nil?
+      flash[:notice] = 'Question not found'
+      redirect_to action: 'index'
+    else
+      @aap = ActionOfficersPq.new
+      @aap.pq_id = @pq.id
+      @aap
+    end
   end
 
   def assign
