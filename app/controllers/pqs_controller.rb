@@ -11,6 +11,7 @@ class PqsController < ApplicationController
   def show
     @pq = PQ.find_by(uin: params[:id])
     if !@pq.present?
+      flash[:notice] = 'Question not found'
       redirect_to action: 'index'
     end
     @pq
@@ -18,26 +19,34 @@ class PqsController < ApplicationController
 
   def commission
     @pq = PQ.find_by(uin: params[:id])
-    @aap = ActionOfficersPq.new
-    @aap.pq_id = @pq.id
-    @aap
+    if @pq.nil?
+      flash[:notice] = 'Question not found'
+      redirect_to action: 'index'
+    else
+      @aap = ActionOfficersPq.new
+      @aap.pq_id = @pq.id
+      @aap
+    end
   end
 
   def assign
     @assignment = ActionOfficersPq.new(assignment_params)
+    @pq = PQ.find_by(id: assignment_params[:pq_id])
 
-    respond_to do |format|
-      if @assignment.save
-        @pq = PQ.find_by(id: params[:id])
-        @ao = ActionOfficer.find(params[:action_officers_pq][:action_officer_id])
-        #PqMailer.commit_email(@ao,@pq).deliver
-        flash[:success] = "Successfully allocated #{@pq.uin} to #{@ao.name}"
-        format.html { redirect_to action: 'show', id: @pq.uin }
-        format.json { head :no_content }
-      else
-        format.html { render action: 'edit' }
-        format.json { render json: @pq.errors, status: :unprocessable_entity }
-      end
+    begin
+    comm_service = CommissioningService.new
+    result = comm_service.send(@assignment)
+
+    if result
+      flash[:success] = "Successfully allocated #{@pq.uin}"
+      redirect_to action: 'show', id: @pq.uin 
+    else
+      redirect_to action: 'commission', id: @pq.uin
+    end
+
+    rescue => e
+      flash[:error] = "#{e}"
+      redirect_to action: 'commission', id: @pq.uin
     end
   end    
 

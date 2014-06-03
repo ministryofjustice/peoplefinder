@@ -4,12 +4,12 @@
     <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
   </head>
   <body>
-    <h1>Hello, <%= @action_officer.name %> you have been allocated a PQ </h1>
+    <h1>Hello, <%= @template_params[:name] %> you have been allocated a PQ </h1>
     <p style="border-left:2px solid black;margin-top:5px;margin-right:5px;margin-bottom:5px;">
-      <%= @pq.question %>.
+      <%= @template_params[:question] %>.
     </p>
     <p>
-      To accept,reject or transfer the question, please click here: <%= @url %>.
+      To accept,reject or transfer the question, please click here: <%= link_to "click here", controller: "assignment", action: "index", uin: @template_params[:uin], token: @template_params[:token], entity: @template_params[:email], :host => root_url %>
     </p>
     <p>Contact the PQ team with any queries!</p>
   </body>

@@ -9,7 +9,7 @@ class AOTokenFilter
     token_service = TokenService.new
 
     token = controller.params[:token]
-    entity = controller.params[:e]
+    entity = controller.params[:entity]
     path = controller.request.path
 
     is_valid = token_service.is_valid(token, path, entity)

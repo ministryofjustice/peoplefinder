@@ -19,7 +19,13 @@ class FilterController < ApplicationController
 
       # end
 
-      @message = "#{pluralize(@results.count,'item')} tabled on #{Date.parse(params[:search]).strftime('%-d %b %Y').to_s}"
+      begin
+        @message = "#{pluralize(@results.count,'item')} tabled on #{Date.parse(params[:search]).strftime('%-d %b %Y').to_s}"
+
+      rescue => e
+        flash[:error] = "Please introduce a valid date"
+        return redirect_to action: 'index'
+      end
 
       render 'index'
     end

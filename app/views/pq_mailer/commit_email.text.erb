@@ -1,7 +1,9 @@
-Hello, <%= @action_officer.name %> you have been allocated a PQ to draft a response to
+Hello, <%= @template_params[:name] %> you have been allocated a PQ 
 ============================================================================
-<%= @pq.question %>.
+<%= @template_params[:question] %>.
 
-To accept,reject or transfer the question, please cut and paste this url to a web browser: <%= @url %>
- 
+To accept,reject or transfer the question, <%= link_to "click here", controller: "assignment", action: "index", uin: @template_params[:uin], token: @template_params[:token], entity: @template_params[:email], :host => root_url %>
+or cut and paste this url to a web browser if the above link is not clickable: 
+ <%= url_for(controller: "assignment", action: "index", uin: @template_params[:uin], token: @template_params[:token], entity: @template_params[:email], :host => root_url )%>
 Contact the PQ team with any queries!
+

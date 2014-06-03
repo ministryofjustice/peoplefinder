@@ -1,4 +1,7 @@
 <h1>Parliamentary Questions of the day</h1>
+
+<%= render partial: "shared/flash_messages", flash: flash %>
+
 <h2 class="section">Today <span class="badge"><%= @questions.count %></span></h2>
 
 <ul class="questions-list">
@@ -50,7 +53,7 @@
                  <% elsif question.action_officers_pq.size>0 %>
                  	Current Action Officer count: <%= question.action_officers_pq.size %> (click to expand?)
 				<% end %>
-                </div>	
+                </div>
 		</li>
     <% end %>
 </ul>

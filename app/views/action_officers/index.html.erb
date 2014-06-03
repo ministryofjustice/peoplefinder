@@ -1,0 +1,23 @@
+<h1>Listing Action Officers</h1>
+
+<table class="table">
+  <tr>
+    <th>Name</th>
+    <th>Email</th>
+    <th></th>
+    <th></th>
+  </tr>
+
+  <%  @action_officers.each do |action_officer| %>
+    <tr>
+      <td><%= action_officer.name %>
+      <td><%=  action_officer.email %>
+      <td><%= link_to 'Show', action_officer , {class: 'button'} %>
+      <td><%= link_to 'Edit', edit_action_officer_path(action_officer), {class: 'button'} %>
+    </tr>
+  <% end %>
+
+</table>
+
+
+<%= link_to 'New Action officer', new_action_officer_path , {class: 'button'} %>
