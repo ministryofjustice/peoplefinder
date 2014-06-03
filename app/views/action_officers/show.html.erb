@@ -1,0 +1,15 @@
+<p class="notice"> <%= notice %></p>
+
+<div>
+  Name:
+  <%= @action_officer.name %>
+
+</div>
+<div>
+  Email:
+  <%= @action_officer.email %>
+</div>
+
+<%= link_to 'Edit', edit_action_officer_path(@action_officer) %>
+
+<%= link_to 'Back', action_officers_path  %>

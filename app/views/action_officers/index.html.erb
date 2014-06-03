@@ -1,0 +1,26 @@
+<h1>Listing Action Officers</h1>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Email</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+  <%  @action_officers.each do |action_officer| %>
+    <tr>
+      <td><%= action_officer.name %>
+      <td><%=  action_officer.email %>
+      <td><%= link_to 'Show', action_officer %>
+      <td><%= link_to 'Edit', edit_action_officer_path(action_officer) %>
+      <td><%= link_to 'Destroy', action_officer, :method => :delete, :data => { :confirm => 'Are you sure?' } %>
+    </tr>
+  <% end %>
+
+</table>
+
+
+
+<%= link_to 'New Action officer', new_action_officer_path %>
