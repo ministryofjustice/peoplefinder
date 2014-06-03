@@ -39,7 +39,7 @@ class PqsController < ApplicationController
     end
 
     rescue => e
-      flash[:danger] = "#{e}"
+      flash[:error] = "#{e}"
       redirect_to action: 'commission', id: @pq.uin
     end
   end    
