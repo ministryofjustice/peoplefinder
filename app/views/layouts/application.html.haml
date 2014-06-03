@@ -2,10 +2,20 @@
 - content_for :stylesheets do
    = stylesheet_link_tag "application", media: "all"
 
-#search
-
 - content_for :javascripts do
    = javascript_include_tag "application"
+
+
+
+- content_for :content_override do
+   %main#wrapper(role="main")
+      = render partial: "shared/navigation"
+      .container
+         %header
+            %h1= yield :header
+         .content-inner
+            = yield
+
 
 = render template: "layouts/moj_template"
 

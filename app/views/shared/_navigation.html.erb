@@ -1,0 +1,24 @@
+
+<% if user_signed_in? %>
+
+<nav class="navbar navbar-default" role="navigation">
+  <div class="container-fluid">
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li><%= link_to 'Dashboard', { controller: 'dashboard', action: 'index' } %></li>
+        <li><%= link_to 'Action Officers', { controller: 'action_officers', action: 'index' } %></li>
+        <li><%= link_to 'Users', { controller: 'users', action: 'index' } %></li>
+      </ul>
+
+      <%= form_tag url_for(:controller => 'filter', :action => 'index'), { :method => 'get', :class => 'navbar-form navbar-right', :role => 'search'} do %>
+          <div class="form-group">
+            <%= date_field_tag :search, params[:search], { :id => 'search_field',  :class => 'form-control', :placeholder => 'Search' } %>
+          </div>
+          <%= submit_tag "Search", { :name => nil, :class => 'btn btn-default' } %>
+      <% end %>
+
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+
+<% end %>
