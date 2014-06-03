@@ -49,7 +49,7 @@
 				<% if question.seen_by_finance && question.action_officers_pq.size==0 %>
                      <%= link_to('Commission', { controller: 'pqs', action: 'commission', id: question.uin} , class: 'button commission') %>
                  <% elsif question.action_officers_pq.size==1 %>
-                 	Currently assigned to <%= question.action_officers.first.name %>
+                 	Currently assigned to <%= question.action_officers.first.name unless question.action_officers.first.nil? %>
                  <% elsif question.action_officers_pq.size>0 %>
                  	Current Action Officer count: <%= question.action_officers_pq.size %> (click to expand?)
 				<% end %>
