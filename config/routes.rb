@@ -20,4 +20,6 @@ ParliamentaryQuestions::Application.routes.draw do
   get 'assignment/:uin' => 'assignment#index'
   get 'assignment/:uin/accept' => 'assignment#accept'
   get 'assignment/:uin/reject' => 'assignment#reject'
+  get 'assignment/:uin/transfer' => 'assignment#transfer'
+  
 end
