@@ -1,15 +1,17 @@
 <p class="notice"> <%= notice %></p>
 
+<h2>Action Officer</h2>
+
 <div>
-  Name:
+  <strong>Name:</strong>
   <%= @action_officer.name %>
 
 </div>
 <div>
-  Email:
+  <strong>Email:</strong>
   <%= @action_officer.email %>
 </div>
 
-<%= link_to 'Edit', edit_action_officer_path(@action_officer) %>
+<%= link_to 'Edit', edit_action_officer_path(@action_officer), {class: 'button'}  %>
 
-<%= link_to 'Back', action_officers_path  %>
+<%= link_to 'Back', action_officers_path , {class: 'button'}  %>

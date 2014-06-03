@@ -1,25 +1,29 @@
-<%= form_for @action_officer do |f| %>
-  <% if @action_officer.errors.any? %>
-    <div class="error_explanation">
-      <h2><%= "#{pluralize(@action_officer.errors.count, "error")} prohibited this action_officer from being saved:" %></h2>
-      <ul>
-        <% @action_officer.errors.full_messages.each do |msg| %>
-          <li><%= msg %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
+<div class="row">
+  <div class="col-md-6">
+    <%= form_for @action_officer do |f| %>
+      <% if @action_officer.errors.any? %>
+        <div class="alert  alert-danger">
+          <p><%= "#{pluralize(@action_officer.errors.count, "error")} prohibited this Action Officer from being saved:" %></p>
+          <ul>
+            <% @action_officer.errors.full_messages.each do |msg| %>
+              <li><%= msg %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
 
-  <div>
-    <%= f.label :name %>
-    <%= f.text_field :name %>
-  </div>
-  <div>
-    <%= f.label :email %>
-    <%= f.text_field :email %>
-  </div>
-  <div>
-    <%= f.submit 'Save' %>
-  </div>
+      <div class="form-group">
+        <%= f.label :name %>
+        <%= f.text_field :name, {class: 'form-control'}%>
+      </div>
+      <div class="form-group">
+        <%= f.label :email %>
+        <%= f.text_field :email , {class: 'form-control'} %>
+      </div>
+      <div class="form-group">
+        <%= f.submit 'Save' , {class: 'button'}%>
+      </div>
 
-<% end %>
+    <% end %>
+  </div>
+</div>

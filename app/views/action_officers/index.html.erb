@@ -1,6 +1,6 @@
 <h1>Listing Action Officers</h1>
 
-<table>
+<table class="table">
   <tr>
     <th>Name</th>
     <th>Email</th>
@@ -13,14 +13,13 @@
     <tr>
       <td><%= action_officer.name %>
       <td><%=  action_officer.email %>
-      <td><%= link_to 'Show', action_officer %>
-      <td><%= link_to 'Edit', edit_action_officer_path(action_officer) %>
-      <td><%= link_to 'Destroy', action_officer, :method => :delete, :data => { :confirm => 'Are you sure?' } %>
+      <td><%= link_to 'Show', action_officer , {class: 'button'} %>
+      <td><%= link_to 'Edit', edit_action_officer_path(action_officer), {class: 'button'} %>
+      <td><%= link_to 'Destroy', action_officer, :method => :delete, :data => { :confirm => 'Are you sure?'} %>
     </tr>
   <% end %>
 
 </table>
 
 
-
-<%= link_to 'New Action officer', new_action_officer_path %>
+<%= link_to 'New Action officer', new_action_officer_path , {class: 'button'} %>
