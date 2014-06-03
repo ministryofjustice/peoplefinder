@@ -29,6 +29,7 @@ capybara-*.html
 /db/*.sqlite3
 /coverage/
 /spec/tmp/*
+/public/assets
 **.orig
 .project
 *~
