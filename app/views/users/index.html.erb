@@ -1,29 +1,39 @@
 
-<%= link_to 'Invite New User', new_user_invitation_path %>
-
-<table>
-  <tr>
-    <th>Name</th>
-    <th>Email</th>
-    <th>Invitiation</th>
-    <th></th>
-    <th></th>
-  </tr>
-
-  <% @users.each do |user| %>
-    <tr>
-      <td><%= user.name %></td>
-      <td><%= user.email %></td>
-      <td><%= user.invited_by.try(:display_name) %></td>
-      <td><%= link_to 'Edit', edit_user_path(user) %></td>
-      <td><%= link_to 'Delete', user_path(user), method: :delete, data: { confirm: 'Are you sure?' } %></td>
-    </tr>
-  <% end %>
 
 
-</table>
-<div class="pagination-row.bottom">
-  <div class="page-entries">
-    <%= will_paginate @users %>
-  </div>
+<div class="row">
+  <div class="col-md-8"><%= link_to 'Invite New User', new_user_invitation_path, {class: 'button'} %></div>
+</div>
+
+<div class="row">
+    <table class="table">
+      <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Invitiation</th>
+        <th></th>
+        <th></th>
+      </tr>
+
+      <% @users.each do |user| %>
+        <tr>
+          <td><%= user.name %></td>
+          <td><%= user.email %></td>
+          <td><%= user.invited_by.try(:display_name) %></td>
+          <td><%= link_to 'Edit', edit_user_path(user), {class: 'button'} %></td>
+          <td><%= link_to 'Delete', user_path(user), {:method => :delete, :class => 'button', :data => { :confirm => 'Are you sure?' } }%></td>
+        </tr>
+      <% end %>
+
+
+    </table>
+
+
+
+    <div class="pagination-row.bottom">
+      <div class="page-entries">
+        <%= will_paginate @users %>
+      </div>
+    </div>
+
 </div>
