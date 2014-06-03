@@ -5,6 +5,9 @@ class CommissioningService
  	end
 
 	def send(assignment)
+    raise 'Action Officer is not selected' if assignment.action_officer_id.nil?
+    raise 'Question is not selected' if assignment.pq_id.nil?
+
 		ActionOfficersPq.create(action_officer_id: assignment.action_officer_id, pq_id: assignment.pq_id)
 		ao = ActionOfficer.find(assignment.action_officer_id)
 		pq = PQ.find_by(id: assignment.pq_id)

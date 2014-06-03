@@ -25,18 +25,22 @@ class PqsController < ApplicationController
 
   def assign
     @assignment = ActionOfficersPq.new(assignment_params)
+    @pq = PQ.find_by(id: assignment_params[:pq_id])
 
+    begin
     comm_service = CommissioningService.new
-
     result = comm_service.send(@assignment)
 
     if result
-      @pq = PQ.find_by(id: assignment_params[:pq_id])
-
       flash[:success] = "Successfully allocated #{@pq.uin}"
       redirect_to action: 'show', id: @pq.uin 
     else
-      render action: 'edit' 
+      redirect_to action: 'commission', id: @pq.uin
+    end
+
+    rescue => e
+      flash[:danger] = "#{e}"
+      redirect_to action: 'commission', id: @pq.uin
     end
   end    
 
