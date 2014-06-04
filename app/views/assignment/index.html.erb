@@ -1,5 +1,5 @@
 
-<h2><%= @ao.name %>, The Parliamentary Question (<%= @question.uin %>)<br/> has been assigned to you</h2>
+<h2><%= @ao.name %>,<br/> The Parliamentary Question (<%= @question.uin %>)<br/> has been assigned to you</h2>
 <br/>
 
 <span class="deadline">
@@ -21,7 +21,6 @@ In the <%= @question.house_name %>
 -->
 <h2>Would you accept responsibility for answering this question?</h2>
 
-<div <a class="button" style="background-color:#468847; color:#ffffff"> <%= link_to 'accept', {action: 'accept', email: @ao.email},{:style=>"color:#FFFFFF"} %> </div>
-<div <a class="button" style="background-color:#c09853"> <%= link_to 'reject', {action: 'reject', email: @ao.email },{:style=>"color:#FFFFFF"} %> </div>
-<div <a class="button" style="background-color:#b94a48"> <%= link_to 'transfer', {action: 'transfer', email: @ao.email },{:style=>"color:#FFFFFF"} %> </div>
-
+<%= link_to('accept', { action: 'accept', email: @ao.email} , {class: 'btn btn-success', style: 'color:#FFFFFF'} ) %>
+<%= link_to('reject', { action: 'reject', email: @ao.email} , {class: 'btn btn-primary', style: 'color:#FFFFFF'} ) %>
+<%= link_to('transfer', { action: 'transfer', email: @ao.email} , {class: 'btn btn-danger', style: 'color:#FFFFFF'} ) %>
