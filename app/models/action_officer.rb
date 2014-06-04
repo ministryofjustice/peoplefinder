@@ -1,5 +1,5 @@
 class ActionOfficer < ActiveRecord::Base
-  validates :email, uniqueness: true
+  validates :email, uniqueness: true, on: :create
 
   # has_and_belongs_to_many :pqs
 	has_many :action_officers_pqs
