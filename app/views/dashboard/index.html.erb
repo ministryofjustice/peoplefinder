@@ -53,12 +53,12 @@
 
                       <% if question.action_officers_pq.first.accept %>
                         <span class="label label-success">Accepted</span>
-                      <% end %>
-                      <% if question.action_officers_pq.first.reject %>
+                      <% elsif question.action_officers_pq.first.reject %>
                           <span class="label label-danger">Rejected</span>
-                      <% end %>
-                      <% if question.action_officers_pq.first.transfer %>
+                      <% elsif question.action_officers_pq.first.transfer %>
                           <span class="label label-danger">Need to transfer</span>
+                      <% else %>
+                          <span class="label label-warning">No response</span>
                       <% end %>
 
                  <% elsif question.action_officers_pq.size>0 %>

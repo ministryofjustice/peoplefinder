@@ -17,10 +17,20 @@ In the <%= @question.house_name %>
 <div class = "panel-indent" style="width= 66%;">
 	<%= @question.question %>
 </div>
-<!--
-<div style="clear:both;"> :style => "color:red"
-</div>
--->
+
+<% if @question.action_officers_pq.first.accept %>
+    <span class="label label-success">Accepted</span>
+<% elsif @question.action_officers_pq.first.reject %>
+    <span class="label label-primary">Rejected</span>
+<% elsif @question.action_officers_pq.first.transfer %>
+    <span class="label label-danger">Need to transfer</span>
+<% else %>
+    <span class="label label-warning">No response</span>
+<% end %>
+
+
+
+
 <h2>Would you accept responsibility for answering this question?</h2>
 
 <%= link_to('accept', { action: 'index', entity: @ao.email, token: params[:token], response: 'accept'} , {class: 'btn btn-success', style: 'color:#FFFFFF'} ) %>
