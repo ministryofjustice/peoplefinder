@@ -16,5 +16,10 @@ ParliamentaryQuestions::Application.routes.draw do
   get 'filter/:search' => 'filter#index'
   get 'dashboard/search' => 'dashboard#search'
   post 'dashboard/search/:search' => 'dashboard#search'
+  
   get 'assignment/:uin' => 'assignment#index'
+  get 'assignment/:uin/accept' => 'assignment#accept'
+  get 'assignment/:uin/reject' => 'assignment#reject'
+  get 'assignment/:uin/transfer' => 'assignment#transfer'
+  
 end

@@ -1,0 +1,26 @@
+
+<h2><%= @ao.name %>,<br/> The Parliamentary Question (<%= @question.uin %>)<br/> has been assigned to you</h2>
+<br/>
+
+<span class="deadline">
+  Deadline for completion: 
+  <%= @question.internal_deadline.strftime('%d/%m/%Y %H:%M') unless @question.internal_deadline.nil? %>
+<%= render partial: 'shared/deadline_time', locals: {internal_deadline: @question.internal_deadline} %>
+</span>
+<div style="clear:both;">
+</div>
+<span>Question tabled by: <%= @question.member_name %></span>
+In the <%= @question.house_name %>
+<!-- -->
+<div class = "panel-indent" style="width= 66%;">
+	<%= @question.question %>
+</div>
+<!--
+<div style="clear:both;"> :style => "color:red"
+</div>
+-->
+<h2>Would you accept responsibility for answering this question?</h2>
+
+<%= link_to('accept', { action: 'accept', email: @ao.email} , {class: 'btn btn-success', style: 'color:#FFFFFF'} ) %>
+<%= link_to('reject', { action: 'reject', email: @ao.email} , {class: 'btn btn-primary', style: 'color:#FFFFFF'} ) %>
+<%= link_to('transfer', { action: 'transfer', email: @ao.email} , {class: 'btn btn-danger', style: 'color:#FFFFFF'} ) %>
