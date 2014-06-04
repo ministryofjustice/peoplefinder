@@ -2,6 +2,8 @@
 <h2><%= @ao.name %>,<br/> The Parliamentary Question (<%= @question.uin %>)<br/> has been assigned to you</h2>
 <br/>
 
+<%= render partial: 'shared/flash_messages' %>
+
 <span class="deadline">
   Deadline for completion: 
   <%= @question.internal_deadline.strftime('%d/%m/%Y %H:%M') unless @question.internal_deadline.nil? %>
@@ -21,6 +23,7 @@ In the <%= @question.house_name %>
 -->
 <h2>Would you accept responsibility for answering this question?</h2>
 
-<%= link_to('accept', { action: 'accept', email: @ao.email} , {class: 'btn btn-success', style: 'color:#FFFFFF'} ) %>
-<%= link_to('reject', { action: 'reject', email: @ao.email} , {class: 'btn btn-primary', style: 'color:#FFFFFF'} ) %>
-<%= link_to('transfer', { action: 'transfer', email: @ao.email} , {class: 'btn btn-danger', style: 'color:#FFFFFF'} ) %>
+<%= link_to('accept', { action: 'index', entity: @ao.email, token: params[:token], response: 'accept'} , {class: 'btn btn-success', style: 'color:#FFFFFF'} ) %>
+<%= link_to('reject', { action: 'index', entity: @ao.email, token: params[:token], response: 'reject'} , {class: 'btn btn-primary', style: 'color:#FFFFFF'} ) %>
+<%= link_to('transfer', { action: 'index', entity: @ao.email, token: params[:token], response: 'transfer'} , {class: 'btn btn-danger', style: 'color:#FFFFFF'} ) %>
+

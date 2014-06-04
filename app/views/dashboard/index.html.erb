@@ -50,6 +50,17 @@
                      <%= link_to('Commission', { controller: 'pqs', action: 'commission', id: question.uin} , class: 'button commission') %>
                  <% elsif question.action_officers_pq.size==1 %>
                  	Currently assigned to <%= question.action_officers.first.name unless question.action_officers.first.nil? %>
+
+                      <% if question.action_officers_pq.first.accept %>
+                        <span class="label label-success">Accepted</span>
+                      <% end %>
+                      <% if question.action_officers_pq.first.reject %>
+                          <span class="label label-danger">Rejected</span>
+                      <% end %>
+                      <% if question.action_officers_pq.first.transfer %>
+                          <span class="label label-danger">Need to transfer</span>
+                      <% end %>
+
                  <% elsif question.action_officers_pq.size>0 %>
                  	Current Action Officer count: <%= question.action_officers_pq.size %> (click to expand?)
 				<% end %>
