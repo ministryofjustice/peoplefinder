@@ -107,7 +107,10 @@ ul.questions-list {
     color: #428bca;
 }
 
-
+.allocation-info {
+    clear: both;
+    padding: 5px 0 5px 0;
+}
 
 
 

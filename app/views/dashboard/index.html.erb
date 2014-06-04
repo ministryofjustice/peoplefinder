@@ -19,7 +19,9 @@
                 <div>
 				    Date For Answer: <%= question.date_for_answer.strftime('%d/%m/%Y') unless question.date_for_answer.nil? %>
                 </div>
-				<span><%= question.house_name %>: <%= question.member_name %></span>
+                <div>
+				    <span><%= question.house_name %>: <%= question.member_name %></span>
+                </div>
 				
 				<div class = "panel-indent" style="float: left; width= 66%;">
 					<%= question.question %>
@@ -45,11 +47,11 @@
 					</div>
 					<% end %>
 				</div>
-				<div style="clear:both;">
+				<div class="allocation-info">
 				<% if question.seen_by_finance && question.action_officers_pq.size==0 %>
                      <%= link_to('Commission', { controller: 'pqs', action: 'commission', id: question.uin} , class: 'button commission') %>
                  <% elsif question.action_officers_pq.size==1 %>
-                 	Currently assigned to <%= question.action_officers.first.name unless question.action_officers.first.nil? %>
+                      <i class="fa fa-caret-right"></i> Assigned to <%= question.action_officers.first.name unless question.action_officers.first.nil? %>
 
                       <% if question.action_officers_pq.first.accept %>
                         <span class="label label-success">Accepted</span>
