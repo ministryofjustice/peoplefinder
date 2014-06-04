@@ -1,5 +1,5 @@
 class AssignmentController < ApplicationController
-  # before_action AOTokenFilter
+  before_action AOTokenFilter
   before_action :set_data
  
   def index
