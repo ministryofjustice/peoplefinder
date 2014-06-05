@@ -4,13 +4,43 @@
     <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
   </head>
   <body>
-    <h1>Hello, <%= @template_params[:name] %> you have been allocated a PQ </h1>
-    <p style="border-left:2px solid black;margin-top:5px;margin-right:5px;margin-bottom:5px;">
-      <%= @template_params[:question] %>.
+    <h1>Hello, <%= @template_params[:name] %> you have been allocated the following PQ </h1>
+    <p style="padding-left:0.5em;margin-left:10px;border-left:2px solid black;margin-top:5px;margin-right:5px;margin-bottom:5px;">
+      <%= @template_params[:question] %>
     </p>
+
     <p>
-      To accept,reject or transfer the question, please click here: <%= link_to "click here", controller: "assignment", action: "index", uin: @template_params[:uin], token: @template_params[:token], entity: @template_params[:entity], :host => root_url %>
+      To accept,reject or transfer the question, please <%= link_to "click here", controller: "assignment", action: "index", uin: @template_params[:uin], token: @template_params[:token], entity: @template_params[:entity], :host => root_url %>
     </p>
-    <p>Contact the PQ team with any queries!</p>
+    <dl>
+      <dt>There are some links to guidance available from the intranet<dt>
+        <dd><a href="http://intranet.justice.gsi.gov.uk/ministers-parliament/working-with-parliament/parliamentary-questions">PQ Intranet page</a></dd>
+        <dd><a href="http://intranet.justice.gsi.gov.uk/ministers-parliament/working-with-parliament/downloads/parliament-questions-guidance-faqs.pdf">Guidance FAQs</a></dd>
+        <dd><a href="http://intranet.justice.gsi.gov.uk/global/forms/downloads/ministers-parliament/template-written-pqs.doc">Response template (Word doc)</a></dd>
+        <dd><a href="http://intranet.justice.gsi.gov.uk/ministers-parliament/working-with-parliament/downloads/high-profile-pq.pdf">High profile criteria</a></dd>
+        <dd><a href="http://intranet.justice.gsi.gov.uk/global/forms/downloads/ministers-parliament/disproportionate-costs-calculator.xls"> Disproportionate costs calculator<a></dd>
+    </dl>
+    <p>If your PQ is to be answered by Simon Hughes MP, please ensure that the Draft Response is sent, alongside the usual copy list, to;</p>
+    <dl>
+    <dd><a href="mailto:Christopher.Beal@justice.gsi.gov.uk">Christopher.Beal@justice.gsi.gov.uk</a>
+    <dd><a href="Nicola.Calderhead@justice.gsi.gov.uk">Nicola.Calderhead@justice.gsi.gov.uk</a>
+    <dd><a href="thomas.murphy@JUSTICE.gsi.gov.uk">thomas.murphy@JUSTICE.gsi.gov.uk</a>
+  </dl>
+    <p>Some guidance points that you should be aware of:</p>
+    <ol>
+    <li>Please ensure that tables attached to or embedded in answers are in Word or Excel format</li>
+<li>Follow up to 'I will write responses' -  Please see revised guidance for IWW -  Follow up responses to IWW PQ answers are dealt with slightly differently to routine PQ answers – please see the attached guidance and process map which details how these should be processed. An IWW follow-up response specific background note is also attached.</li>  
+<li>Guidance - Please familiarise yourself with the guidance below highlighting the details that should be provided in the email subject line when returning PQs.   If colleagues in your team are processing responses, please ensure that this message is relayed.</li> 
+<li>Amendments have been made to the return cc list (see section 4 below). When returning PQs to the full copy list, please include the following in the e-mail subject line: 
+  <ul>
+<li>Parliament's Unique Identifying Number (the 5 or 6 digit number that appears at the end of the question)</li>
+<li>Indicate the name of the MP / Peer</li>
+<li>Give a very brief description of the subject matter (one or two words!)</li>
+<li>Provide the name of the Press Officer involved (if applicable)</br>
+                 e.g. RE: 123456 – Joe Blogs –  Legal Aid  (Press Officer - Rob Smith)</li>
+</ul>
+</ol>
+<p>Taking these steps will ensure that Press Office colleagues are able to identify what PQs relate to their portfolio areas. Likewise, providing PIN numbers also enables us to identify PQs easily.</p>
+<p>Please contact one of the PQ team should you have any questions.</p>
   </body>
 </html>
