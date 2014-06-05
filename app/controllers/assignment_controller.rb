@@ -3,21 +3,23 @@ class AssignmentController < ApplicationController
   before_action :set_data
  
   def index
+  end
 
-    action = params[:response]
-
-    if action == 'accept'
+  def action
+    response = params[:response]
+    if response == 'accept'
       accept
     end
 
-    if action == 'reject'
+    if response == 'reject'
       reject
     end
 
-    if action == 'transfer'
+    if response == 'transfer'
       transfer
     end
 
+    render 'index'
   end
 
   private
