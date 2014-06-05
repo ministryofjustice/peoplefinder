@@ -1,39 +1,76 @@
 
-<h2><%= @ao.name %>,<br/> The Parliamentary Question (<%= @question.uin %>)<br/> has been assigned to you</h2>
-<br/>
+<h2><%= @ao.name %></h2>
+
+<h3>The Parliamentary Question (<%= @question.uin %>) has been assigned to you</h2>
+
 
 <%= render partial: 'shared/flash_messages' %>
 
-<span class="deadline">
-  Deadline for completion: 
-  <%= @question.internal_deadline.strftime('%d/%m/%Y %H:%M') unless @question.internal_deadline.nil? %>
-<%= render partial: 'shared/deadline_time', locals: {internal_deadline: @question.internal_deadline} %>
-</span>
-<div style="clear:both;">
+<div>
+    <span class="deadline">
+      Deadline for completion:
+      <%= @question.internal_deadline.strftime('%d/%m/%Y %H:%M') unless @question.internal_deadline.nil? %>
+    <%= render partial: 'shared/deadline_time', locals: {internal_deadline: @question.internal_deadline} %>
+    </span>
+    <div style="clear:both;">
+    </div>
+    <span>Question tabled by: <%= @question.member_name %></span>
+    In the <%= @question.house_name %>
+    <!-- -->
+    <div class="panel-indent" style="width= 66%;">
+        <%= @question.question %>
+    </div>
+
+    <% if @question.action_officers_pq.first.accept %>
+        <span class="label label-success">Accepted</span>
+    <% elsif @question.action_officers_pq.first.reject %>
+        <span class="label label-primary">Rejected</span>
+    <% elsif @question.action_officers_pq.first.transfer %>
+        <span class="label label-danger">Need to transfer</span>
+    <% else %>
+        <span class="label label-warning">No response</span>
+    <% end %>
 </div>
-<span>Question tabled by: <%= @question.member_name %></span>
-In the <%= @question.house_name %>
-<!-- -->
-<div class = "panel-indent" style="width= 66%;">
-	<%= @question.question %>
+
+<div class="accept-reject-form">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">Would you accept responsibility for answering this question?</h3>
+      </div>
+      <div class="panel-body">
+        <div class="row">
+          <div class="col-md-6">
+            <%= form_tag do |f| %>
+                <%= hidden_field_tag 'token', params[:token] %>
+                <%= hidden_field_tag 'entity', params[:entity] %>
+
+                <div class="form-group">
+                  <div class="radio">
+                    <label>
+                      <%= radio_button_tag :response, 'accept'%>
+                      Accept
+                    </label>
+                  </div>
+                  <div class="radio">
+                    <label>
+                      <%= radio_button_tag :response, 'reject'%>
+                      Reject
+                    </label>
+                  </div>
+
+                </div>
+                <div class="form-group">
+                  <%= submit_tag 'Save Response' , class: 'button'%>
+                </div>
+
+            <% end %>
+          </div>
+        </div>
+
+      </div>
+    </div>
 </div>
 
-<% if @question.action_officers_pq.first.accept %>
-    <span class="label label-success">Accepted</span>
-<% elsif @question.action_officers_pq.first.reject %>
-    <span class="label label-primary">Rejected</span>
-<% elsif @question.action_officers_pq.first.transfer %>
-    <span class="label label-danger">Need to transfer</span>
-<% else %>
-    <span class="label label-warning">No response</span>
-<% end %>
 
 
-
-
-<h2>Would you accept responsibility for answering this question?</h2>
-
-<%= link_to('accept', { action: 'index', entity: params[:entity], token: params[:token], response: 'accept'} , {class: 'btn btn-success', style: 'color:#FFFFFF'} ) %>
-<%= link_to('reject', { action: 'index', entity: params[:entity], token: params[:token], response: 'reject'} , {class: 'btn btn-primary', style: 'color:#FFFFFF'} ) %>
-<%= link_to('transfer', { action: 'index', entity: params[:entity], token: params[:token], response: 'transfer'} , {class: 'btn btn-danger', style: 'color:#FFFFFF'} ) %>
 
