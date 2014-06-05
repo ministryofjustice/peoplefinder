@@ -33,7 +33,7 @@ In the <%= @question.house_name %>
 
 <h2>Would you accept responsibility for answering this question?</h2>
 
-<%= link_to('accept', { action: 'index', entity: @ao.email, token: params[:token], response: 'accept'} , {class: 'btn btn-success', style: 'color:#FFFFFF'} ) %>
-<%= link_to('reject', { action: 'index', entity: @ao.email, token: params[:token], response: 'reject'} , {class: 'btn btn-primary', style: 'color:#FFFFFF'} ) %>
-<%= link_to('transfer', { action: 'index', entity: @ao.email, token: params[:token], response: 'transfer'} , {class: 'btn btn-danger', style: 'color:#FFFFFF'} ) %>
+<%= link_to('accept', { action: 'index', entity: params[:entity], token: params[:token], response: 'accept'} , {class: 'btn btn-success', style: 'color:#FFFFFF'} ) %>
+<%= link_to('reject', { action: 'index', entity: params[:entity], token: params[:token], response: 'reject'} , {class: 'btn btn-primary', style: 'color:#FFFFFF'} ) %>
+<%= link_to('transfer', { action: 'index', entity: params[:entity], token: params[:token], response: 'transfer'} , {class: 'btn btn-danger', style: 'color:#FFFFFF'} ) %>
 

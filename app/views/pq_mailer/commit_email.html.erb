@@ -9,7 +9,7 @@
       <%= @template_params[:question] %>.
     </p>
     <p>
-      To accept,reject or transfer the question, please click here: <%= link_to "click here", controller: "assignment", action: "index", uin: @template_params[:uin], token: @template_params[:token], entity: @template_params[:email], :host => root_url %>
+      To accept,reject or transfer the question, please click here: <%= link_to "click here", controller: "assignment", action: "index", uin: @template_params[:uin], token: @template_params[:token], entity: @template_params[:entity], :host => root_url %>
     </p>
     <p>Contact the PQ team with any queries!</p>
   </body>

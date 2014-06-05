@@ -22,9 +22,24 @@ class AssignmentController < ApplicationController
 
   private
     def set_data
+      # the entity is in this format "assignment:<id>"
+      # for example "assignment:3"
+      entity = params[:entity].split(':')
+      assignment_id = entity[1]
+
+      if assignment_id.nil?
+        return render :file => 'public/401.html', :status => :unauthorized
+      end
+
+      @assignment = ActionOfficersPq.find(assignment_id)
+
+      if @assignment.nil?
+        return render :file => 'public/401.html', :status => :unauthorized
+      end
+
       @question = PQ.find_by(uin: params[:uin])
-      @ao = ActionOfficer.find_by(email: params[:entity])
-      @assignment = ActionOfficersPq.where(pq_id: @question.id, action_officer_id: @ao.id).first
+      @ao = @assignment.action_officer
+
     end
 
     def accept
