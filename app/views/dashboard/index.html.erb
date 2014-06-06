@@ -57,8 +57,6 @@
                         <span class="label label-success">Accepted</span>
                       <% elsif question.action_officers_pq.first.reject %>
                           <span class="label label-danger">Rejected</span>
-                      <% elsif question.action_officers_pq.first.transfer %>
-                          <span class="label label-danger">Need to transfer</span>
                       <% else %>
                           <span class="label label-warning">No response</span>
                       <% end %>
