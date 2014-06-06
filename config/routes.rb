@@ -1,5 +1,7 @@
 ParliamentaryQuestions::Application.routes.draw do
 
+  resources :watchlist_members
+
   resources :action_officers
 
   devise_for :users
