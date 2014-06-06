@@ -9,9 +9,9 @@
       <%= @template_params[:question] %>
     </p>
 
-    <p>
-      To accept,reject or transfer the question, please <%= link_to "click here", controller: "assignment", action: "index", uin: @template_params[:uin], token: @template_params[:token], entity: @template_params[:entity], :host => root_url %>
-    </p>
+    <h2 style="margin:10px 0;">
+      To accept or reject the question, please click the following link <%= link_to "Accept or reject this question", controller: "assignment", action: "index", uin: @template_params[:uin], token: @template_params[:token], entity: @template_params[:entity], :host => root_url %>
+    </h2>
     <dl>
       <dt>There are some links to guidance available from the intranet<dt>
         <dd><a href="http://intranet.justice.gsi.gov.uk/ministers-parliament/working-with-parliament/parliamentary-questions">PQ Intranet page</a></dd>
@@ -36,8 +36,7 @@
 <li>Parliament's Unique Identifying Number (the 5 or 6 digit number that appears at the end of the question)</li>
 <li>Indicate the name of the MP / Peer</li>
 <li>Give a very brief description of the subject matter (one or two words!)</li>
-<li>Provide the name of the Press Officer involved (if applicable)</br>
-                 e.g. RE: 123456 – Joe Blogs –  Legal Aid  (Press Officer - Rob Smith)</li>
+<li>Provide the name of the Press Officer involved (if applicable)</br>e.g. RE: 123456 – Joe Blogs –  Legal Aid  (Press Officer - Rob Smith)</li>
 </ul>
 </ol>
 <p>Taking these steps will ensure that Press Office colleagues are able to identify what PQs relate to their portfolio areas. Likewise, providing PIN numbers also enables us to identify PQs easily.</p>

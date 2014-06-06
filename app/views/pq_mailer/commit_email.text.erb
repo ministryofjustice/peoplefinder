@@ -1,9 +1,43 @@
-Hello, <%= @template_params[:name] %> you have been allocated a PQ 
+Hello, <%= @template_params[:name] %> you have been allocated the following PQ 
 ============================================================================
 <%= @template_params[:question] %>.
 
-To accept,reject or transfer the question, <%= link_to "click here", controller: "assignment", action: "index", uin: @template_params[:uin], token: @template_params[:token], entity: @template_params[:email], :host => root_url %>
-or cut and paste this url to a web browser if the above link is not clickable: 
+To accept or reject the question, cut and paste this url to a web browser: 
  <%= url_for(controller: "assignment", action: "index", uin: @template_params[:uin], token: @template_params[:token], entity: @template_params[:entity], :host => root_url )%>
-Contact the PQ team with any queries!
 
+============================================================================
+
+There are some links to guidance available from the intranet
+	http://intranet.justice.gsi.gov.uk/ministers-parliament/working-with-parliament/parliamentary-questions
+	http://intranet.justice.gsi.gov.uk/ministers-parliament/working-with-parliament/downloads/parliament-questions-guidance-faqs.pdf
+	http://intranet.justice.gsi.gov.uk/global/forms/downloads/ministers-parliament/template-written-pqs.doc
+	http://intranet.justice.gsi.gov.uk/ministers-parliament/working-with-parliament/downloads/high-profile-pq.pdf
+	http://intranet.justice.gsi.gov.uk/global/forms/downloads/ministers-parliament/disproportionate-costs-calculator.xls
+
+If your PQ is to be answered by Simon Hughes MP, please ensure that the Draft Response is sent, alongside the usual copy list, to;
+
+	Christopher.Beal@justice.gsi.gov.uk
+	Nicola.Calderhead@justice.gsi.gov.uk
+	thomas.murphy@JUSTICE.gsi.gov.uk
+
+Some guidance points that you should be aware of:
+
+Please ensure that tables attached to or embedded in answers are in Word or Excel format
+
+	Follow up to 'I will write responses' - Please see revised guidance for IWW - Follow up responses to IWW PQ answers are dealt with slightly differently to routine PQ answers – please see the attached guidance and process map which details how these should be processed. An IWW follow-up response specific background note is also attached.
+
+	Guidance - Please familiarise yourself with the guidance below highlighting the details that should be provided in the email subject line when returning PQs. If colleagues in your team are processing responses, please ensure that this message is relayed.
+	
+	Amendments have been made to the return cc list (see section 4 below). When returning PQs to the full copy list, please include the following in the e-mail subject line:
+
+		Parliament's Unique Identifying Number (the 5 or 6 digit number that appears at the end of the question)
+	
+		Indicate the name of the MP / Peer
+
+		Give a very brief description of the subject matter (one or two words!)
+		Provide the name of the Press Officer involved (if applicable) 
+			e.g. RE: 123456 – Joe Blogs – Legal Aid (Press Officer - Rob Smith)
+
+Taking these steps will ensure that Press Office colleagues are able to identify what PQs relate to their portfolio areas. Likewise, providing PIN numbers also enables us to identify PQs easily.
+
+Please contact one of the PQ team should you have any questions.
