@@ -34,6 +34,8 @@ module ParliamentaryQuestions
     config.filter_parameters += [:password]
 
     config.assets.paths << "#{Rails}/vendor/assets/fonts"
-
+    config.generators do |g| 
+      g.template_engine :erb
+    end
   end
 end

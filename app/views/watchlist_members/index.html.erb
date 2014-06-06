@@ -1,0 +1,23 @@
+<h1>Listing Watchlist members
+<%= link_to 'Add watchlist member', new_watchlist_member_path, {class: 'btn btn-success', style: 'color:#ffffff;'} %>
+</h1>
+<table class="table">
+    <tr>
+      <th>Name</th>
+      <th>Email</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+    <% @watchlist_members.each do |watchlist_member| %>
+      <tr>
+        <td><%= watchlist_member.name %></td>
+        <td><%= watchlist_member.email %></td>
+        <td><%= link_to 'Show', watchlist_member, {class: 'btn btn-default' } %></td>
+        <td><%= link_to 'Edit', edit_watchlist_member_path(watchlist_member), {class: 'btn btn-info', style: 'color:#ffffff;'} %></td>
+      </tr>
+    <% end %>
+</table>
+
+<br>
+
