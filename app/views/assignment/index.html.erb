@@ -37,32 +37,55 @@
       <div class="panel-heading">
         <h3 class="panel-title">Would you accept responsibility for answering this question?</h3>
       </div>
+
       <div class="panel-body">
         <div class="row">
           <div class="col-md-6">
-            <%= form_tag do |f| %>
+            <%= form_for @response, :url => {:controller => 'assignment', :action => 'index', :uin => params[:uin]} do |f| %>
                 <%= hidden_field_tag 'token', params[:token] %>
                 <%= hidden_field_tag 'entity', params[:entity] %>
 
                 <div class="form-group">
                   <div class="radio">
                     <label>
-                      <%= radio_button_tag :response, 'accept'%>
+                      <%= f.radio_button :response, 'accept' %>
                       Accept
                     </label>
                   </div>
                   <div class="radio">
                      <label>
-                      <%= radio_button_tag :response, 'reject', false %>
+                      <%= f.radio_button :response, 'reject'%>
                       Reject
                     </label>
                   </div>
 
                 </div>
 
-                <div class="form-group hide"  id="reason-textarea">
-                  <%= label_tag :reason, 'Please explain why you reject the question' %>
-                  <%= text_area_tag :reason, '' ,  class: 'form-control'%>
+                <div class="<%= 'hide' unless @response.errors.any?%>" id="reason-textarea">
+                  <% if !@response.errors[:reason_option].empty? %>
+                      <div class="alert  alert-danger">
+                        Please select one of the reasons to reject the question
+                      </div>
+                  <% end %>
+
+                  <div class="form-group">
+                    <select class="form-control" name="allocation_response[reason_option]">
+                      <option selected="selected" disabled="disabled">Select the reason to reject the question</option>
+                      <option>Is for other department in the MoJ</option>
+                      <option>Is for other Government department</option>
+                      <option>Other Reason</option>
+                     </select>
+                  </div>
+                  <% if !@response.errors[:reason].empty? %>
+                      <div class="alert  alert-danger">
+                        Please select give us information about why you reject the question
+                      </div>
+                  <% end %>
+
+                  <div class="form-group">
+                    <%= f.label :reason, 'Please explain why you reject the question, or if you are not the right person or department, please tell us who we should contact' %>
+                    <%= f.text_area  :reason,  class: 'form-control'%>
+                  </div>
                 </div>
 
                 <div class="form-group">

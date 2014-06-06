@@ -6,6 +6,13 @@ class AssignmentController < ApplicationController
   end
 
   def action
+
+    @response = AllocationResponse.new(response_params)
+
+    if !@response.valid?
+      return render 'index'
+    end
+
     response = params[:response]
     if response == 'accept'
       accept
@@ -26,6 +33,7 @@ class AssignmentController < ApplicationController
     def set_data
       # the entity is in this format "assignment:<id>"
       # for example "assignment:3"
+
       entity = params[:entity].split(':')
       assignment_id = entity[1]
 
@@ -57,6 +65,12 @@ class AssignmentController < ApplicationController
     def transfer
       flash[:notice] = 'The Question is mark for transfer'
       @assignment.update_attributes(accept: false, reject: false, transfer: true)
+    end
+
+    def response_params
+      params.require(:allocation_response).permit(:response, :reason_option, :reason)
+
+    #  :utf8, :authenticity_token, :commit, :uin, :token, :entity, :answer
     end
 
 end
