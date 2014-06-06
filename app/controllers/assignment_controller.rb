@@ -51,12 +51,12 @@ class AssignmentController < ApplicationController
 
     def accept
       flash[:notice] = 'The Question is accepted'
-      @assignment.update_attributes(accept: true, reject: false, transfer: false)
+      @assignment.update_attributes(accept: true, reject: false)
     end
 
     def reject
       flash[:notice] = 'The Question is rejected'
-      @assignment.update_attributes(accept: false, reject: true, transfer: false)
+      @assignment.update_attributes(accept: false, reject: true, reason_option: @response.reason_option, reason: @response.reason)
     end
 
     def response_params
