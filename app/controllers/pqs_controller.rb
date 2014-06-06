@@ -38,7 +38,7 @@ class PqsController < ApplicationController
     result = comm_service.send(@assignment)
 
     if result
-      flash[:success] = "Successfully allocated #{@pq.uin}"
+      flash[:success] = "Successfully allocated #{@pq.uin} to #{@assignment.action_officer.name}"
       redirect_to action: 'show', id: @pq.uin 
     else
       redirect_to action: 'commission', id: @pq.uin

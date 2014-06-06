@@ -1,5 +1,7 @@
 ParliamentaryQuestions::Application.routes.draw do
 
+  resources :watchlist_members
+
   resources :action_officers
 
   devise_for :users
@@ -18,8 +20,6 @@ ParliamentaryQuestions::Application.routes.draw do
   post 'dashboard/search/:search' => 'dashboard#search'
   
   get 'assignment/:uin' => 'assignment#index'
-  get 'assignment/:uin/accept' => 'assignment#accept'
-  get 'assignment/:uin/reject' => 'assignment#reject'
-  get 'assignment/:uin/transfer' => 'assignment#transfer'
-  
+  post 'assignment/:uin' => 'assignment#action'
+
 end

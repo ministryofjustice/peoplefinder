@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @watchlist_member.name %>
+</p>
+
+<p>
+  <strong>Email:</strong>
+  <%= @watchlist_member.email %>
+</p>
+
+<p>
+  <strong>Deleted:</strong>
+  <%= @watchlist_member.deleted %>
+</p>
+
+<%= link_to 'Edit', edit_watchlist_member_path(@watchlist_member), {class: 'btn btn-info', style: 'color:#ffffff;' } %>
+<%= link_to 'Back to watchlist', watchlist_members_path, {class: 'btn btn-warning', style: 'color:#ffffff;' } %>

@@ -11,22 +11,25 @@ describe 'CommissioningService' do
     ActionMailer::Base.deliveries = []
   end
 
-  it 'should return a boolean value indicating success/failure and inserts the data' do
+  it 'should return the assignment id and inserts the data' do
     assignment = ActionOfficersPq.new(action_officer_id: action_officer.id, pq_id: pq.id)
 
     result = @comm_service.send(assignment)
 
     result.should_not be nil
-    ActionOfficersPq.all.count.should eq(1)
+    result[:assignment_id].should_not be nil
+
+    ActionOfficersPq.where(action_officer_id: action_officer.id, pq_id: pq.id).first.should_not be nil
   end
 
   it 'should have generated a valid token' do
     assignment = ActionOfficersPq.new(action_officer_id: action_officer.id, pq_id: pq.id)
 
-    @comm_service.send(assignment)
+    result = @comm_service.send(assignment)
 
-    token = Token.where(entity: 'ao@ao.gov', path: '/assignment/HL789').first
+    token = Token.where(entity: "assignment:#{result[:assignment_id]}", path: '/assignment/HL789').first
 
+    token.should_not be nil
     token.id.should_not be nil
     token.token_digest.should_not be nil
 
@@ -38,13 +41,14 @@ describe 'CommissioningService' do
   it 'should send an email with the right data' do
     assignment = ActionOfficersPq.new(action_officer_id: action_officer.id, pq_id: pq.id)
 
-    sentToken = @comm_service.send(assignment)
+    result = @comm_service.send(assignment)
+    sentToken = result[:token]
 
     mail = ActionMailer::Base.deliveries.first
 
 
     token_param = {token: sentToken}.to_query
-    entity = {entity: action_officer.email}.to_query
+    entity = {entity: "assignment:#{result[:assignment_id]}"}.to_query
     url = "/assignment/HL789"
 
     mail.html_part.body.should include pq.question
