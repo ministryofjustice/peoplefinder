@@ -3,9 +3,9 @@ class AllocationResponse
   include ActiveModel::Conversion
   extend ActiveModel::Naming
 
-  attr_accessor :response, :reason_option, :reason
+  attr_accessor :response_action, :reason_option, :reason
 
-  validates_presence_of :response
+  validates_presence_of :response_action
   validates :reason_option, presence: true, if: :rejected?
   validates :reason, presence: true, if: :rejected?
 
@@ -21,7 +21,7 @@ class AllocationResponse
   end
 
   def rejected?
-    response == 'reject'
+    response_action == 'reject'
   end
 
 end

@@ -41,20 +41,20 @@
       <div class="panel-body">
         <div class="row">
           <div class="col-md-6">
-            <%= form_for @response, :url => {:controller => 'assignment', :action => 'index', :uin => params[:uin]} do |f| %>
+            <%= form_for @response, :url => {:controller => 'assignment', :action => 'action', :uin => params[:uin]} do |f| %>
                 <%= hidden_field_tag 'token', params[:token] %>
                 <%= hidden_field_tag 'entity', params[:entity] %>
 
                 <div class="form-group">
                   <div class="radio">
                     <label>
-                      <%= f.radio_button :response, 'accept' %>
+                      <%= f.radio_button :response_action, 'accept' %>
                       Accept
                     </label>
                   </div>
                   <div class="radio">
                      <label>
-                      <%= f.radio_button :response, 'reject'%>
+                      <%= f.radio_button :response_action, 'reject'%>
                       Reject
                     </label>
                   </div>

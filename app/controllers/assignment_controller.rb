@@ -13,17 +13,14 @@ class AssignmentController < ApplicationController
       return render 'index'
     end
 
-    response = params[:response]
-    if response == 'accept'
+    response_action = @response.response_action
+
+    if response_action == 'accept'
       accept
     end
 
-    if response == 'reject'
+    if response_action == 'reject'
       reject
-    end
-
-    if response == 'transfer'
-      transfer
     end
 
     render 'index'
@@ -62,15 +59,8 @@ class AssignmentController < ApplicationController
       @assignment.update_attributes(accept: false, reject: true, transfer: false)
     end
 
-    def transfer
-      flash[:notice] = 'The Question is mark for transfer'
-      @assignment.update_attributes(accept: false, reject: false, transfer: true)
-    end
-
     def response_params
-      params.require(:allocation_response).permit(:response, :reason_option, :reason)
-
-    #  :utf8, :authenticity_token, :commit, :uin, :token, :entity, :answer
+      params.require(:allocation_response).permit(:response_action, :reason_option, :reason)
     end
 
 end
