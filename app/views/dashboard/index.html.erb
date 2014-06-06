@@ -51,17 +51,8 @@
 				<% if question.seen_by_finance && question.action_officers_pq.size==0 %>
                      <%= link_to('Commission', { controller: 'pqs', action: 'commission', id: question.uin} , class: 'button commission') %>
                  <% elsif question.action_officers_pq.size==1 %>
-                      <i class="fa fa-caret-right"></i> Assigned to <%= question.action_officers.first.name unless question.action_officers.first.nil? %>
-
-                      <% if question.action_officers_pq.first.accept %>
-                        <span class="label label-success">Accepted</span>
-                      <% elsif question.action_officers_pq.first.reject %>
-                          <span class="label label-danger">Rejected</span>
-                      <% else %>
-                          <span class="label label-warning">No response</span>
-                      <% end %>
-
-                 <% elsif question.action_officers_pq.size>0 %>
+                      <%= render partial: 'shared/question_assigned', locals: {question: question} %>
+                <% elsif question.action_officers_pq.size>0 %>
                  	Current Action Officer count: <%= question.action_officers_pq.size %> (click to expand?)
 				<% end %>
                 </div>

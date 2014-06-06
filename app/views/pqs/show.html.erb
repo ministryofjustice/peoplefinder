@@ -26,16 +26,7 @@
         </div>
         <div>
           <% if @pq.action_officers_pq.size==1 %>
-              Assigned to <%= @pq.action_officers.first.name unless @pq.action_officers.first.nil? %>
-
-              <% if @pq.action_officers_pq.first.accept %>
-                  <span class="label label-success">Accepted</span>
-              <% elsif @pq.action_officers_pq.first.reject %>
-                  <span class="label label-danger">Rejected</span>
-              <% else %>
-                  <span class="label label-warning">No response</span>
-              <% end %>
-
+              <%= render partial: 'shared/question_assigned', locals: {question: @pq} %>
           <% elsif @pq.action_officers_pq.size>0 %>
               Current Action Officer count: <%= @pq.action_officers_pq.size %> (click to expand?)
           <% end %>

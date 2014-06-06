@@ -10,7 +10,7 @@
     <span class="deadline">
       Deadline for completion:
       <%= @question.internal_deadline.strftime('%d/%m/%Y %H:%M') unless @question.internal_deadline.nil? %>
-    <%= render partial: 'shared/deadline_time', locals: {internal_deadline: @question.internal_deadline} %>
+      <%= render partial: 'shared/deadline_time', locals: {internal_deadline: @question.internal_deadline} %>
     </span>
     <div style="clear:both;">
     </div>
@@ -21,13 +21,8 @@
         <%= @question.question %>
     </div>
 
-    <% if @question.action_officers_pq.first.accept %>
-        <span class="label label-success">Accepted</span>
-    <% elsif @question.action_officers_pq.first.reject %>
-        <span class="label label-primary">Rejected</span>
-    <% else %>
-        <span class="label label-warning">No response</span>
-    <% end %>
+    <%= render partial: 'shared/question_assigned', locals: {question: @question} %>
+
 </div>
 
 <div class="accept-reject-form">

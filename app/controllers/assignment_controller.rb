@@ -3,6 +3,7 @@ class AssignmentController < ApplicationController
   before_action :set_data
  
   def index
+    @response = AllocationResponse.new()
   end
 
   def action
