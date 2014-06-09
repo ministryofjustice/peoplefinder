@@ -23,11 +23,9 @@ class CommissionController < ApplicationController
       return redirect_to action: 'commission', id: @pq.uin
     end
     
-    params[:action_officers_pq][:action_officer_id].each do |ao_id| 
+    comm.each do |ao_id| 
       if !ao_id.empty? 
-        assignment = ActionOfficersPq.new(pq_id: pq_id, action_officer_id: ao_id)
-        comm_service = CommissioningService.new
-        result = comm_service.send(assignment)
+        result = assign_one_action_officer(pq_id, ao_id)
         begin
           if result.nil?
             flash[:error] = "Error in commissioning to #{assignment.action_officer.name}"
@@ -46,6 +44,13 @@ class CommissionController < ApplicationController
   end    
 
   private
+    def assign_one_action_officer(pq_id, ao_id)
+      assignment = ActionOfficersPq.new(pq_id: pq_id, action_officer_id: ao_id)
+      comm_service = CommissioningService.new
+      result = comm_service.send(assignment)
+      result      
+    end
+  
     def assignment_params
       # TODO: Check the permit again
       # params.require(:action_officers_pq).permit(:action_officer_id, :pq_id)
