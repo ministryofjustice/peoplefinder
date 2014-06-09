@@ -6,7 +6,7 @@
 
     <div class="textbox" style="clear:both;">
       <%= f.label(:action_officer_id) %> : 
-	<%= collection_select(:action_officers_pq, :action_officer_id, ActionOfficer.all, :id, :name, { :prompt => 'Select an action officer' }) %>
+	<%= collection_select(:action_officers_pq, :action_officer_id, ActionOfficer.all, :id, :name, {}, {:multiple => true }) %>
     </div>
 	<%= f.hidden_field(:pq_id) %>
 <%= f.submit 'Commission', :class => 'btn btn-success' %>

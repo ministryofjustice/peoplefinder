@@ -8,8 +8,8 @@ ParliamentaryQuestions::Application.routes.draw do
 
   resources :users
   resources :pqs  
-  get 'pqs/commission/:id' => 'pqs#commission'
-  post 'pqs/assign/:id' => 'pqs#assign'
+  get 'commission/:id' => 'commission#commission'
+  post 'assign/:id' => 'commission#assign'
 
   get '/', to: 'dashboard#index', as: :root
   get 'dashboard' => 'dashboard#index'

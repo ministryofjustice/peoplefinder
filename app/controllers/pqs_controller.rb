@@ -17,38 +17,6 @@ class PqsController < ApplicationController
     @pq
   end
 
-  def commission
-    @pq = PQ.find_by(uin: params[:id])
-    if @pq.nil?
-      flash[:notice] = 'Question not found'
-      redirect_to action: 'index'
-    else
-      @aap = ActionOfficersPq.new
-      @aap.pq_id = @pq.id
-      @aap
-    end
-  end
-
-  def assign
-    @assignment = ActionOfficersPq.new(assignment_params)
-    @pq = PQ.find_by(id: assignment_params[:pq_id])
-
-    begin
-    comm_service = CommissioningService.new
-    result = comm_service.send(@assignment)
-
-    if result
-      flash[:success] = "Successfully allocated #{@pq.uin} to #{@assignment.action_officer.name}"
-      redirect_to action: 'show', id: @pq.uin 
-    else
-      redirect_to action: 'commission', id: @pq.uin
-    end
-
-    rescue => e
-      flash[:error] = "#{e}"
-      redirect_to action: 'commission', id: @pq.uin
-    end
-  end    
 
   # PATCH/PUT /pqs/1
   # PATCH/PUT /pqs/1.json
@@ -84,6 +52,7 @@ class PqsController < ApplicationController
       params.require(:pq).permit(:internal_deadline, :seen_by_finance, :press_interest, :finance_interest)
     end
     def assignment_params
-      params.require(:action_officers_pq).permit(:action_officer_id, :pq_id)
+      # TODO: Check the permit again
+      # params.require(:action_officers_pq).permit(:action_officer_id, :pq_id)
     end
 end
