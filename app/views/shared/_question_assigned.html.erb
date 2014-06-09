@@ -1,29 +1,30 @@
-<div class="question-allocation">
-<p>Allocation:</p>
-<ul class="question-allocation-list">
-<% question.action_officers_pq.each do |ao_pq|   %>
-    <li>
-        <%= ao_pq.action_officer.name  %>
-        <% if ao_pq.accept %>
-            <span class="label label-success">Accepted</span>
-        <% elsif ao_pq.reject %>
-            <span class="label label-danger">
-             Rejected
-            </span>
-            <a data-toggle="collapse" data-target="#rejection-<%= ao_pq.id %>-<%= ao_pq.action_officer.id %>" class="btn btn-default btn-xs">
-              Display Reason <span class="caret"></span></a>
-            <div id="rejection-<%= ao_pq.id %>-<%= ao_pq.action_officer.id %>" class="collapse">
-              <p><strong><%= ao_pq.reason_option %></strong></p>
-              <p><%= ao_pq.reason %></p>
-            </div>
-        <% else %>
-            <span class="label label-warning">No response</span>
-        <% end %>
-    </li>
+<% if question.action_officers_pq.size > 0 %>
+
+    <div class="question-allocation">
+    <p>Allocation:</p>
+
+    <ul class="question-allocation-list">
+    <% question.action_officers_pq.each do |ao_pq|   %>
+        <li>
+            <%= ao_pq.action_officer.name  %>
+            <% if ao_pq.accept %>
+                <span class="label label-success">Accepted</span>
+            <% elsif ao_pq.reject %>
+                <span class="label label-danger">
+                 Rejected
+                </span>
+                <a data-toggle="collapse" data-target="#rejection-<%= ao_pq.id %>-<%= ao_pq.action_officer.id %>" class="btn btn-default btn-xs">
+                  Display Reason <span class="caret"></span></a>
+                <div id="rejection-<%= ao_pq.id %>-<%= ao_pq.action_officer.id %>" class="collapse">
+                  <p><strong><%= ao_pq.reason_option %></strong></p>
+                  <p><%= ao_pq.reason %></p>
+                </div>
+            <% else %>
+                <span class="label label-warning">No response</span>
+            <% end %>
+        </li>
+    <% end %>
+
+    </ul>
+    </div>
 <% end %>
-
-</ul>
-</div>
-
-
-
