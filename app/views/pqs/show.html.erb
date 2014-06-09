@@ -89,15 +89,21 @@
 
 </div>
 
-<% if @pq['RegisteredInterest'] == "True" %>
+<% if @pq.registered_interest %>
 
  <div>
-  <span>Member has registered an interest in the Question: <%= @pq['RegisteredInterest'] %></span>
+  <span>Member has registered an interest in the Question.</span>
  </div>
   
  <% end %>
 
+<p>
+<% if @pq.seen_by_finance  %>
+    <%= link_to('Commission', { controller: 'commission', action: 'commission', id: @pq.uin} , class: 'btn btn-success') %> 
+<%end%>
+					 
 <%= f.submit 'Update', :class => 'button' %>
+</p>
 
 <% end %>
 

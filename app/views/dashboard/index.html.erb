@@ -48,12 +48,13 @@
 					<% end %>
 				</div>
 				<div class="allocation-info">
-				<% if question.seen_by_finance && question.action_officers_pq.size==0 %>
-                     <%= link_to('Commission', { controller: 'commission', action: 'commission', id: question.uin} , class: 'button commission') %>
-                 <% else %>
-                      <%= render partial: 'shared/question_assigned', locals: {question: question} %>
-				<% end %>
-                </div>
+				
+				<%= render partial: 'shared/question_assigned', locals: {question: question} %>
+				<% if question.seen_by_finance  %>
+                     <div> <%= link_to('Commission', { controller: 'commission', action: 'commission', id: question.uin} , class: 'btn btn-success') %> </div>
+                <% end %>
+				
+				</div>
 		</li>
     <% end %>
 </ul>
