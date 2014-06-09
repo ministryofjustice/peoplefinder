@@ -8,7 +8,7 @@
 
 <div>
     <span class="deadline">
-      Deadline for completion:
+      Deadline to Accept/Reject:
       <%= @question.internal_deadline.strftime('%d/%m/%Y %H:%M') unless @question.internal_deadline.nil? %>
       <%= render partial: 'shared/deadline_time', locals: {internal_deadline: @question.internal_deadline} %>
     </span>

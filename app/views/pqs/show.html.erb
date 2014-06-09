@@ -24,13 +24,9 @@
         <div>
         House: <%= @pq.house_name %>
         </div>
-        <div>
-          <% if @pq.action_officers_pq.size==1 %>
-              <%= render partial: 'shared/question_assigned', locals: {question: @pq} %>
-          <% elsif @pq.action_officers_pq.size>0 %>
-              Current Action Officer count: <%= @pq.action_officers_pq.size %> (click to expand?)
-          <% end %>
-        </div>
+
+        <%= render partial: 'shared/question_assigned', locals: {question: @pq} %>
+
     </div>
   </div>
   <div style="float:right;">

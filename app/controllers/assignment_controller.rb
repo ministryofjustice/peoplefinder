@@ -7,7 +7,6 @@ class AssignmentController < ApplicationController
   end
 
   def action
-
     @response = AllocationResponse.new(response_params)
 
     if !@response.valid?
@@ -15,7 +14,6 @@ class AssignmentController < ApplicationController
     end
 
     response_action = @response.response_action
-
     if response_action == 'accept'
       accept
     end

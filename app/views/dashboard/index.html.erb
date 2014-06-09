@@ -50,10 +50,8 @@
 				<div class="allocation-info">
 				<% if question.seen_by_finance && question.action_officers_pq.size==0 %>
                      <%= link_to('Commission', { controller: 'pqs', action: 'commission', id: question.uin} , class: 'button commission') %>
-                 <% elsif question.action_officers_pq.size==1 %>
+                 <% else %>
                       <%= render partial: 'shared/question_assigned', locals: {question: question} %>
-                <% elsif question.action_officers_pq.size>0 %>
-                 	Current Action Officer count: <%= question.action_officers_pq.size %> (click to expand?)
 				<% end %>
                 </div>
 		</li>
