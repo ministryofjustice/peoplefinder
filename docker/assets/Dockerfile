@@ -18,7 +18,7 @@ RUN DEBIAN_FRONTEND='noninteractive' apt-get install -y nginx
 
 # install custom config files
 ADD docker/assets/nginx.conf /etc/nginx/nginx.conf
-ADD app/assets /srv/http/assets
+ADD public /srv/http
 
 # install service files for runit
 ADD docker/assets/nginx.service /etc/service/nginx/run
