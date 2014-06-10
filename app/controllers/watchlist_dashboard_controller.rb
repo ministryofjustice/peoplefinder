@@ -1,5 +1,5 @@
 class WatchlistDashboardController < ApplicationController
-  #before_action AOTokenFilter
+  before_action AOTokenFilter
 
   def index
 

@@ -1,7 +1,5 @@
 <h1>Questions Allocated <%= Date.today.strftime('%d/%m/%Y') %></h1>
 
-<%= render partial: "shared/flash_messages", flash: flash %>
-
 <h2 class="section">Allocated Today <span class="badge"><%= @questions.count %></span></h2>
 
 <ul class="questions-list">

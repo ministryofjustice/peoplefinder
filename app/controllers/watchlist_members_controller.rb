@@ -1,4 +1,5 @@
 class WatchlistMembersController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_watchlist_member, only: [:show, :edit, :update, :destroy]
 
   # GET /watchlist_members

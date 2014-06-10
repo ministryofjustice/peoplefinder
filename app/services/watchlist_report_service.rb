@@ -18,8 +18,8 @@ class WatchlistReportService
   def send_one(member)
     path = '/watchlist/dashboard'
     entity = "watchlist:#{member.id}"
-    midnight = DateTime.now.midnight.change({:offset => 0})
-    token = @tokenService.generate_token(path, entity, midnight)
+    end_of_day = DateTime.now.end_of_day.change({:offset => 0})
+    token = @tokenService.generate_token(path, entity, end_of_day)
 
     template = Hash.new
     template[:name] = member.name

@@ -20,8 +20,8 @@ describe 'WatchlistReportService' do
     token.id.should_not be nil
     token.token_digest.should_not be nil
 
-    midnight = DateTime.now.midnight.change({:offset => 0})
-    token.expire.should eq(midnight)
+    end_of_day = DateTime.now.end_of_day.change({:offset => 0})
+    token.expire.should eq(end_of_day)
 
 
     # second watchlist member
@@ -30,8 +30,8 @@ describe 'WatchlistReportService' do
     token.id.should_not be nil
     token.token_digest.should_not be nil
 
-    midnight = DateTime.now.midnight.change({:offset => 0})
-    token.expire.should eq(midnight)
+    end_of_day = DateTime.now.end_of_day.change({:offset => 0})
+    token.expire.should eq(end_of_day)
   end
 
   it 'should send an email with the right data' do
