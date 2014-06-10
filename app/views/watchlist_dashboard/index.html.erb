@@ -1,0 +1,31 @@
+<h1>Questions Allocated <%= Date.today.strftime('%d/%m/%Y') %></h1>
+
+<%= render partial: "shared/flash_messages", flash: flash %>
+
+<h2 class="section">Allocated Today <span class="badge"><%= @questions.count %></span></h2>
+
+<ul class="questions-list">
+  <% @questions.each do |question| %>
+      <li style="overflow:auto;">
+        <div class="pq-header">
+          <span class="uin"><%= question.uin %></span>
+        </div>
+        <div>
+          Date For Answer: <%= question.date_for_answer.strftime('%d/%m/%Y') unless question.date_for_answer.nil? %>
+        </div>
+        <div>
+          <span><%= question.house_name %>: <%= question.member_name %></span>
+        </div>
+
+        <div class = "panel-indent" style="float: left; width= 66%;">
+          <%= question.question %>
+        </div>
+        <div class="allocation-info">
+          <%= render partial: 'shared/question_assigned', locals: {question: question} %>
+        </div>
+      </li>
+  <% end %>
+</ul>
+
+
+

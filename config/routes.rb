@@ -22,4 +22,6 @@ ParliamentaryQuestions::Application.routes.draw do
   get 'assignment/:uin' => 'assignment#index'
   post 'assignment/:uin' => 'assignment#action'
 
+  get 'watchlist/dashboard' => 'watchlist_dashboard#index'
+
 end
