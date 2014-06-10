@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <h1>Hello, <%= @template_params[:name] %></h1>
+
+    <h2 style="margin:10px 0;">
+      This are the Parliamentary Questions allocated on <%= @template_params[:date] %> , please click the following link to view the questions <%= link_to "View the questions", controller: "watchlist_dashboard", action: "index", token: @template_params[:token], entity: @template_params[:entity], :host => root_url %>
+    </h2>
+
+    <p>Please contact one of the PQ team should you have any questions.</p>
+  </body>
+</html>

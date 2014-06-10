@@ -1,0 +1,8 @@
+Hello, <%= @template_params[:name] %>
+============================================================================
+This are the questions allocated on <%= @template_params[:date] %>
+ <%= url_for(controller: "watchlist_dashboard", action: "index", token: @template_params[:token], entity: @template_params[:entity], :host => root_url )%>
+
+============================================================================
+
+Please contact one of the PQ team should you have any questions.

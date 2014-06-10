@@ -10,6 +10,6 @@ class WatchlistDashboardController < ApplicationController
 
     @questions = PQ.where(id: pq_ids).load
 
-   
+
   end
 end
