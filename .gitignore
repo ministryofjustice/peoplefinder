@@ -52,4 +52,4 @@ config/environments/*.local.yml
 set_env.sh
 
 # Ignore Dockerfile in base directory
-Dockerfile
+/Dockerfile
