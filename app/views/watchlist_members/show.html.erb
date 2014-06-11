@@ -11,8 +11,11 @@
 </p>
 
 <p>
-  <strong>Deleted:</strong>
-  <%= @watchlist_member.deleted %>
+  <% if @watchlist_member.deleted %>
+      <i class="fa fa-times"></i>Inactive
+  <% else %>
+      <i class="fa fa-check-circle"></i>Active
+  <% end %>
 </p>
 
 <%= link_to 'Edit', edit_watchlist_member_path(@watchlist_member), {class: 'btn btn-info', style: 'color:#ffffff;' } %>

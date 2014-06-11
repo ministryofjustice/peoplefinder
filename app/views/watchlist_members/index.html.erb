@@ -11,7 +11,7 @@
     <tr>
       <th>Name</th>
       <th>Email</th>
-      <th></th>
+      <th>Active/Inactive</th>
       <th></th>
       <th></th>
     </tr>
@@ -19,6 +19,13 @@
       <tr>
         <td><%= watchlist_member.name %></td>
         <td><%= watchlist_member.email %></td>
+        <td>
+            <% if watchlist_member.deleted %>
+              <i class="fa fa-times"></i>Inactive
+            <% else %>
+              <i class="fa fa-check-circle"></i>Active
+            <% end %>
+        </td>
         <td><%= link_to 'Show', watchlist_member, {class: 'btn btn-default' } %></td>
         <td><%= link_to 'Edit', edit_watchlist_member_path(watchlist_member), {class: 'btn btn-info', style: 'color:#ffffff;'} %></td>
       </tr>

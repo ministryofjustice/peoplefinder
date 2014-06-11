@@ -7,7 +7,7 @@ class WatchlistReportService
 
   def send
     result = Hash.new
-    WatchlistMember.all.each do |member|
+    WatchlistMember.where(deleted: false).all.each do |member|
       token = send_one(member)
       result[member.id] = token
     end

@@ -2,8 +2,9 @@ require 'spec_helper'
 
 describe 'WatchlistReportService' do
 
-  let!(:watchlist_one) { create(:watchlist_member, name: 'member 1', email: 'm1@ao.gov') }
-  let!(:watchlist_two) { create(:watchlist_member, name: 'member 2', email: 'm2@ao.gov') }
+  let!(:watchlist_one) { create(:watchlist_member, name: 'member 1', email: 'm1@ao.gov',  deleted: false) }
+  let!(:watchlist_two) { create(:watchlist_member, name: 'member 2', email: 'm2@ao.gov', deleted: false) }
+  let!(:watchlist_deleted) { create(:watchlist_member, name: 'member 3', email: 'm3@ao.gov', deleted: true) }
 
   before(:each) do
     @report_service = WatchlistReportService.new
@@ -32,6 +33,11 @@ describe 'WatchlistReportService' do
 
     end_of_day = DateTime.now.end_of_day.change({:offset => 0})
     token.expire.should eq(end_of_day)
+
+
+    # the token is not send to deleted Watchlist members
+    token = Token.where(entity: "watchlist:#{watchlist_deleted.id}", path: '/watchlist/dashboard').first
+    token.should be nil
   end
 
   it 'should send an email with the right data' do
