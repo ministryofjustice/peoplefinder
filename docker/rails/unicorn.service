@@ -1,0 +1,4 @@
+#!/bin/sh
+cd /rails
+[ -z "${RAILS_DB_MIGRATE}" ] && bundle exec rake db:migrate
+bundle exec unicorn -p 80
