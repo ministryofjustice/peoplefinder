@@ -1,9 +1,9 @@
 <%= render partial: "shared/flash_messages", flash: flash %>
 
 <h1>Listing Watchlist members
-<%= link_to 'Add watchlist member', new_watchlist_member_path, {class: 'btn btn-success', style: 'color:#ffffff;'} %>
+<%= link_to raw('<i class="fa fa-plus"></i> Add watchlist member'), new_watchlist_member_path, {class: 'btn btn-success', style: 'color:#ffffff;'} %>
 
-<%= link_to 'Send allocation info', {controller: 'watchlist_send_emails', action: 'send_emails'}, {class: 'btn btn-success', style: 'color:#ffffff;'} %>
+<%= link_to raw('<i class="fa fa-envelope"></i> Send allocation info'), {controller: 'watchlist_send_emails', action: 'send_emails'}, {class: 'btn btn-success', style: 'color:#ffffff;'} %>
 
 </h1>
 
