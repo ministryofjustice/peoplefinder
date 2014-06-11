@@ -1,0 +1,185 @@
+<%= yield :top_of_page %>
+<!DOCTYPE html>
+<!--[if lt IE 9]><html class="lte-ie8" lang="en"><![endif]-->
+<!--[if gt IE 8]><!--><html lang="en"><!--<![endif]-->
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+
+    <title><%= content_for?(:page_title) ? yield(:page_title) : "GOV.UK - The best place to find government services and information" %></title>
+
+    <script type="text/javascript">
+      (function(){if(navigator.userAgent.match(/IEMobile\/10\.0/)){var d=document,c="appendChild",a=d.createElement("style");a[c](d.createTextNode("@-ms-viewport{width:auto!important}"));d.getElementsByTagName("head")[0][c](a);}})();
+    </script>
+
+    <!--[if gt IE 8]><!--><link href="<%= asset_path "govuk-template.css" %>" media="screen" rel="stylesheet" type="text/css" /><!--<![endif]-->
+    <!--[if IE 6]><link href="<%= asset_path "govuk-template-ie6.css" %>" media="screen" rel="stylesheet" type="text/css" /><![endif]-->
+    <!--[if IE 7]><link href="<%= asset_path "govuk-template-ie7.css" %>" media="screen" rel="stylesheet" type="text/css" /><![endif]-->
+    <!--[if IE 8]><link href="<%= asset_path "govuk-template-ie8.css" %>" media="screen" rel="stylesheet" type="text/css" /><![endif]-->
+
+    <link href="<%= asset_path "govuk-template-print.css" %>" media="print" rel="stylesheet" type="text/css" />
+
+    <!--[if IE 8]>
+    <script type="text/javascript">
+      (function(){if(window.opera){return;}
+       setTimeout(function(){var a=document,g,b={families:(g=
+       ["nta"]),urls:["<%= asset_path "fonts-ie8.css" %>"]},
+       c="<%= asset_path "vendor/goog/webfont-debug.js" %>",d="script",
+       e=a.createElement(d),f=a.getElementsByTagName(d)[0],h=g.length;WebFontConfig
+       ={custom:b},e.src=c,f.parentNode.insertBefore(e,f);for(;h=h-1;a.documentElement
+       .className+=' wf-'+g[h].replace(/\s/g,'').toLowerCase()+'-n4-loading');},0)
+      })()
+    </script>
+    <![endif]-->
+    <!--[if gte IE 9]><!-->
+      <link href="<%= asset_path "fonts.css" %>" media="all" rel="stylesheet" type="text/css" />
+    <!--<![endif]-->
+
+
+    <!--[if lt IE 9]>
+      <script src="<%= asset_path "ie.js" %>" type="text/javascript"></script>
+    <![endif]-->
+
+    <link rel="shortcut icon" href="<%= asset_path "favicon.ico" %>" type="image/x-icon" />
+
+    <!-- For third-generation iPad with high-resolution Retina display: -->
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="<%= asset_path "apple-touch-icon-144x144.png" %>">
+    <!-- For iPhone with high-resolution Retina display: -->
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="<%= asset_path "apple-touch-icon-114x114.png" %>">
+    <!-- For first- and second-generation iPad: -->
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="<%= asset_path "apple-touch-icon-72x72.png" %>">
+    <!-- For non-Retina iPhone, iPod Touch, and Android 2.1+ devices: -->
+    <link rel="apple-touch-icon-precomposed" href="<%= asset_path "apple-touch-icon-57x57.png" %>">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta property="og:image" content="<%= asset_path "opengraph-image.png" %>">
+
+    <!--[if gt IE 8]><!--><link href="<%= asset_path "moj-template.css" %>" media="screen" rel="stylesheet" type="text/css" /><!--<![endif]-->
+    <!--[if IE 6]><link href="<%= asset_path "moj-template-ie6.css" %>" media="screen" rel="stylesheet" type="text/css" /><![endif]-->
+    <!--[if IE 7]><link href="<%= asset_path "moj-template-ie7.css" %>" media="screen" rel="stylesheet" type="text/css" /><![endif]-->
+    <!--[if IE 8]><link href="<%= asset_path "moj-template-ie8.css" %>" media="screen" rel="stylesheet" type="text/css" /><![endif]-->
+
+    <%= yield :stylesheets %>
+    <%= yield :head %>
+
+  </head>
+
+  <body class="<%= content_for?(:body_classes) ? raw("#{yield(:body_classes)}") : "#{config_item(:phase).to_s.downcase} #{config_item(:product_type).to_s.downcase}" %>">
+    <script type="text/javascript">document.body.className = ((document.body.className) ? document.body.className + ' js-enabled' : 'js-enabled');</script>
+
+    <div id="skiplink-container">
+      <div>
+        <a href="#content" class="skiplink">Skip to main content</a>
+      </div>
+    </div>
+
+    
+    <header role="banner" id="global-header" class="with-proposition <%= yield :header_class %>">
+      <div class="header-wrapper">
+        <div class="header-global">
+          <div class="header-logo">
+            <!-- TODO: Put a internal logo ?? -->
+          </div>
+          <%= yield :inside_header %>
+        </div>
+        <% if content_for?(:proposition_header) %>
+          <%= yield(:proposition_header) %>
+        <% else %>
+          <div class="header-proposition">
+            <div class="content">
+                <a href="/" id="proposition-name"><%= "#{config_item(:proposition_title)}" %></a>
+                <a href="https://www.gov.uk/service-manual/phases/<%= "#{config_item(:phase).to_s.downcase}" %>.html" class="proposition-phase"><%= "#{config_item(:phase).to_s.capitalize}" %></a>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </header>
+    <!--end header-->
+    
+
+    <div class="indicator cf">
+      <p>
+        <strong><%= config_item(:phase).to_s.capitalize %>:</strong>
+        This is a new service -
+        <% if content_for?(:feedback_link) %>
+          <%= yield(:feedback_link) %>
+        <% else %>
+          <a href="<%= "#{config_item(:feedback_url)}" %>">your feedback</a>
+        <% end %>
+        will help us to improve it
+      </p>
+    </div>
+
+    <%= yield :after_header %>
+
+    <div id="global-cookie-message">
+      
+        <% if content_for?(:cookie_message) %>
+        <%= yield :cookie_message %>
+      <% else %>
+        <p>GOV.UK uses cookies to make the site simpler. <a href="https://www.gov.uk/help/cookies">Find out more about cookies</a></p>
+      <% end %>
+      
+    </div>
+
+    <% if content_for?(:content_override) %>
+      <%= yield(:content_override) %>
+    <% else %>
+    <%= yield :before_content %>
+
+    <div id="wrapper" class="group">
+      <section id="content" role="main">
+        <%= content_for?(:content) ? yield(:content) : yield %>
+      </section>
+    </div>
+    <% end %>
+
+    <footer class="group js-footer" id="footer" role="contentinfo">
+
+      <div class="footer-wrapper">
+        <%= yield :footer_top %>
+
+        <div class="footer-meta">
+          <div class="footer-meta-inner">
+            <h2 class="visuallyhidden">Support links</h2>
+            <ul>
+              <li><a href="http://www.gov.uk/support">Support</a></li>
+              <li><a href="http://www.gov.uk/support/cookies">Cookies</a></li>
+              <li><a href="http://www.gov.uk/feedback">Feedback</a></li>
+              <li><a href="http://www.gov.uk/cymraeg">Cymraeg</a></li>
+              <li>
+                Built by the
+                <a href="https://mojdigital.blog.gov.uk/"><abbr title="Ministry of Justice">MOJ</abbr> Digital Services</a>
+              </li>
+            </ul>
+
+            <div class="open-government-licence">
+              <h2><a href="http://www.nationalarchives.gov.uk/doc/open-government-licence/version/2">Open Government Licence</a></h2>
+              <p>All content is available under the <a href="http://www.nationalarchives.gov.uk/doc/open-government-licence/version/2">Open Government Licence v2.0</a>, except where otherwise stated</p>
+            </div>
+          </div>
+
+          <div class="copyright">
+            <a href="http://www.nationalarchives.gov.uk/information-management/our-services/crown-copyright.htm">&copy; Crown copyright</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!--end footer-->
+
+    <div id="global-app-error" class="app-error hidden"></div>
+
+    <script src="<%= asset_path "govuk-template.js" %>" type="text/javascript"></script>
+
+    <!--[if gt IE 6]><!-->
+    <script src="<%= asset_path "vendor/jquery/jquery-1.11.0.min.js" %>" type="text/javascript"></script>
+    <script src="<%= asset_path "moj.js" %>" type="text/javascript"></script>
+
+    <%= yield :javascripts %>
+
+    <script type="text/javascript">$(moj.init);</script>
+    <!--<![endif]-->
+
+    <%= yield :body_end %>
+  </body>
+</html>
