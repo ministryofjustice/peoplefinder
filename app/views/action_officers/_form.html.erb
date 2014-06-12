@@ -21,6 +21,14 @@
         <%= f.text_field :email , {class: 'form-control'} %>
       </div>
       <div class="form-group">
+        <div class="checkbox">
+          <label>
+            <%= f.check_box :deleted  %> Inactive
+
+          </label>
+          </div>
+      </div>
+      <div class="form-group">
         <%= f.submit 'Save' , {class: 'button'}%>
       </div>
 

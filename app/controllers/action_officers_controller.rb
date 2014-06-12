@@ -25,6 +25,7 @@ class ActionOfficersController < ApplicationController
   # POST /action_officers
   def create
     @action_officer = ActionOfficer.new(action_officer_params)
+    @action_officer[:deleted] = false
     if @action_officer.save
       redirect_to @action_officer, notice: 'Action officer was successfully created.'
     else
@@ -52,6 +53,6 @@ class ActionOfficersController < ApplicationController
       @action_officer = ActionOfficer.find(params[:id])
     end
     def action_officer_params
-      params.require(:action_officer).permit(:name, :email)
+      params.require(:action_officer).permit(:name, :email, :deleted)
     end
 end
