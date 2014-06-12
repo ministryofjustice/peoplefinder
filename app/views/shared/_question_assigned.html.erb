@@ -3,7 +3,7 @@
     <div class="question-allocation">
     <p>Allocation:</p>
 
-    <ul class="question-allocation-list">
+    <ul class="question-allocation-list" data-pqid="<%= question.id %>">
     <% question.action_officers_pq.each do |ao_pq|   %>
         <li>
             <%= ao_pq.action_officer.name  %>
@@ -27,4 +27,5 @@
 
     </ul>
     </div>
+    
 <% end %>

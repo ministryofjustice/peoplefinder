@@ -18,6 +18,11 @@ class ActionOfficersController < ApplicationController
     @action_officer = ActionOfficer.new
   end
 
+  def find
+    @results = ActionOfficer.where("name ILIKE :search", search: "%#{params[:q]}%").select(:id, :name)
+    render json: @results
+  end
+  
   # GET /action_officers/1/edit
   def edit
   end
