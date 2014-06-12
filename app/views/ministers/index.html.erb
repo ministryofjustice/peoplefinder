@@ -1,0 +1,34 @@
+<h1>Ministers</h1>
+
+<table class="table">
+      <tr>
+      <th>Name</th>
+      <th>Title</th>
+      <th>Email</th>
+      <th>Deleted</th>
+      <th></th>
+      <th></th>
+    </tr>
+  
+  <tbody>
+    <% @ministers.each do |minister| %>
+      <tr>
+        <td><%= minister.name %></td>
+        <td><%= minister.title %></td>
+        <td><%= minister.email %></td>
+        <td><% if minister.deleted %>
+          <i class="fa fa-times"></i>Deleted
+        <% else %>
+          <i class="fa fa-check-circle"></i>Active
+        <% end %>
+	    </td>
+        <td><%= link_to 'Show', minister %></td>
+        <td><%= link_to 'Edit', edit_minister_path(minister) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Minister', new_minister_path %>

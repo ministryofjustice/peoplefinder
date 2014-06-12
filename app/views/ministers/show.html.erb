@@ -1,0 +1,27 @@
+<p id="notice"><%= notice %></p>
+
+<div>
+  <strong>Name:</strong>
+  <%= @minister.name %>
+</div>
+
+<div>
+  <strong>Title:</strong>
+  <%= @minister.title %>
+</div>
+
+<div>
+  <strong>Email:</strong>
+  <%= @minister.email %>
+</div>
+
+<div>
+ <% if @minister.deleted %>
+   <i class="fa fa-times"></i>Deleted
+ <% else %>
+   <i class="fa fa-check-circle"></i>Active
+ <% end %>
+</div>
+
+<%= link_to 'Edit', edit_minister_path(@minister) %> |
+<%= link_to 'Back', ministers_path %>

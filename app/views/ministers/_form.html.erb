@@ -1,0 +1,33 @@
+<%= form_for(@minister) do |f| %>
+  <% if @minister.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@minister.errors.count, "error") %> prohibited this minister from being saved:</h2>
+
+      <ul>
+      <% @minister.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :name %><br>
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.label :title %><br>
+    <%= f.text_field :title %>
+  </div>
+  <div class="field">
+    <%= f.label :email %><br>
+    <%= f.text_field :email %>
+  </div>
+  <div class="field">
+    <%= f.label :deleted %><br>
+    <%= f.check_box :deleted %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
