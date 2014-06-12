@@ -24,9 +24,9 @@
         <div>
         House: <%= @pq.house_name %>
         </div>
-
-        <%= render partial: 'shared/question_assigned', locals: {question: @pq} %>
-
+        <div id="question_allocation_<%= @pq.id %>">
+          <%= render partial: 'shared/question_assigned', locals: {question: @pq} %>
+        </div>
     </div>
   </div>
   <div style="float:right;">
@@ -98,12 +98,19 @@
  <% end %>
 
 <p>
-<% if @pq.seen_by_finance  %>
-    <%= link_to('Commission', { controller: 'commission', action: 'commission', id: @pq.uin} , class: 'btn btn-success') %> 
-<%end%>
-					 
 <%= f.submit 'Update', :class => 'button' %>
 </p>
+<div style="float:right;">
+<% if @pq.seen_by_finance  %>
+    <label>Add action officer(s) for commissioning</label>
+      <%= form_for [@pq, ActionOfficersPq.new], :remote => true, :authenticity_token => true, :html => { :id => "form-commission#{@pq.id}", :class => 'form-commission', :data => {:pqid => "#{@pq.id}" }}, :url => {:controller => 'commission', :action => "assign", :id => @pq.id } do |f| %>
+        <%= collection_select(:action_officers_pq, :action_officer_id, ActionOfficer.all, :id, :name, {}, {:multiple => true, :class => 'multi-select-action-officers', :id => "action_officers_pq_action_officer_id-#{@pq.id}" }) %>
+        <%= f.hidden_field(:pq_id , :value => @pq.id ) %>
+        </br><%= f.submit 'commission', :class => 'btn btn-success btn-sm' %>
+      <% end %>
+
+<%end%>
+</div>					 
 
 <% end %>
 

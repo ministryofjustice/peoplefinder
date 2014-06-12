@@ -8,6 +8,7 @@ ParliamentaryQuestions::Application.routes.draw do
 
   resources :users
   resources :pqs  
+
   get 'commission/:id' => 'commission#commission'
   post 'assign/:id' => 'commission#assign'
 
@@ -24,5 +25,5 @@ ParliamentaryQuestions::Application.routes.draw do
 
   get 'watchlist/dashboard' => 'watchlist_dashboard#index'
   get 'watchlist/send_emails' => 'watchlist_send_emails#send_emails'
-
+  get 'find_action_officers' => 'action_officers#find'
 end

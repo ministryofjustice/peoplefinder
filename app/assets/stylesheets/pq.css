@@ -48,7 +48,7 @@ ul.questions-list {
 }
 
 
-.questions-list li{
+.questions-list > li{
 	margin-top: 20px;
     border: 1px solid #bfc1c3;
     padding: 15px;
@@ -128,4 +128,7 @@ ul.questions-list {
 .accept-reject-form {
     margin: 20px 0 20px 0;
 }
+.select2-container-multi .select2-choices li {
+	width:238px;
 
+}

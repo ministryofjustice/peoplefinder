@@ -16,7 +16,6 @@ class CommissionController < ApplicationController
   def assign
     pq_id = params[:action_officers_pq][:pq_id]
     @pq = PQ.find(pq_id)
-    
     comm = params[:action_officers_pq][:action_officer_id]
     if comm.size==1 && comm.first.empty?
       flash[:error] = "Please select at least one Action Officer"
@@ -38,9 +37,9 @@ class CommissionController < ApplicationController
       end
     end
     
-    flash[:success] = "Successfully allocated #{@pq.uin}"
-    return redirect_to controller: 'pqs', action: 'show', id: @pq.uin 
-    
+    #flash[:success] = "Successfully allocated #{@pq.uin}"
+    #return redirect_to controller: 'pqs', action: 'show', id: @pq.uin 
+    render :partial => "shared/question_assigned", :locals => {question: @pq}
   end    
 
   private
