@@ -10,13 +10,13 @@ class DashboardController < ApplicationController
 
     at_beginning_of_day = DateTime.now.at_beginning_of_day
     @questions_today = PQ.where('created_at >= ?', at_beginning_of_day).order(:internal_deadline).load
-
-    @questions_pending = PQ.where('created_at < ?', at_beginning_of_day).order(:internal_deadline).load
-
+    @questions_pending_count = PQ.where('created_at < ?', at_beginning_of_day).count
   end
 
   def in_progress
-    index
+    at_beginning_of_day = DateTime.now.at_beginning_of_day
+    @questions_today_count = PQ.where('created_at >= ?', at_beginning_of_day).count
+    @questions_pending = PQ.where('created_at < ?', at_beginning_of_day).order(:internal_deadline).load
   end
 
   def search

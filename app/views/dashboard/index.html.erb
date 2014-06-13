@@ -1,6 +1,6 @@
 <ul class="nav nav-tabs">
   <li class="active"><%= link_to raw("New <span class='badge'>#{@questions_today.count}"), controller: 'dashboard', action: 'index' %></li>
-  <li><%= link_to raw("In progress <span class='badge'>#{@questions_pending.count}"), controller: 'dashboard', action: 'in_progress' %></li>
+  <li><%= link_to raw("In progress <span class='badge'>#{@questions_pending_count}"), controller: 'dashboard', action: 'in_progress' %></li>
 </ul>
 
 
