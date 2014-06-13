@@ -26,7 +26,6 @@ class WatchlistMembersController < ApplicationController
   # POST /watchlist_members.json
   def create
     @watchlist_member = WatchlistMember.new(watchlist_member_params)
-    @watchlist_member[:deleted] = false
 
     respond_to do |format|
       if @watchlist_member.save

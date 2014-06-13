@@ -89,7 +89,7 @@ group :test, :development do
   gem 'timecop'
   gem 'letter_opener'
   gem 'faker'
-  gem 'annotate'
+  gem 'annotate', '~> 2.6.3'
 end
 
 

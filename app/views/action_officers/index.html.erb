@@ -4,7 +4,9 @@
   <tr>
     <th>Name</th>
     <th>Email</th>
-	<th>Active/Inactive</th>
+    <th>Phone</th>
+    <th>Directorate</th>
+    <th>Active/Inactive</th>
     <th></th>
     <th></th>
   </tr>
@@ -13,6 +15,8 @@
     <tr>
       <td><%= action_officer.name %>
       <td><%=  action_officer.email %>
+      <td><%=  action_officer.phone %>
+      <td><%= action_officer.deputy_director.division.name unless action_officer.deputy_director.nil? %></td>
       <td><% if action_officer.deleted %>
             <i class="fa fa-times"></i>Inactive
           <% else %>
