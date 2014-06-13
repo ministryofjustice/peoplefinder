@@ -1,5 +1,5 @@
 class WatchlistMailer < ActionMailer::Base
-  default from: "from@example.com"
+  default from: Settings.mail_from
   def commit_email(template_params)
 
     @template_params = template_params

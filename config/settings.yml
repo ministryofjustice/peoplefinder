@@ -2,3 +2,4 @@ pq_rest_api:
   url: <%= ENV['PQ_REST_API_URL'] %>
   username: <%= ENV['PQ_REST_API_USERNAME'] %>
   password: <%= ENV['PQ_REST_API_PASSWORD'] %>
+mail_from: no-reply@digital.justice.gov.uk
