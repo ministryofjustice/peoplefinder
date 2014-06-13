@@ -2,7 +2,13 @@
   <% questions.each do |question| %>
       <li style="overflow:auto;">
         <div class="pq-header">
-          <span class="uin"><%= question.uin %></span><span class="label label-primary">N</span><span class="label label-info">O</span>
+          <span class="uin"><%= question.uin %></span>
+          <% if question.question_type == 'NamedDay' %>
+              <span class="label label-primary">N</span>
+          <% end %>
+          <% if question.question_type == 'Ordinary' %>
+              <span class="label label-info">O</span>
+          <% end %>
                     <span class="deadline">
                       <%= render partial: 'shared/deadline_time', locals: {internal_deadline: question.internal_deadline} %>
                       <%= question.internal_deadline.strftime('%d/%m/%Y %H:%M') unless question.internal_deadline.nil? %>

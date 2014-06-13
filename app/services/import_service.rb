@@ -23,7 +23,8 @@ class ImportService
             house_name: q['House']['HouseName'],
             date_for_answer: q['DateForAnswer'],
             internal_deadline: deadline,
-            registered_interest: q['RegisteredInterest']
+            registered_interest: q['RegisteredInterest'],
+            question_type: q['QuestionType']
           )
 			if pq.errors.empty?			
 				questions_processed.push(q)			
