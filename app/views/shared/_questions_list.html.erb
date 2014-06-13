@@ -46,7 +46,7 @@
               <div id="comm-form-container">
                 <label>Add action officer(s) for commissioning</label>
                 <%= form_for [question, ActionOfficersPq.new], :remote => true, :authenticity_token => true, :html => { :id => "form-commission#{question.id}", :class => 'form-commission', :data => {:pqid => "#{question.id}" }}, :url => {:controller => 'commission', :action => "assign", :id => question.id } do |f| %>
-                    <%= collection_select(:action_officers_pq, :action_officer_id, ActionOfficer.all, :id, :name, {}, {:multiple => true, :class => 'multi-select-action-officers', :id => "action_officers_pq_action_officer_id-#{question.id}" }) %>
+                    <%= collection_select(:action_officers_pq, :action_officer_id, ActionOfficer.where(deleted: false).all, :id, :name, {}, {:multiple => true, :class => 'multi-select-action-officers', :id => "action_officers_pq_action_officer_id-#{question.id}" }) %>
                     <%= f.hidden_field(:pq_id , :value => question.id ) %>
                     </br><%= f.submit 'commission', :class => 'btn btn-success btn-sm' %>
                 <% end %>
