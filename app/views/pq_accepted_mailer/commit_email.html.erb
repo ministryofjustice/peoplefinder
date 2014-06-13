@@ -4,14 +4,16 @@
   <meta content='text/html; charset=UTF-8' http-equiv='Content-Type'/>
 </head>
 <body>
-<h1>Hello, <%= @template_params[:name] %> you accepted to answer the following PQ </h1>
+<h2>Hello, <%= @template_params[:name] %> you accepted to answer the following PQ </h2>
 
-<p style="padding-left:0.5em;margin-left:10px;border-left:2px solid black;margin-top:5px;margin-right:5px;margin-bottom:5px;">
+<div style="padding-left:0.5em;margin-left:10px;border-left:2px solid black;margin-top:5px;margin-right:5px;margin-bottom:5px;font-size: 110%;">
   <%= @template_params[:question] %>
-</p>
+</div>>
 
 
-<p>You can use this link to <a href="mailto:pq@justice.gov.uk">send a draft response</a></p>
+<h2>You can use this link to
+  <%= mail_to 'MOJParliamentaryBranch@cabinet-office.gsi.gov.uk', 'send a draft response', cc: "Christopher.Beal@justice.gsi.gov.uk, Nicola.Calderhead@justice.gsi.gov.uk, thomas.murphy@JUSTICE.gsi.gov.uk", subject: "[Parliament-Questions] Draft for question #{@template_params[:uin]}" %>
+</h2>
 
 <dl>
   <dt>There are some links to guidance available from the intranet
@@ -64,5 +66,17 @@
   areas. Likewise, providing PIN numbers also enables us to identify PQs easily.</p>
 
 <p>Please contact one of the PQ team should you have any questions.</p>
+
+
+<div style="margin-top: 50px; border-top: 1px solid;">
+  Parliamentary Questions<br/>
+  9.25, 9th Floor, Ministry of Justice, 102 Petty France, SW1H 9AJ<br/>
+  T: 0203 334 4302<br/>
+  E: <a href="mailto:MOJParliamentaryBranch@cabinet-office.gsi.gov.uk">MOJParliamentaryBranch@cabinet-office.gsi.gov.uk</a><br/>
+  <br/>
+  Private Office Directorate has changed some of its processes: please refer to the Intranet pages on Working with Private Office <a href="http://intranet.justice.gsi.gov.uk/ministers-parliament/working-with-private-office/index.htm">http://intranet.justice.gsi.gov.uk/ministers-parliament/working-with-private-office/index.htm</a> for full details.
+</div>
+
+
 </body>
 </html>

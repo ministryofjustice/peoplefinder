@@ -4,15 +4,28 @@
     <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
   </head>
   <body>
-    <h1>Hello, <%= @template_params[:name] %> you have been allocated the following PQ </h1>
-    <p style="padding-left:0.5em;margin-left:10px;border-left:2px solid black;margin-top:5px;margin-right:5px;margin-bottom:5px;">
+    <h2>Hello, <%= @template_params[:name] %> you have been allocated the following PQ </h2>
+    <div style="padding-left:0.5em;margin-left:10px;border-left:2px solid black;margin-top:5px;margin-right:5px;margin-bottom:5px;font-size: 110%;">
       <%= @template_params[:question] %>
-    </p>
+    </div>
 
     <h2 style="margin:10px 0;">
-      To accept or reject the question, please click the following link <%= link_to "Accept or reject this question", controller: "assignment", action: "index", uin: @template_params[:uin], token: @template_params[:token], entity: @template_params[:entity], :host => root_url %>
+      Please <%= link_to "Accept or reject this question", controller: "assignment", action: "index", uin: @template_params[:uin], token: @template_params[:token], entity: @template_params[:entity], :host => root_url %>
     </h2>
 
-    <p>Please contact one of the PQ team should you have any questions.</p>
+    <p>Please contact one of the PQ team if you have any questions.</p>
+
+
+    <div style="margin-top: 50px; border-top: 1px solid;">
+        Parliamentary Questions<br/>
+        9.25, 9th Floor, Ministry of Justice, 102 Petty France, SW1H 9AJ<br/>
+        T: 0203 334 4302<br/>
+        E: <a href="mailto:MOJParliamentaryBranch@cabinet-office.gsi.gov.uk">MOJParliamentaryBranch@cabinet-office.gsi.gov.uk</a><br/>
+        <br/>
+        Private Office Directorate has changed some of its processes: please refer to the Intranet pages on Working with Private Office <a href="http://intranet.justice.gsi.gov.uk/ministers-parliament/working-with-private-office/index.htm">http://intranet.justice.gsi.gov.uk/ministers-parliament/working-with-private-office/index.htm</a> for full details.
+    </div>
+
+    </div>
+
   </body>
 </html>

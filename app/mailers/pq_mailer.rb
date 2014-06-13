@@ -6,6 +6,6 @@ class PqMailer < ActionMailer::Base
   	# email, name from AO
   	# uin, question from PQ
   	# url with the token
-    mail(to: @template_params[:email], subject: 'You have been allocated a question')
+    mail(to: @template_params[:email], subject: "[Parliamentary-Questions] #{@template_params[:uin]} | You have been allocated a question")
   end
 end

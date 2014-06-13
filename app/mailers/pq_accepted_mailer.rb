@@ -5,6 +5,6 @@ class PQAcceptedMailer < ActionMailer::Base
     @template_params = template_params
     # email, name from AO
     # uin, question from PQ
-    mail(to: @template_params[:email], subject: 'You have accepted a question')
+    mail(to: @template_params[:email], subject: "[Parliamentary-Questions] #{@template_params[:uin]} | You have accepted the question")
   end
 end
