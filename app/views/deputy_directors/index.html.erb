@@ -1,0 +1,35 @@
+<h1>Listing deputy directors</h1>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Division</th>
+      <th>Active/Inactive</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @deputy_directors.each do |deputy_director| %>
+      <tr>
+        <td><%= deputy_director.name %></td>
+        <td><%= deputy_director.email %></td>
+        <td><%= deputy_director.division.name %></td>
+      <td><% if deputy_director.deleted %>
+            <i class="fa fa-times"></i>Inactive
+          <% else %>
+            <i class="fa fa-check-circle"></i>Active
+          <% end %>
+        <td><%= link_to 'Show', deputy_director %></td>
+        <td><%= link_to 'Edit', edit_deputy_director_path(deputy_director) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Deputy director', new_deputy_director_path %>

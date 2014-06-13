@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @division.name %>
+</p>
+
+<p>
+  <strong>Directorate:</strong>
+  <%= @division.directorate_id %>
+</p>
+<div>  <% if @division.deleted %>
+      <i class="fa fa-times"></i>Inactive
+  <% else %>
+      <i class="fa fa-check-circle"></i>Active
+  <% end %>
+</div>
+<%= link_to 'Edit', edit_division_path(@division) %> |
+<%= link_to 'Back', divisions_path %>

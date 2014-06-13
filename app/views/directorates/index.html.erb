@@ -1,0 +1,31 @@
+<h1>Listing directorates</h1>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Active/Inactive</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @directorates.each do |directorate| %>
+      <tr>
+        <td><%= directorate.name %></td>
+      <td><% if directorate.deleted %>
+            <i class="fa fa-times"></i>Inactive
+          <% else %>
+            <i class="fa fa-check-circle"></i>Active
+          <% end %>
+        <td><%= link_to 'Show', directorate %></td>
+        <td><%= link_to 'Edit', edit_directorate_path(directorate) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Directorate', new_directorate_path %>

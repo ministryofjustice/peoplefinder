@@ -1,0 +1,29 @@
+<%= form_for(@directorate) do |f| %>
+  <% if @directorate.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@directorate.errors.count, "error") %> prohibited this directorate from being saved:</h2>
+
+      <ul>
+      <% @directorate.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :name %><br>
+    <%= f.text_field :name %>
+  </div>
+  <div class="form-group">
+    <div class="checkbox">
+      <label>
+        <%= f.check_box :deleted  %> Inactive
+
+      </label>
+      </div>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

@@ -4,12 +4,24 @@
 
 <div>
   <strong>Name:</strong>
-  <%= @action_officer.name %>
+  <%= @action_officer.name_with_div %>
 
 </div>
 <div>
   <strong>Email:</strong>
   <%= @action_officer.email %>
+</div>
+<div>
+  <strong>Phone:</strong>
+  <%= @action_officer.phone %>
+</div>
+<div>
+  <strong>Deputy director:</strong>
+  <%= @action_officer.deputy_director.name %>
+</div>
+<div>
+  <strong>Division:</strong>
+  <%= @action_officer.deputy_director.division.name %>
 </div>
 <div>  <% if @action_officer.deleted %>
       <i class="fa fa-times"></i>Inactive

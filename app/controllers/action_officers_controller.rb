@@ -1,6 +1,8 @@
 class ActionOfficersController < ApplicationController
   before_action :authenticate_user!
   before_action :set_action_officer, only: [:show, :edit, :update, :destroy]
+  before_action :prepare_deputy_directors
+
 
   # GET /action_officers
   # GET /action_officers.json
@@ -53,11 +55,14 @@ class ActionOfficersController < ApplicationController
     redirect_to action_officers_url
   end
 
-  private
+private
     def set_action_officer
       @action_officer = ActionOfficer.find(params[:id])
     end
     def action_officer_params
-      params.require(:action_officer).permit(:name, :email, :deleted)
+      params.require(:action_officer).permit(:name, :email, :phone, :deleted, :deputy_director_id)
+    end
+    def prepare_deputy_directors
+      @deputy_directors = DeputyDirector.where(deleted: false).all
     end
 end

@@ -1,5 +1,11 @@
 ParliamentaryQuestions::Application.routes.draw do
 
+  resources :deputy_directors
+
+  resources :divisions
+
+  resources :directorates
+
   resources :watchlist_members
 
   resources :action_officers

@@ -1,0 +1,33 @@
+<%= form_for(@division) do |f| %>
+  <% if @division.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@division.errors.count, "error") %> prohibited this division from being saved:</h2>
+
+      <ul>
+      <% @division.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :name %><br>
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.label :directorate_id %><br>
+   <%= f.collection_select(:directorate_id, @directorates, :id, :name, :include_blank => "Please select") %>
+  </div>
+  <div class="form-group">
+    <div class="checkbox">
+      <label>
+        <%= f.check_box :deleted  %> Inactive
+
+      </label>
+      </div>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
