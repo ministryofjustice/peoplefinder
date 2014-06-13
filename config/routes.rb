@@ -14,6 +14,7 @@ ParliamentaryQuestions::Application.routes.draw do
 
   get '/', to: 'dashboard#index', as: :root
   get 'dashboard' => 'dashboard#index'
+  get 'dashboard/in_progress' => 'dashboard#in_progress'
 
   get 'filter' => 'filter#index'
   get 'filter/:search' => 'filter#index'

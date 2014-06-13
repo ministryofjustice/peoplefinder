@@ -15,6 +15,10 @@ class DashboardController < ApplicationController
 
   end
 
+  def in_progress
+    index
+  end
+
   def search
 
   end
