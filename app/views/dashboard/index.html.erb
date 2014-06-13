@@ -3,6 +3,17 @@
   <li><%= link_to raw("In progress <span class='badge'>#{@questions_pending.count}"), controller: 'dashboard', action: 'in_progress' %></li>
 </ul>
 
+
+<ul class="nav nav-pills nav-stacked navbar-right">
+  <li class="active"><a href="#">View all</a></li>
+  <li><a href="#">Unallocated</a></li>
+  <li><a href="#">Allocated pending</a></li>
+  <li><a href="#">Allocated accepted</a></li>
+  <li><a href="#">Rejected</a></li>
+  <li><a href="#">Transfer</a></li>
+</ul>
+
+
 <%= render partial: "shared/flash_messages", flash: flash %>
 
 
