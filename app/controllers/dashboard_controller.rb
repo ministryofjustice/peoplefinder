@@ -2,7 +2,7 @@ class DashboardController < ApplicationController
   before_action :authenticate_user!
   before_action :load_import_service
 
-  # TODO define the number of question per page 
+  # TODO define the number of question per page
   @@per_page = 5
 
   def index
