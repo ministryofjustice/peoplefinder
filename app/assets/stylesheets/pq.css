@@ -38,6 +38,15 @@ h2.section .badge {
     text-transform: none;
     font-weight: 700;
 }
+
+.uin a {
+  text-decoration: underline;
+}
+.uin a:hover {
+    background-color: #ffffff;
+    color: #428bca;
+}
+
 .pq-header {
 	padding-bottom:1em;
 }
