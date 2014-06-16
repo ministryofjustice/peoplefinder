@@ -8,6 +8,7 @@ gem 'jquery-rails'
 gem 'turbolinks'
 gem 'jbuilder', '~> 2.0'
 gem 'haml'
+gem 'omniauth-google-apps'
 
 group :development do
   gem 'spring'
@@ -15,4 +16,5 @@ end
 
 group :development, :test do
   gem 'rspec-rails', '~> 3.0.0'
+  gem 'pry'
 end

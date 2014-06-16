@@ -1,6 +1,12 @@
 !!!
 %html
   %head
+    = javascript_include_tag "application"
   %title MOJ People Finder
   %body
+    - if session['current_user'].present?
+      %p
+        = "Logged in as #{ session['current_user'] } | "
+        = link_to "Logout", sessions_path, :method => :delete
+
     = yield
