@@ -1,23 +1,21 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta content='text/html; charset=UTF-8' http-equiv='Content-Type'/>
+  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
 </head>
 <body>
 <h2>You accepted the following PQ </h2>
 
 <div style="padding-left:0.5em;margin-left:10px;border-left:2px solid black;margin-top:5px;margin-right:5px;margin-bottom:5px;font-size: 110%;">
   <%= @template_params[:question] %>
-</div>>
-
+</div>
 
 <h2>You can use this link to
   <%= mail_to 'MOJParliamentaryBranch@cabinet-office.gsi.gov.uk', 'send a draft response', cc: "Christopher.Beal@justice.gsi.gov.uk, Nicola.Calderhead@justice.gsi.gov.uk, thomas.murphy@JUSTICE.gsi.gov.uk", subject: "[Parliament-Questions] Draft for question #{@template_params[:uin]}" %>
 </h2>
 
 <dl>
-  <dt>There are some links to guidance available from the intranet
-  <dt>
+  <dt>There are some links to guidance available from the intranet</dt>
   <dd><a href="http://intranet.justice.gsi.gov.uk/ministers-parliament/working-with-parliament/parliamentary-questions">PQ
     Intranet page</a></dd>
   <dd>
@@ -30,7 +28,7 @@
       profile criteria</a></dd>
   <dd>
     <a href="http://intranet.justice.gsi.gov.uk/global/forms/downloads/ministers-parliament/disproportionate-costs-calculator.xls">
-      Disproportionate costs calculator<a></dd>
+      Disproportionate costs calculator</a></dd>
 </dl>
 <p><strong>If your PQ is to be answered by Simon Hughes MP, please ensure that the Draft Response is sent, alongside the usual
   copy list, to;</strong></p>
