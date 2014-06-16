@@ -18,7 +18,7 @@
 <%= render partial: "shared/flash_messages", flash: flash %>
 
 
-<%= render partial: 'shared/questions_list', locals: {section_title: 'Today', questions: @questions_pending} %>
+<%= render partial: 'shared/questions_list', locals: {questions: @questions_pending} %>
 
 
 <%= will_paginate @questions_pending %>
