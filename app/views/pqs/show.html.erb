@@ -21,6 +21,14 @@
         <div>
         House: <%= @pq.house_name %>
         </div>
+        <div>
+          Replying minister: <%= @pq.minister.name unless @pq.minister_id.nil? %></span>
+        </div>
+        <% if !@pq.policy_minister_id.nil? %>
+        <div>
+          <span>Policy minister: <%= @pq.policy_minister.name %></span>
+        </div>
+        <% end %>
         <div id="question_allocation_<%= @pq.id %>">
           <%= render partial: 'shared/question_assigned', locals: {question: @pq} %>
         </div>

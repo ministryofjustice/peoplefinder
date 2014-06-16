@@ -20,8 +20,15 @@
         </div>
         <div>
           <span><%= question.house_name %>: <%= question.member_name %></span>
+        </div>        
+        <div>
+          Replying minister: <%= question.minister.name unless question.minister_id.nil? %></span>
         </div>
-
+        <% if !question.policy_minister_id.nil? %>
+        <div>
+          <span>Policy minister: <%= question.policy_minister.name %></span>
+        </div>
+        <% end %>
         <div class = "panel-indent" style="float: left; width= 66%;">
           <%= question.question %>
         </div>
