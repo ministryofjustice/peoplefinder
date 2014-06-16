@@ -11,6 +11,9 @@ ParliamentaryQuestions::Application.routes.draw do
   resources :users
   resources :pqs  
 
+
+  get 'admin' => 'admin#index'
+
   get 'commission/:id' => 'commission#commission'
   post 'assign/:id' => 'commission#assign'
 

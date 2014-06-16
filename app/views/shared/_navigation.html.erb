@@ -9,6 +9,8 @@
         <li><%= link_to 'Action Officers', action_officers_path %></li>
         <li><%= link_to 'Watchlist', watchlist_members_path %></li>
         <li><%= link_to 'Users', users_path %></li>
+        <li><%= link_to 'Admin', admin_path %></li>
+		
       </ul>
 
       <%= form_tag filter_path, { :method => 'get', :class => 'navbar-form navbar-right', :role => 'search'} do %>
