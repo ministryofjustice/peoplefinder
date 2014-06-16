@@ -13,4 +13,10 @@ module ApplicationHelper
         flash_type.to_s
     end
   end
+
+
+  def version_number
+    ENV['VERSION']
+  end
+
 end
