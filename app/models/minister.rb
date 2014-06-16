@@ -1,7 +1,7 @@
 class Minister < ActiveRecord::Base
   validates :email, uniqueness: true, on: :create
   validates_format_of :email,:with => Devise::email_regexp
-
+  has_many :pqs
   before_validation :strip_whitespace
 
   def strip_whitespace

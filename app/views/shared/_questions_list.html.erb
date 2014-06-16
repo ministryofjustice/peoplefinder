@@ -4,10 +4,10 @@
         <div class="pq-header">
           <span class="uin"><%= question.uin %></span>
           <% if question.question_type == 'NamedDay' %>
-              <span class="label label-primary">N</span>
+              <span class="label label-primary" title="Named day">N</span>
           <% end %>
           <% if question.question_type == 'Ordinary' %>
-              <span class="label label-info">O</span>
+              <span class="label label-info" title="Ordinary Written">O</span>
           <% end %>
                     <span class="deadline">
                       <%= render partial: 'shared/deadline_time', locals: {internal_deadline: question.internal_deadline} %>
@@ -61,7 +61,6 @@
           <div id="question_allocation_<%= question.id %>">
             <%= render partial: 'shared/question_assigned', locals: {question: question} %>
           </div>
-
         </div>
 
       </li>

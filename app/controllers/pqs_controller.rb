@@ -1,6 +1,7 @@
 class PqsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_pq, only: [:show, :update]
+  before_action :prepare_ministers 
 
   def index
     redirect_to controller: 'dashboard'
@@ -49,7 +50,10 @@ class PqsController < ApplicationController
     end
 
     def pq_params
-      params.require(:pq).permit(:internal_deadline, :seen_by_finance, :press_interest, :finance_interest)
+      params.require(:pq).permit(:internal_deadline, :seen_by_finance, :press_interest, :finance_interest, :minister_id, :policy_minister_id)
+    end
+    def prepare_ministers
+      @minister_list = Minister.where(deleted: false).all
     end
     def assignment_params
       # TODO: Check the permit again

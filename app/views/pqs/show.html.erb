@@ -93,6 +93,14 @@
  </div>
   
  <% end %>
+      <div class="minister-info">
+        <label>Set replying minister</label>
+        <%= f.collection_select(:minister_id, @minister_list, :id, :name, :include_blank => "Please select") %>
+      </div>
+      <div class="minister-info">
+        <label>Set optional policy minister</label>
+        <%= f.collection_select(:policy_minister_id, @minister_list, :id, :name, :include_blank => "Only select if needed") %>
+      </div>
 
 <p>
 <%= f.submit 'Update', :class => 'button' %>
@@ -105,7 +113,6 @@
         <%= f.hidden_field(:pq_id , :value => @pq.id ) %>
         </br><%= f.submit 'Commission', :class => 'btn btn-success btn-sm' %>
       <% end %>
-
 <%end%>
 </div>					 
 
