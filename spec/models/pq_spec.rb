@@ -57,4 +57,12 @@ describe PQ do
 			expect(newQ).to be_valid
 		end
 	end
+	describe "associations" do
+		it 'should allow minister to be set' do
+			@minister = newQ.should respond_to(:minister)
+		end		
+		it 'should allow policy minister to be set' do
+			@pminister = newQ.should respond_to(:policy_minister)
+		end
+	end
 end

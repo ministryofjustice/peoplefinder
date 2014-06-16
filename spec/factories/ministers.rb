@@ -2,9 +2,9 @@
 
 FactoryGirl.define do
   factory :minister do
-    name "MyString"
-    title "MyString"
-    email "MyString"
+    name "firstname"
+    title "MP"
+    email "first.name@mp.com"
     deleted false
   end
 end
