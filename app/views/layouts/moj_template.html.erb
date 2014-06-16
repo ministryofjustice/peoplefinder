@@ -77,7 +77,7 @@
       <div class="header-wrapper">
         <div class="header-global">
           <div class="header-logo">
-            <!-- TODO: Put a internal logo ?? -->
+            <img src="<%= asset_path "MOJ_Logo.png" %>" alt="Ministry of Justice">
           </div>
           <%= yield :inside_header %>
         </div>
@@ -136,11 +136,12 @@
     <footer class="group js-footer" id="footer" role="contentinfo">
 
       <div class="footer-wrapper">
+        <div>
+          <%= version_number %>
+        </div>
         <%= yield :footer_top %>
-
         <div class="footer-meta">
           <div class="footer-meta-inner">
-
             <div class="open-government-licence">
               <h2><a href="http://www.nationalarchives.gov.uk/doc/open-government-licence/version/2">Open Government Licence</a></h2>
               <p>All content is available under the <a href="http://www.nationalarchives.gov.uk/doc/open-government-licence/version/2">Open Government Licence v2.0</a>, except where otherwise stated</p>

@@ -4,22 +4,26 @@
   <tr>
     <th>Name</th>
     <th>Email</th>
-	<th>Active/Inactive</th>
+    <th>Phone</th>
+    <th>Directorate</th>
+    <th>Active/Inactive</th>
     <th></th>
     <th></th>
   </tr>
 
   <%  @action_officers.each do |action_officer| %>
     <tr>
-      <td><%= action_officer.name %>
-      <td><%=  action_officer.email %>
-          <% if action_officer.deleted %>
+      <td><%= action_officer.name %></td>
+      <td><%=  action_officer.email %></td>
+      <td><%=  action_officer.phone %></td>
+      <td><%= action_officer.deputy_director.division.name unless action_officer.deputy_director.nil? %></td>
+      <td><% if action_officer.deleted %></td>
             <i class="fa fa-times"></i>Inactive
           <% else %>
             <i class="fa fa-check-circle"></i>Active
           <% end %>
-      <td><%= link_to 'Show', action_officer , {class: 'button'} %>
-      <td><%= link_to 'Edit', edit_action_officer_path(action_officer), {class: 'button'} %>
+      <td><%= link_to 'Show', action_officer , {class: 'button'} %></td>
+      <td><%= link_to 'Edit', edit_action_officer_path(action_officer), {class: 'button'} %></td>
     </tr>
   <% end %>
 

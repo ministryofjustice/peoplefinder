@@ -1,0 +1,70 @@
+<ul class="questions-list">
+  <% questions.each do |question| %>
+      <li style="overflow:auto;">
+        <div class="pq-header">
+          <span class="uin"><%= question.uin %></span>
+          <% if question.question_type == 'NamedDay' %>
+              <span class="label label-primary">N</span>
+          <% end %>
+          <% if question.question_type == 'Ordinary' %>
+              <span class="label label-info">O</span>
+          <% end %>
+                    <span class="deadline">
+                      <%= render partial: 'shared/deadline_time', locals: {internal_deadline: question.internal_deadline} %>
+                      <%= question.internal_deadline.strftime('%d/%m/%Y %H:%M') unless question.internal_deadline.nil? %>
+                    </span>
+          <div style="float: right;"><%= link_to('Track PQ', { controller: 'pqs', action: 'show', id: question.uin} ) %></div>
+        </div>
+
+        <div>
+          Date For Answer: <%= question.date_for_answer.strftime('%d/%m/%Y') unless question.date_for_answer.nil? %>
+        </div>
+        <div>
+          <span><%= question.house_name %>: <%= question.member_name %></span>
+        </div>
+
+        <div class = "panel-indent" style="float: left; width= 66%;">
+          <%= question.question %>
+        </div>
+        <div style = "float: left; width= 33%;">
+          <% if question.seen_by_finance %>
+              <div >
+                <span class = "label label-success"><span class="glyphicon glyphicon-eye-open"></span> Seen By Finance</span>
+              </div>
+          <%else%>
+              <div >
+                <span class = "label label-default" style="line-height:2;"><span class="glyphicon glyphicon-eye-close"></span> Not Seen By Finance</span>
+              </div>
+          <% end %>
+          <% if question.press_interest %>
+              <div>
+                <span class = "label label-success">Press Interest</span>
+              </div>
+          <% end %>
+          <% if question.finance_interest %>
+              <div>
+                <span class = "label label-success">Finance Interest</span>
+              </div>
+          <% end %>
+        </div>
+        <div class="allocation-info">
+          <% if question.seen_by_finance  %>
+              <div id="comm-form-container">
+                <label>Add action officer(s) for commissioning</label>
+                <%= form_for [question, ActionOfficersPq.new], :remote => true, :authenticity_token => true, :html => { :id => "form-commission#{question.id}", :class => 'form-commission', :data => {:pqid => "#{question.id}" }}, :url => {:controller => 'commission', :action => "assign", :id => question.id } do |f| %>
+                    <%= collection_select(:action_officers_pq, :action_officer_id, ActionOfficer.where(deleted: false).all, :id, :name, {}, {:multiple => true, :class => 'multi-select-action-officers', :id => "action_officers_pq_action_officer_id-#{question.id}" }) %>
+                    <%= f.hidden_field(:pq_id , :value => question.id ) %>
+                    </br><%= f.submit 'commission', :class => 'btn btn-success btn-sm' %>
+                <% end %>
+              </div>
+          <% end %>
+          <div id="question_allocation_<%= question.id %>">
+            <%= render partial: 'shared/question_assigned', locals: {question: question} %>
+          </div>
+
+        </div>
+
+      </li>
+  <% end %>
+
+</ul>

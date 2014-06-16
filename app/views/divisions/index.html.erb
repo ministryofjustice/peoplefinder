@@ -1,0 +1,33 @@
+<h1>Listing divisions</h1>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Directorate</th>
+      <th>Active/Inactive</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @divisions.each do |division| %>
+      <tr>
+        <td><%= division.name %></td>
+        <td><%= division.directorate.name %></td>
+      <td><% if division.deleted %>
+            <i class="fa fa-times"></i>Inactive
+          <% else %>
+            <i class="fa fa-check-circle"></i>Active
+          <% end %>
+        <td><%= link_to 'Show', division %></td>
+        <td><%= link_to 'Edit', edit_division_path(division) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Division', new_division_path %>

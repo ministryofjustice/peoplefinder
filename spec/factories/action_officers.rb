@@ -2,7 +2,8 @@
 
 FactoryGirl.define do
   factory :action_officer do
-    name "MyString"
-    email "MyString"
+    name "action officer 1"
+    email "action.officer@email.com"
+    deputy_director_id 1
   end
 end

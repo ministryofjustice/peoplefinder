@@ -1,0 +1,37 @@
+<%= form_for(@deputy_director) do |f| %>
+  <% if @deputy_director.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@deputy_director.errors.count, "error") %> prohibited this deputy_director from being saved:</h2>
+
+      <ul>
+      <% @deputy_director.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :name %><br>
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.label :email %><br>
+    <%= f.text_field :email %>
+  </div>
+  <div class="field">
+    <%= f.label :division_id %><br>
+    <%= f.collection_select(:division_id, @divisions, :id, :name, :include_blank => "Please select") %>
+  </div>
+  <div class="form-group">
+    <div class="checkbox">
+      <label>
+        <%= f.check_box :deleted  %> Inactive
+
+      </label>
+      </div>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

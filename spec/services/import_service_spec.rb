@@ -29,6 +29,8 @@ describe 'ImportService' do
       question_one.tabled_date.strftime("%Y-%m-%d").should eql('2013-01-22')
 
       question_one.internal_deadline.strftime("%Y-%m-%d %H:%M").should eql(Date.today.strftime("%Y-%m-%d 10:30"))
+
+      question_one.question_type.should eql('NamedDay')
       
       # second question
       question_two = PQ.find_by(uin: 'HL673892')

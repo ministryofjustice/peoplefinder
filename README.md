@@ -28,7 +28,11 @@ SMTP_HOSTNAME=<host>
 SMTP_PORT=<port>
 SMTP_USERNAME=
 SMTP_PASSWORD=
+
+# version of the webapp
+VERSION=0.1-sprint6
 ```
+
 
 
 # User authentication

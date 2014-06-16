@@ -2,6 +2,12 @@ ParliamentaryQuestions::Application.routes.draw do
 
   resources :ministers
 
+  resources :deputy_directors
+
+  resources :divisions
+
+  resources :directorates
+
   resources :watchlist_members
 
   resources :action_officers
@@ -19,6 +25,7 @@ ParliamentaryQuestions::Application.routes.draw do
 
   get '/', to: 'dashboard#index', as: :root
   get 'dashboard' => 'dashboard#index'
+  get 'dashboard/in_progress' => 'dashboard#in_progress'
 
   get 'filter' => 'filter#index'
   get 'filter/:search' => 'filter#index'

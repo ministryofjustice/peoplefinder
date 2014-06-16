@@ -1,0 +1,24 @@
+<ul class="nav nav-tabs">
+  <li><%= link_to raw("New <span class='badge'>#{@questions_today_count}"), controller: 'dashboard', action: 'index' %></li>
+  <li class="active"><%= link_to raw("In progress <span class='badge'>#{@questions_pending.count}"), controller: 'dashboard', action: 'in_progress' %></li>
+</ul>
+
+
+<ul class="nav nav-pills nav-stacked navbar-right">
+  <li class="active"><a href="#">POD Waiting</a></li>
+  <li><a href="#">POD Query</a></li>
+  <li><a href="#">Pod Cleared</a></li>
+  <li><a href="#">Minister Waiting</a></li>
+  <li><a href="#">Minister Query</a></li>
+  <li><a href="#">Minister Cleared</a></li>
+</ul>
+
+
+
+<%= render partial: "shared/flash_messages", flash: flash %>
+
+
+<%= render partial: 'shared/questions_list', locals: {section_title: 'Today', questions: @questions_pending} %>
+
+
+

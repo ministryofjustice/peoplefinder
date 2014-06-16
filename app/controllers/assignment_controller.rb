@@ -51,6 +51,16 @@ class AssignmentController < ApplicationController
     def accept
       flash[:notice] = 'The Question is accepted'
       @assignment.update_attributes(accept: true, reject: false)
+
+      # send the email with the info
+      template = Hash.new
+      template[:name] = @ao.name
+      template[:email] = @ao.email
+      template[:uin] = @question.uin
+      template[:question] = @question.question
+
+      PQAcceptedMailer.commit_email(template).deliver
+
     end
 
     def reject

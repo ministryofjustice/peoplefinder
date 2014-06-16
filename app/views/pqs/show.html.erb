@@ -11,9 +11,6 @@
     <%= render partial: 'shared/deadline_time', locals: {internal_deadline: @pq.internal_deadline} %>
   </div>
   <div style="Width:400px; float:left;">
-    <div class="member-photo">
-        <img src="/assets/Portrait-icon.jpg" alt="Member's Photo" height="100%" width="100%" >
-    </div>
     <div>
         <div>
         Tabling Member: <%= @pq.member_name %>
@@ -100,13 +97,13 @@
 <p>
 <%= f.submit 'Update', :class => 'button' %>
 </p>
-<div style="float:right;">
+<div>
 <% if @pq.seen_by_finance  %>
     <label>Add action officer(s) for commissioning</label>
       <%= form_for [@pq, ActionOfficersPq.new], :remote => true, :authenticity_token => true, :html => { :id => "form-commission#{@pq.id}", :class => 'form-commission', :data => {:pqid => "#{@pq.id}" }}, :url => {:controller => 'commission', :action => "assign", :id => @pq.id } do |f| %>
         <%= collection_select(:action_officers_pq, :action_officer_id, ActionOfficer.all, :id, :name, {}, {:multiple => true, :class => 'multi-select-action-officers', :id => "action_officers_pq_action_officer_id-#{@pq.id}" }) %>
         <%= f.hidden_field(:pq_id , :value => @pq.id ) %>
-        </br><%= f.submit 'commission', :class => 'btn btn-success btn-sm' %>
+        </br><%= f.submit 'Commission', :class => 'btn btn-success btn-sm' %>
       <% end %>
 
 <%end%>
