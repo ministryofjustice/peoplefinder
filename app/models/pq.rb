@@ -5,6 +5,7 @@ class PQ < ActiveRecord::Base
  	validates :press_interest, :inclusion => {:in => [true, false]}, if: :seen_by_press
     has_many :action_officers_pq
     has_many :action_officers, :through => :action_officers_pq
-    belongs_to :minister, class_name: 'minister' #no link seems to be needed for policy_minister_id!?
+    belongs_to :minister #no link seems to be needed for policy_minister_id!?
+    belongs_to :policy_minister, :class_name=>'Minister', :foreign_key=>'policy_minister_id'
  	#validates :finance_interest, :inclusion => {:in => [true, false]}, if: :seen_by_finance
 end

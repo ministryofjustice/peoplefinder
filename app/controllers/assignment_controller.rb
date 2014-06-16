@@ -58,7 +58,10 @@ class AssignmentController < ApplicationController
       template[:email] = @ao.email
       template[:uin] = @question.uin
       template[:question] = @question.question
-
+      template[:mpname] = @question.minister.name unless @question.minister.nil?
+      template[:mpemail] = @question.minister.email unless @question.minister.nil?
+      template[:policy_mpname] = @question.policy_minister.name unless @question.policy_minister.nil?
+      template[:policy_mpemail] = @question.policy_minister.email unless @question.policy_minister.nil?
       PQAcceptedMailer.commit_email(template).deliver
 
     end
