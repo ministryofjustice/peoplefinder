@@ -1,7 +1,8 @@
 class AssignmentController < ApplicationController
   before_action AOTokenFilter
   before_action :set_data
- 
+  before_action :load_service
+
   def index
     @response = AllocationResponse.new()
   end
@@ -50,8 +51,10 @@ class AssignmentController < ApplicationController
 
     def accept
       flash[:notice] = 'The Question is accepted'
-      @assignment.update_attributes(accept: true, reject: false)
 
+      @assignment_service.accept(@assignment)
+
+      # TODO extract to the service the email logic
       # send the email with the info
       template = Hash.new
       template[:name] = @ao.name
@@ -68,11 +71,17 @@ class AssignmentController < ApplicationController
 
     def reject
       flash[:notice] = 'The Question is rejected'
-      @assignment.update_attributes(accept: false, reject: true, reason_option: @response.reason_option, reason: @response.reason)
+      @assignment_service.reject(@assignment, @response)
     end
 
     def response_params
       params.require(:allocation_response).permit(:response_action, :reason_option, :reason)
+    end
+
+
+
+    def load_service(service = AssignmentService.new)
+      @assignment_service ||= service
     end
 
 end
