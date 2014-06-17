@@ -1,4 +1,6 @@
 
+VERSION=$1
+
 export PQ_REST_API_URL=https://api.wqatest.parliament.uk
 #before_script:
 #  - psql -c 'create role pq login createdb;' -U postgres
@@ -34,21 +36,9 @@ apt-get install git-core curl zlib1g-dev build-essential libssl-dev libreadline-
 #add_packages
 bundle install
 # Run Tesks
-#bundle exec rake db:create
-#bundle exec rake db:migrate
-#bundle exec rake spec
+bundle exec rake db:drop
+bundle exec rake db:create
+bundle exec rake db:migrate
+bundle exec rake spec
 
-# Generate a self contained bundle
-#cd build
-bundle --quiet \
-       --path vendor/bundle \
-       --deployment \
-       --standalone \
-       --binstubs \
-       --without build
-
-
-bundle exec rake assets:precompile RAILS_ENV=production
-
-# Notify hipchat in Jenkins
 
