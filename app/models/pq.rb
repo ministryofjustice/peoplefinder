@@ -9,4 +9,21 @@ class PQ < ActiveRecord::Base
     belongs_to :policy_minister, :class_name=>'Minister', :foreign_key=>'policy_minister_id'
  	#validates :finance_interest, :inclusion => {:in => [true, false]}, if: :seen_by_finance
   belongs_to :progress
+
+
+
+  def self.by_status(status_name)
+    joins(:progress).where('progresses.name = :search', search: "#{status_name}")
+  end
+
+  def self.new_questions()
+    at_beginning_of_day = DateTime.now.at_beginning_of_day
+    where('created_at >= ?', at_beginning_of_day)
+  end
+
+  def self.in_progress()
+    at_beginning_of_day = DateTime.now.at_beginning_of_day
+    where('created_at < ?', at_beginning_of_day)
+  end
+
 end
