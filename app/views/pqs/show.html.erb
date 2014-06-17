@@ -95,12 +95,11 @@
 </div>
 
 <% if @pq.registered_interest %>
-
  <div>
   <span>Member has registered an interest in the Question.</span>
  </div>
-  
- <% end %>
+<% end %>
+
       <div class="minister-info">
         <label>Set replying minister</label>
         <%= f.collection_select(:minister_id, @minister_list, :id, :name, :include_blank => "Please select") %>
