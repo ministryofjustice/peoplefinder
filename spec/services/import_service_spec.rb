@@ -2,6 +2,8 @@ require 'spec_helper'
 
 describe 'ImportService' do
 
+  let!(:unallocated) { create(:progress, name: 'Unallocated') }
+
   before(:each) do
     @http_client = double('QuestionsHttpClient')
     allow(@http_client).to receive(:questions) { import_questions_for_today }
@@ -138,5 +140,18 @@ describe 'ImportService' do
       question_one.internal_deadline.strftime("%Y-%m-%d %H:%M").should eql("2012-08-29 00:00")
 
     end
+
+
+    it 'should create the question in Unallocated state' do
+      import_result = @import_service.today_questions()
+      import_result[:questions].size.should eq(2)
+
+      question_one = PQ.find_by(uin: 'HL784845')
+      question_one.should_not be_nil
+
+      question_one.progress.name.should == 'Unallocated'
+
+    end
+
   end
 end
