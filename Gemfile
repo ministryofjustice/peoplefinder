@@ -10,6 +10,7 @@ gem 'haml-rails'
 gem 'omniauth-google-apps'
 
 group :development do
+  gem 'thin'
   gem 'spring'
 end
 
