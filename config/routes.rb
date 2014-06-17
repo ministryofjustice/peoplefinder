@@ -1,5 +1,7 @@
 ParliamentaryQuestions::Application.routes.draw do
 
+  resources :progresses
+
   resources :ministers
 
   resources :deputy_directors
@@ -31,6 +33,8 @@ ParliamentaryQuestions::Application.routes.draw do
   get 'filter/:search' => 'filter#index'
   get 'dashboard/search' => 'dashboard#search'
   post 'dashboard/search/:search' => 'dashboard#search'
+
+  get 'dashboard/by_status/:qstatus' => 'dashboard#by_status'
   
   get 'assignment/:uin' => 'assignment#index'
   post 'assignment/:uin' => 'assignment#action'

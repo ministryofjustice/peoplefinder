@@ -8,4 +8,5 @@ class PQ < ActiveRecord::Base
     belongs_to :minister #no link seems to be needed for policy_minister_id!?
     belongs_to :policy_minister, :class_name=>'Minister', :foreign_key=>'policy_minister_id'
  	#validates :finance_interest, :inclusion => {:in => [true, false]}, if: :seen_by_finance
+  belongs_to :progress
 end

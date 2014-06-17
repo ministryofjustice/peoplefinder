@@ -23,7 +23,19 @@ class DashboardController < ApplicationController
   end
 
   def search
+  end
 
+  def by_status
+    result_imported = @import_service.today_questions()
+    #@questions = result_imported[:questions]
+
+    at_beginning_of_day = DateTime.now.at_beginning_of_day
+    
+    
+    #@myjoin = PQ.joins(:progress).where('progress.name = unallocated').where('PQ.created_at >= ?', at_beginning_of_day)
+    @questions_today = PQ.joins(:progress).where("progresses.name = :search", search: "#{params[:qstatus]}").paginate(:page => params[:page], :per_page => @@per_page).order(:internal_deadline).load
+    @questions_pending_count = PQ.where('created_at < ?', at_beginning_of_day).count
+    
   end
 
   protected

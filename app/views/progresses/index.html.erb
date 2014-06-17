@@ -1,0 +1,29 @@
+<h1>Listing progresses</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Progress Name</th>
+      <th>Progress order</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @progresses.each do |progress| %>
+      <tr>
+        <td><%= progress.name %></td>
+        <td><%= progress.progress_order %></td>
+        <td><%= link_to 'Show', progress %></td>
+        <td><%= link_to 'Edit', edit_progress_path(progress) %></td>
+        <td><%= link_to 'Destroy', progress, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Progress', new_progress_path %>
