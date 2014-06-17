@@ -12,6 +12,10 @@ class CommissioningService
     ao = ActionOfficer.find(assignment.action_officer_id)
     pq = PQ.find_by(id: assignment.pq_id)
 
+    pro = Progress.find_by_name('Allocated Pending')
+    pq.update progress_id: pro.id
+
+
     path = '/assignment/' + pq.uin.encode
     entity = "assignment:#{actionOfficersPq.id}"
 

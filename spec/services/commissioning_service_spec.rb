@@ -4,6 +4,7 @@ describe 'CommissioningService' do
 
   let(:action_officer) { create(:action_officer, name: 'ao name 1', email: 'ao@ao.gov') }
   let(:pq) { create(:PQ, uin: 'HL789', question: 'test question?') }
+  let!(:pending) { create(:progress, name: 'Allocated Pending') }
 
 
   before(:each) do
@@ -66,6 +67,25 @@ describe 'CommissioningService' do
     mail.to.should include action_officer.email
 
   end
+
+
+  it 'should set the progress to Allocated Pending' do
+    assignment = ActionOfficersPq.new(action_officer_id: action_officer.id, pq_id: pq.id)
+
+    result = @comm_service.send(assignment)
+
+    result.should_not be nil
+
+    assignment_id = result[:assignment_id]
+    assignment_id.should_not be nil
+
+    assignment = ActionOfficersPq.find(assignment_id)
+
+    pq = PQ.find(assignment.pq_id)
+    pq.progress.name.should == 'Allocated Pending'
+
+  end
+
 
 
   it 'should raise an error if the action_officer.id is null' do
