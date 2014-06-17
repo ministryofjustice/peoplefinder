@@ -1,4 +1,18 @@
-#!/bin/sh
-cd /rails
-[ -z "${RAILS_DB_MIGRATE}" ] && bundle exec rake db:migrate
-bundle exec unicorn -p 80
+#!/bin/bash
+#cd /rails
+case ${RAILS_DB_SETUP} in
+migrate)
+    echo "migrate"
+    bundle exec rake db:migrate
+    ;;
+seed)
+    echo "seed"
+    bundle exec rake db:migrate
+    USER_CREATE=${RAILS_DB_SEED:-'admin@admin.com, 123456789, admin'}
+    echo $USER_CREATE
+    bundle exec rake "user:create[admin@admin.com, 123456789, admin]"
+    ;;
+esac
+exec bundle exec unicorn -p 80
+
+
