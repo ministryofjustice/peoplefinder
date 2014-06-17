@@ -1,8 +1,7 @@
 require 'spec_helper'
 
 describe 'ImportService' do
-
-  let!(:unallocated) { create(:progress, name: 'Unallocated') }
+  progress_seed
 
   before(:each) do
     @http_client = double('QuestionsHttpClient')

@@ -4,8 +4,7 @@ describe 'AssignmentService' do
 
   let(:action_officer) { create(:action_officer, name: 'ao name 1', email: 'ao@ao.gov') }
   let(:pq) { create(:PQ, uin: 'HL789', question: 'test question?') }
-  let!(:accepted) { create(:progress, name: 'Allocated Accepted') }
-  let!(:pending) { create(:progress, name: 'Allocated Pending') }
+  progress_seed
 
   before(:each) do
     @assignment_service = AssignmentService.new
