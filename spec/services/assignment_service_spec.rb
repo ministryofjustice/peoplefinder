@@ -4,7 +4,8 @@ describe 'AssignmentService' do
 
   let(:action_officer) { create(:action_officer, name: 'ao name 1', email: 'ao@ao.gov') }
   let(:pq) { create(:PQ, uin: 'HL789', question: 'test question?') }
-
+  let!(:accepted) { create(:progress, name: 'Allocated Accepted') }
+  let!(:pending) { create(:progress, name: 'Allocated Pending') }
 
   before(:each) do
     @assignment_service = AssignmentService.new
@@ -52,6 +53,25 @@ describe 'AssignmentService' do
 
       mail.html_part.body.should include pq.question
       mail.subject.should include pq.uin
+
+    end
+
+
+    it 'should set the progress to Allocated Accepted' do
+
+      # setup a valid assignment
+      assignment = ActionOfficersPq.new(action_officer_id: action_officer.id, pq_id: pq.id)
+      result = @comm_service.send(assignment)
+      assignment_id = result[:assignment_id]
+      assignment = ActionOfficersPq.find(assignment_id)
+      assignment.should_not be nil
+
+      @assignment_service.accept(assignment)
+
+      assignment = ActionOfficersPq.find(assignment_id)
+
+      pq = PQ.find(assignment.pq_id)
+      pq.progress.name.should == 'Allocated Accepted'
 
     end
 
