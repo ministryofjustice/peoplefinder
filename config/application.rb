@@ -33,7 +33,9 @@ module ParliamentaryQuestions
     # Configure sensitive parameters which will be filtered from the log file.
     config.filter_parameters += [:password]
 
-    config.assets.paths << "#{Rails}/vendor/assets/fonts"
+    #config.assets.paths << "#{Rails}/vendor/assets/fonts"
+    config.assets.paths << Rails.root.join("app", "assets", "fonts")
+
     config.generators do |g| 
       g.template_engine :erb
     end
