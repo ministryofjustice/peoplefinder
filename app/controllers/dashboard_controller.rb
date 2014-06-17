@@ -11,21 +11,18 @@ class DashboardController < ApplicationController
     result_imported = @import_service.today_questions()
     #@questions = result_imported[:questions]
 
-    @questions_today = PQ.new_questions.paginate(:page => params[:page], :per_page => @@per_page).order(:internal_deadline).load
-    @questions_pending_count = PQ.in_progress.count
+    @questions = PQ.new_questions.paginate(:page => params[:page], :per_page => @@per_page).order(:internal_deadline).load
   end
 
   def in_progress
-    @questions_today_count = PQ.new_questions.count
-    @questions_pending = PQ.in_progress.paginate(:page => params[:page], :per_page => @@per_page).order(:internal_deadline).load
+    @questions = PQ.in_progress.paginate(:page => params[:page], :per_page => @@per_page).order(:internal_deadline).load
   end
 
   def search
   end
 
   def by_status
-    @questions_today = PQ.by_status(params[:qstatus]).paginate(:page => params[:page], :per_page => @@per_page).order(:internal_deadline).load
-    @questions_pending_count = PQ.in_progress.count
+    @questions = PQ.by_status(params[:qstatus]).paginate(:page => params[:page], :per_page => @@per_page).order(:internal_deadline).load
   end
 
   protected

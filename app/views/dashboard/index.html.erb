@@ -1,18 +1,15 @@
-<ul class="nav nav-tabs">
-  <li class="active"><%= link_to raw("New <span class='badge'>#{@questions_today.count}"), controller: 'dashboard', action: 'index' %></li>
-  <li><%= link_to raw("In progress <span class='badge'>#{@questions_pending_count}"), controller: 'dashboard', action: 'in_progress' %></li>
-</ul>
 
+<%= render partial: "tabs" %>
 
-<%= render partial: "shared/dashboard_filter" %>
+<%= render partial: "dashboard_filter" %>
 
 <%= render partial: "shared/flash_messages", flash: flash %>
 
 
-<%= render partial: 'shared/questions_list', locals: {questions: @questions_today} %>
+<%= render partial: 'shared/questions_list', locals: {questions: @questions} %>
 
 
-<%= will_paginate @questions_today %>
+<%= will_paginate @questions %>
 
 
 

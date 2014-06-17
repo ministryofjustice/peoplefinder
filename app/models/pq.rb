@@ -11,11 +11,6 @@ class PQ < ActiveRecord::Base
   belongs_to :progress
 
 
-
-  def self.by_status(status_name)
-    joins(:progress).where('progresses.name = :search', search: "#{status_name}")
-  end
-
   def self.new_questions()
     at_beginning_of_day = DateTime.now.at_beginning_of_day
     where('created_at >= ?', at_beginning_of_day)
@@ -24,6 +19,21 @@ class PQ < ActiveRecord::Base
   def self.in_progress()
     at_beginning_of_day = DateTime.now.at_beginning_of_day
     where('created_at < ?', at_beginning_of_day)
+  end
+
+
+  # status queries
+  def self.by_status(status_name)
+    joins(:progress).where('progresses.name = :search', search: "#{status_name}")
+  end
+  def self.allocated_accepted()
+    by_status('Allocated Accepted')
+  end
+  def self.allocated_pending()
+    by_status('Allocated Pending')
+  end
+  def self.unallocated()
+    by_status('Unallocated')
   end
 
 end

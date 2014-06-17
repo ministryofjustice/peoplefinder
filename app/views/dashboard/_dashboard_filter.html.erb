@@ -1,14 +1,15 @@
 <ul class="nav nav-pills nav-stacked navbar-right">
   <li class="<%= 'active' if (params[:controller] == 'dashboard' && params[:action] == 'index') %>">
-	  <%= link_to "View all" , {:controller => 'dashboard', :action => 'index'} %>
+	  <%= link_to raw("View all <span class='badge'>#{PQ.new_questions.count}") , {:controller => 'dashboard', :action => 'index'} %>
+
   </li>
   <li class="<%= 'active' if (params[:controller] == 'dashboard' && params[:action] == 'by_status' && params[:qstatus] == 'Unallocated') %>">
-	  <%= link_to "Unallocated" , {:controller => 'dashboard', :action => 'by_status' , :qstatus => 'Unallocated'} %>
+	  <%= link_to raw("Unallocated <span class='badge'>#{PQ.unallocated.count}") , {:controller => 'dashboard', :action => 'by_status' , :qstatus => 'Unallocated'} %>
   </li>
   <li class="<%= 'active' if (params[:controller] == 'dashboard' && params[:action] == 'by_status' && params[:qstatus] == 'Allocated Pending') %>">
-	  <%= link_to "Allocated Pending" , {:controller => 'dashboard', :action => 'by_status' , :qstatus => 'Allocated Pending'} %></li>
+	  <%= link_to raw("Allocated Pending <span class='badge'>#{PQ.allocated_pending.count}") , {:controller => 'dashboard', :action => 'by_status' , :qstatus => 'Allocated Pending'} %></li>
   <li class="<%= 'active' if (params[:controller] == 'dashboard' && params[:action] == 'by_status' && params[:qstatus] == 'Allocated Accepted') %>">
-	  <%= link_to "Allocated Accepted" , {:controller => 'dashboard', :action => 'by_status' , :qstatus => 'Allocated Accepted'} %></li>
+	  <%= link_to raw("Allocated Accepted <span class='badge'>#{PQ.allocated_accepted.count}"), {:controller => 'dashboard', :action => 'by_status' , :qstatus => 'Allocated Accepted'} %></li>
   <li class="<%= 'active' if (params[:controller] == 'dashboard' && params[:action] == 'by_status' && params[:qstatus] == 'Rejected') %>">
 	  <%= link_to "Rejected" , {:controller => 'dashboard', :action => 'by_status' , :qstatus => 'Rejected'} %></li>
   <li class="<%= 'active' if (params[:controller] == 'dashboard' && params[:action] == 'by_status' && params[:qstatus] == 'Transfer') %>">
