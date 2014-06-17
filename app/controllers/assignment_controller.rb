@@ -16,11 +16,13 @@ class AssignmentController < ApplicationController
 
     response_action = @response.response_action
     if response_action == 'accept'
-      accept
+      flash[:notice] = 'The Question is accepted'
+      @assignment_service.accept(@assignment)
     end
 
     if response_action == 'reject'
-      reject
+      flash[:notice] = 'The Question is rejected'
+      @assignment_service.reject(@assignment, @response)
     end
 
     render 'index'
@@ -49,21 +51,9 @@ class AssignmentController < ApplicationController
 
     end
 
-    def accept
-      flash[:notice] = 'The Question is accepted'
-      @assignment_service.accept(@assignment)
-    end
-
-    def reject
-      flash[:notice] = 'The Question is rejected'
-      @assignment_service.reject(@assignment, @response)
-    end
-
     def response_params
       params.require(:allocation_response).permit(:response_action, :reason_option, :reason)
     end
-
-
 
     def load_service(service = AssignmentService.new)
       @assignment_service ||= service

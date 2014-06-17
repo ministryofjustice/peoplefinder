@@ -2,7 +2,7 @@
   <% questions.each do |question| %>
       <li style="overflow:auto;">
         <div class="pq-header">
-          <span class="uin"><%= link_to(question.uin, { controller: 'pqs', action: 'show', id: question.uin} ) %></span>
+          <span class="uin"><%= question.uin %></span>
           <% if question.question_type == 'NamedDay' %>
               <span class="label label-primary" title="Named day">N</span>
           <% end %>
@@ -13,6 +13,7 @@
                       <%= render partial: 'shared/deadline_time', locals: {internal_deadline: question.internal_deadline} %>
                       <%= question.internal_deadline.strftime('%d/%m/%Y %H:%M') unless question.internal_deadline.nil? %>
                     </span>
+          <div style="float: right;"><%= link_to('Track PQ', { controller: 'pqs', action: 'show', id: question.uin} ) %></div>
         </div>
 
         <div>

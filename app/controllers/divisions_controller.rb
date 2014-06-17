@@ -1,4 +1,5 @@
 class DivisionsController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_division, only: [:show, :edit, :update, :destroy]
   before_action :prepare_directorates
 

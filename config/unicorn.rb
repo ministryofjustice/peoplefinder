@@ -1,14 +1,14 @@
 worker_processes 4
 
 rails_env = 'production'
-app_home = ENV['APP_HOME']
+app_home = ENV['APP_HOME'] || '/home/vagrant/pq/current'
 
 #listen "/home/vagrant/pq/shared/unicorn.sock", :backlog => 64
 listen 3000
 working_directory "#{app_home}"
 pid "#{app_home}/log/unicorn.pid"
 stderr_path "#{app_home}/log/unicorn.stderr.log"
-stdout_path "#{app_home}/unicorn.stdout.log"
+stdout_path "#{app_home}/log/unicorn.stdout.log"
 
 timeout 30
 preload_app true
