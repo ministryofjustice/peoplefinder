@@ -1,0 +1,5 @@
+- if logged_in?
+  %p
+    = "Logged in as #{ current_user } | "
+    = link_to "Log out", sessions_path, :method => :delete
+

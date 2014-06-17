@@ -7,16 +7,12 @@
   %body{:class => body_class()}
     = render "shared/header"
     = render "shared/cookie_message"
-    - if session['current_user'].present?
-      %p
-        = "Logged in as #{ session['current_user'] } | "
-        = link_to "Logout", sessions_path, :method => :delete
-
 
     #wrapper.group
       = render "shared/phase_indicator"
       %section#content.group{:role => "main"}
         .full-width-group
+          = render "shared/loginout"
           = yield
 
     = render "shared/footer"

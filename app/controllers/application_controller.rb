@@ -6,9 +6,17 @@ class ApplicationController < ActionController::Base
 
   private
 
+  def current_user
+    session['current_user']
+  end
+  helper_method :current_user
+
+  def logged_in?
+    current_user.present?
+  end
+  helper_method :logged_in?
+
   def ensure_user
-    if session['current_user'].blank?
-      redirect_to new_sessions_path
-    end
+    redirect_to new_sessions_path unless logged_in?
   end
 end
