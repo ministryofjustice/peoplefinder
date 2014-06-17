@@ -1,7 +1,7 @@
 <ul class="nav nav-tabs">
   <li class="<%= 'active' if (params[:controller] == 'dashboard' && (params[:action] == 'index' || params[:action] == 'by_status')) %>">
-    <%= link_to raw("New <span class='badge'>#{PQ.new_questions.count}"), controller: 'dashboard', action: 'index' %>
+    <%= link_to raw("New <span class='badge'>#{PQ.new_questions.count}</span>"), controller: 'dashboard', action: 'index' %>
   <li class="<%= 'active' if (params[:controller] == 'dashboard' && params[:action] == 'in_progress') %>">
-    <%= link_to raw("In progress <span class='badge'>#{PQ.in_progress.count}"), controller: 'dashboard', action: 'in_progress' %>
+    <%= link_to raw("In progress <span class='badge'>#{PQ.in_progress.count}</span>"), controller: 'dashboard', action: 'in_progress' %>
   </li>
 </ul>
