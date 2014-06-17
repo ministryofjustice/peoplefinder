@@ -113,16 +113,6 @@
 <p>
 <%= f.submit 'Update', :class => 'button' %>
 </p>
-<div>
-<% if @pq.seen_by_finance  %>
-    <label>Add action officer(s) for commissioning</label>
-      <%= form_for [@pq, ActionOfficersPq.new], :remote => true, :authenticity_token => true, :html => { :id => "form-commission#{@pq.id}", :class => 'form-commission', :data => {:pqid => "#{@pq.id}" }}, :url => {:controller => 'commission', :action => "assign", :id => @pq.id } do |f| %>
-        <%= collection_select(:action_officers_pq, :action_officer_id, ActionOfficer.where(deleted: false).all, :id, :name_with_div, {}, {:multiple => true, :class => 'multi-select-action-officers', :id => "action_officers_pq_action_officer_id-#{@pq.id}" }) %>
-        <%= f.hidden_field(:pq_id , :value => @pq.id ) %>
-        </br><%= f.submit 'Commission', :class => 'btn btn-success btn-sm' %>
-      <% end %>
-<%end%>
-</div>					 
 
 <% end %>
 
