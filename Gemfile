@@ -8,6 +8,10 @@ gem 'jquery-rails'
 gem 'jbuilder', '~> 2.0'
 gem 'haml-rails'
 gem 'omniauth-google-apps'
+gem 'govuk_frontend_toolkit'
+gem 'moj_frontend_toolkit_gem',
+  git: 'https://github.com/ministryofjustice/moj_frontend_toolkit_gem.git',
+  ref: '8826821' # TODO: change to tag when branch remove_gem_lock is merged
 
 group :development do
   gem 'thin'

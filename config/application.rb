@@ -19,5 +19,21 @@ module Peoplefinder
     # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     # config.i18n.default_locale = :de
+
+    # app title appears in the header bar
+    config.app_title = 'People Finder'
+
+    # phase governs text indicators and highlight colours
+    # presumed values: alpha, beta, live
+    config.phase = 'alpha'
+
+    # known values: information, service
+    config.product_type = 'service'
+
+    # govbranding switches on or off the crown logo, full footer and NTA font
+    config.govbranding = false
+
+    # feedback_email is the address linked in the alpha/beta bar asking for feedback
+    config.feedback_email = 'test@example.com'
   end
 end
