@@ -17,11 +17,12 @@
       <td><%=  action_officer.email %></td>
       <td><%=  action_officer.phone %></td>
       <td><%= action_officer.deputy_director.division.name unless action_officer.deputy_director.nil? %></td>
-      <td><% if action_officer.deleted %></td>
+      <td><% if action_officer.deleted %>
             <i class="fa fa-times"></i>Inactive
           <% else %>
             <i class="fa fa-check-circle"></i>Active
           <% end %>
+        </td>
       <td><%= link_to 'Show', action_officer , {class: 'button'} %></td>
       <td><%= link_to 'Edit', edit_action_officer_path(action_officer), {class: 'button'} %></td>
     </tr>
