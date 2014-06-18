@@ -1,10 +1,9 @@
 
+<%= render partial: "shared/flash_messages", flash: flash %>
+
 <%= render partial: "tabs" %>
 
 <%= render partial: "dashboard_filter" %>
-
-<%= render partial: "shared/flash_messages", flash: flash %>
-
 
 <%= render partial: 'shared/questions_list', locals: {questions: @questions} %>
 

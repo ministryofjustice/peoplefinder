@@ -21,10 +21,12 @@
         </div>
         <div>
           <span><%= question.house_name %>: <%= question.member_name %></span>
-        </div>        
+        </div>   
+        <% if !question.minister_id.nil? %>    
         <div>
           Replying minister: <%= question.minister.name unless question.minister_id.nil? %></span>
         </div>
+        <% end %>
         <% if !question.policy_minister_id.nil? %>
         <div>
           <span>Policy minister: <%= question.policy_minister.name %></span>
