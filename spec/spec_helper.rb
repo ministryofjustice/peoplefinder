@@ -15,6 +15,8 @@ require "factory_girl"
 # users commonly want.
 #
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
+Dir[File.expand_path("../support/**/*.rb", __FILE__)].each {|f| require f}
+
 RSpec.configure do |config|
   # These two settings work together to allow you to limit a spec run
   # to individual examples or groups you care about by tagging them with
@@ -74,4 +76,5 @@ RSpec.configure do |config|
   end
 
   config.include FactoryGirl::Syntax::Methods
+  config.include SpecSupport::Login
 end
