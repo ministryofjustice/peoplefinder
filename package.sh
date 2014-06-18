@@ -1,5 +1,5 @@
 
-VERSION=$1
+VERSION=`echo "$1" | sed -e "s/.*release\///g"`
 
 # Generate a self contained bundle
 #cd build
