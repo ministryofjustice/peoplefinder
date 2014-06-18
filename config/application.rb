@@ -35,5 +35,10 @@ module Peoplefinder
 
     # feedback_email is the address linked in the alpha/beta bar asking for feedback
     config.feedback_email = 'test@example.com'
+
+    config.valid_login_domains = %w[
+      digital.justice.gov.uk
+      digital.cabinet-office.gov.uk
+    ]
   end
 end

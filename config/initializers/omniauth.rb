@@ -11,7 +11,7 @@ module OmniAuth
         f = OmniAuth::Form.new(:title => 'Google Apps Authentication')
         f.label_field('Google Apps Domain', 'domain')
         f.html("\n<select id='domain' name='domain'>")
-        ['digital.justice.gov.uk', 'digital.cabinet-office.gov.uk'].each do |domain|
+        Rails.configuration.valid_login_domains.each do |domain|
           f.html("\n  <option value='#{domain}'/>#{domain}</option>")
         end
         f.html("\n</select>")
