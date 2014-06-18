@@ -6,7 +6,7 @@ class Department
   end
 
   def name
-    "Department of Justice"
+    "Ministry of Justice"
   end
 
   def to_s
