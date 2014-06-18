@@ -1,5 +1,5 @@
 #!/bin/bash
-#cd /rails
+cd /rails
 case ${RAILS_DB_SETUP} in
 migrate)
     echo "migrate"
