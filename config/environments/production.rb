@@ -84,7 +84,7 @@ ParliamentaryQuestions::Application.configure do
   config.after_initialize do
     sending_host = ENV['SENDING_HOST'] || 'localhost'
 
-    ActionMailer::Base.default_url_options = { host: sending_host, protocol: 'https'}
+    ActionMailer::Base.default_url_options = { host: sending_host, protocol: 'http'}
     ActionMailer::Base.default :from => 'no-reply@digital.justice.gov.uk'
     ActionMailer::Base.smtp_settings = {
         address: ENV['SMTP_HOSTNAME'] || 'localhost',
