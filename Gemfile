@@ -12,6 +12,7 @@ gem 'govuk_frontend_toolkit'
 gem 'moj_frontend_toolkit_gem',
   git: 'https://github.com/ministryofjustice/moj_frontend_toolkit_gem.git',
   ref: '8826821' # TODO: change to tag when branch remove_gem_lock is merged
+gem 'simple_form', '~> 3.1.0.rc1'
 
 group :development do
   gem 'thin'
