@@ -1,8 +1,11 @@
+// GOV.UK Toolkit
+@import "colours";
+@import "typography";
+@import "conditionals";
+@import "css3";
+@import "design-patterns/buttons";
+
 // MOJ Toolkit
 @import "moj-base";
-@import "modules/moj.tabs";
 
-// GOV.UK Toolkit
-@import "_colours";
-@import "_typography";
-@import "design-patterns/_buttons";
+@import "main";

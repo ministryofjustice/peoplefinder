@@ -1,0 +1,22 @@
+// Tables
+// ==========================================================================
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  width: 100%;
+}
+
+table th,
+table td {
+  @include core-16;
+  padding: em(14) em(20) em(10) 0;
+
+  text-align: left;
+  color: #0b0c0c;
+  border-bottom: 1px solid $border-colour;
+}
+
+table th {
+  font-weight: 700;
+}

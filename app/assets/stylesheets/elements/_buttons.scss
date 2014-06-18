@@ -1,0 +1,56 @@
+// Buttons
+// ==========================================================================
+
+.button {
+  @include button ($button-colour);
+  margin: 0 $gutter-half $gutter-half 0;
+  padding: em(10) em(15) em(5) em(15);
+  vertical-align: top;
+}
+
+.button:focus {
+  outline: 3px solid $yellow;
+}
+
+// Disabled buttons
+.button[disabled="disabled"] {
+  background: $button-colour;
+}
+
+.button[disabled="disabled"]:focus {
+  outline: none;
+}
+
+// Start now buttons
+.button-get-started {
+  @include bold-24;
+  background-image: url("../images/icons/icon-pointer.png");
+  background-repeat: no-repeat;
+  background-position: 100% 50%;
+  padding: em(7) em(41) em(4) em(16);
+
+  @include device-pixel-ratio {
+    background-image: url("../images/icons/icon-pointer-2x.png");
+    background-size: 30px 19px;
+  }
+
+  @include ie(6) {
+    background-image: url("../images/icons/icon-pointer-2x.png");
+  }
+}
+
+// Show & hide links
+details,
+summary {
+  display: block;
+}
+
+details summary {
+  color: $govuk-blue;
+  text-decoration: underline;
+}
+
+details summary:focus {
+  outline: 3px solid $yellow;
+}
+

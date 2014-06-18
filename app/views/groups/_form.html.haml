@@ -1,4 +1,8 @@
 = simple_form_for @group do |f|
-  = f.association :parent
-  = f.input :name, as: :string
-  = f.button :submit
+  %fieldset
+    .form-group
+      = f.association :parent
+    .form-group
+      = f.input :name, as: :string, class: 'form-control'
+    .form-group
+      = f.button :submit
