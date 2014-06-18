@@ -82,7 +82,7 @@ describe 'CommissioningService' do
     assignment = ActionOfficersPq.find(assignment_id)
 
     pq = PQ.find(assignment.pq_id)
-    pq.progress.name.should == 'Allocated Pending'
+    pq.progress.name.should == Progress.ALLOCATED_PENDING
 
   end
 

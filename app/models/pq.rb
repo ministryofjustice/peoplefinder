@@ -26,14 +26,15 @@ class PQ < ActiveRecord::Base
   def self.by_status(status_name)
     joins(:progress).where('progresses.name = :search', search: "#{status_name}")
   end
+
   def self.allocated_accepted()
-    by_status('Allocated Accepted')
+    by_status(Progress.ALLOCATED_ACCEPTED)
   end
   def self.allocated_pending()
-    by_status('Allocated Pending')
+    by_status(Progress.ALLOCATED_PENDING)
   end
   def self.unallocated()
-    by_status('Unallocated')
+    by_status(Progress.UNALLOCATED)
   end
 
 end

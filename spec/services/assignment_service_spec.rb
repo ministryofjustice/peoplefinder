@@ -70,7 +70,7 @@ describe 'AssignmentService' do
       assignment = ActionOfficersPq.find(assignment_id)
 
       pq = PQ.find(assignment.pq_id)
-      pq.progress.name.should == 'Allocated Accepted'
+      pq.progress.name.should == Progress.ALLOCATED_ACCEPTED
 
     end
 

@@ -6,7 +6,7 @@ class AssignmentService
     ao = ActionOfficer.find(assignment.action_officer_id)
     pq = PQ.find_by(id: assignment.pq_id)
 
-    pro = Progress.find_by_name('Allocated Accepted')
+    pro = Progress.find_by_name(Progress.ALLOCATED_ACCEPTED)
     pq.update progress_id: pro.id
 
     template = Hash.new

@@ -12,7 +12,7 @@ class CommissioningService
     ao = ActionOfficer.find(assignment.action_officer_id)
     pq = PQ.find_by(id: assignment.pq_id)
 
-    pro = Progress.find_by_name('Allocated Pending')
+    pro = Progress.find_by_name(Progress.ALLOCATED_PENDING)
     pq.update progress_id: pro.id
 
 

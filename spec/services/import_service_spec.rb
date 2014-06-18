@@ -148,7 +148,7 @@ describe 'ImportService' do
       question_one = PQ.find_by(uin: 'HL784845')
       question_one.should_not be_nil
 
-      question_one.progress.name.should == 'Unallocated'
+      question_one.progress.name.should == Progress.UNALLOCATED
 
     end
 

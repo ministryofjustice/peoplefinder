@@ -5,4 +5,4 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
-progresses = Progress.create([{name: 'Unallocated'},{name: 'Allocated Pending'},{name: 'Allocated Accepted'}])
+progresses = Progress.create([{name: Progress.UNALLOCATED},{name: Progress.ALLOCATED_PENDING},{name: Progress.ALLOCATED_ACCEPTED}])
