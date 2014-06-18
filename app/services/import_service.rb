@@ -8,8 +8,7 @@ class ImportService
 		questions_processed = Array.new
 		errors = Array.new
 
-    pro = Progress.find_by_name('Unallocated')
-
+    pro = Progress.unallocated
 
 		questions = @questionsService.questions
     questions.each do |q|

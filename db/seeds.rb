@@ -14,7 +14,7 @@ ActiveRecord::Base.connection.execute("TRUNCATE TABLE deputy_directors RESTART I
 ActiveRecord::Base.connection.execute("TRUNCATE TABLE action_officers RESTART IDENTITY;")
 
 puts '-populate'
-progresses = Progress.create!([{name: 'Unallocated'},{name: 'Allocated Pending'},{name: 'Allocated Accepted'}])
+progresses = Progress.create([{name: Progress.UNALLOCATED},{name: Progress.ALLOCATED_PENDING},{name: Progress.ALLOCATED_ACCEPTED}])
 ministers = Minister.create!([
 	{name: 'Chris Grayling', email:'no-emails-1@please.com', title: 'Secretary of State and Lord High Chancellor of Great Britain', deleted: false},
 	{name: 'Lord McNally', email:'no-emails-2@please.com', title: 'Minister of State', deleted: false},

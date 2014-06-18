@@ -2,13 +2,13 @@
   <li class="<%= 'active' if (params[:controller] == 'dashboard' && params[:action] == 'index') %>">
 	  <%= link_to raw("View all <span class='badge'>#{PQ.new_questions.count}</span>") , {:controller => 'dashboard', :action => 'index'} %>
   </li>
-  <li class="<%= 'active' if (params[:controller] == 'dashboard' && params[:action] == 'by_status' && params[:qstatus] == 'Unallocated') %>">
-	  <%= link_to raw("Unallocated <span class='badge'>#{PQ.unallocated.count}</span>") , {:controller => 'dashboard', :action => 'by_status' , :qstatus => 'Unallocated'} %>
+  <li class="<%= 'active' if (params[:controller] == 'dashboard' && params[:action] == 'by_status' && params[:qstatus] == Progress.UNALLOCATED) %>">
+	  <%= link_to raw("Unallocated <span class='badge'>#{PQ.unallocated.count}</span>") , {:controller => 'dashboard', :action => 'by_status' , :qstatus => Progress.UNALLOCATED} %>
   </li>
-  <li class="<%= 'active' if (params[:controller] == 'dashboard' && params[:action] == 'by_status' && params[:qstatus] == 'Allocated Pending') %>">
-	  <%= link_to raw("Allocated Pending <span class='badge'>#{PQ.allocated_pending.count}</span>") , {:controller => 'dashboard', :action => 'by_status' , :qstatus => 'Allocated Pending'} %></li>
-  <li class="<%= 'active' if (params[:controller] == 'dashboard' && params[:action] == 'by_status' && params[:qstatus] == 'Allocated Accepted') %>">
-	  <%= link_to raw("Allocated Accepted <span class='badge'>#{PQ.allocated_accepted.count}</span>"), {:controller => 'dashboard', :action => 'by_status' , :qstatus => 'Allocated Accepted'} %></li>
+  <li class="<%= 'active' if (params[:controller] == 'dashboard' && params[:action] == 'by_status' && params[:qstatus] == Progress.ALLOCATED_PENDING) %>">
+	  <%= link_to raw("Allocated Pending <span class='badge'>#{PQ.allocated_pending.count}</span>") , {:controller => 'dashboard', :action => 'by_status' , :qstatus => Progress.ALLOCATED_PENDING} %></li>
+  <li class="<%= 'active' if (params[:controller] == 'dashboard' && params[:action] == 'by_status' && params[:qstatus] == Progress.ALLOCATED_ACCEPTED) %>">
+	  <%= link_to raw("Allocated Accepted <span class='badge'>#{PQ.allocated_accepted.count}</span>"), {:controller => 'dashboard', :action => 'by_status' , :qstatus => Progress.ALLOCATED_ACCEPTED} %></li>
   <li class="<%= 'active' if (params[:controller] == 'dashboard' && params[:action] == 'by_status' && params[:qstatus] == 'Rejected') %>">
 	  <%= link_to "Rejected" , {:controller => 'dashboard', :action => 'by_status' , :qstatus => 'Rejected'} %></li>
   <li class="<%= 'active' if (params[:controller] == 'dashboard' && params[:action] == 'by_status' && params[:qstatus] == 'Transfer') %>">
