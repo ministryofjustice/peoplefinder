@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   resource :sessions
-  post '/auth/:provider/callback', to: 'sessions#create'
+  match '/auth/:provider/callback', to: 'sessions#create', via: [:get, :post]
   root 'welcome#index'
 
   resources :groups

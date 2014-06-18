@@ -26,6 +26,9 @@ group :development, :test do
 end
 
 group :test do
+  gem 'capybara'
   gem 'factory_girl_rails'
+  gem 'launchy'
+  gem 'poltergeist', require: 'capybara/poltergeist'
   gem 'rspec-rails', '~> 3.0.0'
 end
