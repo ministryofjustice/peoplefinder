@@ -17,18 +17,14 @@ puts '-populate'
 progresses = Progress.create([{name: Progress.UNALLOCATED},{name: Progress.ALLOCATED_PENDING},{name: Progress.ALLOCATED_ACCEPTED}])
 ministers = Minister.create!([
 	{name: 'Chris Grayling', email:'no-emails-1@please.com', title: 'Secretary of State and Lord High Chancellor of Great Britain', deleted: false},
-	{name: 'Lord McNally', email:'no-emails-2@please.com', title: 'Minister of State', deleted: false},
 	{name: 'Damian Green', email:'no-emails-3@please.com', title: 'Minister of State', deleted: false},
-	{name: 'Helen Grant', email:'no-emails-4@please.com', title: 'Parliamentary Under-Secretary of State, Minister for Victims and the Courts (jointly with Government Equalities Office)', deleted: false},
 	{name: 'Jeremy Wright', email:'no-emails-5@please.com', title: 'Parliamentary Under-Secretary of State; Minister for Prisons and Rehabilitation', deleted: false},
-	{name: 'Ursula Brennan', email:'no-emails-6@please.com', title: 'Permanent Secretary', deleted: false},
 	{name: 'Shailesh Vara', email:'no-emails-7@please.com', title: 'Parliamentary Under-Secretary of State', deleted: false},
-	{name: 'Ministerial Correspondnece Unit', email:'no-emails-8@please.com', title: 'MCU', deleted: false},
 	{name: 'Simon Hughes', email:'no-emails-9@please.com', title: 'Minister of State for Justice & Civil Liberties', deleted: false},
 	{name: 'Lord Faulks', email:'no-emails-10@please.com', title: 'Lord Faulks QC, Minister of State', deleted: false}])
 
 directorates = Directorate.create!([
-	{name: 'Finanace Assurance and Commercial', deleted: false},
+	{name: 'Finance Assurance and Commercial', deleted: false},
 	{name: 'Criminal Justice', deleted: false},
 	{name: 'Law and Access to Justice', deleted: false},
 	{name: 'NOMS', deleted: false},
