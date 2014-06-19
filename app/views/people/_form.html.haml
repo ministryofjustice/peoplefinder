@@ -16,5 +16,9 @@
       = f.input :description
     .form-person
       = f.input :keywords, as: :string
+    .form-checkbox
+      - [:works_monday, :works_tuesday, :works_wednesday, :works_thursday, :works_friday].each do |day|
+        = f.input day, as: :boolean, label: day.to_s.titleize
+
     .form-person
       = f.button :submit

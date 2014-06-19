@@ -24,6 +24,8 @@ feature "Person maintenance" do
     fill_in 'Location', with: location
     fill_in 'Description', with: description
     fill_in 'Keywords', with: keywords
+    uncheck('Works Monday')
+    uncheck('Works Friday')
     click_button "Create Person"
 
     person = Person.find_by_surname(surname)
@@ -35,6 +37,11 @@ feature "Person maintenance" do
     expect(person.location).to eql(location)
     expect(person.description).to eql(description)
     expect(person.keywords).to eql(keywords)
+    expect(person.works_monday).to be false
+    expect(person.works_tuesday).to be true
+    expect(person.works_wednesday).to be true
+    expect(person.works_thursday).to be true
+    expect(person.works_friday).to be false
   end
 end
 
