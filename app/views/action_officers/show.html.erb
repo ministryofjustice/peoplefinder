@@ -23,6 +23,10 @@
   <strong>Division:</strong>
   <%= @action_officer.deputy_director.division.name %>
 </div>
+<div>
+  <strong>Press desk:</strong>
+  <%= @action_officer.press_desk.name %>
+</div>
 <div>  <% if @action_officer.deleted %>
       <i class="fa fa-times"></i>Inactive
   <% else %>

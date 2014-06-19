@@ -1,7 +1,7 @@
 class ActionOfficersController < ApplicationController
   before_action :authenticate_user!
   before_action :set_action_officer, only: [:show, :edit, :update, :destroy]
-  before_action :prepare_deputy_directors
+  before_action :prepare_dropdowns
 
 
   # GET /action_officers
@@ -60,9 +60,10 @@ private
       @action_officer = ActionOfficer.find(params[:id])
     end
     def action_officer_params
-      params.require(:action_officer).permit(:name, :email, :phone, :deleted, :deputy_director_id)
+      params.require(:action_officer).permit(:name, :email, :phone, :deleted, :deputy_director_id, :press_desk_id)
     end
-    def prepare_deputy_directors
+    def prepare_dropdowns
       @deputy_directors = DeputyDirector.where(deleted: false).all
+      @press_desks = PressDesk.where(deleted: false).all
     end
 end

@@ -57,10 +57,6 @@
       <%= f.check_box(:seen_by_finance) %>
     </div>
     <div class="checkbox">
-      <%= f.label(:press_interest) %>
-      <%= f.check_box(:press_interest) %>
-    </div>
-    <div class="checkbox">
       <%= f.label(:finance_interest) %>
       <%= f.check_box(:finance_interest) %>
     </div>
@@ -78,11 +74,6 @@
 	<%else%>
         <div>
             <span class = "label label-default" style="line-height:2;"><span class="glyphicon glyphicon-eye-close"></span> Not Seen By Finance</span>
-        </div>
-	<% end %>
-	<% if @pq.press_interest %>
-        <div>
-            <span class = "label label-success">Press Interest</span>
         </div>
 	<% end %>
 	<% if @pq.finance_interest %>

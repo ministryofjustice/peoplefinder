@@ -1,0 +1,40 @@
+<h1>Listing press officers</h1>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Press desk</th>
+      <th>Active/Inactive</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @press_officers.each do |press_officer| %>
+      <tr>
+        <td><%= press_officer.name %></td>
+        <td><%= press_officer.email %></td>
+        <td><%= press_officer.press_desk.name %></td>
+      <td>
+        <% if press_officer.deleted %>
+            <i class="fa fa-times"></i>Inactive
+          <% else %>
+            <i class="fa fa-check-circle"></i>Active
+          <% end %>
+      </td>
+
+        <td><%= link_to 'Show', press_officer %></td>
+        <td><%= link_to 'Edit', edit_press_officer_path(press_officer) %></td>
+        <td><%= link_to 'Destroy', press_officer, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Press officer', new_press_officer_path %>

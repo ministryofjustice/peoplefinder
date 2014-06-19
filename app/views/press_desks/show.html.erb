@@ -1,0 +1,22 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @press_desk.name %>
+</p>
+<div>  
+  <% if @press_desk.deleted %>
+      <i class="fa fa-times"></i>Inactive
+  <% else %>
+      <i class="fa fa-check-circle"></i>Active
+  <% end %>
+</div>
+<div>
+	Press officers
+	<ul>
+	<% @press_desk.press_officers.each do |po|  %>
+		<li><%= link_to(po.name, { controller: 'press_officers', action: 'show', id: po.id} ) %></li>
+	<% end %>
+	</ul>
+<%= link_to 'Edit', edit_press_desk_path(@press_desk) %> |
+<%= link_to 'Back', press_desks_path %>

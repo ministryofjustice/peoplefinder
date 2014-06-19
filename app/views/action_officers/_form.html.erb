@@ -27,6 +27,10 @@
       <div class="form-group">
         <%= f.label :deputy_director_id %>
         <%= f.collection_select(:deputy_director_id, @deputy_directors, :id, :name, :include_blank => "Please select") %>
+      </div>      
+      <div class="form-group">
+        <%= f.label :press_desk_id %>
+        <%= f.collection_select(:press_desk_id, @press_desks, :id, :name, :include_blank => "Please select") %>
       </div>
       <div class="form-group">
         <div class="checkbox">

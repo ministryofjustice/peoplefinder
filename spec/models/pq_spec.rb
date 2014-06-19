@@ -20,14 +20,6 @@ describe PQ do
 			newQ.question=nil
 			expect(newQ).to be_invalid
 		end
-		it 'should not allow press interest to be set if it has not been seen by press office' do
-			newQ.seen_by_press=true
-			expect(newQ).to be_invalid
-			newQ.press_interest=true
-			expect(newQ).to be_valid
-			newQ.press_interest=false
-			expect(newQ).to be_valid
-		end
 		xit 'should not allow finance interest to be set if it has not been seen by finance' do
 			newQ.seen_by_finance=true
 			expect(newQ).to be_invalid
@@ -38,13 +30,6 @@ describe PQ do
 		end
 	end
 	describe 'item' do
-		it 'should allow press interest to be set' do
-			newQ.seen_by_press=true
-			newQ.press_interest=true
-			expect(newQ).to be_valid
-			newQ.press_interest=false
-			expect(newQ).to be_valid
-		end
 		it 'should allow finance interest to be set' do
 			newQ.finance_interest=true
 			expect(newQ).to be_valid

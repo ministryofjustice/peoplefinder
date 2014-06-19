@@ -5,5 +5,6 @@ FactoryGirl.define do
     name "action officer 1"
     email "action.officer@email.com"
     deputy_director_id 1
+    press_desk_id 1
   end
 end

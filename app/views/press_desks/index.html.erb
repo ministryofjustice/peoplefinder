@@ -1,0 +1,38 @@
+<h1>Listing press desks</h1>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Press officers</th>
+      <th>Active/Inactive</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @press_desks.each do |press_desk| %>
+      <tr>
+        <td><%= press_desk.name %></td>
+        <td><%= press_desk.press_officers.count unless press_desk.press_officers.nil? %></td>
+        <td>
+          <% if press_desk.deleted %>
+              <i class="fa fa-times"></i>Inactive
+            <% else %>
+              <i class="fa fa-check-circle"></i>Active
+            <% end %>
+        </td>
+        <td><%= link_to 'Show', press_desk %></td>
+        <td><%= link_to 'Edit', edit_press_desk_path(press_desk) %></td>
+
+        <td><%= link_to 'Destroy', press_desk, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Press desk', new_press_desk_path %>

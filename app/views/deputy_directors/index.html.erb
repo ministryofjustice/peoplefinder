@@ -18,11 +18,13 @@
         <td><%= deputy_director.name %></td>
         <td><%= deputy_director.email %></td>
         <td><%= deputy_director.division.name %></td>
-      <td><% if deputy_director.deleted %>
+      <td>
+        <% if deputy_director.deleted %>
             <i class="fa fa-times"></i>Inactive
           <% else %>
             <i class="fa fa-check-circle"></i>Active
           <% end %>
+      </td>
         <td><%= link_to 'Show', deputy_director %></td>
         <td><%= link_to 'Edit', edit_deputy_director_path(deputy_director) %></td>
       </tr>

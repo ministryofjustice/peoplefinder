@@ -16,8 +16,8 @@ describe Division do
     it "should have a directorate attribute" do
       @dir = div.should respond_to(:directorate)
     end
- 	it 'should have a collection of Deputy directors' do
- 		@deputies = div.should respond_to(:deputy_directors)
- 	end
+   	it 'should have a collection of Deputy directors' do
+   		@deputies = div.should respond_to(:deputy_directors)
+   	end
   end
 end

@@ -6,6 +6,7 @@
     <th>Email</th>
     <th>Phone</th>
     <th>Directorate</th>
+    <th>Press desk</th>
     <th>Active/Inactive</th>
     <th></th>
     <th></th>
@@ -17,6 +18,7 @@
       <td><%=  action_officer.email %></td>
       <td><%=  action_officer.phone %></td>
       <td><%= action_officer.deputy_director.division.name unless action_officer.deputy_director.nil? %></td>
+      <td><%= action_officer.press_desk.name unless action_officer.press_desk.nil? %></td>
       <td><% if action_officer.deleted %>
             <i class="fa fa-times"></i>Inactive
           <% else %>

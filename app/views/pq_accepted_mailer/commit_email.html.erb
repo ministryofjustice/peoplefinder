@@ -11,7 +11,7 @@
 </div>
 
 <h2>You can use this link to
-  <%= mail_to 'MOJParliamentaryBranch@cabinet-office.gsi.gov.uk', 'send a draft response', cc: "Christopher.Beal@justice.gsi.gov.uk, Nicola.Calderhead@justice.gsi.gov.uk, thomas.murphy@JUSTICE.gsi.gov.uk; #{@template_params[:mpemail]}; #{@template_params[:policy_mpemail]}", subject: "[Parliament-Questions] Draft for question #{@template_params[:uin]}" %>
+  <%= mail_to 'MOJParliamentaryBranch@cabinet-office.gsi.gov.uk', 'send a draft response', cc: "Christopher.Beal@justice.gsi.gov.uk, Nicola.Calderhead@justice.gsi.gov.uk, thomas.murphy@JUSTICE.gsi.gov.uk; #{@template_params[:mpemail]}; #{@template_params[:policy_mpemail]}; #{@template_params[:press_email]}", subject: "[Parliament-Questions] Draft for question #{@template_params[:uin]}" %>
 </h2>
 <dl>
   <dt>There are some links to guidance available from the intranet</dt>

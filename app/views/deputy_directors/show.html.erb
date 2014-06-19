@@ -14,7 +14,8 @@
   <strong>Division:</strong>
   <%= @deputy_director.division_id %>
 </p>
-<div>  <% if @deputy_director.deleted %>
+<div>  
+  <% if @deputy_director.deleted %>
       <i class="fa fa-times"></i>Inactive
   <% else %>
       <i class="fa fa-check-circle"></i>Active

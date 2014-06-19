@@ -16,7 +16,7 @@ class AssignmentController < ApplicationController
 
     response_action = @response.response_action
     if response_action == 'accept'
-      flash[:notice] = 'The question is accepted, you have been sent a guidance email'
+      flash[:notice] = 'Thank you for accepting, you have been sent a guidance email'
       @assignment_service.accept(@assignment)
     end
 

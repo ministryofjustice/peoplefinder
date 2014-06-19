@@ -1,16 +1,19 @@
 require 'spec_helper'
 
 describe ActionOfficer do
-  	let(:officer) {build(:action_officer)}
+	let(:officer) {build(:action_officer)}
 
-  	it 'should pass factory build' do
-  		expect(officer).to be_valid
-  	end
-  	it 'should have a deputy director' do
-  		officer.deputy_director_id = nil
-  		expect(officer).to be_invalid
+	it 'should pass factory build' do
+		expect(officer).to be_valid
 	end
-
+	it 'should have a deputy director' do
+		officer.deputy_director_id = nil
+		expect(officer).to be_invalid
+  end
+  it 'should have a press desk' do
+    officer.press_desk_id = nil
+    expect(officer).to be_invalid
+  end
   describe "associations" do
      
     it "should have a deputy director attribute" do

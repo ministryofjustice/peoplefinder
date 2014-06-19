@@ -1,0 +1,20 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @press_officer.name %>
+</p>
+
+<p>
+  <strong>Email:</strong>
+  <%= @press_officer.email %>
+</p>
+<div>  
+  <% if @press_officer.deleted %>
+      <i class="fa fa-times"></i>Inactive
+  <% else %>
+      <i class="fa fa-check-circle"></i>Active
+  <% end %>
+</div>
+<%= link_to 'Edit', edit_press_officer_path(@press_officer) %> |
+<%= link_to 'Back', press_officers_path %>
