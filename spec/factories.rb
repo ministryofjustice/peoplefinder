@@ -4,4 +4,7 @@ FactoryGirl.define do
       "Group-%04d" % n
     end
   end
+
+  factory :person do
+  end
 end

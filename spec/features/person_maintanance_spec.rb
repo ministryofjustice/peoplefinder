@@ -43,5 +43,14 @@ feature "Person maintenance" do
     expect(person.works_thursday).to be true
     expect(person.works_friday).to be false
   end
+
+  scenario 'Creating an invalid person' do
+    visit new_person_path
+    click_button "Create Person"
+    expect(page).to have_text('Please review the problems')
+    within('div.person_surname') do
+      expect(page).to have_text('can\'t be blank')
+    end
+  end
 end
 

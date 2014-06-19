@@ -1,5 +1,6 @@
 = simple_form_for @person do |f|
   %fieldset
+    = f.error_notification
     .form-person
       = f.input :given_name, as: :string
     .form-person
