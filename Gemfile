@@ -33,3 +33,7 @@ group :test do
   gem 'poltergeist', require: 'capybara/poltergeist'
   gem 'rspec-rails', '~> 3.0.0'
 end
+
+group :production do
+  gem 'rails_12factor'
+end
