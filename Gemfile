@@ -24,6 +24,7 @@ end
 
 group :development, :test do
   gem 'pry'
+  gem 'rspec-rails', '~> 3.0.0'
 end
 
 group :test do
@@ -31,7 +32,6 @@ group :test do
   gem 'factory_girl_rails'
   gem 'launchy'
   gem 'poltergeist', require: 'capybara/poltergeist'
-  gem 'rspec-rails', '~> 3.0.0'
 end
 
 group :production do
