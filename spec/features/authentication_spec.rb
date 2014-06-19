@@ -4,8 +4,8 @@ feature "Authentication" do
   before do
     OmniAuth.config.test_mode = true
 
-    OmniAuth.config.mock_auth[:google_apps] = OmniAuth::AuthHash.new({
-      provider: 'google_apps',
+    OmniAuth.config.mock_auth[:gplus] = OmniAuth::AuthHash.new({
+      provider: 'gplus',
       info: {
         email: 'test.user@digital.justice.gov.uk'
       }

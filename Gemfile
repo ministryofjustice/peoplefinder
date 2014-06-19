@@ -11,7 +11,7 @@ gem 'jquery-rails'
 gem 'moj_frontend_toolkit_gem',
   git: 'https://github.com/ministryofjustice/moj_frontend_toolkit_gem.git',
   ref: '8826821' # TODO: change to tag when branch remove_gem_lock is merged
-gem 'omniauth-google-apps'
+gem 'omniauth-gplus', '~> 2.0'
 gem 'pg'
 gem 'sass-rails', '~> 4.0.3'
 gem 'simple_form', '~> 3.1.0.rc1'
