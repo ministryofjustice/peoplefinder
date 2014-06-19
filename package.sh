@@ -1,5 +1,9 @@
 
-VERSION=`echo "$1" | sed -e "s/.*release\///g"`
+if [ -n "$1" ]; then 
+  export VERSION=`echo "$1" | sed -e "s/.*release\///g"`
+else
+  export VERSION='latest'
+fi
 
 # Generate a self contained bundle
 #cd build
