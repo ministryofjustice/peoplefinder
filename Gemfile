@@ -3,6 +3,7 @@ ruby '2.1.1'
 gem 'rails', '4.1.1'
 
 gem 'coffee-rails', '~> 4.0.0'
+gem 'friendly_id', '~> 5.0.0'
 gem 'govuk_frontend_toolkit'
 gem 'haml-rails'
 gem 'jbuilder', '~> 2.0'
