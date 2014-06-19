@@ -170,6 +170,8 @@ GEM
       sass (~> 3.2.0)
       sprockets (~> 2.8, <= 2.11.0)
       sprockets-rails (~> 2.0)
+    shoulda-matchers (2.5.0)
+      activesupport (>= 3.0.0)
     simple_form (3.1.0.rc1)
       actionpack (~> 4.0)
       activemodel (~> 4.0)
@@ -216,6 +218,7 @@ DEPENDENCIES
   jbuilder (~> 2.0)
   jquery-rails
   launchy
+  minitest
   moj_frontend_toolkit_gem!
   omniauth-google-apps
   pg
@@ -225,6 +228,7 @@ DEPENDENCIES
   rails_12factor
   rspec-rails (~> 3.0.0)
   sass-rails (~> 4.0.3)
+  shoulda-matchers
   simple_form (~> 3.1.0.rc1)
   spring
   thin

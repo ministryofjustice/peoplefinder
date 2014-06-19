@@ -32,6 +32,8 @@ group :test do
   gem 'factory_girl_rails'
   gem 'launchy'
   gem 'poltergeist', require: 'capybara/poltergeist'
+  gem 'minitest'
+  gem 'shoulda-matchers'
 end
 
 group :production do
