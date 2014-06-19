@@ -1,8 +1,10 @@
 = simple_form_for @group do |f|
   %fieldset
     .form-group
+      = f.input :name, as: :string
+    .form-group
       = f.association :parent
     .form-group
-      = f.input :name, as: :string, class: 'form-control'
+      = f.input :description
     .form-group
       = f.button :submit

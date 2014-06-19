@@ -1,11 +1,13 @@
 %p#notice= notice
 
 %p
+  %b Name:
+  = @group.name
+%p
   %b Parent:
   = @group.parent
 %p
-  %b Name:
-  = @group.name
+  = @group.description
 
 = link_to 'Edit', edit_group_path(@group)
 \|
