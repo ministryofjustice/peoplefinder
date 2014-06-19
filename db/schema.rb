@@ -28,4 +28,17 @@ ActiveRecord::Schema.define(version: 20140619095316) do
   add_index "groups", ["parent_id"], name: "index_groups_on_parent_id", using: :btree
   add_index "groups", ["slug"], name: "index_groups_on_slug", unique: true, using: :btree
 
+  create_table "people", force: true do |t|
+    t.string   "given_name"
+    t.string   "surname"
+    t.string   "email"
+    t.string   "phone"
+    t.string   "mobile"
+    t.string   "location"
+    t.string   "keywords"
+    t.text     "description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
 end

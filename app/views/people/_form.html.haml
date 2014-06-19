@@ -1,0 +1,20 @@
+= simple_form_for @person do |f|
+  %fieldset
+    .form-person
+      = f.input :given_name, as: :string
+    .form-person
+      = f.input :surname, as: :string
+    .form-person
+      = f.input :location, as: :string
+    .form-person
+      = f.input :phone, as: :string
+    .form-person
+      = f.input :mobile, as: :string
+    .form-person
+      = f.input :email, as: :string
+    .form-person
+      = f.input :description
+    .form-person
+      = f.input :keywords, as: :string
+    .form-person
+      = f.button :submit
