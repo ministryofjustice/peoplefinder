@@ -41,13 +41,13 @@ ActiveRecord::Schema.define(version: 20140620094222) do
   add_index "memberships", ["person_id"], name: "index_memberships_on_person_id", using: :btree
 
   create_table "people", force: true do |t|
-    t.string   "given_name"
-    t.string   "surname"
-    t.string   "email"
-    t.string   "phone"
-    t.string   "mobile"
-    t.string   "location"
-    t.string   "keywords"
+    t.text     "given_name"
+    t.text     "surname"
+    t.text     "email"
+    t.text     "phone"
+    t.text     "mobile"
+    t.text     "location"
+    t.text     "keywords"
     t.text     "description"
     t.datetime "created_at"
     t.datetime "updated_at"
