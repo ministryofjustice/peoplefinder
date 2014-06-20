@@ -12,6 +12,9 @@ feature "Audit trail" do
       fill_in 'Surname', with: 'something else'
       click_button 'Update Person'
       expect(person.versions.last.changeset['surname']).to eql(['original surname', 'something else'])
+
+      visit '/audit_trail'
+      expect(page).to have_text('Surname changed from: original surname to: something else')
     end
   end
 end

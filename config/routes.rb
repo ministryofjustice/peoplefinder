@@ -9,4 +9,5 @@ Rails.application.routes.draw do
   resource :sessions
 
   match '/auth/:provider/callback', to: 'sessions#create', via: [:get, :post]
+  match '/audit_trail', to: 'audits#index', via: [:get]
 end
