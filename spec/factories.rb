@@ -7,4 +7,7 @@ FactoryGirl.define do
 
   factory :person do
   end
+
+  factory :membership do
+  end
 end
