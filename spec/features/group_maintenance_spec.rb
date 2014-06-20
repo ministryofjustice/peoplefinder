@@ -29,5 +29,18 @@ feature "Group maintenance" do
     expect(team.name).to eql(name)
     expect(team.parent).to eql(org)
   end
+
+  scenario 'Deleting a group softly' do
+    membership = create(:membership)
+    group = membership.group
+    visit edit_group_path(group)
+    click_link('Delete this record')
+
+    expect { Group.find(group) }.to raise_error(ActiveRecord::RecordNotFound)
+    expect { Membership.find(membership) }.to raise_error(ActiveRecord::RecordNotFound)
+
+    expect(Group.with_deleted.find(group)).to eql(group)
+    expect(Membership.with_deleted.find(membership)).to eql(membership)
+  end
 end
 
