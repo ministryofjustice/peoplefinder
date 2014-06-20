@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe Group, :type => :model do
+  it { should have_many(:leaders) }
+
   it "should return its parent if present" do
     parent = create(:group)
     child = create(:group, parent: parent)

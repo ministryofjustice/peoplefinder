@@ -6,5 +6,7 @@
       = f.association :person
     .form-group
       = f.association :group
+    .form-checkbox
+      = f.input :leader, as: :boolean
     .form-group
       = f.button :submit

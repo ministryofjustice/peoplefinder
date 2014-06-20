@@ -6,4 +6,8 @@ class Person < ActiveRecord::Base
   def name
     [given_name, surname].compact.join(' ').strip
   end
+
+  def to_s
+    name
+  end
 end
