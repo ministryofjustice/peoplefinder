@@ -60,5 +60,23 @@ feature "Group maintenance" do
     expect(Group.with_deleted.find(group)).to eql(group)
     expect(Membership.with_deleted.find(membership)).to eql(membership)
   end
+
+  scenario "Editing a group" do
+    dept = create(:group, name: "Ministry of Justice")
+    org = create(:group, name: "CSG", parent: dept)
+    group = create(:group, name: "Digital Services", parent: org)
+
+    visit group_path(group)
+    click_link "Edit"
+
+    new_name = "Cyberdigital Cyberservices"
+    fill_in "Name", with: new_name
+    select dept.name, from: "Parent"
+    click_button "Update Group"
+
+    group.reload
+    expect(group.name).to eql(new_name)
+    expect(group.parent).to eql(dept)
+  end
 end
 
