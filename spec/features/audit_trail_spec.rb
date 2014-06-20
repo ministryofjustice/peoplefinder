@@ -14,6 +14,15 @@ feature "Audit trail" do
       expect(person.versions.last.changeset['surname']).to eql(['original surname', 'something else'])
     end
   end
+
+  scenario 'Deleting a person' do
+    membership = create(:membership)
+    person = membership.person
+    visit edit_person_path(person)
+    click_link('Delete this record')
+    expect { Person.find(person) }.to raise_error(ActiveRecord::RecordNotFound)
+    expect { Membership.find(membership) }.to raise_error(ActiveRecord::RecordNotFound)
+  end
 end
 
 

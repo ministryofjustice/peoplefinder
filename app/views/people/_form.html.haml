@@ -27,3 +27,7 @@
 
     .form-person
       = f.button :submit
+
+    - unless @person.new_record?
+      .form-person
+        = link_to 'Delete this record', person_path(@person), method: :delete
