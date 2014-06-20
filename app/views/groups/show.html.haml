@@ -24,3 +24,6 @@
 
     %div.grid-wrapper
       = render partial: "summary", collection: @group.children
+
+%p
+  = link_to 'Add', new_group_group_path(@group)

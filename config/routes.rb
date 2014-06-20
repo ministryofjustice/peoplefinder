@@ -1,7 +1,9 @@
 Rails.application.routes.draw do
   root 'welcome#index'
 
-  resources :groups
+  resources :groups do
+    resources :groups, only: [:new]
+  end
   resources :people
   resources :memberships
   resource :sessions

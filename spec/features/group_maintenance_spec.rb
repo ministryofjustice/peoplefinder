@@ -5,24 +5,42 @@ feature "Group maintenance" do
     log_in_as 'test.user@digital.justice.gov.uk'
   end
 
-  scenario "Creating a top-level organisation" do
-    name = "An Organisation"
+  scenario "Creating a top-level department" do
+    name = "Ministry of Justice"
+
     visit new_group_path
     fill_in "Name", with: name
     click_button "Create Group"
 
-    org = Group.find_by_name(name)
-    expect(org.name).to eql(name)
-    expect(org.parent).to be_nil
+    dept = Group.find_by_name(name)
+    expect(dept.name).to eql(name)
+    expect(dept.parent).to be_nil
   end
 
-  scenario "Creating a team inside an organisation" do
-    org = create(:group)
+  scenario "Creating an organisation inside the department" do
+    dept = create(:group, name: "Ministry of Justice")
 
-    name = "A Team"
+    name = "CSG"
     visit new_group_path
     fill_in "Name", with: name
-    select org.name, from: "Parent"
+    select dept.name, from: "Parent"
+    click_button "Create Group"
+
+    org = Group.find_by_name(name)
+    expect(org.name).to eql(name)
+    expect(org.parent).to eql(dept)
+  end
+
+  scenario "Creating a team inside an organisation from the organisation's page" do
+    dept = create(:group, name: "Ministry of Justice")
+    org = create(:group, parent: dept)
+
+    visit group_path(org)
+
+    click_link "Add"
+
+    name = "Digital Services"
+    fill_in "Name", with: name
     click_button "Create Group"
 
     team = Group.find_by_name(name)

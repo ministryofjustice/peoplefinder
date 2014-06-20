@@ -14,7 +14,7 @@ class GroupsController < ApplicationController
 
   # GET /groups/new
   def new
-    @group = Group.new
+    @group = Group.new(parent: nested_parent)
   end
 
   # GET /groups/1/edit
@@ -64,11 +64,16 @@ class GroupsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_group
-      @group = Group.find_by_slug(params[:id])
+      @group = Group.friendly.find(params[:id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def group_params
       params.require(:group).permit(:parent_id, :name, :description)
+    end
+
+    def nested_parent
+      id = params[:group_id]
+      id && Group.friendly.find(id)
     end
 end
