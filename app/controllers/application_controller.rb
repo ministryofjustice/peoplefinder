@@ -6,6 +6,10 @@ class ApplicationController < ActionController::Base
 
   private
 
+  def user_for_paper_trail
+    logged_in? ? current_user.to_s : 'Public user'
+  end
+
   def current_user
     session['current_user']
   end
