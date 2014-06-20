@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140620132440) do
+ActiveRecord::Schema.define(version: 20140620134259) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -66,10 +66,10 @@ ActiveRecord::Schema.define(version: 20140620132440) do
   add_index "people", ["deleted_at"], name: "index_people_on_deleted_at", using: :btree
 
   create_table "versions", force: true do |t|
-    t.string   "item_type",      null: false
+    t.text     "item_type",      null: false
     t.integer  "item_id",        null: false
-    t.string   "event",          null: false
-    t.string   "whodunnit"
+    t.text     "event",          null: false
+    t.text     "whodunnit"
     t.text     "object"
     t.datetime "created_at"
     t.text     "object_changes"
