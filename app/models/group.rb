@@ -13,11 +13,27 @@ class Group < ActiveRecord::Base
     where(parent_id: nil)
   end
 
+  def self.find_by_slug(slug)
+    if slug
+      friendly.find(slug)
+    else
+      Department.instance
+    end
+  end
+
   def parent
     super || Department.instance
   end
 
   def to_s
     name
+  end
+
+  def editable?
+    true
+  end
+
+  def type_of_children
+    "Teams"
   end
 end

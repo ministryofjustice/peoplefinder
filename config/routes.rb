@@ -1,7 +1,11 @@
 Rails.application.routes.draw do
-  resource :sessions
-  match '/auth/:provider/callback', to: 'sessions#create', via: [:get, :post]
   root 'welcome#index'
 
-  resources :groups, :people, :memberships
+  resources :groups
+  resources :people
+  resources :memberships
+  resource :sessions
+
+  match '/auth/:provider/callback', to: 'sessions#create', via: [:get, :post]
+  get '/department', to: 'groups#show', id: nil, as: :department
 end

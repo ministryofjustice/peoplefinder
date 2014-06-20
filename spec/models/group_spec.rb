@@ -21,4 +21,9 @@ RSpec.describe Group, :type => :model do
     child = create(:group, parent: parent)
     expect(parent.children.to_a).to eql([child])
   end
+
+  it "should call its children 'teams'" do
+    group = create(:group)
+    expect(group.type_of_children).to eql("Teams")
+  end
 end
