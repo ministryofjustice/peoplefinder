@@ -34,4 +34,8 @@ class Department
   def type_of_children
     "Organisations"
   end
+
+  def leaders
+    []
+  end
 end
