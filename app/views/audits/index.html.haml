@@ -1,6 +1,6 @@
 %h1 Audit Trail
 
-%p.font-xsmall Currently displaying the last 1000 changes
+.font-xsmall= will_paginate(@versions)
 %table
   %th Date
   %th Item
@@ -30,5 +30,4 @@
           to: #{ k[1][1] }
           %br
       %td= version.whodunnit
-
-
+.font-xsmall= will_paginate(@versions)
