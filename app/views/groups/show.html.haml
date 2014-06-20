@@ -1,20 +1,21 @@
 %p#notice= notice
 
-%p
-  %b Name:
-  = @group.name
-%p
-  %b Parent:
-  = @group.parent
+%h1
+  = @group
+
+= link_to 'Edit', edit_group_path(@group)
+
+- if @group.parent
+  %p
+    %b Parent:
+    = link_to @group.parent, @group.parent
+
 %p
   %b Leader:
   - @group.leaders.each do |leader|
     = link_to leader, person_path(leader)
 %p
   = @group.description
-
-= link_to 'Edit', edit_group_path(@group)
-\|
 
 %div
   %h2
