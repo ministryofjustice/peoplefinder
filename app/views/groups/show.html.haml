@@ -17,8 +17,10 @@
 %p
   = @group.description
 
-%div
-  %h2
-    = child_level_description(@group)
+- if @group.children.any?
+  %div
+    %h2
+      = child_level_description(@group)
 
-  = render partial: "summary", collection: @group.children
+    %div.grid-wrapper
+      = render partial: "summary", collection: @group.children
