@@ -13,12 +13,11 @@
 %p
   = @group.description
 
-- if @group.editable?
-  = link_to 'Edit', edit_group_path(@group)
-  \|
+= link_to 'Edit', edit_group_path(@group)
+\|
 
 %div
   %h2
-    = @group.type_of_children
+    = child_level_description(@group)
 
   = render partial: "summary", collection: @group.children

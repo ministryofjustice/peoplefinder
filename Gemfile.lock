@@ -234,6 +234,7 @@ DEPENDENCIES
   pry
   rails (= 4.1.1)
   rails_12factor
+  rspec-mocks
   rspec-rails (~> 3.0.0)
   sass-rails (~> 4.0.3)
   shoulda-matchers

@@ -13,7 +13,7 @@ feature "Group maintenance" do
 
     org = Group.find_by_name(name)
     expect(org.name).to eql(name)
-    expect(org.parent).to eql(Department.instance)
+    expect(org.parent).to be_nil
   end
 
   scenario "Creating a team inside an organisation" do
