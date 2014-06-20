@@ -9,3 +9,41 @@
 @import "moj-base";
 
 @import "main";
+
+h1 {
+  @include bold-36();
+
+  margin-top: em(25, 24);
+  margin-bottom: em(10, 24);
+
+  @include media(tablet) {
+    margin-top: em(45, 36 );
+    margin-bottom: em(20, 36);
+  }
+
+}
+
+h2 {
+  @include bold-24();
+
+  margin-top: em(25, 20);
+  margin-bottom: em(10, 20);
+
+  @include media(tablet) {
+    margin-top: em(45, 24);
+    margin-bottom: em(20, 24);
+  }
+
+}
+
+h3 {
+  @include bold-19();
+
+  margin-top: em(10, 16);
+  margin-bottom: em(5, 16);
+
+  @include media(tablet) {
+    margin-top: em(20, 19);
+  }
+
+}
