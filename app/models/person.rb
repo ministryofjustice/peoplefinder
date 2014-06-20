@@ -1,5 +1,6 @@
 class Person < ActiveRecord::Base
   has_paper_trail
+  acts_as_paranoid
 
   validates_presence_of :surname
   has_many :memberships, dependent: :destroy
