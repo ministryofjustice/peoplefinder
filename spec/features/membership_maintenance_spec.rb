@@ -11,5 +11,12 @@ feature "Membership maintenance" do
 
     visit edit_person_path(person)
     within('div.membership') { click_link('Add another') }
+    fill_in 'Role', with: 'Designer'
+    select 'Doe', from: 'Person'
+    select 'Digital Services', from: 'Group'
+    click_button 'Create Membership'
+
+    expect(person.groups).to include(group)
+    expect(person.memberships.first.role).to eql('Designer')
   end
 end

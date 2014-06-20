@@ -1,7 +1,10 @@
-= simple_form_for(@membership) do |f|
-  = f.error_notification
-
-  .form-inputs
-
-  .form-actions
-    = f.button :submit
+= simple_form_for @membership do |f|
+  %fieldset
+    .form-group
+      = f.input :role, as: :string
+    .form-group
+      = f.association :person
+    .form-group
+      = f.association :group
+    .form-group
+      = f.button :submit
