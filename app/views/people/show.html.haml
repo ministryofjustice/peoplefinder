@@ -1,17 +1,35 @@
-%p#notice= notice
+%h1 My Profile
+.person-name= @person.name
+%dl.person
+  - @person.memberships.each do |membership|
+    %dt Organisation
+    %dd= link_to membership.name, group_path(membership.group)
 
-%p
-  %b Name:
-  = @person.name
+    %dt= 'Role'
+    %dd= membership.role
 
-%p
-- @person.memberships.each do |membership|
-  %b Organisation:
-  = link_to membership.name, group_path(membership.group)
-  %br
-  %b Role:
-  = membership.role
+  %dt Location
+  %dd.location= @person.location
 
+  %dt Email
+  %dd= @person.email
+
+  %dt Phone
+  %dd= @person.phone
+
+  %dt Mobile
+  %dd= @person.mobile
+
+  %dt Description
+  %dd= @person.description
+
+  %dt Keywords
+  %dd= @person.keywords
+
+%ul.working_days
+  - ['works_monday', 'works_tuesday', 'works_wednesday', 'works_thursday', 'works_friday'].each do |day|
+    %li{class: ('active' if @person.send(day))}
+      = day.match(/works_(.)/)[1].upcase + (day == 'works_thursday' ? 'h' : '')
 %p
 = link_to 'Edit', edit_person_path(@person)
 \|

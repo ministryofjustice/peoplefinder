@@ -33,7 +33,9 @@ feature "Membership maintenance" do
    scenario 'Showing groups and roles on profile page' do
      membership = person.memberships.create!(group: group, role: 'Worker Bee')
      visit person_path(person)
-     expect(page).to have_content('Organisation: Digital Services')
-     expect(page).to have_content('Role: Worker Bee')
+     within('dl.person') do
+       expect(page).to have_content('Digital Services')
+       expect(page).to have_content('Worker Bee')
+     end
    end
 end
