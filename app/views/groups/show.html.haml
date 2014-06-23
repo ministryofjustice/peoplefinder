@@ -13,6 +13,7 @@
 %p
   %b Leader:
   - [@group.leader].compact.each do |leader|
+    = image_tag leader.image, class: 'group-leader'
     = link_to leader, person_path(leader)
 %p
   = @group.description
