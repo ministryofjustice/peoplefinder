@@ -6,6 +6,8 @@ class Person < ActiveRecord::Base
   has_many :memberships, dependent: :destroy
   has_many :groups, through: :memberships
 
+  default_scope { order(surname: :asc, given_name: :asc) }
+
   def name
     [given_name, surname].compact.join(' ').strip
   end
