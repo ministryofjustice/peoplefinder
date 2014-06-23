@@ -25,5 +25,12 @@
     %div.grid-wrapper
       = render partial: "summary", collection: @group.children
 
+- if @group.non_leaders.any?
+  %div
+    %h2 Team
+
+    %div.grid-wrapper
+      = render partial: "people/summary", collection: @group.non_leaders
+
 %p
   = link_to new_child_group_cta(@group), new_group_group_path(@group)

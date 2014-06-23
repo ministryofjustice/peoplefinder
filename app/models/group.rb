@@ -9,7 +9,9 @@ class Group < ActiveRecord::Base
   has_many :children, class_name: 'Group', foreign_key: 'parent_id'
   has_many :memberships, dependent: :destroy
   has_many :leaderships, -> { where(leader: true) }, class_name: 'Membership'
+  has_many :non_leaderships, -> { where(leader: false) }, class_name: 'Membership'
   has_many :leaders, through: :leaderships, source: :person
+  has_many :non_leaders, through: :non_leaderships, source: :person
 
   validates_presence_of :name
 
