@@ -19,6 +19,7 @@ gem 'uglifier', '>= 1.3.0'
 gem 'paper_trail', '~> 3.0.2'
 gem 'paranoia', '~> 2.0'
 gem 'will_paginate', '~> 3.0'
+gem 'carrierwave', '~> 0.10.0'
 
 group :development do
   gem 'spring'
