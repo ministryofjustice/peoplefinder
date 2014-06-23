@@ -9,6 +9,9 @@ dl.person {
   dt::after {
     content:": "
   }
+  dd {
+    float:left;
+  }
 }
 ul.working_days {
   clear: both;
