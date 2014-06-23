@@ -5,6 +5,9 @@
   = "#{@person.completion_score}%"
   complete.
 
+- if @person.image
+  = image_tag @person.image
+
 %dl.person
   - @person.memberships.each do |membership|
     %dt Organisation

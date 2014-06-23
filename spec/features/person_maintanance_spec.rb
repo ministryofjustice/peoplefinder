@@ -75,6 +75,17 @@ feature "Person maintenance" do
       expect(page).to have_text('Jane Doe')
     end
   end
+
+  scenario 'Adding a profile image' do
+    visit new_person_path
+    fill_in 'Surname', with: person_attributes[:surname]
+    attach_file 'Image',File.join(Rails.root, "spec", "fixtures", "placeholder.png")
+    click_button 'Create Person'
+
+    person = Person.find_by_surname(person_attributes[:surname])
+    visit person_path(person)
+    expect(page).to have_css("img[src*='#{person.image}']")
+  end
 end
 
 def person_attributes

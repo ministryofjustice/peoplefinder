@@ -1,4 +1,4 @@
-= simple_form_for @person do |f|
+= simple_form_for @person, :html => {:multipart => true} do |f|
   %fieldset
     = f.error_notification
     .form-person
@@ -24,7 +24,8 @@
     .form-checkbox
       - [:works_monday, :works_tuesday, :works_wednesday, :works_thursday, :works_friday].each do |day|
         = f.input day, as: :boolean, label: day.to_s.titleize
-
+    .form-person
+      = f.input :image, as: :file
     .form-person
       = f.button :submit
 

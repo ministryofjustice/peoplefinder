@@ -1,6 +1,7 @@
 class Person < ActiveRecord::Base
   has_paper_trail ignore: [:updated_at, :created_at, :id]
   acts_as_paranoid
+  mount_uploader :image, ImageUploader
 
   validates_presence_of :surname
   has_many :memberships, dependent: :destroy
