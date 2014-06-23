@@ -63,6 +63,18 @@ feature "Person maintenance" do
     expect(Person.with_deleted.find(person)).to eql(person)
     expect(Membership.with_deleted.find(membership)).to eql(membership)
   end
+
+  scenario 'Editing a person' do
+    visit person_path(create(:person, person_attributes))
+    click_link 'Edit Page'
+    fill_in 'Given name', with: 'Jane'
+    fill_in 'Surname', with: 'Doe'
+    click_button 'Update Person'
+
+    within('.person-name') do
+      expect(page).to have_text('Jane Doe')
+    end
+  end
 end
 
 def person_attributes
