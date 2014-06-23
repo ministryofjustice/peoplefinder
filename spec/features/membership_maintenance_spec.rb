@@ -27,7 +27,9 @@ feature "Membership maintenance" do
     click_button 'Update Membership'
 
     visit group_path(group)
-    expect(page).to have_content('Leader: Doe')
+    within('h2.group-leader') do
+      expect(page).to have_content('Doe')
+    end
   end
 
   scenario 'Showing groups and roles on profile page' do

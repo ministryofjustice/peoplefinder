@@ -70,6 +70,10 @@ feature "Group maintenance" do
     visit group_path(group)
     click_link "Edit"
 
+    within('div.group-name') do
+      expect(page).to have_text('About Digital Services')
+    end
+
     new_name = "Cyberdigital Cyberservices"
     fill_in "Name", with: new_name
     select dept.name, from: "Parent"

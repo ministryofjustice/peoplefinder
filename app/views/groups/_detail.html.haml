@@ -1,0 +1,14 @@
+%h1= @group
+
+- [@group.leadership].compact.each do |leadership|
+  - person = leadership.person
+
+  = image_tag person.image, class: 'group-leader'
+
+  %h2.group-leader= link_to person.name, person_path(person)
+  .leader-role= leadership.role
+
+  %p= person.description
+
+.group-name= "About #{ @group.name }"
+%p= @group.description

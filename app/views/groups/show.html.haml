@@ -1,7 +1,5 @@
 %p#notice= notice
-
-%h1
-  = @group
+= render partial: 'detail'
 
 = link_to 'Edit', edit_group_path(@group)
 
@@ -9,14 +7,6 @@
   %p
     %b Parent:
     = link_to @group.parent, @group.parent
-
-%p
-  %b Leader:
-  - [@group.leader].compact.each do |leader|
-    = image_tag leader.image, class: 'group-leader'
-    = link_to leader, person_path(leader)
-%p
-  = @group.description
 
 - if @group.children.any?
   %div
