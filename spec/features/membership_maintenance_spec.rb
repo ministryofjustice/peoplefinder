@@ -21,21 +21,21 @@ feature "Membership maintenance" do
   end
 
   scenario 'Making someone the leader of a group' do
-     membership = person.memberships.create!(group: group, role: 'Jefe')
-     visit edit_membership_path(membership)
-     check('Leader')
-     click_button 'Update Membership'
+    membership = person.memberships.create!(group: group, role: 'Jefe')
+    visit edit_membership_path(membership)
+    check('Leader')
+    click_button 'Update Membership'
 
-     visit group_path(group)
-     expect(page).to have_content('Leader: Doe')
-   end
+    visit group_path(group)
+    expect(page).to have_content('Leader: Doe')
+  end
 
-   scenario 'Showing groups and roles on profile page' do
-     membership = person.memberships.create!(group: group, role: 'Worker Bee')
-     visit person_path(person)
-     within('dl.person') do
-       expect(page).to have_content('Digital Services')
-       expect(page).to have_content('Worker Bee')
-     end
-   end
+  scenario 'Showing groups and roles on profile page' do
+    membership = person.memberships.create!(group: group, role: 'Worker Bee')
+    visit person_path(person)
+    within('dl.person') do
+      expect(page).to have_content('Digital Services')
+      expect(page).to have_content('Worker Bee')
+    end
+  end
 end
