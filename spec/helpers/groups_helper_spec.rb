@@ -1,32 +1,27 @@
 require 'rails_helper'
 
 RSpec.describe GroupsHelper, :type => :helper do
-  it "should call top level Department" do
-    group = double(level: 0)
-    expect(level_description(group)).to eql("Department")
+  it "should list second level Organisations" do
+    dept = double(level: 0)
+    expect(child_group_list_title(dept)).to eql("Organisations")
   end
 
-  it "should call second level Organisation" do
-    group = double(level: 1)
-    expect(level_description(group)).to eql("Organisation")
-  end
-
-  it "should call subsequent levels Team" do
+  it "should list subsequent level Teams" do
     [3, 4, 9].each do |level|
       group = double(level: level)
-      expect(level_description(group)).to eql("Team")
+      expect(child_group_list_title(group)).to eql("Teams")
     end
   end
 
-  it "should call children of top level Organisations" do
-    group = double(level: 0)
-    expect(child_level_description(group)).to eql("Organisations")
+  it "should use 'Add organisation' as CTA from department" do
+    dept = double(level: 0)
+    expect(new_child_group_cta(dept)).to eql("Add organisation")
   end
 
-  it "should call children of subsequent levels Teams" do
+  it "should use 'Add team' as CTA from organisation" do
     [3, 4, 9].each do |level|
       group = double(level: level)
-      expect(child_level_description(group)).to eql("Teams")
+      expect(new_child_group_cta(group)).to eql("Add team")
     end
   end
 end

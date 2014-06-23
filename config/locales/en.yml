@@ -20,4 +20,10 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
+  groups:
+    list:
+      team: "Teams"
+      organization: "Organisations"
+    add_cta:
+      team: "Add team"
+      organization: "Add organisation"

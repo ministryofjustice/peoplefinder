@@ -20,8 +20,10 @@ feature "Group maintenance" do
   scenario "Creating an organisation inside the department" do
     dept = create(:group, name: "Ministry of Justice")
 
+    visit group_path(dept)
+    click_link "Add organisation"
+
     name = "CSG"
-    visit new_group_path
     fill_in "Name", with: name
     select dept.name, from: "Parent"
     click_button "Create Group"
@@ -36,8 +38,7 @@ feature "Group maintenance" do
     org = create(:group, parent: dept)
 
     visit group_path(org)
-
-    click_link "Add"
+    click_link "Add team"
 
     name = "Digital Services"
     fill_in "Name", with: name

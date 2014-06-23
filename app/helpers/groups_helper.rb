@@ -1,9 +1,15 @@
 module GroupsHelper
-  def level_description(group)
-    %w[ Department Organisation Team ][[group.level, 2].min]
+  def level_symbol(level)
+    levels = [:department, :organization, :team]
+    index = [level, levels.length - 1].min
+    levels[index]
   end
 
-  def child_level_description(group)
-    %w[ Organisations Teams ][[group.level, 1].min]
+  def child_group_list_title(group)
+    I18n.t(level_symbol(group.level.succ), scope: [:groups, :list])
+  end
+
+  def new_child_group_cta(group)
+    I18n.t(level_symbol(group.level.succ), scope: [:groups, :add_cta])
   end
 end

@@ -20,10 +20,10 @@
 - if @group.children.any?
   %div
     %h2
-      = child_level_description(@group)
+      = child_group_list_title(@group)
 
     %div.grid-wrapper
       = render partial: "summary", collection: @group.children
 
 %p
-  = link_to 'Add', new_group_group_path(@group)
+  = link_to new_child_group_cta(@group), new_group_group_path(@group)
