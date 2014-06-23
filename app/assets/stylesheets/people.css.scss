@@ -1,7 +1,17 @@
 // Place all the styles related to the people controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+dl.person {
+  dt {
+    float:left;
+    clear:both;
+  }
+  dt::after {
+    content:": "
+  }
+}
 ul.working_days {
+  clear: both;
   list-style: none;
   padding: 0;
   li {
