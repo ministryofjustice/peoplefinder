@@ -1,5 +1,11 @@
 %h1 My Profile
 .person-name= @person.name
+
+%p
+  Your profile is
+  = "#{@person.completion_score}%"
+  complete.
+
 %dl.person
   - @person.memberships.each do |membership|
     %dt Organisation
