@@ -16,7 +16,7 @@ RSpec.describe Person, :type => :model do
     end
 
     context 'with a surname only' do
-      it 'should use thesurname' do
+      it 'should use the surname' do
         expect(person.name).to eql('von Brown')
       end
     end
@@ -50,6 +50,20 @@ RSpec.describe Person, :type => :model do
         description: "I am a real person",
       )
       expect(person.completion_score).to eql(100)
+    end
+  end
+
+  context "slug" do
+    it "should be generated from the first part of the email address if present" do
+      person = create(:person, email: "user.example@digital.justice.gov.uk")
+      person.reload
+      expect(person.slug).to eql("user-example")
+    end
+
+    it "should be generated from the name if there is no email" do
+      person = create(:person, given_name: "Bobby", surname: "Tables")
+      person.reload
+      expect(person.slug).to eql("bobby-tables")
     end
   end
 end
