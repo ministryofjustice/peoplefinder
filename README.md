@@ -37,4 +37,4 @@ Then rebuild it: `Person.import`
 
 You can also delete the index:
 
-Person.__elasticsearch__.delete_index! index: Person.index_name
+`Person.__elasticsearch__.delete_index! index: Person.index_name`
