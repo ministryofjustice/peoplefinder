@@ -1,6 +1,11 @@
 class PeopleController < ApplicationController
   before_action :set_person, only: [:show, :edit, :update, :destroy]
 
+  def search
+    @people = Person.search(params[:query]).records
+    render :index
+  end
+
   # GET /people
   # GET /people.json
   def index

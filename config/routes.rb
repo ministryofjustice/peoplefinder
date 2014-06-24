@@ -10,4 +10,5 @@ Rails.application.routes.draw do
 
   match '/auth/:provider/callback', to: 'sessions#create', via: [:get, :post]
   match '/audit_trail', to: 'audits#index', via: [:get]
+  match '/search', to: 'people#search', via: [:get]
 end

@@ -1,5 +1,9 @@
 class Person < ActiveRecord::Base
   extend FriendlyId
+  include Elasticsearch::Model
+  include Elasticsearch::Model::Callbacks
+
+  index_name [Rails.env, model_name.collection.gsub(/\//, '-')].join('_')
   has_paper_trail ignore: [:updated_at, :created_at, :id]
   acts_as_paranoid
   mount_uploader :image, ImageUploader

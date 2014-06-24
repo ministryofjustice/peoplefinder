@@ -1,0 +1,3 @@
+= form_tag '/search', method: :get do
+  = text_field_tag :query, params[:query]
+  = submit_tag 'Search'
