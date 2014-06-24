@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Group, :type => :model do
-  it { should have_one(:leader) }
+  it { should have_many(:leaders) }
 
   it "should list orphaned groups as departments" do
     parent = create(:group, parent: nil)

@@ -1,6 +1,6 @@
 %h1= @group
 
-- [@group.leadership].compact.each do |leadership|
+- @group.leaderships.each do |leadership|
   - person = leadership.person
 
   = image_tag person.image, class: 'group-leader'
