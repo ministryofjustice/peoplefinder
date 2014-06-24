@@ -59,6 +59,19 @@ GEM
     coffee-script-source (1.7.0)
     daemons (1.1.9)
     diff-lcs (1.2.5)
+    elasticsearch (1.0.2)
+      elasticsearch-api (= 1.0.2)
+      elasticsearch-transport (= 1.0.2)
+    elasticsearch-api (1.0.2)
+      multi_json
+    elasticsearch-model (0.1.4)
+      activesupport (> 3)
+      elasticsearch (> 0.4)
+      hashie
+    elasticsearch-rails (0.1.4)
+    elasticsearch-transport (1.0.2)
+      faraday
+      multi_json
     erubis (2.7.0)
     eventmachine (1.0.3)
     excon (0.31.0)
@@ -241,6 +254,8 @@ DEPENDENCIES
   capybara
   carrierwave (~> 0.10.0)
   coffee-rails (~> 4.0.0)
+  elasticsearch-model (~> 0.1.4)
+  elasticsearch-rails (~> 0.1.4)
   factory_girl_rails
   fog (~> 1.20.0)
   friendly_id (~> 5.0.0)

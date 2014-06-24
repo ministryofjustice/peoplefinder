@@ -21,6 +21,8 @@ gem 'paranoia', '~> 2.0'
 gem 'will_paginate', '~> 3.0'
 gem 'carrierwave', '~> 0.10.0'
 gem 'fog', '~> 1.20.0'
+gem 'elasticsearch-model', '~> 0.1.4'
+gem 'elasticsearch-rails', '~> 0.1.4'
 
 group :development do
   gem 'spring'
