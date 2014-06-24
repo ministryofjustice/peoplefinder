@@ -40,4 +40,15 @@ feature "Membership maintenance" do
       expect(page).to have_content('Worker Bee')
     end
   end
+
+  scenario 'Adding a person from a groups page' do
+    visit group_path(group)
+    click_link 'Add member'
+    select person.name, from: 'Person'
+    fill_in 'Role', with: 'Goat farmer'
+    click_button 'Create Membership'
+
+    expect(person.memberships.first.role).to eql('Goat farmer')
+    expect(person.memberships.first.person).to eql(person)
+  end
 end

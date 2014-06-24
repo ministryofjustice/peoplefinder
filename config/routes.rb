@@ -3,6 +3,7 @@ Rails.application.routes.draw do
 
   resources :groups do
     resources :groups, only: [:new]
+    resources :memberships, controller: 'group_memberships'
   end
   resources :people
   resources :memberships

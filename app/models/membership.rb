@@ -7,4 +7,6 @@ class Membership < ActiveRecord::Base
   validates :person, :group, presence: true
 
   delegate :name, to: :group
+  delegate :name, to: :person, prefix: true
+  delegate :name, to: :group, prefix: true
 end

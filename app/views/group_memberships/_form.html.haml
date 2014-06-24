@@ -1,0 +1,10 @@
+= simple_form_for [@group, @membership] do |f|
+  %fieldset
+    .form-group
+      = f.input :role, as: :string
+    .form-group
+      = f.association :person
+    .form-checkbox
+      = f.input :leader, as: :boolean
+    .form-group
+      = f.button :submit

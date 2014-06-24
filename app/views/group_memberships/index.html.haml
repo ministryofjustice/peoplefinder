@@ -1,0 +1,13 @@
+%h1
+  Members of
+  = link_to @group, group_path(@group)
+
+= link_to 'Add member', new_group_membership_path(@group)
+
+%table
+  - @memberships.each do |membership|
+    %tr
+      %td= link_to membership.person_name, membership.person
+      %td= membership.role
+      %td= link_to 'Edit', edit_group_membership_path(@group, membership)
+      %td= link_to 'Remove', group_membership_path(@group, membership), :method => :delete, :data => { :confirm => 'Are you sure?' }
