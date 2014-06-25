@@ -4,6 +4,10 @@ class Person < ActiveRecord::Base
   include Elasticsearch::Model::Callbacks
 
   index_name [Rails.env, model_name.collection.gsub(/\//, '-')].join('_')
+  mapping do
+    indexes :name, analyzer: 'snowball'
+  end
+
   has_paper_trail ignore: [:updated_at, :created_at, :id]
   acts_as_paranoid
   mount_uploader :image, ImageUploader
