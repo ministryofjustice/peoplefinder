@@ -43,6 +43,8 @@ group :test do
   gem 'minitest'
   gem 'poltergeist', require: 'capybara/poltergeist'
   gem 'shoulda-matchers'
+  gem 'simplecov', '~> 0.7.1', require: false
+  gem 'simplecov-rcov', require: false
 end
 
 group :production do
