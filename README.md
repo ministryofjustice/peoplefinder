@@ -35,7 +35,7 @@ Or you can build the index from the console:
 
 You can also delete the index:
 
-`Person.delete_index`
+`Person.delete_indexes`
 
 To run specs without Elasticsearch:
 
