@@ -38,3 +38,7 @@ Then rebuild it: `Person.import`
 You can also delete the index:
 
 `Person.__elasticsearch__.delete_index! index: Person.index_name`
+
+To run specs without Elasticsearch:
+
+`bundle exec rspec . --tag ~@elastic`
