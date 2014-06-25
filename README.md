@@ -31,6 +31,7 @@ If you get an IndexMissingException, you will need to index the Person model:
 
 Or you can build the index from the console:
 
+`Person.__elasticsearch__.create_index! index: Person.index_name, force: true`
 `Person.import`
 
 You can also delete the index:
