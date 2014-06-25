@@ -8,7 +8,6 @@ Rails.application.routes.draw do
   resources :people do
     resources :memberships, controller: 'person_memberships'
   end
-  resources :memberships
   resource :sessions
 
   match '/auth/:provider/callback', to: 'sessions#create', via: [:get, :post]

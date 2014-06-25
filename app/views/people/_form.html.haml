@@ -8,10 +8,6 @@
     .form-group
       = f.input :location, as: :string
     .form-group
-      .membership
-        %label Membership
-        = link_to 'Add another', new_membership_path(person_id: @person.id)
-    .form-group
       = f.input :phone, as: :string
     .form-group
       = f.input :mobile, as: :string
