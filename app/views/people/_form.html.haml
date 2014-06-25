@@ -1,34 +1,34 @@
 = simple_form_for @person, :html => {:multipart => true} do |f|
   %fieldset
     = f.error_notification
-    .form-person
+    .form-group
       = f.input :given_name, as: :string
-    .form-person
+    .form-group
       = f.input :surname, as: :string
-    .form-person
+    .form-group
       = f.input :location, as: :string
-    .form-person
+    .form-group
       .membership
         %label Membership
         = link_to 'Add another', new_membership_path(person_id: @person.id)
-    .form-person
+    .form-group
       = f.input :phone, as: :string
-    .form-person
+    .form-group
       = f.input :mobile, as: :string
-    .form-person
+    .form-group
       = f.input :email, as: :string
-    .form-person
+    .form-group
       = f.input :description
-    .form-person
+    .form-group
       = f.input :keywords, as: :string
     .form-checkbox
       - [:works_monday, :works_tuesday, :works_wednesday, :works_thursday, :works_friday].each do |day|
         = f.input day, as: :boolean, label: day.to_s.titleize
-    .form-person
+    .form-group
       = f.input :image, as: :file
-    .form-person
+    .form-group
       = f.button :submit
 
     - unless @person.new_record?
-      .form-person
+      .form-group
         = link_to 'Delete this record', person_path(@person), method: :delete
