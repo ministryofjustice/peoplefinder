@@ -66,7 +66,7 @@ feature "Person maintenance" do
 
   scenario 'Editing a person' do
     visit person_path(create(:person, person_attributes))
-    click_link 'Edit Page'
+    click_link 'Edit profile'
     fill_in 'Given name', with: 'Jane'
     fill_in 'Surname', with: 'Doe'
     click_button 'Update Person'
