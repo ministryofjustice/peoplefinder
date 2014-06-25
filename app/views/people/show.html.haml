@@ -40,3 +40,4 @@
       = day.match(/works_(.)/)[1].upcase + (day == 'works_thursday' ? 'h' : '')
 %p
 = link_to 'Edit Page', edit_person_path(@person)
+= link_to 'Edit groups', person_memberships_path(@person)

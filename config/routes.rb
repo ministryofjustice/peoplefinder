@@ -5,7 +5,9 @@ Rails.application.routes.draw do
     resources :groups, only: [:new]
     resources :memberships, controller: 'group_memberships'
   end
-  resources :people
+  resources :people do
+    resources :memberships, controller: 'person_memberships'
+  end
   resources :memberships
   resource :sessions
 

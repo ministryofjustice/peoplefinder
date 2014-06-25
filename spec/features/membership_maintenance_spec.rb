@@ -51,4 +51,16 @@ feature "Membership maintenance" do
     expect(person.memberships.first.role).to eql('Goat farmer')
     expect(person.memberships.first.person).to eql(person)
   end
+
+  scenario "Adding a group from a person's page" do
+    visit person_path(person)
+    click_link 'Edit groups'
+    click_link 'Add group'
+    select group.name, from: 'Group'
+    fill_in 'Role', with: 'Goat farmer'
+    click_button 'Create Membership'
+
+    expect(person.memberships.first.role).to eql('Goat farmer')
+    expect(person.memberships.first.group).to eql(group)
+  end
 end
