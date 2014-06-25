@@ -41,7 +41,7 @@ feature "Membership maintenance" do
     end
   end
 
-  scenario 'Adding a person from a groups page' do
+  scenario "Adding a person from a group's page" do
     visit group_path(group)
     click_link 'Add member'
     select person.name, from: 'Person'
