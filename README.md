@@ -31,13 +31,11 @@ If you get an IndexMissingException, you will need to index the Person model:
 
 Or you can build the index from the console:
 
-`Person.__elasticsearch__.create_index! force: true`
-
-Then rebuild it: `Person.import`
+`Person.import`
 
 You can also delete the index:
 
-`Person.__elasticsearch__.delete_index! index: Person.index_name`
+`Person.delete_index`
 
 To run specs without Elasticsearch:
 

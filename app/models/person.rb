@@ -45,4 +45,8 @@ class Person < ActiveRecord::Base
       name
     end
   end
+
+  def self.delete_indexes
+    self.__elasticsearch__.delete_index! index: Person.index_name
+  end
 end
