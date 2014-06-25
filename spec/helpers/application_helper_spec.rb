@@ -19,4 +19,13 @@ RSpec.describe ApplicationHelper, :type => :helper do
       expect(last_update).to be_blank
     end
   end
+
+  context '#govspeak' do
+    it 'should render Markdown starting from h3' do
+      source = "# Header\n\nPara para"
+      fragment = Capybara::Node::Simple.new(govspeak(source))
+
+      expect(fragment).to have_selector('h3', text: 'Header')
+    end
+  end
 end

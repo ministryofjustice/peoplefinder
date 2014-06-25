@@ -10,4 +10,10 @@ module ApplicationHelper
       end
     end
   end
+
+  def govspeak(source)
+    options = { header_offset: 2 }
+    doc = Govspeak::Document.new(source, options)
+    doc.to_html.html_safe
+  end
 end
