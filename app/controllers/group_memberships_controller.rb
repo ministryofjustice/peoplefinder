@@ -1,6 +1,7 @@
 class GroupMembershipsController < ApplicationController
   before_action :set_group
   before_action :set_membership, only: [:show, :edit, :update, :destroy]
+  before_action :set_candidates, only: [:new, :edit]
 
   # GET /memberships
   # GET /memberships.json
@@ -68,5 +69,14 @@ class GroupMembershipsController < ApplicationController
 
     def set_group
       @group ||= Group.friendly.find(params[:group_id])
+    end
+
+    def set_candidates
+      if @membership
+        existing_memberships = @group.memberships.where.not(id: @membership.id)
+      else
+        existing_memberships = @group.memberships
+      end
+      @candidates = Person.where.not(id: existing_memberships.pluck(:person_id))
     end
 end

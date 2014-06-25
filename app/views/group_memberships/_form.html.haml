@@ -3,7 +3,7 @@
     .form-group
       = f.input :role, as: :string
     .form-group
-      = f.association :person
+      = f.association :person, collection: @candidates
     .form-checkbox
       = f.input :leader, as: :boolean
     .form-group
