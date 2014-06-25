@@ -4,9 +4,6 @@ class Person < ActiveRecord::Base
   include Elasticsearch::Model::Callbacks
 
   index_name [Rails.env, model_name.collection.gsub(/\//, '-')].join('_')
-  mapping do
-    indexes :name, analyzer: 'snowball'
-  end
 
   has_paper_trail ignore: [:updated_at, :created_at, :id]
   acts_as_paranoid
@@ -52,5 +49,12 @@ class Person < ActiveRecord::Base
 
   def self.delete_indexes
     self.__elasticsearch__.delete_index! index: Person.index_name
+  end
+
+  def as_indexed_json(options={})
+    self.as_json(
+      include: { memberships: { only: :role},
+                 groups:    { only: :name }
+               })
   end
 end
