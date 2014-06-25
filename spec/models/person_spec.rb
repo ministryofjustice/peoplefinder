@@ -46,9 +46,9 @@ RSpec.describe Person, :type => :model do
         phone: "020 7946 0123",
         mobile: "07700 900123",
         location: "London",
-        keywords: "example",
-        description: "I am a real person",
+        description: "I am a real person"
       )
+      person.groups << build(:group)
       expect(person.completion_score).to eql(100)
     end
   end

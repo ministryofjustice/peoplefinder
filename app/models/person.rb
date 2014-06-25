@@ -33,8 +33,8 @@ class Person < ActiveRecord::Base
       :phone,
       :mobile,
       :location,
-      :keywords,
       :description,
+      :groups
     ].map { |f| self.send(f).present? }
     (100 * completed.select { |f| f }.length) / completed.length
   end

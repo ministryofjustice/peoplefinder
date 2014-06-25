@@ -31,9 +31,6 @@
   %dt Description
   %dd= @person.description
 
-  %dt Keywords
-  %dd= @person.keywords
-
 %ul.working_days
   - ['works_monday', 'works_tuesday', 'works_wednesday', 'works_thursday', 'works_friday'].each do |day|
     %li{class: ('active' if @person.send(day))}

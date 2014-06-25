@@ -15,7 +15,6 @@ feature "Person maintenance" do
     fill_in 'Mobile', with: p[:mobile]
     fill_in 'Location', with: p[:location]
     fill_in 'Description', with: p[:description]
-    fill_in 'Keywords', with: p[:keywords]
     uncheck('Works Monday')
     uncheck('Works Friday')
     click_button "Create Person"
@@ -30,7 +29,6 @@ feature "Person maintenance" do
       expect(page).to have_text(p[:mobile])
       expect(page).to have_text(p[:location])
       expect(page).to have_text(p[:description])
-      expect(page).to have_text(p[:keywords])
     end
 
     within ('ul.working_days') do
@@ -96,7 +94,6 @@ def person_attributes
     phone: '+44-208-123-4567',
     mobile: '07777777777',
     location: 'MOJ / Petty France / London',
-    description: 'Lorem ipsum dolor sit amet...',
-    keywords: 'contractor digital services'
+    description: 'Lorem ipsum dolor sit amet...'
   }
 end
