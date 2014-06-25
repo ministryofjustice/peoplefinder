@@ -11,7 +11,7 @@
 %dl.person
   - @person.memberships.each do |membership|
     %dt Organisation
-    %dd= link_to membership.name, group_path(membership.group)
+    %dd= link_to membership.group_name, group_path(membership.group)
 
     %dt= 'Role'
     %dd= membership.role

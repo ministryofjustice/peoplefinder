@@ -7,7 +7,6 @@ class Membership < ActiveRecord::Base
   validates :person, presence: true, uniqueness: { scope: :group }
   validates :group, presence: true, uniqueness: { scope: :person }
 
-  delegate :name, to: :group
   delegate :name, to: :person, prefix: true
   delegate :name, to: :group, prefix: true
 end
