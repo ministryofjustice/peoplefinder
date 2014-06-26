@@ -32,9 +32,9 @@
   %dd= @person.description
 
 %ul.working_days
-  - ['works_monday', 'works_tuesday', 'works_wednesday', 'works_thursday', 'works_friday'].each do |day|
-    %li{class: ('active' if @person.send(day))}
-      = day.match(/works_(.)/)[1].upcase + (day == 'works_thursday' ? 'h' : '')
+  - Person::DAYS_WORKED.each do |day|
+    %li{class: ('active' if @person.send(day)), alt: day_name(day)}
+      = day_symbol(day)
 %p
 = link_to 'Edit profile', edit_person_path(@person)
 = link_to 'Edit groups', person_memberships_path(@person)

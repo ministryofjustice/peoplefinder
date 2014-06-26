@@ -15,8 +15,8 @@ feature "Person maintenance" do
     fill_in 'Mobile', with: p[:mobile]
     fill_in 'Location', with: p[:location]
     fill_in 'Description', with: p[:description]
-    uncheck('Works Monday')
-    uncheck('Works Friday')
+    uncheck('Monday')
+    uncheck('Friday')
     click_button "Create Person"
 
     within('.person-name') do
@@ -32,11 +32,13 @@ feature "Person maintenance" do
     end
 
     within ('ul.working_days') do
-      expect(page).to_not have_selector("li.active:contains('M')")
-      expect(page).to have_selector("li.active:contains('T')")
-      expect(page).to have_selector("li.active:contains('W')")
-      expect(page).to have_selector("li.active:contains('Th')")
-      expect(page).to_not have_selector("li.active:contains('F')")
+      expect(page).to_not have_selector("li.active[alt='Monday']")
+      expect(page).to have_selector("li.active[alt='Tuesday']")
+      expect(page).to have_selector("li.active[alt='Wednesday']")
+      expect(page).to have_selector("li.active[alt='Thursday']")
+      expect(page).to_not have_selector("li.active[alt='Friday']")
+      expect(page).to_not have_selector("li.active[alt='Saturday']")
+      expect(page).to_not have_selector("li.active[alt='Sunday']")
     end
   end
 

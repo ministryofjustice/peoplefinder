@@ -27,3 +27,20 @@ en:
     add_cta:
       team: "Add team"
       organization: "Add organisation"
+  people:
+    day_names:
+      works_monday: "Monday"
+      works_tuesday: "Tuesday"
+      works_wednesday: "Wednesday"
+      works_thursday: "Thursday"
+      works_friday: "Friday"
+      works_saturday: "Saturday"
+      works_sunday: "Sunday"
+    day_symbols:
+      works_monday: "M"
+      works_tuesday: "T"
+      works_wednesday: "W"
+      works_thursday: "T"
+      works_friday: "F"
+      works_saturday: "S"
+      works_sunday: "S"

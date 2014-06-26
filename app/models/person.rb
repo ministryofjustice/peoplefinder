@@ -3,6 +3,16 @@ class Person < ActiveRecord::Base
   include Elasticsearch::Model
   include Elasticsearch::Model::Callbacks
 
+  DAYS_WORKED = [
+    :works_monday,
+    :works_tuesday,
+    :works_wednesday,
+    :works_thursday,
+    :works_friday,
+    :works_saturday,
+    :works_sunday,
+  ]
+
   index_name [Rails.env, model_name.collection.gsub(/\//, '-')].join('_')
 
   has_paper_trail ignore: [:updated_at, :created_at, :id]
