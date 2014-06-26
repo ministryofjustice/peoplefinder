@@ -4,13 +4,11 @@ class PersonMembershipsController < ApplicationController
   before_action :set_candidates, only: [:new, :edit]
 
   # GET /memberships
-  # GET /memberships.json
   def index
     @memberships = collection.all
   end
 
   # GET /memberships/1
-  # GET /memberships/1.json
   def show
   end
 
@@ -24,7 +22,6 @@ class PersonMembershipsController < ApplicationController
   end
 
   # POST /memberships
-  # POST /memberships.json
   def create
     @membership = collection.new(membership_params)
 
@@ -36,7 +33,6 @@ class PersonMembershipsController < ApplicationController
   end
 
   # PATCH/PUT /memberships/1
-  # PATCH/PUT /memberships/1.json
   def update
     if @membership.update(membership_params)
       redirect_to person_memberships_path(@person), notice: 'Membership was successfully updated.'
@@ -46,7 +42,6 @@ class PersonMembershipsController < ApplicationController
   end
 
   # DELETE /memberships/1
-  # DELETE /memberships/1.json
   def destroy
     @membership.destroy
     redirect_to person_memberships_path(@person), notice: 'Membership was successfully destroyed.'
