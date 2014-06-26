@@ -74,6 +74,18 @@ feature "Person maintenance" do
     end
   end
 
+  scenario 'Editing an invalid person' do
+    visit person_path(create(:person, person_attributes))
+    click_link 'Edit profile'
+    fill_in 'Surname', with: ''
+    click_button 'Update Person'
+
+    expect(page).to have_text('Please review the problems')
+    within('div.person_surname') do
+      expect(page).to have_text('can\'t be blank')
+    end
+  end
+
   scenario 'Adding a profile image' do
     visit new_person_path
     fill_in 'Surname', with: person_attributes[:surname]
