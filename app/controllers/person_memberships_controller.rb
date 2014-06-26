@@ -47,31 +47,31 @@ class PersonMembershipsController < ApplicationController
     redirect_to person_memberships_path(@person), notice: 'Membership was successfully destroyed.'
   end
 
-  private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_membership
-      @membership = collection.find(params[:id])
-    end
+private
+  # Use callbacks to share common setup or constraints between actions.
+  def set_membership
+    @membership = collection.find(params[:id])
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def membership_params
-      params.require(:membership).permit(:role, :group_id, :leader)
-    end
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def membership_params
+    params.require(:membership).permit(:role, :group_id, :leader)
+  end
 
-    def collection
-      @person.memberships.includes(:group)
-    end
+  def collection
+    @person.memberships.includes(:group)
+  end
 
-    def set_person
-      @person ||= Person.friendly.find(params[:person_id])
-    end
+  def set_person
+    @person ||= Person.friendly.find(params[:person_id])
+  end
 
-    def set_candidates
-      if @membership
-        existing_memberships = @person.memberships.where.not(id: @membership.id)
-      else
-        existing_memberships = @person.memberships
-      end
-      @candidates = Group.where.not(id: existing_memberships.pluck(:group_id))
+  def set_candidates
+    if @membership
+      existing_memberships = @person.memberships.where.not(id: @membership.id)
+    else
+      existing_memberships = @person.memberships
     end
+    @candidates = Group.where.not(id: existing_memberships.pluck(:group_id))
+  end
 end

@@ -50,15 +50,18 @@ class PeopleController < ApplicationController
     redirect_to people_url, notice: 'Person was successfully destroyed.'
   end
 
-  private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_person
-      @person = Person.friendly.find(params[:id])
-    end
+private
+  # Use callbacks to share common setup or constraints between actions.
+  def set_person
+    @person = Person.friendly.find(params[:id])
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def person_params
-      params.require(:person).permit(:given_name, :surname, :location, :phone, :mobile, :email, :image,
-                                     :description, :works_monday, :works_tuesday, :works_wednesday, :works_thursday, :works_friday)
-    end
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def person_params
+    params.require(:person).permit(
+      :given_name, :surname, :location, :phone, :mobile, :email, :image,
+      :description, :works_monday, :works_tuesday, :works_wednesday,
+      :works_thursday, :works_friday
+    )
+  end
 end

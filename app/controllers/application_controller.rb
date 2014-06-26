@@ -4,8 +4,7 @@ class ApplicationController < ActionController::Base
   # protect_from_forgery with: :exception
   before_filter :ensure_user
 
-  private
-
+private
   def user_for_paper_trail
     logged_in? ? current_user.to_s : 'Public user'
   end

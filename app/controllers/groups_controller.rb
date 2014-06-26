@@ -45,22 +45,22 @@ class GroupsController < ApplicationController
     redirect_to groups_url, notice: 'Group was successfully destroyed.'
   end
 
-  private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_group
-      @group = collection.friendly.find(params[:id])
-    end
+private
+  # Use callbacks to share common setup or constraints between actions.
+  def set_group
+    @group = collection.friendly.find(params[:id])
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def group_params
-      params.require(:group).permit(:parent_id, :name, :description)
-    end
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def group_params
+    params.require(:group).permit(:parent_id, :name, :description)
+  end
 
-    def collection
-      if params[:group_id]
-        Group.friendly.find(params[:group_id]).children
-      else
-        Group
-      end
+  def collection
+    if params[:group_id]
+      Group.friendly.find(params[:group_id]).children
+    else
+      Group
     end
+  end
 end
