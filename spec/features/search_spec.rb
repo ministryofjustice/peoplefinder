@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-feature 'Search for people' do
+feature 'Search for people', elastic: true do
   describe 'with elasticsearch' do
     before(:all) do
       Person.create!(given_name: 'Jon', surname: 'Browne')
