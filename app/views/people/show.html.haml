@@ -6,7 +6,7 @@
   complete.
 
 - if @person.image
-  = image_tag @person.image, class: 'profile-page'
+  = image_tag @person.image.medium, class: 'profile-page'
 
 %dl.person
   - @person.memberships.each do |membership|

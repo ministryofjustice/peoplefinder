@@ -94,7 +94,7 @@ feature "Person maintenance" do
 
     person = Person.find_by_surname(person_attributes[:surname])
     visit person_path(person)
-    expect(page).to have_css("img[src*='#{person.image}']")
+    expect(page).to have_css("img[src*='#{person.image.medium}']")
   end
 end
 

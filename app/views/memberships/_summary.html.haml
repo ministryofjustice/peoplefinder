@@ -2,7 +2,7 @@
   %div.inner-block
 
     = link_to summary.person do
-      = image_tag summary.person_image, class: 'team-members'
+      = image_tag summary.person_image.medium, class: 'team-members'
       .person-name= summary.person_name
 
     %p= summary.role

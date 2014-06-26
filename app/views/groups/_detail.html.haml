@@ -3,7 +3,7 @@
 - @group.leaderships.each do |leadership|
   - person = leadership.person
 
-  = image_tag person.image, class: 'group-leader'
+  = image_tag person.image.medium, class: 'group-leader'
 
   %h2.group-leader= link_to person.name, person_path(person)
   .leader-role= leadership.role
