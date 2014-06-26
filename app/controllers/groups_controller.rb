@@ -60,7 +60,7 @@ private
     if params[:group_id]
       Group.friendly.find(params[:group_id]).children
     else
-      Group
+      Group.includes(:parent)
     end
   end
 end
