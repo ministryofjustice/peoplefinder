@@ -53,8 +53,26 @@ class Person < ActiveRecord::Base
 
   def as_indexed_json(options={})
     self.as_json(
-      include: { memberships: { only: :role},
-                 groups:    { only: :name }
-               })
+      only: [:description, :location],
+      methods: [:name, :role_and_group]
+    )
+  end
+
+  def role_and_group
+    memberships.map{ | membership| [membership.group_name, membership.role].join(', ') }.join("; ")
+  end
+
+  def self.fuzzy_search(query)
+    Person.search({
+      size: 100,
+      query: {
+        fuzzy_like_this: {
+               fields: [:name, :description, :location, :role_and_group],
+               like_text: query,
+               prefix_length: 3,
+               ignore_tf: true
+             }
+        }
+      })
   end
 end

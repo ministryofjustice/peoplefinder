@@ -73,4 +73,19 @@ RSpec.describe Person, :type => :model do
       Person.delete_indexes
     end
   end
+
+  context 'elasticsearch indexing helpers' do
+    before do
+      person.save!
+      digital_services = create(:group, name: 'Digital Services')
+      estates = create(:group, name: 'Estates')
+      person.memberships.create(group: estates, role: 'Cleaner')
+      person.memberships.create(group: digital_services, role: 'Designer')
+    end
+
+    it 'should write the role and group as a string' do
+      expect(person.role_and_group).to match(/Digital Services, Designer/)
+      expect(person.role_and_group).to match(/Estates, Cleaner/)
+    end
+  end
 end
