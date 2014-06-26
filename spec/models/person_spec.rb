@@ -66,4 +66,11 @@ RSpec.describe Person, :type => :model do
       expect(person.slug).to eql("bobby-tables")
     end
   end
+
+  context "search" do
+    it "should delete indexes" do
+      expect(Person.__elasticsearch__).to receive(:delete_index!).with({ index: "test_people" })
+      Person.delete_indexes
+    end
+  end
 end
