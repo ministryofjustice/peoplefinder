@@ -32,11 +32,14 @@ module Peoplefinder
     # known values: information, service
     config.product_type = 'service'
 
+    config.proposition_title = 'peoplefinder'
+
     # govbranding switches on or off the crown logo, full footer and NTA font
     config.govbranding = false
 
     # feedback_email is the address linked in the alpha/beta bar asking for feedback
     config.feedback_email = 'test@example.com'
+    config.feedback_url = ''
 
     config.valid_login_domains = %w[
       digital.justice.gov.uk

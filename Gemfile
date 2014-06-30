@@ -8,15 +8,15 @@ gem 'elasticsearch-model', '~> 0.1.4'
 gem 'elasticsearch-rails', '~> 0.1.4'
 gem 'fog', '~> 1.20.0'
 gem 'friendly_id', '~> 5.0.0'
-gem 'govspeak'
+gem 'govuk_template'
 gem 'govuk_frontend_toolkit'
+gem 'govspeak'
 gem 'haml-rails'
 gem 'jbuilder', '~> 2.0'
 gem 'jquery-rails'
 gem 'mini_magick'
-gem 'moj_frontend_toolkit_gem',
-  git: 'https://github.com/ministryofjustice/moj_frontend_toolkit_gem.git',
-  ref: '8826821' # TODO: change to tag when branch remove_gem_lock is merged
+gem 'moj_internal_template',
+    git: 'https://github.com/ministryofjustice/moj_internal_template.git'
 gem 'omniauth-gplus', '~> 2.0'
 gem 'paper_trail', '~> 3.0.2'
 gem 'paranoia', '~> 2.0'
