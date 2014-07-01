@@ -1,0 +1,12 @@
+%h2 Search results
+%h4= pluralize(@people.length, "result") + ' returned'
+
+- @people.each do |person|
+  .search-result
+    = image_tag person.image
+    .details
+      %span.name= link_to person
+      %br
+      - person.memberships.each do |membership|
+        = [membership.role, group_breadcrumbs(membership.group)].compact.join("<br/>").html_safe
+      %p= person.location

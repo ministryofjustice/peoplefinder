@@ -2,8 +2,7 @@ class PeopleController < ApplicationController
   before_action :set_person, only: [:show, :edit, :update, :destroy]
 
   def search
-    @people = Person.fuzzy_search(params[:query]).records
-    render :index
+    @people = Person.fuzzy_search(params[:query]).records.limit(100)
   end
 
   # GET /people

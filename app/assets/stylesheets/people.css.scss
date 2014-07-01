@@ -24,3 +24,22 @@ img.profile-page {
   -webkit-appearance: checkbox;
   width: 10px;
 }
+
+.search-result {
+  margin-top: 15px;
+}
+
+.search-result img {
+  height:100px;
+  max-width: 100px;
+  float: left;
+}
+
+.search-result .details {
+  margin-left: 115px;
+}
+
+.search-result .details .name {
+  font-size: 24px;
+}
+
