@@ -40,12 +40,18 @@ ul.working_days {
 
 .search-result {
   margin-top: 15px;
-}
+  min-height: 110px;
+  clear: both;
+  .image-background {
+    height: 110px;
+    width: 110px;
+    float: left;
+  }
+  img {
+    width: 110px;
+    clip: rect(0px, 110px, 110px, 0px);
+  }
 
-.search-result img {
-  height:110px;
-  max-width: 110px;
-  float: left;
 }
 
 .search-result .details {

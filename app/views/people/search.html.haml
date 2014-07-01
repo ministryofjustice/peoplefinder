@@ -4,7 +4,8 @@
 
 - @people.each do |person|
   .search-result
-    = image_tag person.image
+    .image-background
+      = image_tag person.image
     .details
       = link_to person.name, person
       %br
