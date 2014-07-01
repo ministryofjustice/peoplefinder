@@ -14,7 +14,8 @@
     .inner-block
       - @person.memberships.each do |membership|
         %h4= membership.role
-        = link_to membership.group_name, group_path(membership.group)
+        = group_breadcrumbs(membership.group)
+
       %p= @person.location
       %p= contact_details(@person)
       %p= @person.description

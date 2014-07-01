@@ -15,4 +15,20 @@ RSpec.describe Group, :type => :model do
     expect(parent.level).to eql(0)
     expect(child.level).to eql(1)
   end
+
+  it "should know about its ancestors" do
+    grandparent = create(:group, parent: nil)
+    parent = create(:group, parent: grandparent)
+    child = create(:group, parent: parent)
+    grandchild = create(:group, parent: child)
+
+    expect(grandchild.ancestors).to eql([grandparent, parent, child])
+    expect(grandchild.with_ancestry).to eql([grandparent, parent, child, grandchild])
+  end
+
+  it "should know when it has no ancestors" do
+    department = create(:group, parent: nil)
+
+    expect(department.with_ancestry).to eql([department])
+  end
 end

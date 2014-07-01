@@ -28,4 +28,21 @@ class Group < ActiveRecord::Base
   def level
     parent ? parent.level.succ : 0
   end
+
+  def self.get_ancestors(group, ancestry=[])
+    if group.parent.nil?
+      return ancestry
+    else
+      ancestry << group.parent
+      get_ancestors(group.parent, ancestry)
+    end
+  end
+
+  def ancestors
+    @ancestors ||= Group.get_ancestors(self).reverse
+  end
+
+  def with_ancestry
+    ancestors << self
+  end
 end
