@@ -1,8 +1,9 @@
 %div.grid.grid-1-4
-  %div.inner-block
+  %div.inner-block.team-member
 
     = link_to summary.person do
-      = image_tag summary.person_image.medium, class: 'team-members'
+      .image-background
+        = image_tag summary.person_image.medium, class: 'team-members'
       .person-name= summary.person_name
 
-    %p= summary.role
+    .role= summary.role

@@ -1,9 +1,25 @@
-img.group-leader {
-  height:300px;
+.group-leader {
+  .image-background {
+    height: 300px;
+  }
+  img {
+    width: 300px;
+    clip: rect(0px, 300px, 300px, 0px);
+  }
 }
-img.team-members {
-  height:200px;
-  clear:both;
+
+.team-member {
+  min-height: 300px;
+  .image-background {
+    height: 217px;
+  }
+  img {
+    width: 217px;
+    clip: rect(0px, 217px, 217px, 0px);
+  }
+  .role {
+    font-size: 16px;
+  }
 }
 .responsibilities {
   background-color: #ddd;

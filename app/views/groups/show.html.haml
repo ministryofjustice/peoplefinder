@@ -1,6 +1,4 @@
 %p#notice= notice
-= render partial: 'detail'
-
 - content_for :edit_this_page do
   = link_to 'Edit this page', edit_group_path(@group)
 
@@ -8,6 +6,8 @@
   = link_to "Home", "/"
   = render partial: "shared/breadcrumb_spacer"
   = group_breadcrumbs(@group)
+
+= render partial: 'detail'
 
 - if @group.children.any?
   %div
