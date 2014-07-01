@@ -1,14 +1,24 @@
 %h1= @group
 
-- @group.leaderships.each do |leadership|
-  - person = leadership.person
+%div.grid-wrapper
+  %div.grid.grid-1-3
+    %div.inner-block
+      - @group.leaderships.each do |leadership|
+        - person = leadership.person
+        = image_tag person.image.medium, class: 'group-leader'
+        %h2.group-leader= link_to person.name, person_path(person)
+        .leader-role= leadership.role
 
-  = image_tag person.image.medium, class: 'group-leader'
+  -if @group.responsibilities.present?
+    %div.grid.grid-1-3
+      %div.inner-block
+        = govspeak(@group.description)
+    %div.grid.grid-1-3
+      %div.inner-block
+        %div.responsibilities
+          = govspeak(@group.responsibilities)
+  -else
+    %div.grid.grid-2-3
+      %div.inner-block
+        = govspeak(@group.description)
 
-  %h2.group-leader= link_to person.name, person_path(person)
-  .leader-role= leadership.role
-
-  %p= person.description
-
-.group-name= "About #{ @group.name }"
-= govspeak(@group.description)
