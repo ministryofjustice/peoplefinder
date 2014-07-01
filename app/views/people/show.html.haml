@@ -18,3 +18,6 @@
       %p= @person.location
       %p= contact_details(@person)
       %p= @person.description
+
+- content_for :edit_this_page do
+  = link_to "Edit this page", edit_person_path(@person)
