@@ -7,6 +7,8 @@
     .form-group
       = f.input :description
     .form-group
+      = f.input :responsibilities
+    .form-group
       = f.button :submit
 
     - unless @group.new_record?
