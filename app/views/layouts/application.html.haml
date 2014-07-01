@@ -4,8 +4,11 @@
 - content_for :content do
   %div.class
     %main#content{role: 'main'}
-      %div.inner-block
+      .inner-block
+        .breadcrumbs= yield :breadcrumbs
+        .edit_this_page= yield :edit_this_page
+      .inner-block
         = render "shared/search"
-        %div.edit_this_page= yield :edit_this_page
+      .inner-block
         = yield
 = render template: "layouts/moj_internal_template"
