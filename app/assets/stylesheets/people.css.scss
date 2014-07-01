@@ -20,9 +20,15 @@ img.profile-page {
   max-width: 300px;
 }
 
-.form-checkbox input {
+.block-label.checkbox {
+  width: 200px;
+  font-size: 19px;
+  font-weight: normal;
+}
+
+.checkbox input {
   -webkit-appearance: checkbox;
-  width: 10px;
+
 }
 
 .search-result {

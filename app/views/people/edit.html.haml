@@ -1,7 +1,4 @@
-%h1 Editing person
+%p#notice= notice
+%h1= @person.name
 
 = render 'form'
-
-= link_to 'Show', @person
-\|
-= link_to 'Back', people_path

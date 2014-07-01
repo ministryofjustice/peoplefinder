@@ -15,9 +15,12 @@
       = f.input :email, as: :string
     .form-group
       = f.input :description
-    .form-checkbox
+
+
+    .form-group
+      %label.form-label-bold Working days
       - Person::DAYS_WORKED.each do |day|
-        = f.input day, as: :boolean, label: day_name(day)
+        = f.input day, as: :boolean, label: day_name(day), label_html: { class: 'block-label' }
     .form-group
       = f.input :image, as: :file
     .form-group
@@ -26,3 +29,4 @@
     - unless @person.new_record?
       .form-group
         = link_to 'Delete this record', @person, method: :delete
+      %p= link_to 'Back', @person
