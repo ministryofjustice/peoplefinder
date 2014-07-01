@@ -49,6 +49,10 @@ class Person < ActiveRecord::Base
     (100 * completed.select { |f| f }.length) / completed.length
   end
 
+  def profile_completed?
+    completion_score == 100
+  end
+
   def slug_source
     if email.present?
       email.split(/@/).first

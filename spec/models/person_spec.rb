@@ -26,6 +26,7 @@ RSpec.describe Person, :type => :model do
     it "should be 0 if all fields are empty" do
       person = Person.new
       expect(person.completion_score).to eql(0)
+      expect(person).not_to be_profile_completed
     end
 
     it "should be 50 if half the fields are filled" do
@@ -36,6 +37,7 @@ RSpec.describe Person, :type => :model do
         phone: "020 7946 0123",
       )
       expect(person.completion_score).to eql(50)
+      expect(person).not_to be_profile_completed
     end
 
     it "should be 100 if all fields are filled" do
@@ -50,6 +52,7 @@ RSpec.describe Person, :type => :model do
       )
       person.groups << build(:group)
       expect(person.completion_score).to eql(100)
+      expect(person).to be_profile_completed
     end
   end
 
