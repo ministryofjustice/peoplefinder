@@ -18,6 +18,7 @@
 
     .form-group
       %label.form-label-bold Working days
+      Select all that apply
       - Person::DAYS_WORKED.each do |day|
         = f.input day, as: :boolean, label: day_name(day), label_html: { class: 'block-label' }
     .form-group
