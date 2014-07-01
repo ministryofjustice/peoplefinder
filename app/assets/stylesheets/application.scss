@@ -1,6 +1,10 @@
 @import "people";
 @import "groups";
 
+main#content {
+  padding-bottom: 90px;
+}
+
 .edit_this_page {
   float: right;
 }
