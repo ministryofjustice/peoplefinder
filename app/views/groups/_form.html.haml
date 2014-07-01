@@ -13,4 +13,4 @@
 
     - unless @group.new_record?
       .form-group
-        = link_to 'Delete this record', group_path(@group), method: :delete
+        = link_to 'Delete this record', @group, method: :delete

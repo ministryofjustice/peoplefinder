@@ -6,7 +6,7 @@
       - @group.leaderships.each do |leadership|
         - person = leadership.person
         = image_tag person.image.medium, class: 'group-leader'
-        %h2.group-leader= link_to person.name, person_path(person)
+        %h2.group-leader= link_to person, person
         .leader-role= leadership.role
 
   -if @group.responsibilities.present?
