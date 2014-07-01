@@ -14,8 +14,4 @@ module PeopleHelper
       ("Mob: #{ person.mobile }" if person.mobile.present?)
     ].compact.join('<br/>').html_safe
   end
-
-  def group_breadcrumbs(group)
-     group.with_ancestry.map{|g| link_to g.name, group_path(g) }.join(' > ').html_safe
-  end
 end

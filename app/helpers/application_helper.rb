@@ -16,4 +16,8 @@ module ApplicationHelper
     doc = Govspeak::Document.new(source, options)
     doc.to_html.html_safe
   end
+
+  def group_breadcrumbs(group)
+    render partial: "shared/breadcrumbs", locals: { items: group.with_ancestry }
+  end
 end

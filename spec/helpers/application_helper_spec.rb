@@ -34,4 +34,14 @@ RSpec.describe ApplicationHelper, :type => :helper do
       expect(body_class).to eql(Rails.configuration.phase + " " + Rails.configuration.product_type)
     end
   end
+
+  context '#breadcrumbs' do
+    it 'should return group breadcrumbs' do
+      justice = create(:group, name: 'Justice')
+      digital_service = create(:group, parent: justice, name: 'Digital Services')
+      fragment = Capybara::Node::Simple.new(group_breadcrumbs(digital_service))
+      expect(fragment).to have_selector('a[href="/groups/justice"]', text: 'Justice')
+      expect(fragment).to have_selector('a[href="/groups/digital-services"]', text: 'Digital Services')
+    end
+  end
 end
