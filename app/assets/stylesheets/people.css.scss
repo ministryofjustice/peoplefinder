@@ -15,9 +15,16 @@ ul.working_days {
     }
   }
 }
-img.profile-page {
-  height:300px;
-  max-width: 300px;
+
+.profile {
+  min-height: 300px;
+  .image-background {
+    height: 300px;
+  }
+  img {
+    width: 300px;
+    clip: rect(0px, 300px, 300px, 0px);
+  }
 }
 
 .block-label.checkbox {

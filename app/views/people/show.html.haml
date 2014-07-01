@@ -2,8 +2,9 @@
 %h1= @person.name
 .grid-wrapper
   .grid.grid-1-3
-    .inner-block
-      = image_tag @person.image.medium, class: 'profile-page'
+    .inner-block.profile
+      .image-background
+        = image_tag @person.image.medium, class: 'profile-page'
       %h4 Days worked
       %ul.working_days
         - Person::DAYS_WORKED.each do |day|
