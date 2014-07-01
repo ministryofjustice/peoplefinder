@@ -5,6 +5,7 @@
   %div.class
     %main#content{role: 'main'}
       %div.inner-block
-        .edit_this_page= yield :edit_this_page
+        = render "shared/search"
+        %div.edit_this_page= yield :edit_this_page
         = yield
 = render template: "layouts/moj_internal_template"
