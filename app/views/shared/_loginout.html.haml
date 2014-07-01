@@ -1,5 +1,5 @@
-- if logged_in?
-  %p.font-xsmall
+= content_for :log_in_out do
+  - if logged_in?
     = "Logged in as #{ current_user } | "
     = link_to "Log out", sessions_path, :method => :delete
 

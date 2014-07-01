@@ -16,7 +16,7 @@ gem 'jbuilder', '~> 2.0'
 gem 'jquery-rails'
 gem 'mini_magick'
 gem 'moj_internal_template',
-    git: 'https://github.com/ministryofjustice/moj_internal_template.git'
+  git: 'https://github.com/ministryofjustice/moj_internal_template.git'
 gem 'omniauth-gplus', '~> 2.0'
 gem 'paper_trail', '~> 3.0.2'
 gem 'paranoia', '~> 2.0'
