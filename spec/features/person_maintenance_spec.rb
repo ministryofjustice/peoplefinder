@@ -19,17 +19,15 @@ feature "Person maintenance" do
     uncheck('Friday')
     click_button "Create Person"
 
-    within('.person-name') do
+    within('h2.heading-large') do
       expect(page).to have_text(p[:given_name] + ' ' + p[:surname])
     end
+    expect(page).to have_text(p[:email])
+    expect(page).to have_text(p[:phone])
+    expect(page).to have_text('Mob: ' + p[:mobile])
+    expect(page).to have_text(p[:location])
+    expect(page).to have_text(p[:description])
 
-    within('dl.person') do
-      expect(page).to have_text(p[:email])
-      expect(page).to have_text(p[:phone])
-      expect(page).to have_text(p[:mobile])
-      expect(page).to have_text(p[:location])
-      expect(page).to have_text(p[:description])
-    end
 
     within ('ul.working_days') do
       expect(page).to_not have_selector("li.active[alt='Monday']")
@@ -66,19 +64,19 @@ feature "Person maintenance" do
 
   scenario 'Editing a person' do
     visit person_path(create(:person, person_attributes))
-    click_link 'Edit profile'
+    click_link 'Edit this page'
     fill_in 'Given name', with: 'Jane'
     fill_in 'Surname', with: 'Doe'
     click_button 'Update Person'
 
-    within('.person-name') do
+    within('h2.heading-large') do
       expect(page).to have_text('Jane Doe')
     end
   end
 
   scenario 'Editing an invalid person' do
     visit person_path(create(:person, person_attributes))
-    click_link 'Edit profile'
+    click_link 'Edit this page'
     fill_in 'Surname', with: ''
     click_button 'Update Person'
 
