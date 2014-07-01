@@ -19,7 +19,7 @@ feature "Person maintenance" do
     uncheck('Friday')
     click_button "Create Person"
 
-    within('h2.heading-large') do
+    within('h1') do
       expect(page).to have_text(p[:given_name] + ' ' + p[:surname])
     end
     expect(page).to have_text(p[:email])
@@ -69,7 +69,7 @@ feature "Person maintenance" do
     fill_in 'Surname', with: 'Doe'
     click_button 'Update Person'
 
-    within('h2.heading-large') do
+    within('h1') do
       expect(page).to have_text('Jane Doe')
     end
   end
