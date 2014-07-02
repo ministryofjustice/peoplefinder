@@ -35,3 +35,13 @@ main#content {
 .image-background img {
   position: absolute;
 }
+#flash-messages {
+  .flash-message {
+    border: 1px solid black;
+    margin: 15px 0;
+    padding: 15px;
+  }
+  .notice {
+    background-color: #ffd;
+  }
+}

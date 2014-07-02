@@ -3,8 +3,9 @@
   = javascript_include_tag "application"
   = stylesheet_link_tag "application"
 - content_for :content do
-  %div.class
+  .class
     %main#content{role: 'main'}
+      =flash_messages
       .inner-block
         .breadcrumbs= yield :breadcrumbs
         .edit_this_page= yield :edit_this_page

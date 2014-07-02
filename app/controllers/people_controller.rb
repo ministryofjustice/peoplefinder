@@ -28,7 +28,7 @@ class PeopleController < ApplicationController
     @person = Person.new(person_params)
 
     if @person.save
-      redirect_to @person, notice: 'Person was successfully created.'
+      redirect_to @person, notice: "Created #{@person}’s profile."
     else
       render :new
     end
@@ -37,7 +37,7 @@ class PeopleController < ApplicationController
   # PATCH/PUT /people/1
   def update
     if @person.update(person_params)
-      redirect_to @person, notice: 'Person was successfully updated.'
+      redirect_to @person, notice: "Updated #{@person}’s profile."
     else
       render :edit
     end
@@ -46,7 +46,7 @@ class PeopleController < ApplicationController
   # DELETE /people/1
   def destroy
     @person.destroy
-    redirect_to people_url, notice: 'Person was successfully destroyed.'
+    redirect_to people_url, notice: "Deleted #{@person}’s profile."
   end
 
 private

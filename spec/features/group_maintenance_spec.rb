@@ -12,6 +12,8 @@ feature "Group maintenance" do
     fill_in "Name", with: name
     click_button "Create Group"
 
+    expect(page).to have_content("Created Ministry of Justice")
+
     dept = Group.find_by_name(name)
     expect(dept.name).to eql(name)
     expect(dept.parent).to be_nil
@@ -27,6 +29,8 @@ feature "Group maintenance" do
     fill_in "Name", with: name
     select dept.name, from: "Parent"
     click_button "Create Group"
+
+    expect(page).to have_content("Created CSG")
 
     org = Group.find_by_name(name)
     expect(org.name).to eql(name)
@@ -44,6 +48,8 @@ feature "Group maintenance" do
     fill_in "Name", with: name
     click_button "Create Group"
 
+    expect(page).to have_content("Created Digital Services")
+
     team = Group.find_by_name(name)
     expect(team.name).to eql(name)
     expect(team.parent).to eql(org)
@@ -54,6 +60,8 @@ feature "Group maintenance" do
     group = membership.group
     visit edit_group_path(group)
     click_link('Delete this record')
+
+    expect(page).to have_content("Deleted #{group.name}")
 
     expect { Group.find(group) }.to raise_error(ActiveRecord::RecordNotFound)
     expect { Membership.find(membership) }.to raise_error(ActiveRecord::RecordNotFound)
@@ -74,6 +82,8 @@ feature "Group maintenance" do
     fill_in "Name", with: new_name
     select dept.name, from: "Parent"
     click_button "Update Group"
+
+    expect(page).to have_content("Updated Cyberdigital Cyberservices")
 
     group.reload
     expect(group.name).to eql(new_name)

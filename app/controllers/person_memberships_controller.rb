@@ -26,7 +26,8 @@ class PersonMembershipsController < ApplicationController
     @membership = collection.new(membership_params)
 
     if @membership.save
-      redirect_to person_memberships_path(@person), notice: 'Membership was successfully created.'
+      redirect_to person_memberships_path(@person),
+        notice: "Added #{@person} to #{@membership.group}."
     else
       render :new
     end
@@ -35,7 +36,8 @@ class PersonMembershipsController < ApplicationController
   # PATCH/PUT /memberships/1
   def update
     if @membership.update(membership_params)
-      redirect_to person_memberships_path(@person), notice: 'Membership was successfully updated.'
+      redirect_to person_memberships_path(@person),
+        notice: "Updated details."
     else
       render :edit
     end
@@ -43,8 +45,10 @@ class PersonMembershipsController < ApplicationController
 
   # DELETE /memberships/1
   def destroy
+    group = @membership.group
     @membership.destroy
-    redirect_to person_memberships_path(@person), notice: 'Membership was successfully destroyed.'
+    redirect_to person_memberships_path(@person),
+      notice: "Removed #{@person} from #{group}."
   end
 
 private

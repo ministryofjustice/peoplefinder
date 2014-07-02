@@ -19,6 +19,8 @@ feature "Person maintenance" do
     uncheck('Friday')
     click_button "Create Person"
 
+    expect(page).to have_content("Created Marco Polo’s profile")
+
     within('h1') do
       expect(page).to have_text(p[:given_name] + ' ' + p[:surname])
     end
@@ -55,6 +57,8 @@ feature "Person maintenance" do
     visit edit_person_path(person)
     click_link('Delete this record')
 
+    expect(page).to have_content("Deleted #{person}’s profile")
+
     expect { Person.find(person) }.to raise_error(ActiveRecord::RecordNotFound)
     expect { Membership.find(membership) }.to raise_error(ActiveRecord::RecordNotFound)
 
@@ -68,6 +72,8 @@ feature "Person maintenance" do
     fill_in 'Given name', with: 'Jane'
     fill_in 'Surname', with: 'Doe'
     click_button 'Update Person'
+
+    expect(page).to have_content("Updated Jane Doe’s profile")
 
     within('h1') do
       expect(page).to have_text('Jane Doe')

@@ -24,6 +24,7 @@ feature "Membership maintenance" do
 
     expect(person.memberships.first.role).to eql('Goat farmer')
     expect(person.memberships.first.person).to eql(person)
+    expect(page).to have_content("Added #{person} to #{group}")
   end
 
   scenario "Removing a person from a group" do
@@ -32,14 +33,7 @@ feature "Membership maintenance" do
     click_button "Remove"
 
     expect(group.people).not_to include(person)
-  end
-
-  scenario "Removing a group from a person" do
-    membership = person.memberships.create!(group: group, role: 'Worker Bee')
-    visit person_memberships_path(person)
-    click_button "Remove"
-
-    expect(person.groups).not_to include(group)
+    expect(page).to have_content("Removed #{person} from #{group}")
   end
 
   scenario "Adding a group from a person's page" do
@@ -52,5 +46,15 @@ feature "Membership maintenance" do
 
     expect(person.memberships.first.role).to eql('Goat farmer')
     expect(person.memberships.first.group).to eql(group)
+    expect(page).to have_content("Added #{person} to #{group}")
+  end
+
+  scenario "Removing a group from a person" do
+    membership = person.memberships.create!(group: group, role: 'Worker Bee')
+    visit person_memberships_path(person)
+    click_button "Remove"
+
+    expect(person.groups).not_to include(group)
+    expect(page).to have_content("Removed #{person} from #{group}")
   end
 end
