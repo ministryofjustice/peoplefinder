@@ -22,7 +22,6 @@ RSpec.describe Group, :type => :model do
     child = create(:group, parent: parent)
     grandchild = create(:group, parent: child)
 
-    expect(grandchild.ancestors).to eql([grandparent, parent, child])
     expect(grandchild.with_ancestry).to eql([grandparent, parent, child, grandchild])
   end
 
