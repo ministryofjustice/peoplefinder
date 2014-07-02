@@ -10,7 +10,7 @@
         .breadcrumbs= yield :breadcrumbs
         .edit_this_page= yield :edit_this_page
       .inner-block
-        = render "shared/search"
+        = render "shared/search" if current_user
       .inner-block
         = yield
 = render template: "layouts/moj_internal_template"
