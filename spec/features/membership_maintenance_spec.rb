@@ -26,6 +26,22 @@ feature "Membership maintenance" do
     expect(person.memberships.first.person).to eql(person)
   end
 
+  scenario "Removing a person from a group" do
+    membership = person.memberships.create!(group: group, role: 'Worker Bee')
+    visit group_memberships_path(group)
+    click_button "Remove"
+
+    expect(group.people).not_to include(person)
+  end
+
+  scenario "Removing a group from a person" do
+    membership = person.memberships.create!(group: group, role: 'Worker Bee')
+    visit person_memberships_path(person)
+    click_button "Remove"
+
+    expect(person.groups).not_to include(group)
+  end
+
   scenario "Adding a group from a person's page" do
     visit person_path(person)
     click_link 'Edit groups'

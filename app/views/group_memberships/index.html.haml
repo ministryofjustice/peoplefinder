@@ -11,4 +11,4 @@
       %td= membership.role
       %td= membership.leader ? 'Leader' : ''
       %td= link_to 'Edit', edit_group_membership_path(@group, membership)
-      %td= link_to 'Remove', group_membership_path(@group, membership), :method => :delete, :data => { :confirm => 'Are you sure?' }
+      %td= button_to 'Remove', group_membership_path(@group, membership), :method => :delete, :data => { :confirm => 'Are you sure?' }

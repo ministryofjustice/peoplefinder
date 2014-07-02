@@ -14,7 +14,7 @@
       %td= group.name
       %td= link_to 'Show', group
       %td= link_to 'Edit', edit_group_path(group)
-      %td= link_to 'Destroy', group, :method => :delete, :data => { :confirm => 'Are you sure?' }
+      %td= button_to 'Destroy', group, :method => :delete, :data => { :confirm => 'Are you sure?' }
 
 %br
 
