@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   end
   resources :people do
     resources :memberships, controller: 'person_memberships'
+    resource :image, only: [:edit, :update], controller: 'person_image'
   end
   resource :sessions
 

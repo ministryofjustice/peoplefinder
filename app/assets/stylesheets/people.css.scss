@@ -27,6 +27,15 @@ ul.working_days {
   }
 }
 
+img.preview {
+  width: 100px;
+  clip: rect(0px, 100px, 100px, 0px);
+}
+
+img#croppable {
+  width: 500px;
+}
+
 .block-label.checkbox {
   width: 200px;
   font-size: 19px;
