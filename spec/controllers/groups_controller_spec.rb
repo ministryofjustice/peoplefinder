@@ -40,10 +40,22 @@ RSpec.describe GroupsController, :type => :controller do
   let(:valid_session) { {} }
 
   describe "GET index" do
-    it "assigns all groups as @groups" do
-      group = Group.create! valid_attributes
-      get :index, {}, valid_session
-      expect(assigns(:groups)).to eq([group])
+    subject { get :index, {}, valid_session }
+
+    it "without any groups, it redirects to the new group page" do
+      expect(subject).to redirect_to(new_group_path)
+    end
+
+    it "with a department, it redirects to the departmental page" do
+      department = create(:group, parent: nil)
+      expect(subject).to redirect_to(group_path(department))
+    end
+
+    it "with a department and a team, it still redirects to the departmental page" do
+      team = create(:group)
+      department = create(:group)
+      team.update_attribute(:parent, department)
+      expect(subject).to redirect_to(group_path(department))
     end
   end
 

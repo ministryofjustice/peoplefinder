@@ -3,7 +3,12 @@ class GroupsController < ApplicationController
 
   # GET /groups
   def index
-    @groups = collection.all
+    @group = Group.departments.first || Group.first
+    if @group
+      redirect_to @group
+    else
+      redirect_to new_group_path
+    end
   end
 
   # GET /groups/1

@@ -2,14 +2,14 @@ require 'rails_helper'
 
 feature 'Search for people', elastic: true do
   describe 'with elasticsearch' do
-    before(:all) do
+    before do
       Person.create!(given_name: 'Jon', surname: 'Browne')
       Person.import
       sleep 1
       log_in_as 'test.user@digital.justice.gov.uk'
     end
 
-    after(:all) do
+    after do
       clean_up_indexes_and_tables
     end
 
