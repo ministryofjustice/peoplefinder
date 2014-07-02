@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  root 'groups#index'
+  root 'groups#index', as: :home
 
   resources :groups do
     resources :groups, only: [:new]

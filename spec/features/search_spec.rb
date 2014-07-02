@@ -14,7 +14,7 @@ feature 'Search for people', elastic: true do
     end
 
     scenario 'in the most basic form' do
-      visit root_path
+      visit home_path
       fill_in 'query', with: 'Browne'
       click_button 'Search'
 
