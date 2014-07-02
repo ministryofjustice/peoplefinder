@@ -4,18 +4,16 @@
 %p#notice= notice
 %h1= @person.name
 
-= simple_form_for @person do |f|
+= simple_form_for @person, url: person_image_path(@person), method: :put do |f|
   %label Click and drag your cursor to choose the croppable area.
   .form-group
-    = image_tag @person.image.url, id: 'croppable'
+    = image_tag @person.image.croppable.url, id: 'croppable'
 
     -  [:crop_x, :crop_y, :crop_w, :crop_h].each do |x|
       = f.hidden_field x
 
   .form-group
     = f.button :submit, 'Update Image'
-
-
 
   .form-group
     %p= link_to 'Back', edit_person_path(@person)

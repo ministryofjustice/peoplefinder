@@ -23,12 +23,18 @@ RSpec.describe PersonImageController, :type => :controller do
   end
 
   describe "PUT update" do
-    it 'assigns the image crop attributes' do
-      person = Person.create!(surname: 'Doe', image: 'an image')
-      put :update, { crop_x: 10, crop_y: 20, crop_w: 200, crop_h: 200 }
+    it 'crops the image' do
+      image = double(:image)
+      expect(image).to receive(:recreate_versions!).once.and_return(true)
+
+      person = Person.create!(surname: 'Doe', image: image)
+      allow_any_instance_of(Person).to receive(:image).and_return(image)
+
+      put :update, { person_id: person.id,
+          person: { crop_x: 10, crop_y: 20, crop_w: 200, crop_h: 200 } }
 
       expect(response).to be_redirect
-      expect(flash[:notice]).to have_text("Croppped Doe's image")
+      expect(flash[:notice]).to have_text("Cropped Doe's image")
     end
   end
 end

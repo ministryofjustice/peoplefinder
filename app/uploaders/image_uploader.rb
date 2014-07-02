@@ -37,6 +37,27 @@ class ImageUploader < CarrierWave::Uploader::Base
     process quality: 60
   end
 
+  version :croppable do
+    process resize_to_fit: [1024, 1024]
+  end
+
+  version :cropped, from_version: :croppable do
+    process :crop
+  end
+
+  def crop
+    if model.crop_x.present?
+      manipulate! do |img|
+        x = model.crop_x.to_i
+        y = model.crop_y.to_i
+        w = model.crop_w.to_i
+        h = model.crop_h.to_i
+        img.crop "#{ w }x#{ h }+#{ x }+#{ y }"
+        img
+      end
+    end
+  end
+
   # Add a white list of extensions which are allowed to be uploaded.
   # For images you might use something like this:
   def extension_white_list
@@ -48,5 +69,4 @@ class ImageUploader < CarrierWave::Uploader::Base
   # def filename
   #   "something.jpg" if original_filename
   # end
-
 end
