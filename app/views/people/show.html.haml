@@ -11,7 +11,7 @@
           %li{class: ('active' if @person.send(day)), alt: day_name(day)}
             = day_symbol(day)
 
-  .grid.grid-1-3
+  .grid.grid-2-3
     .inner-block
       - @person.memberships.each do |membership|
         %h4= membership.role
