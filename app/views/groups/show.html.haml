@@ -2,10 +2,7 @@
 - content_for :edit_this_page do
   = link_to 'Edit this page', edit_group_path(@group)
 
-- content_for :breadcrumbs do
-  = link_to "Home", "/"
-  = render partial: "shared/breadcrumb_spacer"
-  = group_breadcrumbs(@group)
+= render partial: 'breadcrumbs'
 
 = render partial: 'detail'
 
