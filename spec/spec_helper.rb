@@ -85,10 +85,5 @@ RSpec.configure do |config|
   config.include FactoryGirl::Syntax::Methods
   config.include SpecSupport::Login
   config.include SpecSupport::Search
-end
-
-
-
-def sample_image
-  File.join(Rails.root, "spec", "fixtures", "placeholder.png")
+  config.include SpecSupport::Carrierwave
 end
