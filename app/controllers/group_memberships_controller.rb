@@ -75,6 +75,7 @@ private
     else
       existing_memberships = @group.memberships
     end
-    @candidates = Person.where.not(id: existing_memberships.pluck(:person_id)).sort{|a,b| a.name <=> b.name}
+    @candidates = Person.where.not(id: existing_memberships.pluck(:person_id)).
+      sort_by { |p| p.name }
   end
 end
