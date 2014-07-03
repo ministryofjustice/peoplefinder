@@ -23,11 +23,11 @@ RSpec.describe PersonImageController, :type => :controller do
   end
 
   describe "PUT update" do
-    it 'crops the image' do
-      image = double(:image)
-      expect(image).to receive(:recreate_versions!).once.and_return(true)
+    let(:image) { double(:image) }
+    let(:person) { Person.create!(surname: 'Doe', image: image) }
 
-      person = Person.create!(surname: 'Doe', image: image)
+    it 'recreates image versions' do
+      expect(image).to receive(:recreate_versions!).once.and_return(true)
       allow_any_instance_of(Person).to receive(:image).and_return(image)
 
       put :update, { person_id: person.id,
@@ -35,6 +35,16 @@ RSpec.describe PersonImageController, :type => :controller do
 
       expect(response).to redirect_to(person)
       expect(flash[:notice]).to have_text("Cropped Doe's image")
+    end
+
+    it 'fails to recreate image versions' do
+      expect(image).to receive(:recreate_versions!).once.and_return(false)
+      allow_any_instance_of(Person).to receive(:image).and_return(image)
+
+      put :update, { person_id: person.id,
+        person: { crop_x: 10, crop_y: 20, crop_w: 200, crop_h: 200 } }
+
+      expect(response).to render_template(:edit)
     end
   end
 end
