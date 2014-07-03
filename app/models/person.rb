@@ -73,7 +73,7 @@ class Person < ActiveRecord::Base
   end
 
   def role_and_group
-    memberships.map{ | membership| [membership.group_name, membership.role].join(', ') }.join("; ")
+    memberships.map{ |m| [m.group_name, m.role].join(', ') }.join("; ")
   end
 
   def self.fuzzy_search(query)
