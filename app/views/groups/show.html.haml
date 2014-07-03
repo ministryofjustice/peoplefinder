@@ -22,7 +22,6 @@
       = render partial: "memberships/summary", collection: @group.non_leaderships
 
 %p
+  = link_to 'Manage people', group_memberships_path(@group)
+  \|
   = link_to new_child_group_cta(@group), new_group_group_path(@group)
-
-%p
-  = link_to 'Add member', new_group_membership_path(@group)

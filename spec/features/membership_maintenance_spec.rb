@@ -17,7 +17,8 @@ feature "Membership maintenance" do
 
   scenario "Adding a person from a group's page" do
     visit group_path(group)
-    click_link 'Add member'
+    click_link 'Manage people'
+    first(:link, 'Add someone').click
     select person.name, from: 'Person'
     fill_in 'Role', with: 'Goat farmer'
     click_button 'Create Membership'
@@ -39,7 +40,7 @@ feature "Membership maintenance" do
   scenario "Adding a group from a person's page" do
     visit person_path(person)
     click_link 'Edit groups'
-    click_link 'Add group'
+    first(:link, 'Add group').click
     select group.name, from: 'Group'
     fill_in 'Role', with: 'Goat farmer'
     click_button 'Create Membership'

@@ -25,8 +25,8 @@ en:
       team: "Teams"
       organization: "Organisations"
     add_cta:
-      team: "Add team"
-      organization: "Add organisation"
+      team: "Add a team"
+      organization: "Add an organisation"
   people:
     day_names:
       works_monday: "Monday"

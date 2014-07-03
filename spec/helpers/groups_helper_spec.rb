@@ -13,15 +13,15 @@ RSpec.describe GroupsHelper, :type => :helper do
     end
   end
 
-  it "should use 'Add organisation' as CTA from department" do
+  it "should use 'Add an organisation' as CTA from department" do
     dept = double(level: 0)
-    expect(new_child_group_cta(dept)).to eql("Add organisation")
+    expect(new_child_group_cta(dept)).to eql("Add an organisation")
   end
 
-  it "should use 'Add team' as CTA from organisation" do
+  it "should use 'Add a team' as CTA from organisation" do
     [3, 4, 9].each do |level|
       group = double(level: level)
-      expect(new_child_group_cta(group)).to eql("Add team")
+      expect(new_child_group_cta(group)).to eql("Add a team")
     end
   end
 end

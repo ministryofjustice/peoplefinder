@@ -1,10 +1,10 @@
 = render partial: 'breadcrumbs'
 
 %h1
-  Members of
+  People in
   = link_to @group, @group
 
-= link_to 'Add member', new_group_membership_path(@group)
+= link_to 'Add someone', new_group_membership_path(@group)
 
 %table
   - @memberships.each do |membership|
@@ -14,3 +14,5 @@
       %td= membership.leader ? 'Leader' : ''
       %td= link_to 'Edit', edit_group_membership_path(@group, membership)
       %td= button_to 'Remove', group_membership_path(@group, membership), :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+= link_to 'Add someone', new_group_membership_path(@group)
