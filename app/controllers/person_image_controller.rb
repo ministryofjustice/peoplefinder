@@ -12,7 +12,7 @@ class PersonImageController < ApplicationController
     @person.assign_attributes(person_params)
 
     if @person.image.recreate_versions!
-      redirect_to edit_person_path(@person), notice: "Cropped #{ @person }'s image."
+      redirect_to person_path(@person), notice: "Cropped #{ @person }'s image."
     else
       render action: 'edit'
     end

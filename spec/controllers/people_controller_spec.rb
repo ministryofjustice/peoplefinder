@@ -16,6 +16,10 @@ RSpec.describe PeopleController, :type => :controller do
     {surname: ''}
   }
 
+  let(:valid_attributes_with_image) {
+    attributes_for(:person).merge(image: File.open(sample_image))
+  }
+
   # This should return the minimal set of values that should be in the session
   # in order to pass any filters (e.g. authentication) defined in
   # PersonsController. Be sure to keep this updated too.
@@ -70,6 +74,11 @@ RSpec.describe PeopleController, :type => :controller do
         post :create, {:person => valid_attributes}, valid_session
         expect(response).to redirect_to(Person.last)
       end
+
+      it "redirect to the cropping tool if an image has been attached" do
+        post :create, {:person => valid_attributes_with_image}, valid_session
+        expect(response).to redirect_to(edit_person_image_path(Person.last))
+      end
     end
 
     describe "with invalid params" do
@@ -108,6 +117,12 @@ RSpec.describe PeopleController, :type => :controller do
         person = Person.create! valid_attributes
         put :update, {:id => person.to_param, :person => valid_attributes}, valid_session
         expect(response).to redirect_to(person)
+      end
+
+      it "redirect to the cropping tool if an image has been attached" do
+        person = Person.create! valid_attributes
+        put :update, {:id => person.to_param, :person => valid_attributes_with_image}, valid_session
+        expect(response).to redirect_to(edit_person_image_path(person))
       end
     end
 

@@ -29,7 +29,7 @@ class PeopleController < ApplicationController
     @person = Person.new(person_params)
 
     if @person.save
-      redirect_to @person, notice: "Created #{@person}’s profile."
+      redirect_to successful_redirect_path, notice: "Created #{@person}’s profile."
     else
       render :new
     end
@@ -38,7 +38,7 @@ class PeopleController < ApplicationController
   # PATCH/PUT /people/1
   def update
     if @person.update(person_params)
-      redirect_to @person, notice: "Updated #{@person}’s profile."
+      redirect_to successful_redirect_path, notice: "Updated #{@person}’s profile."
     else
       render :edit
     end
@@ -63,5 +63,9 @@ private
       :description, :works_monday, :works_tuesday, :works_wednesday,
       :works_thursday, :works_friday
     )
+  end
+
+  def successful_redirect_path
+    person_params[:image].present? ? edit_person_image_path(@person) : @person
   end
 end
