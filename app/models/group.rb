@@ -30,8 +30,8 @@ class Group < ActiveRecord::Base
     parent ? parent.level.succ : 0
   end
 
-  def with_ancestry(acc = [])
+  def hierarchy(acc = [])
     acc = [self] + acc
-    @with_ancestry ||= parent ? parent.with_ancestry(acc) : acc
+    @hierarchy ||= parent ? parent.hierarchy(acc) : acc
   end
 end

@@ -8,4 +8,8 @@ class Home
   def to_s
     "Home"
   end
+
+  def self.hierarchy
+    [instance]
+  end
 end

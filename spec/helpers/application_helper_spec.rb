@@ -36,10 +36,11 @@ RSpec.describe ApplicationHelper, :type => :helper do
   end
 
   context '#breadcrumbs' do
-    it 'should return group breadcrumbs' do
+    it 'should build linked breadcrumbs' do
       justice = create(:group, name: 'Justice')
       digital_service = create(:group, parent: justice, name: 'Digital Services')
-      fragment = Capybara::Node::Simple.new(group_breadcrumbs(digital_service))
+      generated = breadcrumbs([justice, digital_service])
+      fragment = Capybara::Node::Simple.new(generated)
       expect(fragment).to have_selector('a[href="/groups/justice"]', text: 'Justice')
       expect(fragment).to have_selector('a[href="/groups/digital-services"]', text: 'Digital Services')
     end

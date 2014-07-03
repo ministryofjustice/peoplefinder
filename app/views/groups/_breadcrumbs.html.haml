@@ -1,2 +1,2 @@
 - content_for :breadcrumbs do
-  = render partial: "shared/breadcrumbs", locals: { items: [Home.instance] + @group.with_ancestry }
+  = breadcrumbs(Home.hierarchy + @group.hierarchy)

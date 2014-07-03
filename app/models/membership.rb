@@ -10,4 +10,5 @@ class Membership < ActiveRecord::Base
   delegate :name, to: :person, prefix: true
   delegate :image, to: :person, prefix: true
   delegate :name, to: :group, prefix: true
+  delegate :hierarchy, to: :group
 end

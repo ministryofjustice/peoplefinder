@@ -17,8 +17,8 @@ module ApplicationHelper
     doc.to_html.html_safe
   end
 
-  def group_breadcrumbs(group)
-    render partial: "shared/breadcrumbs", locals: { items: group.with_ancestry }
+  def breadcrumbs(items)
+    render partial: "shared/breadcrumbs", locals: { items: items }
   end
 
   FLASH_NOTICE_KEYS = %w[ error notice warning ]

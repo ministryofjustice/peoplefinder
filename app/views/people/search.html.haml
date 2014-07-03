@@ -10,5 +10,5 @@
       = link_to person.name, person
       %br
       - person.memberships.each do |membership|
-        = [membership.role, group_breadcrumbs(membership.group)].compact.join("<br/>").html_safe
+        = [membership.role, breadcrumbs(membership.hierarchy)].compact.join("<br/>").html_safe
       %p= person.location

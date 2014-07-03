@@ -22,12 +22,12 @@ RSpec.describe Group, :type => :model do
     child = create(:group, parent: parent)
     grandchild = create(:group, parent: child)
 
-    expect(grandchild.with_ancestry).to eql([grandparent, parent, child, grandchild])
+    expect(grandchild.hierarchy).to eql([grandparent, parent, child, grandchild])
   end
 
   it "should know when it has no ancestors" do
     department = create(:group, parent: nil)
 
-    expect(department.with_ancestry).to eql([department])
+    expect(department.hierarchy).to eql([department])
   end
 end
