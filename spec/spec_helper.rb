@@ -97,3 +97,7 @@ def clean_up_indexes_and_tables
   # => that use elasticsearch.
   PaperTrail::Version.delete_all
 end
+
+def sample_image
+  File.join(Rails.root, "spec", "fixtures", "placeholder.png")
+end

@@ -95,7 +95,7 @@ feature "Person maintenance" do
   scenario 'Adding a profile image' do
     visit new_person_path
     fill_in 'Surname', with: person_attributes[:surname]
-    attach_file 'Image',File.join(Rails.root, "spec", "fixtures", "placeholder.png")
+    attach_file 'Image', sample_image
     click_button 'Create Person'
 
     person = Person.find_by_surname(person_attributes[:surname])
