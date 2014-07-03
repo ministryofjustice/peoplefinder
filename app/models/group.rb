@@ -42,10 +42,6 @@ class Group < ActiveRecord::Base
     leaderships.first
   end
 
-  def leader
-    leaders.first
-  end
-
   delegate :image, to: :leader, prefix: true
   delegate :name, to: :leader, prefix: true
 end
