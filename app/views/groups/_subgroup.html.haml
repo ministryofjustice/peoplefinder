@@ -2,7 +2,7 @@
   %div.inner-block
     %h3
       = link_to subgroup, subgroup
-    - if @group.level < 2 && @group.leader
+    - if @group.level < 2 && subgroup.leader
       .image-background
         = image_tag subgroup.leader_image.medium, class: 'team-members'
       .person-name= subgroup.leader_name
