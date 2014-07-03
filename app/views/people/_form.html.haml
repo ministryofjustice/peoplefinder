@@ -26,7 +26,7 @@
       = f.input :image, as: :file
 
       - if @person.image.present?
-        = image_tag @person.image.url(:medium), class: 'preview'
+        = image_tag @person.image.medium, class: 'preview'
         = link_to 'Crop image', edit_person_image_path(@person)
 
     .form-group

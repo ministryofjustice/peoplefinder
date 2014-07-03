@@ -32,17 +32,14 @@ class ImageUploader < CarrierWave::Uploader::Base
   #   process :resize_to_fit => [50, 50]
   # end
 
-  version :medium do
-    process resize_to_fit: [512, 512]
+  version :medium, from_version: :croppable do
+    process :crop
+    process resize_to_limit: [512, 512]
     process quality: 60
   end
 
   version :croppable do
-    process resize_to_fit: [1024, 1024]
-  end
-
-  version :cropped, from_version: :croppable do
-    process :crop
+    process resize_to_limit: [1024, 1024]
   end
 
   def crop
