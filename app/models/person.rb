@@ -81,12 +81,12 @@ class Person < ActiveRecord::Base
       size: 100,
       query: {
         fuzzy_like_this: {
-               fields: [:name, :description, :location, :role_and_group],
-               like_text: query,
-               prefix_length: 3,
-               ignore_tf: true
-             }
+          fields: [:name, :description, :location, :role_and_group],
+          like_text: query,
+          prefix_length: 3,
+          ignore_tf: true
         }
-      })
+      }
+    })
   end
 end
