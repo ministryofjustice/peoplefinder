@@ -35,6 +35,10 @@ class Group < ActiveRecord::Base
     @hierarchy ||= parent ? parent.hierarchy(acc) : acc
   end
 
+  def leadership
+    leaderships.first
+  end
+
   def leader
     leaders.first
   end

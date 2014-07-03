@@ -4,11 +4,7 @@
   %div.grid.grid-1-3
     %div.inner-block.group-leader
       - @group.leaderships.each do |leadership|
-        - person = leadership.person
-        .image-background
-          = image_tag person.image.medium
-        %h3= link_to person, person
-        .leader-role= leadership.role
+        = render partial: 'leadership', object: leadership
 
   -if @group.responsibilities.present?
     %div.grid.grid-1-3
