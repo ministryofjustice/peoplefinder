@@ -27,6 +27,24 @@ class Person < ActiveRecord::Base
 
   friendly_id :slug_source, use: :slugged
 
+  def self.delete_indexes
+    self.__elasticsearch__.delete_index! index: Person.index_name
+  end
+
+  def self.fuzzy_search(query)
+    Person.search({
+      size: 100,
+      query: {
+        fuzzy_like_this: {
+          fields: [:name, :description, :location, :role_and_group],
+          like_text: query,
+          prefix_length: 3,
+          ignore_tf: true
+        }
+      }
+    })
+  end
+
   def name
     [given_name, surname].compact.join(' ').strip
   end
@@ -61,10 +79,6 @@ class Person < ActiveRecord::Base
     end
   end
 
-  def self.delete_indexes
-    self.__elasticsearch__.delete_index! index: Person.index_name
-  end
-
   def as_indexed_json(options={})
     self.as_json(
       only: [:description, :location],
@@ -74,19 +88,5 @@ class Person < ActiveRecord::Base
 
   def role_and_group
     memberships.map{ |m| [m.group_name, m.role].join(', ') }.join("; ")
-  end
-
-  def self.fuzzy_search(query)
-    Person.search({
-      size: 100,
-      query: {
-        fuzzy_like_this: {
-          fields: [:name, :description, :location, :role_and_group],
-          like_text: query,
-          prefix_length: 3,
-          ignore_tf: true
-        }
-      }
-    })
   end
 end
