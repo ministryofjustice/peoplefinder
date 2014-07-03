@@ -91,4 +91,47 @@ RSpec.describe Person, :type => :model do
       expect(person.role_and_group).to match(/Estates, Cleaner/)
     end
   end
+
+  context "hierarchy" do
+    let(:person) { Person.new }
+
+    context "when there are no memberships" do
+      it "should contain only itself" do
+        expect(person.hierarchy).to eql([person])
+      end
+    end
+
+    context "when there is one membership" do
+      it "should contain the group's hierarchy" do
+        group_a = Group.new
+        group_b = Group.new
+        allow(group_b).to receive(:hierarchy) { [group_a, group_b] }
+        person.groups << group_b
+        expect(person.hierarchy).to eql([group_a, group_b, person])
+      end
+    end
+
+    context "when there are multiple group memberships" do
+      let(:groups) { 4.times.map { Group.new } }
+
+      before do
+        allow(groups[1]).to receive(:hierarchy) { [groups[0], groups[1]] }
+        allow(groups[3]).to receive(:hierarchy) { [groups[2], groups[3]] }
+        person.groups << groups[1]
+        person.groups << groups[3]
+      end
+
+      it "should use the first group's hierarchy" do
+        expect(person.hierarchy).to eql([groups[0], groups[1], person])
+      end
+
+      it "should use the group hint to choose the hierarchy" do
+        expect(person.hierarchy(groups[3])).to eql([groups[2], groups[3], person])
+      end
+
+      it "should use the first group's hierarchy if the hint is unhelpful" do
+        expect(person.hierarchy(Group.new)).to eql([groups[0], groups[1], person])
+      end
+    end
+  end
 end

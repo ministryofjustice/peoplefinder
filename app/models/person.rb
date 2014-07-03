@@ -89,4 +89,16 @@ class Person < ActiveRecord::Base
   def role_and_group
     memberships.map{ |m| [m.group_name, m.role].join(', ') }.join("; ")
   end
+
+  def hierarchy(hint_group = nil)
+    if groups.empty?
+      items = []
+    elsif groups.length == 1 || hint_group.nil?
+      items = groups.first.hierarchy
+    else
+      group = groups.find { |g| g.hierarchy.include?(hint_group) } || groups.first
+      items = group.hierarchy
+    end
+    items << self
+  end
 end
