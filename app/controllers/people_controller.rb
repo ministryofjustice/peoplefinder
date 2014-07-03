@@ -1,5 +1,6 @@
 class PeopleController < ApplicationController
   before_action :set_person, only: [:show, :edit, :update, :destroy]
+  before_action :set_hint_group
 
   def search
     @people = Person.fuzzy_search(params[:query]).records.limit(100)
@@ -53,6 +54,12 @@ private
   # Use callbacks to share common setup or constraints between actions.
   def set_person
     @person = Person.friendly.find(params[:id])
+  end
+
+  def set_hint_group
+    if session[:last_group_visited]
+      @hint_group = Group.find(session[:last_group_visited])
+    end
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.
