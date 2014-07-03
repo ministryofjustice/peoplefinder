@@ -56,12 +56,6 @@ private
     @person = Person.friendly.find(params[:id])
   end
 
-  def set_hint_group
-    if session[:last_group_visited]
-      @hint_group = Group.find(session[:last_group_visited])
-    end
-  end
-
   # Never trust parameters from the scary internet, only allow the white list through.
   def person_params
     params.require(:person).permit(

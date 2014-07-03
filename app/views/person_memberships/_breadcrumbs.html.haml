@@ -1,0 +1,2 @@
+- content_for :breadcrumbs do
+  = breadcrumbs(Home.hierarchy + @person.hierarchy(@hint_group))

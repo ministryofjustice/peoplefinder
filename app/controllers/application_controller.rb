@@ -22,4 +22,10 @@ private
   def ensure_user
     redirect_to new_sessions_path unless logged_in?
   end
+
+  def set_hint_group
+    if session[:last_group_visited]
+      @hint_group = Group.find(session[:last_group_visited])
+    end
+  end
 end

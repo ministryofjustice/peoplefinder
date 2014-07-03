@@ -2,6 +2,7 @@ class PersonMembershipsController < ApplicationController
   before_action :set_person
   before_action :set_membership, only: [:show, :edit, :update, :destroy]
   before_action :set_candidates, only: [:new, :edit]
+  before_action :set_hint_group
 
   # GET /memberships
   def index
