@@ -21,8 +21,7 @@ if ENV['USE_LOCAL_TEMPLATE']
     path: '../moj_internal_template'
 else
   gem 'moj_internal_template',
-    git: 'https://github.com/ministryofjustice/moj_internal_template.git',
-    branch: 'experimental'
+    git: 'https://github.com/ministryofjustice/moj_internal_template.git'
 end
 gem 'omniauth-gplus', '~> 2.0'
 gem 'paper_trail', '~> 3.0.2'
