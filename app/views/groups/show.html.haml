@@ -12,7 +12,7 @@
       = child_group_list_title(@group)
 
     %div.grid-wrapper
-      = render partial: "summary", collection: @group.children
+      = render partial: "subgroup", collection: @group.children
 
 - if @group.non_leaderships.any?
   %div

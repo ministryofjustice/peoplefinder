@@ -1,0 +1,11 @@
+%div.grid.grid-1-3.subgroup
+  %div.inner-block
+    %h3
+      = link_to subgroup, subgroup
+    - if @group.level < 2 && @group.leader
+      .image-background
+        = image_tag subgroup.leader_image.medium, class: 'team-members'
+      .person-name= subgroup.leader_name
+    -else
+      %p
+        = subgroup.description

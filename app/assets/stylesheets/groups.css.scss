@@ -25,3 +25,14 @@
   background-color: #ddd;
   padding: 5px;
 }
+
+.subgroup {
+  .image-background {
+    height: 300px;
+  }
+  img {
+    width: 300px;
+    clip: rect(0px, 300px, 300px, 0px);
+  }
+}
+

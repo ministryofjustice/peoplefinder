@@ -34,4 +34,11 @@ class Group < ActiveRecord::Base
     acc = [self] + acc
     @hierarchy ||= parent ? parent.hierarchy(acc) : acc
   end
+
+  def leader
+    leaders.first
+  end
+
+  delegate :image, to: :leader, prefix: true
+  delegate :name, to: :leader, prefix: true
 end
