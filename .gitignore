@@ -5,3 +5,4 @@
 /tmp
 /public/uploads/*
 /coverage
+/spec/support/uploads/*
