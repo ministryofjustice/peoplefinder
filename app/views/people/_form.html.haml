@@ -27,7 +27,7 @@
 
       - if @person.image.present?
         = image_tag @person.image.medium, class: 'preview'
-        = link_to 'Crop image', edit_person_image_path(@person)
+        %p= link_to 'Crop image', edit_person_image_path(@person)
 
     .form-group
       = f.button :submit
