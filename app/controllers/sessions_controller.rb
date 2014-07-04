@@ -7,7 +7,7 @@ class SessionsController < ApplicationController
     if user
       redirect_to '/'
     else
-      render :text => "You need to sign in with a MOJ DS or GDS account"
+      render :failed
     end
   end
 

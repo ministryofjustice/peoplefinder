@@ -25,7 +25,7 @@ feature "Authentication" do
     expect(page).to have_text("Please log in to continue")
 
     click_link "log in"
-    expect(page).to have_text(/sign in with a MOJ DS or GDS account/)
+    expect(page).to have_text(/log in with an MOJ DS or GDS account/)
   end
 end
 
