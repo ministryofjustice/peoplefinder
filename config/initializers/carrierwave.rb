@@ -22,6 +22,12 @@ module CarrierWave
       end
     end
   end
+
+  module DirHelpers
+    def base_upload_dir
+      ""
+    end
+  end
 end
 
 if Rails.env.test?
@@ -29,12 +35,8 @@ if Rails.env.test?
   CarrierWave::Uploader::Base.descendants.each do |klass|
     next if klass.anonymous?
     klass.class_eval do
-      def cache_dir
-        "#{Rails.root}/spec/support/uploads/tmp"
-      end
-
-      def store_dir
-        "#{Rails.root}/spec/support/uploads/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}"
+      def base_upload_dir
+        "#{Rails.root}/spec/support/"
       end
     end
   end
