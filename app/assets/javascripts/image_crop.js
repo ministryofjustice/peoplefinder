@@ -1,9 +1,10 @@
 $(function(){
   $('#croppable').Jcrop({
-      onSelect: stashCoords,
-      aspectRatio: 1
-    });
+    setSelect: [20, 20, 300, 300],
+    onSelect: stashCoords,
+    aspectRatio: 1
   });
+});
 
 function stashCoords(coords) {
   $('#person_crop_x').val(coords.x);
