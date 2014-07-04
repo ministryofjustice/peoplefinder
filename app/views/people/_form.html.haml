@@ -16,11 +16,9 @@
     .form-group
       = f.input :description
 
-    .form-group
-      %label.form-label-bold Working days
-      Select all that apply
+    .form-checkbox
       - Person::DAYS_WORKED.each do |day|
-        = f.input day, as: :boolean, label: day_name(day), label_html: { class: 'block-label' }
+        = f.input day, as: :boolean, label: day.to_s.titleize
 
     .form-group
       = f.input :image, as: :file
