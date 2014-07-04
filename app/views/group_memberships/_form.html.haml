@@ -1,9 +1,9 @@
 = simple_form_for [@group, @membership] do |f|
   %fieldset
     .form-group
-      = f.input :role, as: :string
-    .form-group
       = f.association :person, collection: @candidates
+    .form-group
+      = f.input :role, as: :string
     .form-checkbox
       = f.input :leader, as: :boolean
     .form-group
