@@ -10,7 +10,10 @@ module SpecSupport
       OmniAuth.config.mock_auth[:gplus] = OmniAuth::AuthHash.new({
         provider: 'gplus',
         info: {
-          email: email
+          email: email,
+          first_name: 'John',
+          last_name: 'Doe',
+          name: 'John Doe',
         }
       })
 

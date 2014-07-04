@@ -4,7 +4,10 @@ RSpec.describe User, :type => :model do
   def build_valid_auth_hash
     {
       'info' => {
-        'email' => 'example.user@digital.justice.gov.uk'
+        'email' => 'example.user@digital.justice.gov.uk',
+        'first_name' => 'John',
+        'last_name' => 'Doe',
+        'name' => 'John Doe',
       }
     }
   end
@@ -14,6 +17,7 @@ RSpec.describe User, :type => :model do
     user = User.from_auth_hash(auth_hash)
     expect(user).not_to be_nil
     expect(user.email).to eql('example.user@digital.justice.gov.uk')
+    expect(user.name).to eql('John Doe')
   end
 
   it "should return nil from an auth_hash with the wrong domain" do
@@ -23,8 +27,15 @@ RSpec.describe User, :type => :model do
     expect(user).to be_nil
   end
 
-  it "should use email for to_s" do
-    user = User.new('user@example.com')
-    expect(user.to_s).to eql('user@example.com')
+  context "to_s" do
+    it "should use name if available" do
+      user = User.new('user@example.com', 'John Doe')
+      expect(user.to_s).to eql('John Doe')
+    end
+
+    it "should use email if name is unavailable" do
+      user = User.new('user@example.com')
+      expect(user.to_s).to eql('user@example.com')
+    end
   end
 end

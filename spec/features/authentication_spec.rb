@@ -12,7 +12,7 @@ feature "Authentication" do
     expect(page).to have_text("Please log in to continue")
 
     click_link "log in"
-    expect(page).to have_text("Logged in as test.user@digital.justice.gov.uk")
+    expect(page).to have_text("Logged in as John Doe")
 
     click_link "Log out"
     expect(page).to have_text("Please log in to continue")
@@ -33,7 +33,10 @@ def invalid_user
   OmniAuth::AuthHash.new({
     provider: 'gplus',
     info: {
-      email: 'test.user@example.com'
+      email: 'test.user@example.com',
+      first_name: 'John',
+      last_name: 'Doe',
+      name: 'John Doe',
     }
   })
 end
@@ -42,7 +45,10 @@ def valid_user
   OmniAuth::AuthHash.new({
     provider: 'gplus',
     info: {
-      email: 'test.user@digital.justice.gov.uk'
+      email: 'test.user@digital.justice.gov.uk',
+      first_name: 'John',
+      last_name: 'Doe',
+      name: 'John Doe',
     }
   })
 end
