@@ -1,4 +1,15 @@
 GIT
+  remote: https://github.com/carrierwaveuploader/carrierwave.git
+  revision: cc39842e44edcb6187b2d379a606ec48a6b5e4a8
+  tag: cc39842e44edcb6187b2d379a606ec48a6b5e4a8
+  specs:
+    carrierwave (0.10.0)
+      activemodel (>= 3.2.0)
+      activesupport (>= 3.2.0)
+      json (>= 1.7)
+      mime-types (>= 1.16)
+
+GIT
   remote: https://github.com/ministryofjustice/moj_internal_template.git
   revision: 74d478a5982e62cd062805000a897a5270e4ce24
   specs:
@@ -45,11 +56,6 @@ GEM
       rack (>= 1.0.0)
       rack-test (>= 0.5.4)
       xpath (~> 2.0)
-    carrierwave (0.10.0)
-      activemodel (>= 3.2.0)
-      activesupport (>= 3.2.0)
-      json (>= 1.7)
-      mime-types (>= 1.16)
     cliver (0.3.2)
     coderay (1.1.0)
     coffee-rails (4.0.1)
@@ -273,7 +279,7 @@ PLATFORMS
 
 DEPENDENCIES
   capybara
-  carrierwave (~> 0.10.0)
+  carrierwave!
   coffee-rails (~> 4.0.0)
   elasticsearch-model (~> 0.1.4)
   elasticsearch-rails (~> 0.1.4)
