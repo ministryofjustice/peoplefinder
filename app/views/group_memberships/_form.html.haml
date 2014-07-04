@@ -4,7 +4,7 @@
       = f.association :person, collection: @candidates
     .form-group
       = f.input :role, as: :string
-    .form-checkbox
-      = f.input :leader, as: :boolean
+    .form-group
+      = f.input :leader, as: :boolean, label_html: { class: 'block-label' }
     .form-group
       = f.button :submit
