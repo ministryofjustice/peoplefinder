@@ -25,9 +25,21 @@ class GroupMembershipsController < ApplicationController
   def create
     @membership = collection.new(membership_params)
 
-    if @membership.save
+    # => validation on create has been disabled
+    # => to facilitate the nested membership form
+    # => on the edit person page.
+    # => Adding some validation logic to ensure
+    # => this method behaves correctly, until
+    # => this controller is removed.
+
+    if @membership.person_id.blank?
+      @membership.errors.add(:person, 'cannot be blank')
+      render :new
+
+    elsif @membership.save
       redirect_to group_memberships_path(@group),
         notice: "Added #{@membership.person} to #{@group}."
+
     else
       render :new
     end
