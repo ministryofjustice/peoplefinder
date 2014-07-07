@@ -18,10 +18,12 @@ class PeopleController < ApplicationController
   # GET /people/new
   def new
     @person = Person.new
+    @person.memberships.build
   end
 
   # GET /people/1/edit
   def edit
+    @person.memberships.build if @person.memberships.empty?
   end
 
   # POST /people

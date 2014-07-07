@@ -45,6 +45,7 @@ RSpec.describe PeopleController, :type => :controller do
     it "assigns a new person as @person" do
       get :new, {}, valid_session
       expect(assigns(:person)).to be_a_new(Person)
+      expect(assigns(:person).memberships.length).to eql(1)
     end
   end
 
@@ -53,6 +54,22 @@ RSpec.describe PeopleController, :type => :controller do
       person = Person.create! valid_attributes
       get :edit, {:id => person.to_param}, valid_session
       expect(assigns(:person)).to eq(person)
+    end
+
+    context 'building memberships' do
+      let(:person) { create(:person) }
+      let(:group) { create(:group) }
+
+      it "builds a membership if there isn't one already" do
+        get :edit, {:id => person.to_param}, valid_session
+        expect(assigns(:person).memberships.length).to eql(1)
+      end
+
+      it " does not build a membership when there is one already" do
+        person.memberships.create(group: group)
+        get :edit, {:id => person.to_param}, valid_session
+        expect(assigns(:person).memberships.length).to eql(1)
+      end
     end
   end
 

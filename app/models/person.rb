@@ -25,6 +25,8 @@ class Person < ActiveRecord::Base
   has_many :memberships, dependent: :destroy
   has_many :groups, through: :memberships
 
+  accepts_nested_attributes_for :memberships, reject_if: proc { |attributes| attributes['membership_id'].blank? }
+
   default_scope { order(surname: :asc, given_name: :asc) }
 
   friendly_id :slug_source, use: :slugged
