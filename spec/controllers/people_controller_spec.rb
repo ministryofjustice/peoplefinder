@@ -25,6 +25,8 @@ RSpec.describe PeopleController, :type => :controller do
   # PersonsController. Be sure to keep this updated too.
   let(:valid_session) { {} }
 
+  let(:group) { create(:group) }
+
   describe "GET index" do
     it "assigns all people as @people" do
       person = Person.create! valid_attributes
@@ -46,6 +48,7 @@ RSpec.describe PeopleController, :type => :controller do
       get :new, {}, valid_session
       expect(assigns(:person)).to be_a_new(Person)
       expect(assigns(:person).memberships.length).to eql(1)
+      expect(assigns(:groups)).to include(group)
     end
   end
 
@@ -54,11 +57,11 @@ RSpec.describe PeopleController, :type => :controller do
       person = Person.create! valid_attributes
       get :edit, {:id => person.to_param}, valid_session
       expect(assigns(:person)).to eq(person)
+      expect(assigns(:groups)).to include(group)
     end
 
     context 'building memberships' do
       let(:person) { create(:person) }
-      let(:group) { create(:group) }
 
       it "builds a membership if there isn't one already" do
         get :edit, {:id => person.to_param}, valid_session
@@ -102,10 +105,7 @@ RSpec.describe PeopleController, :type => :controller do
       it "assigns a newly created but unsaved person as @person" do
         post :create, {:person => invalid_attributes}, valid_session
         expect(assigns(:person)).to be_a_new(Person)
-      end
-
-      it "re-renders the 'new' template" do
-        post :create, {:person => invalid_attributes}, valid_session
+        expect(assigns(:groups)).to include(group)
         expect(response).to render_template("new")
       end
     end
@@ -155,12 +155,8 @@ RSpec.describe PeopleController, :type => :controller do
         person = Person.create! valid_attributes
         put :update, {:id => person.to_param, :person => invalid_attributes}, valid_session
         expect(assigns(:person)).to eq(person)
-      end
-
-      it "re-renders the 'edit' template" do
-        person = Person.create! valid_attributes
-        put :update, {:id => person.to_param, :person => invalid_attributes}, valid_session
         expect(response).to render_template("edit")
+        expect(assigns(:groups)).to include(group)
       end
     end
   end

@@ -4,7 +4,7 @@ class Membership < ActiveRecord::Base
 
   belongs_to :person, touch: true
   belongs_to :group, touch: true
-  validates :person, presence: true, uniqueness: { scope: :group }
+  validates :person, presence: true, uniqueness: { scope: :group }, on: :update
   validates :group, presence: true, uniqueness: { scope: :person }
 
   delegate :name, to: :person, prefix: true

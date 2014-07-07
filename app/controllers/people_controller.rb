@@ -19,20 +19,22 @@ class PeopleController < ApplicationController
   def new
     @person = Person.new
     @person.memberships.build
+    load_groups
   end
 
   # GET /people/1/edit
   def edit
     @person.memberships.build if @person.memberships.empty?
+    load_groups
   end
 
   # POST /people
   def create
     @person = Person.new(person_params)
-
     if @person.save
       redirect_to successful_redirect_path, notice: "Created #{@person}’s profile."
     else
+      load_groups
       render :new
     end
   end
@@ -42,6 +44,7 @@ class PeopleController < ApplicationController
     if @person.update(person_params)
       redirect_to successful_redirect_path, notice: "Updated #{@person}’s profile."
     else
+      load_groups
       render :edit
     end
   end
@@ -62,10 +65,15 @@ private
   def person_params
     params.require(:person).permit(
       :given_name, :surname, :location, :phone, :mobile, :email, :image,
-      :description, *Person::DAYS_WORKED)
+      :description, *Person::DAYS_WORKED,
+      memberships_attributes: [:id, :role, :group_id, :leader])
   end
 
   def successful_redirect_path
     person_params[:image].present? ? edit_person_image_path(@person) : @person
+  end
+
+  def load_groups
+    @groups = Group.all
   end
 end

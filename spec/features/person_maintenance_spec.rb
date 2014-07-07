@@ -42,6 +42,21 @@ feature "Person maintenance" do
     end
   end
 
+  scenario 'Creating a person and making them the leader of a group' do
+    group = create(:group, name: 'Digital Justice')
+    visit new_person_path
+    fill_in 'Surname', with: person_attributes[:surname]
+    fill_in 'Role', with: 'Head Honcho'
+    select('Digital Justice', from: 'Group')
+    check('Leader')
+    click_button "Create Person"
+
+    membership = Person.last.memberships.last
+    expect(membership.role).to eql('Head Honcho')
+    expect(membership.group).to eql(group)
+    expect(membership.leader?).to be true
+  end
+
   scenario 'Creating an invalid person' do
     visit new_person_path
     click_button "Create Person"
