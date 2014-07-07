@@ -95,6 +95,8 @@ feature "Person maintenance" do
     end
   end
 
+  scenario 'Deleting a group'
+
   scenario 'Editing an invalid person' do
     visit person_path(create(:person, person_attributes))
     click_link 'Edit this page'

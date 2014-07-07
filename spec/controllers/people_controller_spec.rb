@@ -76,6 +76,14 @@ RSpec.describe PeopleController, :type => :controller do
     end
   end
 
+  describe 'GET add_membership' do
+    it 'builds a membership for a person object and renders add_membership template' do
+      get :add_membership
+      expect(assigns(:person).memberships.length).to eql(1)
+      expect(response).to render_template('add_membership')
+    end
+  end
+
   describe "POST create" do
     describe "with valid params" do
       it "creates a new Person" do

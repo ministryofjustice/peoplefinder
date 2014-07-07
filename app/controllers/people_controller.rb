@@ -19,13 +19,13 @@ class PeopleController < ApplicationController
   def new
     @person = Person.new
     @person.memberships.build
-    load_groups
+    set_groups
   end
 
   # GET /people/1/edit
   def edit
     @person.memberships.build if @person.memberships.empty?
-    load_groups
+    set_groups
   end
 
   # POST /people
@@ -34,7 +34,7 @@ class PeopleController < ApplicationController
     if @person.save
       redirect_to successful_redirect_path, notice: "Created #{@person}’s profile."
     else
-      load_groups
+      set_groups
       render :new
     end
   end
@@ -44,7 +44,7 @@ class PeopleController < ApplicationController
     if @person.update(person_params)
       redirect_to successful_redirect_path, notice: "Updated #{@person}’s profile."
     else
-      load_groups
+      set_groups
       render :edit
     end
   end
@@ -53,6 +53,13 @@ class PeopleController < ApplicationController
   def destroy
     @person.destroy
     redirect_to people_url, notice: "Deleted #{@person}’s profile."
+  end
+
+  def add_membership
+    @person = Person.new
+    @person.memberships.build
+    set_groups
+    render "add_membership", :layout => false
   end
 
 private
@@ -73,7 +80,7 @@ private
     person_params[:image].present? ? edit_person_image_path(@person) : @person
   end
 
-  def load_groups
+  def set_groups
     @groups = Group.all
   end
 end

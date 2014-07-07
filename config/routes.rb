@@ -6,6 +6,9 @@ Rails.application.routes.draw do
     resources :memberships, controller: 'group_memberships'
   end
   resources :people do
+    collection do
+      get :add_membership
+    end
     resources :memberships, controller: 'person_memberships'
     resource :image, controller: 'person_image'
   end

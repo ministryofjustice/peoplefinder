@@ -1,0 +1,7 @@
+= f.fields_for :memberships, child_index: child_index do |membership|
+  .form-group
+    = membership.input :role, as: :string
+  .form-group
+    = membership.association :group, collection: @groups, required: false, include_blank: "-- Select --"
+  .form-checkbox
+    = membership.input :leader

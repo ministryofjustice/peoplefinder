@@ -5,6 +5,12 @@
       = f.input :given_name, as: :string
     .form-group
       = f.input :surname, as: :string
+
+    #memberships
+      - child_index = Time.now.to_i
+      = render partial: 'membership_fields', locals: { f: f, child_index: child_index }
+    = link_to 'Add another group', add_membership_people_path, id: 'add_membership'
+
     .form-group
       = f.input :location, as: :string
     .form-group
