@@ -12,6 +12,7 @@ Rails.application.routes.draw do
     resources :memberships, controller: 'person_memberships'
     resource :image, controller: 'person_image'
   end
+  resources :memberships, only: [:destroy]
   resource :sessions
 
   match '/auth/:provider/callback', to: 'sessions#create', via: [:get, :post]

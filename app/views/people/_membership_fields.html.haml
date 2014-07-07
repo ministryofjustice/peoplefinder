@@ -1,7 +1,11 @@
 = f.fields_for :memberships, child_index: child_index do |membership|
   .form-group
-    = membership.input :role, as: :string
-  .form-group
     = membership.association :group, collection: @groups, required: false, include_blank: "-- Select --"
+  - if group = membership.object.group
+    = link_to "Remove #{ group.name  }",
+      membership_path(membership.object), :method => :delete,
+        :data => { :confirm => 'Are you sure you want to remove this group?' }
+  .form-group
+    = membership.input :role, as: :string
   .form-checkbox
     = membership.input :leader

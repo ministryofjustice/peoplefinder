@@ -95,7 +95,18 @@ feature "Person maintenance" do
     end
   end
 
-  scenario 'Deleting a group'
+  scenario 'Removing a group' do
+     group = create(:group, name: 'Digital Justice')
+     person = create(:person, person_attributes)
+     person.memberships.create(group: group)
+
+     visit edit_person_path(person)
+     click_link('Remove Digital Justice')
+
+     expect(page).to have_content("Removed Marco Polo from Digital Justice")
+     expect(person.reload.memberships).to be_empty
+  end
+
 
   scenario 'Editing an invalid person' do
     visit person_path(create(:person, person_attributes))
