@@ -18,6 +18,13 @@ GIT
       govuk_template (= 0.8.1)
       rails (~> 4)
 
+GIT
+  remote: https://github.com/ministryofjustice/omniauth-gplus.git
+  revision: c9b013d10c6af55d9eb92d41191e7e0d036ef7c9
+  specs:
+    omniauth-gplus (2.0.1)
+      omniauth-oauth2 (~> 1.1)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -160,8 +167,6 @@ GEM
     omniauth (1.2.1)
       hashie (>= 1.2, < 3)
       rack (~> 1.0)
-    omniauth-gplus (2.0.1)
-      omniauth-oauth2 (~> 1.1)
     omniauth-oauth2 (1.1.2)
       faraday (>= 0.8, < 0.10)
       multi_json (~> 1.3)
@@ -296,7 +301,7 @@ DEPENDENCIES
   mini_magick
   minitest
   moj_internal_template!
-  omniauth-gplus (~> 2.0)
+  omniauth-gplus!
   paper_trail (~> 3.0.2)
   paranoia (~> 2.0)
   pg

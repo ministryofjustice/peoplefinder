@@ -25,7 +25,8 @@ else
   gem 'moj_internal_template',
     git: 'https://github.com/ministryofjustice/moj_internal_template.git'
 end
-gem 'omniauth-gplus', '~> 2.0'
+gem 'omniauth-gplus',
+  git: 'https://github.com/ministryofjustice/omniauth-gplus.git'
 gem 'paper_trail', '~> 3.0.2'
 gem 'paranoia', '~> 2.0'
 gem 'pg'
