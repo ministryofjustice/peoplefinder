@@ -11,6 +11,7 @@ gem 'uglifier', '>= 1.3.0'
 
 group :development do
   gem 'spring'
+  gem 'thin'
 end
 
 group :test do
