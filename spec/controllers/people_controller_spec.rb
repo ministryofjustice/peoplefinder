@@ -97,14 +97,21 @@ RSpec.describe PeopleController, :type => :controller do
   describe "PUT update" do
     describe "with valid params" do
       let(:new_attributes) {
-        attributes_for(:person)
+        attributes_for(:person).merge(
+          works_monday: true,
+          works_tuesday: false,
+          works_saturday: true,
+          works_sunday: false
+        )
       }
 
       it "updates the requested person" do
         person = Person.create! valid_attributes
         put :update, {:id => person.to_param, :person => new_attributes}, valid_session
         person.reload
-        expect(person.surname).to eql(new_attributes[:surname])
+        new_attributes.each do |attr, value|
+          expect(person.send(attr)).to eql(value)
+        end
       end
 
       it "assigns the requested person as @person" do

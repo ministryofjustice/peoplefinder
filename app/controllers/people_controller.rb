@@ -60,7 +60,7 @@ private
   def person_params
     params.require(:person).permit(
       :given_name, :surname, :location, :phone, :mobile, :email, :image,
-      :description, Person::DAYS_WORKED)
+      :description, *Person::DAYS_WORKED)
   end
 
   def successful_redirect_path
