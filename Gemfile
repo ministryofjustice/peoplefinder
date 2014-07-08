@@ -3,10 +3,15 @@ ruby '2.1.1'
 gem 'rails', '~> 4.1.4'
 
 gem 'coffee-rails', '~> 4.0.0'
+gem 'govuk_template'
+gem 'govuk_frontend_toolkit'
 gem 'jbuilder', '~> 2.0'
 gem 'jquery-rails'
+gem 'moj_internal_template',
+  git: 'https://github.com/ministryofjustice/moj_internal_template.git'
 gem 'pg'
 gem 'sass-rails', '~> 4.0.3'
+gem 'simple_form', '~> 3.1.0.rc1'
 gem 'uglifier', '>= 1.3.0'
 
 group :development do

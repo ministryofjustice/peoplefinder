@@ -1,14 +1,14 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>SCSAppraisals</title>
-  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
-  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
-  <%= csrf_meta_tags %>
-</head>
-<body>
-
-<%= yield %>
-
-</body>
-</html>
+<% content_for :head do %>
+  <-- Define your own additional styles -->
+  <%= stylesheet_link_tag "application" %>
+<% end %>
+<% content_for :content do %>
+  <div id="wrapper" class="">
+    <main id="content" role="main" class="">
+      <div class="inner-block">
+        <%= yield %>
+      </div>
+    </main>
+  </div>
+<% end %>
+<%= render template: "layouts/moj_internal_template" %>
