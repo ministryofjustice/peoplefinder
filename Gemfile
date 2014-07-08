@@ -25,3 +25,7 @@ group :test do
   gem 'simplecov', '~> 0.7.1', require: false
   gem 'simplecov-rcov', require: false
 end
+
+group :production do
+  gem 'rails_12factor'
+end
