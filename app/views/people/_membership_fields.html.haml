@@ -3,7 +3,7 @@
     .form-group
       = membership.association :group, collection: @groups,
         required: false, include_blank: "-- Select --",
-        label: remove_membership_link(membership)
+        label: remove_membership_link(membership.object)
     .form-group
       = membership.input :role, as: :string, label: 'Title'
     .form-checkbox

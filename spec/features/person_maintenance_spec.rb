@@ -101,10 +101,11 @@ feature "Person maintenance" do
      person.memberships.create(group: group)
 
      visit edit_person_path(person)
-     click_link('Remove Digital Justice')
+     click_link('remove')
 
      expect(page).to have_content("Removed Marco Polo from Digital Justice")
      expect(person.reload.memberships).to be_empty
+     expect(current_path).to eql(edit_person_path(person))
   end
 
 
