@@ -10,7 +10,7 @@ feature "Audit trail" do
       person = create(:person, surname: 'original surname')
       visit edit_person_path(person)
       fill_in 'Surname', with: 'something else'
-      click_button 'Update Person'
+      click_button 'Update person'
       expect(person.versions.last.changeset['surname']).to eql(['original surname', 'something else'])
 
       visit '/audit_trail'
