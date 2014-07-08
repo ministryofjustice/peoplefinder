@@ -70,7 +70,7 @@ feature "Person maintenance" do
     membership = create(:membership)
     person = membership.person
     visit edit_person_path(person)
-    click_link('Delete this record')
+    click_link('Delete this profile')
 
     expect(page).to have_content("Deleted #{person}’s profile")
 
