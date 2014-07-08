@@ -6,10 +6,14 @@
     .form-group
       = f.input :surname, as: :string, required: false
 
-    #memberships
-      - child_index = Time.now.to_i
-      = render partial: 'membership_fields', locals: { f: f, child_index: child_index }
-    = link_to 'Add another group', add_membership_people_path, id: 'add_membership'
+    .form-group
+      %label.form-label-bold Role
+      #memberships
+        - child_index = Time.now.to_i
+        = render partial: 'membership_fields', locals: { f: f, child_index: child_index }
+
+    .form-group
+      = link_to 'Add another role', add_membership_people_path, id: 'add_membership'
 
     .form-group
       = f.input :location, as: :string

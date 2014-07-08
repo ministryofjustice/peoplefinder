@@ -46,7 +46,7 @@ feature "Person maintenance" do
     group = create(:group, name: 'Digital Justice')
     visit new_person_path
     fill_in 'Surname', with: person_attributes[:surname]
-    fill_in 'Role', with: 'Head Honcho'
+    fill_in 'Title', with: 'Head Honcho'
     select('Digital Justice', from: 'Group')
     check('Leader')
     click_button "Create Person"
