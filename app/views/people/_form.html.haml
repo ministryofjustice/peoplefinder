@@ -31,11 +31,11 @@
         = f.input day, as: :boolean, label: day.to_s.titleize
 
     .form-group
-      = f.input :image, as: :file
-
+      %label.form-label-bold Image
       - if @person.image.present?
         = image_tag @person.image.medium, class: 'preview'
         %p= link_to 'Crop image', edit_person_image_path(@person)
+      = f.input :image, as: :file, label: false
 
     .form-group
       = f.button :submit
