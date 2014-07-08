@@ -4,7 +4,7 @@
     .form-group
       = f.input :given_name, as: :string
     .form-group
-      = f.input :surname, as: :string
+      = f.input :surname, as: :string, required: false
 
     #memberships
       - child_index = Time.now.to_i
