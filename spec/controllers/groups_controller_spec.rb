@@ -39,6 +39,8 @@ RSpec.describe GroupsController, :type => :controller do
   # GroupsController. Be sure to keep this updated too.
   let(:valid_session) { {} }
 
+  let(:person) { create(:person)  }
+
   describe "GET index" do
     subject { get :index, {}, valid_session }
 
@@ -71,6 +73,8 @@ RSpec.describe GroupsController, :type => :controller do
     it "assigns a new group as @group" do
       get :new, {}, valid_session
       expect(assigns(:group)).to be_a_new(Group)
+      expect(assigns(:group).memberships.length).to eql(1)
+      expect(assigns(:people)).to include(person)
     end
   end
 
@@ -111,6 +115,7 @@ RSpec.describe GroupsController, :type => :controller do
       it "re-renders the 'new' template" do
         post :create, {:group => invalid_attributes}, valid_session
         expect(response).to render_template("new")
+        expect(assigns(:people)).to include(person)
       end
     end
   end
@@ -152,6 +157,7 @@ RSpec.describe GroupsController, :type => :controller do
         group = Group.create! valid_attributes
         put :update, {:id => group.to_param, :group => invalid_attributes}, valid_session
         expect(response).to render_template("edit")
+        expect(assigns(:people)).to include(person)
       end
     end
   end

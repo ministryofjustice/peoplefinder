@@ -17,6 +17,9 @@ class Group < ActiveRecord::Base
   has_many :leaders, through: :leaderships, source: :person
   has_many :non_leaders, through: :non_leaderships, source: :person
 
+  accepts_nested_attributes_for :memberships, allow_destroy: true,
+    reject_if: proc { |membership| membership['person_id'].blank? }
+
   validates_presence_of :name
 
   default_scope { order(name: :asc) }

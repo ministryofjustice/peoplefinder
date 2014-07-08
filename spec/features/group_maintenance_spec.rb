@@ -55,6 +55,21 @@ feature "Group maintenance" do
     expect(team.parent).to eql(org)
   end
 
+  scenario 'Creating a group and adding a leader' do
+    person = create(:person, surname: 'Doe')
+    visit new_group_path
+    fill_in 'Name', with: 'Cleaners'
+    select 'Doe', from: 'Person'
+    fill_in 'Title', with: 'Head Honcho'
+    check('Leader')
+    click_button "Create Group"
+
+    membership = Group.last.memberships.last
+    expect(membership.role).to eql('Head Honcho')
+    expect(membership.person).to eql(person)
+    expect(membership.leader?).to be true
+  end
+
   scenario 'Deleting a group softly' do
     membership = create(:membership)
     group = membership.group

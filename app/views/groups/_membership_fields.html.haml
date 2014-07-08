@@ -1,0 +1,10 @@
+= f.fields_for :memberships, child_index: child_index do |membership|
+  .grey-panel
+    .form-group
+      = membership.association :person, collection: @people,
+        required: false, include_blank: "-- Select --",
+        label: remove_membership_link(membership.object)
+    .form-group
+      = membership.input :role, as: :string, label: 'Title'
+    .form-checkbox
+      = membership.input :leader, label: 'Leader?'

@@ -18,7 +18,7 @@ module PeopleHelper
   def remove_membership_link(membership)
     ret = ''
     if group = membership.group
-      ret = link_to "remove", membership_path(membership, referer: edit_person_path(@person)),
+      ret = link_to "remove", membership_path(membership, referer: edit_person_path(membership.person)),
             method: :delete,
             data: { :confirm => 'Are you sure you want to remove this group?' }
     end
