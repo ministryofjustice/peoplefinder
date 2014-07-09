@@ -124,4 +124,3 @@ feature "Group maintenance" do
     expect(group.parent).to eql(dept)
   end
 end
-
