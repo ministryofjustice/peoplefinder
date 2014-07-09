@@ -1,10 +1,10 @@
-= f.fields_for :memberships, child_index: child_index do |membership|
+= f.fields_for :memberships, child_index: child_index do |membership_f|
   .grey-panel
     .form-group
-      = membership.association :person, collection: @people,
+      = membership_f.association :person, collection: @people,
         required: false, include_blank: "-- Select --",
-        label: remove_membership_link(membership.object)
+        label: remove_membership_link(membership_f.object)
     .form-group
-      = membership.input :role, as: :string, label: 'Title'
+      = membership_f.input :role, as: :string, label: 'Title'
     .form-checkbox
-      = membership.input :leader, label: 'Leader?'
+      = membership_f.input :leader, label: 'Leader?'
