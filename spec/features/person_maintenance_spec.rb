@@ -95,6 +95,12 @@ feature "Person maintenance" do
     end
   end
 
+  scenario 'Creating a person and linking to the new group page' do
+    visit new_person_path
+    click_link 'Add a new group'
+    expect(page).to have_text('New group')
+  end
+
   scenario 'Editing a person and linking to the new group page' do
     visit edit_person_path(create(:person, person_attributes))
     click_link 'Add a new group'

@@ -70,6 +70,12 @@ feature "Group maintenance" do
     expect(membership.leader?).to be true
   end
 
+  scenario 'Creating a group and linking to the new person page' do
+    visit new_group_path
+    click_link 'Add a new person'
+    expect(page).to have_text('New person')
+  end
+
   scenario 'Editing a group and linking to the new person page' do
     visit edit_group_path(create(:group))
     click_link 'Add a new person'
