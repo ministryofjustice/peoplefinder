@@ -65,7 +65,7 @@ class PeopleController < ApplicationController
 private
   # Use callbacks to share common setup or constraints between actions.
   def set_person
-    @person = Person.friendly.find(params[:id])
+    @person = Person.friendly.includes(:groups).find(params[:id])
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.
