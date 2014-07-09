@@ -113,8 +113,16 @@ RSpec.describe PeopleController, :type => :controller do
       it "assigns a newly created but unsaved person as @person" do
         post :create, {:person => invalid_attributes}, valid_session
         expect(assigns(:person)).to be_a_new(Person)
-        expect(assigns(:groups)).to include(group)
+      end
+
+      it "re-renders the 'new' template" do
+        post :create, {:person => invalid_attributes}, valid_session
         expect(response).to render_template("new")
+      end
+
+      it "assigns the @groups collection" do
+        post :create, {:person => invalid_attributes}, valid_session
+        expect(assigns(:groups)).to include(group)
       end
     end
   end
