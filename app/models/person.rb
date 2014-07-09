@@ -108,4 +108,8 @@ class Person < ActiveRecord::Base
     end
     items << self
   end
+
+  def assignable_groups
+    Group.where.not(id: memberships.pluck(:group_id))
+  end
 end
