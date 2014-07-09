@@ -16,8 +16,7 @@
         = render partial: 'membership_fields', locals: { f: f, child_index: child_index }
 
     .form-group
-      = link_to 'Add another person', add_membership_groups_path, id: 'add_another_person'
-
+      = link_to 'Add another person', add_membership_groups_path, id: 'add_membership'
 
     .form-group
       = f.button :submit
