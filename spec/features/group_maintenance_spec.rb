@@ -10,7 +10,7 @@ feature "Group maintenance" do
 
     visit new_group_path
     fill_in "Name", with: name
-    click_button "Create Group"
+    click_button "Create group"
 
     expect(page).to have_content("Created Ministry of Justice")
 
@@ -28,7 +28,7 @@ feature "Group maintenance" do
     name = "CSG"
     fill_in "Name", with: name
     select dept.name, from: "Parent"
-    click_button "Create Group"
+    click_button "Create group"
 
     expect(page).to have_content("Created CSG")
 
@@ -46,7 +46,7 @@ feature "Group maintenance" do
 
     name = "Digital Services"
     fill_in "Name", with: name
-    click_button "Create Group"
+    click_button "Create group"
 
     expect(page).to have_content("Created Digital Services")
 
@@ -62,7 +62,7 @@ feature "Group maintenance" do
     select 'Doe', from: 'Name'
     fill_in 'Title', with: 'Head Honcho'
     check('Leader')
-    click_button "Create Group"
+    click_button "Create group"
 
     membership = Group.last.memberships.last
     expect(membership.role).to eql('Head Honcho')
@@ -115,7 +115,7 @@ feature "Group maintenance" do
     new_name = "Cyberdigital Cyberservices"
     fill_in "Name", with: new_name
     select dept.name, from: "Parent"
-    click_button "Update Group"
+    click_button "Update group"
 
     expect(page).to have_content("Updated Cyberdigital Cyberservices")
 

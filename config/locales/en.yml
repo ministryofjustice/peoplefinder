@@ -49,3 +49,6 @@ en:
       person:
         create: "Create person"
         update: "Update person"
+      group:
+        create: "Create group"
+        update: "Update group"
