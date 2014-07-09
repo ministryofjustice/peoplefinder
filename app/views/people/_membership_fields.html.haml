@@ -1,5 +1,5 @@
 = f.fields_for :memberships, child_index: child_index do |membership_f|
-  .grey-panel
+  .roles.grey-panel
     .form-group
       - membership = membership_f.object
       - if membership.new_record?

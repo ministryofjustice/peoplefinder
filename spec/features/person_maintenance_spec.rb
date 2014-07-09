@@ -107,9 +107,11 @@ feature "Person maintenance" do
     expect(page).to have_text('New group')
   end
 
-  scenario 'Clicking the add another role link' do
+  scenario 'Clicking the add another role link', js: true do
+    javascript_log_in
     visit new_person_path
-    expect(page).to have_link('Add another role')
+    click_link('Add another role')
+    expect(page).to have_selector('#memberships .roles', count: 2)
   end
 
   scenario 'Removing a group' do

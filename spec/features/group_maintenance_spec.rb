@@ -82,9 +82,11 @@ feature "Group maintenance" do
     expect(page).to have_text('New person')
   end
 
-  scenario 'Clicking the add another person link' do
+  scenario 'Clicking the add another person link', js: true do
+    javascript_log_in
     visit new_group_path
-    expect(page).to have_link('Add another person')
+    click_link('Add another person')
+    expect(page).to have_selector('#memberships .people', count: 2)
   end
 
   scenario 'Removing a person' do
