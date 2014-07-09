@@ -85,10 +85,28 @@ RSpec.describe PeopleController, :type => :controller do
   end
 
   describe 'GET add_membership' do
-    it 'builds a membership for a person object and renders add_membership template' do
-      get :add_membership
-      expect(assigns(:person).memberships.length).to eql(1)
-      expect(response).to render_template('add_membership')
+    context 'with a new person' do
+      it 'builds a membership for a person object and renders add_membership template' do
+        get :add_membership
+        expect(assigns(:person).memberships.length).to eql(1)
+        expect(response).to render_template('add_membership')
+      end
+    end
+
+    context 'with an existing person' do
+      let(:person) { create(:person) }
+
+      it 'builds a membership for a person object and renders add_membership template' do
+        get :add_membership, id: person
+        expect(assigns(:person).memberships.length).to eql(1)
+        expect(response).to render_template('add_membership')
+      end
+
+      it 'sets assignable groups' do
+        group = create(:group)
+        get :add_membership, id: person
+        expect(assigns(:groups)).to include(group)
+      end
     end
   end
 

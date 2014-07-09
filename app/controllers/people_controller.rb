@@ -1,5 +1,5 @@
 class PeopleController < ApplicationController
-  before_action :set_person, only: [:show, :edit, :update, :destroy]
+  before_action :set_person, only: [:show, :edit, :update, :destroy ]
   before_action :set_hint_group
 
   def search
@@ -56,9 +56,10 @@ class PeopleController < ApplicationController
   end
 
   def add_membership
-    @person = Person.new
+    set_person if params[:id].present?
+    @person ||= Person.new
     @person.memberships.build
-    @groups = Group.all
+    set_assignable_groups
     render "add_membership", :layout => false
   end
 
