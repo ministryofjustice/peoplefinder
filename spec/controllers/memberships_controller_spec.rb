@@ -8,7 +8,7 @@ RSpec.describe MembershipsController, :type => :controller do
   describe "DELETE destroy" do
     let(:group) { create(:membership) }
 
-    it "redirects to the referer list" do
+    it "redirects to the referer" do
       delete :destroy, {:id => group.to_param, referer: people_path}
       expect(response).to redirect_to(people_path)
     end

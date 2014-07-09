@@ -59,7 +59,7 @@ feature "Group maintenance" do
     person = create(:person, surname: 'Doe')
     visit new_group_path
     fill_in 'Name', with: 'Cleaners'
-    select 'Doe', from: 'Person'
+    select 'Doe', from: 'Name'
     fill_in 'Title', with: 'Head Honcho'
     check('Leader')
     click_button "Create Group"
@@ -68,6 +68,25 @@ feature "Group maintenance" do
     expect(membership.role).to eql('Head Honcho')
     expect(membership.person).to eql(person)
     expect(membership.leader?).to be true
+  end
+
+  scenario 'Editing a group and linking to the new person page' do
+    visit edit_group_path(create(:group))
+    click_link 'Add a new person'
+    expect(page).to have_text('New person')
+  end
+
+  scenario 'Removing a person' do
+     alice = create(:person, surname: 'Alice')
+     digital_group = create(:group, name: 'Digital')
+     digital_group.memberships.create(person: alice)
+
+     visit edit_group_path(digital_group)
+     click_link('remove')
+
+     expect(page).to have_content("Removed Alice from Digital")
+     expect(digital_group.reload.memberships).to be_empty
+     expect(current_path).to eql(edit_group_path(digital_group))
   end
 
   scenario 'Deleting a group softly' do

@@ -1,9 +1,22 @@
 = f.fields_for :memberships, child_index: child_index do |membership_f|
   .grey-panel
     .form-group
-      = membership_f.association :group, collection: @groups,
-        required: false, include_blank: "-- Select --",
-        label: "Group #{ remove_membership_link(membership_f.object) }".html_safe
+      - membership = membership_f.object
+      - if membership.new_record?
+        = membership_f.association :group, collection: @groups,
+          required: false,
+          include_blank: "-- Select --",
+          label: 'Group'
+
+      - else
+        %h3
+          = link_to membership.group.name, membership.group
+          = link_to 'remove', membership_path(membership,
+            referer: edit_person_path(@person)),
+            method: :delete,
+            class: 'remove-link',
+            data: {confirm: "Are you sure you want to remove #{ membership.person} from #{ membership.group }? " }
+
     .form-group
       = membership_f.input :role, as: :string, label: 'Title'
     .form-checkbox

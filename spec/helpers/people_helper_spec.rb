@@ -20,16 +20,4 @@ RSpec.describe PeopleHelper, :type => :helper do
       expect(contact_details(person)).to eql("Mob: 0777-999-999")
     end
   end
-
-  context '#remove_membership_link' do
-    it 'should return an empty string when the membership has not been saved' do
-      membership = Membership.new
-      expect(remove_membership_link(membership)).to be_blank
-    end
-
-    it 'should return a deletion link for an existing membership record' do
-      membership = create(:membership)
-      expect(remove_membership_link(membership)).to match(/<a.*>remove<\/a>/)
-    end
-  end
 end

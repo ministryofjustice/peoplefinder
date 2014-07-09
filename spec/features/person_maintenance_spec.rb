@@ -114,7 +114,6 @@ feature "Person maintenance" do
      expect(current_path).to eql(edit_person_path(person))
   end
 
-
   scenario 'Editing an invalid person' do
     visit person_path(create(:person, person_attributes))
     click_link 'Edit this page'

@@ -14,12 +14,4 @@ module PeopleHelper
       ("Mob: #{ person.mobile }" if person.mobile.present?)
     ].compact.join('<br/>').html_safe
   end
-
-  def remove_membership_link(membership)
-    unless membership.new_record?
-      link_to "remove", membership_path(membership, referer: edit_person_path(membership.person)),
-            method: :delete,
-            data: { :confirm => 'Are you sure you want to remove this group?' }
-    end
-  end
 end
