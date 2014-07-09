@@ -57,6 +57,14 @@ class GroupsController < ApplicationController
     redirect_to groups_url, notice: "Deleted #{@group}."
   end
 
+  def add_membership
+    @group = Group.new
+    @group.memberships.build
+    load_people
+    render "add_membership", :layout => false
+  end
+
+
 private
   # Use callbacks to share common setup or constraints between actions.
   def set_group

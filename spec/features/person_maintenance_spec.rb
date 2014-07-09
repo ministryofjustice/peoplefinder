@@ -107,6 +107,11 @@ feature "Person maintenance" do
     expect(page).to have_text('New group')
   end
 
+  scenario 'Clicking the add another role link' do
+    visit new_person_path
+    expect(page).to have_link('Add another role')
+  end
+
   scenario 'Removing a group' do
      group = create(:group, name: 'Digital Justice')
      person = create(:person, person_attributes)

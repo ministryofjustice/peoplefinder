@@ -2,6 +2,9 @@ Rails.application.routes.draw do
   root 'groups#index', as: :home
 
   resources :groups do
+    collection do
+      get :add_membership
+    end
     resources :groups, only: [:new]
     resources :memberships, controller: 'group_memberships'
   end

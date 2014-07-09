@@ -82,6 +82,11 @@ feature "Group maintenance" do
     expect(page).to have_text('New person')
   end
 
+  scenario 'Clicking the add another person link' do
+    visit new_group_path
+    expect(page).to have_link('Add another person')
+  end
+
   scenario 'Removing a person' do
      alice = create(:person, surname: 'Alice')
      digital_group = create(:group, name: 'Digital')

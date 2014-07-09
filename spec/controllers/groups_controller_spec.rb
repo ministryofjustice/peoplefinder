@@ -162,6 +162,15 @@ RSpec.describe GroupsController, :type => :controller do
     end
   end
 
+
+  describe 'GET add_membership' do
+    it 'builds a membership for a group object and renders add_membership template' do
+      get :add_membership
+      expect(assigns(:group).memberships.length).to eql(1)
+      expect(response).to render_template('add_membership')
+    end
+  end
+
   describe "DELETE destroy" do
     it "destroys the requested group" do
       group = Group.create! valid_attributes

@@ -1,8 +1,8 @@
 $(function() {
-  return $(document).on("click", "#add_another_person", function(e) {
+  return $(document).on("click", "#add_another_group", function(e) {
     e.preventDefault();
     return $.ajax({
-      url: '/people/add_membership',
+      url: '/groups/add_membership',
       success: function(data) {
         var el_to_add;
         el_to_add = $(data).html();
