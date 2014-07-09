@@ -7,7 +7,9 @@ class Group < ActiveRecord::Base
 
   belongs_to :parent, class_name: 'Group'
   has_many :children, class_name: 'Group', foreign_key: 'parent_id'
-  has_many :memberships, dependent: :destroy
+  has_many :memberships, -> {
+    includes(:person).order("people.surname")  },
+    dependent: :destroy
   has_many :people, through: :memberships
   has_many :leaderships, -> { where(leader: true) }, class_name: 'Membership'
   has_many :non_leaderships,
