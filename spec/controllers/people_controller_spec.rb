@@ -47,8 +47,16 @@ RSpec.describe PeopleController, :type => :controller do
     it "assigns a new person as @person" do
       get :new, {}, valid_session
       expect(assigns(:person)).to be_a_new(Person)
+    end
+
+    it "builds a membership object" do
+      get :new, {}, valid_session
       expect(assigns(:person).memberships.length).to eql(1)
-      expect(assigns(:groups)).to include(group)
+    end
+
+    it "sets assignable groups" do
+      get :new, {}, valid_session
+      expect(assigns(:person).assignable_groups).to eql(assigns(:groups))
     end
   end
 
@@ -57,7 +65,7 @@ RSpec.describe PeopleController, :type => :controller do
       person = Person.create! valid_attributes
       get :edit, {:id => person.to_param}, valid_session
       expect(assigns(:person)).to eq(person)
-      expect(assigns(:groups)).to include(group)
+      expect(assigns(:person).assignable_groups).to eql(assigns(:groups))
     end
 
     context 'building memberships' do
@@ -122,7 +130,7 @@ RSpec.describe PeopleController, :type => :controller do
 
       it "assigns the @groups collection" do
         post :create, {:person => invalid_attributes}, valid_session
-        expect(assigns(:groups)).to include(group)
+        expect(assigns(:person).assignable_groups).to eql(assigns(:groups))
       end
     end
   end
@@ -172,7 +180,7 @@ RSpec.describe PeopleController, :type => :controller do
         put :update, {:id => person.to_param, :person => invalid_attributes}, valid_session
         expect(assigns(:person)).to eq(person)
         expect(response).to render_template("edit")
-        expect(assigns(:groups)).to include(group)
+        expect(assigns(:person).assignable_groups).to eql(assigns(:groups))
       end
     end
   end
