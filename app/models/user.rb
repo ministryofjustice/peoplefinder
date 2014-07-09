@@ -1,4 +1,4 @@
-User = Struct.new(:email, :name) do
+class User < ActiveRecord::Base
   def self.from_auth_hash(auth_hash)
     email = auth_hash['info']['email']
     name = auth_hash['info']['name']
@@ -7,7 +7,9 @@ User = Struct.new(:email, :name) do
 
     return nil unless valid_domains.include?(domain)
 
-    new(email, name)
+    User.where(email: email).first_or_create.tap { |user|
+      user.update_attribute(:name, name) unless user.name == name
+    }
   end
 
   def to_s
