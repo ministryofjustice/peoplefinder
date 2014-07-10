@@ -20,6 +20,8 @@ module SCSAppraisals
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     # config.i18n.default_locale = :de
     #
+    config.app_title = 'SCS Appraisals'
+
     config.valid_login_domains = %w[
       digital.justice.gov.uk
       digital.cabinet-office.gov.uk
