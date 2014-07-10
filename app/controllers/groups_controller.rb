@@ -19,7 +19,8 @@ class GroupsController < ApplicationController
   # GET /groups/new
   def new
     @group = collection.new
-    @group.memberships.build
+    preset_person = params[:person_id] ? Person.friendly.find(params[:person_id]) : nil
+    @group.memberships.build person: preset_person
     load_people
   end
 

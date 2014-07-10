@@ -102,9 +102,9 @@ feature "Person maintenance" do
   end
 
   scenario 'Editing a person and linking to the new group page' do
-    visit edit_person_path(create(:person, person_attributes))
+    visit edit_person_path(create(:person, surname: 'Polo'))
     click_link 'Add a new group'
-    expect(page).to have_text('New group')
+    expect(page).to have_select('Name', selected: 'Polo')
   end
 
   scenario 'Clicking the add another role link', js: true do

@@ -18,7 +18,8 @@ class PeopleController < ApplicationController
   # GET /people/new
   def new
     @person = Person.new
-    @person.memberships.build
+    preset_group = params[:group_id] ? Group.friendly.find(params[:group_id]) : nil
+    @person.memberships.build group: preset_group
     set_assignable_groups
   end
 

@@ -77,9 +77,9 @@ feature "Group maintenance" do
   end
 
   scenario 'Editing a group and linking to the new person page' do
-    visit edit_group_path(create(:group))
+    visit edit_group_path(create(:group, name: 'Doe'))
     click_link 'Add a new person'
-    expect(page).to have_text('New person')
+    expect(page).to have_select('Group', selected: 'Doe')
   end
 
   scenario 'Clicking the add another person link', js: true do
