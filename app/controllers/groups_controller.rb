@@ -58,7 +58,8 @@ class GroupsController < ApplicationController
   end
 
   def add_membership
-    @group = Group.new
+    set_group if params[:id].present?
+    @group ||= Group.new
     @group.memberships.build
     load_people
     render "add_membership", :layout => false
@@ -86,6 +87,6 @@ private
   end
 
   def load_people
-    @people = Person.all
+    @people = @group.assignable_people
   end
 end

@@ -39,7 +39,7 @@ RSpec.describe GroupsController, :type => :controller do
   # GroupsController. Be sure to keep this updated too.
   let(:valid_session) { {} }
 
-  let(:person) { create(:person)  }
+  let(:person) { create(:person) }
 
   describe "GET index" do
     subject { get :index, {}, valid_session }
@@ -73,16 +73,36 @@ RSpec.describe GroupsController, :type => :controller do
     it "assigns a new group as @group" do
       get :new, {}, valid_session
       expect(assigns(:group)).to be_a_new(Group)
+    end
+
+    it "assigns a membership object" do
+      get :new, {}, valid_session
       expect(assigns(:group).memberships.length).to eql(1)
+    end
+
+    it "sets people" do
+      get :new, {}, valid_session
       expect(assigns(:people)).to include(person)
     end
   end
 
   describe "GET edit" do
+    let(:group) { Group.create! valid_attributes }
+
     it "assigns the requested group as @group" do
-      group = Group.create! valid_attributes
       get :edit, {:id => group.to_param}, valid_session
-      expect(assigns(:group)).to eq(group)
+      expect(assigns(:group)).to eql(group)
+    end
+
+    it "sets people" do
+      get :edit, {:id => group.to_param}, valid_session
+      expect(assigns(:people)).to include(person)
+    end
+
+    it "sets people and excludes the already assigned person" do
+      group.memberships.create(person: person)
+      get :edit, {:id => group.to_param}, valid_session
+      expect(assigns(:people)).not_to include(person)
     end
   end
 
@@ -115,6 +135,10 @@ RSpec.describe GroupsController, :type => :controller do
       it "re-renders the 'new' template" do
         post :create, {:group => invalid_attributes}, valid_session
         expect(response).to render_template("new")
+      end
+
+      it "sets people" do
+        post :create, {:group => invalid_attributes}, valid_session
         expect(assigns(:people)).to include(person)
       end
     end
@@ -147,27 +171,22 @@ RSpec.describe GroupsController, :type => :controller do
     end
 
     describe "with invalid params" do
+      let(:group) { Group.create! valid_attributes }
+
       it "assigns the group as @group" do
-        group = Group.create! valid_attributes
         put :update, {:id => group.to_param, :group => invalid_attributes}, valid_session
         expect(assigns(:group)).to eq(group)
       end
 
       it "re-renders the 'edit' template" do
-        group = Group.create! valid_attributes
         put :update, {:id => group.to_param, :group => invalid_attributes}, valid_session
         expect(response).to render_template("edit")
+      end
+
+      it "sets people" do
+        get :new, {:id => group.to_param, :group => invalid_attributes}, valid_session
         expect(assigns(:people)).to include(person)
       end
-    end
-  end
-
-
-  describe 'GET add_membership' do
-    it 'builds a membership for a group object and renders add_membership template' do
-      get :add_membership
-      expect(assigns(:group).memberships.length).to eql(1)
-      expect(response).to render_template('add_membership')
     end
   end
 
@@ -186,4 +205,47 @@ RSpec.describe GroupsController, :type => :controller do
     end
   end
 
+  describe 'GET add_membership' do
+    context 'with a new group' do
+      it 'builds a membership for a group object and renders add_membership template' do
+        get :add_membership
+        expect(assigns(:group).memberships.length).to eql(1)
+      end
+
+      it 'renders add_membership template' do
+        get :add_membership
+        expect(response).to render_template('add_membership')
+      end
+
+      it 'sets people' do
+        get :add_membership
+        expect(assigns(:people)).to include(person)
+      end
+    end
+
+    context 'with an existing group' do
+      let(:group) { create(:group) }
+
+      it 'builds a membership for a group object' do
+        get :add_membership, id: group
+        expect(assigns(:group).memberships.length).to eql(1)
+      end
+
+      it 'renders add_membership template' do
+        get :add_membership, id: group
+        expect(response).to render_template('add_membership')
+      end
+
+      it 'sets people' do
+        get :add_membership, id: group
+        expect(assigns(:people)).to include(person)
+      end
+
+      it "sets groups and excludes the already assigned groups" do
+        group.memberships.create(person: person)
+        get :add_membership, id: group
+        expect(assigns(:people)).not_to include(person)
+      end
+    end
+  end
 end

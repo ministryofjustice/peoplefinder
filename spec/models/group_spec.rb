@@ -30,4 +30,25 @@ RSpec.describe Group, :type => :model do
 
     expect(department.hierarchy).to eql([department])
   end
+
+  describe '.assignable_people' do
+    let(:group) { build(:group) }
+
+    before do
+      ['alice', 'bob', 'charlie'].each do |name|
+         create(:person, surname: name)
+      end
+    end
+
+    it 'should contain all people when a group has no memberships' do
+      expect(group.assignable_people.length).to eql(3)
+    end
+
+    it 'should contain alice when bob and charlie are group members' do
+      group.save!
+      group.memberships.create(person: Person.find_by_surname('bob'))
+      group.memberships.create(person:  Person.find_by_surname('charlie'))
+      expect(group.assignable_people.first.surname).to eql('alice')
+    end
+  end
 end

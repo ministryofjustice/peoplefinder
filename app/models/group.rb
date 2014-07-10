@@ -47,6 +47,10 @@ class Group < ActiveRecord::Base
     leaderships.first
   end
 
+  def assignable_people
+    Person.where.not(id: memberships.pluck(:person_id))
+  end
+
   delegate :image, to: :leader, prefix: true
   delegate :name, to: :leader, prefix: true
 end

@@ -135,7 +135,7 @@ RSpec.describe Person, :type => :model do
     end
   end
 
-  context '#assignable_groups' do
+  describe '.assignable groups' do
     before do
       ['apples', 'bananas', 'cherries'].each do
         |fruit| create(:group, name: fruit)
