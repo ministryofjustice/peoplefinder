@@ -1,5 +1,5 @@
 class PeopleController < ApplicationController
-  before_action :set_person, only: [:show, :edit, :update, :destroy ]
+  before_action :set_person, only: [:show, :edit, :update, :destroy]
   before_action :set_hint_group
 
   def search
@@ -32,6 +32,7 @@ class PeopleController < ApplicationController
   # POST /people
   def create
     @person = Person.new(person_params)
+
     if @person.save
       redirect_to successful_redirect_path, notice: "Created #{@person}’s profile."
     else

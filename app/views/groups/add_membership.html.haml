@@ -1,4 +1,5 @@
 - @group = Group.new
 - @group.memberships.build
+
 = simple_form_for @group, :authenticity_token => false do |f|
   = render partial: 'membership_fields', locals: { f: f, child_index: Time.now.to_i }

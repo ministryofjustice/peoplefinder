@@ -63,7 +63,7 @@ RSpec.describe GroupsController, :type => :controller do
 
   describe "GET show" do
     it "assigns the requested group as @group" do
-      group = Group.create! valid_attributes
+      group = create(:group, valid_attributes)
       get :show, {:id => group.to_param}, valid_session
       expect(assigns(:group)).to eq(group)
     end
@@ -87,7 +87,7 @@ RSpec.describe GroupsController, :type => :controller do
   end
 
   describe "GET edit" do
-    let(:group) { Group.create! valid_attributes }
+    let(:group) { create(:group, valid_attributes) }
 
     it "assigns the requested group as @group" do
       get :edit, {:id => group.to_param}, valid_session
@@ -151,27 +151,27 @@ RSpec.describe GroupsController, :type => :controller do
       }
 
       it "updates the requested group" do
-        group = Group.create! valid_attributes
+        group = create(:group, valid_attributes)
         put :update, {:id => group.to_param, :group => new_attributes}, valid_session
         group.reload
         expect(group.name).to eql(new_attributes[:name])
       end
 
       it "assigns the requested group as @group" do
-        group = Group.create! valid_attributes
+        group = create(:group, valid_attributes)
         put :update, {:id => group.to_param, :group => valid_attributes}, valid_session
         expect(assigns(:group)).to eq(group)
       end
 
       it "redirects to the group" do
-        group = Group.create! valid_attributes
+        group = create(:group, valid_attributes)
         put :update, {:id => group.to_param, :group => valid_attributes}, valid_session
         expect(response).to redirect_to(group)
       end
     end
 
     describe "with invalid params" do
-      let(:group) { Group.create! valid_attributes }
+      let(:group) { create(:group, valid_attributes) }
 
       it "assigns the group as @group" do
         put :update, {:id => group.to_param, :group => invalid_attributes}, valid_session
@@ -192,14 +192,14 @@ RSpec.describe GroupsController, :type => :controller do
 
   describe "DELETE destroy" do
     it "destroys the requested group" do
-      group = Group.create! valid_attributes
+      group = create(:group, valid_attributes)
       expect {
         delete :destroy, {:id => group.to_param}, valid_session
       }.to change(Group, :count).by(-1)
     end
 
     it "redirects to the groups list" do
-      group = Group.create! valid_attributes
+      group = create(:group, valid_attributes)
       delete :destroy, {:id => group.to_param}, valid_session
       expect(response).to redirect_to(groups_url)
     end

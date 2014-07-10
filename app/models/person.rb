@@ -22,8 +22,7 @@ class Person < ActiveRecord::Base
   attr_accessor :crop_x, :crop_y, :crop_w, :crop_h
 
   validates_presence_of :surname
-  has_many :memberships, -> {
-    includes(:group).order("groups.name")  },
+  has_many :memberships, -> { includes(:group).order("groups.name")  },
     dependent: :destroy
   has_many :groups, through: :memberships
 

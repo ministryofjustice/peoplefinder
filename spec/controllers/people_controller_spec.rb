@@ -29,7 +29,7 @@ RSpec.describe PeopleController, :type => :controller do
 
   describe "GET index" do
     it "assigns all people as @people" do
-      person = Person.create! valid_attributes
+      person = create(:person, valid_attributes)
       get :index, {}, valid_session
       expect(assigns(:people)).to eq([person])
     end
@@ -37,7 +37,7 @@ RSpec.describe PeopleController, :type => :controller do
 
   describe "GET show" do
     it "assigns the requested person as @person" do
-      person = Person.create! valid_attributes
+      person = create(:person, valid_attributes)
       get :show, {:id => person.to_param}, valid_session
       expect(assigns(:person)).to eq(person)
     end
@@ -61,7 +61,7 @@ RSpec.describe PeopleController, :type => :controller do
   end
 
   describe "GET edit" do
-    let(:person) { Person.create! valid_attributes }
+    let(:person) { create(:person, valid_attributes) }
 
     it "assigns the requested person as @person" do
       get :edit, {:id => person.to_param}, valid_session
@@ -137,7 +137,7 @@ RSpec.describe PeopleController, :type => :controller do
   end
 
   describe "PUT update" do
-    let(:person) { Person.create! valid_attributes }
+    let(:person) { create(:person, valid_attributes) }
 
     describe "with valid params" do
       let(:new_attributes) {
@@ -193,14 +193,14 @@ RSpec.describe PeopleController, :type => :controller do
 
   describe "DELETE destroy" do
     it "destroys the requested person" do
-      person = Person.create! valid_attributes
+      person = create(:person, valid_attributes)
       expect {
         delete :destroy, {:id => person.to_param}, valid_session
       }.to change(Person, :count).by(-1)
     end
 
     it "redirects to the people list" do
-      person = Person.create! valid_attributes
+      person = create(:person, valid_attributes)
       delete :destroy, {:id => person.to_param}, valid_session
       expect(response).to redirect_to(people_url)
     end
