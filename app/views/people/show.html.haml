@@ -25,7 +25,6 @@
 
 - content_for :edit_this_page do
   = link_to 'Edit this page', edit_person_path(@person)
-  = link_to 'Edit groups', person_memberships_path(@person)
 
 - if @person.profile_completed?
   %h4 Profile completeness
