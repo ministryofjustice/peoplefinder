@@ -65,7 +65,6 @@ textarea {
   }
   select.form-control {
     width: 95%;
-    -webkit-appearance: menulist;
   }
   input.boolean {
     width: 20px;
@@ -73,4 +72,8 @@ textarea {
 }
 .remove-link {
   font-size: 19px;
+}
+
+select.form-control {
+  -webkit-appearance: menulist;
 }
