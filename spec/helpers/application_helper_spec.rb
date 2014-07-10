@@ -29,12 +29,6 @@ RSpec.describe ApplicationHelper, :type => :helper do
     end
   end
 
-  context '#body_class' do
-    it 'should set the body_class' do
-      expect(body_class).to eql(Rails.configuration.phase + " " + Rails.configuration.product_type)
-    end
-  end
-
   context '#breadcrumbs' do
     it 'should build linked breadcrumbs' do
       justice = create(:group, name: 'Justice')
