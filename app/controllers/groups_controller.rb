@@ -60,7 +60,6 @@ class GroupsController < ApplicationController
   def add_membership
     set_group if params[:id].present?
     @group ||= Group.new
-    @group.memberships.build
     load_people
     render "add_membership", :layout => false
   end

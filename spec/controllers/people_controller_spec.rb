@@ -208,11 +208,6 @@ RSpec.describe PeopleController, :type => :controller do
 
   describe 'GET add_membership' do
     context 'with a new person' do
-      it 'builds a membership for a person object and renders add_membership template' do
-        get :add_membership
-        expect(assigns(:person).memberships.length).to eql(1)
-      end
-
       it 'renders add_membership template' do
         get :add_membership
         expect(response).to render_template('add_membership')
@@ -227,11 +222,6 @@ RSpec.describe PeopleController, :type => :controller do
     context 'with an existing person' do
       let(:person) { create(:person) }
 
-      it 'builds a membership for a person object' do
-        get :add_membership, id: person
-        expect(assigns(:person).memberships.length).to eql(1)
-      end
-
       it 'renders add_membership template' do
         get :add_membership, id: person
         expect(response).to render_template('add_membership')
@@ -242,7 +232,7 @@ RSpec.describe PeopleController, :type => :controller do
         expect(assigns(:groups)).to include(group)
       end
 
-      it "sets groups and excludes the already assigned groups" do
+      it "sets groups and excludes the already assigned group" do
         person.memberships.create(group: group)
         get :edit, {:id => person.to_param}, valid_session
         expect(assigns(:groups)).not_to include(group)

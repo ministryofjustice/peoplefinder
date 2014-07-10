@@ -58,7 +58,6 @@ class PeopleController < ApplicationController
   def add_membership
     set_person if params[:id].present?
     @person ||= Person.new
-    @person.memberships.build
     set_assignable_groups
     render "add_membership", :layout => false
   end
