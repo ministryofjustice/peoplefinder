@@ -228,6 +228,7 @@ DEPENDENCIES
   jbuilder (~> 2.0)
   jquery-rails
   launchy
+  mail
   minitest
   moj_internal_template!
   omniauth-gplus!

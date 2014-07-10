@@ -8,6 +8,7 @@ gem 'govuk_frontend_toolkit'
 gem 'haml-rails'
 gem 'jbuilder', '~> 2.0'
 gem 'jquery-rails'
+gem 'mail'
 gem 'moj_internal_template',
   git: 'https://github.com/ministryofjustice/moj_internal_template.git'
 gem 'omniauth-gplus',
