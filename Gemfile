@@ -16,6 +16,7 @@ gem 'govspeak'
 gem 'haml-rails'
 gem 'jbuilder', '~> 2.0'
 gem 'jquery-rails'
+gem 'mail'
 gem 'mini_magick'
 
 if ENV['USE_LOCAL_TEMPLATE']
