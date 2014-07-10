@@ -17,7 +17,7 @@ feature "Person maintenance" do
     fill_in 'Description', with: p[:description]
     uncheck('Monday')
     uncheck('Friday')
-    click_button "Create Person"
+    click_button "Create person"
 
     expect(page).to have_content("Created Marco Polo’s profile")
 
@@ -42,9 +42,24 @@ feature "Person maintenance" do
     end
   end
 
+  scenario 'Creating a person and making them the leader of a group' do
+    group = create(:group, name: 'Digital Justice')
+    visit new_person_path
+    fill_in 'Surname', with: person_attributes[:surname]
+    fill_in 'Title', with: 'Head Honcho'
+    select('Digital Justice', from: 'Group')
+    check('Leader')
+    click_button "Create person"
+
+    membership = Person.last.memberships.last
+    expect(membership.role).to eql('Head Honcho')
+    expect(membership.group).to eql(group)
+    expect(membership.leader?).to be true
+  end
+
   scenario 'Creating an invalid person' do
     visit new_person_path
-    click_button "Create Person"
+    click_button "Create person"
     expect(page).to have_text('Please review the problems')
     within('div.person_surname') do
       expect(page).to have_text('can\'t be blank')
@@ -55,7 +70,7 @@ feature "Person maintenance" do
     membership = create(:membership)
     person = membership.person
     visit edit_person_path(person)
-    click_link('Delete this record')
+    click_link('Delete this profile')
 
     expect(page).to have_content("Deleted #{person}’s profile")
 
@@ -71,7 +86,7 @@ feature "Person maintenance" do
     click_link 'Edit this page'
     fill_in 'Given name', with: 'Jane'
     fill_in 'Surname', with: 'Doe'
-    click_button 'Update Person'
+    click_button 'Update person'
 
     expect(page).to have_content("Updated Jane Doe’s profile")
 
@@ -80,11 +95,43 @@ feature "Person maintenance" do
     end
   end
 
+  scenario 'Creating a person and linking to the new group page' do
+    visit new_person_path
+    click_link 'Add a new group'
+    expect(page).to have_text('New group')
+  end
+
+  scenario 'Editing a person and linking to the new group page' do
+    visit edit_person_path(create(:person, surname: 'Polo'))
+    click_link 'Add a new group'
+    expect(page).to have_select('Name', selected: 'Polo')
+  end
+
+  scenario 'Clicking the add another role link', js: true do
+    javascript_log_in
+    visit new_person_path
+    click_link('Add another role')
+    expect(page).to have_selector('#memberships .roles', count: 2)
+  end
+
+  scenario 'Removing a group' do
+     group = create(:group, name: 'Digital Justice')
+     person = create(:person, person_attributes)
+     person.memberships.create(group: group)
+
+     visit edit_person_path(person)
+     click_link('remove')
+
+     expect(page).to have_content("Removed Marco Polo from Digital Justice")
+     expect(person.reload.memberships).to be_empty
+     expect(current_path).to eql(edit_person_path(person))
+  end
+
   scenario 'Editing an invalid person' do
     visit person_path(create(:person, person_attributes))
     click_link 'Edit this page'
     fill_in 'Surname', with: ''
-    click_button 'Update Person'
+    click_button 'Update person'
 
     expect(page).to have_text('Please review the problems')
     within('div.person_surname') do
@@ -95,8 +142,8 @@ feature "Person maintenance" do
   scenario 'Adding a profile image' do
     visit new_person_path
     fill_in 'Surname', with: person_attributes[:surname]
-    attach_file 'Image', sample_image
-    click_button 'Create Person'
+    attach_file 'person[image]', sample_image
+    click_button 'Create person'
 
     person = Person.find_by_surname(person_attributes[:surname])
     visit person_path(person)

@@ -1,6 +1,11 @@
 = render partial: 'breadcrumbs'
 
-%h1 Editing group
+%p#notice= notice
+
+- content_for :edit_this_page do
+  = render partial: 'edit_links'
+
+%h1= @group
 
 = render 'form'
 

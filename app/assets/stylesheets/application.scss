@@ -52,3 +52,28 @@ h1, h2 {
 textarea {
   height: 158px
 }
+.grey-panel {
+  background-color: #DEE0E2;
+  width: 47%;
+  margin: 15px 0 15px 0;
+  padding: 15px 15px 15px 15px;
+  label.form-label-bold {
+    font-size: 19px;
+  }
+  input.form-control {
+    width: 95%;
+  }
+  select.form-control {
+    width: 95%;
+  }
+  input.boolean {
+    width: 20px;
+  }
+}
+.remove-link {
+  font-size: 19px;
+}
+
+select.form-control {
+  -webkit-appearance: menulist;
+}

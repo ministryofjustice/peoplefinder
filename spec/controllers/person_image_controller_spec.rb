@@ -7,14 +7,14 @@ RSpec.describe PersonImageController, :type => :controller do
 
   describe "GET edit" do
     it "assigns the person" do
-      person = Person.create!(surname: 'Doe', image: 'an image')
+      person = create(:person, surname: 'Doe', image: 'an image')
       get :edit, { person_id: person.to_param }
 
       expect(assigns(:person)).to eql(person)
     end
 
     it "redirects when there is no image" do
-      person = Person.create!(surname: 'Bloggs', image: nil)
+      person = create(:person, surname: 'Bloggs', image: nil)
       get :edit, { person_id: person.id }
 
       expect(response).to be_redirect
@@ -24,7 +24,7 @@ RSpec.describe PersonImageController, :type => :controller do
 
   describe "PUT update" do
     let(:image) { double(:image) }
-    let(:person) { Person.create!(surname: 'Doe', image: image) }
+    let(:person) { create(:person, surname: 'Doe', image: image) }
 
     it 'recreates image versions' do
       expect(image).to receive(:recreate_versions!).once.and_return(true)

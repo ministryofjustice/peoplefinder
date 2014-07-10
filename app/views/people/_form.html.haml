@@ -4,7 +4,17 @@
     .form-group
       = f.input :given_name, as: :string
     .form-group
-      = f.input :surname, as: :string
+      = f.input :surname, as: :string, required: false
+
+    .form-group
+      %label.form-label-bold Role
+      #memberships
+        - child_index = Time.now.to_i
+        = render partial: 'membership_fields', locals: { f: f, child_index: child_index }
+
+    .form-group
+      = link_to 'Add another role', add_membership_people_path(id: @person.to_param), id: 'add_membership'
+
     .form-group
       = f.input :location, as: :string
     .form-group
@@ -21,16 +31,16 @@
         = f.input day, as: :boolean, label: day.to_s.titleize
 
     .form-group
-      = f.input :image, as: :file
-
+      %label.form-label-bold Image
       - if @person.image.present?
         = image_tag @person.image.medium, class: 'preview'
         %p= link_to 'Crop image', edit_person_image_path(@person)
+      = f.input :image, as: :file, label: false
 
     .form-group
       = f.button :submit
 
     - unless @person.new_record?
       .form-group
-        = link_to 'Delete this record', @person, method: :delete
+        = link_to 'Delete this profile', @person, method: :delete
       %p= link_to 'Back', @person

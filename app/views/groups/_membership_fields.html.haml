@@ -1,0 +1,25 @@
+= f.fields_for :memberships, child_index: child_index do |membership_f|
+  .people.grey-panel
+
+    - membership = membership_f.object
+
+    - if membership.new_record?
+      .form-group
+        = membership_f.association :person, collection: @people,
+          required: false,
+          include_blank: "-- Select --",
+          label: 'Name'
+      .form-group
+        = membership_f.input :role, as: :string, label: 'Title'
+      .form-checkbox
+        = membership_f.input :leader, label: 'Leader?'
+
+    - else
+      = link_to membership.person.name, membership.person
+      = " (#{ 'Leader ' }) " if membership.leader?
+      = membership.role  if membership.role.present?
+      = link_to 'remove', membership_path(membership,
+          referer: request.path),
+          method: :delete,
+          class: 'remove-link',
+          data: {confirm: "Are you sure you want to remove #{ membership.person} from #{ membership.group }? " }

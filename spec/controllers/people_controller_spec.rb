@@ -25,9 +25,11 @@ RSpec.describe PeopleController, :type => :controller do
   # PersonsController. Be sure to keep this updated too.
   let(:valid_session) { {} }
 
+  let(:group) { create(:group) }
+
   describe "GET index" do
     it "assigns all people as @people" do
-      person = Person.create! valid_attributes
+      person = create(:person, valid_attributes)
       get :index, {}, valid_session
       expect(assigns(:people)).to eq([person])
     end
@@ -35,7 +37,7 @@ RSpec.describe PeopleController, :type => :controller do
 
   describe "GET show" do
     it "assigns the requested person as @person" do
-      person = Person.create! valid_attributes
+      person = create(:person, valid_attributes)
       get :show, {:id => person.to_param}, valid_session
       expect(assigns(:person)).to eq(person)
     end
@@ -46,13 +48,48 @@ RSpec.describe PeopleController, :type => :controller do
       get :new, {}, valid_session
       expect(assigns(:person)).to be_a_new(Person)
     end
+
+    it "builds a membership object" do
+      get :new, {}, valid_session
+      expect(assigns(:person).memberships.length).to eql(1)
+    end
+
+    it "sets groups" do
+      get :new, {}, valid_session
+      expect(assigns(:groups)).to include(group)
+    end
   end
 
   describe "GET edit" do
+    let(:person) { create(:person, valid_attributes) }
+
     it "assigns the requested person as @person" do
-      person = Person.create! valid_attributes
       get :edit, {:id => person.to_param}, valid_session
       expect(assigns(:person)).to eq(person)
+    end
+
+    it "sets groups" do
+      get :edit, {:id => person.to_param}, valid_session
+      expect(assigns(:groups)).to include(group)
+    end
+
+    it "sets groups and excludes the already assigned groups" do
+      person.memberships.create(group: group)
+      get :edit, {:id => person.to_param}, valid_session
+      expect(assigns(:groups)).not_to include(group)
+    end
+
+    context 'building memberships' do
+      it "builds a membership if there isn't one already" do
+        get :edit, {:id => person.to_param}, valid_session
+        expect(assigns(:person).memberships.length).to eql(1)
+      end
+
+      it " does not build a membership when there is one already" do
+        person.memberships.create(group: group)
+        get :edit, {:id => person.to_param}, valid_session
+        expect(assigns(:person).memberships.length).to eql(1)
+      end
     end
   end
 
@@ -91,10 +128,17 @@ RSpec.describe PeopleController, :type => :controller do
         post :create, {:person => invalid_attributes}, valid_session
         expect(response).to render_template("new")
       end
+
+      it "assigns the @groups collection" do
+        post :create, {:person => invalid_attributes}, valid_session
+        expect(assigns(:groups)).to include(group)
+      end
     end
   end
 
   describe "PUT update" do
+    let(:person) { create(:person, valid_attributes) }
+
     describe "with valid params" do
       let(:new_attributes) {
         attributes_for(:person).merge(
@@ -106,7 +150,6 @@ RSpec.describe PeopleController, :type => :controller do
       }
 
       it "updates the requested person" do
-        person = Person.create! valid_attributes
         put :update, {:id => person.to_param, :person => new_attributes}, valid_session
         person.reload
         new_attributes.each do |attr, value|
@@ -115,19 +158,16 @@ RSpec.describe PeopleController, :type => :controller do
       end
 
       it "assigns the requested person as @person" do
-        person = Person.create! valid_attributes
         put :update, {:id => person.to_param, :person => valid_attributes}, valid_session
         expect(assigns(:person)).to eq(person)
       end
 
       it "redirects to the person" do
-        person = Person.create! valid_attributes
         put :update, {:id => person.to_param, :person => valid_attributes}, valid_session
         expect(response).to redirect_to(person)
       end
 
-      it "redirect to the cropping tool if an image has been attached" do
-        person = Person.create! valid_attributes
+      it "redirects to the cropping tool if an image has been attached" do
         put :update, {:id => person.to_param, :person => valid_attributes_with_image}, valid_session
         expect(response).to redirect_to(edit_person_image_path(person))
       end
@@ -135,33 +175,68 @@ RSpec.describe PeopleController, :type => :controller do
 
     describe "with invalid params" do
       it "assigns the person as @person" do
-        person = Person.create! valid_attributes
         put :update, {:id => person.to_param, :person => invalid_attributes}, valid_session
         expect(assigns(:person)).to eq(person)
       end
 
       it "re-renders the 'edit' template" do
-        person = Person.create! valid_attributes
         put :update, {:id => person.to_param, :person => invalid_attributes}, valid_session
         expect(response).to render_template("edit")
+      end
+
+      it "assigns the @groups collection" do
+        post :create, {:person => invalid_attributes}, valid_session
+        expect(assigns(:groups)).to include(group)
       end
     end
   end
 
   describe "DELETE destroy" do
     it "destroys the requested person" do
-      person = Person.create! valid_attributes
+      person = create(:person, valid_attributes)
       expect {
         delete :destroy, {:id => person.to_param}, valid_session
       }.to change(Person, :count).by(-1)
     end
 
     it "redirects to the people list" do
-      person = Person.create! valid_attributes
+      person = create(:person, valid_attributes)
       delete :destroy, {:id => person.to_param}, valid_session
       expect(response).to redirect_to(people_url)
     end
   end
 
-end
+  describe 'GET add_membership' do
+    context 'with a new person' do
+      it 'renders add_membership template' do
+        get :add_membership
+        expect(response).to render_template('add_membership')
+      end
 
+      it 'sets groups' do
+        get :add_membership
+        expect(assigns(:groups)).to include(group)
+      end
+    end
+
+    context 'with an existing person' do
+      let(:person) { create(:person) }
+
+      it 'renders add_membership template' do
+        get :add_membership, id: person
+        expect(response).to render_template('add_membership')
+      end
+
+      it 'sets groups' do
+        get :add_membership, id: person
+        expect(assigns(:groups)).to include(group)
+      end
+
+      it "sets groups and excludes the already assigned group" do
+        person.memberships.create(group: group)
+        get :edit, {:id => person.to_param}, valid_session
+        expect(assigns(:groups)).not_to include(group)
+      end
+    end
+  end
+end

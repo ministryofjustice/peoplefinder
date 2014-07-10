@@ -44,3 +44,11 @@ en:
       works_friday: "F"
       works_saturday: "S"
       works_sunday: "S"
+  helpers:
+    submit:
+      person:
+        create: "Create person"
+        update: "Update person"
+      group:
+        create: "Create group"
+        update: "Update group"

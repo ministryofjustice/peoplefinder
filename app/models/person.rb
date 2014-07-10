@@ -22,8 +22,12 @@ class Person < ActiveRecord::Base
   attr_accessor :crop_x, :crop_y, :crop_w, :crop_h
 
   validates_presence_of :surname
-  has_many :memberships, dependent: :destroy
+  has_many :memberships, -> { includes(:group).order("groups.name")  },
+    dependent: :destroy
   has_many :groups, through: :memberships
+
+  accepts_nested_attributes_for :memberships, allow_destroy: true,
+    reject_if: proc { |membership| membership['group_id'].blank? }
 
   default_scope { order(surname: :asc, given_name: :asc) }
 
@@ -102,5 +106,9 @@ class Person < ActiveRecord::Base
       items = group.hierarchy
     end
     items << self
+  end
+
+  def assignable_groups
+    Group.where.not(id: memberships.pluck(:group_id))
   end
 end

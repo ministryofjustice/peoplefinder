@@ -19,10 +19,15 @@ class GroupsController < ApplicationController
   # GET /groups/new
   def new
     @group = collection.new
+    preset_person = params[:person_id] ? Person.friendly.find(params[:person_id]) : nil
+    @group.memberships.build person: preset_person
+    load_people
   end
 
   # GET /groups/1/edit
   def edit
+    @group.memberships.build if @group.memberships.empty?
+    load_people
   end
 
   # POST /groups
@@ -32,6 +37,7 @@ class GroupsController < ApplicationController
     if @group.save
       redirect_to @group, notice: "Created #{@group}."
     else
+      load_people
       render :new
     end
   end
@@ -41,6 +47,7 @@ class GroupsController < ApplicationController
     if @group.update(group_params)
       redirect_to @group, notice: "Updated #{@group}"
     else
+      load_people
       render :edit
     end
   end
@@ -51,15 +58,23 @@ class GroupsController < ApplicationController
     redirect_to groups_url, notice: "Deleted #{@group}."
   end
 
+  def add_membership
+    set_group if params[:id].present?
+    @group ||= Group.new
+    load_people
+    render "add_membership", :layout => false
+  end
+
 private
   # Use callbacks to share common setup or constraints between actions.
   def set_group
-    @group = collection.friendly.find(params[:id])
+    @group = collection.friendly.includes(:people).find(params[:id])
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def group_params
-    params.require(:group).permit(:parent_id, :name, :description, :responsibilities)
+    params.require(:group).permit(:parent_id, :name, :description, :responsibilities,
+      memberships_attributes: [:id, :role, :person_id, :leader])
   end
 
   def collection
@@ -68,5 +83,9 @@ private
     else
       Group.includes(:parent)
     end
+  end
+
+  def load_people
+    @people = @group.assignable_people
   end
 end

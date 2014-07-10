@@ -19,5 +19,10 @@ module SpecSupport
 
       visit 'auth/gplus'
     end
+
+    def javascript_log_in
+      visit '/'
+      click_link 'log in'
+    end
   end
 end

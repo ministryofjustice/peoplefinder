@@ -2,9 +2,9 @@ require 'rails_helper'
 
 RSpec.describe 'People Search', elastic: true do
   before(:all) do
-    @alice = Person.create!(given_name: 'Alice', surname: 'Andrews')
-    @bob = Person.create!(given_name: 'Bob', surname: 'Browning', location: 'Petty France 10th floor', description: 'weekends only')
-    @digital_services = Group.create!(name: 'Digital Services')
+    @alice = create(:person, given_name: 'Alice', surname: 'Andrews')
+    @bob = create(:person, given_name: 'Bob', surname: 'Browning', location: 'Petty France 10th floor', description: 'weekends only')
+    @digital_services = create(:group, name: 'Digital Services')
     @bob.memberships.create(group: @digital_services, role: 'Cleaner')
     Person.import
     sleep 1

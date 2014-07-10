@@ -7,7 +7,8 @@ class Group < ActiveRecord::Base
 
   belongs_to :parent, class_name: 'Group'
   has_many :children, class_name: 'Group', foreign_key: 'parent_id'
-  has_many :memberships, dependent: :destroy
+  has_many :memberships, -> { includes(:person).order("people.surname")  },
+    dependent: :destroy
   has_many :people, through: :memberships
   has_many :leaderships, -> { where(leader: true) }, class_name: 'Membership'
   has_many :non_leaderships,
@@ -16,6 +17,9 @@ class Group < ActiveRecord::Base
     class_name: 'Membership'
   has_many :leaders, through: :leaderships, source: :person
   has_many :non_leaders, through: :non_leaderships, source: :person
+
+  accepts_nested_attributes_for :memberships, allow_destroy: true,
+    reject_if: proc { |membership| membership['person_id'].blank? }
 
   validates_presence_of :name
 
@@ -40,6 +44,10 @@ class Group < ActiveRecord::Base
 
   def leadership
     leaderships.first
+  end
+
+  def assignable_people
+    Person.where.not(id: memberships.pluck(:person_id))
   end
 
   delegate :image, to: :leader, prefix: true
