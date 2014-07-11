@@ -5,11 +5,13 @@ feature "Person maintenance" do
     log_in_as 'test.user@digital.justice.gov.uk'
   end
 
-  scenario "Creating a person" do
+  scenario "Creating a person with a complete profile" do
+    group = create(:group, name: 'Digital')
     visit new_person_path
     p = person_attributes
     fill_in 'Given name', with: p[:given_name]
     fill_in 'Surname', with: p[:surname]
+    select 'Digital', from: 'Group'
     fill_in 'Email', with: p[:email]
     fill_in 'Phone', with: p[:phone]
     fill_in 'Mobile', with: p[:mobile]
@@ -39,6 +41,8 @@ feature "Person maintenance" do
       expect(page).to_not have_selector("li.active[alt='Saturday']")
       expect(page).to_not have_selector("li.active[alt='Sunday']")
     end
+
+    expect(page).not_to have_text('Profile completeness')
   end
 
   scenario 'Creating an invalid person' do
@@ -100,6 +104,11 @@ feature "Person maintenance" do
     person = Person.find_by_surname(person_attributes[:surname])
     visit person_path(person)
     expect(page).to have_css("img[src*='#{person.image.medium}']")
+  end
+
+  scenario 'Viewing a person with an incomplete profile' do
+    visit person_path(create(:person))
+    expect(page).to have_text('Profile completeness')
   end
 end
 
