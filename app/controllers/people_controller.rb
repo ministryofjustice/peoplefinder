@@ -8,7 +8,7 @@ class PeopleController < ApplicationController
 
   # GET /people
   def index
-    @people = Person.all
+    redirect_to '/'
   end
 
   # GET /people/1

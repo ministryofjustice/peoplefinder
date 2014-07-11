@@ -28,10 +28,9 @@ RSpec.describe PeopleController, :type => :controller do
   let(:group) { create(:group) }
 
   describe "GET index" do
-    it "assigns all people as @people" do
-      person = create(:person, valid_attributes)
+    it "redirects to the root" do
       get :index, {}, valid_session
-      expect(assigns(:people)).to eq([person])
+      expect(response).to redirect_to('/')
     end
   end
 
