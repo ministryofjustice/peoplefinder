@@ -1,0 +1,9 @@
+language: ruby
+rvm:
+  - '2.1.1'
+services:
+  - elasticsearch
+before_install:
+  - sudo apt-get install -qq phantomjs
+before_script:
+  - psql -c 'create database peoplefinder_test;' -U postgres
