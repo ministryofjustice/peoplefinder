@@ -30,7 +30,6 @@ feature "Person maintenance" do
     expect(page).to have_text(p[:location])
     expect(page).to have_text(p[:description])
 
-
     within ('ul.working_days') do
       expect(page).to_not have_selector("li.active[alt='Monday']")
       expect(page).to have_selector("li.active[alt='Tuesday']")
@@ -40,21 +39,6 @@ feature "Person maintenance" do
       expect(page).to_not have_selector("li.active[alt='Saturday']")
       expect(page).to_not have_selector("li.active[alt='Sunday']")
     end
-  end
-
-  scenario 'Creating a person and making them the leader of a group' do
-    group = create(:group, name: 'Digital Justice')
-    visit new_person_path
-    fill_in 'Surname', with: person_attributes[:surname]
-    fill_in 'Title', with: 'Head Honcho'
-    select('Digital Justice', from: 'Group')
-    check('Leader')
-    click_button "Create person"
-
-    membership = Person.last.memberships.last
-    expect(membership.role).to eql('Head Honcho')
-    expect(membership.group).to eql(group)
-    expect(membership.leader?).to be true
   end
 
   scenario 'Creating an invalid person' do
@@ -93,38 +77,6 @@ feature "Person maintenance" do
     within('h1') do
       expect(page).to have_text('Jane Doe')
     end
-  end
-
-  scenario 'Creating a person and linking to the new group page' do
-    visit new_person_path
-    click_link 'Add a new group'
-    expect(page).to have_text('New group')
-  end
-
-  scenario 'Editing a person and linking to the new group page' do
-    visit edit_person_path(create(:person, surname: 'Polo'))
-    click_link 'Add a new group'
-    expect(page).to have_select('Name', selected: 'Polo')
-  end
-
-  scenario 'Clicking the add another role link', js: true do
-    javascript_log_in
-    visit new_person_path
-    click_link('Add another role')
-    expect(page).to have_selector('#memberships .roles', count: 2)
-  end
-
-  scenario 'Removing a group' do
-     group = create(:group, name: 'Digital Justice')
-     person = create(:person, person_attributes)
-     person.memberships.create(group: group)
-
-     visit edit_person_path(person)
-     click_link('remove')
-
-     expect(page).to have_content("Removed Marco Polo from Digital Justice")
-     expect(person.reload.memberships).to be_empty
-     expect(current_path).to eql(edit_person_path(person))
   end
 
   scenario 'Editing an invalid person' do
