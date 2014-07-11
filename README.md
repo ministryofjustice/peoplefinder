@@ -13,3 +13,7 @@ to **Client secret**.
 You will also need to configure **Consent screen** below for logging in to work.
 
 The permitted domains are configured in `config/application.rb`.
+
+## Utilities
+
+CI by [Travis](https://travis-ci.org/ministryofjustice/scs_appraisals).
