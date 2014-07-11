@@ -2,11 +2,15 @@ class User < ActiveRecord::Base
   validate :validate_email_domain
   validate :email, presence: true, unique: true
 
+  def self.for_email(email)
+    user = User.where(email: email).first_or_create
+  end
+
   def self.from_auth_hash(auth_hash)
     email = normalize_email(auth_hash['info']['email'])
     name = auth_hash['info']['name']
 
-    user = User.where(email: email).first_or_create
+    user = User.for_email(email)
     return nil unless user.valid?
     user.update_name(name)
     user
