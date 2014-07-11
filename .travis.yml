@@ -1,0 +1,9 @@
+language: ruby
+rvm:
+  - '2.1.1'
+before_install:
+  - sudo apt-get install -qq phantomjs
+before_script:
+  - psql -c 'create database scs_appraisals_test;' -U postgres
+notifications:
+  email: false
