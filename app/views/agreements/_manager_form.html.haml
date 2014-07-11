@@ -1,0 +1,8 @@
+= simple_form_for @agreement, url: manager_agreements_path, html: {multipart: true} do |f|
+  %fieldset
+    = f.error_notification
+    .form-group
+      = f.input :jobholder_email, as: :string, required: true
+
+  .actions
+    = f.submit 'Save'

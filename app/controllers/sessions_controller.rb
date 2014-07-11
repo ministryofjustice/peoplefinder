@@ -3,10 +3,11 @@ class SessionsController < ApplicationController
 
   def create
     user = User.from_auth_hash(auth_hash)
-    session['current_user'] = user
     if user
+      session['current_user_id'] = user.id
       redirect_to '/'
     else
+      session['current_user_id'] = nil
       render :failed
     end
   end
@@ -15,7 +16,7 @@ class SessionsController < ApplicationController
   end
 
   def destroy
-    session['current_user'] = nil
+    session['current_user_id'] = nil
     redirect_to '/'
   end
 
