@@ -6,10 +6,15 @@ RSpec.describe MembershipsController, :type => :controller do
   end
 
   describe "DELETE destroy" do
-    let(:group) { create(:membership) }
+    let(:membership) { create(:membership) }
+
+    it "deletes the record" do
+      delete :destroy, {:id => membership.to_param, referer: people_path}
+      expect { Membership.find(membership) }.to raise_error(ActiveRecord::RecordNotFound)
+    end
 
     it "redirects to the referer" do
-      delete :destroy, {:id => group.to_param, referer: people_path}
+      delete :destroy, {:id => membership.to_param, referer: people_path}
       expect(response).to redirect_to(people_path)
     end
   end
