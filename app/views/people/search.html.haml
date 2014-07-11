@@ -1,4 +1,5 @@
-%p= link_to 'Add new person', new_person_path
+- content_for :edit_this_page do
+  = link_to 'Add new person', new_person_path
 
 %h1 Search results
 %h4= pluralize(@people.length, "result") + ' returned'
