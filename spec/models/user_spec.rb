@@ -50,6 +50,11 @@ RSpec.describe User, :type => :model do
     expect(user.name).to eql('John Doe')
   end
 
+  it "should normalise the email address" do
+    user = User.new(email: '"Example User" <Example.User@digital.justice.gov.uk>')
+    expect(user.email).to eql('example.user@digital.justice.gov.uk')
+  end
+
   context "to_s" do
     it "should use name if available" do
       user = User.new
