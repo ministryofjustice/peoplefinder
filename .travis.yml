@@ -7,3 +7,5 @@ before_install:
   - sudo apt-get install -qq phantomjs
 before_script:
   - psql -c 'create database peoplefinder_test;' -U postgres
+notifications:
+  email: false
