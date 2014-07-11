@@ -41,3 +41,9 @@ You can also delete the index:
 To run specs without Elasticsearch:
 
 `bundle exec rspec . --tag ~elastic`
+
+## Utilities
+
+CI by [Travis](https://travis-ci.org/ministryofjustice/peoplefinder).
+
+Software metrics by [Code Climate](https://codeclimate.com/github/ministryofjustice/peoplefinder)
