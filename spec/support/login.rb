@@ -1,7 +1,7 @@
 module SpecSupport
   module Login
     def mock_logged_in_user
-      controller.session[:current_user] = User.new('test.user@digital.moj.gov.uk')
+      controller.session[:current_user_id] = User.for_email("test.user@#{ Rails.configuration.valid_login_domains.first }").id
     end
 
     def log_in_as(email)
