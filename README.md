@@ -42,6 +42,20 @@ To run specs without Elasticsearch:
 
 `bundle exec rspec . --tag ~elastic`
 
+## Images
+
+We use [MiniMagick](https://github.com/minimagick/minimagick) so either Imagemagick or Graphicsmagick need to be installed for image manipulation and for some of the tests.
+
+If using brew you can use the following command:
+
+`brew install imagemagick`
+
+## Testing
+
+You'll need to install PhantomJS in order to run the headless browser tests.
+
+`brew install phantomjs`
+
 ## Utilities
 
 CI by [Travis](https://travis-ci.org/ministryofjustice/peoplefinder).
