@@ -21,6 +21,6 @@ private
   end
 
   def agreement_params
-    params[:agreement].permit(:manager_email)
+    params[:agreement].permit(:manager_email, :number_of_staff, :staff_engagement_score)
   end
 end

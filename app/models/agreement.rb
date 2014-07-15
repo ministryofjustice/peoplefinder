@@ -8,6 +8,8 @@ class Agreement < ActiveRecord::Base
   delegate :email, to: :manager, prefix: true, allow_nil: true
   delegate :email, to: :jobholder, prefix: true, allow_nil: true
 
+  store_accessor :headcount_responsibilities, :number_of_staff, :staff_engagement_score
+
   def manager_email=(email)
     self.manager = User.for_email(email) if email.present?
   end

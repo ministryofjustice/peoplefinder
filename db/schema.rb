@@ -11,16 +11,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140715090213) do
+ActiveRecord::Schema.define(version: 20140715134303) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+  enable_extension "hstore"
 
   create_table "agreements", force: true do |t|
     t.integer  "manager_id"
     t.integer  "jobholder_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.hstore   "headcount_responsibilities"
   end
 
   add_index "agreements", ["manager_id", "jobholder_id"], name: "index_agreements_on_manager_id_and_jobholder_id", using: :btree
