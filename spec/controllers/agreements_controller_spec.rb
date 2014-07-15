@@ -35,7 +35,7 @@ RSpec.describe AgreementsController, :type => :controller do
     describe "with valid params" do
       it "redirects to the created agreement" do
         post :create, { agreement: valid_attributes }
-        expect(response).to redirect_to(assigns(:agreement))
+        expect(response).to redirect_to('/')
       end
     end
 
@@ -51,4 +51,16 @@ RSpec.describe AgreementsController, :type => :controller do
       end
     end
   end
+
+  describe 'GET edit' do
+    let(:agreement) { create(:agreement) }
+
+    it 'assigns the agreement' do
+      get :edit, id: agreement.to_param
+      expect(assigns(:agreement)).to eql(agreement)
+    end
+  end
+
+  it 'should not allow me to view (edit) an agreement that I do not manage'
+  it 'should only show me (index) agreements that I manage'
 end

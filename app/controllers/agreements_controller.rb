@@ -12,10 +12,18 @@ class AgreementsController < ApplicationController
     set_implicit_parameter
 
     if @agreement.save
-      redirect_to agreement_path(@agreement), notice: 'Agreement was successfully created.'
+      redirect_to '/', notice: 'Agreement was successfully created.'
     else
       render :new
     end
+  end
+
+  def edit
+    @agreement = Agreement.find(params[:id])
+  end
+
+  def index
+    @agreements = Agreement.all
   end
 
 private
