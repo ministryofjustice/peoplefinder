@@ -1,6 +1,8 @@
 class AgreementsController < ApplicationController
   def new
     @agreement = Agreement.new
+    @agreement.budgetary_responsibilities = [{}]
+
     set_implicit_parameter
   end
 
@@ -21,6 +23,7 @@ private
   end
 
   def agreement_params
-    params[:agreement].permit(:manager_email, :number_of_staff, :staff_engagement_score)
+    params[:agreement].permit(:manager_email, :number_of_staff, :staff_engagement_score,
+      budgetary_responsibilities: [:budget_type, :budget_value, :description])
   end
 end
