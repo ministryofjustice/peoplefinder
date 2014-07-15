@@ -331,7 +331,7 @@ DEPENDENCIES
   pg
   poltergeist
   pry
-  rails (~> 4.1.1)
+  rails (~> 4.1.4)
   rails_12factor
   rspec-mocks
   rspec-rails (~> 3.0.0)
