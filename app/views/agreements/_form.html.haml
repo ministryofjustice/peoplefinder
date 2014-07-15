@@ -21,5 +21,10 @@
         = f.fields_for :budgetary_responsibilities, OpenStruct.new(budgetary_responsibility), index: nil do |br_f|
           = render 'budgetary_responsibility_fields', f: br_f
 
+    %h2 Objectives
+    .objectives
+      - @agreement.objectives.each do |objective|
+        = f.fields_for :objectives, OpenStruct.new(objective), index: nil do |br_f|
+          = render 'objective_fields', f: br_f
     .actions
       = f.submit 'Save'
