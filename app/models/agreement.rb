@@ -4,6 +4,7 @@ class Agreement < ActiveRecord::Base
 
   validates :manager, presence: true
   validates :jobholder, presence: true
+  validates :manager_email, presence: true
 
   delegate :email, to: :manager, prefix: true, allow_nil: true
   delegate :email, to: :jobholder, prefix: true, allow_nil: true
