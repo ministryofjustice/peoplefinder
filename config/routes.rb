@@ -1,7 +1,9 @@
 Rails.application.routes.draw do
-  root "home#index"
+  resources :agreements
 
   resource :sessions
 
   match '/auth/:provider/callback', to: 'sessions#create', via: [:get, :post]
+
+  root 'agreements#index', as: :home
 end
