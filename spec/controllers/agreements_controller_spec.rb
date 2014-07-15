@@ -15,6 +15,16 @@ RSpec.describe AgreementsController, :type => :controller do
       expect(assigns(:agreement).jobholder).to be_present
     end
 
+    it 'inits the budgetary_responsibilities' do
+      get :new
+      expect(assigns(:agreement).budgetary_responsibilities).to be_present
+    end
+
+    it 'inits the objectives' do
+      get :new
+      expect(assigns(:agreement).budgetary_responsibilities).to be_present
+    end
+
     it 'renders the "new" template' do
       get :new
       expect(response).to render_template('new')
