@@ -1,0 +1,10 @@
+= simple_form_for @agreement do |f|
+
+  %fieldset
+    = f.error_notification
+
+    .form-group
+      = f.input :manager_email, as: :string
+
+    .actions
+      = f.submit 'Save'
