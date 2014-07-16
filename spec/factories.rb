@@ -8,5 +8,7 @@ FactoryGirl.define do
   factory :agreement do
     association :manager, factory: :user
     association :jobholder, factory: :user
+    budgetary_responsibilities [{}]
+    objectives [{}]
   end
 end
