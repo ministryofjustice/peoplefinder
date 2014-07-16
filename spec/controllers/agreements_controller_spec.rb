@@ -53,14 +53,34 @@ RSpec.describe AgreementsController, :type => :controller do
   end
 
   describe 'GET edit' do
-    let(:agreement) { create(:agreement) }
+    context 'allowed to view the agreement' do
+      let(:agreement) { create(:agreement, jobholder_email: current_test_user.email) }
 
-    it 'assigns the agreement' do
-      get :edit, id: agreement.to_param
-      expect(assigns(:agreement)).to eql(agreement)
+      it 'assigns the agreement' do
+        get :edit, id: agreement.to_param
+        expect(assigns(:agreement)).to eql(agreement)
+      end
+
+      it 'renders the edit template' do
+        get :edit, id: agreement.to_param
+        expect(assigns(:agreement)).to eql(agreement)
+      end
+    end
+
+    context 'not allowed to view the agreement' do
+      let(:agreement) { create(:agreement, jobholder_email: 'notme', manager_email: 'noryou') }
+
+      it 'raises an error' do
+        expect { get :edit, id: agreement.to_param
+          }.to raise_error(ActiveRecord::RecordNotFound)
+      end
     end
   end
 
-  it 'should not allow me to view (edit) an agreement that I do not manage'
-  it 'should only show me (index) agreements that I manage'
+  describe 'GET index' do
+    it 'should call editable_by current_user' do
+      expect(Agreement).to receive(:editable_by).with(current_test_user).once
+      get :index
+    end
+  end
 end

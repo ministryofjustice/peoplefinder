@@ -4,6 +4,10 @@ module SpecSupport
       controller.session[:current_user_id] = User.for_email("test.user@#{ Rails.configuration.valid_login_domains.first }").id
     end
 
+    def current_test_user
+      User.where(id: controller.session[:current_user_id]).first
+    end
+
     def log_in_as(email)
       OmniAuth.config.test_mode = true
 

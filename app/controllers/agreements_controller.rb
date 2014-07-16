@@ -19,11 +19,11 @@ class AgreementsController < ApplicationController
   end
 
   def edit
-    @agreement = Agreement.find(params[:id])
+    @agreement = Agreement.editable_by(current_user).find(params[:id])
   end
 
   def index
-    @agreements = Agreement.all
+    @agreements = scope
   end
 
 private
@@ -35,5 +35,9 @@ private
     params[:agreement].permit(:manager_email, :number_of_staff, :staff_engagement_score,
       budgetary_responsibilities: [:budget_type, :budget_value, :description],
       objectives: [:objective_type, :description, :deliverable, :measures])
+  end
+
+  def scope
+    Agreement.editable_by(current_user)
   end
 end

@@ -11,6 +11,8 @@ class Agreement < ActiveRecord::Base
 
   store_accessor :headcount_responsibilities, :number_of_staff, :staff_engagement_score
 
+  scope :editable_by, ->(user) { where('jobholder_id = ? or manager_id = ?', user.id, user.id) }
+
   def manager_email=(email)
     self.manager = User.for_email(email) if email.present?
   end
