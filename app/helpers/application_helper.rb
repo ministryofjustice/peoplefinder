@@ -14,4 +14,9 @@ module ApplicationHelper
       }
     }
   end
+
+  def financial_year(the_date=Date.today)
+    the_date = the_date.last_year if the_date.month < 4
+    "#{ the_date.strftime('%Y') }/#{ the_date.next_year.strftime('%y') }"
+  end
 end

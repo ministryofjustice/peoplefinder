@@ -16,6 +16,6 @@ private
   helper_method :logged_in?
 
   def ensure_user
-    redirect_to new_sessions_path unless logged_in?
+     redirect_to new_sessions_path unless logged_in?
   end
 end

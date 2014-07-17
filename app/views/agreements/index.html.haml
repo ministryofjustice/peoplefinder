@@ -1,3 +1,7 @@
+%h1 SCS feedback dashboard
+
+%h2 Current reportees - #{ financial_year }
+
 - @agreements.each do |agreement|
   = agreement.jobholder
   = button_to 'Continue', edit_agreement_path(agreement), method: :get
