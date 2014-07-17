@@ -65,11 +65,15 @@ RSpec.describe AgreementsController, :type => :controller do
     end
 
     context 'budgetary responsibilities and objectives' do
-      let(:agreement) { create(:agreement, jobholder: current_test_user) }
+      let(:agreement) { create(:agreement, valid_attributes) }
 
       context 'when they have been pre-defined' do
-        it 'has the attributes' do
-          agreement.update_attributes!(budgetary_responsibilities: [{}], objectives: [{}])
+        before do
+          agreement.update_attributes!(headcount_responsibilities: {},
+            budgetary_responsibilities: [{}], objectives: [{}])
+        end
+
+        it 'has previously set the objectives and budgetary_responsibilities' do
           get :edit, id: agreement.to_param
 
           [:budgetary_responsibilities, :objectives].each do |attr|
@@ -79,7 +83,7 @@ RSpec.describe AgreementsController, :type => :controller do
       end
 
       context 'when they have not been pre-defined' do
-        it 'has the attributes' do
+        it 'has not previously set the objectives and budgetary_responsibilities' do
           get :edit, id: agreement.to_param
 
           [:budgetary_responsibilities, :objectives].each do |attr|

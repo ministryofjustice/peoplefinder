@@ -1,9 +1,7 @@
 class AgreementsController < ApplicationController
   def new
     @agreement = Agreement.new
-    @agreement.budgetary_responsibilities = [{}]
-    @agreement.objectives = [{}]
-
+    initialise_objectives_and_budgetary_responsibilities
     set_implicit_parameter
   end
 
@@ -17,6 +15,7 @@ class AgreementsController < ApplicationController
 
   def edit
     @agreement = Agreement.editable_by(current_user).find(params[:id])
+    initialise_objectives_and_budgetary_responsibilities
   end
 
   def index
@@ -42,5 +41,10 @@ private
 
   def scope
     Agreement.editable_by(current_user)
+  end
+
+  def initialise_objectives_and_budgetary_responsibilities
+    @agreement.budgetary_responsibilities = [{}] unless @agreement.budgetary_responsibilities
+    @agreement.objectives = [{}] unless @agreement.objectives
   end
 end
