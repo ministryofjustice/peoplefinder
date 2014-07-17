@@ -6,7 +6,7 @@ RSpec.describe AgreementsController, :type => :controller do
   end
 
   let(:valid_attributes) {
-      attributes_for(:agreement).merge(manager_email: 'manager@digital.justice.gov.uk')
+      attributes_for(:agreement).merge(jobholder: current_test_user)
     }
 
   describe 'GET new' do
@@ -38,18 +38,6 @@ RSpec.describe AgreementsController, :type => :controller do
         expect(response).to redirect_to('/')
       end
     end
-
-    describe "with invalid params" do
-      it "it does not save the agreement" do
-        post :create, { agreement: {} }
-        expect(assigns(:agreement)).to be_new_record
-      end
-
-      it "renders the 'new' template" do
-        post :create, { agreement: {} }
-        expect(response).to render_template('new')
-      end
-    end
   end
 
   describe 'GET edit' do
@@ -73,6 +61,31 @@ RSpec.describe AgreementsController, :type => :controller do
       it 'raises an error' do
         expect { get :edit, id: agreement.to_param
           }.to raise_error(ActiveRecord::RecordNotFound)
+      end
+    end
+
+    context 'budgetary responsibilities and objectives' do
+      let(:agreement) { create(:agreement, jobholder: current_test_user) }
+
+      context 'when they have been pre-defined' do
+        it 'has the attributes' do
+          agreement.update_attributes!(budgetary_responsibilities: [{}], objectives: [{}])
+          get :edit, id: agreement.to_param
+
+          [:budgetary_responsibilities, :objectives].each do |attr|
+            expect(assigns(:agreement).send(attr)).to eql([{}])
+          end
+        end
+      end
+
+      context 'when they have not been pre-defined' do
+        it 'has the attributes' do
+          get :edit, id: agreement.to_param
+
+          [:budgetary_responsibilities, :objectives].each do |attr|
+            expect(assigns(:agreement).send(attr)).to eql([{}])
+          end
+        end
       end
     end
   end

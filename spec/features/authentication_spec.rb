@@ -33,7 +33,7 @@ def invalid_user
   OmniAuth::AuthHash.new({
     provider: 'gplus',
     info: {
-      email: 'test.user@example.com',
+      email: 'test.user@not-allowed',
       first_name: 'John',
       last_name: 'Doe',
       name: 'John Doe',
