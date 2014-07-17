@@ -37,6 +37,11 @@ RSpec.describe AgreementsController, :type => :controller do
         post :create, { agreement: valid_attributes }
         expect(response).to redirect_to('/')
       end
+
+      it "sets a flash massage" do
+        post :create, { agreement: valid_attributes }
+        expect(request.flash[:notice]).to match(/success/)
+      end
     end
   end
 
