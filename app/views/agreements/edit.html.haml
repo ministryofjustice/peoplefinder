@@ -1,2 +1,2 @@
-%p= "Jobholder: #{ @agreement.jobholder }"
+%h1= "#{ @agreement.jobholder.to_s.possessive } responsibilities"
 = render 'form'

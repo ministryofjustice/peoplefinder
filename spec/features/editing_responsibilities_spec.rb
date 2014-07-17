@@ -2,24 +2,29 @@ require 'rails_helper'
 
 feature "Edititing responsibilities" do
   before do
-    log_in_as "jobholder@digital.justice.gov.uk"
-    create(:agreement, jobholder: User.where(email: "jobholder@digital.justice.gov.uk").first)
+    jobholder = create(:user, name: 'John Doe', email: 'jobholder@digital.justice.gov.uk')
+    create(:agreement, jobholder: jobholder)
+    log_in_as jobholder.email
   end
 
   scenario "Edititing responsibilities as a jobholder" do
     visit "/"
     click_button "Continue"
 
+    within('h1') do
+      expect(page.text).to have_text("John Doe’s responsibilities")
+    end
+
     fill_in "Number of staff", with: "There's about 300"
     fill_in "Staff engagement score", with: "I did pretty well for a while"
 
-    within ('.budgetary-responsibilities') do
+    within ('#budgetary-responsibilities') do
       fill_in "Type", with: "Capital"
       fill_in "Value", with: "200 quid"
       fill_in "Description", with: "Paid annually"
     end
 
-    within ('.objectives') do
+    within ('#objectives') do
       fill_in "Type", with: "Productivity goal"
       fill_in "Objective", with: "Get to work on time"
       fill_in "Deliverable", with: "A copy of my timesheet"
