@@ -90,6 +90,15 @@ RSpec.describe AgreementsController, :type => :controller do
     end
   end
 
+  describe 'PUT update' do
+    let(:agreement) { create(:agreement, jobholder: current_test_user) }
+
+    it "redirects to the dashboard" do
+      put :update, { id: agreement.id, agreement: valid_attributes }
+      expect(response).to redirect_to('/')
+    end
+  end
+
   describe 'GET index' do
     it 'should call editable_by current_user' do
       expect(Agreement).to receive(:editable_by).with(current_test_user).once

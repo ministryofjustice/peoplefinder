@@ -1,4 +1,3 @@
-%p= link_to "Initiate feedback for myself", new_agreement_path
-
 - @agreements.each do |agreement|
-  = link_to agreement.jobholder, edit_agreement_path(agreement)
+  = agreement.jobholder
+  = button_to 'Continue', edit_agreement_path(agreement), method: :get

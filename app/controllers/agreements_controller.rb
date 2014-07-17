@@ -23,6 +23,12 @@ class AgreementsController < ApplicationController
     @agreements = scope
   end
 
+  def update
+    @agreement = Agreement.editable_by(current_user).find(params[:id])
+    @agreement.update_attributes(agreement_params)
+    redirect_to '/'
+  end
+
 private
   def set_implicit_parameter
     @agreement.jobholder = current_user

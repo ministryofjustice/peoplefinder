@@ -9,7 +9,7 @@ feature 'Manager activity' do
     create(:agreement, jobholder_email: 'jobholder@digital.justice.gov.uk', manager_email: 'manager@digital.justice.gov.uk')
 
     visit '/'
-    click_link('jobholder@digital.justice.gov.uk')
+    click_button('Continue')
 
     expect(page).to have_text('Jobholder: jobholder@digital.justice.gov.uk')
     expect(page).to have_field('Manager email', with: 'manager@digital.justice.gov.uk')
