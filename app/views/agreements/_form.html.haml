@@ -6,9 +6,11 @@
     %h2.form-section Budgetary
     #budgetary-responsibilities
       - @agreement.budgetary_responsibilities.each do |budgetary_responsibility|
-        = f.fields_for :budgetary_responsibilities, OpenStruct.new(budgetary_responsibility), index: nil do |br_f|
-          = render 'budgetary_responsibility_fields', f: br_f
+        .budgetary-responsibility
+          = f.fields_for :budgetary_responsibilities, OpenStruct.new(budgetary_responsibility), index: nil do |br_f|
+            = render 'budgetary_responsibility_fields', f: br_f
 
+    = link_to 'Add another', '#', id: 'add-another-budgetary-responsibility'
     %hr
 
     %h2.form-section Headcount

@@ -47,4 +47,13 @@ feature "Editing start of year agreement" do
     expect(objectives['deliverable']).to match(/copy of my timesheet/)
     expect(objectives['measures']).to match(/average tardiness/)
   end
+
+
+  scenario 'Add budgetary responsibilities to an agreement', js: true do
+    click_button "Continue"
+    click_link "add-another-budgetary-responsibility"
+    expect(page).to have_css('.budgetary-responsibility', count: 2)
+    click_link "add-another-budgetary-responsibility"
+    expect(page).to have_css('.budgetary-responsibility', count: 3)
+  end
 end
