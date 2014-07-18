@@ -49,11 +49,18 @@ feature "Editing start of year agreement" do
   end
 
 
-  scenario 'Add budgetary responsibilities to an agreement', js: true do
+  scenario 'Add and remove budgetary responsibilities to an agreement', js: true do
     click_button "Continue"
-    click_link "add-another-budgetary-responsibility"
-    expect(page).to have_css('.budgetary-responsibility', count: 2)
-    click_link "add-another-budgetary-responsibility"
-    expect(page).to have_css('.budgetary-responsibility', count: 3)
+
+    within('#budgetary-responsibilities') do
+      expect(page).not_to have_link('Remove last row')
+
+      click_link "Add another"
+      expect(page).to have_css('.budgetary-responsibility', count: 2)
+
+      click_link "Remove last row"
+      expect(page).to have_css('.budgetary-responsibility', count: 1)
+      expect(page).not_to have_link('Remove last row')
+    end
   end
 end
