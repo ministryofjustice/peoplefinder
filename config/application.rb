@@ -27,5 +27,6 @@ module SCSAppraisals
       digital.cabinet-office.gov.uk
       example.com
     ]
+    config.active_record.schema_format = :sql
   end
 end
