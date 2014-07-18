@@ -1,4 +1,15 @@
-%p= link_to "Initiate feedback for myself", new_agreement_path
+%h1 SCS feedback dashboard
 
-- @agreements.each do |agreement|
-  = link_to agreement.jobholder, edit_agreement_path(agreement)
+%h2 Current reportees - #{ financial_year }
+
+%table
+  %th Name
+  %th Team
+  %th Status
+  %th
+  - @agreements.each do |agreement|
+    %tr
+      %td= agreement.jobholder
+      %td= "#{ agreement.jobholder.organisation } (#{ agreement.jobholder.grade })"
+      %td
+      %td= button_to 'Continue', edit_agreement_path(agreement), method: :get, class: :button

@@ -1,25 +1,30 @@
 require 'rails_helper'
 
-feature "Initiating feedback" do
+feature "Edititing responsibilities" do
   before do
-    log_in_as "jobholder@digital.justice.gov.uk"
+    jobholder = create(:user, name: 'John Doe', email: 'jobholder@digital.justice.gov.uk')
+    create(:agreement, jobholder: jobholder)
+    log_in_as jobholder.email
   end
 
-  scenario "Initiating feedback as a jobholder" do
+  scenario "Edititing responsibilities as a jobholder" do
     visit "/"
-    click_link "Initiate feedback for myself"
+    click_button "Continue"
 
-    fill_in "Manager email", with: "manager@digital.justice.gov.uk"
+    within('h1') do
+      expect(page.text).to have_text("John Doe’s responsibilities")
+    end
+
     fill_in "Number of staff", with: "There's about 300"
     fill_in "Staff engagement score", with: "I did pretty well for a while"
 
-    within ('.budgetary-responsibilities') do
+    within ('#budgetary-responsibilities') do
       fill_in "Type", with: "Capital"
       fill_in "Value", with: "200 quid"
       fill_in "Description", with: "Paid annually"
     end
 
-    within ('.objectives') do
+    within ('#objectives') do
       fill_in "Type", with: "Productivity goal"
       fill_in "Objective", with: "Get to work on time"
       fill_in "Deliverable", with: "A copy of my timesheet"
@@ -28,14 +33,10 @@ feature "Initiating feedback" do
 
     click_button "Save"
 
-    manager = User.find_by_email("manager@digital.justice.gov.uk")
-    jobholder = User.find_by_email("jobholder@digital.justice.gov.uk")
     agreement = Agreement.last
     budgetary_responsibility = agreement.budgetary_responsibilities.first
     objectives = agreement.objectives.first
 
-    expect(agreement.manager).to eql(manager)
-    expect(agreement.jobholder).to eql(jobholder)
     expect(agreement.number_of_staff).to match(/about 300/)
     expect(agreement.staff_engagement_score).to match(/did pretty well/)
 
