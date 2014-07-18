@@ -9,7 +9,8 @@ class Agreement < ActiveRecord::Base
   delegate :email, to: :manager, prefix: true, allow_nil: true
   delegate :email, to: :jobholder, prefix: true, allow_nil: true
 
-  store_accessor :headcount_responsibilities, :number_of_staff, :staff_engagement_score
+  store_accessor :headcount_responsibilities, :number_of_staff, :staff_engagement_score,
+    :payband_1, :payband_a, :payband_b, :payband_c, :payband_d, :payband_e
 
   scope :editable_by, ->(user) { where('jobholder_id = ? or manager_id = ?', user.id, user.id) }
 

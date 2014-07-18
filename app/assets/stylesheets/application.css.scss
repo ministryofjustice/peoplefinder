@@ -9,6 +9,10 @@
  }
 }
 
+h1 {
+  margin-top: 30px;
+}
+
 input.form-control.wide {
   width: 65% !important;
 }
@@ -17,9 +21,22 @@ input.form-control.x-wide {
   width: 85% !important;
 }
 
+textarea.form-control.x-wide {
+  width: 85% !important;
+  height: 90px !important;
+}
+
 textarea.form-control.xx-wide {
   width: 100% !important;
   height: 90px !important;
+}
+
+.form-label-bold {
+  margin-top: 30px;
+}
+
+h2.form-section {
+  margin-top: 30px;
 }
 
 .pound {
@@ -27,4 +44,14 @@ textarea.form-control.xx-wide {
   background-position: left center;
   background-repeat: no-repeat;
   padding-left: 40px;
+}
+
+.form-checkbox {
+  width: 150px;
+  float: left;
+  margin: 0;
+}
+
+.grades-covered {
+  width: 75%;
 }
