@@ -8,3 +8,23 @@
    background-color: #ffd;
  }
 }
+
+input.form-control.wide {
+  width: 65% !important;
+}
+
+input.form-control.x-wide {
+  width: 85% !important;
+}
+
+textarea.form-control.xx-wide {
+  width: 100% !important;
+  height: 90px !important;
+}
+
+.pound {
+  background-image: image-url('poundbg.png');
+  background-position: left center;
+  background-repeat: no-repeat;
+  padding-left: 40px;
+}
