@@ -17,5 +17,8 @@
 
 /coverage
 
+# Ignore local .env file
+.env
+
 .ruby-version
 .idea
