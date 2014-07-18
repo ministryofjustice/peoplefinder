@@ -1,28 +1,22 @@
 = simple_form_for @agreement do |f|
+  = f.error_notification
 
   %fieldset
-    = f.error_notification
 
-    %h2 Personal details
-    .form-group
-      = f.input :manager_email, as: :string
-
-    %h2 Headcount responsibilities
-    .form-group
-      = f.input :number_of_staff, as: :text
-
-    .form-group
-      = f.input :staff_engagement_score, as: :text
-
-    %h2 Budgetary responsibilities
-    .budgetary-responsibilities
-
+    %h2 Budgetary
+    #budgetary-responsibilities
       - @agreement.budgetary_responsibilities.each do |budgetary_responsibility|
         = f.fields_for :budgetary_responsibilities, OpenStruct.new(budgetary_responsibility), index: nil do |br_f|
           = render 'budgetary_responsibility_fields', f: br_f
 
+    %h2 Headcount
+    .form-group.budgetary-responsibilities
+      = f.input :number_of_staff, as: :text
+      = f.input :staff_engagement_score, as: :text
+
+
     %h2 Objectives
-    .objectives
+    #objectives
       - @agreement.objectives.each do |objective|
         = f.fields_for :objectives, OpenStruct.new(objective), index: nil do |br_f|
           = render 'objective_fields', f: br_f

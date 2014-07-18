@@ -1,9 +1,7 @@
 class AgreementsController < ApplicationController
   def new
     @agreement = Agreement.new
-    @agreement.budgetary_responsibilities = [{}]
-    @agreement.objectives = [{}]
-
+    initialise_objectives_and_budgetary_responsibilities
     set_implicit_parameter
   end
 
@@ -11,19 +9,23 @@ class AgreementsController < ApplicationController
     @agreement = Agreement.new(agreement_params)
     set_implicit_parameter
 
-    if @agreement.save
-      redirect_to '/', notice: 'Agreement was successfully created.'
-    else
-      render :new
-    end
+    @agreement.save
+    redirect_to '/', notice: 'Agreement was successfully created.'
   end
 
   def edit
     @agreement = Agreement.editable_by(current_user).find(params[:id])
+    initialise_objectives_and_budgetary_responsibilities
   end
 
   def index
     @agreements = scope
+  end
+
+  def update
+    @agreement = Agreement.editable_by(current_user).find(params[:id])
+    @agreement.update_attributes(agreement_params)
+    redirect_to '/'
   end
 
 private
@@ -39,5 +41,10 @@ private
 
   def scope
     Agreement.editable_by(current_user)
+  end
+
+  def initialise_objectives_and_budgetary_responsibilities
+    @agreement.budgetary_responsibilities = [{}] unless @agreement.budgetary_responsibilities
+    @agreement.objectives = [{}] unless @agreement.objectives
   end
 end

@@ -13,6 +13,8 @@
 
 ActiveRecord::Schema.define(version: 20140717100456) do
 
+
+
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "hstore"
@@ -36,6 +38,9 @@ ActiveRecord::Schema.define(version: 20140717100456) do
     t.datetime "updated_at"
     t.string   "staff_number"
     t.string   "password_digest"
+    t.text     "grade"
+    t.text     "organisation"
+
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree

@@ -6,7 +6,7 @@ RSpec.describe AgreementsController, :type => :controller do
   end
 
   let(:valid_attributes) {
-      attributes_for(:agreement).merge(manager_email: 'manager@digital.justice.gov.uk')
+      attributes_for(:agreement).merge(jobholder: current_test_user)
     }
 
   describe 'GET new' do
@@ -46,9 +46,10 @@ RSpec.describe AgreementsController, :type => :controller do
         expect(assigns(:agreement)).to be_new_record
       end
 
-      it "renders the 'new' template" do
-        post :create, { agreement: {} }
-        expect(response).to render_template('new')
+
+      it "sets a flash massage" do
+        post :create, { agreement: valid_attributes }
+        expect(request.flash[:notice]).to match(/success/)
       end
     end
   end
@@ -75,6 +76,44 @@ RSpec.describe AgreementsController, :type => :controller do
         expect { get :edit, id: agreement.to_param
           }.to raise_error(ActiveRecord::RecordNotFound)
       end
+    end
+
+    context 'budgetary responsibilities and objectives' do
+      let(:agreement) { create(:agreement, valid_attributes) }
+
+      context 'when they have been pre-defined' do
+        before do
+          agreement.update_attributes!(headcount_responsibilities: {},
+            budgetary_responsibilities: [{}], objectives: [{}])
+        end
+
+        it 'has previously set the objectives and budgetary_responsibilities' do
+          get :edit, id: agreement.to_param
+
+          [:budgetary_responsibilities, :objectives].each do |attr|
+            expect(assigns(:agreement).send(attr)).to eql([{}])
+          end
+        end
+      end
+
+      context 'when they have not been pre-defined' do
+        it 'has not previously set the objectives and budgetary_responsibilities' do
+          get :edit, id: agreement.to_param
+
+          [:budgetary_responsibilities, :objectives].each do |attr|
+            expect(assigns(:agreement).send(attr)).to eql([{}])
+          end
+        end
+      end
+    end
+  end
+
+  describe 'PUT update' do
+    let(:agreement) { create(:agreement, jobholder: current_test_user) }
+
+    it "redirects to the dashboard" do
+      put :update, { id: agreement.id, agreement: valid_attributes }
+      expect(response).to redirect_to('/')
     end
   end
 

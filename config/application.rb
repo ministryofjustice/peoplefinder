@@ -25,6 +25,7 @@ module SCSAppraisals
     config.valid_login_domains = %w[
       digital.justice.gov.uk
       digital.cabinet-office.gov.uk
+      example.com
     ]
   end
 end

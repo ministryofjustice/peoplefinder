@@ -18,7 +18,7 @@ RSpec.describe User, :type => :model do
 
   it "should return nil from an auth_hash with the wrong domain" do
     auth_hash = build_valid_auth_hash
-    auth_hash['info']['email'] = 'rogue.user@example.com'
+    auth_hash['info']['email'] = 'rogue.user@not-allowed'
     user = User.from_auth_hash(auth_hash)
     expect(user).to be_nil
   end
