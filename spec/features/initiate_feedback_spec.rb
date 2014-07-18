@@ -31,7 +31,6 @@ feature "Initiating feedback" do
     click_button "Save"
 
     manager = User.find_by_email("manager@digital.justice.gov.uk")
-    jobholder = User.find_by_email(jobholder.email)
     agreement = Agreement.last
     budgetary_responsibility = agreement.budgetary_responsibilities.first
     objectives = agreement.objectives.first
