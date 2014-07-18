@@ -1,19 +1,14 @@
 require 'rails_helper'
 
-feature "Initiating feedback" do
-  let(:jobholder) {create(:user, email: "jobholder@digital.justice.gov.uk")}
-
-
+feature "Editing start of year agreement" do
   before do
-    jobholder = create(:user, name: 'John Doe', email: 'jobholder@digital.justice.gov.uk')
+    jobholder = create(:user, name: 'John Doe')
     create(:agreement, jobholder: jobholder)
     log_in_as jobholder.email
   end
 
   scenario "Edititing responsibilities as a jobholder" do
-    visit "/"
     click_button "Continue"
-
     within('h1') do
       expect(page.text).to have_text("John Doe’s responsibilities")
     end
@@ -35,7 +30,6 @@ feature "Initiating feedback" do
     end
 
     click_button "Save"
-
 
     agreement = Agreement.last
     budgetary_responsibility = agreement.budgetary_responsibilities.first
