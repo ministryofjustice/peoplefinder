@@ -1,7 +1,14 @@
 %p
   This is the MOJ Senior Civil Service Appraisals service
 
-%p
-  Please
-  = link_to "log in", "/auth/gplus"
-  to continue
+%section#login-form
+  %h1 Please log in to continue
+  = form_tag '/auth/identity/callback' do
+    .form-group
+      = label_tag :auth_key, 'Email'
+      = text_field_tag :auth_key
+    .form-group
+      = label_tag :password
+      = password_field_tag :password
+    .actions
+      = submit_tag 'Login'

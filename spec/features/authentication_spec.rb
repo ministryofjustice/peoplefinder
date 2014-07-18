@@ -1,54 +1,47 @@
 require 'rails_helper'
 
 feature "Authentication" do
-  before do
-    OmniAuth.config.test_mode = true
-  end
 
-  scenario "Logging in and out" do
-    OmniAuth.config.mock_auth[:gplus] = valid_user
+  let(:valid_registered_user){ create(:user, name: 'John Doe', password: '12345678')}
+
+  scenario "Logging in and out for a registered user" do
 
     visit '/'
     expect(page).to have_text("Please log in to continue")
 
-    click_link "log in"
+    fill_in 'auth_key', with: valid_registered_user.email
+    fill_in 'password', with: '12345678'
+    click_button 'Login'
     expect(page).to have_text("Logged in as John Doe")
 
     click_link "Log out"
     expect(page).to have_text("Please log in to continue")
   end
 
-  scenario 'Log in failure' do
-    OmniAuth.config.mock_auth[:gplus] = invalid_user
-
+  scenario 'Log in failure for a registered user with invalid password' do
     visit '/'
     expect(page).to have_text("Please log in to continue")
 
-    click_link "log in"
-    expect(page).to have_text(/log in with an MOJ DS or GDS account/)
+    fill_in 'auth_key', with: valid_registered_user.email
+    fill_in 'password', with: 'this is an incorrect password wibble'
+    click_button 'Login'
+
+    expect(page).to_not have_text("Logged in as John Doe")
+    expect(page).to have_css('h1', 'Please log in to continue ')
   end
+
+  scenario "Login failure for someone who isn't registered with the app" do
+    visit '/'
+    expect(page).to have_text("Please log in to continue")
+
+    fill_in 'auth_key', with: 'lord_of_not_registered@example.com'
+    fill_in 'password', with: 'this is an incorrect password wibble'
+    click_button 'Login'
+
+    expect(page).to_not have_text("Logged in as John Doe")
+    expect(page).to have_css('h1', 'Please log in to continue ')
+  end
+
+
 end
 
-def invalid_user
-  OmniAuth::AuthHash.new({
-    provider: 'gplus',
-    info: {
-      email: 'test.user@example.com',
-      first_name: 'John',
-      last_name: 'Doe',
-      name: 'John Doe',
-    }
-  })
-end
-
-def valid_user
-  OmniAuth::AuthHash.new({
-    provider: 'gplus',
-    info: {
-      email: 'test.user@digital.justice.gov.uk',
-      first_name: 'John',
-      last_name: 'Doe',
-      name: 'John Doe',
-    }
-  })
-end

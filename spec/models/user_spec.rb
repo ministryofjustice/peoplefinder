@@ -14,13 +14,6 @@ RSpec.describe User, :type => :model do
     }
   end
 
-  it "should return a user from a valid auth_hash" do
-    auth_hash = build_valid_auth_hash
-    user = User.from_auth_hash(auth_hash)
-    expect(user).not_to be_nil
-    expect(user.email).to eql(email)
-    expect(user.name).to eql('John Doe')
-  end
 
   it "should return nil from an auth_hash with the wrong domain" do
     auth_hash = build_valid_auth_hash
@@ -29,11 +22,6 @@ RSpec.describe User, :type => :model do
     expect(user).to be_nil
   end
 
-  it "should create a new record if none exists" do
-    auth_hash = build_valid_auth_hash
-    user = User.from_auth_hash(auth_hash)
-    expect(User.where(email: email).first).to eql(user)
-  end
 
   it "should return an existing record" do
     existing = create(:user, email: email)
@@ -42,13 +30,6 @@ RSpec.describe User, :type => :model do
     expect(user.id).to eql(existing.id)
   end
 
-  it "should update the name of the existing record" do
-    existing = create(:user, email: email, name: 'OLD NAME')
-    auth_hash = build_valid_auth_hash
-    user = User.from_auth_hash(auth_hash)
-    user.reload
-    expect(user.name).to eql('John Doe')
-  end
 
   it "should normalise the email address" do
     user = User.new(email: '"Example User" <Example.User@digital.justice.gov.uk>')
@@ -68,4 +49,16 @@ RSpec.describe User, :type => :model do
       expect(user.to_s).to eql('user@example.com')
     end
   end
+
+  describe '#for_email' do
+
+    it 'creates a user with a randomly generated password' do
+      user = User.for_email('example.user@digital.justice.gov.uk')
+      expect(user.password_digest).to_not be_blank
+
+    end
+
+  end
+
+
 end

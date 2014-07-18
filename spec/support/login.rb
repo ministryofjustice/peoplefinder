@@ -8,20 +8,11 @@ module SpecSupport
       User.where(id: controller.session[:current_user_id]).first
     end
 
-    def log_in_as(email)
-      OmniAuth.config.test_mode = true
-
-      OmniAuth.config.mock_auth[:gplus] = OmniAuth::AuthHash.new({
-        provider: 'gplus',
-        info: {
-          email: email,
-          first_name: 'John',
-          last_name: 'Doe',
-          name: 'John Doe',
-        }
-      })
-
-      visit 'auth/gplus'
+    def log_in_as(email, password = '12345678')
+      visit '/sessions/new'
+      fill_in 'auth_key', with: email
+      fill_in 'password', with: password
+      click_button 'Login'
     end
   end
 end

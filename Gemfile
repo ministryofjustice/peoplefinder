@@ -11,8 +11,7 @@ gem 'jquery-rails'
 gem 'mail'
 gem 'moj_internal_template',
   git: 'https://github.com/ministryofjustice/moj_internal_template.git'
-gem 'omniauth-gplus',
-  git: 'https://github.com/ministryofjustice/omniauth-gplus.git'
+gem 'omniauth-identity', '~> 1.1.1'
 gem 'pg'
 gem 'sass-rails', '~> 4.0.3'
 gem 'simple_form', '~> 3.1.0.rc1'

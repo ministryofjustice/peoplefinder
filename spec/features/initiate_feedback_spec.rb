@@ -1,8 +1,10 @@
 require 'rails_helper'
 
 feature "Initiating feedback" do
+  let(:jobholder) {create(:user, email: "jobholder@digital.justice.gov.uk")}
+
   before do
-    log_in_as "jobholder@digital.justice.gov.uk"
+    log_in_as jobholder.email
   end
 
   scenario "Initiating feedback as a jobholder" do
@@ -29,7 +31,7 @@ feature "Initiating feedback" do
     click_button "Save"
 
     manager = User.find_by_email("manager@digital.justice.gov.uk")
-    jobholder = User.find_by_email("jobholder@digital.justice.gov.uk")
+    jobholder = User.find_by_email(jobholder.email)
     agreement = Agreement.last
     budgetary_responsibility = agreement.budgetary_responsibilities.first
     objectives = agreement.objectives.first
