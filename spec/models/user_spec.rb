@@ -2,6 +2,7 @@ require 'rails_helper'
 
 RSpec.describe User, :type => :model do
   let(:email) { 'example.user@digital.justice.gov.uk' }
+  let(:password) { 'a warm summers day in blighty'}
 
   def build_valid_auth_hash
     {
@@ -55,7 +56,19 @@ RSpec.describe User, :type => :model do
     it 'creates a user with a randomly generated password' do
       user = User.for_email('example.user@digital.justice.gov.uk')
       expect(user.password_digest).to_not be_blank
+    end
 
+    it 'returns a corresponding user for given email' do
+      user = create(:user, email: email, password: password, password_confirmation: password)
+      located_user = User.for_email(user.email)
+      expect(located_user).to eql(user)
+    end
+
+    it "returns a corresponding user for a given email and doesn't change the password" do
+      user = create(:user, email: email, password: password, password_confirmation: password)
+      located_user = User.for_email(user.email)
+      expect(located_user).to eql(user)
+      expect(user.authenticate(password)).to eql(user)
     end
 
   end

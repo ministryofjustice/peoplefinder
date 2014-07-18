@@ -5,11 +5,7 @@ class User < OmniAuth::Identity::Models::ActiveRecord
   validate :email, presence: true, unique: true
 
   def self.for_email(email)
-    where(email: email).first_or_initialize.tap do |user|
-      set_password_if_required(user)
-      user.email = email
-      user.save!
-    end
+    where(email: email).first_or_create
   end
 
   def self.from_auth_hash(auth_hash)
@@ -44,6 +40,7 @@ class User < OmniAuth::Identity::Models::ActiveRecord
 
 
 
+
 private
   def validate_email_domain
     valid_domains = Rails.configuration.valid_login_domains
@@ -52,13 +49,14 @@ private
     end
   end
 
-  def self.set_password_if_required(user)
-    if user.password.blank? && user.password_digest.blank?
+  def set_password_if_required
+    if self.password.blank? && self.password_digest.blank?
       temp_password = SecureRandom.hex
-      user.password = temp_password
-      user.password_confirmation = temp_password
+      self.password = temp_password
+      self.password_confirmation = temp_password
     end
   end
+
 
 
 end
