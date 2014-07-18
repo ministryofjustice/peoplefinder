@@ -42,7 +42,5 @@ feature "Authentication" do
     expect(page).to have_css('h1', 'Please log in to continue ')
   end
 
-
-
 end
 

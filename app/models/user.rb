@@ -38,10 +38,19 @@ class User < OmniAuth::Identity::Models::ActiveRecord
     Mail::Address.new(email).domain
   end
 
+  def set_password_reset_token!
+    self.password_reset_token = SecureRandom.urlsafe_base64
+    save!
+    self.password_reset_token
+  end
+
+  def start_password_reset_flow!
+    set_password_reset_token!
+    UserMailer.password_reset_notification(self)
+  end
 
 
-
-private
+  private
   def validate_email_domain
     valid_domains = Rails.configuration.valid_login_domains
     unless valid_domains.include?(domain)

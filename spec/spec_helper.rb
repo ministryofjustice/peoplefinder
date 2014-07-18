@@ -1,5 +1,7 @@
 require 'simplecov'
 require 'simplecov-rcov'
+
+
 SimpleCov.formatter = SimpleCov::Formatter::RcovFormatter
 SimpleCov.start 'rails' do
   add_filter '/gem/'
@@ -61,6 +63,8 @@ RSpec.configure do |config|
   # as the one that triggered the failure.
   Kernel.srand config.seed
 
+
+
   # rspec-expectations config goes here. You can use an alternate
   # assertion/expectation library such as wrong or the stdlib/minitest
   # assertions if you prefer.
@@ -86,4 +90,6 @@ RSpec.configure do |config|
 
   config.include FactoryGirl::Syntax::Methods
   config.include SpecSupport::Login
+
+
 end

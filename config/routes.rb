@@ -3,6 +3,8 @@ Rails.application.routes.draw do
 
   resource :sessions
 
+  resource :passwords, only: [:new, :create, :update, :show]
+
   match '/auth/:provider/callback', to: 'sessions#create', via: [:get, :post]
   match '/login', to: 'sessions#new', via: [:get]
   match '/logout', to: 'sessions#destroy', via: [:get]

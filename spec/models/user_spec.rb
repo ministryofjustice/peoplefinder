@@ -73,5 +73,29 @@ RSpec.describe User, :type => :model do
 
   end
 
+  describe ".set_password_reset_token!" do
+
+    it 'sets a unique password reset token' do
+      user = create(:user)
+      expect(user.password_reset_token).to be_blank
+      user.set_password_reset_token!
+      expect(user.password_reset_token).to_not be_blank
+    end
+
+  end
+
+
+  describe ".start_password_reset_flow!" do
+    include EmailSpec::Helpers
+    include EmailSpec::Matchers
+
+    it 'sets a new password reset token and emails the user' do
+      user = create(:user)
+      expect(UserMailer).to receive(:password_reset_notification).with(user)
+      user.start_password_reset_flow!
+    end
+
+  end
+
 
 end

@@ -3,12 +3,6 @@
 
 %section#login-form
   %h1 Please log in to continue
-  = form_tag '/auth/identity/callback' do
-    .form-group
-      = label_tag :auth_key, 'Email'
-      = text_field_tag :auth_key
-    .form-group
-      = label_tag :password
-      = password_field_tag :password
-    .actions
-      = submit_tag 'Login'
+  =render 'sign_in_form'
+
+%p=link_to 'Forgotten your password?', new_passwords_path
