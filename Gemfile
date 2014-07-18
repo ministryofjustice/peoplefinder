@@ -40,6 +40,7 @@ group :development, :test do
   gem 'guard'
   gem 'guard-rspec', require: false
   gem 'pry'
+  gem 'dotenv-rails'
 end
 
 group :production do
