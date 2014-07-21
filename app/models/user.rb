@@ -16,8 +16,6 @@ class User < OmniAuth::Identity::Models::ActiveRecord
     user
   end
 
-
-
   def self.normalize_email(e)
     Mail::Address.new(e).address.downcase
   end
@@ -38,9 +36,6 @@ class User < OmniAuth::Identity::Models::ActiveRecord
     Mail::Address.new(email).domain
   end
 
-
-
-
 private
   def validate_email_domain
     valid_domains = Rails.configuration.valid_login_domains
@@ -56,7 +51,4 @@ private
       self.password_confirmation = temp_password
     end
   end
-
-
-
 end

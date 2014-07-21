@@ -38,7 +38,7 @@ RSpec.describe AgreementsController, :type => :controller do
         expect(response).to redirect_to('/')
       end
     end
-    
+
 
     describe "with invalid params" do
       it "it does not save the agreement" do

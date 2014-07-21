@@ -45,4 +45,3 @@ feature "Authentication" do
 
 
 end
-
