@@ -28,10 +28,6 @@ class User < OmniAuth::Identity::Models::ActiveRecord
     super User.normalize_email(e)
   end
 
-  def update_name(n)
-    update_attribute :name, n unless self.name == n
-  end
-
   def domain
     Mail::Address.new(email).domain
   end
