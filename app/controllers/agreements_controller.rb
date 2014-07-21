@@ -14,7 +14,7 @@ class AgreementsController < ApplicationController
   end
 
   def edit
-    @agreement = Agreement.editable_by(current_user).find(params[:id])
+    @agreement = scope.find(params[:id])
     initialise_objectives_and_budgetary_responsibilities
   end
 
@@ -23,7 +23,7 @@ class AgreementsController < ApplicationController
   end
 
   def update
-    @agreement = Agreement.editable_by(current_user).find(params[:id])
+    @agreement = scope.find(params[:id])
     @agreement.update_attributes(agreement_params)
     redirect_to '/'
   end

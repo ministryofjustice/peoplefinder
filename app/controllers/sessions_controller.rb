@@ -12,11 +12,9 @@ class SessionsController < ApplicationController
   end
 
   def new
-  end
-
-  def failure
-    flash[:error] = 'Email or password was incorrect'
-    render :new
+    if params[:failed]
+      flash[:warning] = 'Email or password was incorrect'
+    end
   end
 
   def destroy

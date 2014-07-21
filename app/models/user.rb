@@ -28,10 +28,6 @@ class User < OmniAuth::Identity::Models::ActiveRecord
     super User.normalize_email(e)
   end
 
-  def update_name(n)
-    update_attribute :name, n unless self.name == n
-  end
-
   def domain
     Mail::Address.new(email).domain
   end
@@ -54,7 +50,9 @@ class User < OmniAuth::Identity::Models::ActiveRecord
   end
 
 
-  private
+
+private
+
   def validate_email_domain
     valid_domains = Rails.configuration.valid_login_domains
     unless valid_domains.include?(domain)
@@ -69,7 +67,4 @@ class User < OmniAuth::Identity::Models::ActiveRecord
       self.password_confirmation = temp_password
     end
   end
-
-
-
 end

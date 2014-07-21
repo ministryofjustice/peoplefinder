@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Agreement, :type => :model do
-  let(:email) { "example.user@digital.justice.gov.uk" }
+  let(:email) { generate(:email) }
 
   it "should assign an existing user via manager_email" do
     user = create(:user)
@@ -24,7 +24,7 @@ RSpec.describe Agreement, :type => :model do
   end
 
   it "should create a new user and assign as jobholder" do
-    email = "example.user@digital.justice.gov.uk"
+    email = generate(:email)
     agreement = create(:agreement, jobholder_email: email)
     agreement.reload
     expect(agreement.jobholder.email).to eql(email)

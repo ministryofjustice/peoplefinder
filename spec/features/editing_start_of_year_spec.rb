@@ -1,19 +1,14 @@
 require 'rails_helper'
 
-feature "Initiating feedback" do
-  let(:jobholder) {create(:user, email: "jobholder@digital.justice.gov.uk")}
-
-
+feature "Editing start of year agreement" do
   before do
-    jobholder = create(:user, name: 'John Doe', email: 'jobholder@digital.justice.gov.uk')
+    jobholder = create(:user, name: 'John Doe')
     create(:agreement, jobholder: jobholder)
     log_in_as jobholder.email
   end
 
   scenario "Edititing responsibilities as a jobholder" do
-    visit "/"
     click_button "Continue"
-
     within('h1') do
       expect(page.text).to have_text("John Doe’s responsibilities")
     end
@@ -36,7 +31,6 @@ feature "Initiating feedback" do
 
     click_button "Save"
 
-
     agreement = Agreement.last
     budgetary_responsibility = agreement.budgetary_responsibilities.first
     objectives = agreement.objectives.first
@@ -52,5 +46,20 @@ feature "Initiating feedback" do
     expect(objectives['description']).to match(/Get to work/)
     expect(objectives['deliverable']).to match(/copy of my timesheet/)
     expect(objectives['measures']).to match(/average tardiness/)
+  end
+
+  scenario 'Add and remove budgetary responsibilities to an agreement', js: true do
+    click_button "Continue"
+
+    within('#budgetary-responsibilities') do
+      expect(page).not_to have_link('Remove last row')
+
+      click_link "Add another"
+      expect(page).to have_css('.budgetary-responsibility', count: 2)
+
+      click_link "Remove last row"
+      expect(page).to have_css('.budgetary-responsibility', count: 1)
+      expect(page).not_to have_link('Remove last row')
+    end
   end
 end

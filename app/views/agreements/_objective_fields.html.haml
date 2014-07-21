@@ -1,8 +1,9 @@
 .form-group
-  = f.input :objective_type, label: 'Type', required: false
-.form-group
-  = f.input :description, label: 'Objective', required: false
-.form-group
-  = f.input :deliverable, label: 'Deliverables', required: false
-.form-group
-  = f.input :measures, label: 'Measures / Targets', required: false
+  .grid.grid-1-4
+    = f.input :objective_type, label: 'Type', required: false, as: :text, input_html: { class: 'x-wide' }
+  .grid.grid-1-4
+    = f.input :description, label: 'Objective', required: false, as: :text, input_html: { class: 'x-wide' }
+  .grid.grid-1-4
+    = f.input :deliverable, label: 'Deliverables', required: false, as: :text, input_html: { class: 'x-wide' }
+  .grid.grid-1-4
+    = f.input :measures, label: 'Measures / Targets', required: false, as: :text, input_html: { class: 'x-wide' }

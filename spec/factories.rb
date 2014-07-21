@@ -1,8 +1,11 @@
 FactoryGirl.define do
+  sequence :email do |n|
+    domain = Rails.configuration.valid_login_domains.first
+    "example.user.%d@%s" % [n, domain]
+  end
+
   factory :user do
-    sequence :email do |n|
-      "example.user.%d@digital.justice.gov.uk" % n      
-    end
+    email
     password '12345678'
     password_confirmation '12345678'
   end

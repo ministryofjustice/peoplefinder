@@ -8,8 +8,7 @@ Rails.application.routes.draw do
   match '/auth/:provider/callback', to: 'sessions#create', via: [:get, :post]
   match '/login', to: 'sessions#new', via: [:get]
   match '/logout', to: 'sessions#destroy', via: [:get]
-  match '/login_failure', to: 'sessions#failure', via: [:get]
-  match '/auth/failure', to: 'sessions#failure', via: [:get]
+  match '/auth/failure', to: 'sessions#new', via: [:get], failed: true
 
 
   root 'agreements#index', as: :home

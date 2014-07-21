@@ -6,8 +6,8 @@ RSpec.describe AgreementsController, :type => :controller do
   end
 
   let(:valid_attributes) {
-      attributes_for(:agreement).merge(jobholder: current_test_user)
-    }
+    attributes_for(:agreement).merge(jobholder: current_test_user)
+  }
 
   describe 'GET new' do
     it 'assigns the jobholder' do
@@ -38,7 +38,7 @@ RSpec.describe AgreementsController, :type => :controller do
         expect(response).to redirect_to('/')
       end
     end
-    
+
 
     describe "with invalid params" do
       it "it does not save the agreement" do

@@ -3,19 +3,47 @@
 
   %fieldset
 
-    %h2 Budgetary
+    %h2.form-section Budgetary
     #budgetary-responsibilities
       - @agreement.budgetary_responsibilities.each do |budgetary_responsibility|
-        = f.fields_for :budgetary_responsibilities, OpenStruct.new(budgetary_responsibility), index: nil do |br_f|
-          = render 'budgetary_responsibility_fields', f: br_f
+        .budgetary-responsibility
+          = f.fields_for :budgetary_responsibilities, OpenStruct.new(budgetary_responsibility), index: nil do |br_f|
+            = render 'budgetary_responsibility_fields', f: br_f
 
-    %h2 Headcount
-    .form-group.budgetary-responsibilities
-      = f.input :number_of_staff, as: :text
-      = f.input :staff_engagement_score, as: :text
+      = link_to 'Add another', '#', id: 'add-another-budgetary-responsibility'
 
+      = link_to 'Remove last row', '#', id: 'remove-last-budgetary-responsibility',
+        class: "#{ 'hidden' unless @agreement.budgetary_responsibilities.length > 1 }"
 
-    %h2 Objectives
+    %hr
+
+    %h2.form-section Headcount
+
+    .grid.grid-1-3
+      = f.input :number_of_staff, as: :string, input_html: { class: 'x-wide' }
+    .grid.grid-2-3
+      .grades-covered
+        %label.form-label-bold Grades covered
+        .form-checkbox
+          = f.input :payband_1, as: :boolean, label: 'Payband 1'
+        .form-checkbox
+          = f.input :payband_a, as: :boolean, label: 'Payband A'
+        .form-checkbox
+          = f.input :payband_b, as: :boolean, label: 'Payband B'
+        .form-checkbox
+          = f.input :payband_c, as: :boolean, label: 'Payband C'
+        .form-checkbox
+          = f.input :payband_d, as: :boolean, label: 'Payband D'
+        .form-checkbox
+          = f.input :payband_e, as: :boolean, label: 'Payband E'
+
+    .form-group
+      .grid.grid-1-3
+        = f.input :staff_engagement_score, as: :string
+
+    %hr
+
+    %h2.form-section Objectives
     #objectives
       - @agreement.objectives.each do |objective|
         = f.fields_for :objectives, OpenStruct.new(objective), index: nil do |br_f|

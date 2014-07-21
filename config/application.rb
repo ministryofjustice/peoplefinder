@@ -28,6 +28,7 @@ module SCSAppraisals
       example.com
     ]
 
+
     config.noreply_email = ENV['EMAIL_NOREPLY_ADDRESS']
 
     config.action_mailer.delivery_method = :smtp
@@ -46,6 +47,9 @@ module SCSAppraisals
       g.integration_tool :rspec, :fixture => true, :views => true
       g.fixture_replacement :factory_girl, :dir => "spec/support/factories"
     end
+
+
+    config.active_record.schema_format = :sql
 
   end
 end
