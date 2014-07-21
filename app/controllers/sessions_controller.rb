@@ -13,7 +13,7 @@ class SessionsController < ApplicationController
 
   def new
     if params[:failed]
-      warning :failed
+      warning :login_failed
     end
   end
 

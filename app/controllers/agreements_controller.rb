@@ -10,7 +10,7 @@ class AgreementsController < ApplicationController
     set_implicit_parameter
 
     @agreement.save
-    notice :ok
+    notice :created
     redirect_to home_path
   end
 

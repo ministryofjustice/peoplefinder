@@ -53,12 +53,12 @@ feature "Reset users password" do
     fill_in :email, with: 'basil.brush@example.com'
     click_button 'Submit'
 
-    expect(page).to have_text("An account with that email address can't be found")
+    expect(page).to have_text("An account with that email address can’t be found")
   end
 
   scenario "when a person testing security uses a random reset token, it should not allow them to do this" do
     visit passwords_path(token: SecureRandom.urlsafe_base64)
-    expect(page).to have_text("That doesn't appear to be a valid token")
+    expect(page).to have_text("That doesn’t appear to be a valid token")
   end
 
 end

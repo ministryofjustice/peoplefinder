@@ -23,8 +23,12 @@ en:
   hello: "Hello world"
   controllers:
     agreements:
-      create:
-        ok: "Agreement was successfully created"
+      created: "Agreement was successfully created"
+    passwords:
+      reset_sent: "An email with a link to reset your password has been sent"
+      email_not_found: "An account with that email address can’t be found"
+      updated: "Your password has been updated"
+      update_failed: "There was a problem updating your password details"
+      invalid_token: "That doesn’t appear to be a valid token"
     sessions:
-      new:
-        failed: "Email or password was incorrect"
+      login_failed: "Email or password was incorrect"
