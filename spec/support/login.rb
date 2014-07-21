@@ -8,7 +8,7 @@ module SpecSupport
       User.where(id: controller.session[:current_user_id]).first
     end
 
-    def log_in_as(email, password = '12345678')
+    def log_in_as(email, password)
       visit '/sessions/new'
       fill_in 'auth_key', with: email
       fill_in 'password', with: password

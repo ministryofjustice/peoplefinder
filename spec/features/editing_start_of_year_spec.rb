@@ -2,9 +2,10 @@ require 'rails_helper'
 
 feature "Editing start of year agreement" do
   before do
-    jobholder = create(:user, name: 'John Doe')
+    password = generate(:password)
+    jobholder = create(:user, name: 'John Doe', password: password)
     create(:agreement, jobholder: jobholder)
-    log_in_as jobholder.email
+    log_in_as jobholder.email, password
   end
 
   scenario "Edititing responsibilities as a jobholder" do

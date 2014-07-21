@@ -2,14 +2,15 @@ require 'rails_helper'
 
 feature "Authentication" do
 
-  let(:valid_registered_user){ create(:user, name: 'John Doe', password: '12345678')}
+  let(:password) { generate(:password) }
+  let(:valid_registered_user){ create(:user, name: 'John Doe', password: password) }
 
   scenario "Logging in and out for a registered user" do
     visit '/'
     expect(page).to have_text("Please log in to continue")
 
     fill_in 'auth_key', with: valid_registered_user.email
-    fill_in 'password', with: '12345678'
+    fill_in 'password', with: password
     click_button 'Login'
     expect(page).to have_text("Logged in as John Doe")
 

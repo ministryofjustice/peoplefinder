@@ -2,8 +2,8 @@ require 'rails_helper'
 
 feature "Reset users password" do
 
-  let(:forgetful_user) {create(:user)}
-  let(:password) {'12345678'}
+  let(:forgetful_user) { create(:user) }
+  let(:password) { generate(:password) }
 
   scenario "when a user requests for a password reset link" do
     visit '/'
@@ -20,7 +20,6 @@ feature "Reset users password" do
   end
 
   scenario "when a user clicks on the email link and sets a new password" do
-
     clear_emails
     visit new_passwords_path
 
@@ -40,13 +39,11 @@ feature "Reset users password" do
 
     click_button 'Submit'
 
-
     expect(page).to have_text('Your password has been updated')
 
-
+    forgetful_user.reload
     expect(forgetful_user.authenticate(password)).to eql(forgetful_user)
   end
-
 
   scenario "when a user isn't registered with the system, they should not be able to ask for a reset token" do
     visit new_passwords_path

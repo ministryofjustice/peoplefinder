@@ -55,13 +55,13 @@ RSpec.describe User, :type => :model do
     end
 
     it 'returns a corresponding user for given email' do
-      user = create(:user, email: email, password: password, password_confirmation: password)
+      user = create(:user, email: email)
       located_user = User.for_email(user.email)
       expect(located_user).to eql(user)
     end
 
     it "returns a corresponding user for a given email and doesn't change the password" do
-      user = create(:user, email: email, password: password, password_confirmation: password)
+      user = create(:user, email: email, password: password)
       located_user = User.for_email(user.email)
       expect(located_user).to eql(user)
       expect(user.authenticate(password)).to eql(user)

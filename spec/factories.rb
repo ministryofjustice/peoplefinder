@@ -4,10 +4,15 @@ FactoryGirl.define do
     "example.user.%d@%s" % [n, domain]
   end
 
+  sequence :password do |n|
+    "Insecure%03d" % n
+  end
+
   factory :user do
     email
-    password '12345678'
-    password_confirmation '12345678'
+
+    password
+    password_confirmation { password }
   end
 
   factory :agreement do
