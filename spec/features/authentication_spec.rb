@@ -41,4 +41,5 @@ feature "Authentication" do
     expect(page).to_not have_text("Logged in as John Doe")
     expect(page).to have_css('h1', 'Please log in to continue ')
   end
+
 end

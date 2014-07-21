@@ -24,6 +24,8 @@ group :development do
 end
 
 group :test do
+  gem 'email_spec'
+  gem 'capybara-email'
   gem 'capybara'
   gem 'factory_girl_rails'
   gem 'launchy'
@@ -40,6 +42,7 @@ group :development, :test do
   gem 'guard'
   gem 'guard-rspec', require: false
   gem 'pry'
+  gem 'dotenv-rails'
 end
 
 group :production do

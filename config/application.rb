@@ -27,6 +27,27 @@ module SCSAppraisals
       digital.cabinet-office.gov.uk
       example.com
     ]
+
+    config.noreply_email = ENV['EMAIL_NOREPLY_ADDRESS']
+
+    config.action_mailer.delivery_method = :smtp
+    config.action_mailer.smtp_settings = {
+        address:              ENV['SMTP_ADDRESS'],
+        port:                 ENV['SMTP_PORT'],
+        domain:               ENV['SMTP_DOMAIN'],
+        user_name:            ENV['SMTP_USERNAME'],
+        password:             ENV['SMTP_PASSWORD'],
+        authentication:       'plain',
+        enable_starttls_auto: true  }
+
+
+    config.generators do |g|
+      g.test_framework  :rspec, :fixture => true, :views => false
+      g.integration_tool :rspec, :fixture => true, :views => true
+      g.fixture_replacement :factory_girl, :dir => "spec/support/factories"
+    end
+
     config.active_record.schema_format = :sql
+
   end
 end

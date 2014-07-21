@@ -66,5 +66,46 @@ RSpec.describe User, :type => :model do
       expect(located_user).to eql(user)
       expect(user.authenticate(password)).to eql(user)
     end
+
   end
+
+
+
+  describe ".set_password_reset_token!" do
+
+    it 'sets a unique password reset token' do
+      user = create(:user)
+      expect(user.password_reset_token).to be_blank
+      user.set_password_reset_token!
+      expect(user.password_reset_token).to_not be_blank
+    end
+
+  end
+
+
+  describe ".start_password_reset_flow!" do
+
+    it 'sets a new password reset token and emails the user' do
+      user = create(:user)
+      expect(user).to receive(:set_password_reset_token!)
+      expect(UserMailer).to receive(:password_reset_notification).and_return(double("Mailer", :deliver => true))
+      user.start_password_reset_flow!
+    end
+
+  end
+
+  describe ".update_password!" do
+    let(:subject) { create(:user)}
+
+    it 'updates a password given a password and its matching confirmation' do
+      expect(subject.update_password!('12345678', '12345678')).to eql(true)
+    end
+
+    it "returns an error if the password and confirmation don't match" do
+      expect{subject.update_password!('12345678', 'wibble123')}.to raise_error(ActiveRecord::RecordInvalid)
+    end
+
+  end
+
+
 end

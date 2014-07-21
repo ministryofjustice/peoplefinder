@@ -7,7 +7,7 @@ class SessionsController < ApplicationController
       session['current_user_id'] = user.id
       redirect_to '/'
     else
-      render :failed
+      redirect_to login_failure_path
     end
   end
 

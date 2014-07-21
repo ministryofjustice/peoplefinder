@@ -1,0 +1,6 @@
+%section#password-reminder-form
+  =form_tag passwords_path, {html: {role: 'form'}} do
+    .form-group
+      = label_tag :email
+      = text_field_tag :email
+      = submit_tag 'Submit'
