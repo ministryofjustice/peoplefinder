@@ -15,7 +15,7 @@ class SessionsController < ApplicationController
   end
 
   def failure
-    flash[:alert] = 'Email or password was incorrect'
+    flash[:error] = 'Email or password was incorrect'
     render :new
   end
 
