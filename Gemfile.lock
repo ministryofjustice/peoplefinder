@@ -48,6 +48,9 @@ GEM
       rack (>= 1.0.0)
       rack-test (>= 0.5.4)
       xpath (~> 2.0)
+    capybara-email (2.4.0)
+      capybara (~> 2.4)
+      mail
     celluloid (0.15.2)
       timers (~> 1.1.0)
     cliver (0.3.2)
@@ -245,6 +248,7 @@ PLATFORMS
 
 DEPENDENCIES
   capybara
+  capybara-email
   coffee-rails (~> 4.0.0)
   dotenv-rails
   email_spec

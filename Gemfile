@@ -25,6 +25,7 @@ end
 
 group :test do
   gem 'email_spec'
+  gem 'capybara-email'
   gem 'capybara'
   gem 'factory_girl_rails'
   gem 'launchy'
