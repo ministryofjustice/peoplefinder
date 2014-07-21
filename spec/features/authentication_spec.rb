@@ -5,7 +5,6 @@ feature "Authentication" do
   let(:valid_registered_user){ create(:user, name: 'John Doe', password: '12345678')}
 
   scenario "Logging in and out for a registered user" do
-
     visit '/'
     expect(page).to have_text("Please log in to continue")
 
@@ -41,7 +40,4 @@ feature "Authentication" do
     expect(page).to_not have_text("Logged in as John Doe")
     expect(page).to have_css('h1', 'Please log in to continue ')
   end
-
-
-
 end

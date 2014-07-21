@@ -2,7 +2,6 @@ require 'rails_helper'
 include ApplicationHelper
 
 describe 'ApplicationHelper' do
-
   describe '#financial_year' do
     it 'should display a date in March 2014 to 2013/14' do
       the_date = Date.new(2014, 3, 31)

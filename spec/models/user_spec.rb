@@ -15,7 +15,6 @@ RSpec.describe User, :type => :model do
     }
   end
 
-
   it "should return nil from an auth_hash with the wrong domain" do
     auth_hash = build_valid_auth_hash
     auth_hash['info']['email'] = 'rogue.user@not-allowed'
@@ -23,14 +22,12 @@ RSpec.describe User, :type => :model do
     expect(user).to be_nil
   end
 
-
   it "should return an existing record" do
     existing = create(:user, email: email)
     auth_hash = build_valid_auth_hash
     user = User.from_auth_hash(auth_hash)
     expect(user.id).to eql(existing.id)
   end
-
 
   it "should normalise the email address" do
     user = User.new(email: '"Example User" <Example.User@digital.justice.gov.uk>')
@@ -52,7 +49,6 @@ RSpec.describe User, :type => :model do
   end
 
   describe '#for_email' do
-
     it 'creates a user with a randomly generated password' do
       user = User.for_email('example.user@digital.justice.gov.uk')
       expect(user.password_digest).to_not be_blank
@@ -70,8 +66,5 @@ RSpec.describe User, :type => :model do
       expect(located_user).to eql(user)
       expect(user.authenticate(password)).to eql(user)
     end
-
   end
-
-
 end

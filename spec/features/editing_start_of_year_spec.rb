@@ -48,7 +48,6 @@ feature "Editing start of year agreement" do
     expect(objectives['measures']).to match(/average tardiness/)
   end
 
-
   scenario 'Add and remove budgetary responsibilities to an agreement', js: true do
     click_button "Continue"
 
