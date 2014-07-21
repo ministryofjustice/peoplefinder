@@ -10,7 +10,8 @@ class AgreementsController < ApplicationController
     set_implicit_parameter
 
     @agreement.save
-    redirect_to '/', notice: 'Agreement was successfully created.'
+    notice :ok
+    redirect_to '/'
   end
 
   def edit

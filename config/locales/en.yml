@@ -21,3 +21,10 @@
 
 en:
   hello: "Hello world"
+  controllers:
+    agreements:
+      create:
+        ok: "Agreement was successfully created"
+    sessions:
+      new:
+        failed: "Email or password was incorrect"

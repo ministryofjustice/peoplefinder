@@ -13,7 +13,7 @@ class SessionsController < ApplicationController
 
   def new
     if params[:failed]
-      flash[:warning] = 'Email or password was incorrect'
+      warning :failed
     end
   end
 

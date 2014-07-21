@@ -18,4 +18,21 @@ private
   def ensure_user
      redirect_to new_sessions_path unless logged_in?
   end
+
+  def i18n_flash(type, partial_key, options = {})
+    full_key = ["controllers", controller_name, action_name, partial_key].join(".")
+    flash[type] = I18n.t(full_key, options)
+  end
+
+  def error(partial_key, options = {})
+    i18n_flash :error, partial_key, options
+  end
+
+  def notice(partial_key, options = {})
+    i18n_flash :notice, partial_key, options
+  end
+
+  def warning(partial_key, options = {})
+    i18n_flash :warning, partial_key, options
+  end
 end
