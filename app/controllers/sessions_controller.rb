@@ -5,7 +5,7 @@ class SessionsController < ApplicationController
     user = User.from_auth_hash(auth_hash)
     if user
       session['current_user_id'] = user.id
-      redirect_to '/'
+      redirect_to home_path
     else
       redirect_to login_failure_path
     end
@@ -19,7 +19,7 @@ class SessionsController < ApplicationController
 
   def destroy
     session['current_user_id'] = nil
-    redirect_to '/'
+    redirect_to home_path
   end
 
 protected

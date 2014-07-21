@@ -11,7 +11,7 @@ class AgreementsController < ApplicationController
 
     @agreement.save
     notice :ok
-    redirect_to '/'
+    redirect_to home_path
   end
 
   def edit
@@ -26,7 +26,7 @@ class AgreementsController < ApplicationController
   def update
     @agreement = scope.find(params[:id])
     @agreement.update_attributes(agreement_params)
-    redirect_to '/'
+    redirect_to home_path
   end
 
 private
