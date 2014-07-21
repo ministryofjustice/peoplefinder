@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe User, :type => :model do
-  let(:email) { 'example.user@digital.justice.gov.uk' }
+  let(:email) { generate(:email) }
   let(:password) { 'a warm summers day in blighty'}
 
   def build_valid_auth_hash
@@ -50,7 +50,7 @@ RSpec.describe User, :type => :model do
 
   describe '#for_email' do
     it 'creates a user with a randomly generated password' do
-      user = User.for_email('example.user@digital.justice.gov.uk')
+      user = User.for_email(email)
       expect(user.password_digest).to_not be_blank
     end
 
