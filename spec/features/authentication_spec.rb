@@ -25,6 +25,7 @@ feature "Authentication" do
     fill_in 'password', with: 'this is an incorrect password wibble'
     click_button 'Login'
 
+    expect(page).to have_text("incorrect")
     expect(page).to_not have_text("Logged in as John Doe")
     expect(page).to have_css('h1', 'Please log in to continue ')
   end
