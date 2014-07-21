@@ -14,11 +14,6 @@ class SessionsController < ApplicationController
   def new
   end
 
-  def failure
-    flash[:alert] = 'Email or password was incorrect'
-    render :new
-  end
-
   def destroy
     session['current_user_id'] = nil
     redirect_to '/'
