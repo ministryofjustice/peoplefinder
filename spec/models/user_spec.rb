@@ -86,16 +86,27 @@ RSpec.describe User, :type => :model do
 
 
   describe ".start_password_reset_flow!" do
-    include EmailSpec::Helpers
-    include EmailSpec::Matchers
 
     it 'sets a new password reset token and emails the user' do
       user = create(:user)
-      expect(UserMailer).to receive(:password_reset_notification).with(user)
+      expect(user).to receive(:set_password_reset_token!)
+      expect(UserMailer).to receive(:password_reset_notification).and_return(double("Mailer", :deliver => true))
       user.start_password_reset_flow!
     end
 
   end
 
+  describe ".update_password!" do
+    let(:subject) { create(:user)}
+
+    it 'updates a password given a password and its matching confirmation' do
+      expect(subject.update_password!('12345678', '12345678')).to eql(true)
+    end
+
+    it "returns an error if the password and confirmation don't match" do
+      expect{subject.update_password!('12345678', 'wibble123')}.to raise_error(ActiveRecord::RecordInvalid)
+    end
+
+  end
 
 end

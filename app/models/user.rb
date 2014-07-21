@@ -16,8 +16,6 @@ class User < OmniAuth::Identity::Models::ActiveRecord
     user
   end
 
-
-
   def self.normalize_email(e)
     Mail::Address.new(e).address.downcase
   end
@@ -46,7 +44,13 @@ class User < OmniAuth::Identity::Models::ActiveRecord
 
   def start_password_reset_flow!
     set_password_reset_token!
-    UserMailer.password_reset_notification(self)
+    UserMailer.password_reset_notification(self).deliver
+  end
+
+  def update_password!(password, confirmation)
+    self.password = password
+    self.password_confirmation = confirmation
+    save!
   end
 
 
