@@ -1,7 +1,11 @@
 =form_tag passwords_path, {method: :patch} do
   = hidden_field_tag :token, @token
-  = password_field_tag :password
-  = password_field_tag :password_confirmation
-  = submit_tag 'Submit'
+  .form-group
+    = label_tag :password
+    = password_field_tag :password, nil, class: 'form-control'
+    = label_tag :password_confirmation
+    = password_field_tag :password_confirmation, nil, class: 'form-control'
+  .actions
+    = submit_tag 'Submit', class: :button
 
 

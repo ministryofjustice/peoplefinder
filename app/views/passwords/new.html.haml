@@ -1,6 +1,10 @@
 %section#password-reminder-form
-  =form_tag passwords_path, {html: {role: 'form'}} do
+
+  %h1 Password reset
+
+  =form_tag passwords_path, role: 'form' do
     .form-group
       = label_tag :email
-      = text_field_tag :email
-      = submit_tag 'Submit'
+      = text_field_tag :email, nil, class: 'form-control'
+    .actions
+      = submit_tag 'Submit', class: :button
