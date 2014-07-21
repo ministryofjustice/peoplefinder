@@ -28,6 +28,8 @@ module SCSAppraisals
       example.com
     ]
 
+    config.noreply_email = ENV['EMAIL_NOREPLY_ADDRESS']
+
     config.action_mailer.delivery_method = :smtp
     config.action_mailer.smtp_settings = {
         address:              ENV['SMTP_ADDRESS'],
