@@ -40,4 +40,4 @@
         = f.fields_for :objectives, OpenStruct.new(objective), index: nil do |br_f|
           = render 'objective_fields', f: br_f
     .actions
-      = f.button :submit, 'Save'
+      = f.button :submit

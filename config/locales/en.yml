@@ -32,3 +32,7 @@ en:
       invalid_token: "That doesn’t appear to be a valid token"
     sessions:
       login_failed: "Email or password was incorrect"
+  helpers:
+    submit:
+      agreement:
+        update: "Save"
