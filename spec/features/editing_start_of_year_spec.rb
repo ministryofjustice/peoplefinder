@@ -8,7 +8,7 @@ feature "Editing start of year agreement" do
     log_in_as jobholder.email, password
   end
 
-  scenario "Edititing responsibilities as a jobholder" do
+  scenario "Edititing responsibilities as a jobholder", js: true do
     click_button "Continue"
     within('h1') do
       expect(page.text).to have_text("John Doe’s responsibilities")
@@ -17,13 +17,23 @@ feature "Editing start of year agreement" do
     fill_in "Number of staff", with: "There's about 300"
     fill_in "Staff engagement score", with: "I did pretty well for a while"
 
-    within ('#budgetary-responsibilities') do
+    within('.budgetary-responsibility:nth-child(1)') do
       fill_in "Type", with: "Capital"
       fill_in "Value", with: "200 quid"
       fill_in "Description", with: "Paid annually"
     end
 
-    within ('#objectives') do
+    within('#budgetary-responsibilities') do
+      click_link("Add another")
+    end
+
+    within('.budgetary-responsibility:nth-child(2)') do
+      fill_in "Type", with: "Imaginary"
+      fill_in "Value", with: "37 Dunning-Krugerrands"
+      fill_in "Description", with: "Simian"
+    end
+
+    within('#objectives') do
       fill_in "Type", with: "Productivity goal"
       fill_in "Objective", with: "Get to work on time"
       fill_in "Deliverable", with: "A copy of my timesheet"
@@ -39,9 +49,15 @@ feature "Editing start of year agreement" do
     expect(agreement.number_of_staff).to match(/about 300/)
     expect(agreement.staff_engagement_score).to match(/did pretty well/)
 
+    budgetary_responsibility = agreement.budgetary_responsibilities[0]
     expect(budgetary_responsibility['budget_type']).to match(/Capital/)
     expect(budgetary_responsibility['budget_value']).to match(/200 quid/)
     expect(budgetary_responsibility['description']).to match(/annually/)
+
+    budgetary_responsibility = agreement.budgetary_responsibilities[1]
+    expect(budgetary_responsibility['budget_type']).to match(/Imaginary/)
+    expect(budgetary_responsibility['budget_value']).to match(/37 Dunning-Krugerrands/)
+    expect(budgetary_responsibility['description']).to match(/Simian/)
 
     expect(objectives['objective_type']).to match(/Productivity goal/)
     expect(objectives['description']).to match(/Get to work/)
