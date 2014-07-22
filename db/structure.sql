@@ -98,9 +98,10 @@ CREATE TABLE users (
     created_at timestamp without time zone,
     updated_at timestamp without time zone,
     staff_number character varying(255),
+    password_digest character varying(255),
     grade text,
     organisation text,
-    password_digest character varying(255)
+    password_reset_token character varying(255)
 );
 
 
@@ -168,6 +169,13 @@ CREATE UNIQUE INDEX index_users_on_email ON users USING btree (email);
 
 
 --
+-- Name: index_users_on_password_reset_token; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_users_on_password_reset_token ON users USING btree (password_reset_token);
+
+
+--
 -- Name: unique_schema_migrations; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -197,4 +205,6 @@ INSERT INTO schema_migrations (version) VALUES ('20140715150844');
 INSERT INTO schema_migrations (version) VALUES ('20140717085456');
 
 INSERT INTO schema_migrations (version) VALUES ('20140717100456');
+
+INSERT INTO schema_migrations (version) VALUES ('20140718133703');
 
