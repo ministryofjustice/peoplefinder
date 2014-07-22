@@ -6,14 +6,12 @@
     %h2.form-section Budgetary
     #budgetary-responsibilities
       - @agreement.budgetary_responsibilities.each do |budgetary_responsibility|
-        .budgetary-responsibility
+        .cloneable.budgetary-responsibility
           = f.fields_for :budgetary_responsibilities, OpenStruct.new(budgetary_responsibility), index: nil do |br_f|
             = render 'budgetary_responsibility_fields', f: br_f
 
-      = link_to 'Add another', '#', id: 'add-another-budgetary-responsibility'
-
-      = link_to 'Remove last row', '#', id: 'remove-last-budgetary-responsibility',
-        class: "#{ 'hidden' unless @agreement.budgetary_responsibilities.length > 1 }"
+      = link_to 'Add another', '#', class: 'add-one'
+      = link_to 'Remove last row', '#', class: 'remove-one'
 
     %hr
 

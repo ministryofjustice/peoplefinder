@@ -1,23 +1,35 @@
-$(function(){
-   $(document).on("click", "#add-another-budgetary-responsibility", function(e) {
-     e.preventDefault();
+/* jslint browser: true */
+/* global $ */
+(function(){
+  var makeCloneable = function(selector) {
+    var scope = $(selector);
 
-     var cloneable = $('.budgetary-responsibility:first').clone();
-     cloneable.insertAfter('.budgetary-responsibility:last');
+    var update_remove_one_visibility = function() {
+      var hidden = scope.find('.cloneable').length < 2;
+      scope.find('.remove-one').toggleClass('hidden', hidden);
+    };
 
-     $('.budgetary-responsibility:last-of-type').find("input[type='text']").val("");
-     toggle_remove_budget_responsibility_link();
-   });
+    update_remove_one_visibility();
 
-   $(document).on("click", "#remove-last-budgetary-responsibility", function(e) {
-     e.preventDefault();
+    scope.find('.add-one').click(function(e) {
+      e.preventDefault();
 
-     $('.budgetary-responsibility:last').remove();
-     toggle_remove_budget_responsibility_link()
-   });
+      var newContent = scope.find('.cloneable:first').clone();
+      scope.find('.cloneable:last').after(newContent);
 
-  function toggle_remove_budget_responsibility_link(){
-    var visible = ($('.budgetary-responsibility').length < 2 )
-    $('#remove-last-budgetary-responsibility').toggleClass('hidden', visible) ;
-  }
-});
+      scope.find('.cloneable:last input[type="text"]').val('');
+      update_remove_one_visibility();
+    });
+
+    scope.find('.remove-one').click(function(e) {
+      e.preventDefault();
+
+      scope.find('.cloneable:last').remove();
+      update_remove_one_visibility();
+    });
+  };
+
+  $(document).ready(function() {
+    makeCloneable('#budgetary-responsibilities');
+  });
+})();
