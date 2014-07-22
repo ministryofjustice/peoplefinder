@@ -3,7 +3,7 @@ $(function(){
      e.preventDefault();
 
      var cloneable = $('.budgetary-responsibility:first').clone();
-     cloneable.appendTo('.budgetary-responsibility:last');
+     cloneable.insertAfter('.budgetary-responsibility:last');
 
      $('.budgetary-responsibility:last-of-type').find("input[type='text']").val("");
      toggle_remove_budget_responsibility_link();
