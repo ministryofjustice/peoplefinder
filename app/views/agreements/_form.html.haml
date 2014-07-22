@@ -24,18 +24,9 @@
     .grid.grid-2-3
       .grades-covered
         %label.form-label-bold Grades covered
-        .form-checkbox
-          = f.input :payband_1, as: :boolean, label: 'Payband 1'
-        .form-checkbox
-          = f.input :payband_a, as: :boolean, label: 'Payband A'
-        .form-checkbox
-          = f.input :payband_b, as: :boolean, label: 'Payband B'
-        .form-checkbox
-          = f.input :payband_c, as: :boolean, label: 'Payband C'
-        .form-checkbox
-          = f.input :payband_d, as: :boolean, label: 'Payband D'
-        .form-checkbox
-          = f.input :payband_e, as: :boolean, label: 'Payband E'
+        - Agreement::PAYBANDS.each do |payband|
+          .form-checkbox
+            = f.input payband, as: :boolean
 
     .form-group
       .grid.grid-1-3
