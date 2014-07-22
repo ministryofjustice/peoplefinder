@@ -18,6 +18,7 @@
       scope.find('.cloneable:last').after(newContent);
 
       scope.find('.cloneable:last input[type="text"]').val('');
+      scope.find('.cloneable:last textarea').text('');
       update_remove_one_visibility();
     });
 
