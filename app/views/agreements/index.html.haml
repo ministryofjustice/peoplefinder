@@ -1,15 +1,16 @@
-%h1 SCS feedback dashboard
+.inner-block
+  %h1 SCS feedback dashboard
 
-%h2 Current reportees - #{ financial_year }
+  %h2 Current reportees - #{ financial_year }
 
-%table
-  %th Name
-  %th Team
-  %th Status
-  %th
-  - @agreements.each do |agreement|
-    %tr
-      %td= agreement.jobholder
-      %td= "#{ agreement.jobholder.organisation } (#{ agreement.jobholder.grade })"
-      %td
-      %td= button_to 'Continue', edit_agreement_path(agreement), method: :get, class: :button
+  %table
+    %th Name
+    %th Team
+    %th Status
+    %th
+    - @agreements.each do |agreement|
+      %tr
+        %td= agreement.jobholder
+        %td= "#{ agreement.jobholder.organisation } (#{ agreement.jobholder.grade })"
+        %td
+        %td= button_to 'Continue', edit_agreement_path(agreement), method: :get, class: :button

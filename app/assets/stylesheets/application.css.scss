@@ -59,3 +59,7 @@ h2.form-section {
 .hidden {
   display: none;
 }
+
+.cloneable:first-child .grid-divider {
+  display: none;
+}

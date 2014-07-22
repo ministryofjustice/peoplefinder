@@ -1,41 +1,54 @@
 = simple_form_for @agreement do |f|
   = f.error_notification
 
-  %fieldset
 
+  .inner-block
     %h2.form-section Budgetary
-    #budgetary-responsibilities
-      - @agreement.budgetary_responsibilities.each do |budgetary_responsibility|
-        .cloneable.budgetary-responsibility
+
+  #budgetary-responsibilities
+    - @agreement.budgetary_responsibilities.each do |budgetary_responsibility|
+      .cloneable.budgetary-responsibility
+        .grid-divider
+        .grid-wrapper
           = f.fields_for :budgetary_responsibilities, OpenStruct.new(budgetary_responsibility), index: nil do |br_f|
             = render 'budgetary_responsibility_fields', f: br_f
 
+    .inner-block
       = link_to 'Add another', '#', class: 'add-one'
       = link_to 'Remove last row', '#', class: 'remove-one'
 
-    %hr
+  .grid-divider
 
+  .inner-block
     %h2.form-section Headcount
 
+  .grid-wrapper
     .grid.grid-1-3
-      = f.input :number_of_staff, as: :string, input_html: { class: 'x-wide' }
+      .inner-block
+        = f.input :number_of_staff, as: :string, input_html: { class: 'x-wide' }
     .grid.grid-2-3
-      .grades-covered
-        %label.form-label-bold Grades covered
-        - Agreement::PAYBANDS.each do |payband|
-          .form-checkbox
-            = f.input payband, as: :boolean
+      .inner-block
+        .grades-covered
+          %label.form-label-bold Grades covered
+          - Agreement::PAYBANDS.each do |payband|
+            .form-checkbox
+              = f.input payband, as: :boolean
 
+  .grid-wrapper
     .form-group
       .grid.grid-1-3
-        = f.input :staff_engagement_score, as: :string
+        .inner-block
+          = f.input :staff_engagement_score, as: :string
 
-    %hr
+  .grid-divider
 
+  .inner-block
     %h2.form-section Objectives
-    #objectives
-      - @agreement.objectives.each do |objective|
-        = f.fields_for :objectives, OpenStruct.new(objective), index: nil do |br_f|
-          = render 'objective_fields', f: br_f
+  #objectives.grid-wrapper
+    - @agreement.objectives.each do |objective|
+      = f.fields_for :objectives, OpenStruct.new(objective), index: nil do |br_f|
+        = render 'objective_fields', f: br_f
+
+  .inner-block
     .actions
       = f.button :submit
