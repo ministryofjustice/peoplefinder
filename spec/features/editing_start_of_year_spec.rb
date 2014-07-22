@@ -55,7 +55,12 @@ feature "Editing start of year agreement" do
     within('#budgetary-responsibilities') do
       expect(page).not_to have_link('Remove last row')
 
-      click_link "Add another"
+      2.times do
+        click_link "Add another"
+      end
+      expect(page).to have_css('.budgetary-responsibility', count: 3)
+
+      click_link "Remove last row"
       expect(page).to have_css('.budgetary-responsibility', count: 2)
 
       click_link "Remove last row"
