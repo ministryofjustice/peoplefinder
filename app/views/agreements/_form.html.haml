@@ -14,8 +14,7 @@
             = render 'budgetary_responsibility_fields', f: br_f
 
     .inner-block
-      = link_to 'Add another', '#', class: 'add-one'
-      = link_to 'Remove last row', '#', class: 'remove-one'
+      = render partial: 'clone_buttons'
 
   .grid-divider
 
