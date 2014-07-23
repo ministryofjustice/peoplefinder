@@ -6,6 +6,6 @@ rvm:
 before_install:
   - sudo apt-get install -qq phantomjs
 before_script:
-  - psql -c 'create database scs_appraisals_test;' -U postgres
+  - rake db:test:prepare
 notifications:
   email: false
