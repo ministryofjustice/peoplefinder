@@ -6,6 +6,6 @@ rvm:
 before_install:
   - sudo apt-get install -qq phantomjs
 before_script:
-  - rake db:test:prepare
+  - bundle exec rake db:test:prepare
 notifications:
   email: false
