@@ -32,6 +32,10 @@ en:
       invalid_token: "That doesn’t appear to be a valid token"
     sessions:
       login_failed: "Email or password was incorrect"
+    registrations:
+      invalid_token: "That doesn’t appear to be a valid token"
+      registration_success: "Registration is now complete"
+      failed_registration: "There was a problem with your password"
   helpers:
     submit:
       agreement:

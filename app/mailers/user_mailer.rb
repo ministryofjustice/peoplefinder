@@ -3,9 +3,16 @@ class UserMailer < ActionMailer::Base
 
   def password_reset_notification(user)
     @user = user
-    @url =  passwords_url(token: user.password_reset_token)
+    @url =  passwords_url(token: user.token)
     mail(to: user.email,
          subject: "Your password reset request")
 
+  end
+
+  def registration_notification(user)
+    @user = user
+    @url = new_registration_url(token: user.token)
+    mail(to: user.email,
+         subject: "You've been invited to the SCS Appraisal system")
   end
 end
