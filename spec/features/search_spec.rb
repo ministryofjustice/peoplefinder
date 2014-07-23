@@ -3,7 +3,7 @@ require 'rails_helper'
 feature 'Search for people', elastic: true do
   describe 'with elasticsearch' do
     before do
-      create(:person, given_name: 'Jon', surname: 'Browne')
+      create(:person, given_name: 'Jon', surname: 'Browne', email: 'jon.browne@digital.justice.gov.uk', mobile: '0711111111')
       Person.import
       sleep 1
       log_in_as 'test.user@digital.justice.gov.uk'
@@ -19,6 +19,8 @@ feature 'Search for people', elastic: true do
       click_button 'Search'
 
       expect(page).to have_text('Jon Browne')
+      expect(page).to have_text('jon.browne@digital.justice.gov.uk')
+      expect(page).to have_text('0711111111')
     end
   end
 end

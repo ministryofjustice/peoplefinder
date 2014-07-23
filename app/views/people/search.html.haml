@@ -14,3 +14,5 @@
       - person.memberships.each do |membership|
         = [membership.role, breadcrumbs(membership.hierarchy)].compact.join("<br/>").html_safe
       %p= person.location
+      %p= person.email
+      %p= person.mobile
