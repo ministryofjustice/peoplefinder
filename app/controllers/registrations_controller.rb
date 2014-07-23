@@ -21,7 +21,7 @@ class RegistrationsController < ApplicationController
     @user = User.from_token(token)
     if @user.nil?
       notice :invalid_token
-      # redirect_to new_sessions_path
+      redirect_to new_sessions_path
     end
   end
 

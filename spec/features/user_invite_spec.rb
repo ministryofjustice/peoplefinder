@@ -42,4 +42,9 @@ feature "Inviting a new user to the system" do
     expect(page).to have_text("doesn't match Password")
   end
 
+  scenario 'A user tries to register with an invalid token' do
+    visit new_registration_path(token: SecureRandom.hex)
+    expect(page).to have_text("That doesn’t appear to be a valid token")
+  end
+
 end
