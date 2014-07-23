@@ -5,7 +5,7 @@
 
     =form_tag passwords_path, role: 'form' do
       .form-group
-        = label_tag :email
+        = label_tag :email, 'Email', class: 'form-label-bold'
         = text_field_tag :email, nil, class: 'form-control'
       .actions
         = submit_tag 'Submit', class: :button

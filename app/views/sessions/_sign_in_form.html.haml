@@ -1,9 +1,9 @@
 = form_tag '/auth/identity/callback', role: 'form' do
   .form-group
-    = label_tag :auth_key, 'Email'
+    = label_tag :auth_key, 'Email', class: 'form-label-bold'
     = email_field_tag :auth_key, nil, class: 'form-control'
   .form-group
-    = label_tag :password
+    = label_tag :password, 'Password', class: 'form-label-bold'
     = password_field_tag :password, nil, class: 'form-control'
   .actions
     = submit_tag 'Login', class: :button
