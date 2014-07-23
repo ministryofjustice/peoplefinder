@@ -33,7 +33,7 @@ class PasswordsController < ApplicationController
 
 private
   def load_user_by_token
-    @user = User.where(password_reset_token: token_params[:token]).first
+    @user = User.from_token(params[:token])
     if @user
       @token = @user.password_reset_token
     else
@@ -44,10 +44,6 @@ private
 
   def password_params
     params.permit(:email)
-  end
-
-  def token_params
-    params.permit(:token)
   end
 
   def auth_params

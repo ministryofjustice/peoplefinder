@@ -1,4 +1,6 @@
 class User < OmniAuth::Identity::Models::ActiveRecord
+  attr_writer :token
+
   before_validation :set_password_if_required
 
   validate :validate_email_domain
@@ -18,6 +20,11 @@ class User < OmniAuth::Identity::Models::ActiveRecord
 
   def self.normalize_email(e)
     Mail::Address.new(e).address.downcase
+  end
+
+  def self.from_token(token)
+    return nil if token.blank?
+    where(password_reset_token: token).first
   end
 
   def to_s
@@ -46,10 +53,20 @@ class User < OmniAuth::Identity::Models::ActiveRecord
   def update_password!(password, confirmation)
     self.password = password
     self.password_confirmation = confirmation
+    self.password_reset_token = nil
     save!
   end
 
-private
+  def invite!
+    set_password_reset_token!
+    UserMailer.registration_notification(self).deliver
+  end
+
+  def token
+    self.password_reset_token
+  end
+
+  private
 
   def validate_email_domain
     valid_domains = Rails.configuration.valid_login_domains
