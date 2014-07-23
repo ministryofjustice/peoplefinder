@@ -6,7 +6,7 @@ class PasswordsController < ApplicationController
   def new; end
 
   def create
-    user = User.where(email: password_params[:email]).first
+    user = User.where(email: params[:email]).first
     if user
       user.start_password_reset_flow!
       notice :reset_sent
@@ -24,7 +24,7 @@ class PasswordsController < ApplicationController
       redirect_to new_sessions_path
     else
       error :update_failed
-      @token = user.password_reset_token
+      @token = user.token
       render :show
     end
   end
@@ -35,15 +35,11 @@ private
   def load_user_by_token
     @user = User.from_token(params[:token])
     if @user
-      @token = @user.password_reset_token
+      @token = @user.token
     else
       warning :invalid_token
       redirect_to new_passwords_path
     end
-  end
-
-  def password_params
-    params.permit(:email)
   end
 
   def auth_params
