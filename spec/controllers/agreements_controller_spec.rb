@@ -90,9 +90,8 @@ RSpec.describe AgreementsController, :type => :controller do
         it 'has previously set the objectives and budgetary_responsibilities' do
           get :edit, id: agreement.to_param
 
-          [:budgetary_responsibilities, :objectives].each do |attr|
-            expect(assigns(:agreement).send(attr)).to eql([{}])
-          end
+          expect(assigns(:agreement).budgetary_responsibilities).to eql([{}])
+          expect(assigns(:agreement).objectives).to eql([{}])
         end
       end
 
@@ -100,9 +99,8 @@ RSpec.describe AgreementsController, :type => :controller do
         it 'has not previously set the objectives and budgetary_responsibilities' do
           get :edit, id: agreement.to_param
 
-          [:budgetary_responsibilities, :objectives].each do |attr|
-            expect(assigns(:agreement).send(attr)).to eql([{}])
-          end
+          expect(assigns(:agreement).budgetary_responsibilities).to eql([{}])
+          expect(assigns(:agreement).objectives).to eql([{}])
         end
       end
     end
