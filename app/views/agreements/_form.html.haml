@@ -5,9 +5,9 @@
   .inner-block
     %h2.form-section Budgetary
 
-  #budgetary-responsibilities
+  #budgetary-responsibilities.cloneable
     - @agreement.budgetary_responsibilities.each do |budgetary_responsibility|
-      .cloneable.budgetary-responsibility
+      .cloneable-item.budgetary-responsibility
         .grid-divider
         .grid-wrapper
           = f.fields_for :budgetary_responsibilities, OpenStruct.new(budgetary_responsibility), index: nil do |br_f|
