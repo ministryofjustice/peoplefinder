@@ -33,18 +33,28 @@ feature "Editing start of year agreement" do
       fill_in "Description", with: "Simian"
     end
 
-    within('#objectives') do
+    within('#objectives .cloneable-item:nth-child(1)') do
       fill_in "Type", with: "Productivity goal"
       fill_in "Objective", with: "Get to work on time"
       fill_in "Deliverable", with: "A copy of my timesheet"
       fill_in "Measures / Target", with: "An average tardiness of 2.7 minutes"
     end
 
+    within('#objectives') do
+      click_link("Add another")
+    end
+
+    within('#objectives .cloneable-item:nth-child(2)') do
+      fill_in "Type", with: "Personal goal"
+      fill_in "Objective", with: "Learn to fly"
+      fill_in "Deliverable", with: "Sprout wings"
+      fill_in "Measures / Target", with: "5m wingspan"
+    end
+
     click_button "Save"
 
     agreement = Agreement.last
     budgetary_responsibility = agreement.budgetary_responsibilities.first
-    objectives = agreement.objectives.first
 
     expect(agreement.number_of_staff).to match(/about 300/)
     expect(agreement.staff_engagement_score).to match(/did pretty well/)
@@ -59,10 +69,17 @@ feature "Editing start of year agreement" do
     expect(budgetary_responsibility['budget_value']).to match(/37 Dunning-Krugerrands/)
     expect(budgetary_responsibility['description']).to match(/Simian/)
 
+    objectives = agreement.objectives[0]
     expect(objectives['objective_type']).to match(/Productivity goal/)
     expect(objectives['description']).to match(/Get to work/)
     expect(objectives['deliverable']).to match(/copy of my timesheet/)
     expect(objectives['measures']).to match(/average tardiness/)
+
+    objectives = agreement.objectives[1]
+    expect(objectives['objective_type']).to match(/Personal goal/)
+    expect(objectives['description']).to match(/Learn to fly/)
+    expect(objectives['deliverable']).to match(/Sprout wings/)
+    expect(objectives['measures']).to match(/5m wingspan/)
   end
 
   scenario 'Add and remove budgetary responsibilities to an agreement', js: true do

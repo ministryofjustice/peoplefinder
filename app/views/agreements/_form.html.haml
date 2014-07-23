@@ -43,10 +43,15 @@
 
   .inner-block
     %h2.form-section Objectives
-  #objectives.grid-wrapper
+  #objectives.cloneable
     - @agreement.objectives.each do |objective|
-      = f.fields_for :objectives, OpenStruct.new(objective), index: nil do |br_f|
-        = render 'objective_fields', f: br_f
+      .cloneable-item
+        .grid-divider
+        .grid-wrapper
+          = f.fields_for :objectives, OpenStruct.new(objective), index: nil do |br_f|
+            = render 'objective_fields', f: br_f
+    .inner-block
+      = render partial: 'clone_buttons'
 
   .inner-block
     .actions
