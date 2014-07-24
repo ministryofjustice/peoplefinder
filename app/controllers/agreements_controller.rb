@@ -44,7 +44,7 @@ private
     params[:agreement].permit(:manager_email, :number_of_staff, :staff_engagement_score,
       objectives_attributes: [:id, :objective_type, :description, :deliverables, :measurements],
       budgetary_responsibilities_attributes: [:id, :budget_type, :value, :description]
-                             )
+    )
   end
 
   def scope
