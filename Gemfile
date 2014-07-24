@@ -39,6 +39,7 @@ group :test do
 end
 
 group :development, :test do
+  gem 'ffaker'
   gem 'guard'
   gem 'guard-rspec', require: false
   gem 'pry'

@@ -21,4 +21,13 @@ FactoryGirl.define do
     budgetary_responsibilities [{}]
     objectives [{}]
   end
+
+
+  factory :objective do
+    association :agreement, factory: :agreement
+    objective_type { Faker::Skill.speciality }
+    description { Faker::Lorem.paragraph }
+    deliverables { Faker::Lorem.paragraph}
+    measurements { Faker::Lorem.paragraph }
+  end
 end

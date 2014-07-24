@@ -9,6 +9,7 @@ SimpleCov.start 'rails' do
 end
 
 require "factory_girl"
+require 'ffaker'
 
 require 'capybara/poltergeist'
 Capybara.javascript_driver = :poltergeist
