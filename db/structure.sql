@@ -79,6 +79,41 @@ ALTER SEQUENCE agreements_id_seq OWNED BY agreements.id;
 
 
 --
+-- Name: objectives; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE objectives (
+    id integer NOT NULL,
+    objective_type character varying(255),
+    description text,
+    deliverables text,
+    measurements text,
+    agreement_id integer,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone
+);
+
+
+--
+-- Name: objectives_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE objectives_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: objectives_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE objectives_id_seq OWNED BY objectives.id;
+
+
+--
 -- Name: schema_migrations; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -135,6 +170,13 @@ ALTER TABLE ONLY agreements ALTER COLUMN id SET DEFAULT nextval('agreements_id_s
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
+ALTER TABLE ONLY objectives ALTER COLUMN id SET DEFAULT nextval('objectives_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
 ALTER TABLE ONLY users ALTER COLUMN id SET DEFAULT nextval('users_id_seq'::regclass);
 
 
@@ -144,6 +186,14 @@ ALTER TABLE ONLY users ALTER COLUMN id SET DEFAULT nextval('users_id_seq'::regcl
 
 ALTER TABLE ONLY agreements
     ADD CONSTRAINT agreements_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: objectives_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY objectives
+    ADD CONSTRAINT objectives_pkey PRIMARY KEY (id);
 
 
 --
@@ -159,6 +209,13 @@ ALTER TABLE ONLY users
 --
 
 CREATE INDEX index_agreements_on_manager_id_and_jobholder_id ON agreements USING btree (manager_id, jobholder_id);
+
+
+--
+-- Name: index_objectives_on_objective_type; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_objectives_on_objective_type ON objectives USING btree (objective_type);
 
 
 --
@@ -207,4 +264,6 @@ INSERT INTO schema_migrations (version) VALUES ('20140717085456');
 INSERT INTO schema_migrations (version) VALUES ('20140717100456');
 
 INSERT INTO schema_migrations (version) VALUES ('20140718133703');
+
+INSERT INTO schema_migrations (version) VALUES ('20140723161243');
 

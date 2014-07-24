@@ -9,7 +9,7 @@ FactoryGirl.define do
   end
 
   factory :user do
-    email
+    email {generate(:email)}
 
     password
     password_confirmation { password }
@@ -19,13 +19,15 @@ FactoryGirl.define do
     association :manager, factory: :user
     association :jobholder, factory: :user
     budgetary_responsibilities [{}]
-    objectives [{}]
+    after(:create) do |agreement|
+      FactoryGirl.create(:objective, agreement: agreement)
+    end
   end
 
 
   factory :objective do
     association :agreement, factory: :agreement
-    objective_type { Faker::Skill.speciality }
+    objective_type { Faker::Lorem.sentence }
     description { Faker::Lorem.paragraph }
     deliverables { Faker::Lorem.paragraph}
     measurements { Faker::Lorem.paragraph }

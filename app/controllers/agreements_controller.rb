@@ -25,8 +25,15 @@ class AgreementsController < ApplicationController
 
   def update
     @agreement = scope.find(params[:id])
-    @agreement.update_attributes(agreement_params)
-    redirect_to home_path
+    @agreement.attributes = agreement_params
+    if @agreement.save
+      notice :updated
+      redirect_to home_path
+    else
+      error :failed_update
+      render :edit
+    end
+
   end
 
 private
@@ -36,8 +43,8 @@ private
 
   def agreement_params
     params[:agreement].permit(:manager_email, :number_of_staff, :staff_engagement_score,
-      budgetary_responsibilities: [:budget_type, :budget_value, :description],
-      objectives: [:objective_type, :description, :deliverable, :measures])
+      objectives_attributes: [:id, :objective_type, :description, :deliverables, :measurements],
+      budgetary_responsibilities: [:budget_type, :budget_value, :description])
   end
 
   def scope
@@ -46,6 +53,6 @@ private
 
   def initialise_objectives_and_budgetary_responsibilities
     @agreement.budgetary_responsibilities = [{}] unless @agreement.budgetary_responsibilities
-    @agreement.objectives = [{}] unless @agreement.objectives
+    @agreement.objectives.build unless @agreement.objectives.any?
   end
 end

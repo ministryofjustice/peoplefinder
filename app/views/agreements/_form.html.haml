@@ -48,7 +48,7 @@
       .cloneable-item
         .grid-divider
         .grid-wrapper
-          = f.fields_for :objectives, OpenStruct.new(objective), index: nil do |br_f|
+          = f.simple_fields_for :objectives do |br_f|
             = render 'objective_fields', f: br_f
     .inner-block
       = render partial: 'clone_buttons'
