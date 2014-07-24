@@ -10,7 +10,7 @@
       .cloneable-item.budgetary-responsibility
         .grid-divider
         .grid-wrapper
-          = f.fields_for :budgetary_responsibilities, OpenStruct.new(budgetary_responsibility), index: nil do |br_f|
+          = f.simple_fields_for :budgetary_responsibilities do |br_f|
             = render 'budgetary_responsibility_fields', f: br_f
 
     .inner-block

@@ -5,6 +5,10 @@ class Agreement < ActiveRecord::Base
 
   accepts_nested_attributes_for :objectives, allow_destroy: true
 
+  has_many :budgetary_responsibilities
+
+  accepts_nested_attributes_for :budgetary_responsibilities, allow_destroy: true
+
   validates :manager, presence: true
   validates :jobholder, presence: true
   validates :manager_email, presence: true

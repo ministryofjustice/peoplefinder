@@ -19,18 +19,8 @@ feature "Editing start of year agreement" do
 
     within('.budgetary-responsibility:nth-child(1)') do
       fill_in "Type", with: "Capital"
-      fill_in "Value", with: "200 quid"
+      fill_in "Value", with: "200"
       fill_in "Description", with: "Paid annually"
-    end
-
-    within('#budgetary-responsibilities') do
-      click_link("Add another")
-    end
-
-    within('.budgetary-responsibility:nth-child(2)') do
-      fill_in "Type", with: "Imaginary"
-      fill_in "Value", with: "37 Dunning-Krugerrands"
-      fill_in "Description", with: "Simian"
     end
 
     within('#objectives .cloneable-item:nth-child(1)') do
@@ -59,14 +49,9 @@ feature "Editing start of year agreement" do
     expect(agreement.staff_engagement_score).to match(/did pretty well/)
 
     budgetary_responsibility = agreement.budgetary_responsibilities[0]
-    expect(budgetary_responsibility['budget_type']).to match(/Capital/)
-    expect(budgetary_responsibility['budget_value']).to match(/200 quid/)
-    expect(budgetary_responsibility['description']).to match(/annually/)
-
-    budgetary_responsibility = agreement.budgetary_responsibilities[1]
-    expect(budgetary_responsibility['budget_type']).to match(/Imaginary/)
-    expect(budgetary_responsibility['budget_value']).to match(/37 Dunning-Krugerrands/)
-    expect(budgetary_responsibility['description']).to match(/Simian/)
+    expect(budgetary_responsibility.budget_type).to match(/Capital/)
+    expect(budgetary_responsibility.value).to eql(200)
+    expect(budgetary_responsibility.description).to match(/annually/)
 
     objectives = agreement.objectives.first
 

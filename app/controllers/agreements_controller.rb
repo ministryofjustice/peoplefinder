@@ -33,7 +33,6 @@ class AgreementsController < ApplicationController
       error :failed_update
       render :edit
     end
-
   end
 
 private
@@ -44,7 +43,8 @@ private
   def agreement_params
     params[:agreement].permit(:manager_email, :number_of_staff, :staff_engagement_score,
       objectives_attributes: [:id, :objective_type, :description, :deliverables, :measurements],
-      budgetary_responsibilities: [:budget_type, :budget_value, :description])
+      budgetary_responsibilities_attributes: [:id, :budget_type, :value, :description]
+                             )
   end
 
   def scope
@@ -52,7 +52,7 @@ private
   end
 
   def initialise_objectives_and_budgetary_responsibilities
-    @agreement.budgetary_responsibilities = [{}] unless @agreement.budgetary_responsibilities
-    @agreement.objectives.build unless @agreement.objectives.any?
+    @agreement.budgetary_responsibilities.build if @agreement.budgetary_responsibilities.empty?
+    @agreement.objectives.build if @agreement.objectives.empty?
   end
 end

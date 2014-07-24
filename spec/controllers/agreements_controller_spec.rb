@@ -84,13 +84,15 @@ RSpec.describe AgreementsController, :type => :controller do
       context 'when they have been pre-defined' do
         before do
           agreement.update_attributes!(headcount_responsibilities: {},
-            budgetary_responsibilities: [{}], objectives: [])
+            budgetary_responsibilities: [],
+            objectives: []
+          )
         end
 
         it 'has previously set the objectives and budgetary_responsibilities' do
           get :edit, id: agreement.to_param
 
-          expect(assigns(:agreement).budgetary_responsibilities).to eql([{}])
+          expect(assigns(:agreement).budgetary_responsibilities.all).to be_empty
           expect(assigns(:agreement).objectives.all).to be_empty
         end
       end
@@ -99,7 +101,8 @@ RSpec.describe AgreementsController, :type => :controller do
         it 'has not previously set the objectives and budgetary_responsibilities' do
           get :edit, id: agreement.to_param
 
-          expect(assigns(:agreement).budgetary_responsibilities).to eql([{}])
+          expect(assigns(:agreement).budgetary_responsibilities.length).to eql(1)
+          expect(assigns(:agreement).budgetary_responsibilities.first).to be_instance_of(BudgetaryResponsibility)
           expect(assigns(:agreement).objectives.count).to eql(1)
           expect(assigns[:agreement].objectives.first).to be_instance_of(Objective)
         end

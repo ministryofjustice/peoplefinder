@@ -3,7 +3,6 @@
 --
 
 SET statement_timeout = 0;
-SET lock_timeout = 0;
 SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
 SET check_function_bodies = false;
@@ -54,7 +53,6 @@ CREATE TABLE agreements (
     created_at timestamp without time zone,
     updated_at timestamp without time zone,
     headcount_responsibilities hstore,
-    budgetary_responsibilities hstore[],
     objectives hstore[]
 );
 
@@ -76,6 +74,40 @@ CREATE SEQUENCE agreements_id_seq
 --
 
 ALTER SEQUENCE agreements_id_seq OWNED BY agreements.id;
+
+
+--
+-- Name: budgetary_responsibilities; Type: TABLE; Schema: public; Owner: -; Tablespace:
+--
+
+CREATE TABLE budgetary_responsibilities (
+    id integer NOT NULL,
+    agreement_id integer,
+    budget_type character varying(255),
+    value integer,
+    description text,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone
+);
+
+
+--
+-- Name: budgetary_responsibilities_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE budgetary_responsibilities_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: budgetary_responsibilities_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE budgetary_responsibilities_id_seq OWNED BY budgetary_responsibilities.id;
 
 
 --
@@ -133,9 +165,9 @@ CREATE TABLE users (
     created_at timestamp without time zone,
     updated_at timestamp without time zone,
     staff_number character varying(255),
-    password_digest character varying(255),
     grade text,
     organisation text,
+    password_digest character varying(255),
     password_reset_token character varying(255)
 );
 
@@ -170,6 +202,13 @@ ALTER TABLE ONLY agreements ALTER COLUMN id SET DEFAULT nextval('agreements_id_s
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
+ALTER TABLE ONLY budgetary_responsibilities ALTER COLUMN id SET DEFAULT nextval('budgetary_responsibilities_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
 ALTER TABLE ONLY objectives ALTER COLUMN id SET DEFAULT nextval('objectives_id_seq'::regclass);
 
 
@@ -186,6 +225,14 @@ ALTER TABLE ONLY users ALTER COLUMN id SET DEFAULT nextval('users_id_seq'::regcl
 
 ALTER TABLE ONLY agreements
     ADD CONSTRAINT agreements_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: budgetary_responsibilities_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
+--
+
+ALTER TABLE ONLY budgetary_responsibilities
+    ADD CONSTRAINT budgetary_responsibilities_pkey PRIMARY KEY (id);
 
 
 --
@@ -209,6 +256,13 @@ ALTER TABLE ONLY users
 --
 
 CREATE INDEX index_agreements_on_manager_id_and_jobholder_id ON agreements USING btree (manager_id, jobholder_id);
+
+
+--
+-- Name: index_budgetary_responsibilities_on_agreement_id; Type: INDEX; Schema: public; Owner: -; Tablespace:
+--
+
+CREATE INDEX index_budgetary_responsibilities_on_agreement_id ON budgetary_responsibilities USING btree (agreement_id);
 
 
 --
@@ -267,3 +321,4 @@ INSERT INTO schema_migrations (version) VALUES ('20140718133703');
 
 INSERT INTO schema_migrations (version) VALUES ('20140723161243');
 
+INSERT INTO schema_migrations (version) VALUES ('20140724091225');
