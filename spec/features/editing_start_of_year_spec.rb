@@ -8,8 +8,8 @@ feature "Editing start of year agreement" do
     log_in_as jobholder.email, password
   end
 
-  scenario "Edititing responsibilities as a jobholder", js: true do
-    click_button "Continue"
+  scenario "Editing responsibilities as a jobholder", js: true do
+    click_button "Responsibilities"
     within('h1') do
       expect(page.text).to have_text("John Doe’s responsibilities")
     end
@@ -23,24 +23,6 @@ feature "Editing start of year agreement" do
       fill_in "Description", with: "Paid annually"
     end
 
-    within('#objectives .cloneable-item:nth-child(1)') do
-      fill_in "Type", with: "Productivity goal"
-      fill_in "Objective", with: "Get to work on time"
-      fill_in "Deliverable", with: "A copy of my timesheet"
-      fill_in "Measures / Target", with: "An average tardiness of 2.7 minutes"
-    end
-
-    # within('#objectives') do
-    #   click_link("Add another")
-    # end
-    #
-    # within('#objectives .cloneable-item:nth-child(2)') do
-    #   fill_in "Type", with: "Personal goal"
-    #   fill_in "Objective", with: "Learn to fly"
-    #   fill_in "Deliverable", with: "Sprout wings"
-    #   fill_in "Measures / Target", with: "5m wingspan"
-    # end
-
     click_button "Save"
 
     agreement = Agreement.last
@@ -52,35 +34,29 @@ feature "Editing start of year agreement" do
     expect(budgetary_responsibility.budget_type).to match(/Capital/)
     expect(budgetary_responsibility.value).to eql(200)
     expect(budgetary_responsibility.description).to match(/annually/)
+  end
+
+  scenario "Edititing objectives as a jobholder", js: true do
+    click_button "Objectives"
+    within('h1') do
+      expect(page.text).to have_text("John Doe’s objectives")
+    end
+
+    within('.cloneable-item:nth-child(1)') do
+      fill_in "Type", with: "Productivity goal"
+      fill_in "Objective", with: "Get to work on time"
+      fill_in "Deliverable", with: "A copy of my timesheet"
+      fill_in "Measures / Target", with: "An average tardiness of 2.7 minutes"
+    end
+
+    click_button "Save"
+
+    agreement = Agreement.last
 
     objectives = agreement.objectives.first
-
-
-
     expect(objectives.objective_type).to match(/Productivity goal/)
     expect(objectives.description).to match(/Get to work/)
     expect(objectives.deliverables).to match(/copy of my timesheet/)
     expect(objectives.measurements).to match(/average tardiness/)
-
-  end
-
-  scenario 'Add and remove budgetary responsibilities to an agreement', js: true do
-    click_button "Continue"
-
-    within('#budgetary-responsibilities') do
-      expect(page).not_to have_link('Remove last row')
-
-      2.times do
-        click_link "Add another"
-      end
-      expect(page).to have_css('.budgetary-responsibility', count: 3)
-
-      click_link "Remove last row"
-      expect(page).to have_css('.budgetary-responsibility', count: 2)
-
-      click_link "Remove last row"
-      expect(page).to have_css('.budgetary-responsibility', count: 1)
-      expect(page).not_to have_link('Remove last row')
-    end
   end
 end

@@ -1,13 +1,16 @@
 class Agreement < ActiveRecord::Base
   belongs_to :manager, class_name: 'User'
   belongs_to :jobholder, class_name: 'User'
-  has_many :objectives
 
-  accepts_nested_attributes_for :objectives, allow_destroy: true
+  has_many :objectives
+  accepts_nested_attributes_for :objectives,
+    allow_destroy: true,
+    reject_if: :all_blank
 
   has_many :budgetary_responsibilities
-
-  accepts_nested_attributes_for :budgetary_responsibilities, allow_destroy: true
+  accepts_nested_attributes_for :budgetary_responsibilities,
+    allow_destroy: true,
+    reject_if: :all_blank
 
   validates :manager, presence: true
   validates :jobholder, presence: true

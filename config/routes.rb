@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
-  resources :agreements do
-    resources :objectives
-  end
+  resources :agreements
+  resources :responsibilities_agreements
+  resources :objectives_agreements
 
   resource :sessions
 

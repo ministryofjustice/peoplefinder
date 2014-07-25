@@ -42,3 +42,7 @@ en:
     submit:
       agreement:
         update: "Save"
+      objectives_agreement:
+        update: "Save"
+      responsibilities_agreement:
+        update: "Save"

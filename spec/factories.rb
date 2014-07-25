@@ -18,9 +18,6 @@ FactoryGirl.define do
   factory :agreement do
     association :manager, factory: :user
     association :jobholder, factory: :user
-    after(:create) do |agreement|
-      FactoryGirl.create(:objective, agreement: agreement)
-    end
   end
 
 
@@ -33,5 +30,8 @@ FactoryGirl.define do
   end
 
   factory :budgetary_responsibility do
+    association :agreement, factory: :agreement
+    budget_type "Capital"
+    value 100
   end
 end

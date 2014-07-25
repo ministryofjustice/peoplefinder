@@ -1,4 +1,10 @@
 class User < OmniAuth::Identity::Models::ActiveRecord
+
+  has_many :agreements_as_jobholder, class_name: 'Agreement',
+    foreign_key: :jobholder_id
+  has_many :agreements_as_manager, class_name: 'Agreement',
+    foreign_key: :manager_id
+
   attr_writer :token
 
   before_validation :set_password_if_required
