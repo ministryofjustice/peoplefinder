@@ -2,7 +2,7 @@
   %h1= @group
   = link_to 'Edit this organisation', edit_group_path(@group)
 
-%div.grid-wrapper
+%div.grid-wrapper.details
   %div.grid.grid-1-3
     %div.inner-block.group-leader
       - @group.leaderships.each do |leadership|
@@ -10,7 +10,7 @@
 
   -if @group.responsibilities.present?
     %div.grid.grid-1-3
-      %div.inner-block
+      %div.inner-block.about
         %h3= about_group_title(@group)
         = govspeak(@group.description)
     %div.grid.grid-1-3
@@ -20,7 +20,7 @@
           = govspeak(@group.responsibilities)
   -else
     %div.grid.grid-2-3
-      %div.inner-block
+      %div.inner-block.about
         %h3= about_group_title(@group)
         = govspeak(@group.description)
 

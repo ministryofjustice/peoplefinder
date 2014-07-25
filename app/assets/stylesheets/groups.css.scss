@@ -21,11 +21,18 @@
     font-size: 16px;
   }
 }
-.responsibilities {
-  background-color: #ddd;
-  padding: 5px;
-}
 
+.details {
+  .responsibilities {
+    background-color: #ddd;
+    padding: 20px;
+    padding-top: 10px;
+  }
+
+  .about {
+    padding-top:10px;
+  }
+}
 .subgroup {
   margin-bottom: 20px;
   h3 {
