@@ -23,7 +23,7 @@ feature "Group maintenance" do
     dept = create(:group, name: "Ministry of Justice")
 
     visit group_path(dept)
-    click_link "Add an organisation"
+    click_link "Add a new organisation"
 
     name = "CSG"
     fill_in "Name", with: name
