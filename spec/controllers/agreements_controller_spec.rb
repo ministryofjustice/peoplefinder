@@ -121,7 +121,7 @@ RSpec.describe AgreementsController, :type => :controller do
 
   describe 'GET index' do
     it 'should call editable_by current_user' do
-      expect(Agreement).to receive(:editable_by).with(current_test_user).once
+      expect(Agreement).to receive(:editable_by).with(current_test_user).once.and_return(double('ActiveRecord::Relation'))
       get :index
     end
   end

@@ -1,0 +1,9 @@
+%tr
+  %td
+    %p= agreement.jobholder
+    %p= "#{ agreement.jobholder.organisation } (#{ agreement.jobholder.grade })"
+  %td
+    %p= link_to 'Responsibilities', '#'
+  %td
+    %p= link_to 'Objectives', agreement_objectives_path(agreement)
+  %td= button_to 'Continue', edit_agreement_path(agreement), method: :get, class: :button

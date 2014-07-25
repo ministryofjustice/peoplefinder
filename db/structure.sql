@@ -3,6 +3,7 @@
 --
 
 SET statement_timeout = 0;
+SET lock_timeout = 0;
 SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
 SET check_function_bodies = false;
@@ -77,7 +78,7 @@ ALTER SEQUENCE agreements_id_seq OWNED BY agreements.id;
 
 
 --
--- Name: budgetary_responsibilities; Type: TABLE; Schema: public; Owner: -; Tablespace:
+-- Name: budgetary_responsibilities; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE budgetary_responsibilities (
@@ -165,9 +166,9 @@ CREATE TABLE users (
     created_at timestamp without time zone,
     updated_at timestamp without time zone,
     staff_number character varying(255),
+    password_digest character varying(255),
     grade text,
     organisation text,
-    password_digest character varying(255),
     password_reset_token character varying(255)
 );
 
@@ -228,7 +229,7 @@ ALTER TABLE ONLY agreements
 
 
 --
--- Name: budgetary_responsibilities_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
+-- Name: budgetary_responsibilities_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY budgetary_responsibilities
@@ -259,7 +260,7 @@ CREATE INDEX index_agreements_on_manager_id_and_jobholder_id ON agreements USING
 
 
 --
--- Name: index_budgetary_responsibilities_on_agreement_id; Type: INDEX; Schema: public; Owner: -; Tablespace:
+-- Name: index_budgetary_responsibilities_on_agreement_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX index_budgetary_responsibilities_on_agreement_id ON budgetary_responsibilities USING btree (agreement_id);
@@ -322,3 +323,4 @@ INSERT INTO schema_migrations (version) VALUES ('20140718133703');
 INSERT INTO schema_migrations (version) VALUES ('20140723161243');
 
 INSERT INTO schema_migrations (version) VALUES ('20140724091225');
+
