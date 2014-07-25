@@ -11,12 +11,13 @@ gem 'jquery-rails'
 gem 'mail'
 gem 'moj_internal_template',
   git: 'https://github.com/ministryofjustice/moj_internal_template.git'
+gem 'nested_form'
 gem 'omniauth-identity', '~> 1.1.1'
 gem 'pg'
+gem 'possessive', '~> 1.0.1'
 gem 'sass-rails', '~> 4.0.3'
 gem 'simple_form', '~> 3.1.0.rc1'
 gem 'uglifier', '>= 1.3.0'
-gem 'possessive', '~> 1.0.1'
 
 group :development do
   gem 'spring'

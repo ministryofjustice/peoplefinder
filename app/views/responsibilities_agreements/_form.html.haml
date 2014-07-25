@@ -1,19 +1,13 @@
-= simple_form_for @responsibilities_agreement do |f|
+= simple_nested_form_for @responsibilities_agreement do |f|
   = f.error_notification
 
   .inner-block
     %h2.form-section Budgetary
 
-  #budgetary-responsibilities.cloneable
-    - @responsibilities_agreement.budgetary_responsibilities.each do |budgetary_responsibility|
-      .cloneable-item.budgetary-responsibility
-        .grid-divider
-        .grid-wrapper
-          = f.simple_fields_for :budgetary_responsibilities do |ff|
-            = render 'budgetary_responsibility_fields', f: ff
-
-    .inner-block
-      = render partial: 'agreements/clone_buttons'
+  #budgetary-responsibilities
+    = f.simple_fields_for :budgetary_responsibilities
+  .inner-block
+    = f.link_to_add "Add more", :budgetary_responsibilities, data: { target: '#budgetary-responsibilities' }
 
   .grid-divider
 

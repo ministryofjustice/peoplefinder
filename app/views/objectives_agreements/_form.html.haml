@@ -1,15 +1,10 @@
-= simple_form_for @objectives_agreement do |f|
+= simple_nested_form_for @objectives_agreement do |f|
   = f.error_notification
 
-  #objectives.cloneable
-    - @objectives_agreement.objectives.each do |objective|
-      .cloneable-item
-        .grid-divider
-        .grid-wrapper
-          = f.simple_fields_for :objectives do |br_f|
-            = render 'objective_fields', f: br_f
-    .inner-block
-      = render partial: 'agreements/clone_buttons'
+  #objectives
+    = f.simple_fields_for :objectives
+  .inner-block
+    = f.link_to_add "Add more", :objectives, data: { target: "#objectives" }
 
   .inner-block
     .actions
