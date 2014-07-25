@@ -7,8 +7,10 @@
 
 - if @group.children.any?
   %div
-    %h2
+    %h1
       = child_group_list_title(@group)
+      within
+      = @group.name
 
     %div.grid-wrapper
       = render partial: "subgroup", collection: @group.children

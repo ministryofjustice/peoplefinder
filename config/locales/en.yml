@@ -21,6 +21,12 @@
 
 en:
   groups:
+    about:
+      team: "About the team"
+      organization: "About the organisation"
+    responsibilities:
+      team: "Team responsibilities:"
+      organization: "Organisation responsibilities:"
     list:
       team: "Teams"
       organization: "Organisations"
