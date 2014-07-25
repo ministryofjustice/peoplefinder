@@ -6,12 +6,12 @@ RSpec.describe ApplicationHelper, :type => :helper do
   context '#last_update' do
     it 'should show last_update for a person' do
       @person = double(:person, updated_at: stubbed_time)
-      expect(last_update).to eql('Last updated: 31 Oct 2012.')
+      expect(last_update).to eql('Last updated: 31 Oct 2012 02:02.')
     end
 
     it 'should show last_update for a group' do
       @group = double(:group, updated_at: stubbed_time)
-      expect(last_update).to eql('Last updated: 31 Oct 2012.')
+      expect(last_update).to eql('Last updated: 31 Oct 2012 02:02.')
     end
 
     it 'should not show last_update for a new person' do
