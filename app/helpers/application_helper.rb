@@ -2,7 +2,7 @@ module ApplicationHelper
   def last_update
     if current_object = @person || @group
       unless current_object.updated_at.blank?
-        "Last updated: #{ current_object.updated_at.strftime('%d %b %Y') }."
+        "Last updated: #{ current_object.updated_at.strftime('%d %b %Y %H:%M') }."
       end
     end
   end
