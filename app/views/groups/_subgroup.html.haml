@@ -2,7 +2,4 @@
   %div.inner-block
     %h3
       = link_to subgroup, subgroup
-    - if @group.level < 2 && subgroup.leadership
-      = render partial: 'leadership', object: subgroup.leadership
-    -else
       = govspeak(truncate(subgroup.description, length: 200))
