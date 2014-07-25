@@ -22,10 +22,12 @@
 en:
   hello: "Hello world"
   controllers:
-    agreements:
-      created: "Agreement was successfully created"
-      updated: "Agreement was updated"
-      failed_update: "There was a problem updating the agreement"
+    responsibilities_agreements:
+      updated: "Responsibilities updated"
+      failed_update: "There was a problem updating responsibilities"
+    objectives_agreements:
+      updated: "Objectives updated"
+      failed_update: "There was a problem updating objectives"
     passwords:
       reset_sent: "An email with a link to reset your password has been sent"
       email_not_found: "An account with that email address can’t be found"
