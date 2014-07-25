@@ -2,6 +2,8 @@
 
 - content_for :edit_this_page do
   = link_to 'Edit this page', edit_group_path(@group)
+  |
+  = link_to 'Add a new person', new_person_path(group_id: @group.to_param)
 
 = render partial: 'detail'
 
