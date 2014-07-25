@@ -34,8 +34,8 @@ feature "Reset users password" do
 
     expect(page).to have_text('Enter a new password')
 
-    fill_in :password, with: password
-    fill_in :password_confirmation, with: password
+    fill_in :user_password, with: password
+    fill_in :user_password_confirmation, with: password
 
     click_button 'Submit'
 
@@ -43,6 +43,32 @@ feature "Reset users password" do
 
     forgetful_user.reload
     expect(forgetful_user.authenticate(password)).to eql(forgetful_user)
+  end
+
+  scenario "when a user tries to set an invalid password" do
+    clear_emails
+    visit new_passwords_path
+
+    fill_in :email, with: forgetful_user.email
+    click_button'Submit'
+
+    expect(page).to have_text( 'An email with a link to reset your password has been sent')
+
+    open_email(forgetful_user.email)
+
+    current_email.click_link('Password reset link')
+
+    expect(page).to have_text('Enter a new password')
+
+    fill_in :user_password, with: password
+    fill_in :user_password_confirmation, with: 'this will not match'
+
+    click_button 'Submit'
+
+    expect(page).to have_text('Your password and password confirmation were invalid')
+    expect(page).to have_text("doesn't match Password")
+
+    expect(forgetful_user.authenticate(password)).to eql(false)
   end
 
   scenario "when a user isn't registered with the system, they should not be able to ask for a reset token" do

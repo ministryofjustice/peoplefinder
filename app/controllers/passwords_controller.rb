@@ -18,13 +18,13 @@ class PasswordsController < ApplicationController
   end
 
   def update
-    if @user
-      @user.update_password!(auth_params[:password], auth_params[:password_confirmation])
+    @user.attributes = auth_params
+    if @user.save
       notice :updated
       redirect_to new_sessions_path
     else
       error :update_failed
-      @token = user.token
+      @token = @user.token
       render :show
     end
   end
@@ -43,6 +43,6 @@ private
   end
 
   def auth_params
-    params.permit(:token, :password, :password_confirmation)
+    params[:user].permit(:password, :password_confirmation)
   end
 end

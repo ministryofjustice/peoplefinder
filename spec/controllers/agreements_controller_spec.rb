@@ -56,7 +56,7 @@ RSpec.describe AgreementsController, :type => :controller do
 
   describe 'GET edit' do
     context 'allowed to view the agreement' do
-      let(:agreement) { create(:agreement, jobholder_email: current_test_user.email) }
+      let(:agreement) { create(:agreement, jobholder: current_test_user) }
 
       it 'assigns the agreement' do
         get :edit, id: agreement.to_param
@@ -70,7 +70,7 @@ RSpec.describe AgreementsController, :type => :controller do
     end
 
     context 'not allowed to view the agreement' do
-      let(:agreement) { create(:agreement, jobholder_email: 'notme', manager_email: 'noryou') }
+      let(:agreement) { create(:agreement) }
 
       it 'raises an error' do
         expect { get :edit, id: agreement.to_param

@@ -1,10 +1,9 @@
-=form_tag passwords_path, {method: :patch} do
+=simple_form_for @user, url: passwords_path do |f|
   = hidden_field_tag :token, @token
   .form-group
-    = label_tag :password, 'Password', class: 'form-label-bold'
-    = password_field_tag :password, nil, class: 'form-control'
-    = label_tag :password_confirmation
-    = password_field_tag :password_confirmation, nil, class: 'form-control'
+    = f.input :password
+  .form-group
+    = f.input :password_confirmation
   .actions
     = submit_tag 'Submit', class: :button
 

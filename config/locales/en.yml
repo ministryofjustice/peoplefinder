@@ -30,7 +30,7 @@ en:
       reset_sent: "An email with a link to reset your password has been sent"
       email_not_found: "An account with that email address can’t be found"
       updated: "Your password has been updated"
-      update_failed: "There was a problem updating your password details"
+      update_failed: "Your password and password confirmation were invalid"
       invalid_token: "That doesn’t appear to be a valid token"
     sessions:
       login_failed: "Email or password was incorrect"
