@@ -15,7 +15,7 @@ class Person < ActiveRecord::Base
 
   index_name [Rails.env, model_name.collection.gsub(/\//, '-')].join('_')
 
-  has_paper_trail ignore: [:updated_at, :created_at, :id]
+  has_paper_trail ignore: [:updated_at, :created_at, :id, :slug]
   acts_as_paranoid
   mount_uploader :image, ImageUploader
 

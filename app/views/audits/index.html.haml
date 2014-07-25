@@ -3,7 +3,6 @@
 .font-xsmall= will_paginate(@versions)
 %table
   %th Date
-  %th Item
   %th Action
   %th Changed by
 
@@ -11,23 +10,22 @@
     %tr
       %td= version.created_at.to_formatted_s(:long)
       %td
-        - item = version.item || eval(version.item_type).with_deleted.where(id: version.item_id).first
-        .bold-xsmall= version.item_type.humanize
-        - if item.is_a?(Membership)
-          = item.group.name
-        - else
-          = item
-      %td
-        - if version.event =~ /destroy/
-          = 'Record deleted'
-        - version.changeset.each do |k|
-          = k[0].humanize
-
-          - if k[1][0].present?
-            changed from: #{ k[1][0] }
-          - else
-            set
-          to: #{ k[1][1] }
-          %br
+        %h4= event_description(version)
+        %p= link_to_edited_item(version)
+        %p
+          - version.changeset.each do |k|
+            - if k[1][0].present?
+              %strong
+                = k[0].humanize
+                changed from 
+              = k[1][0]
+              %strong to
+              = k[1][1]
+            - else
+              %strong
+                = k[0].humanize
+                set to: 
+              = k[1][1]
+            %br
       %td= version.whodunnit
 .font-xsmall= will_paginate(@versions)
