@@ -32,7 +32,7 @@ en:
       organization: "Organisations"
     add_cta:
       team: "Add a team"
-      organization: "Add an organisation"
+      organization: "Add a new organisation"
   people:
     day_names:
       works_monday: "Monday"

@@ -63,10 +63,16 @@ a:hover {
 
 h1, h2 {
   margin: 30px 0;
+  border-bottom: 1px solid black;
 }
 
-h1 {
-  border-bottom: 1px solid black;
+.title_with_edit {
+  position: relative;
+  a {
+    position: absolute;
+    right: 0;
+    bottom: 13px;
+  }
 }
 
 textarea {

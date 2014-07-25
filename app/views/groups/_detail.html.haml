@@ -1,4 +1,6 @@
-%h1= @group
+.title_with_edit
+  %h1= @group
+  = link_to 'Edit this organisation', edit_group_path(@group)
 
 %div.grid-wrapper
   %div.grid.grid-1-3
