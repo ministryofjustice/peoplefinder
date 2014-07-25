@@ -2,25 +2,23 @@
 
 = render partial: 'detail'
 
-- if @group.children.any?
-  %div
-    .title_with_edit
-      %h2
-        = child_group_list_title(@group)
-        within
-        = @group.name
-      = link_to new_child_group_cta(@group), new_group_group_path(@group)
+%div
+  .title_with_edit
+    %h2
+      = child_group_list_title(@group)
+      within
+      = @group.name
+    = link_to new_child_group_cta(@group), new_group_group_path(@group)
 
-    %div.grid-wrapper
-      = render partial: "subgroup", collection: @group.children
+  %div.grid-wrapper
+    = render partial: "subgroup", collection: @group.children
 
-- if @group.non_leaderships.any?
-  %div
-    .title_with_edit
-      %h2 Team
-      = link_to 'Add a new person', new_person_path(group_id: @group.to_param)
+%div
+  .title_with_edit
+    %h2 Team
+    = link_to 'Add a new person', new_person_path(group_id: @group.to_param)
 
-    %div.grid-wrapper
-      = render partial: "memberships/summary", collection: @group.non_leaderships
+  %div.grid-wrapper
+    = render partial: "memberships/summary", collection: @group.non_leaderships
 
 %p
