@@ -4,5 +4,4 @@ class ResponsibilitiesAgreement < SimpleDelegator
   extend  SingleForwardable
 
   def_single_delegator :Agreement, :reflect_on_association
-  end
 end
