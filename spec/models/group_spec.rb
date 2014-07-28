@@ -65,6 +65,11 @@ RSpec.describe Group, :type => :model do
       expect(group).not_to be_deletable
     end
 
+    it 'should not be detable when there are children' do
+      create(:group, parent: group)
+      expect(group.reload).not_to be_deletable
+    end
+
     it 'should be detable when there are unsaved memberships (e.g. in the groups#form)' do
       group.memberships.build
       expect(group).to be_deletable

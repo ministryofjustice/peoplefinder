@@ -51,7 +51,7 @@ class Group < ActiveRecord::Base
   end
 
   def deletable?
-    memberships.reject(&:new_record?).empty?
+    children.blank? && memberships.reject(&:new_record?).empty?
   end
 
   private
