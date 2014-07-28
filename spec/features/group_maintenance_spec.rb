@@ -56,15 +56,19 @@ feature "Group maintenance" do
   end
 
   scenario 'Deleting a group' do
-    membership = create(:membership)
-    group = membership.group
+    group = create(:group)
     visit edit_group_path(group)
     click_link('Delete this record')
 
     expect(page).to have_content("Deleted #{group.name}")
-
     expect { Group.find(group) }.to raise_error(ActiveRecord::RecordNotFound)
-    expect { Membership.find(membership) }.to raise_error(ActiveRecord::RecordNotFound)
+  end
+
+  scenario 'Prevent deletion of a group that has memberships' do
+    membership = create(:membership)
+    group = membership.group
+    visit edit_group_path(group)
+    expect(page).not_to have_link('Delete this record')
   end
 
   scenario "Editing a group" do

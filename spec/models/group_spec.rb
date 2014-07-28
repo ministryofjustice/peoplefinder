@@ -51,4 +51,39 @@ RSpec.describe Group, :type => :model do
       expect(group.assignable_people.first.surname).to eql('alice')
     end
   end
+
+  describe '.deletable?' do
+    let(:group) { create(:group) }
+
+    it 'should only be detable when there are no memberships' do
+      group.memberships.create(person: create(:person))
+      expect(group).not_to be_deletable
+    end
+
+    it 'should not be detable when there are memberships' do
+      group.memberships.create(person: create(:person))
+      expect(group).not_to be_deletable
+    end
+
+    it 'should be detable when there are unsaved memberships (e.g. in the groups#form)' do
+      group.memberships.build
+      expect(group).to be_deletable
+    end
+  end
+
+  describe '.destroy' do
+    let(:group) { create(:group) }
+
+    it 'should persist the record and add an error message when it is not deletable' do
+      allow(group).to receive(:deletable?).once.and_return(false)
+      group.destroy
+      expect(group.errors[:base].to_s).to include('cannot be deleted')
+    end
+
+    it 'should delete the record when it is deletable' do
+      allow(group).to receive(:deletable?).once.and_return(true)
+      group.destroy
+      expect { Group.find(group) }.to raise_error(ActiveRecord::RecordNotFound)
+    end
+  end
 end

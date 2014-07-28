@@ -6,8 +6,7 @@ class Group < ActiveRecord::Base
 
   belongs_to :parent, class_name: 'Group'
   has_many :children, class_name: 'Group', foreign_key: 'parent_id'
-  has_many :memberships, -> { includes(:person).order("people.surname")  },
-    dependent: :destroy
+  has_many :memberships, -> { includes(:person).order("people.surname")  }
   has_many :people, through: :memberships
   has_many :leaderships, -> { where(leader: true) }, class_name: 'Membership'
   has_many :non_leaderships,
@@ -23,6 +22,8 @@ class Group < ActiveRecord::Base
   validates_presence_of :name
 
   default_scope { order(name: :asc) }
+
+  before_destroy :check_deletability
 
   def self.departments
     where(parent_id: nil)
@@ -47,6 +48,19 @@ class Group < ActiveRecord::Base
 
   def assignable_people
     Person.where.not(id: memberships.pluck(:person_id))
+  end
+
+  def deletable?
+    memberships.reject(&:new_record?).empty?
+  end
+
+  private
+
+  def check_deletability
+    unless deletable?
+      errors[:base] << 'cannot be deleted until all the memberships have been removed'
+      return false
+    end
   end
 
   delegate :image, to: :leader, prefix: true

@@ -21,6 +21,6 @@
     .form-group
       = f.button :submit
 
-    - unless @group.new_record?
+    - if @group.deletable?
       .form-group
         = link_to 'Delete this record', @group, method: :delete
