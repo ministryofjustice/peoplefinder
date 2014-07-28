@@ -15,6 +15,11 @@ feature "Audit trail" do
       visit '/audit_trail'
       expect(page).to have_text('Person Edited')
       expect(page).to have_text('Surname changed from original surname to something else')
+
+      click_button 'undo'
+
+      person.reload
+      expect(person.surname).to eq('original surname')
     end
   end
 
@@ -29,6 +34,10 @@ feature "Audit trail" do
       expect(page).to have_text('New Person')
       expect(page).to have_text('Given name set to: Jon')
       expect(page).to have_text('Surname set to: Smith')
+
+      expect {
+        click_button 'undo'
+      }.to change(Person, :count).by(-1)
     end
   end
 
@@ -40,6 +49,10 @@ feature "Audit trail" do
 
       visit '/audit_trail'
       expect(page).to have_text('Deleted Person')
+
+      expect {
+        click_button 'undo'
+      }.to change(Person, :count).by(1)
     end
   end
 

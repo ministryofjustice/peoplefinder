@@ -28,4 +28,5 @@
               = k[1][1]
             %br
       %td= version.whodunnit
+      %td= button_to 'undo', "/audit_trail/undo/#{version.id}"
 .font-xsmall= will_paginate(@versions)

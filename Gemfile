@@ -29,7 +29,6 @@ end
 gem 'omniauth-gplus',
   git: 'https://github.com/ministryofjustice/omniauth-gplus.git'
 gem 'paper_trail', '~> 3.0.2'
-gem 'paranoia', '~> 2.0'
 gem 'pg'
 gem 'sass-rails', '~> 4.0.3'
 gem 'simple_form', '~> 3.1.0.rc1'

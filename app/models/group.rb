@@ -1,6 +1,5 @@
 class Group < ActiveRecord::Base
   has_paper_trail ignore: [:updated_at, :created_at, :slug, :id]
-  acts_as_paranoid
 
   extend FriendlyId
   friendly_id :name, use: :slugged

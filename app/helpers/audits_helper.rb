@@ -11,7 +11,7 @@ module AuditsHelper
 
   def link_to_edited_item(version)
     if version.item && !version.item.is_a?(Membership)
-      link_to(version.item)
+      link_to(version.item, version.item)
     end
   end
 end

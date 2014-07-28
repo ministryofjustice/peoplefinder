@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140701114117) do
+ActiveRecord::Schema.define(version: 20140725151509) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -23,11 +23,9 @@ ActiveRecord::Schema.define(version: 20140701114117) do
     t.datetime "updated_at"
     t.string   "slug"
     t.text     "description"
-    t.datetime "deleted_at"
     t.text     "responsibilities"
   end
 
-  add_index "groups", ["deleted_at"], name: "index_groups_on_deleted_at", using: :btree
   add_index "groups", ["parent_id"], name: "index_groups_on_parent_id", using: :btree
   add_index "groups", ["slug"], name: "index_groups_on_slug", unique: true, using: :btree
 
@@ -38,10 +36,8 @@ ActiveRecord::Schema.define(version: 20140701114117) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "leader",     default: false
-    t.datetime "deleted_at"
   end
 
-  add_index "memberships", ["deleted_at"], name: "index_memberships_on_deleted_at", using: :btree
   add_index "memberships", ["group_id"], name: "index_memberships_on_group_id", using: :btree
   add_index "memberships", ["person_id"], name: "index_memberships_on_person_id", using: :btree
 
@@ -60,14 +56,12 @@ ActiveRecord::Schema.define(version: 20140701114117) do
     t.boolean  "works_wednesday", default: true
     t.boolean  "works_thursday",  default: true
     t.boolean  "works_friday",    default: true
-    t.datetime "deleted_at"
     t.string   "image"
     t.string   "slug"
     t.boolean  "works_saturday",  default: false
     t.boolean  "works_sunday",    default: false
   end
 
-  add_index "people", ["deleted_at"], name: "index_people_on_deleted_at", using: :btree
   add_index "people", ["slug"], name: "index_people_on_slug", unique: true, using: :btree
 
   create_table "versions", force: true do |t|

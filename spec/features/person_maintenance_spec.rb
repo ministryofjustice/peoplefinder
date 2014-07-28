@@ -54,7 +54,7 @@ feature "Person maintenance" do
     end
   end
 
-  scenario 'Deleting a person softly' do
+  scenario 'Deleting a person' do
     membership = create(:membership)
     person = membership.person
     visit edit_person_path(person)
@@ -64,9 +64,6 @@ feature "Person maintenance" do
 
     expect { Person.find(person) }.to raise_error(ActiveRecord::RecordNotFound)
     expect { Membership.find(membership) }.to raise_error(ActiveRecord::RecordNotFound)
-
-    expect(Person.with_deleted.find(person)).to eql(person)
-    expect(Membership.with_deleted.find(membership)).to eql(membership)
   end
 
   scenario 'Editing a person' do
