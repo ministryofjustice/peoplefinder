@@ -50,4 +50,123 @@ RSpec.describe Agreement, :type => :model do
       end
     end
   end
+
+  context 'responsibilities_have_changed?' do
+    subject { build(:agreement) }
+
+    it "should reset sign-off on update if a budget responsibility has been added" do
+      subject.responsibilities_signed_off_by_manager = true
+      subject.responsibilities_signed_off_by_staff_member = true
+      subject.save!
+
+      subject.budgetary_responsibilities.build attributes_for(:budgetary_responsibility)
+      subject.save!
+
+      subject.reload
+      expect(subject.responsibilities_signed_off_by_manager).to eql(false)
+      expect(subject.responsibilities_signed_off_by_staff_member).to eql(false)
+    end
+
+    it "should reset sign-off on update if a budget responsibility has been removed" do
+      subject.save!
+      create(:budgetary_responsibility, agreement: subject)
+      subject.reload
+
+      subject.responsibilities_signed_off_by_manager = true
+      subject.responsibilities_signed_off_by_staff_member = true
+      subject.save!
+
+      br = subject.budgetary_responsibilities[0]
+      subject.budgetary_responsibilities.destroy(br)
+      subject.save!
+
+      subject.reload
+      expect(subject.responsibilities_signed_off_by_manager).to eql(false)
+      expect(subject.responsibilities_signed_off_by_staff_member).to eql(false)
+    end
+
+    it "should reset sign-off on update if a budget responsibility has been changed" do
+      subject.save!
+      create(:budgetary_responsibility, agreement: subject)
+      subject.reload
+
+      subject.responsibilities_signed_off_by_manager = true
+      subject.responsibilities_signed_off_by_staff_member = true
+      subject.save!
+
+      subject.budgetary_responsibilities[0].value = 900000
+      subject.save!
+
+      subject.reload
+      expect(subject.responsibilities_signed_off_by_manager).to eql(false)
+      expect(subject.responsibilities_signed_off_by_staff_member).to eql(false)
+    end
+
+    it "should reset sign-off on update if details have changed" do
+      subject.responsibilities_signed_off_by_manager = true
+      subject.responsibilities_signed_off_by_staff_member = true
+      subject.save!
+
+      subject.number_of_staff = 1234
+      subject.save!
+
+      subject.reload
+      expect(subject.responsibilities_signed_off_by_manager).to eql(false)
+      expect(subject.responsibilities_signed_off_by_staff_member).to eql(false)
+    end
+
+    it "should reset staff member sign-off if manager changed and signed off" do
+      subject.responsibilities_signed_off_by_staff_member = true
+      subject.save!
+
+      subject.update_attributes(
+        number_of_staff: 2,
+        responsibilities_signed_off_by_manager: true
+      )
+      subject.reload
+
+      expect(subject.responsibilities_signed_off_by_manager).to be true
+      expect(subject.responsibilities_signed_off_by_staff_member).to be false
+    end
+
+    it "should reset staff member sign-off if staff_member changed and signed off" do
+      subject.responsibilities_signed_off_by_manager = true
+      subject.save!
+
+      subject.update_attributes(
+        number_of_staff: 2,
+        responsibilities_signed_off_by_staff_member: true
+      )
+      subject.reload
+
+      expect(subject.responsibilities_signed_off_by_staff_member).to be true
+      expect(subject.responsibilities_signed_off_by_manager).to be false
+    end
+
+    it "should complete sign-off by manager" do
+      subject.responsibilities_signed_off_by_staff_member = true
+      subject.save!
+
+      subject.update_attributes(
+        responsibilities_signed_off_by_manager: true
+      )
+      subject.reload
+
+      expect(subject.responsibilities_signed_off_by_manager).to be true
+      expect(subject.responsibilities_signed_off_by_staff_member).to be true
+    end
+
+    it "should complete sign-off by staff_member" do
+      subject.responsibilities_signed_off_by_manager = true
+      subject.save!
+
+      subject.update_attributes(
+        responsibilities_signed_off_by_staff_member: true
+      )
+      subject.reload
+
+      expect(subject.responsibilities_signed_off_by_staff_member).to be true
+      expect(subject.responsibilities_signed_off_by_manager).to be true
+    end
+  end
 end
