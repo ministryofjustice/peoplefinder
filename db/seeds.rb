@@ -21,7 +21,7 @@ eve = User.create!({
   name: 'Eve', email: 'Eve@example.com', grade: 'Ensign', organisation: 'El Pollo Bronco', staff_number: 'EEEE5555'
 })
 
-Agreement.create!(jobholder: bob, manager: alice)
-Agreement.create!(jobholder: carol, manager: alice)
-Agreement.create!(jobholder: dave, manager: alice)
-Agreement.create!(jobholder: eve, manager: bob)
+Agreement.create!(staff_member: bob, manager: alice)
+Agreement.create!(staff_member: carol, manager: alice)
+Agreement.create!(staff_member: dave, manager: alice)
+Agreement.create!(staff_member: eve, manager: bob)

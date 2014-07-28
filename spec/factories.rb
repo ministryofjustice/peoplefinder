@@ -17,7 +17,7 @@ FactoryGirl.define do
 
   factory :agreement do
     association :manager, factory: :user
-    association :jobholder, factory: :user
+    association :staff_member, factory: :user
   end
 
 

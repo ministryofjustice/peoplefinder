@@ -3,12 +3,12 @@ require 'rails_helper'
 feature "Editing start of year agreement" do
   before do
     password = generate(:password)
-    jobholder = create(:user, name: 'John Doe', password: password)
-    create(:agreement, jobholder: jobholder)
-    log_in_as jobholder.email, password
+    staff_member = create(:user, name: 'John Doe', password: password)
+    create(:agreement, staff_member: staff_member)
+    log_in_as staff_member.email, password
   end
 
-  scenario "Editing responsibilities as a jobholder", js: true do
+  scenario "Editing responsibilities as a staff_member", js: true do
     click_button "Responsibilities"
     within('h1') do
       expect(page.text).to have_text("John Doe’s responsibilities")
@@ -49,7 +49,7 @@ feature "Editing start of year agreement" do
     expect(brs[1].description).to match(/Stuff/)
   end
 
-  scenario "Edititing objectives as a jobholder", js: true do
+  scenario "Edititing objectives as a staff_member", js: true do
     click_button "Objectives"
     within('h1') do
       expect(page.text).to have_text("John Doe’s objectives")

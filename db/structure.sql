@@ -50,7 +50,7 @@ SET default_with_oids = false;
 CREATE TABLE agreements (
     id integer NOT NULL,
     manager_id integer,
-    jobholder_id integer,
+    staff_member_id integer,
     created_at timestamp without time zone,
     updated_at timestamp without time zone,
     headcount_responsibilities hstore,
@@ -253,10 +253,10 @@ ALTER TABLE ONLY users
 
 
 --
--- Name: index_agreements_on_manager_id_and_jobholder_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_agreements_on_manager_id_and_staff_member_id; Type: INDEX; Schema: public; Owner: -; Tablespace:
 --
 
-CREATE INDEX index_agreements_on_manager_id_and_jobholder_id ON agreements USING btree (manager_id, jobholder_id);
+CREATE INDEX index_agreements_on_manager_id_and_staff_member_id ON agreements USING btree (manager_id, staff_member_id);
 
 
 --
@@ -324,3 +324,4 @@ INSERT INTO schema_migrations (version) VALUES ('20140723161243');
 
 INSERT INTO schema_migrations (version) VALUES ('20140724091225');
 
+INSERT INTO schema_migrations (version) VALUES ('20140728100246');
