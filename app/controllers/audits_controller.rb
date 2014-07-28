@@ -5,10 +5,12 @@ class AuditsController < ApplicationController
 
   def undo
     @version = PaperTrail::Version.find(params[:id])
-    if @version.event == 'create'
-      @version.item.destroy
-    else
-      @version.reify.save
+    unless @version.item_type == 'Membership'
+      if @version.event == 'create'
+        @version.item.destroy
+      else
+        @version.reify.save
+      end
     end
     redirect_to :action => :index
   end
