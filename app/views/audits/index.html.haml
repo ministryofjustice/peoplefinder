@@ -13,18 +13,8 @@
         %h4= event_description(version)
         %p= link_to_edited_item(version)
         %p
-          - if version.item.is_a?(Membership)
-            %strong Person set to:
-            = version.item.person
-            %br
-            %strong Group set to:
-            = version.item.group
-            %br
-            %strong Title set to:
-            = version.item.role
-            %br
-            %strong Leader set to:
-            = version.item.leader? ? 'Yes' : 'No'
+          - if version.item_type =~ /Membership/
+            = render partial: 'membership', locals: { version: version }
 
           - else
             - version.changeset.each do |k|

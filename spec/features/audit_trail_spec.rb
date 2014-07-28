@@ -125,8 +125,10 @@ feature "Audit trail" do
 
   scenario 'Auditing the deletion of a membership' do
     with_versioning do
-      person = create(:person)
-      person.memberships.create(group: create(:group))
+      group = create(:group, name: 'Digital Justice')
+      person = create(:person, surname: 'Bob')
+      person.memberships.create(group: group, role: 'Jefe', leader: true)
+
       visit edit_person_path(person)
       within('.roles') do
         click_link("remove")
@@ -134,6 +136,10 @@ feature "Audit trail" do
 
       visit '/audit_trail'
       expect(page).to have_text('Deleted Membership')
+      expect(page).to have_text('Person was: Bob')
+      expect(page).to have_text('Group was: Digital Justice')
+      expect(page).to have_text('Title was: Jefe')
+      expect(page).to have_text('Leader was: Yes')
     end
   end
 end
