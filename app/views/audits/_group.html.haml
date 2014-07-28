@@ -1,0 +1,20 @@
+- if version.event =~ /destroy/
+  - item = version.reify
+  %strong Name:
+  = item.name
+
+- else
+  - version.changeset.each do |k|
+    - if k[1][0].present?
+      %strong
+        = k[0].humanize
+        changed from
+      = k[1][0]
+      %strong to
+      = k[1][1]
+    - else
+      %strong
+        = k[0].humanize
+        set to:
+      = k[1][1]
+    %br

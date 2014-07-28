@@ -49,6 +49,7 @@ feature "Audit trail" do
 
       visit '/audit_trail'
       expect(page).to have_text('Deleted Person')
+      expect(page).to have_text('Name: Greg Dan')
 
       expect {
         click_button 'undo'
@@ -89,6 +90,7 @@ feature "Audit trail" do
 
       visit '/audit_trail'
       expect(page).to have_text('Deleted Group')
+      expect(page).to have_text('Name: original name')
     end
   end
 
