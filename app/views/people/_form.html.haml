@@ -39,8 +39,3 @@
 
     .form-group
       = f.button :submit
-
-    - if @person.deletable?
-      .form-group
-        = link_to 'Delete this profile', @person, method: :delete
-      %p= link_to 'Back', @person

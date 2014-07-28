@@ -20,7 +20,3 @@
 
     .form-group
       = f.button :submit
-
-    - if @group.deletable?
-      .form-group
-        = link_to 'Delete this record', @group, method: :delete
