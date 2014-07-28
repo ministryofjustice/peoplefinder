@@ -92,11 +92,48 @@ feature "Audit trail" do
     end
   end
 
-  scenario 'Auditing the editing of a photo'
+  scenario 'Auditing the editing of a photo' do
+    with_versioning do
+      person = create(:person)
+      visit edit_person_path(person)
+      attach_file('person[image]', sample_image)
+      click_button 'Update person'
 
-  scenario 'Auditing the creation of a membership'
-  scenario 'Auditing the deletion of a membership'
-  scenario 'Auditing the editing of a membership?'
+      visit '/audit_trail'
+      expect(page).to have_text('Person Edited')
+      expect(page).to have_text(/Image set to.*placeholder/)
+    end
+  end
+
+  scenario 'Auditing the creation of a membership' do
+    with_versioning do
+      create(:group, name: 'Digital Justice')
+      person = create(:person, surname: 'Bob')
+      visit edit_person_path(person)
+      select('Digital Justice', from: 'Group')
+      fill_in('Title', with: 'Jefe')
+      click_button 'Update person'
+
+      visit '/audit_trail'
+      expect(page).to have_text('New Membership')
+      expect(page).to have_text('Person set to: Bob')
+      expect(page).to have_text('Group set to: Digital Justice')
+      expect(page).to have_text('Title set to: Jefe')
+      expect(page).to have_text('Leader set to: No')
+    end
+  end
+
+  scenario 'Auditing the deletion of a membership' do
+    with_versioning do
+      person = create(:person)
+      person.memberships.create(group: create(:group))
+      visit edit_person_path(person)
+      within('.roles') do
+        click_link("remove")
+      end
+
+      visit '/audit_trail'
+      expect(page).to have_text('Deleted Membership')
+    end
+  end
 end
-
-
