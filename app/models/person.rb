@@ -21,8 +21,7 @@ class Person < ActiveRecord::Base
   attr_accessor :crop_x, :crop_y, :crop_w, :crop_h
 
   validates_presence_of :surname
-  has_many :memberships, -> { includes(:group).order("groups.name")  },
-    dependent: :destroy
+  has_many :memberships, -> { includes(:group).order("groups.name")  }
   has_many :groups, through: :memberships
 
   accepts_nested_attributes_for :memberships, allow_destroy: true,
@@ -31,6 +30,8 @@ class Person < ActiveRecord::Base
   default_scope { order(surname: :asc, given_name: :asc) }
 
   friendly_id :slug_source, use: :slugged
+
+  before_destroy :check_deletability
 
   def self.delete_indexes
     self.__elasticsearch__.delete_index! index: Person.index_name
@@ -121,6 +122,7 @@ class Person < ActiveRecord::Base
       UserUpdateMailer.new_profile_email(self, current_user.email).deliver
     end
   end
+
   def send_update_email!(current_user, old_email)
     if self.email == old_email
       if self.valid_email? && current_user.email != self.email
@@ -135,9 +137,23 @@ class Person < ActiveRecord::Base
       end
     end
   end
+
   def send_destroy_email!(current_user)
     if self.valid_email? && current_user.email != self.email
       UserUpdateMailer.deleted_profile_email(self, current_user.email).deliver
+    end
+  end
+
+  def deletable?
+    memberships.reject(&:new_record?).empty?
+  end
+
+  private
+
+  def check_deletability
+    unless deletable?
+      errors[:base] << 'cannot be deleted until all the memberships have been removed'
+      return false
     end
   end
 end

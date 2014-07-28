@@ -55,15 +55,20 @@ feature "Person maintenance" do
   end
 
   scenario 'Deleting a person' do
-    membership = create(:membership)
-    person = membership.person
+    person = create(:person)
     visit edit_person_path(person)
-    click_link('Delete this profile')
+    click_link('Delete')
 
     expect(page).to have_content("Deleted #{person}’s profile")
 
     expect { Person.find(person) }.to raise_error(ActiveRecord::RecordNotFound)
-    expect { Membership.find(membership) }.to raise_error(ActiveRecord::RecordNotFound)
+  end
+
+  scenario 'Prevent deletion of a person that has memberships' do
+    membership = create(:membership)
+    person = membership.person
+    visit edit_person_path(person)
+    expect(page).not_to have_link('Delete')
   end
 
   scenario 'Editing a person' do
