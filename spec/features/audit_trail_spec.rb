@@ -117,11 +117,16 @@ feature "Audit trail" do
       click_button 'Update person'
 
       visit '/audit_trail'
-      expect(page).to have_text('New Membership')
-      expect(page).to have_text('Person set to: Bob')
-      expect(page).to have_text('Group set to: Digital Justice')
-      expect(page).to have_text('Title set to: Jefe')
-      expect(page).to have_text('Leader set to: No')
+
+      within('tr:first') do
+        expect(page).to have_text('New Membership')
+        expect(page).to have_text('Person set to: Bob')
+        expect(page).to have_text('Group set to: Digital Justice')
+        expect(page).to have_text('Title set to: Jefe')
+        expect(page).to have_text('Leader set to: No')
+
+        expect(page).not_to have_button 'undo'
+      end
     end
   end
 
@@ -137,11 +142,16 @@ feature "Audit trail" do
       end
 
       visit '/audit_trail'
-      expect(page).to have_text('Deleted Membership')
-      expect(page).to have_text('Person was: Bob')
-      expect(page).to have_text('Group was: Digital Justice')
-      expect(page).to have_text('Title was: Jefe')
-      expect(page).to have_text('Leader was: Yes')
+
+      within('tr:first') do
+        expect(page).to have_text('Deleted Membership')
+        expect(page).to have_text('Person was: Bob')
+        expect(page).to have_text('Group was: Digital Justice')
+        expect(page).to have_text('Title was: Jefe')
+        expect(page).to have_text('Leader was: Yes')
+
+        expect(page).not_to have_button 'undo'
+      end
     end
   end
 end
