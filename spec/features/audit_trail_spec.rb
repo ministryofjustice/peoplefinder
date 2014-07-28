@@ -14,7 +14,7 @@ feature "Audit trail" do
 
       visit '/audit_trail'
       expect(page).to have_text('Person Edited')
-      expect(page).to have_text('Surname changed from: original surname to: something else')
+      expect(page).to have_text('Surname changed from original surname to something else')
     end
   end
 
@@ -52,7 +52,7 @@ feature "Audit trail" do
 
       visit '/audit_trail'
       expect(page).to have_text('Group Edited')
-      expect(page).to have_text('Name changed from: original name to: something else')
+      expect(page).to have_text('Name changed from original name to something else')
     end
   end
 
