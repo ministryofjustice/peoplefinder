@@ -110,4 +110,34 @@ class Person < ActiveRecord::Base
   def assignable_groups
     Group.where.not(id: memberships.pluck(:group_id))
   end
+
+  def valid_email?(email=nil)
+    email ||= self.email
+    email.present? && email.match(/\A[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]+\z/)
+  end
+
+  def send_create_email!(current_user)
+    if self.valid_email? && current_user.email != self.email
+      UserUpdateMailer.new_profile_email(self, current_user.email).deliver
+    end
+  end
+  def send_update_email!(current_user, old_email)
+    if self.email == old_email
+      if self.valid_email? && current_user.email != self.email
+        UserUpdateMailer.updated_profile_email(self, current_user.email).deliver
+      end
+    else
+      if self.valid_email? && current_user.email != self.email
+        UserUpdateMailer.updated_address_to_email(self, current_user.email, old_email).deliver
+      end
+      if self.valid_email?(old_email) && current_user.email != old_email
+        UserUpdateMailer.updated_address_from_email(self, current_user.email, old_email).deliver
+      end
+    end
+  end
+  def send_destroy_email!(current_user)
+    if self.valid_email? && current_user.email != self.email
+      UserUpdateMailer.deleted_profile_email(self, current_user.email).deliver
+    end
+  end
 end

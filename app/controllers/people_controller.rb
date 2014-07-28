@@ -34,6 +34,7 @@ class PeopleController < ApplicationController
     @person = Person.new(person_params)
 
     if @person.save
+      @person.send_create_email!(current_user)
       redirect_to successful_redirect_path, notice: "Created #{@person}’s profile."
     else
       set_assignable_groups
@@ -43,7 +44,9 @@ class PeopleController < ApplicationController
 
   # PATCH/PUT /people/1
   def update
+    old_email = @person.email
     if @person.update(person_params)
+      @person.send_update_email!(current_user, old_email)
       redirect_to successful_redirect_path, notice: "Updated #{@person}’s profile."
     else
       set_assignable_groups
@@ -53,6 +56,7 @@ class PeopleController < ApplicationController
 
   # DELETE /people/1
   def destroy
+    @person.send_destroy_email!(current_user)
     @person.destroy
     redirect_to people_url, notice: "Deleted #{@person}’s profile."
   end
