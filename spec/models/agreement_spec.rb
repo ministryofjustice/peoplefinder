@@ -76,8 +76,8 @@ RSpec.describe Agreement, :type => :model do
       subject.responsibilities_signed_off_by_staff_member = true
       subject.save!
 
-      br = subject.budgetary_responsibilities[0]
-      subject.budgetary_responsibilities.destroy(br)
+      objective = subject.budgetary_responsibilities[0]
+      subject.budgetary_responsibilities.destroy(objective)
       subject.save!
 
       subject.reload
@@ -167,6 +167,110 @@ RSpec.describe Agreement, :type => :model do
 
       expect(subject.responsibilities_signed_off_by_staff_member).to be true
       expect(subject.responsibilities_signed_off_by_manager).to be true
+    end
+  end
+
+  context 'objectives have changed' do
+    subject { build(:agreement) }
+
+    it "should reset sign-off on update if an objective has been added" do
+      subject.objectives_signed_off_by_manager = true
+      subject.objectives_signed_off_by_staff_member = true
+      subject.save!
+
+      subject.objectives.build attributes_for(:objective)
+      subject.save!
+
+      subject.reload
+      expect(subject.objectives_signed_off_by_manager).to eql(false)
+      expect(subject.objectives_signed_off_by_staff_member).to eql(false)
+    end
+
+    it "should reset sign-off on update if an objective has been removed" do
+      subject.save!
+      create(:objective, agreement: subject)
+      subject.reload
+
+      subject.objectives_signed_off_by_manager = true
+      subject.objectives_signed_off_by_staff_member = true
+      subject.save!
+
+      objective = subject.objectives[0]
+      subject.objectives.destroy(objective)
+      subject.save!
+
+      subject.reload
+      expect(subject.objectives_signed_off_by_manager).to eql(false)
+      expect(subject.objectives_signed_off_by_staff_member).to eql(false)
+    end
+
+    it "should reset sign-off on update if an objective has been changed" do
+      subject.save!
+      create(:objective, agreement: subject)
+      subject.reload
+
+      subject.objectives_signed_off_by_manager = true
+      subject.objectives_signed_off_by_staff_member = true
+      subject.save!
+
+      subject.objectives[0].description = "Changed"
+      subject.save!
+
+      subject.reload
+      expect(subject.objectives_signed_off_by_manager).to eql(false)
+      expect(subject.objectives_signed_off_by_staff_member).to eql(false)
+    end
+
+    it "should reset staff member sign-off if manager changed and signed off" do
+      subject.objectives_signed_off_by_staff_member = true
+      subject.save!
+
+      subject.objectives.build attributes_for(:objective)
+      subject.objectives_signed_off_by_manager = true
+      subject.save!
+      subject.reload
+
+      expect(subject.objectives_signed_off_by_manager).to be true
+      expect(subject.objectives_signed_off_by_staff_member).to be false
+    end
+
+    it "should reset staff member sign-off if staff_member changed and signed off" do
+      subject.objectives_signed_off_by_manager = true
+      subject.save!
+
+      subject.objectives.build attributes_for(:objective)
+      subject.objectives_signed_off_by_staff_member = true
+      subject.save!
+      subject.reload
+
+      expect(subject.objectives_signed_off_by_staff_member).to be true
+      expect(subject.objectives_signed_off_by_manager).to be false
+    end
+
+    it "should complete sign-off by manager" do
+      subject.objectives_signed_off_by_staff_member = true
+      subject.save!
+
+      subject.update_attributes(
+        objectives_signed_off_by_manager: true
+      )
+      subject.reload
+
+      expect(subject.objectives_signed_off_by_manager).to be true
+      expect(subject.objectives_signed_off_by_staff_member).to be true
+    end
+
+    it "should complete sign-off by staff_member" do
+      subject.objectives_signed_off_by_manager = true
+      subject.save!
+
+      subject.update_attributes(
+        objectives_signed_off_by_staff_member: true
+      )
+      subject.reload
+
+      expect(subject.objectives_signed_off_by_staff_member).to be true
+      expect(subject.objectives_signed_off_by_manager).to be true
     end
   end
 end
