@@ -9,7 +9,7 @@ Rails.application.routes.draw do
   resource :registration, only: [:new, :update]
 
   match '/auth/:provider/callback', to: 'sessions#create', via: [:get, :post]
-  match '/login', to: 'sessions#new', via: [:get]
+  match '/login', to: 'sessions#new', via: [:get], as: :login
   match '/logout', to: 'sessions#destroy', via: [:get]
   match '/auth/failure', to: 'sessions#new', via: [:get], failed: true
 

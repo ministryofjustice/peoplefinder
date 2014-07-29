@@ -7,7 +7,8 @@ class SessionsController < ApplicationController
       session['current_user_id'] = user.id
       redirect_to home_path
     else
-      redirect_to login_failure_path
+      warning :login_failed
+      redirect_to login_path
     end
   end
 
