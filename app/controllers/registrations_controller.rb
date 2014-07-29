@@ -2,8 +2,6 @@ class RegistrationsController < ApplicationController
   skip_before_filter :ensure_user
   before_filter :load_user_by_token, only: [:new, :update]
 
-  def new; end
-
   def update
     @user.attributes = user_params
     if @user.save
@@ -14,9 +12,8 @@ class RegistrationsController < ApplicationController
       render :new
     end
   end
-  
-  private
 
+private
   def load_user_by_token
     @user = User.from_token(token)
     if @user.nil?
@@ -29,12 +26,7 @@ class RegistrationsController < ApplicationController
     params[:user] && params[:user][:token] ? params[:user][:token] : params[:token]
   end
 
-  def token_params
-    params.permit(:token)
-  end
-
   def user_params
     params[:user].permit(:password, :password_confirmation, :token)
   end
-
 end
