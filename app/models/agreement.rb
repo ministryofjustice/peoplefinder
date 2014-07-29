@@ -42,9 +42,15 @@ class Agreement < ActiveRecord::Base
     *PAYBANDS
   ]
 
+private
   def reset_sign_off_if_changed
     return unless has_responsibility_changes?
+    reset_responsibilities_sign_off_unless_expressly_set
 
+    true
+  end
+
+  def reset_responsibilities_sign_off_unless_expressly_set
     unless responsibilities_signed_off_by_manager_changed?
       self.responsibilities_signed_off_by_manager = false
     end
@@ -52,11 +58,8 @@ class Agreement < ActiveRecord::Base
     unless responsibilities_signed_off_by_staff_member_changed?
       self.responsibilities_signed_off_by_staff_member = false
     end
-
-    true
   end
 
-private
   def budgetary_responsibilities_have_changed(agreement)
     @budgetary_responsibilities_have_changed = true
   end
