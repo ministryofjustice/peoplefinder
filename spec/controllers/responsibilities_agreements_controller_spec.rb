@@ -63,10 +63,20 @@ RSpec.describe ResponsibilitiesAgreementsController, :type => :controller do
 
   describe 'PUT update' do
     let(:agreement) { create(:agreement, staff_member: current_test_user) }
+    let(:invalid_attributes) {
+      valid_attributes.merge("budgetary_responsibilities_attributes" => {
+        "0" => { "budget_type" => "", "value" => "9" }
+      })
+    }
 
     it "redirects to the dashboard" do
       put :update, { id: agreement.id, responsibilities_agreement: valid_attributes }
       expect(response).to redirect_to('/')
+    end
+
+    it "re-renders edit if update failed" do
+      put :update, { id: agreement.id, responsibilities_agreement: invalid_attributes }
+      expect(response).to render_template("edit")
     end
   end
 end
