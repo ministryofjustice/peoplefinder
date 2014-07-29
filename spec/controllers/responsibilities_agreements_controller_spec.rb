@@ -20,7 +20,7 @@ RSpec.describe ResponsibilitiesAgreementsController, :type => :controller do
 
       it 'renders the edit template' do
         get :edit, id: agreement.to_param
-        expect(assigns(:responsibilities_agreement)).to eql(agreement)
+        expect(response).to render_template("edit")
       end
     end
 
