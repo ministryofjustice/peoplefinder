@@ -21,7 +21,9 @@ class ObjectivesAgreementsController < ApplicationController
 private
   def objectives_agreement_params
     params[:objectives_agreement].permit(
-      objectives_attributes: [:id, :objective_type, :description, :deliverables, :measurements]
+      objectives_attributes: [
+        :id, :objective_type, :description, :deliverables, :measurements
+      ]
     )
   end
 
