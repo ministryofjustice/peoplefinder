@@ -1,13 +1,13 @@
-- item, verb = (version.event == 'destroy') ? [version.reify, 'was'] : [version.item, 'set to']
-- if item
+- membership, verb = (version.destruction?) ? [version.reify, 'was'] : [version.item, 'set to']
+- if membership
   %strong Person #{ verb }:
-  = item.person
+  = membership.person
   %br
   %strong Group #{ verb }:
-  = item.group
+  = membership.group
   %br
   %strong Title #{ verb }:
-  = item.role
+  = membership.role
   %br
   %strong Leader #{ verb }:
-  = item.leader? ? 'Yes' : 'No'
+  = membership.leader? ? 'Yes' : 'No'

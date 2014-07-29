@@ -1,7 +1,6 @@
-- if version.event =~ /destroy/
-  - item = version.reify
+- if version.destruction?
   %strong Name:
-  = item.name
+  = version.reify.name
 
 - else
   - version.changeset.each do |k|

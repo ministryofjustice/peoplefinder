@@ -11,13 +11,13 @@
     %tr
       %td= version.created_at.to_formatted_s(:long)
       %td
-        %h4= event_description(version)
+        %h4= version.event_description
         %p= link_to_edited_item(version)
-        %p= render partial: version.item_type.downcase, locals: { version: version }
+        %p= render partial: view_template(version), locals: { version: version }
 
       %td= version.whodunnit
       %td
-        - unless version.item_type == 'Membership'
+        - unless version.membership?
           = button_to 'undo', "/audit_trail/undo/#{version.id}"
 
 .font-xsmall= will_paginate(@versions)
