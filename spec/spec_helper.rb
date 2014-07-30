@@ -95,6 +95,7 @@ RSpec.configure do |config|
 
   config.include FactoryGirl::Syntax::Methods
   config.include SpecSupport::Login
+  config.include SpecSupport::SharedSteps
 
 
 end

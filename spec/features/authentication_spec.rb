@@ -1,46 +1,46 @@
 require 'rails_helper'
 
 feature "Authentication" do
-
-  let(:password) { generate(:password) }
-  let(:valid_registered_user){ create(:user, name: 'John Doe', password: password) }
-
   scenario "Logging in and out for a registered user" do
-    visit '/'
-    expect(page).to have_text("Please log in to continue")
+    given_i_have_an_account
+    when_i_visit_the_home_page
+    and_i_enter_my_email
+    and_i_enter_my_password
+    and_i_click 'Log in'
+    then_i_should_be_logged_in
+    when_i_click 'Log out'
+    then_i_should_not_be_logged_in
+  end
 
-    fill_in 'auth_key', with: valid_registered_user.email
-    fill_in 'password', with: password
-    click_button 'Log in'
-    expect(page).to have_text("Logged in as John Doe")
+  scenario "Failing to log in with the wrong password" do
+    given_i_have_an_account
+    when_i_visit_the_home_page
+    and_i_enter_my_email
+    and_i_enter_an_arbitrary_password
+    and_i_click 'Log in'
+    then_i_should_not_be_logged_in
+    and_i_should_see_an_incorrect_password_message
+  end
 
-    click_button "Log out"
+  scenario "Failing to log in with a completely wrong email address" do
+    given_i_have_an_account
+    when_i_visit_the_home_page
+    and_i_enter_an_unregistered_email
+    and_i_enter_an_arbitrary_password
+    and_i_click 'Log in'
+    then_i_should_not_be_logged_in
+    and_i_should_see_an_incorrect_password_message
+  end
+
+  def then_i_should_be_logged_in
+    expect(page).to have_text("Logged in as #{state[:me]}")
+  end
+
+  def then_i_should_not_be_logged_in
     expect(page).to have_text("Please log in to continue")
   end
 
-  scenario 'Log in failure for a registered user with invalid password' do
-    visit '/'
-    expect(page).to have_text("Please log in to continue")
-
-    fill_in 'auth_key', with: valid_registered_user.email
-    fill_in 'password', with: 'this is an incorrect password wibble'
-    click_button 'Log in'
-
+  def and_i_should_see_an_incorrect_password_message
     expect(page).to have_text("incorrect")
-    expect(page).to_not have_text("Logged in as John Doe")
-    expect(page).to have_css('h1', 'Please log in to continue ')
   end
-
-  scenario "Login failure for someone who isn't registered with the app" do
-    visit '/'
-    expect(page).to have_text("Please log in to continue")
-
-    fill_in 'auth_key', with: 'lord_of_not_registered@example.com'
-    fill_in 'password', with: 'this is an incorrect password wibble'
-    click_button 'Log in'
-
-    expect(page).to_not have_text("Logged in as John Doe")
-    expect(page).to have_css('h1', 'Please log in to continue ')
-  end
-
 end

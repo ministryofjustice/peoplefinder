@@ -32,6 +32,7 @@ FactoryGirl.define do
   factory :budgetary_responsibility do
     association :agreement, factory: :agreement
     budget_type "Capital"
-    value 100
+    sequence(:value) { |n| 10 * n + 1 }
+    description { Faker::Lorem.paragraph }
   end
 end

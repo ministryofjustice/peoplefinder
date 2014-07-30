@@ -2,48 +2,74 @@ require 'rails_helper'
 
 feature "Editing objectives" do
   before do
-    password = generate(:password)
-    staff_member = create(:user, name: 'John Doe', password: password)
-    create(:agreement, staff_member: staff_member)
-    log_in_as staff_member.email, password
+    given_i_have_an_account
+    and_i_am_logged_in
+    and_i_have_an_agreement_as_a_staff_member
   end
 
-  scenario "Editing objectives as a staff_member", js: true do
-    click_button "Objectives"
-    within('h1') do
-      expect(page.text).to have_text("John Doe’s objectives")
+  scenario "Seeing my objectives", js: true do
+    given_the_agreement_has_some_objectives
+    when_i_visit_the_page_for_the_agreement_objectives
+    then_i_should_see_the_objectives
+  end
+
+  scenario "Adding objectives", js: true do
+    when_i_visit_the_page_for_the_agreement_objectives
+    and_i_fill_in_an_objective
+    and_i_add_another_objective
+    and_i_fill_in_an_objective
+    and_i_click 'Save'
+    then_the_agreement_should_have_the_objectives
+  end
+
+  def given_the_agreement_has_some_objectives
+    state[:objectives] = 2.times.map {
+      create(:objective, agreement: state[:agreement])
+    }
+  end
+
+  def when_i_visit_the_page_for_the_agreement_objectives
+    visit '/'
+    click_button 'Objectives'
+  end
+
+  def and_i_fill_in_an_objective
+    unless state.has_key?(:objective_attributes)
+      state[:objective_attributes] = []
     end
 
-    within('#objectives .fields:nth-child(1)') do
-      fill_in "Type", with: "Productivity goal"
-      fill_in "Objective", with: "Get to work on time"
-      fill_in "Deliverable", with: "A copy of my timesheet"
-      fill_in "Measures / Target", with: "An average tardiness of 2.7 minutes"
-    end
+    attrs = attributes_for(:objective)
+    state[:objective_attributes] << attrs
 
+    within('#objectives .fields:last-child') do
+      fill_in 'Type', with: attrs[:objective_type]
+      fill_in 'Objective', with: attrs[:description]
+      fill_in 'Deliverable', with: attrs[:deliverables]
+      fill_in 'Measures / Target', with: attrs[:measurements]
+    end
+  end
+
+  def and_i_add_another_objective
     click_link 'Add more'
+  end
 
-    within('#objectives .fields:nth-child(2)') do
-      fill_in "Type", with: "Personal goal"
-      fill_in "Objective", with: "Learn to fly"
-      fill_in "Deliverable", with: "Sprout wings"
-      fill_in "Measures / Target", with: "5m wingspan"
+  def then_i_should_see_the_objectives
+    expect(page).to have_text("#{state[:me]}’s objectives")
+    state[:objectives].each do |objective|
+      expect(page).to have_css('textarea', text: objective.objective_type)
+      expect(page).to have_css('textarea', text: objective.description)
+      expect(page).to have_css('textarea', text: objective.deliverables)
+      expect(page).to have_css('textarea', text: objective.measurements)
     end
+  end
 
-    click_button "Save"
-
-    agreement = Agreement.last
-
-    objectives = agreement.objectives.sort_by(&:created_at)
-
-    expect(objectives[0].objective_type).to match(/Productivity goal/)
-    expect(objectives[0].description).to match(/Get to work/)
-    expect(objectives[0].deliverables).to match(/copy of my timesheet/)
-    expect(objectives[0].measurements).to match(/average tardiness/)
-
-    expect(objectives[1].objective_type).to match(/Personal goal/)
-    expect(objectives[1].description).to match(/Learn to fly/)
-    expect(objectives[1].deliverables).to match(/Sprout wings/)
-    expect(objectives[1].measurements).to match(/5m wingspan/)
+  def then_the_agreement_should_have_the_objectives
+    objectives = state[:agreement].reload.objectives.sort_by(&:id)
+    state[:objective_attributes].zip(objectives).each do |attrs, objective|
+      expect(objective.objective_type).to eql(attrs[:objective_type])
+      expect(objective.description).to eql(attrs[:description])
+      expect(objective.deliverables).to eql(attrs[:deliverables])
+      expect(objective.measurements).to eql(attrs[:measurements])
+    end
   end
 end
