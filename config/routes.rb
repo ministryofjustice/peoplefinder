@@ -17,7 +17,7 @@ Rails.application.routes.draw do
   resource :sessions
 
   match '/auth/:provider/callback', to: 'sessions#create', via: [:get, :post]
-  match '/audit_trail', to: 'audits#index', via: [:get]
-  match '/audit_trail/undo/:id', to: 'audits#undo', via: [:post]
+  match '/audit_trail', to: 'versions#index', via: [:get]
+  match '/audit_trail/undo/:id', to: 'versions#undo', via: [:post]
   match '/search', to: 'people#search', via: [:get]
 end

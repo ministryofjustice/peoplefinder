@@ -1,4 +1,4 @@
-class AuditsController < ApplicationController
+class VersionsController < ApplicationController
   def index
     @versions = Version.order(created_at: :desc).paginate(:page => params[:page], :per_page => 200)
   end

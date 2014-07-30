@@ -1,4 +1,4 @@
-module AuditsHelper
+module VersionsHelper
   def view_template(version)
     version.membership? ? 'membership' : 'general'
   end
