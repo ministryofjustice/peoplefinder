@@ -54,8 +54,9 @@ class GroupsController < ApplicationController
 
   # DELETE /groups/1
   def destroy
+    next_page = @group.parent ? @group.parent : groups_url
     @group.destroy
-    redirect_to groups_url, notice: "Deleted #{@group}."
+    redirect_to next_page, notice: "Deleted #{@group}."
   end
 
   def add_membership

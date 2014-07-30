@@ -198,7 +198,14 @@ RSpec.describe GroupsController, :type => :controller do
       }.to change(Group, :count).by(-1)
     end
 
-    it "redirects to the groups list" do
+    it "redirects to the parent group" do
+      parent = create(:group, parent: nil)
+      group = create(:group, parent: parent)
+      delete :destroy, {:id => group.to_param}, valid_session
+      expect(response).to redirect_to(parent)
+    end
+
+    it "redirects to the groups list if there is no parent" do
       group = create(:group, valid_attributes)
       delete :destroy, {:id => group.to_param}, valid_session
       expect(response).to redirect_to(groups_url)
