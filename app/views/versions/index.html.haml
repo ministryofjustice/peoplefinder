@@ -18,6 +18,6 @@
       %td= version.whodunnit
       %td
         - unless version.membership?
-          = button_to 'undo', "/audit_trail/undo/#{version.id}"
+          = button_to 'undo', "/audit_trail/undo/#{version.id}", data: { confirm: 'Are you sure you want to undo this change?' }
 
 .font-xsmall= will_paginate(@versions)
