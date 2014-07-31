@@ -53,7 +53,6 @@ CREATE TABLE agreements (
     created_at timestamp without time zone,
     updated_at timestamp without time zone,
     headcount_responsibilities hstore,
-    objectives hstore[],
     objectives_signed_off_by_staff_member boolean DEFAULT false NOT NULL,
     objectives_signed_off_by_manager boolean DEFAULT false NOT NULL,
     notes text
@@ -333,4 +332,6 @@ INSERT INTO schema_migrations (version) VALUES ('20140728100246');
 INSERT INTO schema_migrations (version) VALUES ('20140731135750');
 
 INSERT INTO schema_migrations (version) VALUES ('20140731141231');
+
+INSERT INTO schema_migrations (version) VALUES ('20140731142848');
 
