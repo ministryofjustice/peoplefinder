@@ -15,16 +15,11 @@
     %h2.form-section Headcount
 
   .grid-wrapper
-    .grid.grid-1-3
-      .inner-block
-        = f.input :number_of_staff, as: :string, input_html: { class: 'x-wide' }
-    .grid.grid-2-3
-      .inner-block
-        .grades-covered
-          %label.form-label-bold Grades covered
-          - Agreement::PAYBANDS.each do |payband|
-            .form-checkbox
-              = f.input payband, as: :boolean
+    .form-group
+      - Agreement::PAYBANDS.each do |payband|
+        .grid.grid-1-3
+          .inner-block
+            = f.input payband
 
   .grid-wrapper
     .form-group

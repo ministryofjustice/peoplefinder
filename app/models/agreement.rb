@@ -24,11 +24,16 @@ class Agreement < ActiveRecord::Base
   delegate :email, to: :staff_member, prefix: true, allow_nil: true
 
   PAYBANDS = [
-    :payband_1, :payband_a, :payband_b, :payband_c, :payband_d, :payband_e
+    :fast_stream_headcount,
+    :payband_1_headcount,
+    :payband_a_headcount,
+    :payband_b_headcount,
+    :payband_c_headcount,
+    :payband_d_headcount,
+    :payband_e_headcount
   ]
 
-  store_accessor :headcount_responsibilities, :number_of_staff,
-    :staff_engagement_score, *PAYBANDS
+  store_accessor :headcount_responsibilities, :staff_engagement_score, *PAYBANDS
 
   scope :editable_by, ->(user) {
     where(
@@ -36,11 +41,6 @@ class Agreement < ActiveRecord::Base
       or(arel_table[:manager_id].eq(user.id))
     )
   }
-
-  RESPONSIBILITIES_FIELDS = [
-    :headcount_responsibilities, :number_of_staff, :staff_engagement_score,
-    *PAYBANDS
-  ]
 
 private
   def reset_sign_off_if_changed
