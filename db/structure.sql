@@ -55,7 +55,8 @@ CREATE TABLE agreements (
     headcount_responsibilities hstore,
     objectives hstore[],
     objectives_signed_off_by_staff_member boolean DEFAULT false NOT NULL,
-    objectives_signed_off_by_manager boolean DEFAULT false NOT NULL
+    objectives_signed_off_by_manager boolean DEFAULT false NOT NULL,
+    notes text
 );
 
 
@@ -330,4 +331,6 @@ INSERT INTO schema_migrations (version) VALUES ('20140728095125');
 INSERT INTO schema_migrations (version) VALUES ('20140728100246');
 
 INSERT INTO schema_migrations (version) VALUES ('20140731135750');
+
+INSERT INTO schema_migrations (version) VALUES ('20140731141231');
 
