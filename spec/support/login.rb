@@ -12,7 +12,7 @@ module SpecSupport
       visit '/sessions/new'
       fill_in 'auth_key', with: email
       fill_in 'password', with: password
-      click_button 'Login'
+      click_button 'Log in'
     end
   end
 end
