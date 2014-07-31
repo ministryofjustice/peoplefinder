@@ -3,7 +3,6 @@
 --
 
 SET statement_timeout = 0;
-SET lock_timeout = 0;
 SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
 SET check_function_bodies = false;
@@ -55,8 +54,6 @@ CREATE TABLE agreements (
     updated_at timestamp without time zone,
     headcount_responsibilities hstore,
     objectives hstore[],
-    responsibilities_signed_off_by_staff_member boolean DEFAULT false NOT NULL,
-    responsibilities_signed_off_by_manager boolean DEFAULT false NOT NULL,
     objectives_signed_off_by_staff_member boolean DEFAULT false NOT NULL,
     objectives_signed_off_by_manager boolean DEFAULT false NOT NULL
 );
@@ -170,9 +167,9 @@ CREATE TABLE users (
     created_at timestamp without time zone,
     updated_at timestamp without time zone,
     staff_number character varying(255),
-    password_digest character varying(255),
     grade text,
     organisation text,
+    password_digest character varying(255),
     password_reset_token character varying(255)
 );
 
@@ -257,7 +254,7 @@ ALTER TABLE ONLY users
 
 
 --
--- Name: index_agreements_on_manager_id_and_staff_member_id; Type: INDEX; Schema: public; Owner: -; Tablespace:
+-- Name: index_agreements_on_manager_id_and_staff_member_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX index_agreements_on_manager_id_and_staff_member_id ON agreements USING btree (manager_id, staff_member_id);
@@ -331,3 +328,6 @@ INSERT INTO schema_migrations (version) VALUES ('20140724091225');
 INSERT INTO schema_migrations (version) VALUES ('20140728095125');
 
 INSERT INTO schema_migrations (version) VALUES ('20140728100246');
+
+INSERT INTO schema_migrations (version) VALUES ('20140731135750');
+

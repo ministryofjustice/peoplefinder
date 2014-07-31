@@ -9,9 +9,7 @@ class Agreement < ActiveRecord::Base
     allow_destroy: true,
     reject_if: :all_blank
 
-  has_many :budgetary_responsibilities,
-    after_add: :budgetary_responsibilities_have_changed,
-    after_remove: :budgetary_responsibilities_have_changed
+  has_many :budgetary_responsibilities
   accepts_nested_attributes_for :budgetary_responsibilities,
     allow_destroy: true,
     reject_if: :all_blank
@@ -46,25 +44,11 @@ class Agreement < ActiveRecord::Base
 
 private
   def reset_sign_off_if_changed
-    if has_responsibility_changes?
-      reset_responsibilities_sign_off_unless_expressly_set
-    end
-
     if has_objective_changes?
       reset_objectives_sign_off_unless_expressly_set
     end
 
     true
-  end
-
-  def reset_responsibilities_sign_off_unless_expressly_set
-    unless responsibilities_signed_off_by_manager_changed?
-      self.responsibilities_signed_off_by_manager = false
-    end
-
-    unless responsibilities_signed_off_by_staff_member_changed?
-      self.responsibilities_signed_off_by_staff_member = false
-    end
   end
 
   def reset_objectives_sign_off_unless_expressly_set
@@ -77,25 +61,13 @@ private
     end
   end
 
-  def budgetary_responsibilities_have_changed(agreement)
-    @budgetary_responsibilities_have_changed = true
-  end
-
   def objectives_have_changed(agreement)
     @objectives_have_changed = true
   end
 
   def unset_change_flags
-    @budgetary_responsibilities_have_changed = false
     @objectives_have_changed = false
-
     true
-  end
-
-  def has_responsibility_changes?
-    @budgetary_responsibilities_have_changed ||
-      RESPONSIBILITIES_FIELDS.any? { |k| changed_attributes.has_key?(k) } ||
-      budgetary_responsibilities.any?(&:changed?)
   end
 
   def has_objective_changes?
