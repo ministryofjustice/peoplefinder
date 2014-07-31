@@ -31,6 +31,19 @@ RSpec.describe Group, :type => :model do
     expect(department.hierarchy).to eql([department])
   end
 
+  describe '.leaf_node?' do
+    let(:group) { create(:group) }
+
+    it "should know when it is a leaf_node (no children)" do
+      expect(group).to be_leaf_node
+    end
+
+    it "should know when it is not a leaf_node (no children)" do
+      expect(group).to be_leaf_node
+    end
+
+  end
+
   describe '.assignable_people' do
     let(:group) { build(:group) }
 
