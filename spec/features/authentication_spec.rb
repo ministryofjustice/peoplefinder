@@ -14,7 +14,7 @@ feature "Authentication" do
     click_button 'Log in'
     expect(page).to have_text("Logged in as John Doe")
 
-    click_link "Log out"
+    click_button "Log out"
     expect(page).to have_text("Please log in to continue")
   end
 
