@@ -2,6 +2,9 @@ class RegistrationsController < ApplicationController
   skip_before_filter :ensure_user
   before_filter :load_user_by_token, only: [:new, :update]
 
+  def new
+  end
+
   def update
     @user.attributes = user_params
     if @user.save
