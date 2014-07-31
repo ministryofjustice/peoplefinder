@@ -1,5 +1,8 @@
 = render partial: 'breadcrumbs'
 
+= content_for :edit_this_page do
+  = link_to 'Edit this page', edit_group_path(@group)
+
 = render partial: 'detail'
 
 %div
