@@ -1,11 +1,18 @@
 require 'simplecov'
 require 'simplecov-rcov'
+require 'capybara/email/rspec'
+
+
 SimpleCov.formatter = SimpleCov::Formatter::RcovFormatter
 SimpleCov.start 'rails' do
   add_filter '/gem/'
 end
 
 require "factory_girl"
+require 'ffaker'
+
+require 'capybara/poltergeist'
+Capybara.javascript_driver = :poltergeist
 
 Dir[File.expand_path("../support/**/*.rb", __FILE__)].each {|f| require f}
 
@@ -61,6 +68,8 @@ RSpec.configure do |config|
   # as the one that triggered the failure.
   Kernel.srand config.seed
 
+
+
   # rspec-expectations config goes here. You can use an alternate
   # assertion/expectation library such as wrong or the stdlib/minitest
   # assertions if you prefer.
@@ -85,4 +94,8 @@ RSpec.configure do |config|
   end
 
   config.include FactoryGirl::Syntax::Methods
+  config.include SpecSupport::Login
+  config.include SpecSupport::SharedSteps
+
+
 end

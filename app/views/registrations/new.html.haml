@@ -1,0 +1,13 @@
+%section#new-registration
+  %h1 Complete your registration
+
+  %p=@user.name
+
+  = simple_form_for @user, url: registration_path do |f|
+    .form-group
+      = f.input :password
+    .form-group
+      = f.input :password_confirmation
+      = f.hidden_field :token
+    .actions
+      = f.button :submit, 'Finish'

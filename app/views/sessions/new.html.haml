@@ -1,7 +1,9 @@
-%p
-  This is the MOJ Senior Civil Service Appraisals service
+.inner-block
+  %p
+    This is the MOJ Senior Civil Service Appraisals service
 
-%p
-  Please
-  = link_to "log in", "/auth/gplus"
-  to continue
+  %section#login-form
+    %h1 Please log in to continue
+    =render 'sign_in_form'
+
+  %p=link_to 'Forgotten your password?', new_passwords_path

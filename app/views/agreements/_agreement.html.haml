@@ -1,0 +1,7 @@
+%tr
+  %td
+    %p= agreement.staff_member
+    %p= "#{ agreement.staff_member.organisation } (#{ agreement.staff_member.grade })"
+  %td= button_to 'Responsibilities', edit_responsibilities_agreement_path(agreement), method: :get, class: :button
+  %td= button_to 'Objectives', edit_objectives_agreement_path(agreement), method: :get, class: :button
+  %td

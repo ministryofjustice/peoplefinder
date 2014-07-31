@@ -3,20 +3,24 @@ class SessionsController < ApplicationController
 
   def create
     user = User.from_auth_hash(auth_hash)
-    session['current_user'] = user
     if user
-      redirect_to '/'
+      session['current_user_id'] = user.id
+      redirect_to home_path
     else
-      render :failed
+      warning :login_failed
+      redirect_to login_path
     end
   end
 
   def new
+    if params[:failed]
+      warning :login_failed
+    end
   end
 
   def destroy
-    session['current_user'] = nil
-    redirect_to '/'
+    session['current_user_id'] = nil
+    redirect_to home_path
   end
 
 protected

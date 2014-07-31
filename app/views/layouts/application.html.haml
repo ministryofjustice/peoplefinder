@@ -5,6 +5,6 @@
 - content_for :content do
   .class
     %main#content{role: 'main'}
-      .inner-block
-        = yield
+      = flash_messages
+      = yield
 = render template: "layouts/moj_internal_template"

@@ -11,9 +11,10 @@ gem 'jquery-rails'
 gem 'mail'
 gem 'moj_internal_template',
   git: 'https://github.com/ministryofjustice/moj_internal_template.git'
-gem 'omniauth-gplus',
-  git: 'https://github.com/ministryofjustice/omniauth-gplus.git'
+gem 'nested_form'
+gem 'omniauth-identity', '~> 1.1.1'
 gem 'pg'
+gem 'possessive', '~> 1.0.1'
 gem 'sass-rails', '~> 4.0.3'
 gem 'simple_form', '~> 3.1.0.rc1'
 gem 'uglifier', '>= 1.3.0'
@@ -24,6 +25,8 @@ group :development do
 end
 
 group :test do
+  gem 'email_spec'
+  gem 'capybara-email'
   gem 'capybara'
   gem 'factory_girl_rails'
   gem 'launchy'
@@ -34,6 +37,14 @@ group :test do
   gem 'shoulda-matchers'
   gem 'simplecov', '~> 0.7.1', require: false
   gem 'simplecov-rcov', require: false
+end
+
+group :development, :test do
+  gem 'ffaker'
+  gem 'guard'
+  gem 'guard-rspec', require: false
+  gem 'pry'
+  gem 'dotenv-rails'
 end
 
 group :production do

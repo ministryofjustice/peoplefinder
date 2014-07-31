@@ -10,6 +10,17 @@ en:
       # html: '<abbr title="required">*</abbr>'
     error_notification:
       default_message: "Please review the problems below:"
+    labels:
+      agreements:
+        payband_1: "Payband 1"
+        payband_a: "Payband A"
+        payband_b: "Payband B"
+        payband_c: "Payband C"
+        payband_d: "Payband D"
+        payband_e: "Payband E"
+      budgetary_responsibilities:
+        budget_type: "Type"
+
     # Examples
     # labels:
     #   defaults:

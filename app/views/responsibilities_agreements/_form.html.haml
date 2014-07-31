@@ -1,0 +1,37 @@
+= simple_nested_form_for @responsibilities_agreement do |f|
+  = f.error_notification
+
+  .inner-block
+    %h2.form-section Budgetary
+
+  #budgetary-responsibilities
+    = f.simple_fields_for :budgetary_responsibilities
+  .inner-block
+    = f.link_to_add "Add more", :budgetary_responsibilities, data: { target: '#budgetary-responsibilities' }
+
+  .grid-divider
+
+  .inner-block
+    %h2.form-section Headcount
+
+  .grid-wrapper
+    .grid.grid-1-3
+      .inner-block
+        = f.input :number_of_staff, as: :string, input_html: { class: 'x-wide' }
+    .grid.grid-2-3
+      .inner-block
+        .grades-covered
+          %label.form-label-bold Grades covered
+          - Agreement::PAYBANDS.each do |payband|
+            .form-checkbox
+              = f.input payband, as: :boolean
+
+  .grid-wrapper
+    .form-group
+      .grid.grid-1-3
+        .inner-block
+          = f.input :staff_engagement_score, as: :string
+
+  .inner-block
+    .actions
+      = f.button :submit

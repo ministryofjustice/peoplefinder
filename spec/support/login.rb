@@ -1,23 +1,18 @@
 module SpecSupport
   module Login
     def mock_logged_in_user
-      controller.session[:current_user] = User.new('test.user@digital.moj.gov.uk')
+      controller.session[:current_user_id] = User.for_email("test.user@#{ Rails.configuration.valid_login_domains.first }").id
     end
 
-    def log_in_as(email)
-      OmniAuth.config.test_mode = true
+    def current_test_user
+      User.where(id: controller.session[:current_user_id]).first
+    end
 
-      OmniAuth.config.mock_auth[:gplus] = OmniAuth::AuthHash.new({
-        provider: 'gplus',
-        info: {
-          email: email,
-          first_name: 'John',
-          last_name: 'Doe',
-          name: 'John Doe',
-        }
-      })
-
-      visit 'auth/gplus'
+    def log_in_as(email, password)
+      visit '/sessions/new'
+      fill_in 'auth_key', with: email
+      fill_in 'password', with: password
+      click_button 'Log in'
     end
   end
 end

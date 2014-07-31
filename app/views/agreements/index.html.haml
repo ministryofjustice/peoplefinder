@@ -1,0 +1,14 @@
+.inner-block
+  %h1 SCS feedback dashboard
+
+  %h2 Current reportees - #{ financial_year }
+
+  %h3 My Feedbacks
+  %table
+    %thead
+      %th Title &amp; Team
+      %th Feedback sections
+      %th
+      %th Status
+    %tbody
+      = render @agreements

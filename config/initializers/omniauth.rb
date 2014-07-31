@@ -1,4 +1,5 @@
 Rails.application.config.middleware.use OmniAuth::Builder do
-  provider :gplus, ENV['GPLUS_CLIENT_ID'], ENV['GPLUS_CLIENT_SECRET'],
-    scope: "openid,profile,email"
+ provider :identity, :fields => [:email], model: User
 end
+
+OmniAuth.config.logger = Rails.logger
