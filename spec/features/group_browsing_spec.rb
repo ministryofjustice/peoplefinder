@@ -19,28 +19,42 @@ feature "Group browsing" do
 
     click_link "An Organisation"
     expect(page).to have_link("A Team")
-    expect(page).not_to have_link("A Leaf")
+    expect(page).not_to have_link("A Leaf Node")
 
     click_link "A Team"
     expect(page).to have_link("A Leaf Node")
   end
 
-  scenario "Viewing all the people in an organisation (group with children) " do
+  scenario "An organisation with subteams and some people" do
     add_named_people_to_group(org)
     visit group_path(org)
 
+    expect(page).to have_text("Teams within #{ org.name }")
+    expect(page).to have_link("View all people in #{ org.name }")
+  end
+
+  scenario "An organisation with subteams and no people" do
+    visit group_path(org)
+
+    expect(page).to have_text("Teams within #{ org.name }")
+    expect(page).not_to have_link("View all people in #{ org.name }")
+  end
+
+  scenario "An organisation with no subteams (leaf_node) and some people" do
+    add_named_people_to_group(leaf_node)
+    visit group_path(leaf_node)
+
+    expect(page).not_to have_text("Teams within #{ org.name }")
     names.each do |name|
       expect(page).to have_text(name.join(' '))
     end
   end
 
-  scenario "Listing all the people in a leaf node (group without children) " do
-    add_named_people_to_group(leaf_node)
+  scenario "An organisation with no subteams (leaf_node) and no people" do
     visit group_path(leaf_node)
 
-    names.each do |name|
-      expect(page).to have_text(name.join(' '))
-    end
+    expect(page).not_to have_text("Teams within #{ org.name }")
+    expect(page).not_to have_link("View all people in #{ org.name }")
   end
 end
 
