@@ -17,7 +17,7 @@ feature 'Search for people', elastic: true do
       visit home_path
       fill_in 'query', with: 'Browne'
       click_button 'Search'
-
+      expect(page).to have_text('> Search results')
       expect(page).to have_text('Jon Browne')
       expect(page).to have_text('jon.browne@digital.justice.gov.uk')
       expect(page).to have_text('0711111111')
