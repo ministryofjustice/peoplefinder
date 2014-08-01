@@ -4,18 +4,40 @@
 - content_for :edit_this_page do
   = link_to 'Add new person', new_person_path
 
-%h1 Search results
-%h4= pluralize(@people.length, "result") + ' returned'
+#search_results
+  %h1 Search results
+  .pagination= pluralize(@people.length, "result") + ' found'
 
-- @people.each do |person|
-  .search-result
-    .image-background
-      = image_tag person.image.medium
-    .details
-      = link_to person.name, person
-      %br
-      - person.memberships.each do |membership|
-        = [membership.role, breadcrumbs(membership.hierarchy)].compact.join("<br/>").html_safe
-      %p= person.location
-      %p= person.email
-      %p= person.mobile
+  - @people.each do |person|
+    .search-result
+      .grid-wrapper
+        .grid.grid-1-2
+          .inner-block
+            .image-background
+              = image_tag person.image.medium
+            .details
+              %h3= link_to person.name, person
+              - if roles = person.memberships.map(&:role).compact
+                .meta= roles.join(' / ').html_safe
+              - if groups =  person.memberships.map(&:group).compact
+                .meta= groups.map{ |group| link_to group }.join(' / ').html_safe
+
+              .meta= person.location
+        .grid.grid-1-2
+          .inner-block
+            %h3 &nbsp;
+            .meta
+              - if person.phone.present?
+                = "Tel: #{ person.phone }"
+              - else
+                &nbsp;
+            .meta
+              - if person.mobile.present?
+                = "Mob: #{ person.mobile }"
+              - else
+                &nbsp;
+            .meta
+              - if person.email.present?
+                = mail_to(person.email)
+              - else
+                &nbsp;

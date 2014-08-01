@@ -33,26 +33,34 @@ img.preview {
   clip: rect(0px, 100px, 100px, 0px);
 }
 
+#search_results {
+  h1 {
+    margin: 30px 0 0 0 !important;
+  }
+  .pagination {
+    margin: 15px 0 45px 0;
+  }
+}
+
 .search-result {
-  margin-top: 15px;
-  min-height: 110px;
-  clear: both;
-  .image-background {
-    height: 110px;
-    width: 110px;
+  margin: 15px 0 30px 0;
+  height: 125px;
+  border-bottom: 1px solid #DEE0E2;
+  height: 155px;
+  img {
+    width: 125px;
+    clip: rect(0px, 125px, 125px, 0px);
     float: left;
   }
-  img {
-    width: 110px;
-    clip: rect(0px, 110px, 110px, 0px);
+  .details {
+    float: left;
+    margin: -5px 0 0 140px;
+    .meta  {
+      height: 30px;
+      width: 300px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
   }
-
-}
-
-.search-result .details {
-  margin-left: 125px;
-}
-
-.search-result .details .name {
-  font-size: 24px;
 }
