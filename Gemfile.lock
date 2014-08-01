@@ -149,7 +149,6 @@ GEM
       multi_json (~> 1.0)
       websocket-driver (>= 0.2.0)
     polyglot (0.3.5)
-    possessive (1.0.1)
     powerpack (0.0.9)
     pry (0.10.0)
       coderay (~> 1.1.0)
@@ -284,7 +283,6 @@ DEPENDENCIES
   omniauth-identity (~> 1.1.1)
   pg
   poltergeist
-  possessive (~> 1.0.1)
   pry
   rails (~> 4.1.4)
   rails_12factor
