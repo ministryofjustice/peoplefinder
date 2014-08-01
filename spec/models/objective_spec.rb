@@ -1,5 +1,5 @@
 require 'rails_helper'
 
-RSpec.describe Objective, :type => :model do
+RSpec.describe Objective, type: :model do
 
 end

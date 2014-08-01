@@ -1,19 +1,19 @@
 require 'rails_helper'
 
-RSpec.describe PasswordsController, :type => :controller do
+RSpec.describe PasswordsController, type: :controller do
   describe "GET show" do
     describe "with a valid token" do
       let(:user) { create(:user).tap { |u| u.set_password_reset_token! } }
 
       it "should assign the user" do
-        get :show, { token: user.token } 
+        get :show, token: user.token
         expect(assigns(:user)).to eql(user)
       end
     end
 
     describe "with an invalid token" do
       it "should redirect to the new password page" do
-        get :show, { token: 'INVALID' } 
+        get :show, token: 'INVALID'
         expect(response).to redirect_to(new_passwords_path)
       end
     end
@@ -25,21 +25,21 @@ RSpec.describe PasswordsController, :type => :controller do
     describe "with a valid email address" do
       it "should set the user's reset token" do
         old_token = user.token
-        post :create, { email: user.email }
+        post :create, email: user.email
         user.reload
         expect(user.token).not_to be_nil
         expect(user.token).not_to eql(old_token)
       end
 
       it "should redirect to the new password page" do
-        post :create, { email: user.email }
+        post :create, email: user.email
         expect(response).to redirect_to(new_passwords_path)
       end
     end
 
     describe "with an invalid email address" do
       it "should render the new template" do
-        post :create, { email: 'invalid@example.com' }
+        post :create, email: 'invalid@example.com'
         expect(response).to render_template('new')
       end
     end
@@ -50,13 +50,12 @@ RSpec.describe PasswordsController, :type => :controller do
 
     describe "with an invalid token" do
       it "should redirect to the new password page" do
-        patch :update, {
+        patch :update,
           token: "INVALID",
           user: {
             password: password,
             password_confirmation: password
           }
-        }
 
         expect(response).to redirect_to(new_passwords_path)
       end
@@ -67,13 +66,12 @@ RSpec.describe PasswordsController, :type => :controller do
 
       describe "with a valid password" do
         before do
-          patch :update, {
+          patch :update,
             token: user.token,
             user: {
               password: password,
               password_confirmation: password
             }
-          }
         end
 
         it "should update the user's password" do
@@ -88,13 +86,12 @@ RSpec.describe PasswordsController, :type => :controller do
 
       describe "with a mismatching password confirmation" do
         before do
-          patch :update, {
+          patch :update,
             token: user.token,
             user: {
               password: password,
               password_confirmation: generate(:password)
             }
-          }
         end
 
         it "should not update the user's password" do

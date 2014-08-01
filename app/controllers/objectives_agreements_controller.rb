@@ -19,6 +19,7 @@ class ObjectivesAgreementsController < ApplicationController
   end
 
 private
+
   def objectives_agreement_params
     params[:objectives_agreement].permit(
       objectives_attributes: [

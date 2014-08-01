@@ -48,3 +48,8 @@ en:
         update: "Save"
       responsibilities_agreement:
         update: "Save"
+  user_mailer:
+    password_reset_notification:
+      subject: "Your password reset request"
+    registration_notification:
+      subject: "You've been invited to the SCS Appraisal system"

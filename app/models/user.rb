@@ -1,8 +1,9 @@
 class User < OmniAuth::Identity::Models::ActiveRecord
-
-  has_many :agreements_as_staff_member, class_name: 'Agreement',
+  has_many :agreements_as_staff_member,
+    class_name: 'Agreement',
     foreign_key: :staff_member_id
-  has_many :agreements_as_manager, class_name: 'Agreement',
+  has_many :agreements_as_manager,
+    class_name: 'Agreement',
     foreign_key: :manager_id
 
   attr_writer :token
@@ -46,9 +47,10 @@ class User < OmniAuth::Identity::Models::ActiveRecord
   end
 
   def set_password_reset_token!
-    self.password_reset_token = SecureRandom.urlsafe_base64
-    save!
-    self.password_reset_token
+    SecureRandom.urlsafe_base64.tap { |token|
+      self.password_reset_token = token
+      save!
+    }
   end
 
   def start_password_reset_flow!
@@ -69,10 +71,10 @@ class User < OmniAuth::Identity::Models::ActiveRecord
   end
 
   def token
-    self.password_reset_token
+    password_reset_token
   end
 
-  private
+private
 
   def validate_email_domain
     valid_domains = Rails.configuration.valid_login_domains
@@ -82,7 +84,7 @@ class User < OmniAuth::Identity::Models::ActiveRecord
   end
 
   def set_password_if_required
-    if self.password.blank? && self.password_digest.blank?
+    if password.blank? && password_digest.blank?
       temp_password = SecureRandom.hex
       self.password = temp_password
       self.password_confirmation = temp_password

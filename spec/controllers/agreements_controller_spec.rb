@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe AgreementsController, :type => :controller do
+RSpec.describe AgreementsController, type: :controller do
   before do
     mock_logged_in_user
   end

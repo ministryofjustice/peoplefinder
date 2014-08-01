@@ -1,6 +1,6 @@
 class RegistrationsController < ApplicationController
-  skip_before_filter :ensure_user
-  before_filter :load_user_by_token, only: [:new, :update]
+  skip_before_action :ensure_user
+  before_action :load_user_by_token, only: [:new, :update]
 
   def new
   end
@@ -17,6 +17,7 @@ class RegistrationsController < ApplicationController
   end
 
 private
+
   def load_user_by_token
     @user = User.from_token(token)
     if @user.nil?
@@ -26,7 +27,11 @@ private
   end
 
   def token
-    params[:user] && params[:user][:token] ? params[:user][:token] : params[:token]
+    if params[:user] && params[:user][:token]
+      params[:user][:token]
+    else
+      params[:token]
+    end
   end
 
   def user_params

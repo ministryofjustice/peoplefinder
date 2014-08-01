@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe ResponsibilitiesAgreementsController, :type => :controller do
+RSpec.describe ResponsibilitiesAgreementsController, type: :controller do
   before do
     mock_logged_in_user
   end
@@ -28,8 +28,9 @@ RSpec.describe ResponsibilitiesAgreementsController, :type => :controller do
       let(:agreement) { create(:agreement) }
 
       it 'raises an error' do
-        expect { get :edit, id: agreement.to_param
-          }.to raise_error(ActiveRecord::RecordNotFound)
+        expect {
+          get :edit, id: agreement.to_param
+        }.to raise_error(ActiveRecord::RecordNotFound)
       end
     end
 
@@ -38,7 +39,8 @@ RSpec.describe ResponsibilitiesAgreementsController, :type => :controller do
 
       context 'when they have been pre-defined' do
         before do
-          agreement.update_attributes!(headcount_responsibilities: {},
+          agreement.update_attributes!(
+            headcount_responsibilities: {},
             budgetary_responsibilities: []
           )
         end
@@ -64,18 +66,24 @@ RSpec.describe ResponsibilitiesAgreementsController, :type => :controller do
   describe 'PUT update' do
     let(:agreement) { create(:agreement, staff_member: current_test_user) }
     let(:invalid_attributes) {
-      valid_attributes.merge("budgetary_responsibilities_attributes" => {
-        "0" => { "budget_type" => "", "value" => "9" }
-      })
+      valid_attributes.merge(
+        "budgetary_responsibilities_attributes" => {
+          "0" => { "budget_type" => "", "value" => "9" }
+        }
+      )
     }
 
     it "redirects to the dashboard" do
-      put :update, { id: agreement.id, responsibilities_agreement: valid_attributes }
+      put :update,
+        id: agreement.id,
+        responsibilities_agreement: valid_attributes
       expect(response).to redirect_to('/')
     end
 
     it "re-renders edit if update failed" do
-      put :update, { id: agreement.id, responsibilities_agreement: invalid_attributes }
+      put :update,
+        id: agreement.id,
+        responsibilities_agreement: invalid_attributes
       expect(response).to render_template("edit")
     end
   end

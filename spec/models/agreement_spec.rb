@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Agreement, :type => :model do
+RSpec.describe Agreement, type: :model do
   let(:email) { generate(:email) }
 
   describe '.editable_by' do

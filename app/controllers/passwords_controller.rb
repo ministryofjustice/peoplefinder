@@ -1,7 +1,7 @@
 class PasswordsController < ApplicationController
-  skip_before_filter :ensure_user
+  skip_before_action :ensure_user
 
-  before_filter :load_user_by_token, only: [:show, :update]
+  before_action :load_user_by_token, only: [:show, :update]
 
   def new; end
 
@@ -32,6 +32,7 @@ class PasswordsController < ApplicationController
   def show; end
 
 private
+
   def load_user_by_token
     @user = User.from_token(params[:token])
     if @user

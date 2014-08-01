@@ -48,7 +48,7 @@ feature "Reset users password" do
   end
 
   def then_i_should_see_a_password_reset_message
-    expect(page).to have_text( 'An email with a link to reset your password has been sent')
+    expect(page).to have_text('An email with a link to reset your password has been sent')
   end
 
   def then_i_should_see_a_not_found_message

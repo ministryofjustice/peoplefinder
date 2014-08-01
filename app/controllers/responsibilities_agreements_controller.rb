@@ -19,9 +19,14 @@ class ResponsibilitiesAgreementsController < ApplicationController
   end
 
 private
+
   def responsibilities_agreement_params
-    params[:responsibilities_agreement].permit(:number_of_staff, :staff_engagement_score,
-      budgetary_responsibilities_attributes: [:id, :budget_type, :value, :description]
+    params[:responsibilities_agreement].permit(
+      :number_of_staff,
+      :staff_engagement_score,
+      budgetary_responsibilities_attributes: [
+        :id, :budget_type, :value, :description
+      ]
     )
   end
 

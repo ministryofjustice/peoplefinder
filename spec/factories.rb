@@ -9,7 +9,7 @@ FactoryGirl.define do
   end
 
   factory :user do
-    email {generate(:email)}
+    email { generate(:email) }
 
     password
     password_confirmation { password }
@@ -20,12 +20,11 @@ FactoryGirl.define do
     association :staff_member, factory: :user
   end
 
-
   factory :objective do
     association :agreement, factory: :agreement
     objective_type { Faker::Lorem.sentence }
     description { Faker::Lorem.paragraph }
-    deliverables { Faker::Lorem.paragraph}
+    deliverables { Faker::Lorem.paragraph }
     measurements { Faker::Lorem.paragraph }
   end
 

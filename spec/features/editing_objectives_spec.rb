@@ -34,9 +34,7 @@ feature "Editing objectives" do
   end
 
   def and_i_fill_in_an_objective
-    unless state.has_key?(:objective_attributes)
-      state[:objective_attributes] = []
-    end
+    state[:objective_attributes] = [] unless state.key?(:objective_attributes)
 
     attrs = attributes_for(:objective)
     state[:objective_attributes] << attrs

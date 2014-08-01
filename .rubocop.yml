@@ -1,0 +1,75 @@
+AllCops:
+  # Exclude anything that isn't really part of our code.
+  # rails_helper is excluded because it's full of solecisms, but it's mostly
+  # generated code and copy-and-pasted snipets from READMEs.
+  Exclude:
+    - 'vendor/**/*'
+    - 'db/**/*'
+    - 'bin/**/*'
+    - '**/*.gemspec'
+    - '**/Rakefile'
+    - '**/Vagrantfile'
+    - 'config/initializers/simple_form.rb'
+    - 'spec/rails_helper.rb'
+  RunRailsCops: true
+
+# private/protected/public
+Style/AccessModifierIndentation:
+  EnforcedStyle: outdent
+
+# Just indent parameters by two spaces. It's less volatile if methods change,
+# and there's less busy work lining things up.
+Style/AlignParameters:
+  EnforcedStyle: with_fixed_indentation
+
+# Chain methods with trailing dots.
+Style/DotPosition:
+  EnforcedStyle: trailing
+
+# We have a mixture at the moment, so don't enforce anything.
+Style/FormatString:
+  Enabled: false
+
+# It's not really clearer to replace every if with a return if.
+Style/GuardClause:
+  Enabled: false
+
+# Allow long lines in specs, as it's almost impossible to fit RSpec's
+# expectations into 80 characters.
+Style/LineLength:
+  Exclude:
+    - 'spec/**/*'
+
+# Don't worry about long methods in specs.
+Style/MethodLength:
+  Exclude:
+    - 'spec/**/*'
+
+# Percent-formatting and hash interpolation both have their place. Don't
+# enforce any particular one.
+Style/StringLiterals:
+  Enabled: false
+
+# Rubucop can't enforce Weirich style, so just turn this off.
+Blocks:
+  Enabled: false
+
+# Prefer sensible naming to comments everywhere.
+Documentation:
+  Description: Document classes and non-namespace modules.
+  Enabled: false
+
+# Would enforce do_y if x over if x / do y / end. As with GuardClause above,
+# this enforces code organisation that doesn't necesarily make things clearer.
+IfUnlessModifier:
+  Enabled: false
+
+# Allow safe assignment in conditions.
+Lint/AssignmentInCondition:
+  AllowSafeAssignment: false
+
+# Just a preference to use %w[] over %w()
+Style/PercentLiteralDelimiters:
+  PreferredDelimiters:
+    '%w': '[]'
+    '%W': '[]'

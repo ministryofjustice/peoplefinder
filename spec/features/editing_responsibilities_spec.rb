@@ -34,7 +34,7 @@ feature "Editing responsibilities" do
   end
 
   def and_i_fill_in_a_responsibility
-    unless state.has_key?(:responsibility_attributes)
+    unless state.key?(:responsibility_attributes)
       state[:responsibility_attributes] = []
     end
     attrs = attributes_for(:budgetary_responsibility)

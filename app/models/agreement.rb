@@ -35,7 +35,7 @@ class Agreement < ActiveRecord::Base
 
   store_accessor :headcount_responsibilities, :staff_engagement_score, *PAYBANDS
 
-  scope :editable_by, ->(user) {
+  scope :editable_by, lambda { |user|
     where(
       arel_table[:staff_member_id].eq(user.id).
       or(arel_table[:manager_id].eq(user.id))
@@ -43,8 +43,9 @@ class Agreement < ActiveRecord::Base
   }
 
 private
+
   def reset_sign_off_if_changed
-    if has_objective_changes?
+    if objectives_changed?
       reset_objectives_sign_off_unless_expressly_set
     end
 
@@ -61,7 +62,7 @@ private
     end
   end
 
-  def objectives_have_changed(agreement)
+  def objectives_have_changed(_)
     @objectives_have_changed = true
   end
 
@@ -70,7 +71,7 @@ private
     true
   end
 
-  def has_objective_changes?
+  def objectives_changed?
     @objectives_have_changed || objectives.any?(&:changed?)
   end
 end
