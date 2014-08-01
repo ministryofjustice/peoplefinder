@@ -13,7 +13,6 @@
         = render "shared/search" if current_user
       .inner-block
         = yield
-- content_for :footer_top do
-  .inner-block
-    = last_update
+      #last_update
+        = last_update
 = render template: "layouts/moj_internal_template"

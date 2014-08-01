@@ -1,6 +1,12 @@
 @import "people";
 @import "groups";
 
+#last_update {
+  float: right;
+  top: 75px;
+  position: relative;
+}
+
 .breadcrumbs_and_edit_link {
   margin-top: 1em;
   margin-bottom: 1em;
