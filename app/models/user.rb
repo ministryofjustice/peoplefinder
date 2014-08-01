@@ -79,7 +79,7 @@ private
   def validate_email_domain
     valid_domains = Rails.configuration.valid_login_domains
     unless valid_domains.include?(domain)
-      errors.add :email, 'must be in the list of permitted domains'
+      errors.add :email, I18n.t('errors.users.invalid_email_domain')
     end
   end
 

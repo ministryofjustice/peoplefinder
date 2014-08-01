@@ -53,3 +53,6 @@ en:
       subject: "Your password reset request"
     registration_notification:
       subject: "You've been invited to the SCS Appraisal system"
+  errors:
+    users:
+      invalid_email_domain: "must be in the list of permitted domains"
