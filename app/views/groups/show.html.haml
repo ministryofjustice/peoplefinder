@@ -5,22 +5,18 @@
 
 = render partial: 'detail'
 
-%div
-  - if display_children_of_group(@group)
-    .title_with_edit
-      %h2
-        = child_group_list_title(@group)
-        within
-        = @group.name
+- if display_children_of_group(@group)
+  .title_with_edit
+    %h2
+      = child_group_list_title(@group)
+      within
+      = @group.name
 
-    .grid-wrapper
-      = render partial: "subgroup", collection: @group.children
+  .grid-wrapper
+    = render partial: "subgroup", collection: @group.children
 
-  - if display_view_all_people_link_for_group(@group)
-    = link_to "View all people in #{ @group.name }", id: 'view-all-people'
+- if display_view_all_people_link_for_group(@group)
+  = link_to "View all people in #{ @group.name }", group_path(@group), remote: true, id: 'show_people_link'
 
-  - if display_all_people_in_group(@group)
-    .title_with_edit
-      %h2 People in #{ @group.name }
-    .grid-wrapper
-      = render partial: "memberships/summary", collection: @group.non_leaderships
+- if display_all_people_in_group(@group)
+  = render partial: 'all_people'

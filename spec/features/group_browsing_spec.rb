@@ -61,6 +61,27 @@ feature "Group browsing" do
     expect(page).not_to have_text("Teams within #{ current_group.name }")
     expect(page).not_to have_link("View all people in #{ current_group.name }")
   end
+
+  scenario "Following the view all people link", js: true do
+    current_group = team
+    add_people_to_group(names, current_group)
+
+    javascript_log_in
+    visit group_path(current_group)
+
+    click_link("View all people in #{ current_group.name }")
+    expect(page).to have_text("People in #{ current_group.name }")
+    names.each do |name|
+      expect(page).to have_link(name.join(' '))
+    end
+
+    click_link("hide")
+    expect(page).not_to have_text("People in #{ current_group.name }")
+    expect(page).to have_link("View all people in #{ current_group.name }")
+
+    click_link("View all people in #{ current_group.name }")
+    expect(page).to have_css('.team-member', count: 3)
+  end
 end
 
 def add_people_to_group(names, group)

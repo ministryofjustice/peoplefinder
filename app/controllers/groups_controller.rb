@@ -13,7 +13,10 @@ class GroupsController < ApplicationController
 
   # GET /groups/1
   def show
-    session[:last_group_visited] = @group.id
+    respond_to do |format|
+      format.html { session[:last_group_visited] = @group.id }
+      format.js { }
+    end
   end
 
   # GET /groups/new

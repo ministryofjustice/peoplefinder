@@ -14,3 +14,11 @@ $(function() {
     });
   });
 });
+
+$(function() {
+  return $(document).on("click", "#hide_people_link", function(e) {
+    e.preventDefault();
+    $('#all_people').remove();
+    $('#show_people_link').show();
+  });
+});

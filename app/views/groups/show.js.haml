@@ -1,0 +1,3 @@
+$('#show_people_link').after("#{ escape_javascript(render partial: 'all_people', locals: { hideable: true }) }");
+$('#show_people_link').hide();
+$('#hide_people_link').show();
