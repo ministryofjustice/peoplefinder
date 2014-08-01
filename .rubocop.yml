@@ -26,7 +26,8 @@ Style/AlignParameters:
 Style/DotPosition:
   EnforcedStyle: trailing
 
-# We have a mixture at the moment, so don't enforce anything.
+# Percent-formatting and hash interpolation both have their place. Don't
+# enforce any particular one.
 Style/FormatString:
   Enabled: false
 
@@ -45,10 +46,14 @@ Style/MethodLength:
   Exclude:
     - 'spec/**/*'
 
-# Percent-formatting and hash interpolation both have their place. Don't
-# enforce any particular one.
+# Enforce single quotes everywhere except in specs (because there's a lot of
+# human text with apostrophes in spec names, and using double quotes for all
+# of those is more consistent. There shouldn't be much human-readable text in
+# the application code: that is better moved to the locale files.
 Style/StringLiterals:
-  Enabled: false
+  EnforcedStyle: single_quotes
+  Exclude:
+    - 'spec/**/*'
 
 # Rubucop can't enforce Weirich style, so just turn this off.
 Blocks:
