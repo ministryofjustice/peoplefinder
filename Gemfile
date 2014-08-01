@@ -25,26 +25,26 @@ group :development do
 end
 
 group :test do
-  gem 'email_spec'
-  gem 'capybara-email'
   gem 'capybara'
+  gem 'capybara-email'
+  gem 'email_spec'
   gem 'factory_girl_rails'
   gem 'launchy'
   gem 'minitest'
   gem 'poltergeist', require: 'capybara/poltergeist'
-  gem 'rspec-rails', '~> 3.0.0'
   gem 'rspec-mocks'
+  gem 'rspec-rails', '~> 3.0.0'
   gem 'shoulda-matchers'
   gem 'simplecov', '~> 0.7.1', require: false
   gem 'simplecov-rcov', require: false
 end
 
 group :development, :test do
+  gem 'dotenv-rails'
   gem 'ffaker'
   gem 'guard'
   gem 'guard-rspec', require: false
   gem 'pry'
-  gem 'dotenv-rails'
 end
 
 group :production do
