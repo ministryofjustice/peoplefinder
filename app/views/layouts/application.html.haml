@@ -1,10 +1,10 @@
-= render "shared/loginout"
+= render 'shared/loginout'
 - content_for :head do
-  = javascript_include_tag "application"
-  = stylesheet_link_tag "application"
+  = javascript_include_tag 'application'
+  = stylesheet_link_tag 'application'
 - content_for :content do
   .class
     %main#content{role: 'main'}
       = flash_messages
       = yield
-= render template: "layouts/moj_internal_template"
+= render template: 'layouts/moj_internal_template'
