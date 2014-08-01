@@ -16,7 +16,7 @@
     .inner-block
       - @person.memberships.each do |membership|
         %h4= membership.role
-        = breadcrumbs(membership.hierarchy)
+        = link_to membership.group, membership.group
 
       %p= @person.location
       %p= contact_details(@person)
