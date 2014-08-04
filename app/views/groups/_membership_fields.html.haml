@@ -12,7 +12,7 @@
       .form-group
         = membership_f.input :role, as: :string, label: 'Title'
       .form-checkbox
-        = membership_f.input :leader, label: 'Leader?'
+        = membership_f.input :leader, label: 'This person is the Leader of this team'
 
     - else
       = link_to membership.person.name, membership.person
