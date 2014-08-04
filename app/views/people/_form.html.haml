@@ -24,7 +24,7 @@
     .form-group
       = f.input :email, as: :string
     .form-group
-      = f.input :description
+      = f.input :description, label: 'About'
 
     .form-checkbox
       - Person::DAYS_WORKED.each do |day|

@@ -16,7 +16,7 @@ feature "Person maintenance" do
     fill_in 'Phone', with: p[:phone]
     fill_in 'Mobile', with: p[:mobile]
     fill_in 'Location', with: p[:location]
-    fill_in 'Description', with: p[:description]
+    fill_in 'About', with: p[:description]
     uncheck('Monday')
     uncheck('Friday')
     click_button "Create person"
