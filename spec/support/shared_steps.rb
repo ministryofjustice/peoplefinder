@@ -62,6 +62,11 @@ module SpecSupport
     end
     alias_method :and_i_click, :when_i_click
 
+    def when_i_check(label)
+      check label
+    end
+    alias_method :and_i_check, :when_i_check
+
     def then_i_should_have_a_new_password
       state[:me].reload
       expect(state[:me].authenticate(state[:new_password])).to eql(state[:me])

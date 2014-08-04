@@ -19,6 +19,9 @@ en:
         payband_c_headcount: "Payband C"
         payband_d_headcount: "Payband D"
         payband_e_headcount: "Payband E"
+      objectives_agreement:
+        objectives_signed_off_by_manager: "Manager sign-off"
+        objectives_signed_off_by_staff_member: "Staff member sign-off"
       budgetary_responsibilities:
         budget_type: "Type"
 

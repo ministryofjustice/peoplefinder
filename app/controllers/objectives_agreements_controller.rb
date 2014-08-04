@@ -22,10 +22,21 @@ private
 
   def objectives_agreement_params
     params[:objectives_agreement].permit(
+      *permitted_params_for_current_user,
       objectives_attributes: [
         :id, :objective_type, :description, :deliverables, :measurements
       ]
     )
+  end
+
+  def permitted_params_for_current_user
+    if current_user == @objectives_agreement.manager
+      [:objectives_signed_off_by_manager]
+    elsif current_user == @objectives_agreement.staff_member
+      [:objectives_signed_off_by_staff_member]
+    else
+      []
+    end
   end
 
   def retrieve_object

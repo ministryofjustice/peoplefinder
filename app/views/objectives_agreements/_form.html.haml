@@ -7,5 +7,12 @@
     = f.link_to_add 'Add more', :objectives, data: { target: '#objectives' }
 
   .inner-block
+    %fieldset
+      .form-checkbox
+        = f.input :objectives_signed_off_by_manager, label_html: { class: 'block-label' }
+      .form-checkbox
+        = f.input :objectives_signed_off_by_staff_member, label_html: { class: 'block-label' }
+
+  .inner-block
     .actions
       = f.button :submit

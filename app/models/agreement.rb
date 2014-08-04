@@ -42,6 +42,10 @@ class Agreement < ActiveRecord::Base
     )
   }
 
+  def signed_off?
+    objectives_signed_off_by_manager? && objectives_signed_off_by_staff_member?
+  end
+
 private
 
   def reset_sign_off_if_changed
