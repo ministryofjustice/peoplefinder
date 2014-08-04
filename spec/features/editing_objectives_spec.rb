@@ -4,16 +4,17 @@ feature "Editing objectives" do
   before do
     given_i_have_an_account
     and_i_am_logged_in
-    and_i_have_an_agreement_as_a_staff_member
   end
 
   scenario "Seeing my objectives", js: true do
-    given_the_agreement_has_some_objectives
+    given_i_have_an_agreement_as_a_staff_member
+    and_the_agreement_has_some_objectives
     when_i_visit_the_page_for_my_objectives
     then_i_should_see_the_objectives
   end
 
   scenario "Adding objectives", js: true do
+    given_i_have_an_agreement_as_a_staff_member
     when_i_visit_the_page_for_my_objectives
     and_i_fill_in_an_objective
     and_i_add_another_objective
@@ -23,26 +24,59 @@ feature "Editing objectives" do
   end
 
   scenario "Signing off my objectives", js: true do
-    when_my_manager_has_signed_off_my_objectives
+    given_i_have_an_agreement_as_a_staff_member
+    and_my_manager_has_signed_off_my_objectives
     when_i_visit_the_page_for_my_objectives
     and_i_check 'Staff member sign-off'
     and_i_click 'Save'
     then_my_objectives_should_be_signed_off
   end
 
-  def given_the_agreement_has_some_objectives
+  scenario "Editing signed-off objectives", js: true do
+    given_i_have_an_agreement_as_a_staff_member
+    and_my_manager_has_signed_off_my_objectives
+    and_i_have_signed_off_my_objectives
+    when_i_visit_the_page_for_my_objectives
+    and_i_fill_in_an_objective
+    and_i_click 'Save'
+    then_my_objectives_should_not_be_signed_off
+  end
+
+  scenario "Signing off my staff member's objectives", js: true do
+    given_my_staff_member_has_an_agreement
+    and_my_staff_manager_has_signed_off_their_objectives
+    when_i_visit_the_page_for_their_objectives
+    and_i_check 'Manager sign-off'
+    and_i_click 'Save'
+    then_my_objectives_should_be_signed_off
+  end
+
+  def and_the_agreement_has_some_objectives
     state[:objectives] = 2.times.map {
       create(:objective, agreement: state[:agreement])
     }
   end
 
   def when_i_visit_the_page_for_my_objectives
-    visit '/'
-    click_button 'Objectives'
+    visit edit_objectives_agreement_path(state[:agreement])
   end
 
-  def when_my_manager_has_signed_off_my_objectives
+  def when_i_visit_the_page_for_their_objectives
+    visit edit_objectives_agreement_path(state[:agreement])
+  end
+
+  def and_my_manager_has_signed_off_my_objectives
     state[:agreement].objectives_signed_off_by_manager = true
+    state[:agreement].save!
+  end
+
+  def and_my_staff_manager_has_signed_off_their_objectives
+    state[:agreement].objectives_signed_off_by_staff_member = true
+    state[:agreement].save!
+  end
+
+  def and_i_have_signed_off_my_objectives
+    state[:agreement].objectives_signed_off_by_staff_member = true
     state[:agreement].save!
   end
 
@@ -87,5 +121,10 @@ feature "Editing objectives" do
   def then_my_objectives_should_be_signed_off
     agreement = state[:agreement].reload
     expect(agreement).to be_signed_off
+  end
+
+  def then_my_objectives_should_not_be_signed_off
+    agreement = state[:agreement].reload
+    expect(agreement).not_to be_signed_off
   end
 end

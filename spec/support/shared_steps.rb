@@ -23,8 +23,14 @@ module SpecSupport
       clear_emails
     end
 
-    def and_i_have_an_agreement_as_a_staff_member
+    def given_i_have_an_agreement_as_a_staff_member
       state[:agreement] = create(:agreement, staff_member: state[:me])
+    end
+    alias_method :and_i_have_an_agreement_as_a_staff_member,
+      :given_i_have_an_agreement_as_a_staff_member
+
+    def given_my_staff_member_has_an_agreement
+      state[:agreement] = create(:agreement, manager: state[:me])
     end
 
     def and_i_am_logged_in
