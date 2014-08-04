@@ -64,8 +64,8 @@ class Person < ActiveRecord::Base
       :given_name,
       :surname,
       :email,
-      :phone,
-      :mobile,
+      :primary_phone_number,
+      :secondary_phone_number,
       :location,
       :description,
       :groups

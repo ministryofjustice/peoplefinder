@@ -34,7 +34,7 @@ RSpec.describe Person, :type => :model do
         given_name: "Bobby",
         surname: "Tables",
         email: "user.example@digital.justice.gov.uk",
-        phone: "020 7946 0123",
+        primary_phone_number: "020 7946 0123",
       )
       expect(person.completion_score).to eql(50)
       expect(person).not_to be_profile_completed
@@ -45,8 +45,8 @@ RSpec.describe Person, :type => :model do
         given_name: "Bobby",
         surname: "Tables",
         email: "user.example@digital.justice.gov.uk",
-        phone: "020 7946 0123",
-        mobile: "07700 900123",
+        primary_phone_number: "020 7946 0123",
+        secondary_phone_number: "07700 900123",
         location: "London",
         description: "I am a real person"
       )

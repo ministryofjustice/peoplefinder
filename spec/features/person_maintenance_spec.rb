@@ -13,8 +13,8 @@ feature "Person maintenance" do
     fill_in 'Surname', with: p[:surname]
     select 'Digital', from: 'Group'
     fill_in 'Email', with: p[:email]
-    fill_in 'Phone', with: p[:phone]
-    fill_in 'Mobile', with: p[:mobile]
+    fill_in 'Primary phone number', with: p[:primary_phone_number]
+    fill_in 'Secondary phone number', with: p[:secondary_phone_number]
     fill_in 'Location', with: p[:location]
     fill_in 'About', with: p[:description]
     uncheck('Monday')
@@ -27,8 +27,8 @@ feature "Person maintenance" do
       expect(page).to have_text(p[:given_name] + ' ' + p[:surname])
     end
     expect(page).to have_text(p[:email])
-    expect(page).to have_text(p[:phone])
-    expect(page).to have_text('Mob: ' + p[:mobile])
+    expect(page).to have_text(p[:primary_phone_number])
+    expect(page).to have_text(p[:secondary_phone_number])
     expect(page).to have_text(p[:location])
     expect(page).to have_text(p[:description])
 
@@ -119,8 +119,8 @@ def person_attributes
     given_name: 'Marco',
     surname: 'Polo',
     email: 'marco.polo@example.com',
-    phone: '+44-208-123-4567',
-    mobile: '07777777777',
+    primary_phone_number: '+44-208-123-4567',
+    secondary_phone_number: '07777777777',
     location: 'MOJ / Petty France / London',
     description: 'Lorem ipsum dolor sit amet...'
   }

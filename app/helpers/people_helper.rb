@@ -10,8 +10,8 @@ module PeopleHelper
   def contact_details(person)
     [
       (mail_to(person.email) if person.email.present?),
-      (person.phone if person.phone.present?),
-      ("Mob: #{ person.mobile }" if person.mobile.present?)
+      (person.primary_phone_number if person.primary_phone_number.present?),
+      (person.secondary_phone_number if person.secondary_phone_number.present?)
     ].compact.join('<br/>').html_safe
   end
 end

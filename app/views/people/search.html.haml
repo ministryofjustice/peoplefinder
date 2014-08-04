@@ -27,13 +27,8 @@
           .inner-block
             %h3 &nbsp;
             .meta
-              - if person.phone.present?
-                = "Tel: #{ person.phone }"
-              - else
-                &nbsp;
-            .meta
-              - if person.mobile.present?
-                = "Mob: #{ person.mobile }"
+              - if person.primary_phone_number.present?
+                = "Tel: #{ person.primary_phone_number }"
               - else
                 &nbsp;
             .meta

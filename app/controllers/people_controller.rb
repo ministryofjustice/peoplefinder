@@ -77,8 +77,8 @@ private
   # Never trust parameters from the scary internet, only allow the white list through.
   def person_params
     params.require(:person).permit(
-      :given_name, :surname, :location, :phone, :mobile, :email, :image,
-      :description, *Person::DAYS_WORKED,
+      :given_name, :surname, :location, :primary_phone_number, :secondary_phone_number,
+      :email, :image, :description, *Person::DAYS_WORKED,
       memberships_attributes: [:id, :role, :group_id, :leader])
   end
 
