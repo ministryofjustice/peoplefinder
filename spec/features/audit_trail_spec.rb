@@ -137,7 +137,7 @@ feature "Audit trail" do
       person.memberships.create(group: group, role: 'Jefe', leader: true)
 
       visit edit_person_path(person)
-      within('.roles') do
+      within('.membership') do
         click_link("remove")
       end
 

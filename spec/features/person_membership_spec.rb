@@ -35,8 +35,12 @@ feature "Person maintenance" do
   scenario 'Clicking the add another role link', js: true do
     javascript_log_in
     visit new_person_path
+
     click_link('Add another role')
-    expect(page).to have_selector('#memberships .roles', count: 2)
+    expect(page).to have_selector('#memberships .membership', count: 2)
+
+    click_link('remove', match: :first)
+    expect(page).to have_selector('#memberships .membership', count: 1)
   end
 
   scenario 'Removing a group' do

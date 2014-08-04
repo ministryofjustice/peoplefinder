@@ -35,8 +35,12 @@ feature "Group maintenance" do
   scenario 'Clicking the add another person link', js: true do
     javascript_log_in
     visit new_group_path
+
     click_link('Add another person')
-    expect(page).to have_selector('#memberships .people', count: 2)
+    expect(page).to have_selector('#memberships .membership', count: 2)
+
+    click_link('remove', match: :first)
+    expect(page).to have_selector('#memberships .membership', count: 1)
   end
 
   scenario 'Removing a person' do
