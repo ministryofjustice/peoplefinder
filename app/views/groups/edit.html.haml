@@ -11,5 +11,3 @@
   .form-group
     = link_to 'Delete this record', @group, method: :delete,
       data: { confirm: "Are you sure you want to delete #{ @group.name }?" }
-
-= render partial: 'detail'
