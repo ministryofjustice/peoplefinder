@@ -9,9 +9,9 @@
   .inner-block
     %fieldset
       .form-checkbox
-        = f.input :objectives_signed_off_by_manager, label: t('simple_form.labels.objectives_agreement.objectives_signed_off_by_manager', name: @objectives_agreement.manager), label_html: { class: 'block-label' }
+        = sign_off_box(f, :manager)
       .form-checkbox
-        = f.input :objectives_signed_off_by_staff_member, label: t('simple_form.labels.objectives_agreement.objectives_signed_off_by_staff_member', name: @objectives_agreement.staff_member), label_html: { class: 'block-label' }
+        = sign_off_box(f, :staff_member)
 
   .inner-block
     .actions

@@ -16,7 +16,22 @@ module ApplicationHelper
     "#{ the_date.strftime('%Y') }/#{ the_date.next_year.strftime('%y') }"
   end
 
+  def sign_off_box(form, role)
+    field = "objectives_signed_off_by_#{role}"
+    person = form.object.send(role)
+    form.input(
+      field,
+      label: sign_off_label(field, person),
+      label_html: { class: 'block-label' },
+      disabled: person != current_user
+    )
+  end
+
 private
+
+  def sign_off_label(field, person)
+    t(field, scope: 'simple_form.labels.objectives_agreement', name: person)
+  end
 
   def flash_message(type)
     content_tag(:div, class: "flash-message #{type}") {
