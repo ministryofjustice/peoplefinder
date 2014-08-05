@@ -27,7 +27,7 @@ feature "Editing objectives" do
     given_i_have_an_agreement_as_a_staff_member
     and_my_manager_has_signed_off_my_objectives
     when_i_visit_the_page_for_my_objectives
-    and_i_check 'Staff member sign-off'
+    and_i_check "Sign-off #{state[:me]}"
     and_i_click 'Save'
     then_my_objectives_should_be_signed_off
   end
@@ -46,7 +46,7 @@ feature "Editing objectives" do
     given_my_staff_member_has_an_agreement
     and_my_staff_manager_has_signed_off_their_objectives
     when_i_visit_the_page_for_their_objectives
-    and_i_check 'Manager sign-off'
+    and_i_check "Sign-off #{state[:me]}"
     and_i_click 'Save'
     then_my_objectives_should_be_signed_off
   end
