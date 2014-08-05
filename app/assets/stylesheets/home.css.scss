@@ -1,12 +1,16 @@
 #home-page {
-  .search-box-hint {
+  .hint-text {
     margin: 12px 0 -8px 0;
   }
   a.add-new-person {
     float: right;
-    color: #005EA5;
+    color: $darkblue;
     margin-top: 2px;
     padding: 10px 15px 11px 58px;
-    background: rgba(#2B8CC4, 0.25) url('icon_plus.png') no-repeat 14px;
+    background: $opaqueblue url('icon_plus.png') no-repeat 14px;
+  }
+  #search_box {
+    padding-bottom: 56px;
+    border-bottom: 1px solid $darkblue;
   }
 }
