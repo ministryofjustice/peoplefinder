@@ -105,7 +105,7 @@ class Person < ActiveRecord::Base
       group = groups.find { |g| g.hierarchy.include?(hint_group) } || groups.first
       items = group.hierarchy
     end
-    items << self
+    items + [self]
   end
 
   def assignable_groups
