@@ -4,3 +4,12 @@
 %h3 Search the people finder
 .hint-text Enter the name of a person or role
 = render 'shared/search'
+
+%h3.org-structure #{ @group.name } organisational structure
+.hint-text
+  = link_to 'Start at the top level', groups_path
+  or search for a team within the
+  = @group.name
+  at this level
+
+.org-browser
