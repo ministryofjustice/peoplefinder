@@ -1,6 +1,7 @@
 @import "people";
 @import "groups";
 @import "home";
+@import "search_box";
 
 #last_update {
   float: right;
@@ -21,24 +22,6 @@
   display: inline-block;
 }
 
-.people-search {
-  margin-top: 15px;
-}
-.people-search input.form-control {
-  padding: 10px;
-}
-.people-search input[type='submit'] {
-  position: absolute;
-  margin-top: 2px;
-  margin-left: -4px;
-  width: 47px;
-  height: 47px;
-  border: 1px solid #6F777B;
-  border-width: 0 0 0 1px;
-  text-indent: -5000px;
-  overflow: hidden;
-  background: #6F777B image-url("search-button.png") no-repeat 5px 50%;
-}
 .image-background {
   position: relative;
 }
@@ -118,3 +101,5 @@ textarea {
 select.form-control {
   -webkit-appearance: menulist;
 }
+
+@import 'retinal_images';

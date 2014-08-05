@@ -1,0 +1,11 @@
+/* ensure this declaration is rendered after the original declaration */
+@media only screen and (min--moz-device-pixel-ratio: 1.5),
+only screen and (-o-min-device-pixel-ratio: 3/2),
+only screen and (-webkit-min-device-pixel-ratio: 1.5),
+only screen and (min-device-pixel-ratio: 1.5) {
+
+  #search_box .submit-button {
+    background-image: url(icon_search_retina.png);
+    background-size: 46px 47px;
+  }
+}
