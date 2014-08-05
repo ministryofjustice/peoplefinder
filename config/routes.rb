@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  root 'groups#index', as: :home
+  root 'home#show', as: :home
 
   resources :groups do
     collection do
