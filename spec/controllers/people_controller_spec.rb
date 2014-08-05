@@ -203,6 +203,12 @@ RSpec.describe PeopleController, :type => :controller do
       delete :destroy, {:id => person.to_param}, valid_session
       expect(response).to redirect_to(people_url)
     end
+
+    it "sets a flash message" do
+      person = create(:person, valid_attributes)
+      delete :destroy, {:id => person.to_param}, valid_session
+      expect(flash[:notice]).to include("Deleted #{person}’s profile")
+    end
   end
 
   describe 'GET add_membership' do

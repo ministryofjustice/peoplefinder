@@ -58,9 +58,6 @@ feature "Person maintenance" do
     person = create(:person)
     visit edit_person_path(person)
     click_link('Delete')
-
-    expect(page).to have_content("Deleted #{person}’s profile")
-
     expect { Person.find(person) }.to raise_error(ActiveRecord::RecordNotFound)
   end
 
