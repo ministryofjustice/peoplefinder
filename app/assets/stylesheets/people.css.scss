@@ -35,34 +35,40 @@ img.preview {
 
 #search_results {
   h1 {
-    margin: 30px 0 0 0 !important;
+    margin: 30px 0 -10px 0 !important;
+    border: 0 !important;
+  }
+  .search-hint {
+    padding: 0 0 12px 0;
+    border-bottom: 1px solid #6F777B;
   }
   .pagination {
-    margin: 15px 0 45px 0;
-    padding-bottom: 15px;
-    border-bottom: 1px solid #DEE0E2;
+    padding: 9px 0 0 0;
+    margin-bottom: -5px;
   }
-}
+  .search-result {
+    margin: 15px 0 15px 0;
+    border-top: 1px solid #DEE0E2;
 
-.search-result {
-  margin: 15px 0 30px 0;
-  height: 125px;
-  border-bottom: 1px solid #DEE0E2;
-  height: 155px;
-  img {
-    width: 125px;
-    clip: rect(0px, 125px, 125px, 0px);
-    float: left;
-  }
-  .details {
-    float: left;
-    margin: -5px 0 0 140px;
-    .meta  {
-      height: 30px;
-      width: 300px;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+    .grid-wrapper {
+      margin-top: 15px;
+      img {
+        width: 125px;
+        clip: rect(0px, 125px, 125px, 0px);
+        float: left;
+      }
+      .details {
+        float: left;
+        margin: -5px 0 0 140px;
+        .meta  {
+          height: 30px;
+          width: 400px;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+      }
     }
   }
+
 }

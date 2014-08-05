@@ -187,4 +187,32 @@ RSpec.describe Person, :type => :model do
       expect { Person.find(person) }.to raise_error(ActiveRecord::RecordNotFound)
     end
   end
+
+  describe '.phone' do
+    let(:person) { create(:person) }
+    let(:primary_phone_number) { '0207-123-4567' }
+    let(:secondary_phone_number) { '0208-999-8888' }
+
+    context 'with a primary and secondary phone' do
+      before do
+        person.primary_phone_number = primary_phone_number
+        person.secondary_phone_number = secondary_phone_number
+      end
+
+      it 'should use the primary phone number' do
+        expect(person.phone).to eql(primary_phone_number)
+      end
+    end
+
+    context 'with a blank primary and a valid secondary phone' do
+      before do
+        person.primary_phone_number = ''
+        person.secondary_phone_number = secondary_phone_number
+      end
+
+      it 'should use the secondary phone number' do
+        expect(person.phone).to eql(secondary_phone_number)
+      end
+    end
+  end
 end

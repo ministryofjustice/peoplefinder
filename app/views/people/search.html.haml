@@ -5,7 +5,8 @@
   = link_to 'Add new person', new_person_path
 
 #search_results
-  %h1 Search results
+  %h1.noborder Search results
+  .search-hint Select a person's name to view more details, or you can view their organisation if desired
   .pagination= pluralize(@people.length, "result") + ' found'
 
   - @people.each do |person|
@@ -17,22 +18,15 @@
               = image_tag person.image.medium
             .details
               %h3= link_to person.name, person
-              - if roles = person.memberships.map(&:role).compact
-                .meta= roles.join(' / ').html_safe
-              - if groups =  person.memberships.map(&:group).compact
-                .meta= groups.map{ |group| link_to group }.join(' / ').html_safe
+              - person.memberships.each do |membership|
+                .meta
+                  = "#{ membership.role }, " if membership.role.present?
+                  = link_to membership.group, membership.group
 
-              .meta= person.location
-        .grid.grid-1-2
-          .inner-block
-            %h3 &nbsp;
-            .meta
-              - if person.primary_phone_number.present?
-                = "Tel: #{ person.primary_phone_number }"
-              - else
-                &nbsp;
-            .meta
-              - if person.email.present?
+              .meta= person.phone
+              .meta
                 = mail_to(person.email)
-              - else
-                &nbsp;
+                = mail_to(person.email)
+                = mail_to(person.email)
+                = mail_to(person.email)
+
