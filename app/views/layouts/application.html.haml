@@ -1,7 +1,4 @@
-= render "shared/loginout"
-- content_for :head do
-  = javascript_include_tag "application"
-  = stylesheet_link_tag "application"
+= render partial: 'layouts/shared'
 - content_for :content do
   #wrapper
     %main#content{role: 'main'}
@@ -15,4 +12,5 @@
         = yield
       #last_update
         = last_update
+
 = render template: "layouts/moj_internal_template"

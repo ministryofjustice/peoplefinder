@@ -1,0 +1,8 @@
+= render partial: 'layouts/shared'
+- content_for :content do
+  #wrapper
+    %main#content{role: 'main'}
+      .inner-block
+        = yield
+
+= render template: "layouts/moj_internal_template"
