@@ -8,5 +8,7 @@ feature 'Home page' do
 
   scenario 'Viewing the page' do
     within('h1') { expect(page).to have_text('Ministry of Justice people finder') }
+    expect(page).to have_text('Search the people finder')
+    expect(page).to have_css('input#query')
   end
 end
