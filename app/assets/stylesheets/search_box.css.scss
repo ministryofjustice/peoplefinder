@@ -1,5 +1,10 @@
-.search-box {
+form.search-box {
+  .form-control {
+    width: 480px;
+    max-width: 90% !important;
+  }
   margin-top: 15px;
+  overflow: hidden;
   input.form-control {
     padding: 10px;
   }

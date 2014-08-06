@@ -105,4 +105,11 @@ select.form-control {
   -webkit-appearance: menulist;
 }
 
+a.add-new-person {
+  margin-top: 16px;
+  float: right;
+  color: $darkblue;
+  padding: 10px 15px 11px 58px;
+  background: $opaqueblue image-url('icon_plus.png') no-repeat 14px;
+}
 @import 'retinal_images';

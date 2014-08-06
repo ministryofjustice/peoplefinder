@@ -2,16 +2,12 @@
   .hint-text {
     margin: 12px 0 -8px 0;
   }
-  a.add-new-person {
-    float: right;
-    color: $darkblue;
-    margin-top: 2px;
-    padding: 10px 15px 11px 58px;
-    background: $opaqueblue image-url('icon_plus.png') no-repeat 14px;
-  }
   .search-box {
     padding-bottom: 56px;
     border-bottom: 1px solid $darkblue;
+  }
+  a.add-new-person {
+    margin-top: 2px;
   }
   h3.org-structure {
     margin: 29px 0 30px 0;
