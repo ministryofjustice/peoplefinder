@@ -55,6 +55,10 @@ GEM
       thread_safe (~> 0.1)
       tzinfo (~> 1.1)
     addressable (2.3.6)
+    appsignal (0.9.5)
+      activesupport (>= 3.0)
+      rack
+      thread_safe
     arel (5.0.1.20140414130214)
     builder (3.2.2)
     capybara (2.4.1)
@@ -311,6 +315,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  appsignal
   capybara
   carrierwave!
   coffee-rails (~> 4.0.0)
