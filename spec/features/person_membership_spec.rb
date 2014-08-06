@@ -20,18 +20,6 @@ feature "Person maintenance" do
     expect(membership.leader?).to be true
   end
 
-  scenario 'Creating a person and linking to the new group page' do
-    visit new_person_path
-    click_link 'Add a new group'
-    expect(page).to have_text('New group')
-  end
-
-  scenario 'Editing a person and linking to the new group page' do
-    visit edit_person_path(create(:person, surname: 'Polo'))
-    click_link 'Add a new group'
-    expect(page).to have_select('Name', selected: 'Polo')
-  end
-
   scenario 'Clicking the add another role link', js: true do
     javascript_log_in
     visit new_person_path

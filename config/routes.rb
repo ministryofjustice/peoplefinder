@@ -2,9 +2,6 @@ Rails.application.routes.draw do
   root 'home#show', as: :home
 
   resources :groups do
-    collection do
-      get :add_membership
-    end
     resources :groups, only: [:new]
   end
   resources :people do

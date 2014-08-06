@@ -62,13 +62,6 @@ class GroupsController < ApplicationController
     redirect_to next_page, notice: "Deleted #{@group}."
   end
 
-  def add_membership
-    set_group if params[:id].present?
-    @group ||= Group.new
-    load_people
-    render "add_membership", :layout => false
-  end
-
 private
   # Use callbacks to share common setup or constraints between actions.
   def set_group
@@ -77,8 +70,7 @@ private
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def group_params
-    params.require(:group).permit(:parent_id, :name, :description, :responsibilities,
-      memberships_attributes: [:id, :role, :person_id, :leader])
+    params.require(:group).permit(:parent_id, :name, :description, :responsibilities)
   end
 
   def collection

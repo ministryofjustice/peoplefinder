@@ -211,38 +211,4 @@ RSpec.describe GroupsController, :type => :controller do
       expect(response).to redirect_to(groups_url)
     end
   end
-
-  describe 'GET add_membership' do
-    context 'with a new group' do
-      it 'renders add_membership template' do
-        get :add_membership
-        expect(response).to render_template('add_membership')
-      end
-
-      it 'sets people' do
-        get :add_membership
-        expect(assigns(:people)).to include(person)
-      end
-    end
-
-    context 'with an existing group' do
-      let(:group) { create(:group) }
-
-      it 'renders add_membership template' do
-        get :add_membership, id: group
-        expect(response).to render_template('add_membership')
-      end
-
-      it 'sets people' do
-        get :add_membership, id: group
-        expect(assigns(:people)).to include(person)
-      end
-
-      it "sets people and excludes the already assigned person" do
-        group.memberships.create(person: person)
-        get :add_membership, id: group
-        expect(assigns(:people)).not_to include(person)
-      end
-    end
-  end
 end
