@@ -6,7 +6,7 @@
 
 #search_results
   %h1.noborder Search results
-  .search-hint Select a person's name to view more details, or you can view their organisation if desired.
+  .search-hint Select a person's name to view more details, or you can view their team if desired.
   .pagination= pluralize(@people.length, "result") + ' found'
 
   - @people.each do |person|

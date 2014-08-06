@@ -20,19 +20,6 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
-  groups:
-    about:
-      team: "About the team"
-      organization: "About the organisation"
-    responsibilities:
-      team: "Team responsibilities"
-      organization: "Organisation responsibilities"
-    list:
-      team: "Teams"
-      organization: "Organisations"
-    add_cta:
-      team: "Add a team"
-      organization: "Add a new organisation"
   people:
     day_names:
       works_monday: "Monday"

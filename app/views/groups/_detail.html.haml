@@ -10,16 +10,16 @@
   -if @group.responsibilities.present?
     %div.grid.grid-1-3
       %div.inner-block.about
-        %h3= about_group_title(@group)
+        %h3 About the team
         = govspeak(@group.description)
     %div.grid.grid-1-3
       %div.inner-block
         %div.responsibilities
-          %h3= about_group_responsibilities_title(@group)
+          %h3 Team responsibilities
           = govspeak(@group.responsibilities)
   -else
     %div.grid.grid-2-3
       %div.inner-block.about
-        %h3= about_group_title(@group)
+        %h3 About the team
         = govspeak(@group.description)
 

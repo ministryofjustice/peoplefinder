@@ -19,12 +19,12 @@ feature "Group maintenance" do
     expect(dept.parent).to be_nil
   end
 
-  scenario "Creating an organisation inside the department" do
+  scenario "Creating a team inside the department" do
     dept = create(:group, name: "Ministry of Justice")
 
     visit group_path(dept)
     click_link "Edit this page"
-    click_link "Add a new organisation"
+    click_link "Add a team"
 
     name = "CSG"
     fill_in "Name", with: name
@@ -33,16 +33,16 @@ feature "Group maintenance" do
 
     expect(page).to have_content("Created CSG")
 
-    org = Group.find_by_name(name)
-    expect(org.name).to eql(name)
-    expect(org.parent).to eql(dept)
+    team = Group.find_by_name(name)
+    expect(team.name).to eql(name)
+    expect(team.parent).to eql(dept)
   end
 
-  scenario "Creating a team inside an organisation from the organisation's page" do
+  scenario "Creating a subteam inside a team from that team's page" do
     dept = create(:group, name: "Ministry of Justice")
-    org = create(:group, parent: dept)
+    team = create(:group, parent: dept, name: 'Corporate Services')
 
-    visit group_path(org)
+    visit group_path(team)
     click_link "Edit this page"
     click_link "Add a team"
 
@@ -52,9 +52,9 @@ feature "Group maintenance" do
 
     expect(page).to have_content("Created Digital Services")
 
-    team = Group.find_by_name(name)
-    expect(team.name).to eql(name)
-    expect(team.parent).to eql(org)
+    subteam = Group.find_by_name(name)
+    expect(subteam.name).to eql(name)
+    expect(subteam.parent).to eql(team)
   end
 
   scenario 'Deleting a group' do

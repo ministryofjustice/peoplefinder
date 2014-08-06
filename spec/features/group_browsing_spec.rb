@@ -6,27 +6,26 @@ feature "Group browsing" do
   end
 
   let!(:department) { create(:group, name: "Ministry of Justice") }
-  let!(:org) { create(:group, name: "An Organisation", parent: department) }
-  let!(:team) { create(:group, name: "A Team", parent: org) }
-  let!(:leaf_node) { create(:group, name: "A Leaf Node", parent: team) }
+  let!(:team) { create(:group, name: "A Team", parent: department) }
+  let!(:subteam) { create(:group, name: "A Subteam", parent: team) }
+  let!(:leaf_node) { create(:group, name: "A Leaf Node", parent: subteam) }
 
   scenario "Drilling down through groups" do
     visit group_path(department)
 
-    expect(page).to have_link("An Organisation")
-    expect(page).not_to have_link("A Team")
+    expect(page).to have_link("A Team")
     expect(page).not_to have_link("A Subteam")
 
-    click_link "An Organisation"
-    expect(page).to have_link("A Team")
+    click_link "A Team"
+    expect(page).to have_link("A Subteam")
     expect(page).not_to have_link("A Leaf Node")
 
-    click_link "A Team"
+    click_link "A Subteam"
     expect(page).to have_link("A Leaf Node")
   end
 
-  scenario "An organisation with subteams and some people" do
-    current_group = org
+  scenario "A team with subteams and some people" do
+    current_group = team
     add_people_to_group(names, current_group)
     visit group_path(current_group)
 
@@ -34,15 +33,15 @@ feature "Group browsing" do
     expect(page).to have_link("View all people in #{ current_group.name }")
   end
 
-  scenario "An organisation with subteams and no people" do
-    current_group = org
+  scenario "A team with subteams and no people" do
+    current_group = team
     visit group_path(current_group)
 
     expect(page).to have_text("Teams within #{ current_group.name }")
     expect(page).not_to have_link("View all people in #{ current_group.name }")
   end
 
-  scenario "An organisation with no subteams (leaf_node) and some people" do
+  scenario "A team with no subteams (leaf_node) and some people" do
     current_group = leaf_node
     add_people_to_group(names, current_group)
     visit group_path(current_group)
@@ -54,7 +53,7 @@ feature "Group browsing" do
     end
   end
 
-  scenario "An organisation with no subteams (leaf_node) and no people" do
+  scenario "A team with no subteams (leaf_node) and no people" do
     current_group = leaf_node
     visit group_path(leaf_node)
 

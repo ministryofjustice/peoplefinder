@@ -1,4 +1,4 @@
 = link_to 'Add a new person', new_person_path(group_id: @group.to_param)
 - unless @group.new_record?
   |
-  = link_to new_child_group_cta(@group), new_group_group_path(@group)
+  = link_to 'Add a team', new_group_group_path(@group)
