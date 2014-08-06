@@ -201,7 +201,7 @@ RSpec.describe PeopleController, :type => :controller do
     it "redirects to the people list" do
       person = create(:person, valid_attributes)
       delete :destroy, {:id => person.to_param}, valid_session
-      expect(response).to redirect_to(people_url)
+      expect(response).to redirect_to(home_path)
     end
 
     it "sets a flash message" do

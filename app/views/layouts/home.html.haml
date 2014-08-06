@@ -2,6 +2,7 @@
 - content_for :content do
   #wrapper
     %main#content{role: 'main'}
+      =flash_messages
       .inner-block
         #home-page= yield
 

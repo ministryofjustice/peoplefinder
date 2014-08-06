@@ -58,7 +58,7 @@ class PeopleController < ApplicationController
   def destroy
     @person.send_destroy_email!(current_user)
     @person.destroy
-    redirect_to people_url, notice: "Deleted #{@person}’s profile."
+    redirect_to home_path, notice: "Deleted #{@person}’s profile."
   end
 
   def add_membership
