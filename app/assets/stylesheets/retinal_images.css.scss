@@ -10,7 +10,7 @@ only screen and (min-device-pixel-ratio: 1.5) {
   }
 
   a.add-new-person {
-    background-image: image-url('icon_plus_retina.png');
-    background-size: 31px 31px;
+    background-image: image-url('icon_plus_retina.png') !important;
+    background-size: 31px 31px !important;
   }
 }
