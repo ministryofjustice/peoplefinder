@@ -5,12 +5,12 @@ only screen and (-webkit-min-device-pixel-ratio: 1.5),
 only screen and (min-device-pixel-ratio: 1.5) {
 
   .search-box .submit-button {
-    background-image: url(icon_search_retina.png);
+    background-image: image-url('icon_search_retina.png');
     background-size: 46px 47px;
   }
 
   a.add-new-person {
-    background-image: url(icon_plus_retina.png);
+    background-image: image-url('icon_plus_retina.png');
     background-size: 31px 31px;
   }
 }
