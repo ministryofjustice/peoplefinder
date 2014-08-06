@@ -21,6 +21,7 @@ feature 'Search for people', elastic: true do
       expect(page).to have_text('Jon Browne')
       expect(page).to have_text('jon.browne@digital.justice.gov.uk')
       expect(page).to have_text('0711111111')
+      expect(page).to have_link('add them', href: new_person_path)
     end
   end
 end
