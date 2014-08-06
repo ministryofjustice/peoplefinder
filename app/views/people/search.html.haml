@@ -18,10 +18,13 @@
               = image_tag person.image.medium
             .details
               %h3= link_to person.name, person
-              - person.memberships.each do |membership|
+              - if person.memberships.empty?
                 .meta
-                  = "#{ membership.role }, " if membership.role.present?
-                  = link_to membership.group, membership.group
+              - else
+                - person.memberships.each do |membership|
+                  .meta
+                    = "#{ membership.role }, " if membership.role.present?
+                    = link_to membership.group, membership.group
 
               .meta= person.phone
               .meta
