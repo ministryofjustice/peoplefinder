@@ -62,7 +62,7 @@ feature "Audit trail" do
       group = create(:group, name: 'original name')
       visit edit_group_path(group)
       fill_in 'Name', with: 'something else'
-      click_button 'Update group'
+      click_button 'Update team'
 
       visit '/audit_trail'
       expect(page).to have_text('Group Edited')
@@ -74,7 +74,7 @@ feature "Audit trail" do
     with_versioning do
       visit new_group_path
       fill_in 'Name', with: 'Jon'
-      click_button 'Create group'
+      click_button 'Create team'
 
       visit '/audit_trail'
       expect(page).to have_text('New Group')

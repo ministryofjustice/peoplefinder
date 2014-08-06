@@ -10,7 +10,7 @@ feature "Group maintenance" do
 
     visit new_group_path
     fill_in "Name", with: name
-    click_button "Create group"
+    click_button "Create team"
 
     expect(page).to have_content("Created Ministry of Justice")
 
@@ -29,7 +29,7 @@ feature "Group maintenance" do
     name = "CSG"
     fill_in "Name", with: name
     select dept.name, from: "Parent"
-    click_button "Create group"
+    click_button "Create team"
 
     expect(page).to have_content("Created CSG")
 
@@ -48,7 +48,7 @@ feature "Group maintenance" do
 
     name = "Digital Services"
     fill_in "Name", with: name
-    click_button "Create group"
+    click_button "Create team"
 
     expect(page).to have_content("Created Digital Services")
 
@@ -84,7 +84,7 @@ feature "Group maintenance" do
     new_name = "Cyberdigital Cyberservices"
     fill_in "Name", with: new_name
     select dept.name, from: "Parent"
-    click_button "Update group"
+    click_button "Update team"
 
     expect(page).to have_content("Updated Cyberdigital Cyberservices")
 
