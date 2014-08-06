@@ -11,7 +11,7 @@ feature "Person maintenance" do
     p = person_attributes
     fill_in 'Given name', with: p[:given_name]
     fill_in 'Surname', with: p[:surname]
-    select 'Digital', from: 'Group'
+    select 'Digital', from: 'Team'
     fill_in 'Email', with: p[:email]
     fill_in 'Primary phone number', with: p[:primary_phone_number]
     fill_in 'Secondary phone number', with: p[:secondary_phone_number]

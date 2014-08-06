@@ -8,9 +8,9 @@
         = membership_f.association :group, collection: @groups,
           required: false,
           include_blank: "-- Select --",
-          label: 'Group'
+          label: 'Team'
       .form-group
-        = membership_f.input :role, as: :string, label: 'Title'
+        = membership_f.input :role, as: :string, label: 'Job title'
       .form-checkbox
         = membership_f.input :leader, label: 'This person is the Leader of this team'
         .remove-link

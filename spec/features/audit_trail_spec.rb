@@ -112,8 +112,8 @@ feature "Audit trail" do
       create(:group, name: 'Digital Justice')
       person = create(:person, surname: 'Bob')
       visit edit_person_path(person)
-      select('Digital Justice', from: 'Group')
-      fill_in('Title', with: 'Jefe')
+      select('Digital Justice', from: 'Team')
+      fill_in('Job title', with: 'Jefe')
       click_button 'Update person'
 
       visit '/audit_trail'
@@ -121,8 +121,8 @@ feature "Audit trail" do
       within('tr:first') do
         expect(page).to have_text('New Membership')
         expect(page).to have_text('Person set to: Bob')
-        expect(page).to have_text('Group set to: Digital Justice')
-        expect(page).to have_text('Title set to: Jefe')
+        expect(page).to have_text('Team set to: Digital Justice')
+        expect(page).to have_text('Job title set to: Jefe')
         expect(page).to have_text('Leader set to: No')
 
         expect(page).not_to have_button 'undo'
@@ -146,8 +146,8 @@ feature "Audit trail" do
       within('tr:first') do
         expect(page).to have_text('Deleted Membership')
         expect(page).to have_text('Person was: Bob')
-        expect(page).to have_text('Group was: Digital Justice')
-        expect(page).to have_text('Title was: Jefe')
+        expect(page).to have_text('Team was: Digital Justice')
+        expect(page).to have_text('Job title was: Jefe')
         expect(page).to have_text('Leader was: Yes')
 
         expect(page).not_to have_button 'undo'
