@@ -154,40 +154,6 @@ RSpec.describe Person, :type => :model do
     end
   end
 
-  describe '.deletable?' do
-    let(:person) { create(:person) }
-
-    it 'should only be detable when there are no memberships' do
-      expect(person).to be_deletable
-    end
-
-    it 'should not be detable when there are memberships' do
-      person.memberships.create(person: create(:person))
-      expect(person).not_to be_deletable
-    end
-
-    it 'should be detable when there are unsaved memberships (e.g. in the people#form)' do
-      person.memberships.build
-      expect(person).to be_deletable
-    end
-  end
-
-  describe '.destroy' do
-    let(:person) { create(:person) }
-
-    it 'should persist the record and add an error message when it is not deletable' do
-      allow(person).to receive(:deletable?).once.and_return(false)
-      person.destroy
-      expect(person.errors[:base].to_s).to include('cannot be deleted')
-    end
-
-    it 'should delete the record when it is deletable' do
-      allow(person).to receive(:deletable?).once.and_return(true)
-      person.destroy
-      expect { Person.find(person) }.to raise_error(ActiveRecord::RecordNotFound)
-    end
-  end
-
   describe '.phone' do
     let(:person) { create(:person) }
     let(:primary_phone_number) { '0207-123-4567' }

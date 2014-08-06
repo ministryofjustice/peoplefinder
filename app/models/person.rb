@@ -21,7 +21,7 @@ class Person < ActiveRecord::Base
   attr_accessor :crop_x, :crop_y, :crop_w, :crop_h
 
   validates_presence_of :surname
-  has_many :memberships, -> { includes(:group).order("groups.name")  }
+  has_many :memberships, -> { includes(:group).order("groups.name")  }, dependent: :destroy
   has_many :groups, through: :memberships
 
   accepts_nested_attributes_for :memberships, allow_destroy: true,
@@ -30,8 +30,6 @@ class Person < ActiveRecord::Base
   default_scope { order(surname: :asc, given_name: :asc) }
 
   friendly_id :slug_source, use: :slugged
-
-  before_destroy :check_deletability
 
   def self.delete_indexes
     self.__elasticsearch__.delete_index! index: Person.index_name
@@ -144,21 +142,8 @@ class Person < ActiveRecord::Base
     end
   end
 
-  def deletable?
-    memberships.reject(&:new_record?).empty?
-  end
-
   def phone
     return primary_phone_number if primary_phone_number.present?
     return secondary_phone_number if secondary_phone_number.present?
-  end
-
-  private
-
-  def check_deletability
-    unless deletable?
-      errors[:base] << 'cannot be deleted until all the memberships have been removed'
-      return false
-    end
   end
 end

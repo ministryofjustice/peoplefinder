@@ -61,11 +61,13 @@ feature "Person maintenance" do
     expect { Person.find(person) }.to raise_error(ActiveRecord::RecordNotFound)
   end
 
-  scenario 'Prevent deletion of a person that has memberships' do
+  scenario 'Allow deletion of a person even when there are memberships' do
     membership = create(:membership)
     person = membership.person
     visit edit_person_path(person)
-    expect(page).not_to have_link('Delete')
+    click_link('Delete')
+    expect { Membership.find(membership) }.to raise_error(ActiveRecord::RecordNotFound)
+    expect { Person.find(person) }.to raise_error(ActiveRecord::RecordNotFound)
   end
 
   scenario 'Editing a person' do
