@@ -29,5 +29,6 @@ module Peoplefinder
       digital.justice.gov.uk
       digital.cabinet-office.gov.uk
     ]
+    config.start_secure_session = (ENV['SSL_ON'] =~ /(true|yes|1)$/) == 0
   end
 end

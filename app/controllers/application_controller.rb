@@ -1,5 +1,5 @@
 class ApplicationController < ActionController::Base
-  force_ssl if Rails.env.production?
+  force_ssl if Rails.configuration.start_secure_session
 
   protect_from_forgery with: :exception
   before_filter :ensure_user
