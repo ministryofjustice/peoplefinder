@@ -7,3 +7,4 @@
 /coverage
 /spec/support/uploads/*
 .idea
+/.env

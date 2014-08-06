@@ -12,6 +12,9 @@ to **Client secret**.
 
 You will also need to configure **Consent screen** below for logging in to work.
 
+For local development, you can use a `.env` file; see `.env.sample` for an
+example.
+
 The permitted domains are configured in `config/application.rb`.
 
 ## Search
