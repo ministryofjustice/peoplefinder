@@ -38,6 +38,7 @@ gem 'unicorn', '~> 4.8.3'
 
 group :development do
   gem 'spring'
+  gem 'brakeman', require: false
 end
 
 group :development, :test do
