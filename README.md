@@ -69,7 +69,7 @@ Software metrics by [Code Climate](https://codeclimate.com/github/ministryofjust
 
 ## Releases
 
-Within the bin directory there is a file called release.sh. The purpose of this script is for management of releases i.e tagged versions in a convention compatible with Githubs release conventions.
+Within the bin directory there is a file called release.sh. The purpose of this script is for management of releases i.e tagged versions compatible with Githubs release conventions.
 
 To create a new release:
 
