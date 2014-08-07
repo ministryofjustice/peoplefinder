@@ -107,9 +107,36 @@ feature "Person maintenance" do
     expect(page).to have_css("img[src*='#{person.image.medium}']")
   end
 
-  scenario 'Viewing a person with an incomplete profile' do
-    visit person_path(create(:person))
-    expect(page).to have_text('Profile completeness')
+  context 'Viewing my own profile' do
+    let(:person) { create(:person, email: 'test.user@digital.justice.gov.uk') }
+
+    scenario 'when it is complete' do
+      allow(person).to receive(:incomplete?).once.and_return(false)
+      visit person_path(person)
+      expect(page).not_to have_text('Profile completeness')
+    end
+
+    scenario 'when it is incomplete' do
+      allow(person).to receive(:incomplete?).once.and_return(true)
+      visit person_path(person)
+      expect(page).not_to have_text('Profile completeness')
+    end
+  end
+
+  context 'Viewing another person\'s profile' do
+    let(:person) { create(:person) }
+
+    scenario 'when it is complete' do
+      allow(person).to receive(:incomplete?).once.and_return(false)
+      visit person_path(person)
+      expect(page).to have_text('Profile completeness')
+    end
+
+    scenario 'when it is incomplete' do
+      allow(person).to receive(:incomplete?).once.and_return(true)
+      visit person_path(person)
+      expect(page).to have_text('Profile completeness')
+    end
   end
 end
 
