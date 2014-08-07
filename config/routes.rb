@@ -17,4 +17,5 @@ Rails.application.routes.draw do
   match '/audit_trail', to: 'versions#index', via: [:get]
   match '/audit_trail/undo/:id', to: 'versions#undo', via: [:post]
   match '/search', to: 'people#search', via: [:get]
+  match '/org.json', to: 'org#show', via: [:get]
 end
