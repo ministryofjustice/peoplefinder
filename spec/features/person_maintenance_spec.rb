@@ -41,8 +41,6 @@ feature "Person maintenance" do
       expect(page).to_not have_selector("li.active[alt='Saturday']")
       expect(page).to_not have_selector("li.active[alt='Sunday']")
     end
-
-    expect(page).not_to have_text('Profile completeness')
   end
 
   scenario 'Creating an invalid person' do
@@ -111,15 +109,14 @@ feature "Person maintenance" do
     let(:person) { create(:person, email: 'test.user@digital.justice.gov.uk') }
 
     scenario 'when it is complete' do
-      allow(person).to receive(:incomplete?).once.and_return(false)
+      complete_profile!(person)
       visit person_path(person)
       expect(page).not_to have_text('Profile completeness')
     end
 
     scenario 'when it is incomplete' do
-      allow(person).to receive(:incomplete?).once.and_return(true)
       visit person_path(person)
-      expect(page).not_to have_text('Profile completeness')
+      expect(page).to have_text('Profile completeness')
     end
   end
 
@@ -127,27 +124,31 @@ feature "Person maintenance" do
     let(:person) { create(:person) }
 
     scenario 'when it is complete' do
-      allow(person).to receive(:incomplete?).once.and_return(false)
+      complete_profile!(person)
       visit person_path(person)
-      expect(page).to have_text('Profile completeness')
+      expect(page).not_to have_text('Profile completeness')
     end
 
     scenario 'when it is incomplete' do
-      allow(person).to receive(:incomplete?).once.and_return(true)
       visit person_path(person)
-      expect(page).to have_text('Profile completeness')
+      expect(page).not_to have_text('Profile completeness')
     end
   end
 end
 
 def person_attributes
   {
-    given_name: 'Marco',
-    surname: 'Polo',
-    email: 'marco.polo@example.com',
-    primary_phone_number: '+44-208-123-4567',
-    secondary_phone_number: '07777777777',
-    location: 'MOJ / Petty France / London',
-    description: 'Lorem ipsum dolor sit amet...'
+      given_name: 'Marco',
+      surname: 'Polo',
+      email: 'marco.polo@example.com',
+      primary_phone_number: '+44-208-123-4567',
+      secondary_phone_number: '07777777777',
+      location: 'MOJ / Petty France / London',
+      description: 'Lorem ipsum dolor sit amet...'
   }
+end
+
+def complete_profile!(person)
+  person.update_attributes(person_attributes.except(:email))
+  person.groups << create(:group)
 end

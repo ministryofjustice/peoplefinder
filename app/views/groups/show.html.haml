@@ -15,7 +15,11 @@
     = render partial: "subgroup", collection: @group.children
 
 - if display_view_all_people_link_for_group(@group)
-  = link_to "View all people in #{ @group.name }", group_path(@group), remote: true, id: 'show_people_link'
+  = link_to "View all people in #{ @group.name }", people_group_path(@group)
 
 - if display_all_people_in_group(@group)
-  = render partial: 'all_people'
+  .title_with_edit
+    %h2 People in #{ @group.name }
+  .grid-wrapper
+    = render partial: "memberships/summary", collection: @group.non_leaderships
+

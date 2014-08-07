@@ -16,14 +16,6 @@ $(function() {
 });
 
 $(function() {
-  $(document).on("click", "#hide_people_link", function(e) {
-    e.preventDefault();
-    $('#all_people').remove();
-    $('#show_people_link').show();
-  });
-});
-
-$(function() {
   $(document).on("click", "a.remove-new-membership", function(e) {
     e.preventDefault();
     $(this).parents('.membership').remove();

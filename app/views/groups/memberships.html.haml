@@ -1,0 +1,7 @@
+- content_for :breadcrumbs do
+  = breadcrumbs(Home.hierarchy + @group.hierarchy + ['All people'])
+
+.title_with_edit
+  %h1 People in #{ @group.name }
+.grid-wrapper
+  = render partial: "memberships/summary", collection: @memberships

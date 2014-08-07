@@ -1,0 +1,26 @@
+<div id="org-browser" ng-controller="GroupListCtrl">
+  <ul id="collapsed-groups">
+    <li class='animate' ng-repeat="group in groups">
+      <div ng-click="moveUp(group)" class="actionable">
+        {{group.name}}
+      </div>
+    </li>
+  </ul>
+
+  <ul id="expanded-groups">
+    <li>
+      <div class="actionable">
+        <a href="{{selected.url}}">View {{selected.name}}</a>
+      </div>
+    </li>
+    <li ng-repeat="child in selected.children">
+      <div class="actionable" ng-click="moveDown(child)" ng-show="{{isExpandable(child)}}">
+        {{child.name}}
+        <div class="arrow" ng-show="{{isExpandable(child)}}">〉</div>
+      </div>
+      <div ng-hide="{{isExpandable(child)}}">
+        {{child.name}}
+      </div>
+    </li>
+  </ul>
+</div>
