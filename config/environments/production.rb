@@ -82,7 +82,7 @@ Rails.application.configure do
   config.active_record.dump_schema_after_migration = false
 
   config.action_mailer.default_url_options = {
-    :host => "moj-peoplefinder.herokuapp.com"
+    :host => ENV['ACTION_MAILER_DEFAULT_URL']
   }
 
   config.action_mailer.smtp_settings = {
