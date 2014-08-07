@@ -6,7 +6,7 @@
   }
   li {
     width: 400px;
-    height: 38px;
+    height: 40px;
     padding: 0;
     margin: 0;
   }
@@ -27,12 +27,13 @@
       -webkit-transform-origin: top left;
       transform-origin: top left;
       width: 400px;
-      height: 38px;
+      height: 45px;
       text-align: center;
       font-weight: bold;
+      padding: 9px;
     }
     .animate {
-      width: 38px;
+      width: 45px;
     }
     .animate.ng-enter,
     .animate.ng-leave {
@@ -47,7 +48,7 @@
 
     .animate.ng-enter.ng-enter-active,
     .animate.ng-leave {
-      width: 38px;
+      width: 45px;
     }
   }
   li div {
