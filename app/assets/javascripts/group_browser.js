@@ -18,4 +18,8 @@ peoplefinderApp.controller('GroupListCtrl', function($scope, $http) {
     }
     $scope.selected = group;
   };
+
+  $scope.isExpandable = function(group) {
+    return group.children.length > 0;
+  }
 });
