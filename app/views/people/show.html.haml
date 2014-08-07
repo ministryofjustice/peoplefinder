@@ -25,6 +25,6 @@
 - content_for :edit_this_page do
   = link_to 'Edit this page', edit_person_path(@person)
 
-- unless @person.profile_completed?
+- if nag_to_complete_your_profile?(@person)
   %h4 Profile completeness: #{@person.completion_score}%
   = link_to 'complete your profile', edit_person_path(@person)

@@ -14,4 +14,8 @@ module PeopleHelper
       (person.secondary_phone_number if person.secondary_phone_number.present?)
     ].compact.join('<br/>').html_safe
   end
+
+  def nag_to_complete_your_profile?(person)
+    current_user.email == person.email && person.incomplete?
+  end
 end

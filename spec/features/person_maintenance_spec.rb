@@ -41,8 +41,6 @@ feature "Person maintenance" do
       expect(page).to_not have_selector("li.active[alt='Saturday']")
       expect(page).to_not have_selector("li.active[alt='Sunday']")
     end
-
-    expect(page).not_to have_text('Profile completeness')
   end
 
   scenario 'Creating an invalid person' do
@@ -107,9 +105,34 @@ feature "Person maintenance" do
     expect(page).to have_css("img[src*='#{person.image.medium}']")
   end
 
-  scenario 'Viewing a person with an incomplete profile' do
-    visit person_path(create(:person))
-    expect(page).to have_text('Profile completeness')
+  context 'Viewing my own profile' do
+    let(:person) { create(:person, email: 'test.user@digital.justice.gov.uk') }
+
+    scenario 'when it is complete' do
+      complete_profile!(person)
+      visit person_path(person)
+      expect(page).not_to have_text('Profile completeness')
+    end
+
+    scenario 'when it is incomplete' do
+      visit person_path(person)
+      expect(page).to have_text('Profile completeness')
+    end
+  end
+
+  context 'Viewing another person\'s profile' do
+    let(:person) { create(:person) }
+
+    scenario 'when it is complete' do
+      complete_profile!(person)
+      visit person_path(person)
+      expect(page).not_to have_text('Profile completeness')
+    end
+
+    scenario 'when it is incomplete' do
+      visit person_path(person)
+      expect(page).not_to have_text('Profile completeness')
+    end
   end
 end
 
@@ -123,4 +146,9 @@ def person_attributes
     location: 'MOJ / Petty France / London',
     description: 'Lorem ipsum dolor sit amet...'
   }
+end
+
+def complete_profile!(person)
+  person.update_attributes(person_attributes.except(:email))
+  person.groups << create(:group)
 end
