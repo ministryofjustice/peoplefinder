@@ -3,7 +3,9 @@ Rails.application.routes.draw do
 
   resources :groups do
     resources :groups, only: [:new]
+    get :people, on: :member, action: 'memberships'
   end
+
   resources :people do
     collection do
       get :add_membership

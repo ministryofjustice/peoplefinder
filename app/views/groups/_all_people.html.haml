@@ -1,6 +1,0 @@
-#all_people
-  .title_with_edit
-    %h2 People in #{ @group.name }
-    = link_to 'hide', '#', id: 'hide_people_link', style: 'display:none'
-  .grid-wrapper
-    = render partial: "memberships/summary", collection: @group.non_leaderships
