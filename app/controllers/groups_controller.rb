@@ -63,7 +63,7 @@ class GroupsController < ApplicationController
   end
 
   def memberships
-    @memberships = Membership.all
+    @memberships = @group.memberships
   end
 
 private
