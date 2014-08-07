@@ -66,3 +66,31 @@ You'll need to install PhantomJS in order to run the headless browser tests.
 CI by [Travis](https://travis-ci.org/ministryofjustice/peoplefinder).
 
 Software metrics by [Code Climate](https://codeclimate.com/github/ministryofjustice/peoplefinder)
+
+## Releases
+
+Within the bin directory there is a file called release.sh. The purpose of this script is for management of releases i.e tagged versions in a convention compatible with Githubs release conventions.
+
+To create a new release:
+
+`bin/release.sh create`
+
+Listing all releases:
+
+`bin/release.sh list`
+
+Deleting a particular release:
+
+`bin/release.sh remove RELEASE_VERSION`
+
+Perform a git show of a release:
+
+`bin/release.sh show RELEASE_VERSION`
+
+List all releases with verbose output:
+
+`bin/release.sh ll`
+
+Last release:
+
+`bin/release.sh last`
