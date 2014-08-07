@@ -116,21 +116,21 @@ class Person < ActiveRecord::Base
   end
 
   def send_create_email!(current_user)
-    if self.valid_email? && current_user.email != self.email
+    if should_send_email_notification?(self.email, current_user)
       UserUpdateMailer.new_profile_email(self, current_user.email).deliver
     end
   end
 
   def send_update_email!(current_user, old_email)
     if self.email == old_email
-      if self.valid_email? && current_user.email != self.email
+      if should_send_email_notification?(self.email, current_user)
         UserUpdateMailer.updated_profile_email(self, current_user.email).deliver
       end
     else
-      if self.valid_email? && current_user.email != self.email
+      if should_send_email_notification?(self.email, current_user)
         UserUpdateMailer.updated_address_to_email(self, current_user.email, old_email).deliver
       end
-      if self.valid_email?(old_email) && current_user.email != old_email
+      if should_send_email_notification?(old_email, current_user)
         UserUpdateMailer.updated_address_from_email(self, current_user.email, old_email).deliver
       end
     end
@@ -145,5 +145,11 @@ class Person < ActiveRecord::Base
   def phone
     return primary_phone_number if primary_phone_number.present?
     return secondary_phone_number if secondary_phone_number.present?
+  end
+
+  private
+
+  def should_send_email_notification?(email, current_user)
+    self.valid_email?(email) && current_user.email != email
   end
 end
