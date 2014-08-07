@@ -4,4 +4,4 @@
 .title_with_edit
   %h1 People in #{ @group.name }
 .grid-wrapper
-  = render partial: "memberships/summary", collection: @memberships
+  = render partial: "people/summary", collection: @group.all_people

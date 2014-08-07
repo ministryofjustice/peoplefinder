@@ -3,7 +3,7 @@ Rails.application.routes.draw do
 
   resources :groups do
     resources :groups, only: [:new]
-    get :people, on: :member, action: 'memberships'
+    get :people, on: :member, action: 'all_people'
   end
 
   resources :people do

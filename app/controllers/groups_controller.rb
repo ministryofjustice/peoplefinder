@@ -1,5 +1,5 @@
 class GroupsController < ApplicationController
-  before_action :set_group, only: [:show, :edit, :update, :destroy, :memberships]
+  before_action :set_group, only: [:show, :edit, :update, :destroy, :all_people]
 
   # GET /groups
   def index
@@ -60,10 +60,6 @@ class GroupsController < ApplicationController
     next_page = @group.parent ? @group.parent : groups_url
     @group.destroy
     redirect_to next_page, notice: "Deleted #{@group}."
-  end
-
-  def memberships
-    @memberships = @group.memberships
   end
 
 private

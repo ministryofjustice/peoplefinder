@@ -19,6 +19,10 @@
   }
   .role {
     font-size: 16px;
+    width: 212px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 }
 
