@@ -39,6 +39,7 @@ gem 'unicorn', '~> 4.8.3'
 group :development do
   gem 'spring'
   gem 'brakeman', require: false
+  gem 'pry-rails'
 end
 
 group :development, :test do
