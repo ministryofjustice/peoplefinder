@@ -55,6 +55,18 @@ class Group < ActiveRecord::Base
     children.blank?
   end
 
+  def all_people
+    Person.find_by_sql(
+    [
+      "select distinct array_agg(role) as role_list, p.*
+      from memberships m, people p
+      where m.person_id = p.id AND group_id in (?)
+      group by p.id;",  GroupHierarchy.new(self).to_group_id_list
+    ]).
+    sort_by(&:name).
+    each{ |p| p.role_names = p.role_list.compact.join(', ') }
+  end
+
   private
 
   def check_deletability

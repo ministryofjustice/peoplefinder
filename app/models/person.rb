@@ -18,7 +18,7 @@ class Person < ActiveRecord::Base
   has_paper_trail ignore: [:updated_at, :created_at, :id, :slug]
   mount_uploader :image, ImageUploader
 
-  attr_accessor :crop_x, :crop_y, :crop_w, :crop_h
+  attr_accessor :crop_x, :crop_y, :crop_w, :crop_h, :role_names
 
   validates_presence_of :surname
   has_many :memberships, -> { includes(:group).order("groups.name")  }, dependent: :destroy

@@ -104,4 +104,42 @@ RSpec.describe Group, :type => :model do
       expect { Group.find(group) }.to raise_error(ActiveRecord::RecordNotFound)
     end
   end
+
+  describe '.all_people' do
+    let(:team) { create(:group) }
+    let(:subteam) { create(:group, parent: team) }
+
+    let(:alice) { create(:person, surname: 'alice') }
+    let(:bob) { create(:person, surname: 'bob') }
+
+    subject { team.all_people }
+
+    context 'with bob in the team' do
+      before { team.people << bob }
+
+      it 'should have 1 membership' do
+        expect(subject.length).to eq(1)
+      end
+
+      context 'and alice in the subteam' do
+        before { subteam.people << alice }
+
+        it 'should have 2 membership' do
+          expect(subject.length).to eq(2)
+        end
+
+        context 'and bob also in the subteam' do
+          before { subteam.people << alice }
+
+          it 'should still have 2 memberships' do
+            expect(subject.length).to eq(2)
+          end
+
+          it 'should return alice and bob in alphabetical order' do
+            expect(subject.map(&:name)).to eql(['alice', 'bob'])
+          end
+        end
+      end
+    end
+  end
 end
