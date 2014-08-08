@@ -10,6 +10,10 @@ class GroupHierarchy
     export(@root)
   end
 
+  def to_group_id_list
+    export_id(@root).flatten
+  end
+
 private
 
   def export(group)
@@ -18,6 +22,13 @@ private
       url: group_path(group),
       children: children(group).map { |g| export(g) }
     }
+  end
+
+  def export_id(group)
+    [
+      group.id,
+      children(group).map { |g| export_id(g) }
+   ]
   end
 
   def children(group)
