@@ -1,5 +1,5 @@
 class SessionsController < ApplicationController
-  skip_before_filter :ensure_user
+  skip_before_action :ensure_user
 
   def create
     user = User.from_auth_hash(auth_hash)
@@ -20,6 +20,7 @@ class SessionsController < ApplicationController
   end
 
 protected
+
   def auth_hash
     request.env['omniauth.auth']
   end

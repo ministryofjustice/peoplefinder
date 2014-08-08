@@ -5,7 +5,7 @@ RSpec.describe Group, type: :model do
 
   it "should list orphaned groups as departments" do
     parent = create(:group, parent: nil)
-    child = create(:group, parent: parent)
+    create(:group, parent: parent)
     expect(Group.departments.to_a).to eql([parent])
   end
 
@@ -48,8 +48,8 @@ RSpec.describe Group, type: :model do
     let(:group) { build(:group) }
 
     before do
-      ['alice', 'bob', 'charlie'].each do |name|
-         create(:person, surname: name)
+      %w[ alice bob charlie ].each do |name|
+        create(:person, surname: name)
       end
     end
 
@@ -136,7 +136,7 @@ RSpec.describe Group, type: :model do
           end
 
           it 'should return alice and bob in alphabetical order' do
-            expect(subject.map(&:name)).to eql(['alice', 'bob'])
+            expect(subject.map(&:name)).to eql(%w[ alice bob ])
           end
         end
       end
@@ -146,7 +146,7 @@ RSpec.describe Group, type: :model do
   describe '.leadership' do
     it 'should get the first leader' do
       group = create(:group)
-      leaderships = [ create(:membership, group: group, leader: true) ]
+      leaderships = [create(:membership, group: group, leader: true)]
       expect(group.leadership).to eql(leaderships.first)
     end
   end

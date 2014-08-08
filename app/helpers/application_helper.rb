@@ -1,9 +1,8 @@
 module ApplicationHelper
   def last_update
-    if current_object = @person || @group
-      unless current_object.updated_at.blank?
-        "Last updated: #{ current_object.updated_at.strftime('%d %b %Y %H:%M') }."
-      end
+    current_object = @person || @group
+    if current_object && current_object.updated_at.present?
+      "Last updated: #{ current_object.updated_at.strftime('%d %b %Y %H:%M') }."
     end
   end
 
@@ -14,7 +13,7 @@ module ApplicationHelper
   end
 
   def breadcrumbs(items)
-    render partial: "shared/breadcrumbs", locals: { items: items }
+    render partial: 'shared/breadcrumbs', locals: { items: items }
   end
 
   FLASH_NOTICE_KEYS = %w[ error notice warning ]
@@ -24,12 +23,16 @@ module ApplicationHelper
     return if messages.empty?
     content_tag(:div, class: 'inner-block') {
       content_tag(:div, id: 'flash-messages') {
-        messages.map { |type|
-          content_tag(:div, class: "flash-message #{type.to_s}") {
-            flash[type]
-          }
-        }.join.html_safe
+        messages.map { |type| flash_message(type) }.join.html_safe
       }
+    }
+  end
+
+private
+
+  def flash_message(type)
+    content_tag(:div, class: "flash-message #{type}") {
+      flash[type]
     }
   end
 end

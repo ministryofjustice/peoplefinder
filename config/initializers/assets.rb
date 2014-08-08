@@ -1,4 +1,4 @@
-Rails.application.config.assets.precompile += %w(
+Rails.application.config.assets.precompile += %w[
   gov-static/gov-goodbrowsers.css
   gov-static/gov-ie6.css
   gov-static/gov-ie7.css
@@ -12,4 +12,4 @@ Rails.application.config.assets.precompile += %w(
   jquery.Jcrop.min.js
   angular/angular.js
   angular-animate/angular-animate.js
-)
+]

@@ -48,6 +48,7 @@ group :development, :test do
   gem 'rspec-rails', '~> 3.0.0'
   gem 'rspec-mocks'
   gem 'guard-rspec', require: false
+  gem 'rubocop'
 end
 
 group :test do

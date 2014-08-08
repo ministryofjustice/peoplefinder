@@ -7,7 +7,7 @@ RSpec.describe User, type: :model do
         'email' => 'example.user@digital.justice.gov.uk',
         'first_name' => 'John',
         'last_name' => 'Doe',
-        'name' => 'John Doe',
+        'name' => 'John Doe'
       }
     }
   end

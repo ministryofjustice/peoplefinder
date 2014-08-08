@@ -6,17 +6,19 @@ class Group < ActiveRecord::Base
 
   belongs_to :parent, class_name: 'Group'
   has_many :children, class_name: 'Group', foreign_key: 'parent_id'
-  has_many :memberships, -> { includes(:person).order("people.surname")  }
+  has_many :memberships, -> { includes(:person).order('people.surname')  }
   has_many :people, through: :memberships
   has_many :leaderships, -> { where(leader: true) }, class_name: 'Membership'
   has_many :non_leaderships,
-    -> { where(leader: false).includes(:person).
-         order("people.surname ASC, people.given_name ASC") },
+    lambda {
+      where(leader: false).includes(:person).
+        order('people.surname ASC, people.given_name ASC')
+    },
     class_name: 'Membership'
   has_many :leaders, through: :leaderships, source: :person
   has_many :non_leaders, through: :non_leaderships, source: :person
 
-  validates_presence_of :name
+  validates :name, presence: true
 
   default_scope { order(name: :asc) }
 
@@ -58,20 +60,20 @@ class Group < ActiveRecord::Base
   def all_people
     Person.find_by_sql(
     [
-      "select distinct array_agg(role) as role_list, p.*
+      'select distinct array_agg(role) as role_list, p.*
       from memberships m, people p
       where m.person_id = p.id AND group_id in (?)
-      group by p.id;",  GroupHierarchy.new(self).to_group_id_list
+      group by p.id;',  GroupHierarchy.new(self).to_group_id_list
     ]).
     sort_by(&:name).
-    each{ |p| p.role_names = p.role_list.compact.join(', ') }
+    each { |p| p.role_names = p.role_list.compact.join(', ') }
   end
 
-  private
+private
 
   def check_deletability
     unless deletable?
-      errors[:base] << 'cannot be deleted until all the memberships have been removed'
+      errors[:base] << I18n.t('errors.groups.memberships_exist')
       return false
     end
   end

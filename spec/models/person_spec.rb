@@ -34,7 +34,7 @@ RSpec.describe Person, type: :model do
         given_name: "Bobby",
         surname: "Tables",
         email: "user.example@digital.justice.gov.uk",
-        primary_phone_number: "020 7946 0123",
+        primary_phone_number: "020 7946 0123"
       )
       expect(person.completion_score).to eql(50)
       expect(person).to be_incomplete
@@ -72,7 +72,8 @@ RSpec.describe Person, type: :model do
 
   context "search" do
     it "should delete indexes" do
-      expect(Person.__elasticsearch__).to receive(:delete_index!).with({ index: "test_people" })
+      expect(Person.__elasticsearch__).to receive(:delete_index!).
+        with(index: "test_people")
       Person.delete_indexes
     end
   end
@@ -137,7 +138,7 @@ RSpec.describe Person, type: :model do
 
   describe '.assignable groups' do
     before do
-      ['apples', 'bananas', 'cherries'].each do
+      %w[ apples bananas cherries ].each do
         |fruit| create(:group, name: fruit)
       end
     end

@@ -6,7 +6,7 @@ feature "Person maintenance" do
   end
 
   scenario "Creating a person with a complete profile" do
-    group = create(:group, name: 'Digital')
+    create(:group, name: 'Digital')
     visit new_person_path
     p = person_attributes
     fill_in 'Given name', with: p[:given_name]
@@ -32,7 +32,7 @@ feature "Person maintenance" do
     expect(page).to have_text(p[:location])
     expect(page).to have_text(p[:description])
 
-    within ('ul.working_days') do
+    within('ul.working_days') do
       expect(page).to_not have_selector("li.active[alt='Monday']")
       expect(page).to have_selector("li.active[alt='Tuesday']")
       expect(page).to have_selector("li.active[alt='Wednesday']")
@@ -138,13 +138,13 @@ end
 
 def person_attributes
   {
-      given_name: 'Marco',
-      surname: 'Polo',
-      email: 'marco.polo@example.com',
-      primary_phone_number: '+44-208-123-4567',
-      secondary_phone_number: '07777777777',
-      location: 'MOJ / Petty France / London',
-      description: 'Lorem ipsum dolor sit amet...'
+    given_name: 'Marco',
+    surname: 'Polo',
+    email: 'marco.polo@example.com',
+    primary_phone_number: '+44-208-123-4567',
+    secondary_phone_number: '07777777777',
+    location: 'MOJ / Petty France / London',
+    description: 'Lorem ipsum dolor sit amet...'
   }
 end
 

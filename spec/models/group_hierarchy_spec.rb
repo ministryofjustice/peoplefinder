@@ -21,7 +21,7 @@ RSpec.describe GroupHierarchy, type: :model do
               name: 'D',
               url: '/groups/d',
               children: []
-            },
+            }
           ]
         }, {
           name: 'E',
@@ -45,7 +45,7 @@ RSpec.describe GroupHierarchy, type: :model do
     end
 
     it 'should include each of the five groups' do
-      %w{ A B C D E }.each do |name|
+      %w[ A B C D E ].each do |name|
         expect(subject).to include(Group.find_by_name(name).id)
       end
     end

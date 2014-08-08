@@ -61,3 +61,17 @@ en:
       group:
         create: "Create team"
         update: "Update team"
+  user_update_mailer:
+    new_profile_email:
+      subject: "A new profile on MOJ People Finder has been created for you"
+    updated_profile_email:
+      subject: "Your profile on MOJ People Finder has been edited"
+    deleted_profile_email:
+      subject: "Your profile on MOJ People Finder has been deleted"
+    updated_address_from_email:
+      subject: "This email address has been removed from a profile on MOJ People Finder"
+    updated_address_to_email:
+      subject: "This email address has been added to a profile on MOJ People Finder"
+  errors:
+    groups:
+      memberships_exist: "cannot be deleted until all the memberships have been removed"

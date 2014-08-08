@@ -18,8 +18,7 @@ class PeopleController < ApplicationController
   # GET /people/new
   def new
     @person = Person.new
-    preset_group = params[:group_id] ? Group.friendly.find(params[:group_id]) : nil
-    @person.memberships.build group: preset_group
+    @person.memberships.build group: group_from_group_id
     set_assignable_groups
   end
 
@@ -68,20 +67,23 @@ class PeopleController < ApplicationController
     set_person if params[:id].present?
     @person ||= Person.new
     set_assignable_groups
-    render "add_membership", layout: false
+    render 'add_membership', layout: false
   end
 
 private
+
   # Use callbacks to share common setup or constraints between actions.
   def set_person
     @person = Person.friendly.includes(:groups).find(params[:id])
   end
 
-  # Never trust parameters from the scary internet, only allow the white list through.
+  # Never trust parameters from the scary internet, only allow the white list
+  # through.
   def person_params
     params.require(:person).permit(
-      :given_name, :surname, :location, :primary_phone_number, :secondary_phone_number,
-      :email, :image, :description, *Person::DAYS_WORKED,
+      :given_name, :surname, :location, :primary_phone_number,
+      :secondary_phone_number, :email, :image, :description,
+      *Person::DAYS_WORKED,
       memberships_attributes: [:id, :role, :group_id, :leader])
   end
 
@@ -91,5 +93,9 @@ private
 
   def set_assignable_groups
     @groups = @person.assignable_groups
+  end
+
+  def group_from_group_id
+    params[:group_id] ? Group.friendly.find(params[:group_id]) : nil
   end
 end

@@ -74,16 +74,14 @@ end
 def add_people_to_group(names, group)
   names.each do |gn, sn|
     person = create(:person, given_name: gn, surname: sn)
-    membership = create(:membership, person: person, group: group)
+    create(:membership, person: person, group: group)
   end
 end
 
 def names
-  names = [
-    %w[Johnny Cash],
-    %w[Dolly Parton],
-    %w[Merle Haggard],
+  [
+    %w[ Johnny Cash ],
+    %w[ Dolly Parton ],
+    %w[ Merle Haggard ]
   ]
 end
-
-

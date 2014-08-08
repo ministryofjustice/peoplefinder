@@ -28,13 +28,12 @@ module CarrierWave
 
   module DirHelpers
     def base_upload_dir
-      ""
+      ''
     end
   end
 end
 
 if Rails.env.test?
-  ImageUploader
   CarrierWave::Uploader::Base.descendants.each do |klass|
     next if klass.anonymous?
     klass.class_eval do

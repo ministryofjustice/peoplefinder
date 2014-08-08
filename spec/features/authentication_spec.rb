@@ -30,25 +30,25 @@ feature "Authentication" do
 end
 
 def invalid_user
-  OmniAuth::AuthHash.new({
+  OmniAuth::AuthHash.new(
     provider: 'gplus',
     info: {
       email: 'test.user@example.com',
       first_name: 'John',
       last_name: 'Doe',
-      name: 'John Doe',
+      name: 'John Doe'
     }
-  })
+  )
 end
 
 def valid_user
-  OmniAuth::AuthHash.new({
+  OmniAuth::AuthHash.new(
     provider: 'gplus',
     info: {
       email: 'test.user@digital.justice.gov.uk',
       first_name: 'John',
       last_name: 'Doe',
-      name: 'John Doe',
+      name: 'John Doe'
     }
-  })
+  )
 end

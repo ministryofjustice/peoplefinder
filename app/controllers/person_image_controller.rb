@@ -20,7 +20,8 @@ class PersonImageController < ApplicationController
     end
   end
 
-  private
+private
+
   def set_person
     @person ||= Person.friendly.find(params[:person_id])
   end

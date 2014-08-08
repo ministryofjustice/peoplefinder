@@ -15,15 +15,14 @@ class GroupsController < ApplicationController
   def show
     respond_to do |format|
       format.html { session[:last_group_visited] = @group.id }
-      format.js { }
+      format.js
     end
   end
 
   # GET /groups/new
   def new
     @group = collection.new
-    preset_person = params[:person_id] ? Person.friendly.find(params[:person_id]) : nil
-    @group.memberships.build person: preset_person
+    @group.memberships.build person: person_from_person_id
     load_people
   end
 
@@ -66,14 +65,17 @@ class GroupsController < ApplicationController
   end
 
 private
+
   # Use callbacks to share common setup or constraints between actions.
   def set_group
     @group = collection.friendly.includes(:people).find(params[:id])
   end
 
-  # Never trust parameters from the scary internet, only allow the white list through.
+  # Never trust parameters from the scary internet, only allow the white list
+  # through.
   def group_params
-    params.require(:group).permit(:parent_id, :name, :description, :responsibilities)
+    params.require(:group).
+      permit(:parent_id, :name, :description, :responsibilities)
   end
 
   def collection
@@ -86,5 +88,9 @@ private
 
   def load_people
     @people = @group.assignable_people
+  end
+
+  def person_from_person_id
+    params[:person_id] ? Person.friendly.find(params[:person_id]) : nil
   end
 end

@@ -28,7 +28,7 @@ private
     [
       group.id,
       children(group).map { |g| export_id(g) }
-   ]
+    ]
   end
 
   def children(group)

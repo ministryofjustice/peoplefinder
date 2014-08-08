@@ -7,7 +7,7 @@ module SpecSupport
     end
 
     def sample_image
-      File.join(Rails.root, "spec", "fixtures", "placeholder.png")
+      File.join(Rails.root, 'spec', 'fixtures', 'placeholder.png')
     end
   end
 end

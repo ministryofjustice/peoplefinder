@@ -2,9 +2,10 @@ class ApplicationController < ActionController::Base
   force_ssl if Rails.configuration.start_secure_session
 
   protect_from_forgery with: :exception
-  before_filter :ensure_user
+  before_action :ensure_user
 
 private
+
   def user_for_paper_trail
     logged_in? ? current_user.to_s : 'Public user'
   end
