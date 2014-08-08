@@ -18,8 +18,17 @@
       float: left;
       height: 400px;
       border-right: 1px solid white;
-      background-color: #ddd;
+      background-color: #cae2f0;
       overflow: hidden;
+    }
+    li:nth-child(1) {
+      background-color: #ddd;
+    }
+    li:nth-child(2) {
+      background-color: #d8dee1;
+    }
+    li:nth-child(3) {
+      background-color: #cfe0ea;
     }
     div {
       -webkit-transform: rotate(-90deg) translate(-400px, 0px);
