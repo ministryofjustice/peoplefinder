@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Group, :type => :model do
+RSpec.describe Group, type: :model do
   it { should have_many(:leaders) }
 
   it "should list orphaned groups as departments" do

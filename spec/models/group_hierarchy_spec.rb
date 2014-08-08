@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe GroupHierarchy, :type => :model do
+RSpec.describe GroupHierarchy, type: :model do
   it "should generate a tree of hashes with group information" do
     root = create_hierarchy_of_groups
     root.reload

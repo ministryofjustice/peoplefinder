@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe OrgController, :type => :controller do
+RSpec.describe OrgController, type: :controller do
   before do
     mock_logged_in_user
   end

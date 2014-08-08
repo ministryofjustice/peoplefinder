@@ -18,7 +18,7 @@ require 'rails_helper'
 # Message expectations are only used when there is no simpler way to specify
 # that an instance is receiving a specific message.
 
-RSpec.describe GroupsController, :type => :controller do
+RSpec.describe GroupsController, type: :controller do
   before do
     mock_logged_in_user
   end
@@ -64,7 +64,7 @@ RSpec.describe GroupsController, :type => :controller do
   describe "GET show" do
     it "assigns the requested group as @group" do
       group = create(:group, valid_attributes)
-      get :show, {:id => group.to_param}, valid_session
+      get :show, {id: group.to_param}, valid_session
       expect(assigns(:group)).to eq(group)
     end
   end
@@ -90,18 +90,18 @@ RSpec.describe GroupsController, :type => :controller do
     let(:group) { create(:group, valid_attributes) }
 
     it "assigns the requested group as @group" do
-      get :edit, {:id => group.to_param}, valid_session
+      get :edit, {id: group.to_param}, valid_session
       expect(assigns(:group)).to eql(group)
     end
 
     it "sets people" do
-      get :edit, {:id => group.to_param}, valid_session
+      get :edit, {id: group.to_param}, valid_session
       expect(assigns(:people)).to include(person)
     end
 
     it "sets people and excludes the already assigned person" do
       group.memberships.create(person: person)
-      get :edit, {:id => group.to_param}, valid_session
+      get :edit, {id: group.to_param}, valid_session
       expect(assigns(:people)).not_to include(person)
     end
   end
@@ -110,35 +110,35 @@ RSpec.describe GroupsController, :type => :controller do
     describe "with valid params" do
       it "creates a new Group" do
         expect {
-          post :create, {:group => valid_attributes}, valid_session
+          post :create, {group: valid_attributes}, valid_session
         }.to change(Group, :count).by(1)
       end
 
       it "assigns a newly created group as @group" do
-        post :create, {:group => valid_attributes}, valid_session
+        post :create, {group: valid_attributes}, valid_session
         expect(assigns(:group)).to be_a(Group)
         expect(assigns(:group)).to be_persisted
       end
 
       it "redirects to the created group" do
-        post :create, {:group => valid_attributes}, valid_session
+        post :create, {group: valid_attributes}, valid_session
         expect(response).to redirect_to(Group.last)
       end
     end
 
     describe "with invalid params" do
       it "assigns a newly created but unsaved group as @group" do
-        post :create, {:group => invalid_attributes}, valid_session
+        post :create, {group: invalid_attributes}, valid_session
         expect(assigns(:group)).to be_a_new(Group)
       end
 
       it "re-renders the 'new' template" do
-        post :create, {:group => invalid_attributes}, valid_session
+        post :create, {group: invalid_attributes}, valid_session
         expect(response).to render_template("new")
       end
 
       it "sets people" do
-        post :create, {:group => invalid_attributes}, valid_session
+        post :create, {group: invalid_attributes}, valid_session
         expect(assigns(:people)).to include(person)
       end
     end
@@ -152,20 +152,20 @@ RSpec.describe GroupsController, :type => :controller do
 
       it "updates the requested group" do
         group = create(:group, valid_attributes)
-        put :update, {:id => group.to_param, :group => new_attributes}, valid_session
+        put :update, {id: group.to_param, group: new_attributes}, valid_session
         group.reload
         expect(group.name).to eql(new_attributes[:name])
       end
 
       it "assigns the requested group as @group" do
         group = create(:group, valid_attributes)
-        put :update, {:id => group.to_param, :group => valid_attributes}, valid_session
+        put :update, {id: group.to_param, group: valid_attributes}, valid_session
         expect(assigns(:group)).to eq(group)
       end
 
       it "redirects to the group" do
         group = create(:group, valid_attributes)
-        put :update, {:id => group.to_param, :group => valid_attributes}, valid_session
+        put :update, {id: group.to_param, group: valid_attributes}, valid_session
         expect(response).to redirect_to(group)
       end
     end
@@ -174,17 +174,17 @@ RSpec.describe GroupsController, :type => :controller do
       let(:group) { create(:group, valid_attributes) }
 
       it "assigns the group as @group" do
-        put :update, {:id => group.to_param, :group => invalid_attributes}, valid_session
+        put :update, {id: group.to_param, group: invalid_attributes}, valid_session
         expect(assigns(:group)).to eq(group)
       end
 
       it "re-renders the 'edit' template" do
-        put :update, {:id => group.to_param, :group => invalid_attributes}, valid_session
+        put :update, {id: group.to_param, group: invalid_attributes}, valid_session
         expect(response).to render_template("edit")
       end
 
       it "sets people" do
-        get :new, {:id => group.to_param, :group => invalid_attributes}, valid_session
+        get :new, {id: group.to_param, group: invalid_attributes}, valid_session
         expect(assigns(:people)).to include(person)
       end
     end
@@ -194,20 +194,20 @@ RSpec.describe GroupsController, :type => :controller do
     it "destroys the requested group" do
       group = create(:group, valid_attributes)
       expect {
-        delete :destroy, {:id => group.to_param}, valid_session
+        delete :destroy, {id: group.to_param}, valid_session
       }.to change(Group, :count).by(-1)
     end
 
     it "redirects to the parent group" do
       parent = create(:group, parent: nil)
       group = create(:group, parent: parent)
-      delete :destroy, {:id => group.to_param}, valid_session
+      delete :destroy, {id: group.to_param}, valid_session
       expect(response).to redirect_to(parent)
     end
 
     it "redirects to the groups list if there is no parent" do
       group = create(:group, valid_attributes)
-      delete :destroy, {:id => group.to_param}, valid_session
+      delete :destroy, {id: group.to_param}, valid_session
       expect(response).to redirect_to(groups_url)
     end
   end

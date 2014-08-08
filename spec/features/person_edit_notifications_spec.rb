@@ -46,7 +46,7 @@ feature "Person edit notifications" do
   end
 
   scenario 'Deleting a person with different email' do
-    person = create(:person, :email => 'bob.smith@digital.justice.gov.uk')
+    person = create(:person, email: 'bob.smith@digital.justice.gov.uk')
     visit edit_person_path(person)
     expect { click_link('Delete this profile') }.to change { ActionMailer::Base.deliveries.count }.by(1)
     mail = ActionMailer::Base.deliveries.last
@@ -56,25 +56,25 @@ feature "Person edit notifications" do
   end
 
   scenario 'Deleting a person with same email' do
-    person = create(:person, :email => 'test.user@digital.justice.gov.uk')
+    person = create(:person, email: 'test.user@digital.justice.gov.uk')
     visit edit_person_path(person)
     expect { click_link('Delete this profile') }.not_to change { ActionMailer::Base.deliveries.count }
   end
 
   scenario 'Deleting a person with invalid email' do
-    person = create(:person, :email => 'test.user')
+    person = create(:person, email: 'test.user')
     visit edit_person_path(person)
     expect { click_link('Delete this profile') }.not_to change { ActionMailer::Base.deliveries.count }
   end
 
   scenario 'Deleting a person with nil email' do
-    person = create(:person, :email => nil)
+    person = create(:person, email: nil)
     visit edit_person_path(person)
     expect { click_link('Delete this profile') }.not_to change { ActionMailer::Base.deliveries.count }
   end
 
   scenario 'Editing a person with different email' do
-    person = create(:person, :given_name => 'Bob', :surname => 'Smith', :email => 'bob.smith@digital.justice.gov.uk')
+    person = create(:person, given_name: 'Bob', surname: 'Smith', email: 'bob.smith@digital.justice.gov.uk')
     visit person_path(person)
     click_link 'Edit this page'
     fill_in 'Surname', with: 'Smelly Pants'
@@ -87,7 +87,7 @@ feature "Person edit notifications" do
   end
 
   scenario 'Editing a person with same email' do
-    person = create(:person, :given_name => 'Bob', :surname => 'Smith', :email => 'test.user@digital.justice.gov.uk')
+    person = create(:person, given_name: 'Bob', surname: 'Smith', email: 'test.user@digital.justice.gov.uk')
     visit person_path(person)
     click_link 'Edit this page'
     fill_in 'Surname', with: 'Smelly Pants'
@@ -95,7 +95,7 @@ feature "Person edit notifications" do
   end
 
   scenario 'Editing a person with nil email' do
-    person = create(:person, :given_name => 'Bob', :surname => 'Smith', :email => nil)
+    person = create(:person, given_name: 'Bob', surname: 'Smith', email: nil)
     visit person_path(person)
     click_link 'Edit this page'
     fill_in 'Surname', with: 'Smelly Pants'
@@ -103,7 +103,7 @@ feature "Person edit notifications" do
   end
 
   scenario 'Editing a person with invalid email' do
-    person = create(:person, :given_name => 'Bob', :surname => 'Smith', :email => 'test.user')
+    person = create(:person, given_name: 'Bob', surname: 'Smith', email: 'test.user')
     visit person_path(person)
     click_link 'Edit this page'
     fill_in 'Surname', with: 'Smelly Pants'
@@ -111,7 +111,7 @@ feature "Person edit notifications" do
   end
 
   scenario 'Editing a person from same email to different email' do
-    person = create(:person, :given_name => 'Bob', :surname => 'Smith', :email => 'test.user@digital.justice.gov.uk')
+    person = create(:person, given_name: 'Bob', surname: 'Smith', email: 'test.user@digital.justice.gov.uk')
     visit person_path(person)
     click_link 'Edit this page'
     fill_in 'Email', with: 'bob.smith@digital.justice.gov.uk'
@@ -124,7 +124,7 @@ feature "Person edit notifications" do
   end
 
   scenario 'Editing a person from different email to same email' do
-    person = create(:person, :given_name => 'Bob', :surname => 'Smith', :email => 'bob.smith@digital.justice.gov.uk')
+    person = create(:person, given_name: 'Bob', surname: 'Smith', email: 'bob.smith@digital.justice.gov.uk')
     visit person_path(person)
     click_link 'Edit this page'
     fill_in 'Email', with: 'test.user@digital.justice.gov.uk'
@@ -137,7 +137,7 @@ feature "Person edit notifications" do
   end
 
   scenario 'Editing a person from different email to different email' do
-    person = create(:person, :given_name => 'Bob', :surname => 'Smith', :email => 'bob.smith@digital.justice.gov.uk')
+    person = create(:person, given_name: 'Bob', surname: 'Smith', email: 'bob.smith@digital.justice.gov.uk')
     visit person_path(person)
     click_link 'Edit this page'
     fill_in 'Email', with: 'bob.smithe@digital.justice.gov.uk'
@@ -145,7 +145,7 @@ feature "Person edit notifications" do
   end
 
   scenario 'Editing a person from invalid email to invalid email' do
-    person = create(:person, :given_name => 'Bob', :surname => 'Smith', :email => 'bob.smith')
+    person = create(:person, given_name: 'Bob', surname: 'Smith', email: 'bob.smith')
     visit person_path(person)
     click_link 'Edit this page'
     fill_in 'Email', with: 'test.user'
