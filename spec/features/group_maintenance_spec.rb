@@ -79,13 +79,14 @@ feature "Group maintenance" do
     visit group_path(group)
     click_link "Edit"
 
+    expect(page).to have_text('You are currently editing this page')
     new_name = "Cyberdigital Cyberservices"
     fill_in "Name", with: new_name
     select dept.name, from: "Parent"
     click_button "Update team"
 
     expect(page).to have_content("Updated Cyberdigital Cyberservices")
-
+    expect(page).not_to have_text('You are currently editing this page')
     group.reload
     expect(group.name).to eql(new_name)
     expect(group.parent).to eql(dept)

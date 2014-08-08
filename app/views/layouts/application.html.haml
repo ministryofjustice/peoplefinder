@@ -2,7 +2,8 @@
 - content_for :content do
   #wrapper
     %main#content{role: 'main'}
-      =flash_messages
+      = yield :editing_alert
+      = flash_messages
       .inner-block.breadcrumbs_and_edit_link
         .breadcrumbs= yield :breadcrumbs
         .edit_this_page= yield :edit_this_page

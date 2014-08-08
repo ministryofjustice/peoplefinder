@@ -1,6 +1,7 @@
-$darkblue: #005EA5;
-$opaqueblue: rgba(#2B8CC4, 0.25);
 $blackish: #6F777B;
+$darkblue: #005EA5;
+$turqoise: rgba(#28A197, 0.5);
+$opaqueblue: rgba(#2B8CC4, 0.25);
 
 @import "people";
 @import "groups";
@@ -113,5 +114,12 @@ a.add-new-person {
   color: $darkblue;
   padding: 10px 15px 11px 58px;
   background: $opaqueblue image-url('icon_plus.png') no-repeat 14px;
+}
+
+.editing-alert {
+  background-color: $turqoise;
+  text-align: center;
+  padding-top:5px;
+  height: 30px;
 }
 @import 'retinal_images';

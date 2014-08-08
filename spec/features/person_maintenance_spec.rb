@@ -71,12 +71,14 @@ feature "Person maintenance" do
   scenario 'Editing a person' do
     visit person_path(create(:person, person_attributes))
     click_link 'Edit this page'
+    expect(page).to have_text('You are currently editing this page')
     fill_in 'Given name', with: 'Jane'
     fill_in 'Surname', with: 'Doe'
     click_button 'Update person'
 
     expect(page).to have_content("Updated Jane Doe’s profile")
 
+    expect(page).not_to have_text('You are currently editing this page')
     within('h1') do
       expect(page).to have_text('Jane Doe')
     end

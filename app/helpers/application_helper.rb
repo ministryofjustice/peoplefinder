@@ -35,4 +35,10 @@ private
       flash[type]
     }
   end
+
+  def editing_alert
+    content_for :editing_alert do
+      render partial: 'shared/editing_alert'
+    end
+  end
 end
