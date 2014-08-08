@@ -1,12 +1,21 @@
 #org-browser {
+  $border-color: #bfc1c3;
+  $column-height: 480px;
+  $row-width: 400px;
+  $row-height: 40px;
+
+  margin-top: 15px;
+  border: 1px solid $darkblue;
+  width: 950px;
+  height: $column-height;
+
   ul {
     list-style-type: none;
     padding: 0;
     margin: 0;
   }
   li {
-    width: 400px;
-    height: 40px;
+    height: $row-height;
     padding: 0;
     margin: 0;
   }
@@ -16,26 +25,28 @@
   #collapsed-groups {
     li {
       float: left;
-      height: 400px;
+      height: $column-height;
       border-right: 1px solid white;
-      background-color: #cae2f0;
+      background-color: white;
       overflow: hidden;
     }
-    li:nth-child(1) {
-      background-color: #ddd;
-    }
-    li:nth-child(2) {
-      background-color: #d8dee1;
-    }
-    li:nth-child(3) {
-      background-color: #cfe0ea;
-    }
+    /* 100%, 90%, 80% etc. */
+    li:nth-child(1) { background-color: #9bb7ce; }
+    li:nth-child(2) { background-color: #a4bed2; }
+    li:nth-child(3) { background-color: #afc5d7; }
+    li:nth-child(4) { background-color: #b9ccdc; }
+    li:nth-child(5) { background-color: #c3d3e1; }
+    li:nth-child(6) { background-color: #cddbe6; }
+    li:nth-child(7) { background-color: #d7e2eb; }
+    li:nth-child(8) { background-color: #e1e9f0; }
+    li:nth-child(9) { background-color: #ebf0f5; }
+    li:nth-child(10) { background-color: #f5f7fa; }
     div {
-      -webkit-transform: rotate(-90deg) translate(-400px, 0px);
-      transform: rotate(-90deg) translate(-400px, 0px);
+      -webkit-transform: rotate(-90deg) translate(-$column-height, 0px);
+      transform: rotate(-90deg) translate(-$column-height, 0px);
       -webkit-transform-origin: top left;
       transform-origin: top left;
-      width: 400px;
+      width: $column-height;
       height: 45px;
       text-align: center;
       font-weight: bold;
@@ -65,12 +76,16 @@
   }
   #expanded-groups {
     float: left;
-    height: 400px;
-    overflow-y: scroll;
-    border-right: 1px solid #ddd;
+    height: $column-height;
+    overflow: auto;
+    border-right: 1px solid $border-color;
     li {
-      border-bottom: 1px solid #ddd;
+      border-bottom: 1px solid $border-color;
       position: relative;
+      width: $row-width;
+    }
+    li:first-child {
+      background-color: #f8f8f8;
     }
     .arrow {
       position: absolute;
