@@ -28,4 +28,21 @@ private
       @hint_group = Group.find(session[:last_group_visited])
     end
   end
+
+  def i18n_flash(type, partial_key, options = {})
+    full_key = ['controllers', controller_name, partial_key].join('.')
+    flash[type] = I18n.t(full_key, options)
+  end
+
+  def error(partial_key, options = {})
+    i18n_flash :error, partial_key, options
+  end
+
+  def notice(partial_key, options = {})
+    i18n_flash :notice, partial_key, options
+  end
+
+  def warning(partial_key, options = {})
+    i18n_flash :warning, partial_key, options
+  end
 end

@@ -38,7 +38,8 @@ class GroupsController < ApplicationController
     @group = collection.new(group_params)
 
     if @group.save
-      redirect_to @group, notice: "Created #{@group}."
+      notice :group_created, group: @group
+      redirect_to @group
     else
       load_people
       render :new
@@ -48,7 +49,8 @@ class GroupsController < ApplicationController
   # PATCH/PUT /groups/1
   def update
     if @group.update(group_params)
-      redirect_to @group, notice: "Updated #{@group}"
+      notice :group_updated, group: @group
+      redirect_to @group
     else
       load_people
       render :edit
@@ -59,7 +61,8 @@ class GroupsController < ApplicationController
   def destroy
     next_page = @group.parent ? @group.parent : groups_url
     @group.destroy
-    redirect_to next_page, notice: "Deleted #{@group}."
+    notice :group_deleted, group: @group
+    redirect_to next_page
   end
 
 private

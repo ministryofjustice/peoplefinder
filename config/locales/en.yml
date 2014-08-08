@@ -20,6 +20,22 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
+  controllers:
+    groups:
+      group_created: "Created %{group}"
+      group_updated: "Updated %{group}"
+      group_deleted: "Deleted %{group}"
+    home:
+      top_level_group_needed: "To use the People Finder, first create a top-level group (without a parent)"
+    memberships:
+      member_removed: "Removed %{person} from %{group}"
+    people:
+      profile_created: "Created %{person}’s profile"
+      profile_updated: "Updated %{person}’s profile"
+      profile_deleted: "Deleted %{person}’s profile"
+    person_image:
+      no_image_uploaded: "No image has been uploaded for %{person}"
+      image_cropped: "Cropped %{person}’s image"
   people:
     day_names:
       works_monday: "Monday"

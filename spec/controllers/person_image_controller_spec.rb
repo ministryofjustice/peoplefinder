@@ -34,7 +34,7 @@ RSpec.describe PersonImageController, type: :controller do
           person: { crop_x: 10, crop_y: 20, crop_w: 200, crop_h: 200 } }
 
       expect(response.header["Location"]).to include(person_path(person, cache_bust: ''))
-      expect(flash[:notice]).to have_text("Cropped Doe's image")
+      expect(flash[:notice]).to have_text("Cropped Doe’s image")
     end
 
     it 'fails to recreate image versions' do
