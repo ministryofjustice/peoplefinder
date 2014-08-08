@@ -27,20 +27,19 @@
       float: left;
       height: $column-height;
       border-right: 1px solid white;
-      background-color: white;
+      background-color: #f7f9fb;
       overflow: hidden;
     }
-    /* 100%, 90%, 80% etc. */
+    /* Alpha-blend with white with alpha = 0.75^n */
     li:nth-child(1) { background-color: #9bb7ce; }
-    li:nth-child(2) { background-color: #a4bed2; }
-    li:nth-child(3) { background-color: #afc5d7; }
-    li:nth-child(4) { background-color: #b9ccdc; }
-    li:nth-child(5) { background-color: #c3d3e1; }
-    li:nth-child(6) { background-color: #cddbe6; }
-    li:nth-child(7) { background-color: #d7e2eb; }
-    li:nth-child(8) { background-color: #e1e9f0; }
-    li:nth-child(9) { background-color: #ebf0f5; }
-    li:nth-child(10) { background-color: #f5f7fa; }
+    li:nth-child(2) { background-color: #b3c9da; }
+    li:nth-child(3) { background-color: #c6d6e3; }
+    li:nth-child(4) { background-color: #d4e0ea; }
+    li:nth-child(5) { background-color: #dfe8ef; }
+    li:nth-child(6) { background-color: #e7edf3; }
+    li:nth-child(7) { background-color: #edf2f6; }
+    li:nth-child(8) { background-color: #f1f5f8; }
+    li:nth-child(9) { background-color: #f4f7fa; }
     div {
       -webkit-transform: rotate(-90deg) translate(-$column-height, 0px);
       transform: rotate(-90deg) translate(-$column-height, 0px);
