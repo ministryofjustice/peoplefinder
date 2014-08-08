@@ -94,4 +94,6 @@ Rails.application.configure do
     :domain         => 'heroku.com',
     :enable_starttls_auto => true
   }
+
+  config.filter_parameters += [:given_name, :surname, :email, :primary_phone_number, :secondary_phone_number, :location, :email]
 end
