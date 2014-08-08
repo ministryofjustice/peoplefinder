@@ -128,6 +128,15 @@ It should be noted that depending on your circumstances e.g running migrations e
 `heroku maintenance:on` unleash the app to the world
 
 
+#SSL
+
+If you look in the .env.example you'll see a setting called SSL_ON which defaults to false. However the application is fully able to take advantage of
+SSL and by setting SSL_ON to true it will force the application to use SSL only which you'll definitely want for production.
+  
+To do this on Heroku run:
+
+`heroku config:set SSL_ON=true`
+
 
 
  
