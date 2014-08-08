@@ -1,5 +1,6 @@
 $darkblue: #005EA5;
 $opaqueblue: rgba(#2B8CC4, 0.25);
+$blackish: #6F777B;
 
 @import "people";
 @import "groups";
@@ -52,7 +53,7 @@ a:hover {
 
 h1, h2 {
   margin: 30px 0;
-  border-bottom: 1px solid #6F777B;
+  border-bottom: 1px solid $blackish;
 }
 
 h4 {

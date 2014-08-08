@@ -13,10 +13,10 @@ form.search-box {
     margin-left: -4px;
     width: 47px;
     height: 47px;
-    border: 1px solid #6F777B;
+    border: 1px solid $blackish;
     border-width: 0 0 0 1px;
     text-indent: -5000px;
     overflow: hidden;
-    background: #6F777B image-url('icon_search.png') no-repeat -1px 50%;
+    background: $blackish image-url('icon_search.png') no-repeat -1px 50%;
   }
 }

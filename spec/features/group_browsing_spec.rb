@@ -24,21 +24,13 @@ feature "Group browsing" do
     expect(page).to have_link("A Leaf Node")
   end
 
-  scenario "A team with subteams and some people" do
+  scenario "A team with subteams" do
     current_group = team
     add_people_to_group(names, current_group)
     visit group_path(current_group)
 
     expect(page).to have_text("Teams within #{ current_group.name }")
     expect(page).to have_link("View all people in #{ current_group.name }")
-  end
-
-  scenario "A team with subteams and no people" do
-    current_group = team
-    visit group_path(current_group)
-
-    expect(page).to have_text("Teams within #{ current_group.name }")
-    expect(page).not_to have_link("View all people in #{ current_group.name }")
   end
 
   scenario "A team with no subteams (leaf_node) and some people" do
