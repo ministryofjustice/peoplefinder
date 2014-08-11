@@ -69,19 +69,20 @@ feature "Group browsing" do
       expect(page).to have_link(name.join(' '))
     end
   end
-end
 
-def add_people_to_group(names, group)
-  names.each do |gn, sn|
-    person = create(:person, given_name: gn, surname: sn)
-    create(:membership, person: person, group: group)
+
+  def add_people_to_group(names, group)
+    names.each do |gn, sn|
+      person = create(:person, given_name: gn, surname: sn)
+      create(:membership, person: person, group: group)
+    end
   end
-end
 
-def names
-  [
-    %w[ Johnny Cash ],
-    %w[ Dolly Parton ],
-    %w[ Merle Haggard ]
-  ]
+  def names
+    [
+      %w[ Johnny Cash ],
+      %w[ Dolly Parton ],
+      %w[ Merle Haggard ]
+    ]
+  end
 end
