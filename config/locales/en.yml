@@ -78,7 +78,8 @@ en:
   views:
     info_text:
       delete_this_team: "Delete this team"
-      deletable_group_explanation: "Team deletion is only possible if there are no people associated with it."
       editing_alert: "You are currently editing this page - click the update button to finish"
       hint_team_description: "What is the role and purpose of the team?"
       hint_team_responsibilities: "What are the team's collective responsibilities?"
+      team_deletable: "Note that team deletion cannot be undone."
+      team_not_deletable: "Team deletion is only possible if there are no people associated with it."

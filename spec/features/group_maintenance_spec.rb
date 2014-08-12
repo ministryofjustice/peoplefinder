@@ -62,7 +62,7 @@ feature "Group maintenance" do
   scenario 'Deleting a team' do
     group = create(:group)
     visit edit_group_path(group)
-    expect(page).not_to have_text('deletion is only possible if there are no people')
+    expect(page).to have_text('cannot be undone')
     click_link('Delete this team')
 
     expect(page).to have_content("Deleted #{group.name}")

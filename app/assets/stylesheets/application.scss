@@ -132,9 +132,16 @@ form .text .wider   {
 .delete-actions {
   padding: 30px 0;
   border-top: 1px solid $blackish;
+
+  .deletable {
+    background: transparent image-url('icon_delete.png') no-repeat 0;
+    padding: 10px 0 0 45px;
+    height: 35px;
+  }
+  .opaque {
+    color: rgba($darkblue, .50);
+    opacity: .50;
+  }
 }
 
-.not-deletable {
-  color: rgba($darkblue, .50);
-}
 @import 'retinal_images';
