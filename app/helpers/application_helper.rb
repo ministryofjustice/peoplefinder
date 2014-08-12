@@ -28,6 +28,10 @@ module ApplicationHelper
     }
   end
 
+  def info_text(key)
+    t(key, scope: ['views', controller_name, action_name].join('.'))
+  end
+
 private
 
   def flash_message(type)

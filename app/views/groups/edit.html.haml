@@ -4,7 +4,11 @@
 
 = render 'form'
 
-- if @group.deletable?
-  .form-group
-    = link_to 'Delete this record', @group, method: :delete,
+.delete-actions
+  - if @group.deletable?
+    = link_to info_text('delete_this_team'), @group, method: :delete,
       data: { confirm: "Are you sure you want to delete #{ @group.name }?" }
+  - else
+    .not-deletable
+      = info_text('delete_this_team')
+    %p.form-hint= info_text('deletable_group_explanation')

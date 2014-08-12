@@ -75,3 +75,8 @@ en:
   errors:
     groups:
       memberships_exist: "cannot be deleted until all the memberships have been removed"
+  views:
+    groups:
+      edit:
+        delete_this_team: "Delete this team"
+        deletable_group_explanation: "Team deletion is only possible if there are no people associated with it."

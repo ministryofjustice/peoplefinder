@@ -59,23 +59,25 @@ feature "Group maintenance" do
     expect(subteam.parent).to eql(team)
   end
 
-  scenario 'Deleting a group' do
+  scenario 'Deleting a team' do
     group = create(:group)
     visit edit_group_path(group)
-    click_link('Delete this record')
+    expect(page).not_to have_text('deletion is only possible if there are no people')
+    click_link('Delete this team')
 
     expect(page).to have_content("Deleted #{group.name}")
     expect { Group.find(group) }.to raise_error(ActiveRecord::RecordNotFound)
   end
 
-  scenario 'Prevent deletion of a group that has memberships' do
+  scenario 'Prevent deletion of a team that has memberships' do
     membership = create(:membership)
     group = membership.group
     visit edit_group_path(group)
     expect(page).not_to have_link('Delete this record')
+    expect(page).to have_text('deletion is only possible if there are no people')
   end
 
-  scenario "Editing a group" do
+  scenario "Editing a team" do
     dept = create(:group, name: "Ministry of Justice")
     org = create(:group, name: "CSG", parent: dept)
     group = create(:group, name: "Digital Services", parent: org)

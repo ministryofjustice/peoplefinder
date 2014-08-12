@@ -129,4 +129,12 @@ form .text .wider   {
     height: 205px;
 }
 
+.delete-actions {
+  padding: 30px 0;
+  border-top: 1px solid $blackish;
+}
+
+.not-deletable {
+  color: rgba($darkblue, .50);
+}
 @import 'retinal_images';

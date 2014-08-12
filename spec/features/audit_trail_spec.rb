@@ -86,7 +86,7 @@ feature "Audit trail" do
     with_versioning do
       group = create(:group, name: 'original name')
       visit edit_group_path(group)
-      click_link("Delete this record")
+      click_link("Delete this team")
 
       visit '/audit_trail'
       expect(page).to have_text('Deleted Group')
