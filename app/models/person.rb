@@ -159,7 +159,7 @@ class Person < ActiveRecord::Base
   end
 
   def send_destroy_email!(current_user)
-    if valid_email? && current_user.email != email
+    if should_send_email_notification?(email, current_user)
       UserUpdateMailer.deleted_profile_email(self, current_user.email).deliver
     end
   end
