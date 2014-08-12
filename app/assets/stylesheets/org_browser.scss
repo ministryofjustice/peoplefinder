@@ -1,36 +1,44 @@
 #org-browser {
   $border-color: #bfc1c3;
-  $column-height: 480px;
-  $row-width: 400px;
-  $row-height: 40px;
+  $browser-height: 480px;
+  $browser-width: 950px;
+  $line-height: 25px;
 
-  margin-top: 15px;
+  font-size: 19px;
+  line-height: $line-height;
+
+  height: $browser-height;
+  width: $browser-width;
   border: 1px solid $darkblue;
-  width: 950px;
-  height: $column-height;
+  margin-top: 15px;
 
   ul {
     list-style-type: none;
+  }
+
+  div, ul, li {
     padding: 0;
     margin: 0;
   }
-  li {
-    height: $row-height;
-    padding: 0;
-    margin: 0;
-  }
+
   .actionable {
     cursor: pointer;
   }
-  #collapsed-groups {
+
+  .collapsed-groups {
+    $column-height: $browser-height;
+    $column-width: 45px;
+
     li {
-      float: left;
       height: $column-height;
+      width: $column-width;
+      float: left;
       border-right: 1px solid white;
+      overflow: hidden; // for animation
       background-color: #f7f9fb;
-      overflow: hidden;
     }
-    /* Alpha-blend with white with alpha = 0.75^n */
+
+    // Alpha-blend with white with alpha = 0.75^n
     li:nth-child(1) { background-color: #9bb7ce; }
     li:nth-child(2) { background-color: #b3c9da; }
     li:nth-child(3) { background-color: #c6d6e3; }
@@ -40,19 +48,31 @@
     li:nth-child(7) { background-color: #edf2f6; }
     li:nth-child(8) { background-color: #f1f5f8; }
     li:nth-child(9) { background-color: #f4f7fa; }
-    div {
+
+    .block {
+      width: $column-height; // } sic
+      height: $column-width; // } because it's rotated
+
+      span, label {
+        padding: (($column-width - $line-height) / 2) 5px;
+        padding-right: 0;
+        display: inline-block;
+      }
+    }
+
+    .sideways {
       -webkit-transform: rotate(-90deg) translate(-$column-height, 0px);
       transform: rotate(-90deg) translate(-$column-height, 0px);
       -webkit-transform-origin: top left;
       transform-origin: top left;
       width: $column-height;
-      height: 45px;
+      height: $column-width;
       text-align: center;
       font-weight: bold;
-      padding: 9px;
     }
+
     .animate {
-      width: 45px;
+      width: $column-width;
     }
     .animate.ng-enter,
     .animate.ng-leave {
@@ -67,31 +87,44 @@
 
     .animate.ng-enter.ng-enter-active,
     .animate.ng-leave {
-      width: 45px;
+      width: $column-width;
     }
   }
-  li div {
-    padding: 10px;
-  }
-  #expanded-groups {
+
+  .expanded-groups {
     float: left;
-    height: $column-height;
-    overflow: auto;
+    $row-width: 400px;
+    $row-height: 40px;
     border-right: 1px solid $border-color;
+
     li {
-      border-bottom: 1px solid $border-color;
-      position: relative;
+      height: $row-height;
       width: $row-width;
+      border-bottom: 1px solid $border-color;
+
+      span, a, label {
+        padding: (($row-height - $line-height) / 2) 5px;
+        padding-right: 0;
+        display: inline-block;
+      }
     }
+
     li:first-child {
       background-color: #f8f8f8;
     }
+
+    .block {
+      width: $row-width;
+      height: $row-height;
+      position: relative;
+    }
+
     .arrow {
       position: absolute;
       top: 0;
       right: 0;
       padding-right: 0;
-      color: #888;
+      color: $border-color;
     }
   }
 }

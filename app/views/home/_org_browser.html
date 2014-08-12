@@ -1,25 +1,34 @@
-<div id="org-browser" ng-controller="GroupListCtrl">
-  <ul id="collapsed-groups">
-    <li class='animate' ng-repeat="group in groups">
-      <div ng-click="moveUp(group)" class="actionable">
-        {{group.name}}
+<div id="org-browser" ng-controller="GroupListCtrl" >
+  <ul class="collapsed-groups" >
+    <li class='animate' ng-repeat="group in groups" >
+      <div class="block actionable sideways"
+        ng-click="moveUp(group)" >
+        <label ng-show="selectMode"
+          ng-click="select(group); $event.stopImmediatePropagation();" >
+          <input type="radio" ng-checked="isSelected(group)" />
+        </label>
+        <span>
+          {{ group.name }}
+        </span>
       </div>
     </li>
   </ul>
-
-  <ul id="expanded-groups">
-    <li>
-      <div>
-        <a href="{{selected.url}}">View {{selected.name}}</a>
+  <ul class="expanded-groups" >
+    <li ng-hide="selectMode">
+      <div class="block" >
+        <a href="{{ current.url }}" >View {{ current.name }}</a>
       </div>
     </li>
-    <li ng-repeat="child in selected.children">
-      <div class="actionable" ng-click="moveDown(child)" ng-show="{{isExpandable(child)}}">
-        {{child.name}}
-        <div class="arrow" ng-show="{{isExpandable(child)}}">〉</div>
-      </div>
-      <div ng-hide="{{isExpandable(child)}}">
-        {{child.name}}
+    <li ng-repeat="group in current.children" >
+      <div class="block"
+        ng-class="{ actionable: isExpandable(group) }"
+        ng-click="moveDown(group)" >
+        <label ng-show="selectMode"
+          ng-click="select(group); $event.stopImmediatePropagation();" >
+          <input type="radio" ng-checked="isSelected(group)" />
+        </label>
+        <span>{{ group.name }}</span>
+        <span class="arrow" ng-show="isExpandable(group)" >〉</span>
       </div>
     </li>
   </ul>

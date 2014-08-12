@@ -18,6 +18,7 @@ private
 
   def export(group)
     {
+      id: group.id,
       name: group.name,
       url: group_path(group),
       children: children(group).map { |g| export(g) }

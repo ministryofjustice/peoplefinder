@@ -6,24 +6,30 @@ RSpec.describe GroupHierarchy, type: :model do
     root.reload
 
     expected = {
+      id: root.id,
       name: 'A',
       url: '/groups/a',
       children: [
         {
+          id: root.children[0].id,
           name: 'B',
           url: '/groups/b',
           children: [
             {
+              id: root.children[0].children[0].id,
               name: 'C',
               url: '/groups/c',
               children: []
             }, {
+              id: root.children[0].children[1].id,
+              name: 'C',
               name: 'D',
               url: '/groups/d',
               children: []
             }
           ]
         }, {
+          id: root.children[1].id,
           name: 'E',
           url: '/groups/e',
           children: []

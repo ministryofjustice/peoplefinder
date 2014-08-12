@@ -21,6 +21,8 @@ feature "Person maintenance" do
   end
 
   scenario 'Clicking the add another role link', js: true do
+    create(:group)
+
     javascript_log_in
     visit new_person_path
 

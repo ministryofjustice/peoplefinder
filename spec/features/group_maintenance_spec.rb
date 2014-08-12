@@ -23,15 +23,15 @@ feature "Group maintenance" do
     expect(dept.parent).to be_nil
   end
 
-  scenario "Creating a team inside the department" do
+  scenario "Creating a team inside the department", js: true do
     dept = create(:group, name: "Ministry of Justice")
 
+    javascript_log_in
     visit group_path(dept)
     click_link "Add new sub-team"
 
     name = "CSG"
     fill_in "Team name", with: name
-    select dept.name, from: "Parent"
     click_button "Create team"
 
     expect(page).to have_content("Created CSG")
@@ -77,18 +77,19 @@ feature "Group maintenance" do
     expect(page).to have_text('deletion is only possible if there are no people')
   end
 
-  scenario "Editing a team" do
+  scenario "Editing a team", js: true do
     dept = create(:group, name: "Ministry of Justice")
     org = create(:group, name: "CSG", parent: dept)
     group = create(:group, name: "Digital Services", parent: org)
 
+    javascript_log_in
     visit group_path(group)
     click_link "Edit"
 
     expect(page).to have_text('You are currently editing this page')
     new_name = "Cyberdigital Cyberservices"
     fill_in "Team name", with: new_name
-    select dept.name, from: "Parent"
+    check_in_org_browser "Ministry of Justice"
     click_button "Update team"
 
     expect(page).to have_content("Updated Cyberdigital Cyberservices")
@@ -96,5 +97,11 @@ feature "Group maintenance" do
     group.reload
     expect(group.name).to eql(new_name)
     expect(group.parent).to eql(dept)
+  end
+
+  def check_in_org_browser(text)
+    within '#org-browser' do
+      find('div', text: text).find('input').set(true)
+    end
   end
 end
