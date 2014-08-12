@@ -1,4 +1,7 @@
 = editing_alert
+.grid-wrapper
+  .grid.grid-1-3
+    TEST
 = simple_form_for @group do |f|
   %fieldset
     .form-group
@@ -7,12 +10,12 @@
     .form-group
       %label.form-label-bold{ for: :group_description } Team description
       %p.form-hint What is the role and purpose of the team?
-      = f.input :description, label: false
+      = f.input :description, label: false, input_html: { class: 'wider' }
 
     .form-group
       %label.form-label-bold{ for: :group_responsibilities } Team responsibilities (optional)
       %p.form-hint What are the team's collective responsibilities?
-      = f.input :responsibilities, label: false
+      = f.input :responsibilities, label: false, input_html: { class: 'wider' }
 
     .form-group
       = f.association :parent
