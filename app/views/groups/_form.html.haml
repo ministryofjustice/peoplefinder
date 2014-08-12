@@ -6,12 +6,12 @@
 
     .form-group
       %label.form-label-bold{ for: :group_description } Team description
-      %p.form-hint What is the role and purpose of the team?
+      %p.form-hint= info_text('hint_team_description')
       = f.input :description, label: false, input_html: { class: 'wider' }
 
     .form-group
       %label.form-label-bold{ for: :group_responsibilities } Team responsibilities (optional)
-      %p.form-hint What are the team's collective responsibilities?
+      %p.form-hint= info_text('hint_team_responsibilities')
       = f.input :responsibilities, label: false, input_html: { class: 'wider' }
 
     .form-group
