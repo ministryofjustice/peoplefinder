@@ -1,7 +1,6 @@
 class Person < ActiveRecord::Base
   extend FriendlyId
-  include Elasticsearch::Model
-  include Elasticsearch::Model::Callbacks
+  include Searchable
 
   DAYS_WORKED = [
     :works_monday,
@@ -14,8 +13,6 @@ class Person < ActiveRecord::Base
   ]
 
   VALID_EMAIL_PATTERN = /\A[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]+\z/
-
-  index_name [Rails.env, model_name.collection.gsub(/\//, '-')].join('_')
 
   has_paper_trail ignore: [:updated_at, :created_at, :id, :slug]
   mount_uploader :image, ImageUploader
@@ -35,24 +32,6 @@ class Person < ActiveRecord::Base
   default_scope { order(surname: :asc, given_name: :asc) }
 
   friendly_id :slug_source, use: :slugged
-
-  def self.delete_indexes
-    __elasticsearch__.delete_index! index: Person.index_name
-  end
-
-  def self.fuzzy_search(query) # rubocop:disable Style/MethodLength
-    search(
-      size: 100,
-      query: {
-        fuzzy_like_this: {
-          fields: [:name, :description, :location, :role_and_group],
-          like_text: query,
-          prefix_length: 3,
-          ignore_tf: true
-        }
-      }
-    )
-  end
 
   def name
     [given_name, surname].compact.join(' ').strip
@@ -88,13 +67,6 @@ class Person < ActiveRecord::Base
     else
       name
     end
-  end
-
-  def as_indexed_json(_options = {})
-    as_json(
-      only: [:description, :location],
-      methods: [:name, :role_and_group]
-    )
   end
 
   def role_and_group
