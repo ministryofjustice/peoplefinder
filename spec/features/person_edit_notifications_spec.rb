@@ -86,6 +86,14 @@ feature "Person edit notifications" do
     expect(mail.body.encoded).to match('test.user@digital.justice.gov.uk')
   end
 
+  scenario 'Editing a person with an email that is not in the list of valid domains for login' do
+    person = create(:person, given_name: 'Bob', surname: 'Smith', email: 'bob.smith@something-else.example.com')
+    visit person_path(person)
+    click_link 'Edit this page'
+    fill_in 'Surname', with: 'Smelly Pants'
+    expect { click_button 'Update person' }.not_to change { ActionMailer::Base.deliveries.count }
+  end
+
   scenario 'Editing a person with same email' do
     person = create(:person, given_name: 'Bob', surname: 'Smith', email: 'test.user@digital.justice.gov.uk')
     visit person_path(person)

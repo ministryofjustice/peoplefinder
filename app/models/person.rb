@@ -172,6 +172,7 @@ class Person < ActiveRecord::Base
 private
 
   def should_send_email_notification?(email, current_user)
-    valid_email?(email) && current_user.email != email
+    valid_email?(email) && current_user.email != email &&
+      EmailAddress.new(email).valid_domain?
   end
 end
