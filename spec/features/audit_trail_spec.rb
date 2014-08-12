@@ -61,7 +61,7 @@ feature "Audit trail" do
     with_versioning do
       group = create(:group, name: 'original name')
       visit edit_group_path(group)
-      fill_in 'Name', with: 'something else'
+      fill_in 'Team name', with: 'something else'
       click_button 'Update team'
 
       visit '/audit_trail'
@@ -73,7 +73,7 @@ feature "Audit trail" do
   scenario 'Auditing the creation of a group' do
     with_versioning do
       visit new_group_path
-      fill_in 'Name', with: 'Jon'
+      fill_in 'Team name', with: 'Jon'
       click_button 'Create team'
 
       visit '/audit_trail'

@@ -9,13 +9,17 @@ feature "Group maintenance" do
     name = "Ministry of Justice"
 
     visit new_group_path
-    fill_in "Name", with: name
+    fill_in "Team name", with: name
+    fill_in "Team description", with: 'about my team'
+    fill_in "Team responsibilities (optional)", with: 'my responsibilities'
     click_button "Create team"
 
     expect(page).to have_content("Created Ministry of Justice")
 
     dept = Group.find_by_name(name)
     expect(dept.name).to eql(name)
+    expect(dept.description).to eql('about my team')
+    expect(dept.responsibilities).to eql('my responsibilities')
     expect(dept.parent).to be_nil
   end
 
@@ -26,7 +30,7 @@ feature "Group maintenance" do
     click_link "Add new sub-team"
 
     name = "CSG"
-    fill_in "Name", with: name
+    fill_in "Team name", with: name
     select dept.name, from: "Parent"
     click_button "Create team"
 
@@ -45,7 +49,7 @@ feature "Group maintenance" do
     click_link "Add new sub-team"
 
     name = "Digital Services"
-    fill_in "Name", with: name
+    fill_in "Team name", with: name
     click_button "Create team"
 
     expect(page).to have_content("Created Digital Services")
@@ -81,7 +85,7 @@ feature "Group maintenance" do
 
     expect(page).to have_text('You are currently editing this page')
     new_name = "Cyberdigital Cyberservices"
-    fill_in "Name", with: new_name
+    fill_in "Team name", with: new_name
     select dept.name, from: "Parent"
     click_button "Update team"
 

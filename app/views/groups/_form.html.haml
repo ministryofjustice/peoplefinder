@@ -2,12 +2,20 @@
 = simple_form_for @group do |f|
   %fieldset
     .form-group
-      = f.input :name, as: :string, required: false
+      = f.input :name, as: :string, required: false, label: 'Team name'
+
+    .form-group
+      %label.form-label-bold{ for: :group_description } Team description
+      %p.form-hint What is the role and purpose of the team?
+      = f.input :description, label: false
+
+    .form-group
+      %label.form-label-bold{ for: :group_responsibilities } Team responsibilities (optional)
+      %p.form-hint What are the team's collective responsibilities?
+      = f.input :responsibilities, label: false
+
     .form-group
       = f.association :parent
-    .form-group
-      = f.input :description
-    .form-group
-      = f.input :responsibilities
+
     .form-group
       = f.button :submit
