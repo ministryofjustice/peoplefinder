@@ -16,5 +16,5 @@ $(function() {
   $(document).on("click", "a.remove-new-membership", function(e) {
     e.preventDefault();
     $(this).parents('.membership').remove();
-  })
+  });
 });
