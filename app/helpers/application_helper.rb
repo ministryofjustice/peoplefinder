@@ -29,7 +29,7 @@ module ApplicationHelper
   end
 
   def info_text(key)
-    t(key, scope: ['views', controller_name, 'info_text'].join('.'))
+    t(key, scope: ['views', 'info_text'].join('.'))
   end
 
 private
