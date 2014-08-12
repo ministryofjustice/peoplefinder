@@ -21,5 +21,5 @@ peoplefinderApp.controller('GroupListCtrl', function($scope, $http) {
 
   $scope.isExpandable = function(group) {
     return group.children.length > 0;
-  }
+  };
 });
