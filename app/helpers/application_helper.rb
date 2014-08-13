@@ -29,7 +29,7 @@ module ApplicationHelper
   end
 
   def info_text(key)
-    t(key, scope: %w[views info_text].join('.'))
+    t(key, scope: %w[views info_text].join('.')).html_safe
   end
 
 private

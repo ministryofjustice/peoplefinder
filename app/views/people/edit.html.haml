@@ -4,7 +4,8 @@
 
 = render 'form'
 
-.form-group
-  = link_to 'Delete this profile', @person, method: :delete,
-    data: { confirm: "Are you sure you want to delete the profile for #{ @person.name }?" }
-%p= link_to 'Back', @person
+.delete-actions
+  .deletable
+    = link_to info_text('delete_this_profile'), @person, method: :delete,
+      data: { confirm: "Are you sure you want to delete #{ @person }?" }
+  %p.form-hint= info_text('profile_deletable')

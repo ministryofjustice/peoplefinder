@@ -8,35 +8,43 @@
       = f.input :surname, as: :string, required: false
 
     .form-group
-      %label.form-label-bold Role
       #memberships
-        - child_index = Time.now.to_i
-        = render partial: 'membership_fields', locals: { f: f, child_index: child_index }
+        = render partial: 'membership_fields', locals: { f: f }
 
     .form-group
       = link_to 'Add another role', add_membership_people_path(id: @person.to_param), id: 'add_membership'
 
     .form-group
-      = f.input :location, as: :string
+      %h2.line-above Contact details
+      = f.input :location, as: :string, label: 'Location of work'
     .form-group
       = f.input :primary_phone_number, as: :string
     .form-group
       = f.input :secondary_phone_number, as: :string
     .form-group
-      = f.input :email, as: :string
+      = f.input :email, as: :string, label: 'Email address'
+
     .form-group
-      = f.input :description, label: 'About'
+      %h3.line-above
+        %label{ for: :person_description } Notes
+      %p.form-hint= info_text('notes_field_hint')
+      = f.input :description, label: false, input_html: { class: 'wider' }
+
+    .form-group
+      %h3 Working days
 
     .form-checkbox
       - Person::DAYS_WORKED.each do |day|
-        = f.input day, as: :boolean, label: day.to_s.titleize
+        = f.input day, as: :boolean, label: day_name(day)
 
     .form-group
-      %label.form-label-bold Image
+      %h3.line-above Photograph
+      %p.form-hint= info_text('photo_upload_hint')
+      = f.input :image, as: :file, label: false
+
       - if @person.image.present?
         = image_tag @person.image.medium, class: 'preview'
         %p= link_to 'Crop image', edit_person_image_path(@person)
-      = f.input :image, as: :file, label: false
 
     .form-group
       = f.button :submit

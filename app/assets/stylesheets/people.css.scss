@@ -29,8 +29,8 @@ ul.working_days {
 
 img.preview {
   margin-top: 15px;
-  width: 100px;
-  clip: rect(0px, 100px, 100px, 0px);
+  width: 125px;
+  clip: rect(0px, 125px, 125px, 0px);
 }
 
 #search_results {
@@ -73,4 +73,9 @@ img.preview {
   .add-new-person {
     margin-top: 60px;
   }
+}
+
+form .file {
+  margin-top: 15px;
+  border: 0;
 }

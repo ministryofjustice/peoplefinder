@@ -57,6 +57,13 @@ h1, h2 {
   border-bottom: 1px solid $blackish;
 }
 
+h2.line-above, h3.line-above {
+  margin-top: 30px;
+  padding-top: 20px;
+  border-top: 1px solid $blackish;
+  border-bottom: 0;
+}
+
 h4 {
   margin-top: 6px;
 }
@@ -75,33 +82,6 @@ strong {
   h1, h2 {
     padding-right: 175px;
   }
-
-}
-
-textarea {
-  height: 158px
-}
-.grey-panel {
-  background-color: #DEE0E2;
-  width: 47%;
-  margin: 15px 0 15px 0;
-  padding: 15px 15px 15px 15px;
-  label.form-label-bold {
-    font-size: 19px;
-  }
-  input.form-control {
-    width: 95%;
-  }
-  select.form-control {
-    width: 95%;
-  }
-  input.boolean {
-    width: 20px;
-  }
-}
-.remove-link {
-  font-size: 19px;
-  float: right;
 }
 
 select.form-control {

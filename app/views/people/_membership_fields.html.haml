@@ -1,7 +1,16 @@
+- child_index = Time.now.to_i
 = f.fields_for :memberships, child_index: child_index do |membership_f|
-  .membership.grey-panel
 
+  %h2.line-above Role
+
+
+  .membership
     - membership = membership_f.object
+
+    .form-group
+      = membership_f.input :role, as: :string, label: 'Job title'
+
+
 
     - if membership.new_record?
       .form-group
@@ -9,8 +18,7 @@
           required: false,
           include_blank: "-- Select --",
           label: 'Team'
-      .form-group
-        = membership_f.input :role, as: :string, label: 'Job title'
+
       .form-checkbox
         = membership_f.input :leader, label: 'This person is the Leader of this team'
         .remove-link

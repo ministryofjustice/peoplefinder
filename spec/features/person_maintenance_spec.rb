@@ -16,7 +16,7 @@ feature "Person maintenance" do
     fill_in 'Primary phone number', with: p[:primary_phone_number]
     fill_in 'Secondary phone number', with: p[:secondary_phone_number]
     fill_in 'Location', with: p[:location]
-    fill_in 'About', with: p[:description]
+    fill_in 'Notes', with: p[:description]
     uncheck('Monday')
     uncheck('Friday')
     click_button "Create person"
