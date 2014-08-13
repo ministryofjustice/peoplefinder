@@ -14,4 +14,5 @@
 //= require angular-animate/angular-animate
 //= require jquery
 //= require jquery_ujs
+//= require Jcrop/js/jquery.Jcrop.min
 //= require_tree .

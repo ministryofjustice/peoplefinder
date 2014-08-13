@@ -3,6 +3,7 @@
   "private": true,
   "dependencies": {
     "angular": "~1.2.21",
-    "angular-animate": "~1.2.21"
+    "angular-animate": "~1.2.21",
+    "Jcrop": "~0.9.12"
   }
 }
