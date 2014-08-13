@@ -36,9 +36,14 @@ class Group < ActiveRecord::Base
     parent ? parent.level.succ : 0
   end
 
-  def hierarchy(acc = [])
-    acc = [self] + acc
-    @hierarchy ||= parent ? parent.hierarchy(acc) : acc
+  def hierarchy
+    @hierarchy ||= [].tap { |acc|
+      node = self
+      while node
+        acc.unshift node
+        node = node.parent
+      end
+    }
   end
 
   def leadership
