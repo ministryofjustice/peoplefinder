@@ -88,7 +88,7 @@ feature "Group browsing" do
   end
 
   def click_org_browser_item(text)
-    find('#org-browser .actionable', text: text).click
+    find('#org-browser .actionable', text: text).trigger(:click)
   end
 
   def add_people_to_group(names, group)
