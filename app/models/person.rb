@@ -3,16 +3,7 @@ class Person < ActiveRecord::Base
   include Searchable
   include Completion
   include Notifications
-
-  DAYS_WORKED = [
-    :works_monday,
-    :works_tuesday,
-    :works_wednesday,
-    :works_thursday,
-    :works_friday,
-    :works_saturday,
-    :works_sunday
-  ]
+  include WorkDays
 
   VALID_EMAIL_PATTERN = /\A[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]+\z/
 

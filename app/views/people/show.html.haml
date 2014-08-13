@@ -8,9 +8,7 @@
         = image_tag @person.image.medium, class: 'profile-page'
       %h4 Days worked
       %ul.working_days
-        - Person::DAYS_WORKED.each do |day|
-          %li{class: ('active' if @person.send(day)), alt: day_name(day)}
-            = day_symbol(day)
+        = render 'working_days'
 
   .grid.grid-2-3
     .inner-block
