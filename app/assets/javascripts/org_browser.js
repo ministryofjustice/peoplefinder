@@ -1,7 +1,7 @@
 /* global angular, window */
 var peoplefinderApp = angular.module('peoplefinderApp', ['ngAnimate']);
 
-peoplefinderApp.controller('GroupListCtrl', function($scope, $http) {
+peoplefinderApp.controller('OrgBrowserCtrl', function($scope, $http) {
   var pathToNodeId = function(node, id, path) {
     path = path || [node];
 
