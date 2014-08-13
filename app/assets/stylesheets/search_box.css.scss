@@ -1,7 +1,8 @@
 form.search-box {
   .form-control {
     width: 480px;
-    max-width: 90% !important;
+    max-width: 89% !important;
+    height: 47px;
   }
   margin-top: 15px;
   input.form-control {
@@ -9,7 +10,7 @@ form.search-box {
   }
   .submit-button {
     position: absolute;
-    margin-top: 2px;
+
     margin-left: -4px;
     width: 47px;
     height: 47px;
