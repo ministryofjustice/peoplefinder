@@ -3,8 +3,7 @@
     <li class='animate' ng-repeat="group in groups" >
       <div class="block actionable sideways"
         ng-click="moveUp(group)" >
-        <label ng-show="selectMode"
-          ng-click="select(group); $event.stopImmediatePropagation();" >
+        <label ng-show="selectMode" >
           <input type="radio" ng-checked="isSelected(group)" />
         </label>
         <span>
@@ -20,11 +19,9 @@
       </div>
     </li>
     <li ng-repeat="group in current.children" >
-      <div class="block"
-        ng-class="{ actionable: isExpandable(group) }"
+      <div class="block actionable"
         ng-click="moveDown(group)" >
-        <label ng-show="selectMode"
-          ng-click="select(group); $event.stopImmediatePropagation();" >
+        <label ng-show="selectMode" >
           <input type="radio" ng-checked="isSelected(group)" />
         </label>
         <span>{{ group.name }}</span>

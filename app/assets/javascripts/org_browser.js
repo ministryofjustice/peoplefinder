@@ -17,12 +17,15 @@ peoplefinderApp.controller('OrgBrowserCtrl', function($scope, $http) {
   };
 
   $scope.moveDown = function(group) {
-    if (!$scope.isExpandable(group)) { return; }
-    $scope.groups.push(group);
+    if ($scope.isExpandable(group)) {
+      $scope.groups.push(group);
+    }
+    $scope.select(group);
   };
 
   $scope.moveUp = function(group) {
     while ($scope.current !== group) { $scope.groups.pop(); }
+    $scope.select(group);
   };
 
   $scope.isExpandable = function(group) {
@@ -35,7 +38,9 @@ peoplefinderApp.controller('OrgBrowserCtrl', function($scope, $http) {
 
   $scope.select = function(group) {
     $scope.selectedId = group.id;
-    window.setOrgBrowserGroupId(group.id);
+    if (window.setOrgBrowserGroupId) {
+      window.setOrgBrowserGroupId(group.id);
+    }
   };
 
   Object.defineProperty(
