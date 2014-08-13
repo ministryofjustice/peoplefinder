@@ -1,5 +1,6 @@
+/* global $, document */
 $(function() {
-  $(document).on("click", "#add_membership", function(e) {
+  $(document).on('click', '#add_membership', function(e) {
     e.preventDefault();
     $.ajax({
       url: this,
@@ -13,7 +14,7 @@ $(function() {
 });
 
 $(function() {
-  $(document).on("click", "a.remove-new-membership", function(e) {
+  $(document).on('click', 'a.remove-new-membership', function(e) {
     e.preventDefault();
     $(this).parents('.membership').remove();
   });
