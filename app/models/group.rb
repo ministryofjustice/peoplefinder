@@ -18,7 +18,7 @@ class Group < ActiveRecord::Base
   has_many :leaders, through: :leaderships, source: :person
   has_many :non_leaders, through: :non_leaderships, source: :person
 
-  validates :name, presence: true
+  validates :name, presence: true, uniqueness: { scope: :parent_id }
 
   default_scope { order(name: :asc) }
 
