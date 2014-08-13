@@ -11,7 +11,7 @@ feature "Person maintenance" do
     fill_in 'Surname', with: person_attributes[:surname]
     fill_in 'Job title', with: 'Head Honcho'
     select('Digital Justice', from: 'Team')
-    check('Leader')
+    check('leader')
     click_button "Create person"
 
     membership = Person.last.memberships.last
@@ -38,7 +38,7 @@ feature "Person maintenance" do
     javascript_log_in
     visit new_person_path
 
-    click_link('Add another role')
+    click_link('Add new role')
     expect(page).to have_selector('#memberships .membership', count: 2)
 
     click_link('remove', match: :first)

@@ -11,8 +11,7 @@
       #memberships
         = render partial: 'membership_fields', locals: { f: f }
 
-    .form-group
-      = link_to 'Add another role', add_membership_people_path(id: @person.to_param), id: 'add_membership'
+      = link_to 'Add new role', add_membership_people_path(id: @person.to_param), id: 'add_membership'
 
     .form-group
       %h2.line-above Contact details

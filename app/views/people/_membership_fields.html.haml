@@ -2,8 +2,6 @@
 = f.fields_for :memberships, child_index: child_index do |membership_f|
 
   %h2.line-above Role
-
-
   .membership
     - membership = membership_f.object
 
@@ -11,13 +9,17 @@
       = membership_f.input :role, as: :string, label: 'Job title'
 
     .form-group
-      = membership_f.association :group, collection: Group.all,
-        required: false,
-        include_blank: "-- Select --",
-        label: 'Team'
+      -# pending implementation of org browser
+      -# %p.form-hint= info_text('hint_add_person_to_team')
+      = membership_f.association :group, collection: Group.all, label: 'Team', required: false
+
+      %p.form-hint= info_text('hint_add_person_team_not_found')
 
     .form-checkbox
-      = membership_f.input :leader, label: 'This person is the Leader of this team'
+      %h3 Team leader?
+      = membership_f.input :leader, label: 'This person is leader of the team above.'
+      %p.form-hint= info_text('hint_add_person_as_leader')
+
       - if membership.new_record?
         .remove-link
           = link_to 'remove', '#', class: 'remove-new-membership'
