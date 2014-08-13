@@ -72,18 +72,6 @@ strong {
   font-weight: bold;
 }
 
-.title_with_edit {
-  position: relative;
-  a {
-    position: absolute;
-    right: 0;
-    bottom: 13px;
-  }
-  h1, h2 {
-    padding-right: 175px;
-  }
-}
-
 select.form-control {
   -webkit-appearance: menulist;
 }

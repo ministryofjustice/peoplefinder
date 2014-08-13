@@ -6,10 +6,9 @@
 = render partial: 'detail'
 
 - unless @group.leaf_node?
-  .title_with_edit
-    %h2
-      Teams within
-      = @group.name
+  %h2
+    Teams within
+    = @group.name
 
   .grid-wrapper
     = render partial: "subgroup", collection: @group.children
