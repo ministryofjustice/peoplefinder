@@ -23,10 +23,6 @@ Style/AccessModifierIndentation:
 Style/AlignParameters:
   EnforcedStyle: with_fixed_indentation
 
-# We'll solve this later.
-Style/ClassLength:
-  Enabled: false
-
 # Chain methods with trailing dots.
 Style/DotPosition:
   EnforcedStyle: trailing
