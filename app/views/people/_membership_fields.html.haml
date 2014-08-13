@@ -10,24 +10,19 @@
     .form-group
       = membership_f.input :role, as: :string, label: 'Job title'
 
+    .form-group
+      = membership_f.association :group, collection: Group.all,
+        required: false,
+        include_blank: "-- Select --",
+        label: 'Team'
 
-
-    - if membership.new_record?
-      .form-group
-        = membership_f.association :group, collection: @groups,
-          required: false,
-          include_blank: "-- Select --",
-          label: 'Team'
-
-      .form-checkbox
-        = membership_f.input :leader, label: 'This person is the Leader of this team'
+    .form-checkbox
+      = membership_f.input :leader, label: 'This person is the Leader of this team'
+      - if membership.new_record?
         .remove-link
           = link_to 'remove', '#', class: 'remove-new-membership'
 
-    - else
-      = link_to membership.group.name, membership.group
-      = " (#{ 'Leader ' }) " if membership.leader?
-      = membership.role  if membership.role.present?
+    - if !membership.new_record?
       = link_to 'remove', membership_path(membership,
           referer: request.path),
           method: :delete,

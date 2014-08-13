@@ -20,6 +20,18 @@ feature "Person maintenance" do
     expect(membership.leader?).to be true
   end
 
+  scenario 'Editing a job title' do
+    person = create_person_in_digital_justice
+
+    visit edit_person_path(person)
+
+    fill_in 'Job title', with: 'Head Honcho'
+    click_button 'Update'
+
+    membership = Person.last.memberships.last
+    expect(membership.role).to eql('Head Honcho')
+  end
+
   scenario 'Clicking the add another role link', js: true do
     create(:group)
 
@@ -34,9 +46,7 @@ feature "Person maintenance" do
   end
 
   scenario 'Removing a group' do
-    group = create(:group, name: 'Digital Justice')
-    person = create(:person, person_attributes)
-    person.memberships.create(group: group)
+    person = create_person_in_digital_justice
 
     visit edit_person_path(person)
     click_link('remove')
@@ -45,4 +55,11 @@ feature "Person maintenance" do
     expect(person.reload.memberships).to be_empty
     expect(current_path).to eql(edit_person_path(person))
   end
+end
+
+def create_person_in_digital_justice
+  group = create(:group, name: 'Digital Justice')
+  person = create(:person, person_attributes)
+  person.memberships.create(group: group)
+  person
 end
