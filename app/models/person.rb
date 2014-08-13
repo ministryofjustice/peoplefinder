@@ -47,16 +47,7 @@ class Person < ActiveRecord::Base
   end
 
   def hierarchy(hint_group = nil)
-    if groups.empty?
-      items = []
-    elsif groups.length == 1 || hint_group.nil?
-      items = groups.first.hierarchy
-    else
-      group = groups.find { |g| g.hierarchy.include?(hint_group) } ||
-        groups.first
-      items = group.hierarchy
-    end
-    items + [self]
+    group_hierarchy(hint_group) + [self]
   end
 
   def assignable_groups
@@ -66,5 +57,13 @@ class Person < ActiveRecord::Base
   def valid_email?(email = nil)
     email ||= self.email
     email.present? && email.match(VALID_EMAIL_PATTERN)
+  end
+
+private
+
+  def group_hierarchy(hint_group)
+    return [] if groups.empty?
+    hierarchies = groups.map(&:hierarchy)
+    hierarchies.find { |a| a.include?(hint_group) } || hierarchies.first
   end
 end
