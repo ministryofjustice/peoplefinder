@@ -23,6 +23,10 @@
 
   .actionable {
     cursor: pointer;
+
+    label, input {
+      cursor: pointer;
+    }
   }
 
   .collapsed-groups {
