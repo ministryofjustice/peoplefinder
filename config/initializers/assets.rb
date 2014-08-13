@@ -10,6 +10,8 @@ Rails.application.config.assets.precompile += %w[
   gov-static/gov-ie.js
   jquery.Jcrop.min.css
   jquery.Jcrop.min.js
-  angular/angular.js
-  angular-animate/angular-animate.js
 ]
+
+Dir.chdir(Rails.root.join('vendor', 'assets', 'components')) do
+  Rails.application.config.assets.precompile += Dir['**/*.{js,css}']
+end
