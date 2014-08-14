@@ -37,7 +37,7 @@ private
   end
 
   def group_path(lg)
-    Rails.application.routes.url_helpers.group_path(id: lg.slug)
+    Rails.application.routes.url_helpers.group_path(id: lg.id)
   end
 
   def lookup

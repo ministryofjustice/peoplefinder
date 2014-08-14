@@ -11,10 +11,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140804160030) do
+ActiveRecord::Schema.define(version: 20140814153848) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+  enable_extension "pg_stat_statements"
 
   create_table "groups", force: true do |t|
     t.integer  "parent_id"
@@ -26,8 +27,7 @@ ActiveRecord::Schema.define(version: 20140804160030) do
     t.text     "responsibilities"
   end
 
-  add_index "groups", ["parent_id"], name: "index_groups_on_parent_id", using: :btree
-  add_index "groups", ["slug"], name: "index_groups_on_slug", unique: true, using: :btree
+  add_index "groups", ["slug", "parent_id"], name: "index_groups_on_slug_and_parent_id", unique: true, using: :btree
 
   create_table "memberships", force: true do |t|
     t.integer  "group_id"
@@ -45,21 +45,21 @@ ActiveRecord::Schema.define(version: 20140804160030) do
     t.text     "given_name"
     t.text     "surname"
     t.text     "email"
-    t.text     "secondary_phone_number"
     t.text     "primary_phone_number"
+    t.text     "secondary_phone_number"
     t.text     "location"
     t.text     "description"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "works_monday",    default: true
-    t.boolean  "works_tuesday",   default: true
-    t.boolean  "works_wednesday", default: true
-    t.boolean  "works_thursday",  default: true
-    t.boolean  "works_friday",    default: true
+    t.boolean  "works_monday",           default: true
+    t.boolean  "works_tuesday",          default: true
+    t.boolean  "works_wednesday",        default: true
+    t.boolean  "works_thursday",         default: true
+    t.boolean  "works_friday",           default: true
     t.string   "image"
     t.string   "slug"
-    t.boolean  "works_saturday",  default: false
-    t.boolean  "works_sunday",    default: false
+    t.boolean  "works_saturday",         default: false
+    t.boolean  "works_sunday",           default: false
   end
 
   add_index "people", ["slug"], name: "index_people_on_slug", unique: true, using: :btree

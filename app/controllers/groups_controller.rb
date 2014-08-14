@@ -1,5 +1,6 @@
 class GroupsController < ApplicationController
   before_action :set_group, only: [:show, :edit, :update, :destroy, :all_people]
+  before_action :redirect_numeric_show, only: [:show]
   before_action :check_editability, only: [:edit, :update, :destroy]
 
   # GET /groups
@@ -63,9 +64,22 @@ class GroupsController < ApplicationController
 
 private
 
+  def numeric_id?
+    params[:id].match(/\A\d+\z/)
+  end
+
+  def redirect_numeric_show
+    return true unless numeric_id?
+    redirect_to @group.canonical_path
+  end
+
   # Use callbacks to share common setup or constraints between actions.
   def set_group
-    @group = collection.friendly.includes(:people).find(params[:id])
+    if numeric_id?
+      @group = collection.includes(:people).find(params[:id])
+    else
+      @group = Group.by_hierarchical_slug(params[:id]).includes(:people).first
+    end
   end
 
   # Never trust parameters from the scary internet, only allow the white list
@@ -77,7 +91,7 @@ private
 
   def collection
     if params[:group_id]
-      Group.friendly.find(params[:group_id]).children
+      Group.find(params[:group_id]).children
     else
       Group.includes(:parent)
     end

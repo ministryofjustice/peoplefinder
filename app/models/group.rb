@@ -1,9 +1,6 @@
 class Group < ActiveRecord::Base
   has_paper_trail ignore: [:updated_at, :created_at, :slug, :id]
 
-  extend FriendlyId
-  friendly_id :name, use: :slugged
-
   belongs_to :parent, class_name: 'Group'
   has_many :children, class_name: 'Group', foreign_key: 'parent_id'
   has_many :memberships, -> { includes(:person).order('people.surname')  }
@@ -26,6 +23,12 @@ class Group < ActiveRecord::Base
 
   def self.departments
     where(parent_id: nil)
+  end
+
+  def self.by_hierarchical_slug(str)
+    str.split('/').inject(departments) { |group, slug|
+      group.first.children.where(slug: slug)
+    }
   end
 
   def to_s
@@ -75,6 +78,19 @@ class Group < ActiveRecord::Base
       return false unless children.empty?
     end
     true
+  end
+
+  def name=(name)
+    super
+    self.slug = name.to_s.parameterize
+  end
+
+  def hierarchical_slug
+    hierarchy[1 .. -1].map(&:slug).join('/')
+  end
+
+  def canonical_path
+    ['/teams', hierarchical_slug].reject(&:blank?).join('/')
   end
 
 private

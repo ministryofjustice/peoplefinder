@@ -8,30 +8,30 @@ RSpec.describe GroupHierarchy, type: :model do
     expected = {
       id: root.id,
       name: 'A',
-      url: '/groups/a',
+      url: "/groups/#{ root.id }",
       children: [
         {
           id: root.children[0].id,
           name: 'B',
-          url: '/groups/b',
+          url: "/groups/#{ root.children[0].id }",
           children: [
             {
               id: root.children[0].children[0].id,
               name: 'C',
-              url: '/groups/c',
+              url: "/groups/#{ root.children[0].children[0].id }",
               children: []
             }, {
               id: root.children[0].children[1].id,
               name: 'C',
               name: 'D',
-              url: '/groups/d',
+              url: "/groups/#{ root.children[0].children[1].id }",
               children: []
             }
           ]
         }, {
           id: root.children[1].id,
           name: 'E',
-          url: '/groups/e',
+          url: "/groups/#{ root.children[1].id }",
           children: []
         }
       ]

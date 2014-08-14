@@ -145,4 +145,25 @@ RSpec.describe Group, type: :model do
       expect(department.reload).not_to be_editable
     end
   end
+
+  context "slugs" do
+    let(:department) { create(:department, name: 'Ministry of Justice') }
+    let(:team) { create(:group, name: 'A Team', parent: department) }
+    let!(:subteam) { create(:group, name: 'A Subteam', parent: team) }
+
+    it "should generate slug from the hierarchy" do
+      expect(subteam.hierarchical_slug).to eql('a-team/a-subteam')
+      expect(team.hierarchical_slug).to eql('a-team')
+      expect(department.hierarchical_slug).to eql('')
+    end
+
+    it "should find group by drilling down through slugs" do
+      expect(Group.by_hierarchical_slug('a-team/a-subteam').first).
+        to eql(subteam)
+    end
+
+    it "should find the department for an empty list" do
+      expect(Group.by_hierarchical_slug('').first).to eql(department)
+    end
+  end
 end

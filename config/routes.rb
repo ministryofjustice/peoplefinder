@@ -6,6 +6,9 @@ Rails.application.routes.draw do
     get :people, on: :member, action: 'all_people'
   end
 
+  get '/teams', to: 'groups#show', id: ''
+  get '/teams/*id', to: 'groups#show'
+
   resources :people do
     collection do
       get :add_membership

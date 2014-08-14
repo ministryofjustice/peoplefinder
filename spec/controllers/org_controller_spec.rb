@@ -11,10 +11,10 @@ RSpec.describe OrgController, type: :controller do
       get :show
 
       expected = {
-        "id" => group.id,
-        "name" => "Ministry of Justice",
-        "url" => "/groups/ministry-of-justice",
-        "children" => []
+        'id' => group.id,
+        'name' => 'Ministry of Justice',
+        'url' => "/groups/#{group.id}",
+        'children' => []
       }
       expect(JSON.parse(response.body)).to eql(expected)
     end
