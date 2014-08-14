@@ -6,7 +6,7 @@ RSpec.describe Membership, type: :model do
 
   let!(:membership) { create(:membership) }
 
-  it 'should not be a leader by default' do
+  it 'is not be a leader by default' do
     expect(membership.leader?).to be false
   end
 end

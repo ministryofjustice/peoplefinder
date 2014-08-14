@@ -3,20 +3,20 @@ require 'rails_helper'
 RSpec.describe Group, type: :model do
   it { should have_many(:leaders) }
 
-  it "should list orphaned groups as departments" do
+  it "lists orphaned groups as departments" do
     parent = create(:group, parent: nil)
     create(:group, parent: parent)
-    expect(Group.departments.to_a).to eql([parent])
+    expect(described_class.departments.to_a).to eql([parent])
   end
 
-  it "should calculate its level" do
-    parent = Group.new
-    child = Group.new(parent: parent)
+  it "calculates its level" do
+    parent = described_class.new
+    child = described_class.new(parent: parent)
     expect(parent.level).to eql(0)
     expect(child.level).to eql(1)
   end
 
-  it "should know about its ancestors" do
+  it "knows about its ancestors" do
     grandparent = create(:group, parent: nil)
     parent = create(:group, parent: grandparent)
     child = create(:group, parent: parent)
@@ -25,7 +25,7 @@ RSpec.describe Group, type: :model do
     expect(grandchild.hierarchy).to eql([grandparent, parent, child, grandchild])
   end
 
-  it "should know when it has no ancestors" do
+  it "knows when it has no ancestors" do
     department = create(:group, parent: nil)
 
     expect(department.hierarchy).to eql([department])
@@ -34,11 +34,11 @@ RSpec.describe Group, type: :model do
   describe '.leaf_node?' do
     let(:group) { create(:group) }
 
-    it "should know when it is a leaf_node (no children)" do
+    it "knows when it is a leaf_node (no children)" do
       expect(group).to be_leaf_node
     end
 
-    it "should know when it is not a leaf_node (no children)" do
+    it "knows when it is not a leaf_node (no children)" do
       expect(group).to be_leaf_node
     end
   end
@@ -46,22 +46,22 @@ RSpec.describe Group, type: :model do
   describe '.deletable?' do
     let(:group) { create(:group) }
 
-    it 'should only be detable when there are no memberships' do
+    it 'is only detable when there are no memberships' do
       group.memberships.create(person: create(:person))
       expect(group).not_to be_deletable
     end
 
-    it 'should not be detable when there are memberships' do
+    it 'is not detable when there are memberships' do
       group.memberships.create(person: create(:person))
       expect(group).not_to be_deletable
     end
 
-    it 'should not be detable when there are children' do
+    it 'is not detable when there are children' do
       create(:group, parent: group)
       expect(group.reload).not_to be_deletable
     end
 
-    it 'should be detable when there are unsaved memberships (e.g. in the groups#form)' do
+    it 'is detable when there are unsaved memberships (e.g. in the groups#form)' do
       group.memberships.build
       expect(group).to be_deletable
     end
@@ -70,16 +70,16 @@ RSpec.describe Group, type: :model do
   describe '.destroy' do
     let(:group) { create(:group) }
 
-    it 'should persist the record and add an error message when it is not deletable' do
+    it 'persists the record and add an error message when it is not deletable' do
       allow(group).to receive(:deletable?).once.and_return(false)
       group.destroy
       expect(group.errors[:base].to_s).to include('cannot be deleted')
     end
 
-    it 'should delete the record when it is deletable' do
+    it 'deletes the record when it is deletable' do
       allow(group).to receive(:deletable?).once.and_return(true)
       group.destroy
-      expect { Group.find(group) }.to raise_error(ActiveRecord::RecordNotFound)
+      expect { described_class.find(group) }.to raise_error(ActiveRecord::RecordNotFound)
     end
   end
 
@@ -95,25 +95,25 @@ RSpec.describe Group, type: :model do
     context 'with bob in the team' do
       before { team.people << bob }
 
-      it 'should have 1 membership' do
+      it 'has 1 membership' do
         expect(subject.length).to eq(1)
       end
 
       context 'and alice in the subteam' do
         before { subteam.people << alice }
 
-        it 'should have 2 membership' do
+        it 'has 2 membership' do
           expect(subject.length).to eq(2)
         end
 
         context 'and bob also in the subteam' do
           before { subteam.people << alice }
 
-          it 'should still have 2 memberships' do
+          it 'still has 2 memberships' do
             expect(subject.length).to eq(2)
           end
 
-          it 'should return alice and bob in alphabetical order' do
+          it 'returns alice and bob in alphabetical order' do
             expect(subject.map(&:name)).to eql(%w[ alice bob ])
           end
         end
@@ -122,7 +122,7 @@ RSpec.describe Group, type: :model do
   end
 
   describe '.leadership' do
-    it 'should get the first leader' do
+    it 'gets the first leader' do
       group = create(:group)
       leaderships = [create(:membership, group: group, leader: true)]
       expect(group.leadership).to eql(leaderships.first)
@@ -132,15 +132,15 @@ RSpec.describe Group, type: :model do
   describe '.editable?' do
     let(:department) { create(:department) }
 
-    it 'should not have a parent' do
+    it 'does not have a parent' do
       expect(department.parent).to be_nil
     end
 
-    it 'should be editable when there are no children (during application setup, for example)' do
+    it 'is not editable when there are no children (during application setup, for example)' do
       expect(department).to be_editable
     end
 
-    it 'should not be editable when there are children' do
+    it 'is editable when there are children' do
       create(:group, parent: department)
       expect(department.reload).not_to be_editable
     end
@@ -151,19 +151,19 @@ RSpec.describe Group, type: :model do
     let(:team) { create(:group, name: 'A Team', parent: department) }
     let!(:subteam) { create(:group, name: 'A Subteam', parent: team) }
 
-    it "should generate slug from the hierarchy" do
+    it "generates slug from the hierarchy" do
       expect(subteam.hierarchical_slug).to eql('a-team/a-subteam')
       expect(team.hierarchical_slug).to eql('a-team')
       expect(department.hierarchical_slug).to eql('')
     end
 
-    it "should find group by drilling down through slugs" do
-      expect(Group.by_hierarchical_slug('a-team/a-subteam').first).
+    it "finds group by drilling down through slugs" do
+      expect(described_class.by_hierarchical_slug('a-team/a-subteam').first).
         to eql(subteam)
     end
 
-    it "should find the department for an empty list" do
-      expect(Group.by_hierarchical_slug('').first).to eql(department)
+    it "finds the department for an empty list" do
+      expect(described_class.by_hierarchical_slug('').first).to eql(department)
     end
   end
 end

@@ -9,46 +9,46 @@ RSpec.describe Person, type: :model do
     before { person.surname = 'von Brown' }
 
     context 'with a given_name and surname' do
-      it 'should concatenate given_name and surname' do
+      it 'concatenates given_name and surname' do
         person.given_name = 'Jon'
         expect(person.name).to eql('Jon von Brown')
       end
     end
 
     context 'with a surname only' do
-      it 'should use the surname' do
+      it 'uses the surname' do
         expect(person.name).to eql('von Brown')
       end
     end
   end
 
-  context "completion score" do
-    it "should be 0 if all fields are empty" do
-      person = Person.new
+  context 'completion score' do
+    it 'returns 0 if all fields are empty' do
+      person = described_class.new
       expect(person.completion_score).to eql(0)
       expect(person).to be_incomplete
     end
 
-    it "should be 50 if half the fields are filled" do
-      person = Person.new(
-        given_name: "Bobby",
-        surname: "Tables",
-        email: "user.example@digital.justice.gov.uk",
-        primary_phone_number: "020 7946 0123"
+    it 'returns 50 if half the fields are filled' do
+      person = described_class.new(
+        given_name: 'Bobby',
+        surname: 'Tables',
+        email: 'user.example@digital.justice.gov.uk',
+        primary_phone_number: '020 7946 0123'
       )
       expect(person.completion_score).to eql(50)
       expect(person).to be_incomplete
     end
 
-    it "should be 100 if all fields are filled" do
-      person = Person.new(
-        given_name: "Bobby",
-        surname: "Tables",
-        email: "user.example@digital.justice.gov.uk",
-        primary_phone_number: "020 7946 0123",
-        secondary_phone_number: "07700 900123",
-        location: "London",
-        description: "I am a real person"
+    it 'returns 100 if all fields are filled' do
+      person = described_class.new(
+        given_name: 'Bobby',
+        surname: 'Tables',
+        email: 'user.example@digital.justice.gov.uk',
+        primary_phone_number: '020 7946 0123',
+        secondary_phone_number: '07700 900123',
+        location: 'London',
+        description: 'I am a real person'
       )
       person.groups << build(:group)
       expect(person.completion_score).to eql(100)
@@ -56,25 +56,25 @@ RSpec.describe Person, type: :model do
     end
   end
 
-  context "slug" do
-    it "should be generated from the first part of the email address if present" do
-      person = create(:person, email: "user.example@digital.justice.gov.uk")
+  context 'slug' do
+    it 'generates from the first part of the email address if present' do
+      person = create(:person, email: 'user.example@digital.justice.gov.uk')
       person.reload
-      expect(person.slug).to eql("user-example")
+      expect(person.slug).to eql('user-example')
     end
 
-    it "should be generated from the name if there is no email" do
-      person = create(:person, given_name: "Bobby", surname: "Tables")
+    it 'generates from the name if there is no email' do
+      person = create(:person, given_name: 'Bobby', surname: 'Tables')
       person.reload
-      expect(person.slug).to eql("bobby-tables")
+      expect(person.slug).to eql('bobby-tables')
     end
   end
 
-  context "search" do
-    it "should delete indexes" do
-      expect(Person.__elasticsearch__).to receive(:delete_index!).
-        with(index: "test_people")
-      Person.delete_indexes
+  context 'search' do
+    it 'deletes indexes' do
+      expect(described_class.__elasticsearch__).to receive(:delete_index!).
+        with(index: 'test_people')
+      described_class.delete_indexes
     end
   end
 
@@ -87,23 +87,23 @@ RSpec.describe Person, type: :model do
       person.memberships.create(group: digital_services, role: 'Designer')
     end
 
-    it 'should write the role and group as a string' do
+    it 'writes the role and group as a string' do
       expect(person.role_and_group).to match(/Digital Services, Designer/)
       expect(person.role_and_group).to match(/Estates, Cleaner/)
     end
   end
 
-  context "hierarchy" do
-    let(:person) { Person.new }
+  context 'hierarchy' do
+    let(:person) { described_class.new }
 
-    context "when there are no memberships" do
-      it "should contain only itself" do
+    context 'when there are no memberships' do
+      it 'contains only itself' do
         expect(person.hierarchy).to eql([person])
       end
     end
 
-    context "when there is one membership" do
-      it "should contain the group's hierarchy" do
+    context 'when there is one membership' do
+      it 'contains the group hierarchy' do
         group_a = Group.new
         group_b = Group.new
         allow(group_b).to receive(:hierarchy) { [group_a, group_b] }
@@ -112,7 +112,7 @@ RSpec.describe Person, type: :model do
       end
     end
 
-    context "when there are multiple group memberships" do
+    context 'when there are multiple group memberships' do
       let(:groups) { 4.times.map { Group.new } }
 
       before do
@@ -122,15 +122,15 @@ RSpec.describe Person, type: :model do
         person.groups << groups[3]
       end
 
-      it "should use the first group's hierarchy" do
+      it 'uses the first group hierarchy' do
         expect(person.hierarchy).to eql([groups[0], groups[1], person])
       end
 
-      it "should use the group hint to choose the hierarchy" do
+      it 'uses the group hint to choose the hierarchy' do
         expect(person.hierarchy(groups[3])).to eql([groups[2], groups[3], person])
       end
 
-      it "should use the first group's hierarchy if the hint is unhelpful" do
+      it 'uses the first group hierarchy if the hint is unhelpful' do
         expect(person.hierarchy(Group.new)).to eql([groups[0], groups[1], person])
       end
     end
@@ -147,7 +147,7 @@ RSpec.describe Person, type: :model do
         person.secondary_phone_number = secondary_phone_number
       end
 
-      it 'should use the primary phone number' do
+      it 'uses the primary phone number' do
         expect(person.phone).to eql(primary_phone_number)
       end
     end
@@ -158,7 +158,7 @@ RSpec.describe Person, type: :model do
         person.secondary_phone_number = secondary_phone_number
       end
 
-      it 'should use the secondary phone number' do
+      it 'uses the secondary phone number' do
         expect(person.phone).to eql(secondary_phone_number)
       end
     end

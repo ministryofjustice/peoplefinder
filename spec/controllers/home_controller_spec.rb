@@ -7,12 +7,12 @@ RSpec.describe HomeController, type: :controller do
 
   describe 'GET show' do
     context 'when there is no top-level group' do
-      it 'should redirect to the new group page' do
+      it 'redirects to the new group page' do
         get :show
         expect(response).to redirect_to(new_group_path)
       end
 
-      it 'should tell the user to create a top-level group' do
+      it 'tells the user to create a top-level group' do
         get :show
         expect(flash[:notice]).to have_text('create a top-level group')
       end
@@ -21,12 +21,12 @@ RSpec.describe HomeController, type: :controller do
     context 'when there is a top-level group' do
       before { create(:group, name: 'Ministry of Justice', parent: nil) }
 
-      it 'should render the show template' do
+      it 'renders the show template' do
         get :show
         expect(response).to render_template('show')
       end
 
-      it 'should assign the group to the top_level_group' do
+      it 'assigns the group to the top_level_group' do
         get :show
         expect(assigns(:group).name).to eql('Ministry of Justice')
       end

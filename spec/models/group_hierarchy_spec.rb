@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe GroupHierarchy, type: :model do
-  it "should generate a tree of hashes with group information" do
+  it "generates a tree of hashes with group information" do
     root = create_hierarchy_of_groups
     root.reload
 
@@ -37,20 +37,20 @@ RSpec.describe GroupHierarchy, type: :model do
       ]
     }
 
-    generated = GroupHierarchy.new(root).to_hash
+    generated = described_class.new(root).to_hash
 
     expect(generated).to eql(expected)
   end
 
   context 'Generating a group_id list' do
     let(:root) { create_hierarchy_of_groups }
-    subject { GroupHierarchy.new(root).to_group_id_list }
+    subject { described_class.new(root).to_group_id_list }
 
-    it 'sould have five elements' do
+    it 'has five elements' do
       expect(subject.length).to eql(5)
     end
 
-    it 'should include each of the five groups' do
+    it 'includes each of the five groups' do
       %w[ A B C D E ].each do |name|
         expect(subject).to include(Group.find_by_name(name).id)
       end

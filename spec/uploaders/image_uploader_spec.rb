@@ -5,7 +5,7 @@ RSpec.describe ImageUploader, type: :uploader do
   let(:person) { create(:person, image: File.open(sample_image)) }
 
   before do
-    ImageUploader.enable_processing = true
+    described_class.enable_processing = true
   end
 
   it 'creates default image sizes' do
@@ -22,6 +22,6 @@ RSpec.describe ImageUploader, type: :uploader do
   end
 
   after do
-    ImageUploader.enable_processing = false
+    described_class.enable_processing = false
   end
 end

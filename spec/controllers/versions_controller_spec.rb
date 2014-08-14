@@ -6,7 +6,7 @@ RSpec.describe VersionsController, type: :controller do
   end
 
   describe '.undo' do
-    it 'should undo a new person - by deleting it' do
+    it 'undoes a new person - by deleting it' do
       with_versioning do
         person = create(:person)
         version = PaperTrail::Version.last
@@ -17,7 +17,7 @@ RSpec.describe VersionsController, type: :controller do
       end
     end
 
-    it 'should undo a deleted person - by renewing it' do
+    it 'undoes a deleted person - by renewing it' do
       with_versioning do
         person = create(:person, surname: 'Necro')
         person.destroy
@@ -28,7 +28,7 @@ RSpec.describe VersionsController, type: :controller do
       end
     end
 
-    it 'should not undo a new membership' do
+    it 'does not undo a new membership' do
       with_versioning do
         membership = create(:membership)
         version = PaperTrail::Version.last
@@ -38,7 +38,7 @@ RSpec.describe VersionsController, type: :controller do
       end
     end
 
-    it 'should not undo a deleted membership' do
+    it 'does not undo a deleted membership' do
       with_versioning do
         membership = create(:membership)
         membership.destroy
