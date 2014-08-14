@@ -72,12 +72,6 @@ RSpec.describe PeopleController, type: :controller do
       expect(assigns(:groups)).to include(group)
     end
 
-    it "sets groups and excludes the already assigned groups" do
-      person.memberships.create(group: group)
-      get :edit, { id: person.to_param }, valid_session
-      expect(assigns(:groups)).not_to include(group)
-    end
-
     context 'building memberships' do
       it "builds a membership if there isn't one already" do
         get :edit, { id: person.to_param }, valid_session
@@ -235,12 +229,6 @@ RSpec.describe PeopleController, type: :controller do
       it 'sets groups' do
         get :add_membership, id: person
         expect(assigns(:groups)).to include(group)
-      end
-
-      it "sets groups and excludes the already assigned group" do
-        person.memberships.create(group: group)
-        get :edit, { id: person.to_param }, valid_session
-        expect(assigns(:groups)).not_to include(group)
       end
     end
   end

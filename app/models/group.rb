@@ -50,10 +50,6 @@ class Group < ActiveRecord::Base
     leaderships.first
   end
 
-  def assignable_people
-    Person.where.not(id: memberships.pluck(:person_id))
-  end
-
   def deletable?
     leaf_node? && memberships.reject(&:new_record?).empty?
   end

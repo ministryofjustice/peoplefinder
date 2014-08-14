@@ -136,25 +136,6 @@ RSpec.describe Person, type: :model do
     end
   end
 
-  describe '.assignable groups' do
-    before do
-      %w[ apples bananas cherries ].each do |fruit|
-        create(:department, name: fruit)
-      end
-    end
-
-    it 'should contain all groups when a person has no memberships' do
-      expect(person.assignable_groups.length).to eql(3)
-    end
-
-    it 'should contain apples when a person is a member of bananas and cherries' do
-      person.save!
-      person.memberships.create(group: Group.find_by_name('bananas'))
-      person.memberships.create(group:  Group.find_by_name('cherries'))
-      expect(person.assignable_groups.first.name).to eql('apples')
-    end
-  end
-
   describe '.phone' do
     let(:person) { create(:person) }
     let(:primary_phone_number) { '0207-123-4567' }

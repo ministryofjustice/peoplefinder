@@ -41,28 +41,6 @@ RSpec.describe Group, type: :model do
     it "should know when it is not a leaf_node (no children)" do
       expect(group).to be_leaf_node
     end
-
-  end
-
-  describe '.assignable_people' do
-    let(:group) { build(:group) }
-
-    before do
-      %w[ alice bob charlie ].each do |name|
-        create(:person, surname: name)
-      end
-    end
-
-    it 'should contain all people when a group has no memberships' do
-      expect(group.assignable_people.length).to eql(3)
-    end
-
-    it 'should contain alice when bob and charlie are group members' do
-      group.save!
-      group.memberships.create(person: Person.find_by_surname('bob'))
-      group.memberships.create(person:  Person.find_by_surname('charlie'))
-      expect(group.assignable_people.first.surname).to eql('alice')
-    end
   end
 
   describe '.deletable?' do

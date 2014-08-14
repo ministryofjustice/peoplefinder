@@ -78,11 +78,6 @@ RSpec.describe GroupsController, type: :controller do
       get :new, {}, valid_session
       expect(assigns(:group).memberships.length).to eql(1)
     end
-
-    it "sets people" do
-      get :new, {}, valid_session
-      expect(assigns(:people)).to include(person)
-    end
   end
 
   describe "GET edit" do
@@ -91,17 +86,6 @@ RSpec.describe GroupsController, type: :controller do
     it "assigns the requested group as @group" do
       get :edit, { id: group.to_param }, valid_session
       expect(assigns(:group)).to eql(group)
-    end
-
-    it "sets people" do
-      get :edit, { id: group.to_param }, valid_session
-      expect(assigns(:people)).to include(person)
-    end
-
-    it "sets people and excludes the already assigned person" do
-      group.memberships.create(person: person)
-      get :edit, { id: group.to_param }, valid_session
-      expect(assigns(:people)).not_to include(person)
     end
   end
 
@@ -134,11 +118,6 @@ RSpec.describe GroupsController, type: :controller do
       it "re-renders the 'new' template" do
         post :create, { group: invalid_attributes }, valid_session
         expect(response).to render_template("new")
-      end
-
-      it "sets people" do
-        post :create, { group: invalid_attributes }, valid_session
-        expect(assigns(:people)).to include(person)
       end
     end
   end
@@ -180,11 +159,6 @@ RSpec.describe GroupsController, type: :controller do
       it "re-renders the 'edit' template" do
         put :update, { id: group.to_param, group: invalid_attributes }, valid_session
         expect(response).to render_template("edit")
-      end
-
-      it "sets people" do
-        get :new, { id: group.to_param, group: invalid_attributes }, valid_session
-        expect(assigns(:people)).to include(person)
       end
     end
   end

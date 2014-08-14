@@ -19,13 +19,13 @@ class PeopleController < ApplicationController
   def new
     @person = Person.new
     @person.memberships.build group: group_from_group_id
-    set_assignable_groups
+    set_groups
   end
 
   # GET /people/1/edit
   def edit
     @person.memberships.build if @person.memberships.empty?
-    set_assignable_groups
+    set_groups
   end
 
   # POST /people
@@ -37,7 +37,7 @@ class PeopleController < ApplicationController
       notice :profile_created, person: @person
       redirect_to successful_redirect_path
     else
-      set_assignable_groups
+      set_groups
       render :new
     end
   end
@@ -50,7 +50,7 @@ class PeopleController < ApplicationController
       notice :profile_updated, person: @person
       redirect_to successful_redirect_path
     else
-      set_assignable_groups
+      set_groups
       render :edit
     end
   end
@@ -66,7 +66,7 @@ class PeopleController < ApplicationController
   def add_membership
     set_person if params[:id].present?
     @person ||= Person.new
-    set_assignable_groups
+    set_groups
     render 'add_membership', layout: false
   end
 
@@ -91,8 +91,8 @@ private
     person_params[:image].present? ? edit_person_image_path(@person) : @person
   end
 
-  def set_assignable_groups
-    @groups = @person.assignable_groups
+  def set_groups
+    @groups = Group.all
   end
 
   def group_from_group_id

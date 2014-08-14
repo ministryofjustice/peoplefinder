@@ -23,13 +23,11 @@ class GroupsController < ApplicationController
   def new
     @group = collection.new
     @group.memberships.build person: person_from_person_id
-    load_people
   end
 
   # GET /groups/1/edit
   def edit
     @group.memberships.build if @group.memberships.empty?
-    load_people
   end
 
   # POST /groups
@@ -40,7 +38,6 @@ class GroupsController < ApplicationController
       notice :group_created, group: @group
       redirect_to @group
     else
-      load_people
       render :new
     end
   end
@@ -51,7 +48,6 @@ class GroupsController < ApplicationController
       notice :group_updated, group: @group
       redirect_to @group
     else
-      load_people
       render :edit
     end
   end
@@ -84,10 +80,6 @@ private
     else
       Group.includes(:parent)
     end
-  end
-
-  def load_people
-    @people = @group.assignable_people
   end
 
   def person_from_person_id

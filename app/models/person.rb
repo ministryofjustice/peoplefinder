@@ -50,10 +50,6 @@ class Person < ActiveRecord::Base
     group_hierarchy(hint_group) + [self]
   end
 
-  def assignable_groups
-    Group.where.not(id: memberships.pluck(:group_id))
-  end
-
   def valid_email?(email = nil)
     email ||= self.email
     email.present? && email.match(VALID_EMAIL_PATTERN)
