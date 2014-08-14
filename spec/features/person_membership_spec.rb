@@ -10,8 +10,8 @@ feature "Person maintenance" do
     visit new_person_path
     fill_in 'Surname', with: person_attributes[:surname]
     fill_in 'Job title', with: 'Head Honcho'
-    select('Digital Justice', from: 'Team')
-    check('leader')
+    select 'Digital Justice', from: 'Team'
+    check 'leader'
     click_button "Create person"
 
     membership = Person.last.memberships.last
@@ -32,6 +32,25 @@ feature "Person maintenance" do
     expect(membership.role).to eql('Head Honcho')
   end
 
+  scenario 'Adding an additional role', js: true do
+    person = create_person_in_digital_justice
+    create(:group, name: 'Communications')
+
+    javascript_log_in
+    visit edit_person_path(person)
+
+    click_link('Add new role')
+    sleep 1
+
+    within all('#memberships .membership').last do
+      select 'Communications', from: 'Team'
+      fill_in 'Job title', with: 'Talker'
+    end
+
+    click_button 'Update'
+    expect(Person.last.memberships.length).to eql(2)
+  end
+
   scenario 'Clicking the add another role link', js: true do
     create(:group)
 
@@ -49,9 +68,9 @@ feature "Person maintenance" do
     person = create_person_in_digital_justice
 
     visit edit_person_path(person)
-    click_link('remove')
 
-    expect(page).to have_content("Removed Marco Polo from Digital Justice")
+    click_link('remove')
+    expect(page).to have_content("Removed #{ person.name } from Digital Justice")
     expect(person.reload.memberships).to be_empty
     expect(current_path).to eql(edit_person_path(person))
   end
@@ -59,7 +78,7 @@ end
 
 def create_person_in_digital_justice
   group = create(:group, name: 'Digital Justice')
-  person = create(:person, person_attributes)
+  person = create(:person)
   person.memberships.create(group: group)
   person
 end

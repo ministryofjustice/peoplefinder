@@ -1,32 +1,29 @@
-- child_index = Time.now.to_i
-= f.fields_for :memberships, child_index: child_index do |membership_f|
-
+.membership
   %h2.line-above Role
-  .membership
-    - membership = membership_f.object
 
-    .form-group
-      = membership_f.input :role, as: :string, label: 'Job title'
+  - membership = membership_f.object
 
-    .form-group
-      -# pending implementation of org browser
-      -# %p.form-hint= info_text('hint_add_person_to_team')
-      = membership_f.association :group, collection: Group.all, label: 'Team', required: false
+  .form-group
+    = membership_f.input :role, as: :string, label: 'Job title'
 
-      %p.form-hint= info_text('hint_add_person_team_not_found')
+  .form-group
+    -# pending implementation of org browser
+    -# %p.form-hint= info_text('hint_add_person_to_team')
+    = membership_f.association :group, collection: Group.all, label: 'Team', required: false
 
-    .form-checkbox
-      %h3 Team leader?
-      = membership_f.input :leader, label: 'This person is leader of the team above.'
-      %p.form-hint= info_text('hint_add_person_as_leader')
+    %p.form-hint= info_text('hint_add_person_team_not_found')
 
+  .form-checkbox
+    %h3 Team leader?
+    = membership_f.input :leader, label: 'This person is leader of the team above.'
+    %p.form-hint= info_text('hint_add_person_as_leader')
+
+    .remove-link
       - if membership.new_record?
-        .remove-link
-          = link_to 'remove', '#', class: 'remove-new-membership'
+        = link_to 'remove', '#', class: 'remove-new-membership'
 
-    - if !membership.new_record?
-      = link_to 'remove', membership_path(membership,
+      - else
+        = link_to 'remove', membership_path(membership,
           referer: request.path),
           method: :delete,
-          class: 'remove-link',
           data: {confirm: "Are you sure you want to remove #{ membership.person} from #{ membership.group }? " }

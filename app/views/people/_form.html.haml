@@ -9,7 +9,8 @@
 
     .form-group
       #memberships
-        = render partial: 'membership_fields', locals: { f: f }
+        = f.fields_for :memberships do |membership_f|
+          = render partial: 'membership_fields', locals: { membership_f: membership_f }
 
       = link_to 'Add new role', add_membership_people_path(id: @person.to_param), id: 'add_membership'
 
