@@ -128,4 +128,21 @@ RSpec.describe Group, type: :model do
       expect(group.leadership).to eql(leaderships.first)
     end
   end
+
+  describe '.editable?' do
+    let(:department) { create(:department) }
+
+    it 'should not have a parent' do
+      expect(department.parent).to be_nil
+    end
+
+    it 'should be editable when there are no children (during application setup, for example)' do
+      expect(department).to be_editable
+    end
+
+    it 'should not be editable when there are children' do
+      create(:group, parent: department)
+      expect(department.reload).not_to be_editable
+    end
+  end
 end

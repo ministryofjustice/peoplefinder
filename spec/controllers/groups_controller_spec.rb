@@ -180,7 +180,7 @@ RSpec.describe GroupsController, type: :controller do
   end
 
   context 'locking down a department' do
-    let(:department) { create(:department) }
+    let(:department) { create(:group).parent }
 
     it "cannot be edited" do
       get :edit, id: department.to_param

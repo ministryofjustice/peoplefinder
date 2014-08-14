@@ -71,7 +71,10 @@ class Group < ActiveRecord::Base
   end
 
   def editable?
-    parent.present?
+    if parent.nil?
+      return false unless children.empty?
+    end
+    true
   end
 
 private

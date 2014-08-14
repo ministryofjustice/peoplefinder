@@ -100,7 +100,7 @@ feature "Group maintenance" do
   end
 
   scenario "Not displaying a link to edit a department"  do
-    dept = create(:department)
+    dept = create(:group).parent
 
     visit group_path(dept)
     expect(page).not_to have_link('Edit', href: edit_group_path(dept))
