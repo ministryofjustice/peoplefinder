@@ -99,6 +99,13 @@ feature "Group maintenance" do
     expect(group.parent).to eql(dept)
   end
 
+  scenario "Not displaying a link to edit a department"  do
+    dept = create(:department)
+
+    visit group_path(dept)
+    expect(page).not_to have_link('Edit', href: edit_group_path(dept))
+  end
+
   def check_in_org_browser(text)
     within '#org-browser' do
       find('div', text: text).find('input').set(true)

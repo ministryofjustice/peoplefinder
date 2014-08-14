@@ -177,11 +177,24 @@ RSpec.describe GroupsController, type: :controller do
       delete :destroy, { id: group.to_param }, valid_session
       expect(response).to redirect_to(parent)
     end
+  end
 
-    it "redirects to the groups list if there is no parent" do
-      group = create(:department, valid_attributes)
-      delete :destroy, { id: group.to_param }, valid_session
-      expect(response).to redirect_to(groups_url)
+  context 'locking down a department' do
+    let(:department) { create(:department) }
+
+    it "cannot be edited" do
+      get :edit, id: department.to_param
+      expect(response).to have_http_status(403)
+    end
+
+    it "cannot be updated" do
+      put :update, id: department.to_param, group: valid_attributes
+      expect(response).to have_http_status(403)
+    end
+
+    it "cannot be destroyed" do
+      delete :destroy, id: department.to_param
+      expect(response).to have_http_status(403)
     end
   end
 end

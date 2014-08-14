@@ -70,6 +70,10 @@ class Group < ActiveRecord::Base
     each { |p| p.role_names = p.role_list.compact.join(', ') }
   end
 
+  def editable?
+    parent.present?
+  end
+
 private
 
   def check_deletability
