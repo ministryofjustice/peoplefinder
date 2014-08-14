@@ -112,16 +112,4 @@ form .text .wider   {
   }
 }
 
-@media screen and (orientation: portrait) and (-webkit-min-device-pixel-ratio: 2) {
-  .form-control {
-    width: 50%;
-  }
-}
-
-@media screen and (orientation: portrait) and (-webkit-min-device-pixel-ratio: 3) {
-  .form-control {
-    width: 55%;
-  }
-}
-
 @import 'retinal_images';
