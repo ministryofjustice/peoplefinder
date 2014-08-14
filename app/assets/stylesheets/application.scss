@@ -112,6 +112,17 @@ form .text .wider   {
   }
 }
 
+
+.form-hint{
+  word-wrap: break-word;
+}
+
+@media screen and (max-width: 640px) {
+ .form-hint{
+   width: 50%;
+ }
+}
+
 @media screen and (orientation: portrait) and (-webkit-min-device-pixel-ratio: 2) {
   .form-control {
     width: 50%;
