@@ -54,9 +54,8 @@ RSpec.describe GroupsController, type: :controller do
     end
 
     it "with a department and a team, it still redirects to the departmental page" do
-      team = create(:group)
-      department = create(:group)
-      team.update_attribute(:parent, department)
+      department = create(:department)
+      create(:group, parent: department)
       expect(subject).to redirect_to(group_path(department))
     end
   end
@@ -206,7 +205,7 @@ RSpec.describe GroupsController, type: :controller do
     end
 
     it "redirects to the groups list if there is no parent" do
-      group = create(:group, valid_attributes)
+      group = create(:department, valid_attributes)
       delete :destroy, { id: group.to_param }, valid_session
       expect(response).to redirect_to(groups_url)
     end

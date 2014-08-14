@@ -138,8 +138,8 @@ RSpec.describe Person, type: :model do
 
   describe '.assignable groups' do
     before do
-      %w[ apples bananas cherries ].each do
-        |fruit| create(:group, name: fruit)
+      %w[ apples bananas cherries ].each do |fruit|
+        create(:department, name: fruit)
       end
     end
 
