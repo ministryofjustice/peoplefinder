@@ -23,6 +23,11 @@ Style/AccessModifierIndentation:
 Style/AlignParameters:
   EnforcedStyle: with_fixed_indentation
 
+Style/CollectionMethods:
+  PreferredMethods:
+    inject: 'inject'
+    reduce: 'inject'
+
 # Chain methods with trailing dots.
 Style/DotPosition:
   EnforcedStyle: trailing
