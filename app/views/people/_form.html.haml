@@ -49,6 +49,8 @@
 
     .form-group
       = f.button :submit
-      - unless @person.new_record?
-        .cancel
+      .cancel
+        - if @person.new_record?
+          = link_to 'Cancel', :back
+        - else
           = link_to 'Cancel', @person

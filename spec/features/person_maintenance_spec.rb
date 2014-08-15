@@ -159,6 +159,11 @@ feature "Person maintenance" do
     visit edit_person_path(person)
     expect(page).to have_link('Cancel', href: person_path(person))
   end
+
+  scenario 'Cancelling a new form' do
+    visit new_person_path
+    expect(page).to have_link('Cancel', href: 'javascript:history.back()')
+  end
 end
 
 def person_attributes

@@ -120,6 +120,11 @@ feature "Group maintenance" do
     expect(page).to have_link('Cancel', href: group_path(group))
   end
 
+  scenario 'Cancelling a new form' do
+    visit new_group_path
+    expect(page).to have_link('Cancel', href: 'javascript:history.back()')
+  end
+
   scenario "Not displaying a link to edit a department"  do
     dept = create(:group).parent
 
