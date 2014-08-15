@@ -5,11 +5,11 @@
 .hint-text Enter the name of a person or role
 = render 'shared/search'
 
-%h3.org-structure #{ @group.name } organisational structure
+.hint-text Find out how to contact people, what team they’re in and the hours they work. You can also ‘add a new person’ to your team.
+
+%h3.org-structure Our organisational structure
 .hint-text
-  = link_to 'Start at the top level', groups_path
-  or search for a team within the
-  = @group.name
-  at this level
+  Click on departments and teams, or see the whole of the
+  = link_to  @group.name, groups_path
 
 = render 'org_browser'

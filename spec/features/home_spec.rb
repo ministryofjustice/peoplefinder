@@ -11,6 +11,6 @@ feature 'Home page' do
     expect(page).to have_text('Search the people finder')
     expect(page).to have_css('input#query')
     expect(page).to have_link('Add new profile', href: new_person_path)
-    expect(page).to have_link('Start at the top level', href: groups_path)
+    expect(page).to have_link('Ministry of Justice', href: groups_path)
   end
 end
