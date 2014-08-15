@@ -19,7 +19,7 @@ feature "Person maintenance" do
     fill_in 'Notes', with: p[:description]
     uncheck('Monday')
     uncheck('Friday')
-    click_button "Create person"
+    click_button "Create"
 
     expect(page).to have_content("Created Marco Polo’s profile")
 
@@ -45,7 +45,7 @@ feature "Person maintenance" do
 
   scenario 'Creating an invalid person' do
     visit new_person_path
-    click_button "Create person"
+    click_button "Create"
     expect(page).to have_text('Please review the problems')
     within('div.person_surname') do
       expect(page).to have_text('can\'t be blank')
@@ -74,7 +74,7 @@ feature "Person maintenance" do
 
     fill_in 'Given name', with: 'Jane'
     fill_in 'Surname', with: 'Doe'
-    click_button 'Update person'
+    click_button 'Update'
 
     expect(page).to have_content("Updated Jane Doe’s profile")
     within('h1') do
@@ -86,7 +86,7 @@ feature "Person maintenance" do
     visit person_path(create(:person, person_attributes))
     click_link 'Edit this profile'
     fill_in 'Surname', with: ''
-    click_button 'Update person'
+    click_button 'Update'
 
     expect(page).to have_text('Please review the problems')
     within('div.person_surname') do
@@ -98,7 +98,7 @@ feature "Person maintenance" do
     visit new_person_path
     fill_in 'Surname', with: person_attributes[:surname]
     attach_file 'person[image]', sample_image
-    click_button 'Create person'
+    click_button 'Create'
 
     person = Person.find_by_surname(person_attributes[:surname])
     visit person_path(person)

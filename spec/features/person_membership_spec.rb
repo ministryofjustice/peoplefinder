@@ -12,7 +12,7 @@ feature "Person maintenance" do
     fill_in 'Job title', with: 'Head Honcho'
     select 'Digital Justice', from: 'Team'
     check 'leader'
-    click_button "Create person"
+    click_button "Create"
 
     membership = Person.last.memberships.last
     expect(membership.role).to eql('Head Honcho')

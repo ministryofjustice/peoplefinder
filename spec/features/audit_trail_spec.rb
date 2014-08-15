@@ -10,7 +10,7 @@ feature "Audit trail" do
       person = create(:person, surname: 'original surname')
       visit edit_person_path(person)
       fill_in 'Surname', with: 'something else'
-      click_button 'Update person'
+      click_button 'Update'
 
       visit '/audit_trail'
       expect(page).to have_text('Person Edited')
@@ -28,7 +28,7 @@ feature "Audit trail" do
       visit new_person_path
       fill_in 'Given name', with: 'Jon'
       fill_in 'Surname', with: 'Smith'
-      click_button 'Create person'
+      click_button 'Create'
 
       visit '/audit_trail'
       expect(page).to have_text('New Person')
@@ -62,7 +62,7 @@ feature "Audit trail" do
       group = create(:group, name: 'original name')
       visit edit_group_path(group)
       fill_in 'Team name', with: 'something else'
-      click_button 'Update team'
+      click_button 'Update'
 
       visit '/audit_trail'
       expect(page).to have_text('Group Edited')
@@ -74,7 +74,7 @@ feature "Audit trail" do
     with_versioning do
       visit new_group_path
       fill_in 'Team name', with: 'Jon'
-      click_button 'Create team'
+      click_button 'Create'
 
       visit '/audit_trail'
       expect(page).to have_text('New Group')
@@ -99,7 +99,7 @@ feature "Audit trail" do
       person = create(:person)
       visit edit_person_path(person)
       attach_file('person[image]', sample_image)
-      click_button 'Update person'
+      click_button 'Update'
 
       visit '/audit_trail'
       expect(page).to have_text('Person Edited')
@@ -114,7 +114,7 @@ feature "Audit trail" do
       visit edit_person_path(person)
       select('Digital Justice', from: 'Team')
       fill_in('Job title', with: 'Jefe')
-      click_button 'Update person'
+      click_button 'Update'
 
       visit '/audit_trail'
 

@@ -56,11 +56,11 @@ en:
   helpers:
     submit:
       person:
-        create: "Create person"
-        update: "Update person"
+        create: "Create"
+        update: "Update"
       group:
-        create: "Create team"
-        update: "Update team"
+        create: "Create"
+        update: "Update"
   user_update_mailer:
     new_profile_email:
       subject: "A new profile on MOJ People Finder has been created for you"

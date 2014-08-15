@@ -12,7 +12,7 @@ feature "Group maintenance" do
     fill_in "Team name", with: name
     fill_in "Team description", with: 'about my team'
     fill_in "Team responsibilities (optional)", with: 'my responsibilities'
-    click_button "Create team"
+    click_button "Create"
 
     expect(page).to have_content("Created Ministry of Justice")
 
@@ -32,7 +32,7 @@ feature "Group maintenance" do
 
     name = "CSG"
     fill_in "Team name", with: name
-    click_button "Create team"
+    click_button "Create"
 
     expect(page).to have_content("Created CSG")
 
@@ -50,7 +50,7 @@ feature "Group maintenance" do
 
     name = "Digital Services"
     fill_in "Team name", with: name
-    click_button "Create team"
+    click_button "Create"
 
     expect(page).to have_content("Created Digital Services")
 
@@ -90,7 +90,7 @@ feature "Group maintenance" do
     new_name = "Cyberdigital Cyberservices"
     fill_in "Team name", with: new_name
     check_in_org_browser "Ministry of Justice"
-    click_button "Update team"
+    click_button "Update"
 
     expect(page).to have_content("Updated Cyberdigital Cyberservices")
     expect(page).not_to have_text('You are currently editing this page')
