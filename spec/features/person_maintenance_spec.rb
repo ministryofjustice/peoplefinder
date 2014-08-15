@@ -149,6 +149,12 @@ feature "Person maintenance" do
     expect(page).not_to have_selector('.search-box')
     expect(page).to have_text('You are currently editing this page')
   end
+
+  scenario 'Cancelling an edit' do
+    person = create(:person)
+    visit edit_person_path(person)
+    expect(page).to have_link('Cancel', href: person_path(person))
+  end
 end
 
 def person_attributes

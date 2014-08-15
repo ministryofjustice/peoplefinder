@@ -114,6 +114,12 @@ feature "Group maintenance" do
     expect(page).to have_text('You are currently editing this page')
   end
 
+  scenario 'Cancelling an edit' do
+    group = create(:group)
+    visit edit_group_path(group)
+    expect(page).to have_link('Cancel', href: group_path(group))
+  end
+
   scenario "Not displaying a link to edit a department"  do
     dept = create(:group).parent
 

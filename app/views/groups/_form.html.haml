@@ -30,3 +30,6 @@
 
     .form-group
       = f.button :submit
+      - unless @group.new_record?
+        .cancel
+          = link_to 'Cancel', @group
