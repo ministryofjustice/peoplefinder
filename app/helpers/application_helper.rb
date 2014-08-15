@@ -40,7 +40,8 @@ private
     }
   end
 
-  def editing_alert
+  def editing_mode
+    @editing_mode = true
     content_for :editing_alert do
       render partial: 'shared/editing_alert'
     end

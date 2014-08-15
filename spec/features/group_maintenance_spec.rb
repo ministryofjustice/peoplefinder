@@ -99,6 +99,21 @@ feature "Group maintenance" do
     expect(group.parent).to eql(dept)
   end
 
+  scenario 'UI elements on the new/edit pages' do
+    visit new_group_path
+    expect(page).not_to have_selector('.search-box')
+    expect(page).to have_text('You are currently editing this page')
+
+    fill_in 'Team name', with: 'Digital'
+    click_button 'Create'
+    expect(page).to have_selector('.search-box')
+    expect(page).not_to have_text('You are currently editing this page')
+
+    click_link 'Edit this team'
+    expect(page).not_to have_selector('.search-box')
+    expect(page).to have_text('You are currently editing this page')
+  end
+
   scenario "Not displaying a link to edit a department"  do
     dept = create(:group).parent
 

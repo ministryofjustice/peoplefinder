@@ -3,6 +3,7 @@ require 'rails_helper'
 feature 'Search for people', elastic: true do
   describe 'with elasticsearch' do
     before do
+      create(:department)
       create(:person, given_name: 'Jon', surname: 'Browne', email: 'jon.browne@digital.justice.gov.uk', primary_phone_number: '0711111111')
       Person.import
       sleep 1

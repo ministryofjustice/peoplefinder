@@ -71,14 +71,12 @@ feature "Person maintenance" do
   scenario 'Editing a person' do
     visit person_path(create(:person, person_attributes))
     click_link 'Edit this profile'
-    expect(page).to have_text('You are currently editing this page')
+
     fill_in 'Given name', with: 'Jane'
     fill_in 'Surname', with: 'Doe'
     click_button 'Update person'
 
     expect(page).to have_content("Updated Jane Doe’s profile")
-
-    expect(page).not_to have_text('You are currently editing this page')
     within('h1') do
       expect(page).to have_text('Jane Doe')
     end
@@ -135,6 +133,21 @@ feature "Person maintenance" do
       visit person_path(person)
       expect(page).not_to have_text('Profile completeness')
     end
+  end
+
+  scenario 'UI elements on the new/edit pages' do
+    visit new_person_path
+    expect(page).not_to have_selector('.search-box')
+    expect(page).to have_text('You are currently editing this page')
+
+    fill_in 'Surname', with: person_attributes[:surname]
+    click_button 'Create'
+    expect(page).to have_selector('.search-box')
+    expect(page).not_to have_text('You are currently editing this page')
+
+    click_link 'Edit this profile'
+    expect(page).not_to have_selector('.search-box')
+    expect(page).to have_text('You are currently editing this page')
   end
 end
 
