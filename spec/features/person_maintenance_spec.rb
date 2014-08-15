@@ -5,8 +5,10 @@ feature "Person maintenance" do
     log_in_as 'test.user@digital.justice.gov.uk'
   end
 
-  scenario "Creating a person with a complete profile" do
+  scenario "Creating a person with a complete profile", js: true do
     create(:group, name: 'Digital')
+
+    javascript_log_in
     visit new_person_path
     fill_in_new_profile_details
 
@@ -23,11 +25,12 @@ feature "Person maintenance" do
     end
   end
 
-  scenario 'Creating a person with an identical name' do
+  scenario 'Creating a person with an identical name', js: true do
     create(:group, name: 'Digital')
     create(:person, given_name: person_attributes[:given_name],
                     surname: person_attributes[:surname])
 
+    javascript_log_in
     visit new_person_path
     fill_in_new_profile_details
 
@@ -200,7 +203,7 @@ end
 def fill_in_new_profile_details
   fill_in 'First name', with: person_attributes[:given_name]
   fill_in 'Surname', with: person_attributes[:surname]
-  select 'Digital', from: 'Team'
+  click_in_org_browser 'Digital'
   fill_in 'Email', with: person_attributes[:email]
   fill_in 'Primary phone number', with: person_attributes[:primary_phone_number]
   fill_in 'Any other phone number', with: person_attributes[:secondary_phone_number]

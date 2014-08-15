@@ -89,7 +89,7 @@ feature "Group maintenance" do
     expect(page).to have_text('You are currently editing this page')
     new_name = "Cyberdigital Cyberservices"
     fill_in "Team name", with: new_name
-    check_in_org_browser "Ministry of Justice"
+    click_in_org_browser "Ministry of Justice"
     click_button "Update"
 
     expect(page).to have_content("Updated Cyberdigital Cyberservices")
@@ -129,17 +129,11 @@ feature "Group maintenance" do
     dept = create(:group).parent
 
     visit edit_group_path(dept)
-    expect(page).not_to have_selector('#org-browser')
+    expect(page).not_to have_selector('.org-browser')
   end
 
   scenario "Displaying an edit parent field for a team"  do
     visit edit_group_path(create(:group))
-    expect(page).to have_selector('#org-browser')
-  end
-
-  def check_in_org_browser(text)
-    within '#org-browser' do
-      find('div', text: text).find('input').set(true)
-    end
+    expect(page).to have_selector('.org-browser')
   end
 end

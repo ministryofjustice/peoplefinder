@@ -2,22 +2,25 @@
 
 .font-xsmall= will_paginate(@versions)
 %table
-  %th Date
-  %th Action
-  %th Changed by
-  %th
-
-  - @versions.each do |version|
+  %thead
     %tr
-      %td= version.created_at.to_formatted_s(:long)
-      %td
-        %h4= version.event_description
-        %p= link_to_edited_item(version)
-        %p= render partial: view_template(version), locals: { version: version }
+      %th Date
+      %th Action
+      %th Changed by
+      %th
 
-      %td= version.whodunnit
-      %td
-        - unless version.membership?
-          = button_to 'undo', "/audit_trail/undo/#{version.id}", data: { confirm: 'Are you sure you want to undo this change?' }
+  %tbody
+    - @versions.each do |version|
+      %tr
+        %td= version.created_at.to_formatted_s(:long)
+        %td
+          %h4= version.event_description
+          %p= link_to_edited_item(version)
+          %p= render partial: view_template(version), locals: { version: version }
+
+        %td= version.whodunnit
+        %td
+          - unless version.membership?
+            = button_to 'undo', "/audit_trail/undo/#{version.id}", data: { confirm: 'Are you sure you want to undo this change?' }
 
 .font-xsmall= will_paginate(@versions)

@@ -1,7 +1,28 @@
-/* global angular, window */
+/* global angular, document, $ */
 var peoplefinderApp = angular.module('peoplefinderApp', ['ngAnimate']);
 
-peoplefinderApp.controller('OrgBrowserCtrl', function($scope, $http) {
+peoplefinderApp.injectNewContainer = function(container) {
+  angular.element(document).injector().invoke(function ($compile) {
+    var scope = angular.element(container).scope();
+    $compile(container)(scope);
+  }, this);
+};
+
+function FormInputMapper(element) {
+  this._hiddenInput = $(element).find('input[type="hidden"]');
+  this.active = !!this._hiddenInput.length;
+}
+
+FormInputMapper.prototype.getId = function() {
+  return parseInt(this._hiddenInput.attr('value'), 10);
+};
+
+FormInputMapper.prototype.setId = function(id) {
+  if (!this.active) { return; }
+  this._hiddenInput.attr('value', id);
+};
+
+peoplefinderApp.controller('OrgBrowserCtrl', function($scope, $element, $http) {
   var pathToNodeId = function(node, id, path) {
     path = path || [node];
 
@@ -38,9 +59,7 @@ peoplefinderApp.controller('OrgBrowserCtrl', function($scope, $http) {
 
   $scope.select = function(group) {
     $scope.selectedId = group.id;
-    if (window.setOrgBrowserGroupId) {
-      window.setOrgBrowserGroupId(group.id);
-    }
+    $scope.mapper.setId(group.id);
   };
 
   Object.defineProperty(
@@ -50,14 +69,16 @@ peoplefinderApp.controller('OrgBrowserCtrl', function($scope, $http) {
 
   $scope.groups = [];
 
-  if (window.getOrgBrowserGroupId) {
+  $scope.mapper = new FormInputMapper($element);
+
+  if ($scope.mapper.active) {
     $scope.selectMode = true;
-    $scope.selectedId = window.getOrgBrowserGroupId();
+    $scope.selectedId = $scope.mapper.getId();
   }
 
   $http.get('/org.json').success(function(tree) {
     var path;
-    if ($scope.selectMode) {
+    if ($scope.selectMode && $scope.selectedId) {
       path = pathToNodeId(tree, $scope.selectedId);
       $scope.select(path[path.length - 1]);
     } else {

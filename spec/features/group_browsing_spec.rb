@@ -31,12 +31,12 @@ feature "Group browsing" do
 
     expect(page).not_to have_text 'A Leaf Node'
 
-    click_org_browser_item 'A Team'
-    click_org_browser_item 'A Subteam'
+    click_in_org_browser 'A Team'
+    click_in_org_browser 'A Subteam'
 
     expect(page).to have_text 'A Leaf Node'
 
-    click_org_browser_item 'Ministry of Justice'
+    click_in_org_browser 'Ministry of Justice'
 
     expect(page).not_to have_text 'A Leaf Node'
   end
@@ -85,10 +85,6 @@ feature "Group browsing" do
     names.each do |name|
       expect(page).to have_link(name.join(' '))
     end
-  end
-
-  def click_org_browser_item(text)
-    find('#org-browser .actionable', text: text).trigger(:click)
   end
 
   def add_people_to_group(names, group)

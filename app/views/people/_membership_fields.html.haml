@@ -20,9 +20,9 @@
       = membership_f.input :role, as: :string, label: 'Job title'
 
     .form-group
-      -# pending implementation of org browser
-      -# %p.form-hint= info_text('hint_add_person_to_team')
-      = membership_f.association :group, collection: Group.all, label: 'Team', required: false
+      %label.form-label-bold Team
+      = render layout: 'shared/org_browser' do
+        = membership_f.input :group_id, as: :hidden
 
       %p.form-hint= info_text('hint_add_person_team_not_found')
 

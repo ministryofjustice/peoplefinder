@@ -5,12 +5,14 @@ feature "Person maintenance" do
     log_in_as 'test.user@digital.justice.gov.uk'
   end
 
-  scenario 'Creating a person and making them the leader of a group' do
+  scenario 'Creating a person and making them the leader of a group', js: true do
     group = create(:group, name: 'Digital Justice')
+    javascript_log_in
+
     visit new_person_path
     fill_in 'Surname', with: 'Taylor'
     fill_in 'Job title', with: 'Head Honcho'
-    select 'Digital Justice', from: 'Team'
+    click_in_org_browser 'Digital Justice'
     check 'leader'
     click_button "Create"
 
@@ -36,7 +38,7 @@ feature "Person maintenance" do
 
   scenario 'Adding an additional role', js: true do
     person = create_person_in_digital_justice
-    create(:group, name: 'Communications')
+    create(:group, parent: Group.departments.first, name: 'Communications')
 
     javascript_log_in
     visit edit_person_path(person)
@@ -45,7 +47,7 @@ feature "Person maintenance" do
     sleep 1
 
     within all('#memberships .membership').last do
-      select 'Communications', from: 'Team'
+      click_in_org_browser 'Communications'
       fill_in 'Job title', with: 'Talker'
     end
 
@@ -82,7 +84,8 @@ end
 
 def create_person_in_digital_justice
   department = create(:department, name: 'Digital Justice')
+  group = create(:group, name: 'Digital Justice', parent: department)
   person = create(:person)
-  person.memberships.create(group: department)
+  person.memberships.create(group: group)
   person
 end

@@ -107,18 +107,20 @@ feature "Audit trail" do
     end
   end
 
-  scenario 'Auditing the creation of a membership' do
+  scenario 'Auditing the creation of a membership', js: true do
     with_versioning do
       create(:group, name: 'Digital Justice')
       person = create(:person, surname: 'Bob')
+      javascript_log_in
+
       visit edit_person_path(person)
-      select('Digital Justice', from: 'Team')
+      click_in_org_browser 'Digital Justice'
       fill_in('Job title', with: 'Jefe')
       click_button 'Update'
 
       visit '/audit_trail'
 
-      within('tr:first') do
+      within('tbody tr:first-child') do
         expect(page).to have_text('New Membership')
         expect(page).to have_text('Person set to: Bob')
         expect(page).to have_text('Team set to: Digital Justice')
@@ -143,7 +145,7 @@ feature "Audit trail" do
 
       visit '/audit_trail'
 
-      within('tr:first') do
+      within('tbody tr:first-child') do
         expect(page).to have_text('Deleted Membership')
         expect(page).to have_text('Person was: Bob')
         expect(page).to have_text('Team was: Digital Justice')
