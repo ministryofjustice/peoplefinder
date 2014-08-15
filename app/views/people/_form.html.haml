@@ -16,11 +16,13 @@
 
     .form-group
       %h2.line-above Contact details
-      = f.input :location, as: :string, label: 'Location of work'
+      %label.form-label-bold{ for: :person_location } Location of work
+      %p.form-hint= info_text('location_hint')
+      = f.input :location, as: :string, label: false
     .form-group
       = f.input :primary_phone_number, as: :string
     .form-group
-      = f.input :secondary_phone_number, as: :string
+      = f.input :secondary_phone_number, as: :string, label: 'Any other phone number'
     .form-group
       = f.input :email, as: :string, label: 'Email address'
 

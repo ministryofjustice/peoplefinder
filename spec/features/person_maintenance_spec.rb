@@ -14,7 +14,7 @@ feature "Person maintenance" do
     select 'Digital', from: 'Team'
     fill_in 'Email', with: p[:email]
     fill_in 'Primary phone number', with: p[:primary_phone_number]
-    fill_in 'Secondary phone number', with: p[:secondary_phone_number]
+    fill_in 'Any other phone number', with: p[:secondary_phone_number]
     fill_in 'Location', with: p[:location]
     fill_in 'Notes', with: p[:description]
     uncheck('Monday')
