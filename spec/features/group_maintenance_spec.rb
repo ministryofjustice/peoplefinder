@@ -125,11 +125,16 @@ feature "Group maintenance" do
     expect(page).to have_link('Cancel', href: 'javascript:history.back()')
   end
 
-  scenario "Not displaying a link to edit a department"  do
+  scenario "Not displaying an edit parent field for a department"  do
     dept = create(:group).parent
 
-    visit group_path(dept)
-    expect(page).not_to have_link('Edit', href: edit_group_path(dept))
+    visit edit_group_path(dept)
+    expect(page).not_to have_selector('#org-browser')
+  end
+
+  scenario "Displaying an edit parent field for a team"  do
+    visit edit_group_path(create(:group))
+    expect(page).to have_selector('#org-browser')
   end
 
   def check_in_org_browser(text)

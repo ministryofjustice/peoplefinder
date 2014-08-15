@@ -129,20 +129,20 @@ RSpec.describe Group, type: :model do
     end
   end
 
-  describe '.editable?' do
+  describe '.editable_parent?' do
     let(:department) { create(:department) }
 
-    it 'does not have a parent' do
+    it 'checks that there is no parent' do
       expect(department.parent).to be_nil
     end
 
-    it 'is not editable when there are no children (during application setup, for example)' do
-      expect(department).to be_editable
+    it 'allows editing of the parent when there are no children (during application setup, for example)' do
+      expect(department.editable_parent?).to be true
     end
 
-    it 'is editable when there are children' do
+    it 'prevents editing of the parent when there are children' do
       create(:group, parent: department)
-      expect(department.reload).not_to be_editable
+      expect(department.reload.editable_parent?).to be false
     end
   end
 

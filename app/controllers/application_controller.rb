@@ -38,8 +38,4 @@ private
   def notice(partial_key, options = {})
     i18n_flash :notice, partial_key, options
   end
-
-  def access_denied
-    render text: 'You do not have permission to edit this record', status: 403
-  end
 end

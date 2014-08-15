@@ -73,7 +73,7 @@ class Group < ActiveRecord::Base
     each { |p| p.role_names = p.role_list.compact.join(', ') }
   end
 
-  def editable?
+  def editable_parent?
     if parent.nil?
       return false unless children.empty?
     end

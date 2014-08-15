@@ -191,23 +191,4 @@ RSpec.describe GroupsController, type: :controller do
       expect(response).to redirect_to(parent)
     end
   end
-
-  context 'locking down a department' do
-    let(:department) { create(:group).parent }
-
-    it "cannot be edited" do
-      get :edit, id: department.to_param
-      expect(response).to have_http_status(403)
-    end
-
-    it "cannot be updated" do
-      put :update, id: department.to_param, group: valid_attributes
-      expect(response).to have_http_status(403)
-    end
-
-    it "cannot be destroyed" do
-      delete :destroy, id: department.to_param
-      expect(response).to have_http_status(403)
-    end
-  end
 end

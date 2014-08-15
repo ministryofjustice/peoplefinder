@@ -14,19 +14,21 @@
       %p.form-hint= info_text('hint_team_responsibilities')
       = f.input :responsibilities, label: false, input_html: { class: 'wider' }
 
-    .form-group
-      = f.input :parent_id, as: :hidden
-      - unless params[:group_id]
-        %label.form-label-bold Team parent
-        %p.form-hint Use this to change where in the organisation this team is located.
-        = render partial: 'home/org_browser'
-        :javascript
-          window.getOrgBrowserGroupId = function() {
-            return parseInt($('#group_parent_id').attr('value'), 10);
-          };
-          window.setOrgBrowserGroupId = function(id) {
-            $('#group_parent_id').attr('value', id);
-          };
+
+    - if @group.editable_parent?
+      .form-group
+        = f.input :parent_id, as: :hidden
+        - unless params[:group_id]
+          %label.form-label-bold Team parent
+          %p.form-hint Use this to change where in the organisation this team is located.
+          = render partial: 'home/org_browser'
+          :javascript
+            window.getOrgBrowserGroupId = function() {
+              return parseInt($('#group_parent_id').attr('value'), 10);
+            };
+            window.setOrgBrowserGroupId = function(id) {
+              $('#group_parent_id').attr('value', id);
+            };
 
     .form-group
       = f.button :submit

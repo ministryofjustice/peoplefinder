@@ -1,7 +1,6 @@
 class GroupsController < ApplicationController
   before_action :set_group, only: [:show, :edit, :update, :destroy, :all_people]
   before_action :redirect_numeric_show, only: [:show]
-  before_action :check_editability, only: [:edit, :update, :destroy]
 
   # GET /groups
   def index
@@ -99,9 +98,5 @@ private
 
   def person_from_person_id
     params[:person_id] ? Person.friendly.find(params[:person_id]) : nil
-  end
-
-  def check_editability
-    access_denied unless @group.editable?
   end
 end

@@ -1,8 +1,7 @@
 = render partial: 'breadcrumbs'
 
 = content_for :edit_this_page do
-  - if @group.editable?
-    = link_to 'Edit this team', edit_group_path(@group)
+  = link_to 'Edit this team', edit_group_path(@group)
 
 = render partial: 'detail'
 
