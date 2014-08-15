@@ -70,7 +70,7 @@ feature "Person maintenance" do
 
   scenario 'Editing a person' do
     visit person_path(create(:person, person_attributes))
-    click_link 'Edit this page'
+    click_link 'Edit this profile'
     expect(page).to have_text('You are currently editing this page')
     fill_in 'Given name', with: 'Jane'
     fill_in 'Surname', with: 'Doe'
@@ -86,7 +86,7 @@ feature "Person maintenance" do
 
   scenario 'Editing an invalid person' do
     visit person_path(create(:person, person_attributes))
-    click_link 'Edit this page'
+    click_link 'Edit this profile'
     fill_in 'Surname', with: ''
     click_button 'Update person'
 

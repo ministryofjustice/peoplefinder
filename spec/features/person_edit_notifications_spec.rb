@@ -90,7 +90,7 @@ feature "Person edit notifications" do
   scenario 'Editing a person with different email' do
     person = create(:person, given_name: 'Bob', surname: 'Smith', email: 'bob.smith@digital.justice.gov.uk')
     visit person_path(person)
-    click_link 'Edit this page'
+    click_link 'Edit this profile'
     fill_in 'Surname', with: 'Smelly Pants'
     expect { click_button 'Update person' }.to change { ActionMailer::Base.deliveries.count }.by(1)
     mail = ActionMailer::Base.deliveries.last
@@ -103,7 +103,7 @@ feature "Person edit notifications" do
   scenario 'Editing a person with an email from invalid domain' do
     person = create(:person, given_name: 'Bob', surname: 'Smith', email: 'bob.smith@something-else.example.com')
     visit person_path(person)
-    click_link 'Edit this page'
+    click_link 'Edit this profile'
     fill_in 'Surname', with: 'Smelly Pants'
     expect { click_button 'Update person' }.not_to change { ActionMailer::Base.deliveries.count }
   end
@@ -111,7 +111,7 @@ feature "Person edit notifications" do
   scenario 'Editing a person with same email' do
     person = create(:person, given_name: 'Bob', surname: 'Smith', email: 'test.user@digital.justice.gov.uk')
     visit person_path(person)
-    click_link 'Edit this page'
+    click_link 'Edit this profile'
     fill_in 'Surname', with: 'Smelly Pants'
     expect { click_button 'Update person' }.not_to change { ActionMailer::Base.deliveries.count }
   end
@@ -119,7 +119,7 @@ feature "Person edit notifications" do
   scenario 'Editing a person with nil email' do
     person = create(:person, given_name: 'Bob', surname: 'Smith', email: nil)
     visit person_path(person)
-    click_link 'Edit this page'
+    click_link 'Edit this profile'
     fill_in 'Surname', with: 'Smelly Pants'
     expect { click_button 'Update person' }.not_to change { ActionMailer::Base.deliveries.count }
   end
@@ -127,7 +127,7 @@ feature "Person edit notifications" do
   scenario 'Editing a person with invalid email' do
     person = create(:person, given_name: 'Bob', surname: 'Smith', email: 'test.user')
     visit person_path(person)
-    click_link 'Edit this page'
+    click_link 'Edit this profile'
     fill_in 'Surname', with: 'Smelly Pants'
     expect { click_button 'Update person' }.not_to change { ActionMailer::Base.deliveries.count }
   end
@@ -135,7 +135,7 @@ feature "Person edit notifications" do
   scenario 'Editing a person from same email to different email' do
     person = create(:person, given_name: 'Bob', surname: 'Smith', email: 'test.user@digital.justice.gov.uk')
     visit person_path(person)
-    click_link 'Edit this page'
+    click_link 'Edit this profile'
     fill_in 'Email', with: 'bob.smith@digital.justice.gov.uk'
     expect { click_button 'Update person' }.to change { ActionMailer::Base.deliveries.count }.by(1)
     mail = ActionMailer::Base.deliveries.last
@@ -148,7 +148,7 @@ feature "Person edit notifications" do
   scenario 'Editing a person from different email to same email' do
     person = create(:person, given_name: 'Bob', surname: 'Smith', email: 'bob.smith@digital.justice.gov.uk')
     visit person_path(person)
-    click_link 'Edit this page'
+    click_link 'Edit this profile'
     fill_in 'Email', with: 'test.user@digital.justice.gov.uk'
     expect { click_button 'Update person' }.to change { ActionMailer::Base.deliveries.count }.by(1)
     mail = ActionMailer::Base.deliveries.last
@@ -161,7 +161,7 @@ feature "Person edit notifications" do
   scenario 'Editing a person from different email to different email' do
     person = create(:person, given_name: 'Bob', surname: 'Smith', email: 'bob.smith@digital.justice.gov.uk')
     visit person_path(person)
-    click_link 'Edit this page'
+    click_link 'Edit this profile'
     fill_in 'Email', with: 'bob.smithe@digital.justice.gov.uk'
     expect { click_button 'Update person' }.to change { ActionMailer::Base.deliveries.count }.by(2)
   end
@@ -169,7 +169,7 @@ feature "Person edit notifications" do
   scenario 'Editing a person from invalid email to invalid email' do
     person = create(:person, given_name: 'Bob', surname: 'Smith', email: 'bob.smith')
     visit person_path(person)
-    click_link 'Edit this page'
+    click_link 'Edit this profile'
     fill_in 'Email', with: 'test.user'
     expect { click_button 'Update person' }.not_to change { ActionMailer::Base.deliveries.count }
   end
