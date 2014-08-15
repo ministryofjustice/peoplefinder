@@ -9,7 +9,7 @@ feature "Person maintenance" do
     create(:group, name: 'Digital')
     visit new_person_path
     p = person_attributes
-    fill_in 'Given name', with: p[:given_name]
+    fill_in 'First name', with: p[:given_name]
     fill_in 'Surname', with: p[:surname]
     select 'Digital', from: 'Team'
     fill_in 'Email', with: p[:email]
@@ -72,7 +72,7 @@ feature "Person maintenance" do
     visit person_path(create(:person, person_attributes))
     click_link 'Edit this profile'
 
-    fill_in 'Given name', with: 'Jane'
+    fill_in 'First name', with: 'Jane'
     fill_in 'Surname', with: 'Doe'
     click_button 'Update'
 

@@ -8,7 +8,7 @@ feature "Person edit notifications" do
   scenario "Creating a person with different email" do
     visit new_person_path
 
-    fill_in 'Given name', with: "Bob"
+    fill_in 'First name', with: "Bob"
     fill_in 'Surname', with: "Smith"
     fill_in 'Email', with: 'bob.smith@digital.justice.gov.uk'
     expect { click_button "Create" }.to change { ActionMailer::Base.deliveries.count }.by(1)
@@ -22,7 +22,7 @@ feature "Person edit notifications" do
   scenario "Creating a person with same email" do
     visit new_person_path
 
-    fill_in 'Given name', with: "Bob"
+    fill_in 'First name', with: "Bob"
     fill_in 'Surname', with: "Smith"
     fill_in 'Email', with: 'test.user@digital.justice.gov.uk'
     expect { click_button "Create" }.not_to change { ActionMailer::Base.deliveries.count }
@@ -39,7 +39,7 @@ feature "Person edit notifications" do
   scenario "Creating a person with invalid email" do
     visit new_person_path
 
-    fill_in 'Given name', with: "Bob"
+    fill_in 'First name', with: "Bob"
     fill_in 'Surname', with: "Smith"
     fill_in 'Email', with: 'test.user'
     expect { click_button "Create" }.not_to change { ActionMailer::Base.deliveries.count }
@@ -48,7 +48,7 @@ feature "Person edit notifications" do
   scenario "Creating a person with nil email" do
     visit new_person_path
 
-    fill_in 'Given name', with: "Bob"
+    fill_in 'First name', with: "Bob"
     fill_in 'Surname', with: "Smith"
     expect { click_button "Create" }.not_to change { ActionMailer::Base.deliveries.count }
   end

@@ -26,7 +26,7 @@ feature "Audit trail" do
   scenario 'Auditing the creation of a person' do
     with_versioning do
       visit new_person_path
-      fill_in 'Given name', with: 'Jon'
+      fill_in 'First name', with: 'Jon'
       fill_in 'Surname', with: 'Smith'
       click_button 'Create'
 

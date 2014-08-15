@@ -3,7 +3,7 @@
   %fieldset
     = f.error_notification
     .form-group
-      = f.input :given_name, as: :string
+      = f.input :given_name, as: :string, label: 'First name'
     .form-group
       = f.input :surname, as: :string, required: false
 
