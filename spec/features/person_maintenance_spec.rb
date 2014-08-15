@@ -98,11 +98,15 @@ feature "Person maintenance" do
     visit new_person_path
     fill_in 'Surname', with: person_attributes[:surname]
     attach_file 'person[image]', sample_image
+    expect(page).not_to have_link('Crop image')
     click_button 'Create'
 
     person = Person.find_by_surname(person_attributes[:surname])
     visit person_path(person)
     expect(page).to have_css("img[src*='#{person.image.medium}']")
+
+    visit edit_person_path(person)
+    expect(page).to have_link('Crop image', edit_person_image_path(person))
   end
 
   context 'Viewing my own profile' do
