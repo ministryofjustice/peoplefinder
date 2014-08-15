@@ -1,29 +1,44 @@
+- membership = membership_f.object
 .membership
   %h2.line-above Role
 
-  - membership = membership_f.object
-
-  .form-group
-    = membership_f.input :role, as: :string, label: 'Job title'
-
-  .form-group
-    -# pending implementation of org browser
-    -# %p.form-hint= info_text('hint_add_person_to_team')
-    = membership_f.association :group, collection: Group.all, label: 'Team', required: false
-
-    %p.form-hint= info_text('hint_add_person_team_not_found')
-
-  .form-checkbox
-    %h3 Team leader?
-    = membership_f.input :leader, label: 'This person is leader of the team above.'
-    %p.form-hint= info_text('hint_add_person_as_leader')
-
-    .remove-link
-      - if membership.new_record?
-        = link_to 'remove', '#', class: 'remove-new-membership'
-
-      - else
-        = link_to 'remove', membership_path(membership,
+  - unless membership.new_record?
+    .form-group.role-summary
+      .title
+        - if membership.role.present?
+          %strong= membership.role
+          = breadcrumbs(membership.group.hierarchy)
+      .cta
+        = link_to 'Edit', '#', class: 'show-role-editable'
+      .cta
+        = link_to 'Delete', membership_path(membership,
           referer: request.path),
           method: :delete,
           data: {confirm: "Are you sure you want to remove #{ membership.person} from #{ membership.group }? " }
+
+
+  .editable-fields{ style: ('display:none' unless membership.new_record?) }
+    .form-group
+      = membership_f.input :role, as: :string, label: 'Job title'
+
+    .form-group
+      -# pending implementation of org browser
+      -# %p.form-hint= info_text('hint_add_person_to_team')
+      = membership_f.association :group, collection: Group.all, label: 'Team', required: false
+
+      %p.form-hint= info_text('hint_add_person_team_not_found')
+
+    .form-checkbox
+      %h3 Team leader?
+      = membership_f.input :leader, label: 'This person is leader of the team above.'
+      %p.form-hint= info_text('hint_add_person_as_leader')
+
+      .remove-link
+        - if membership.new_record?
+          = link_to 'Delete', '#', class: 'remove-new-membership'
+
+        - else
+          = link_to 'Delete', membership_path(membership,
+            referer: request.path),
+            method: :delete,
+            data: {confirm: "Are you sure you want to remove #{ membership.person} from #{ membership.group }? " }

@@ -138,7 +138,7 @@ feature "Audit trail" do
 
       visit edit_person_path(person)
       within('.membership') do
-        click_link("remove")
+        click_link("Delete")
       end
 
       visit '/audit_trail'

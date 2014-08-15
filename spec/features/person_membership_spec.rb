@@ -8,7 +8,7 @@ feature "Person maintenance" do
   scenario 'Creating a person and making them the leader of a group' do
     group = create(:group, name: 'Digital Justice')
     visit new_person_path
-    fill_in 'Surname', with: person_attributes[:surname]
+    fill_in 'Surname', with: 'Taylor'
     fill_in 'Job title', with: 'Head Honcho'
     select 'Digital Justice', from: 'Team'
     check 'leader'
@@ -20,10 +20,12 @@ feature "Person maintenance" do
     expect(membership.leader?).to be true
   end
 
-  scenario 'Editing a job title' do
+  scenario 'Editing a job title', js: true do
     person = create_person_in_digital_justice
 
+    javascript_log_in
     visit edit_person_path(person)
+    click_link 'Edit'
 
     fill_in 'Job title', with: 'Head Honcho'
     click_button 'Update'
@@ -60,7 +62,7 @@ feature "Person maintenance" do
     click_link('Add new role')
     expect(page).to have_selector('#memberships .membership', count: 2)
 
-    click_link('remove', match: :first)
+    click_link('Delete', match: :first)
     expect(page).to have_selector('#memberships .membership', count: 1)
   end
 
@@ -69,7 +71,9 @@ feature "Person maintenance" do
 
     visit edit_person_path(person)
 
-    click_link('remove')
+    within('#memberships') do
+      click_link('Delete')
+    end
     expect(page).to have_content("Removed #{ person.name } from Digital Justice")
     expect(person.reload.memberships).to be_empty
     expect(current_path).to eql(edit_person_path(person))
@@ -77,8 +81,8 @@ feature "Person maintenance" do
 end
 
 def create_person_in_digital_justice
-  group = create(:group, name: 'Digital Justice')
+  department = create(:department, name: 'Digital Justice')
   person = create(:person)
-  person.memberships.create(group: group)
+  person.memberships.create(group: department)
   person
 end

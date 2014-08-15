@@ -75,7 +75,34 @@ img.preview {
   }
 }
 
-form .file {
-  margin-top: 15px;
-  border: 0;
+form {
+  .role-summary {
+    clear: both;
+    .title {
+      background-color: $paleblue;
+      float: left;
+      padding: 8px 15px 8px 8px;
+      margin-right: 15px;
+      max-width: 70%;
+      strong {
+        padding-right: 15px;
+      }
+    }
+    .cta {
+      padding: 8px;
+      float: left;
+    }
+  }
+  .file {
+    margin-top: 15px;
+    border: 0;
+    line-height: 0;
+    font-size: 15px;
+  }
+  .remove-link {
+    margin-top: 45px;
+  }
+  #add_membership {
+    margin-top: 60px;
+  }
 }

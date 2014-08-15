@@ -19,3 +19,11 @@ $(function() {
     $(this).parents('.membership').remove();
   });
 });
+
+$(function() {
+  $(document).on('click', 'a.show-role-editable', function(e) {
+     e.preventDefault();
+     $(this).closest('.role-summary').hide();
+     $(this).closest('.membership').children('.editable-fields').show();
+   });
+})
