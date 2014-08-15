@@ -73,7 +73,7 @@ feature "Group maintenance" do
     membership = create(:membership)
     group = membership.group
     visit edit_group_path(group)
-    expect(page).not_to have_link('Delete this record')
+    expect(page).not_to have_link('Delete this team')
     expect(page).to have_text('deletion is only possible if there are no people')
   end
 

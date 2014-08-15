@@ -55,7 +55,7 @@ feature "Person maintenance" do
   scenario 'Deleting a person' do
     person = create(:person)
     visit edit_person_path(person)
-    click_link('Delete')
+    click_link('Delete this profile')
     expect { Person.find(person) }.to raise_error(ActiveRecord::RecordNotFound)
   end
 
@@ -63,7 +63,7 @@ feature "Person maintenance" do
     membership = create(:membership)
     person = membership.person
     visit edit_person_path(person)
-    click_link('Delete')
+    click_link('Delete this profile')
     expect { Membership.find(membership) }.to raise_error(ActiveRecord::RecordNotFound)
     expect { Person.find(person) }.to raise_error(ActiveRecord::RecordNotFound)
   end
