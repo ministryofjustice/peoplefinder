@@ -78,13 +78,18 @@ private
   def person_params
     params.require(:person).permit(
       :given_name, :surname, :location, :primary_phone_number,
-      :secondary_phone_number, :email, :image, :description,
+      :secondary_phone_number, :email, :image, :image_cache,
+      :description,
       *Person::DAYS_WORKED,
       memberships_attributes: [:id, :role, :group_id, :leader])
   end
 
   def successful_redirect_path
-    person_params[:image].present? ? edit_person_image_path(@person) : @person
+    if person_params[:image].present? || person_params[:image_cache].present?
+      edit_person_image_path(@person)
+    else
+      @person
+    end
   end
 
   def set_groups

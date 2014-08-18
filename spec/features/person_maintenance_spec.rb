@@ -208,10 +208,11 @@ def fill_in_new_profile_details
   fill_in 'Notes', with: person_attributes[:description]
   uncheck('Monday')
   uncheck('Friday')
+  attach_file 'person[image]', sample_image
 end
 
 def check_creation_of_profile_details
-  expect(page).to have_content("Created Marco Polo’s profile")
+  click_button 'Update Image'
 
   within('h1') do
     expect(page).to have_text(person_attributes[:given_name] + ' ' + person_attributes[:surname])
@@ -231,4 +232,6 @@ def check_creation_of_profile_details
     expect(page).to_not have_selector("li.active[alt='Saturday']")
     expect(page).to_not have_selector("li.active[alt='Sunday']")
   end
+
+  expect(page).to have_css("img[src*='medium_placeholder.png']")
 end
