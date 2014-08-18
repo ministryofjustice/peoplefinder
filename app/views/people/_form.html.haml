@@ -9,6 +9,7 @@
 
     .form-group
       #memberships
+        %h2.line-above Roles
         = f.fields_for :memberships do |membership_f|
           = render partial: 'membership_fields', locals: { membership_f: membership_f }
 
