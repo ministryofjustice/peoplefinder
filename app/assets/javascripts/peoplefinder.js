@@ -26,4 +26,4 @@ $(function() {
      $(this).closest('.role-summary').hide();
      $(this).closest('.membership').children('.editable-fields').show();
    });
-})
+});
