@@ -8,39 +8,10 @@ feature "Person maintenance" do
   scenario "Creating a person with a complete profile" do
     create(:group, name: 'Digital')
     visit new_person_path
-    p = person_attributes
-    fill_in 'First name', with: p[:given_name]
-    fill_in 'Surname', with: p[:surname]
-    select 'Digital', from: 'Team'
-    fill_in 'Email', with: p[:email]
-    fill_in 'Primary phone number', with: p[:primary_phone_number]
-    fill_in 'Any other phone number', with: p[:secondary_phone_number]
-    fill_in 'Location', with: p[:location]
-    fill_in 'Notes', with: p[:description]
-    uncheck('Monday')
-    uncheck('Friday')
+    fill_in_new_profile_details
+
     click_button "Create"
-
-    expect(page).to have_content("Created Marco Polo’s profile")
-
-    within('h1') do
-      expect(page).to have_text(p[:given_name] + ' ' + p[:surname])
-    end
-    expect(page).to have_text(p[:email])
-    expect(page).to have_text(p[:primary_phone_number])
-    expect(page).to have_text(p[:secondary_phone_number])
-    expect(page).to have_text(p[:location])
-    expect(page).to have_text(p[:description])
-
-    within('ul.working_days') do
-      expect(page).to_not have_selector("li.active[alt='Monday']")
-      expect(page).to have_selector("li.active[alt='Tuesday']")
-      expect(page).to have_selector("li.active[alt='Wednesday']")
-      expect(page).to have_selector("li.active[alt='Thursday']")
-      expect(page).to_not have_selector("li.active[alt='Friday']")
-      expect(page).to_not have_selector("li.active[alt='Saturday']")
-      expect(page).to_not have_selector("li.active[alt='Sunday']")
-    end
+    check_creation_of_profile_details
   end
 
   scenario 'Creating an invalid person' do
@@ -227,4 +198,40 @@ end
 def complete_profile!(person)
   person.update_attributes(person_attributes.except(:email))
   person.groups << create(:group)
+end
+
+def fill_in_new_profile_details
+  fill_in 'First name', with: person_attributes[:given_name]
+  fill_in 'Surname', with: person_attributes[:surname]
+  select 'Digital', from: 'Team'
+  fill_in 'Email', with: person_attributes[:email]
+  fill_in 'Primary phone number', with: person_attributes[:primary_phone_number]
+  fill_in 'Any other phone number', with: person_attributes[:secondary_phone_number]
+  fill_in 'Location', with: person_attributes[:location]
+  fill_in 'Notes', with: person_attributes[:description]
+  uncheck('Monday')
+  uncheck('Friday')
+end
+
+def check_creation_of_profile_details
+  expect(page).to have_content("Created Marco Polo’s profile")
+
+  within('h1') do
+    expect(page).to have_text(person_attributes[:given_name] + ' ' + person_attributes[:surname])
+  end
+  expect(page).to have_text(person_attributes[:email])
+  expect(page).to have_text(person_attributes[:primary_phone_number])
+  expect(page).to have_text(person_attributes[:secondary_phone_number])
+  expect(page).to have_text(person_attributes[:location])
+  expect(page).to have_text(person_attributes[:description])
+
+  within('ul.working_days') do
+    expect(page).to_not have_selector("li.active[alt='Monday']")
+    expect(page).to have_selector("li.active[alt='Tuesday']")
+    expect(page).to have_selector("li.active[alt='Wednesday']")
+    expect(page).to have_selector("li.active[alt='Thursday']")
+    expect(page).to_not have_selector("li.active[alt='Friday']")
+    expect(page).to_not have_selector("li.active[alt='Saturday']")
+    expect(page).to_not have_selector("li.active[alt='Sunday']")
+  end
 end
