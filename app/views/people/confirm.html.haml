@@ -1,7 +1,8 @@
 - @editing_mode = true
 #search_results
   %h1.noborder Duplicate names found
-  %p= info_text('duplicate_names_hint')
+  .spacer-45
+  = info_text('duplicate_names_hint')
 
   .pagination= pluralize(@people.length, "result") + ' found'
 
@@ -27,6 +28,7 @@
 
     = f.input :image_cache, as: :hidden
 
+    .spacer-45
     .form-group
       = f.button :submit, 'Continue'
       .cancel
