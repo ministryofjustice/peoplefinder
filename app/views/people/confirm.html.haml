@@ -1,1 +1,34 @@
-confirm
+- @editing_mode = true
+#search_results
+  %h1.noborder Duplicate names found
+  %p
+    There are existing profiles that have the same name.
+    Check that it's not one of these before continuing.
+  .pagination= pluralize(@people.length, "result") + ' found'
+
+  = render partial: 'person', collection: @people, locals: { edit_link: true }
+
+  = simple_form_for @person, :html => {:multipart => true} do |f|
+
+    = f.input :given_name, as: :hidden
+    = f.input :surname, as: :hidden
+
+    = f.fields_for :memberships do |membership_f|
+      = membership_f.input :role, as: :hidden
+      = membership_f.input :group_id, as: :hidden
+
+    = f.input :location, as: :hidden
+    = f.input :primary_phone_number, as: :hidden
+    = f.input :secondary_phone_number, as: :hidden
+    = f.input :email, as: :hidden
+    = f.input :description, as: :hidden
+
+    - Person::DAYS_WORKED.each do |day|
+      = f.input day, as: :hidden
+
+    = f.input :image_cache, as: :hidden
+
+    .form-group
+      = f.button :submit, 'Continue'
+      .cancel
+        = link_to 'Return to home page', home_path

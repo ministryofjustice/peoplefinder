@@ -96,6 +96,8 @@ private
   end
 
   def duplicate_people
+    return false if params['commit'] == 'Continue'
+
     @people = Person.
       where(surname: @person.surname).
       where(given_name: @person.given_name).

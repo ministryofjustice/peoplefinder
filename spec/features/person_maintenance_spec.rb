@@ -23,50 +23,47 @@ feature "Person maintenance" do
     end
   end
 
-  pending do
-    scenario 'Creating a person with an identical name' do
-      create(:person, given_name: 'Bo', surname: 'Diddley')
-      visit new_person_path
+  scenario 'Creating a person with an identical name' do
+    create(:group, name: 'Digital')
+    create(:person, given_name: person_attributes[:given_name],
+                    surname: person_attributes[:surname])
 
-      fill_in 'First name', with: 'Bo'
-      fill_in 'Surname', with: 'Diddley'
-      click_button 'Create'
+    visit new_person_path
+    fill_in_new_profile_details
 
-      click_button 'Continue'
-      expect(page).to have_content("Created Bo Diddley’s profile")
-      expect(Person.find_by_surname('Diddley').count).to eql(2)
-    end
+    click_button 'Create'
+
+    expect(page).to have_text('1 result found')
+    click_button 'Continue'
+    check_creation_of_profile_details
+    expect(Person.where(surname: person_attributes[:surname]).count).to eql(2)
   end
 
-  pending do
-    scenario 'Cancelling creation of a person with an identical name' do
-      create(:person, given_name: 'Bo', surname: 'Diddley')
-      visit new_person_path
+  scenario 'Cancelling creation of a person with an identical name' do
+    create(:person, given_name: person_attributes[:given_name],
+                    surname: person_attributes[:surname])
+    visit new_person_path
 
-      fill_in 'First name', with: 'Bo'
-      fill_in 'Surname', with: 'Diddley'
-      click_button 'Create'
+    fill_in 'First name', with: person_attributes[:given_name]
+    fill_in 'Surname', with: person_attributes[:surname]
+    click_button 'Create'
 
-      click_button 'Continue'
-      expect(page).to have_content("Created Bo Diddley’s profile")
-      expect(Person.find_by_surname('Diddley').count).to eql(1)
-    end
+    click_link 'Return to home page'
+    expect(Person.where(surname: person_attributes[:surname]).count).to eql(1)
   end
 
-  pending do
-    scenario 'Editing a person and given them a name that already exists' do
-      create(:person, given_name: 'Bo', surname: 'Diddley')
-      person = create(:person, given_name: 'Bobbie', surname: 'Browne')
-      visit edit_person_path(person)
+  scenario 'Editing a person and giving them a name that already exists' do
+    create(:person, given_name: person_attributes[:given_name],
+                    surname: person_attributes[:surname])
+    person = create(:person, given_name: 'Bobbie', surname: 'Browne')
+    visit edit_person_path(person)
 
-      fill_in 'First name', with: 'Bo'
-      fill_in 'Surname', with: 'Diddley'
-      click_button 'Update'
+    fill_in 'First name', with: person_attributes[:given_name]
+    fill_in 'Surname', with: person_attributes[:surname]
+    click_button 'Update'
 
-      click_button 'Continue'
-      expect(page).to have_content("Update Bo Diddley’s profile")
-      expect(Person.find_by_surname('Diddley').count).to eql(2)
-    end
+    click_button 'Continue'
+    expect(Person.where(surname: person_attributes[:surname]).count).to eql(2)
   end
 
   scenario 'Deleting a person' do

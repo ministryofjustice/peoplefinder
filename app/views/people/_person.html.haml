@@ -1,0 +1,24 @@
+.search-result
+  .grid-wrapper
+    .grid.grid-2-3
+      .inner-block
+        .image-background
+          = image_tag person.image.medium
+        .details
+          %h3= link_to person.name, person
+          - if person.memberships.empty?
+            .meta
+          - else
+            - person.memberships.each do |membership|
+              .meta
+                = "#{ membership.role }, " if membership.role.present?
+                = link_to membership.group, membership.group
+
+          .meta= person.phone
+          .meta
+            = mail_to(person.email)
+
+    - if edit_link
+      .grid.grid-1-3
+        .inner-block
+          = link_to 'Edit this profile', edit_person_path(person)
