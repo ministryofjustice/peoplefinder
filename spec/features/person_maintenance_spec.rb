@@ -52,6 +52,52 @@ feature "Person maintenance" do
     end
   end
 
+  pending do
+    scenario 'Creating a person with an identical name' do
+      create(:person, given_name: 'Bo', surname: 'Diddley')
+      visit new_person_path
+
+      fill_in 'First name', with: 'Bo'
+      fill_in 'Surname', with: 'Diddley'
+      click_button 'Create'
+
+      click_button 'Continue'
+      expect(page).to have_content("Created Bo Diddley’s profile")
+      expect(Person.find_by_surname('Diddley').count).to eql(2)
+    end
+  end
+
+  pending do
+    scenario 'Cancelling creation of a person with an identical name' do
+      create(:person, given_name: 'Bo', surname: 'Diddley')
+      visit new_person_path
+
+      fill_in 'First name', with: 'Bo'
+      fill_in 'Surname', with: 'Diddley'
+      click_button 'Create'
+
+      click_button 'Continue'
+      expect(page).to have_content("Created Bo Diddley’s profile")
+      expect(Person.find_by_surname('Diddley').count).to eql(1)
+    end
+  end
+
+  pending do
+    scenario 'Editing a person and given them a name that already exists' do
+      create(:person, given_name: 'Bo', surname: 'Diddley')
+      person = create(:person, given_name: 'Bobbie', surname: 'Browne')
+      visit edit_person_path(person)
+
+      fill_in 'First name', with: 'Bo'
+      fill_in 'Surname', with: 'Diddley'
+      click_button 'Update'
+
+      click_button 'Continue'
+      expect(page).to have_content("Update Bo Diddley’s profile")
+      expect(Person.find_by_surname('Diddley').count).to eql(2)
+    end
+  end
+
   scenario 'Deleting a person' do
     person = create(:person)
     visit edit_person_path(person)

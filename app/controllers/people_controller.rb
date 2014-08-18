@@ -32,26 +32,22 @@ class PeopleController < ApplicationController
   def create
     @person = Person.new(person_params)
 
-    if @person.save
-      @person.send_create_email!(current_user)
-      notice :profile_created, person: @person
-      redirect_to successful_redirect_path
+    if @person.valid?
+      duplicate_people ? render(:confirm) : create_and_redirect
     else
-      set_groups
-      render :new
+      set_groups && render(:new)
     end
   end
 
   # PATCH/PUT /people/1
   def update
-    old_email = @person.email
-    if @person.update(person_params)
-      @person.send_update_email!(current_user, old_email)
-      notice :profile_updated, person: @person
-      redirect_to successful_redirect_path
+    @old_email = @person.email
+    @person.assign_attributes(person_params)
+
+    if @person.valid?
+      duplicate_people ? render(:confirm) : update_and_redirect
     else
-      set_groups
-      render :edit
+      set_groups && render(:edit)
     end
   end
 
@@ -97,5 +93,27 @@ private
 
   def group_from_group_id
     params[:group_id] ? Group.friendly.find(params[:group_id]) : nil
+  end
+
+  def duplicate_people
+    @people = Person.
+      where(surname: @person.surname).
+      where(given_name: @person.given_name).
+      where.not(id: @person.id)
+    @people.present?
+  end
+
+  def create_and_redirect
+    @person.save
+    @person.send_create_email!(current_user)
+    notice :profile_created, person: @person
+    redirect_to successful_redirect_path
+  end
+
+  def update_and_redirect
+    @person.save
+    @person.send_update_email!(current_user, @old_email)
+    notice :profile_updated, person: @person
+    redirect_to successful_redirect_path
   end
 end

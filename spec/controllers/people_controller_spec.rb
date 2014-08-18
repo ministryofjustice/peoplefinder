@@ -127,6 +127,14 @@ RSpec.describe PeopleController, type: :controller do
         expect(assigns(:groups)).to include(group)
       end
     end
+
+    describe 'with duplicate name' do
+      it "renders the 'confirm' template" do
+        create(:person, given_name: 'Bo', surname: 'Diddley')
+        post :create, { person: { given_name: 'Bo', surname: 'Diddley' } }, valid_session
+        expect(response).to render_template('confirm')
+      end
+    end
   end
 
   describe "PUT update" do
@@ -180,6 +188,15 @@ RSpec.describe PeopleController, type: :controller do
       it "assigns the @groups collection" do
         post :create, { person: invalid_attributes }, valid_session
         expect(assigns(:groups)).to include(group)
+      end
+    end
+
+    describe 'with duplicate name' do
+      it "renders the 'confirm' template" do
+        create(:person, given_name: 'Bo', surname: 'Diddley')
+        person = create(:person, given_name: 'Bobbie', surname: 'Browne')
+        put :update, { id: person.to_param, person: { given_name: 'Bo', surname: 'Diddley' } }, valid_session
+        expect(response).to render_template('confirm')
       end
     end
   end
