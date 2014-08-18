@@ -21,10 +21,6 @@ $paleblue: rgba(#9BB7CE, 0.5);
   margin-bottom: 1em;
 }
 
-.edit_this_page {
-  float: right;
-}
-
 .breadcrumbs {
   display: inline-block;
 }
@@ -71,6 +67,19 @@ h4 {
 
 strong {
   font-weight: bold;
+}
+
+.title_with_edit {
+  border-bottom: 1px solid $blackish;
+  margin-bottom: 30px;
+  h1 {
+    border: 0 !important;
+    margin: 30px 0 0 0;
+  }
+  .edit-link {
+    height: 100%;
+    padding: 61px 0 0 36px;
+  }
 }
 
 .spacer-45 {

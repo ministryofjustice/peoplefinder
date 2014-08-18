@@ -7,7 +7,6 @@
       = flash_messages
       .inner-block.breadcrumbs_and_edit_link
         .breadcrumbs= yield :breadcrumbs
-        .edit_this_page= yield :edit_this_page
       - if current_user && !@editing_mode
         .grid-wrapper
           .grid.grid-2-3
