@@ -1,9 +1,8 @@
 - @editing_mode = true
 #search_results
   %h1.noborder Duplicate names found
-  %p
-    There are existing profiles that have the same name.
-    Check that it's not one of these before continuing.
+  %p= info_text('duplicate_names_hint')
+
   .pagination= pluralize(@people.length, "result") + ' found'
 
   = render partial: 'person', collection: @people, locals: { edit_link: true }
