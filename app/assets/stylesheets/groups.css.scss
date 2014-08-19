@@ -16,6 +16,7 @@
   }
   img {
     width: 217px;
+    max-width: 100%;
     clip: rect(0px, 217px, 217px, 0px);
   }
   .role {
@@ -24,6 +25,7 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    max-width: 100%;
   }
 }
 
