@@ -24,7 +24,7 @@ feature "Group maintenance" do
   end
 
   scenario "Creating a team inside the department", js: true do
-    dept = create(:group, name: "Ministry of Justice")
+    dept = create(:department)
 
     javascript_log_in
     visit group_path(dept)
@@ -42,7 +42,7 @@ feature "Group maintenance" do
   end
 
   scenario "Creating a subteam inside a team from that team's page" do
-    dept = create(:group, name: "Ministry of Justice")
+    dept = create(:department)
     team = create(:group, parent: dept, name: 'Corporate Services')
 
     visit group_path(team)
@@ -93,7 +93,7 @@ feature "Group maintenance" do
   end
 
   scenario "Editing a team", js: true do
-    dept = create(:group, name: "Ministry of Justice")
+    dept = create(:department)
     org = create(:group, name: "CSG", parent: dept)
     group = create(:group, name: "Digital Services", parent: org)
 

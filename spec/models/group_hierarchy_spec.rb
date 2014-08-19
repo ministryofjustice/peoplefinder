@@ -2,48 +2,47 @@ require 'rails_helper'
 
 RSpec.describe GroupHierarchy, type: :model do
   it "generates a tree of hashes with group information" do
-    root = create_hierarchy_of_groups
-    root.reload
+    a, b, c, d, e = create_hierarchy_of_groups
+    a.reload
 
     expected = {
-      id: root.id,
+      id: a.id,
       name: 'A',
-      url: "/groups/#{ root.id }",
+      url: "/groups/#{ a.id }",
       children: [
         {
-          id: root.children[0].id,
+          id: b.id,
           name: 'B',
-          url: "/groups/#{ root.children[0].id }",
+          url: "/groups/#{ b.id }",
           children: [
             {
-              id: root.children[0].children[0].id,
+              id: c.id,
               name: 'C',
-              url: "/groups/#{ root.children[0].children[0].id }",
+              url: "/groups/#{ c.id }",
               children: []
             }, {
-              id: root.children[0].children[1].id,
-              name: 'C',
+              id: d.id,
               name: 'D',
-              url: "/groups/#{ root.children[0].children[1].id }",
+              url: "/groups/#{ d.id }",
               children: []
             }
           ]
         }, {
-          id: root.children[1].id,
+          id: e.id,
           name: 'E',
-          url: "/groups/#{ root.children[1].id }",
+          url: "/groups/#{ e.id }",
           children: []
         }
       ]
     }
 
-    generated = described_class.new(root).to_hash
+    generated = described_class.new(a).to_hash
 
     expect(generated).to eql(expected)
   end
 
   context 'Generating a group_id list' do
-    let(:root) { create_hierarchy_of_groups }
+    let(:root) { create_hierarchy_of_groups.first }
     subject { described_class.new(root).to_group_id_list }
 
     it 'has five elements' do
@@ -59,11 +58,10 @@ RSpec.describe GroupHierarchy, type: :model do
 end
 
 def create_hierarchy_of_groups
-  create(:group, name: 'A', slug: 'a', children: [
-    create(:group, name: 'B', slug: 'b', children: [
-      create(:group, name: 'C', slug: 'c', children: []),
-      create(:group, name: 'D', slug: 'd', children: [])
-    ]),
-    create(:group, name: 'E', slug: 'e', children: [])
-  ])
+  a = create(:group, name: 'A')
+  b = create(:group, name: 'B', parent: a)
+  c = create(:group, name: 'C', parent: b)
+  d = create(:group, name: 'D', parent: b)
+  e = create(:group, name: 'E', parent: a)
+  [a, b, c, d, e]
 end

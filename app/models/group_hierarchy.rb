@@ -1,7 +1,4 @@
 class GroupHierarchy
-  FIELDS = [:id, :name, :slug, :parent_id]
-  LiteGroup = Struct.new(*FIELDS)
-
   def initialize(root)
     @root = root
   end
@@ -11,7 +8,7 @@ class GroupHierarchy
   end
 
   def to_group_id_list
-    export_id(@root).flatten
+    @root.subtree_ids
   end
 
 private
@@ -25,13 +22,6 @@ private
     }
   end
 
-  def export_id(group)
-    [
-      group.id,
-      children(group).map { |g| export_id(g) }
-    ]
-  end
-
   def children(group)
     lookup.select { |g| g.parent_id == group.id }.sort_by(&:name)
   end
@@ -41,6 +31,6 @@ private
   end
 
   def lookup
-    @lookup ||= Group.pluck(*FIELDS).map { |a| LiteGroup.new(*a) }
+    @lookup ||= Group.all
   end
 end

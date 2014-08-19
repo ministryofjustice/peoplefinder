@@ -92,7 +92,7 @@ private
     if params[:group_id]
       Group.find(params[:group_id]).children
     else
-      Group.includes(:parent)
+      Group
     end
   end
 

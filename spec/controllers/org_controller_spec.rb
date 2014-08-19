@@ -7,7 +7,7 @@ RSpec.describe OrgController, type: :controller do
 
   describe "GET show" do
     it "renders JSON of the organisational hierarchy" do
-      group = create(:department, name: "Ministry of Justice")
+      group = create(:department)
       get :show
 
       expected = {

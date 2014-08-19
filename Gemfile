@@ -2,6 +2,7 @@ source 'https://rubygems.org'
 ruby '2.1.1'
 gem 'rails', '~> 4.1.5'
 
+gem 'ancestry'
 gem 'carrierwave',
   git: 'https://github.com/carrierwaveuploader/carrierwave.git',
   tag: 'cc39842e44edcb6187b2d379a606ec48a6b5e4a8'

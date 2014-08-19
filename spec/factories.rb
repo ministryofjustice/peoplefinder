@@ -1,7 +1,7 @@
 FactoryGirl.define do
   factory :department, class: 'Group' do
-    sequence :name do |n|
-      "Department-%04d" % n
+    initialize_with do
+      Group.where(ancestry_depth: 0).first_or_create(name: 'Ministry of Justice')
     end
   end
 

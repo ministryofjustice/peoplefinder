@@ -11,23 +11,24 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140814153848) do
+ActiveRecord::Schema.define(version: 20140819091601) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "pg_stat_statements"
 
   create_table "groups", force: true do |t|
-    t.integer  "parent_id"
     t.text     "name"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "slug"
     t.text     "description"
     t.text     "responsibilities"
+    t.text     "ancestry"
+    t.integer  "ancestry_depth",   default: 0, null: false
   end
 
-  add_index "groups", ["slug", "parent_id"], name: "index_groups_on_slug_and_parent_id", unique: true, using: :btree
+  add_index "groups", ["ancestry"], name: "index_groups_on_ancestry", using: :btree
 
   create_table "memberships", force: true do |t|
     t.integer  "group_id"

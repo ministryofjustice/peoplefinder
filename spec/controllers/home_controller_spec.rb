@@ -19,7 +19,7 @@ RSpec.describe HomeController, type: :controller do
     end
 
     context 'when there is a top-level group' do
-      before { create(:group, name: 'Ministry of Justice', parent: nil) }
+      before { create(:department) }
 
       it 'renders the show template' do
         get :show

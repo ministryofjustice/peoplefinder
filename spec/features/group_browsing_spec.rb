@@ -5,7 +5,7 @@ feature "Group browsing" do
     log_in_as 'test.user@digital.justice.gov.uk'
   end
 
-  let!(:department) { create(:department, name: "Ministry of Justice") }
+  let!(:department) { create(:department) }
   let!(:team) { create(:group, name: "A Team", parent: department) }
   let!(:subteam) { create(:group, name: "A Subteam", parent: team) }
   let!(:leaf_node) { create(:group, name: "A Leaf Node", parent: subteam) }

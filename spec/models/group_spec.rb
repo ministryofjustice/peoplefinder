@@ -4,14 +4,14 @@ RSpec.describe Group, type: :model do
   it { should have_many(:leaders) }
 
   it "lists orphaned groups as departments" do
-    parent = create(:group, parent: nil)
+    parent = create(:department)
     create(:group, parent: parent)
     expect(described_class.departments.to_a).to eql([parent])
   end
 
   it "calculates its level" do
-    parent = described_class.new
-    child = described_class.new(parent: parent)
+    parent = create(:department)
+    child = create(:group, parent: parent)
     expect(parent.level).to eql(0)
     expect(child.level).to eql(1)
   end
@@ -22,13 +22,13 @@ RSpec.describe Group, type: :model do
     child = create(:group, parent: parent)
     grandchild = create(:group, parent: child)
 
-    expect(grandchild.hierarchy).to eql([grandparent, parent, child, grandchild])
+    expect(grandchild.hierarchy.to_a).to eql([grandparent, parent, child, grandchild])
   end
 
   it "knows when it has no ancestors" do
     department = create(:group, parent: nil)
 
-    expect(department.hierarchy).to eql([department])
+    expect(department.hierarchy.to_a).to eql([department])
   end
 
   describe '.leaf_node?' do
@@ -147,7 +147,7 @@ RSpec.describe Group, type: :model do
   end
 
   context "slugs" do
-    let(:department) { create(:department, name: 'Ministry of Justice') }
+    let(:department) { create(:department) }
     let(:team) { create(:group, name: 'A Team', parent: department) }
     let!(:subteam) { create(:group, name: 'A Subteam', parent: team) }
 

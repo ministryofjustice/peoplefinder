@@ -2,7 +2,7 @@ require 'rails_helper'
 
 feature 'Home page' do
   before do
-    create(:group, name: 'Ministry of Justice', parent: nil)
+    create(:department)
     log_in_as 'test.user@digital.justice.gov.uk'
   end
 

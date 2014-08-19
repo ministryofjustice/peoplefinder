@@ -49,7 +49,7 @@ RSpec.describe GroupsController, type: :controller do
     end
 
     it "with a department, it redirects to the departmental page" do
-      department = create(:group, parent: nil)
+      department = create(:department)
       expect(subject).to redirect_to(group_path(department))
     end
 
@@ -61,7 +61,7 @@ RSpec.describe GroupsController, type: :controller do
   end
 
   describe "GET show" do
-    let(:department) { create(:department, name: 'Ministry of Justice') }
+    let(:department) { create(:department) }
     let(:team) { create(:group, name: 'A Team', parent: department) }
     let!(:subteam) { create(:group, name: 'A Subteam', parent: team) }
 

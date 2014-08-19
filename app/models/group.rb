@@ -1,8 +1,6 @@
 class Group < ActiveRecord::Base
   has_paper_trail ignore: [:updated_at, :created_at, :slug, :id]
 
-  belongs_to :parent, class_name: 'Group'
-  has_many :children, class_name: 'Group', foreign_key: 'parent_id'
   has_many :memberships, -> { includes(:person).order('people.surname')  }
   has_many :people, through: :memberships
   has_many :leaderships, -> { where(leader: true) }, class_name: 'Membership'
@@ -15,14 +13,16 @@ class Group < ActiveRecord::Base
   has_many :leaders, through: :leaderships, source: :person
   has_many :non_leaders, through: :non_leaderships, source: :person
 
-  validates :name, presence: true, uniqueness: { scope: :parent_id }
+  has_ancestry cache_depth: true
+
+  validates :name, presence: true, uniqueness: { scope: :ancestry }
 
   default_scope { order(name: :asc) }
 
   before_destroy :check_deletability
 
   def self.departments
-    where(parent_id: nil)
+    roots
   end
 
   def self.by_hierarchical_slug(str)
@@ -36,17 +36,11 @@ class Group < ActiveRecord::Base
   end
 
   def level
-    parent ? parent.level.succ : 0
+    ancestry_depth
   end
 
   def hierarchy
-    @hierarchy ||= [].tap { |acc|
-      node = self
-      while node
-        acc.unshift node
-        node = node.parent
-      end
-    }
+    path
   end
 
   def leadership
@@ -67,15 +61,16 @@ class Group < ActiveRecord::Base
       'select distinct array_agg(role) as role_list, p.*
       from memberships m, people p
       where m.person_id = p.id AND group_id in (?)
-      group by p.id;',  GroupHierarchy.new(self).to_group_id_list
+      group by p.id;', subtree_ids
     ]).
     sort_by(&:name).
     each { |p| p.role_names = p.role_list.compact.join(', ') }
   end
 
   def editable_parent?
-    if parent.nil?
-      return false unless children.empty?
+    return true if new_record?
+    unless parent
+      return false if children.any?
     end
     true
   end
@@ -86,7 +81,7 @@ class Group < ActiveRecord::Base
   end
 
   def hierarchical_slug
-    hierarchy[1 .. -1].map(&:slug).join('/')
+    path.after_depth(0).map(&:slug).join('/')
   end
 
   def canonical_path
