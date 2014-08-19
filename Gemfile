@@ -10,7 +10,8 @@ gem 'jbuilder', '~> 2.0'
 gem 'jquery-rails'
 gem 'mail'
 gem 'moj_internal_template',
-  git: 'https://github.com/ministryofjustice/moj_internal_template.git'
+  git: 'https://github.com/ministryofjustice/moj_internal_template.git',
+  branch: 'master'
 gem 'nested_form'
 gem 'omniauth-identity', '~> 1.1.1'
 gem 'pg'
