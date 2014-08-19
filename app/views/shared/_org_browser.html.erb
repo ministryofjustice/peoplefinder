@@ -16,7 +16,9 @@
   <ul class="expanded-groups" >
     <li ng-hide="selectMode">
       <div class="block" >
+        <span>
         <a href="{{ current.url }}" >View {{ current.name }}</a>
+        </span>
       </div>
     </li>
     <li ng-repeat="group in current.children" >
