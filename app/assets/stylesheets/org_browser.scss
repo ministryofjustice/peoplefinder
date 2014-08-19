@@ -107,7 +107,7 @@
       border-bottom: 1px solid $border-color;
 
       span, a, label {
-        padding: (($row-height - $line-height) / 2) 5px;
+        padding: (($row-height - $line-height) / 4.2) 5px;
         padding-right: 0;
         display: inline-block;
       }
