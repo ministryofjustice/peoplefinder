@@ -2,6 +2,8 @@
 
 [![Code Climate](https://codeclimate.com/github/ministryofjustice/peoplefinder/badges/gpa.svg)](https://codeclimate.com/github/ministryofjustice/peoplefinder)
 
+[![Test Coverage](https://codeclimate.com/github/ministryofjustice/peoplefinder/badges/coverage.svg)](https://codeclimate.com/github/ministryofjustice/peoplefinder)
+
 ## Authentication
 
 Authentication requires two environment variables. You can obtain these by
