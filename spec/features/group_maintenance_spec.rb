@@ -59,6 +59,21 @@ feature "Group maintenance" do
     expect(subteam.parent).to eql(team)
   end
 
+  scenario "Creating a team and choosing the parent from the org browser", js: true do
+    create(:group, name: 'Corporate Services')
+
+    javascript_log_in
+    visit new_group_path
+
+    fill_in "Team name", with: "Digital Services"
+    click_in_org_browser "Corporate Services"
+    click_button "Create"
+
+    within(".breadcrumbs") do
+      expect(page).to have_content("Corporate Services > Digital Services")
+    end
+  end
+
   scenario 'Deleting a team' do
     group = create(:group)
     visit edit_group_path(group)
@@ -89,6 +104,11 @@ feature "Group maintenance" do
     expect(page).to have_text('You are currently editing this page')
     new_name = "Cyberdigital Cyberservices"
     fill_in "Team name", with: new_name
+
+    within('.group-parent') do
+      click_link "Edit"
+    end
+
     click_in_org_browser "Ministry of Justice"
     click_button "Update"
 
@@ -130,10 +150,5 @@ feature "Group maintenance" do
 
     visit edit_group_path(dept)
     expect(page).not_to have_selector('.org-browser')
-  end
-
-  scenario "Displaying an edit parent field for a team"  do
-    visit edit_group_path(create(:group))
-    expect(page).to have_selector('.org-browser')
   end
 end

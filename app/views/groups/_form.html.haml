@@ -15,15 +15,21 @@
       = f.input :responsibilities, label: false, input_html: { class: 'wider' }
 
     - if @group.editable_parent?
-      .form-group
+      .form-group.group-parent
         - if params[:group_id]
           = f.input :parent_id, as: :hidden
         - else
           %label.form-label-bold Team parent
           %p.form-hint Use this to change where in the organisation this team is located.
-          = render layout: 'shared/org_browser' do
-            = f.input :parent_id, as: :hidden
 
+          .editable-fields{ style: ('display:none' unless @group.new_record?) }
+            = render layout: 'shared/org_browser' do
+              = f.input :parent_id, as: :hidden
+          -unless @group.new_record?
+            .parent-summary
+              - if @group.parent
+                .title= breadcrumbs(@group.parent.hierarchy)
+              .cta= link_to 'Edit', '#', class: 'show-parent-editable'
     .form-group
       = f.button :submit
       .cancel

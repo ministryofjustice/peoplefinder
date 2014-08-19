@@ -26,4 +26,10 @@ $(function() {
     $(this).closest('.role-summary').hide();
     $(this).closest('.membership').children('.editable-fields').show();
   });
+
+  $(document).on('click', 'a.show-parent-editable', function(e) {
+    e.preventDefault();
+    $(this).closest('.parent-summary').hide();
+    $(this).closest('.group-parent').children('.editable-fields').show();
+  });
 });
