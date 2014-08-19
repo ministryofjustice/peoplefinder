@@ -41,6 +41,20 @@ feature "Group browsing" do
     expect(page).not_to have_text 'A Leaf Node'
   end
 
+  scenario 'Linking to a leaf node page from the org browser', js: true do
+    javascript_log_in
+
+    visit '/'
+
+    click_in_org_browser 'A Team'
+    click_in_org_browser 'A Subteam'
+    click_link 'A Leaf Node'
+
+    within('h1') do
+      expect(page).to have_text('A Leaf Node')
+    end
+  end
+
   scenario "A team with subteams" do
     current_group = team
     add_people_to_group(names, current_group)

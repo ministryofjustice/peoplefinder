@@ -24,9 +24,13 @@
         ng-click="moveDown(group)" >
         <label ng-show="selectMode" >
           <input type="radio" ng-checked="isSelected(group)" />
+          <span>{{ group.name }}</span>
         </label>
-        <span>{{ group.name }}</span>
-        <span class="arrow" ng-show="isExpandable(group)" >〉</span>
+        <label ng-show="!selectMode" >
+          <a href="{{ group.url }}" ng-show="!isExpandable(group)">{{ group.name }}</a>
+          <span ng-show="isExpandable(group)">{{ group.name }}</span>
+        </label>
+        <span class="arrow" ng-show="isExpandable(group)">〉</span>
       </div>
     </li>
   </ul>
