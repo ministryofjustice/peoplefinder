@@ -9,3 +9,5 @@ before_script:
   - psql -c 'create database peoplefinder_test;' -U postgres
 notifications:
   email: false
+env:
+  secure: "0N9WNoZ+piFcYzp52WtIodiUe0STJFb9RFjt7+GPoDM4YkXhpiisBAz2ZgL3bsLi3FEz1KPvCRLOL21H0sRohXyKd8LMNSVojn4q3J6r3fPWlWzwVvmIrnQj7dzgPn9qCqcWv4gFj5zVVkyzujQ/2ZvWDNNuDrRj80AtG685eyI="

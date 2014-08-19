@@ -83,6 +83,8 @@ GEM
     celluloid (0.15.2)
       timers (~> 1.1.0)
     cliver (0.3.2)
+    codeclimate-test-reporter (0.3.0)
+      simplecov (>= 0.7.1, < 1.0.0)
     coderay (1.1.0)
     diff-lcs (1.2.5)
     dotenv (0.11.1)
@@ -356,6 +358,7 @@ DEPENDENCIES
   brakeman
   capybara
   carrierwave!
+  codeclimate-test-reporter
   dotenv-rails
   elasticsearch-model (~> 0.1.4)
   elasticsearch-rails (~> 0.1.4)

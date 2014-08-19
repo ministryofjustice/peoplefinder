@@ -50,6 +50,7 @@ end
 
 group :test do
   gem 'capybara'
+  gem 'codeclimate-test-reporter'
   gem 'factory_girl_rails'
   gem 'launchy'
   gem 'minitest'
