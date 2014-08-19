@@ -1,5 +1,5 @@
 /* global $ */
-$(function(){
+$(window).load(function(){
   var stashCoords = function(coords) {
     $('#person_crop_x').val(coords.x);
     $('#person_crop_y').val(coords.y);
@@ -9,6 +9,7 @@ $(function(){
 
   $('#croppable').Jcrop({
     setSelect: [20, 20, 300, 300],
+    boxWidth:  ($(window).width()*0.80),
     onSelect: stashCoords,
     aspectRatio: 1
   });
