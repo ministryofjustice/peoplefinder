@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 ruby '2.1.1'
-gem 'rails', '~> 4.1.4'
+gem 'rails', '~> 4.1.5'
 
 gem 'carrierwave',
   git: 'https://github.com/carrierwaveuploader/carrierwave.git',
