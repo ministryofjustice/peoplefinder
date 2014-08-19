@@ -1,13 +1,13 @@
 - membership = membership_f.object
-.membership
+.membership.editable-container
   - unless membership.new_record?
-    .form-group.role-summary
+    .form-group.editable-summary
       .title
         - if membership.role.present?
           %strong= membership.role
         = breadcrumbs(membership.group.hierarchy)
       .cta
-        = link_to 'Edit', '#', class: 'show-role-editable'
+        = link_to 'Edit', '#', class: 'show-editable-fields'
       .cta
         = link_to 'Delete', membership_path(membership,
           referer: request.path),

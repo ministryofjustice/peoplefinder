@@ -15,7 +15,7 @@
       = f.input :responsibilities, label: false, input_html: { class: 'wider' }
 
     - if @group.editable_parent?
-      .form-group.group-parent
+      .form-group.group-parent.editable-container
         - if params[:group_id]
           = f.input :parent_id, as: :hidden
         - else
@@ -25,11 +25,13 @@
           .editable-fields{ style: ('display:none' unless @group.new_record?) }
             = render layout: 'shared/org_browser' do
               = f.input :parent_id, as: :hidden
+
           -unless @group.new_record?
-            .parent-summary
+            .editable-summary.parent-summary
               - if @group.parent
                 .title= breadcrumbs(@group.parent.hierarchy)
-              .cta= link_to 'Edit', '#', class: 'show-parent-editable'
+              .cta= link_to 'Edit', '#', class: 'show-editable-fields'
+
     .form-group
       = f.button :submit
       .cancel

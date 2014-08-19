@@ -21,15 +21,9 @@ $(function() {
     $(this).parents('.membership').remove();
   });
 
-  $(document).on('click', 'a.show-role-editable', function(e) {
+  $(document).on('click', 'a.show-editable-fields', function(e) {
     e.preventDefault();
-    $(this).closest('.role-summary').hide();
-    $(this).closest('.membership').children('.editable-fields').show();
-  });
-
-  $(document).on('click', 'a.show-parent-editable', function(e) {
-    e.preventDefault();
-    $(this).closest('.parent-summary').hide();
-    $(this).closest('.group-parent').children('.editable-fields').show();
+    $(this).closest('.editable-summary').hide();
+    $(this).closest('.editable-container').children('.editable-fields').show();
   });
 });
