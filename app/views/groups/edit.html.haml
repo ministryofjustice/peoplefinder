@@ -4,7 +4,7 @@
 
 = render 'form'
 
-.delete-actions
+.form-group.delete-actions
   - if @group.deletable?
     .deletable
       = link_to info_text('delete_this_team'), @group, method: :delete,

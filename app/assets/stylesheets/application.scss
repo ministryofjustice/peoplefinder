@@ -10,6 +10,10 @@ $paleblue: rgba(#9BB7CE, 0.5);
 @import "search_box";
 @import "org_browser";
 
+.form-control {
+  max-width: 100% !important;
+}
+
 #last_update {
   float: right;
   top: 75px;
@@ -106,7 +110,7 @@ a.add-new-person {
 }
 
 form .text .wider   {
-    width: 100%;
+    width: 95%;
     height: 205px;
 }
 
