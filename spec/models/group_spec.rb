@@ -31,6 +31,15 @@ RSpec.describe Group, type: :model do
     expect(department.hierarchy.to_a).to eql([department])
   end
 
+  it "does not permit cyclic graphs" do
+    a = create(:group)
+    b = create(:group, parent: a)
+    c = create(:group, parent: b)
+
+    a.parent = c
+    expect(a).not_to be_valid
+  end
+
   describe '.leaf_node?' do
     let(:group) { create(:group) }
 
