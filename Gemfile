@@ -18,13 +18,9 @@ gem 'jquery-rails'
 gem 'mail'
 gem 'mini_magick'
 
-if ENV['USE_LOCAL_TEMPLATE']
-  gem 'moj_internal_template',
-    path: '../moj_internal_template'
-else
-  gem 'moj_internal_template',
-    git: 'https://github.com/ministryofjustice/moj_internal_template.git'
-end
+gem 'moj_internal_template',
+  git: 'https://github.com/ministryofjustice/moj_internal_template.git',
+  branch: 'master'
 gem 'omniauth-gplus',
   git: 'https://github.com/ministryofjustice/omniauth-gplus.git'
 gem 'paper_trail', '~> 3.0.2'
