@@ -23,6 +23,19 @@ FormInputMapper.prototype.setId = function(id) {
 };
 
 peoplefinderApp.controller('OrgBrowserCtrl', function($scope, $element, $http) {
+  var augmentTree = function(node, current, disabled) {
+    if (node.id === current) { disabled = true; }
+    return {
+      id: node.id,
+      name: node.name,
+      url: node.url,
+      disabled: disabled,
+      children: node.children.map(function(child) {
+        return augmentTree(child, current, disabled);
+      })
+    }
+  }
+
   var pathToNodeId = function(node, id, path) {
     path = path || [node];
 
@@ -38,6 +51,7 @@ peoplefinderApp.controller('OrgBrowserCtrl', function($scope, $element, $http) {
   };
 
   $scope.moveDown = function(group) {
+    if (group.disabled) { return; }
     if ($scope.isExpandable(group)) {
       $scope.groups.push(group);
     }
@@ -45,6 +59,7 @@ peoplefinderApp.controller('OrgBrowserCtrl', function($scope, $element, $http) {
   };
 
   $scope.moveUp = function(group) {
+    if (group.disabled) { return; }
     while ($scope.current !== group) { $scope.groups.pop(); }
     $scope.select(group);
   };
@@ -77,6 +92,13 @@ peoplefinderApp.controller('OrgBrowserCtrl', function($scope, $element, $http) {
   }
 
   $http.get('/org.json').success(function(tree) {
+    var current;
+
+    if ($scope.selectMode) {
+      current = parseInt($element.attr('data-current-id'), 10);
+    }
+
+    tree = augmentTree(tree, current, false);
     var path;
     if ($scope.selectMode && $scope.selectedId) {
       path = pathToNodeId(tree, $scope.selectedId);

@@ -1,11 +1,13 @@
-<div class="org-browser" ng-controller="OrgBrowserCtrl" >
+<div class="org-browser" ng-controller="OrgBrowserCtrl"
+  <%= %{data-current-id="#{@group.id}"}.html_safe if @group %> >
   <%= yield %>
   <ul class="collapsed-groups" >
     <li class='animate' ng-repeat="group in groups" >
       <div class="block actionable sideways"
         ng-click="moveUp(group)" >
         <label ng-show="selectMode" >
-          <input type="radio" ng-checked="isSelected(group)" />
+          <input type="radio" ng-checked="isSelected(group)"
+            ng-disabled="group.disabled"/>
         </label>
         <span>
           {{ group.name }}
@@ -25,7 +27,8 @@
       <div class="block actionable"
         ng-click="moveDown(group)" >
         <label ng-show="selectMode" >
-          <input type="radio" ng-checked="isSelected(group)" />
+          <input type="radio" ng-checked="isSelected(group)"
+            ng-disabled="group.disabled"/>
           <span>{{ group.name }}</span>
         </label>
         <label ng-show="!selectMode" >
