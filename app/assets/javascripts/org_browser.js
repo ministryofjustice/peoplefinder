@@ -33,8 +33,8 @@ peoplefinderApp.controller('OrgBrowserCtrl', function($scope, $element, $http) {
       children: node.children.map(function(child) {
         return augmentTree(child, current, disabled);
       })
-    }
-  }
+    };
+  };
 
   var pathToNodeId = function(node, id, path) {
     path = path || [node];
