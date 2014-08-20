@@ -23,4 +23,8 @@ Rails.application.routes.draw do
   match '/audit_trail/undo/:id', to: 'versions#undo', via: [:post]
   match '/search', to: 'people#search', via: [:get]
   match '/org.json', to: 'org#show', via: [:get]
+
+  match '/404', to: 'errors#file_not_found', via: :all
+  match '/422', to: 'errors#unprocessable', via: :all
+  match '/500', to: 'errors#internal_server_error', via: :all
 end
