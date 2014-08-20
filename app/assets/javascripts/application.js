@@ -12,9 +12,9 @@
 // (https://github.com/sstephenson/sprockets#sprockets-directives) for details
 // about supported directives.
 //
-//= require angular/angular
-//= require angular-animate/angular-animate
 //= require jquery
 //= require jquery_ujs
+//= require angular/angular
+//= require angular-animate/angular-animate
 //= require Jcrop/js/jquery.Jcrop.min
 //= require_tree .
