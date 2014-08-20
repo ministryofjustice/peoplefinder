@@ -68,11 +68,7 @@ class Group < ActiveRecord::Base
   end
 
   def editable_parent?
-    return true if new_record?
-    unless parent
-      return false if children.any?
-    end
-    true
+    new_record? || parent.present? || children.empty?
   end
 
   def name=(name)
