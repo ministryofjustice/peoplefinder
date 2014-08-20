@@ -10,6 +10,16 @@ GIT
       mime-types (>= 1.16)
 
 GIT
+  remote: https://github.com/lowjoel/jshint.git
+  revision: a88bd7a0a0ccb70133b2b109cca8fbd8fd15d315
+  tag: a88bd7a0a0ccb70133b2b109cca8fbd8fd15d315
+  specs:
+    jshint (0.0.2)
+      execjs (>= 1.4.0)
+      multi_json (~> 1.0)
+      therubyracer (~> 0.12.1)
+
+GIT
   remote: https://github.com/ministryofjustice/moj_internal_template.git
   revision: e90118ed0982f5675731dba81fcdd36712f11097
   branch: master
@@ -171,6 +181,7 @@ GEM
     kramdown (0.13.8)
     launchy (2.4.2)
       addressable (~> 2.3)
+    libv8 (3.16.14.3)
     listen (2.7.9)
       celluloid (>= 0.15.2)
       rb-fsevent (>= 0.9.3)
@@ -258,6 +269,7 @@ GEM
       ffi (>= 0.5.0)
     recipient_interceptor (0.1.2)
       mail
+    ref (1.0.5)
     rspec (3.0.0)
       rspec-core (~> 3.0.0)
       rspec-expectations (~> 3.0.0)
@@ -329,6 +341,9 @@ GEM
     subexec (0.2.3)
     temple (0.6.8)
     terminal-table (1.4.5)
+    therubyracer (0.12.1)
+      libv8 (~> 3.16.14.0)
+      ref
     thor (0.19.1)
     thread_safe (0.3.4)
     tilt (1.4.1)
@@ -372,6 +387,7 @@ DEPENDENCIES
   haml-rails
   jbuilder (~> 2.0)
   jquery-rails
+  jshint!
   launchy
   mail
   mini_magick
