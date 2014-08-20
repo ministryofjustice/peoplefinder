@@ -119,6 +119,30 @@ feature "Group maintenance" do
     expect(group.parent).to eql(dept)
   end
 
+  scenario "Not responding to the selection of impossible parent nodes", js: true do
+    dept = create(:department)
+    org = create(:group, name: "CSG", parent: dept)
+    group = create(:group, name: "Digital Services", parent: org)
+
+    javascript_log_in
+    visit group_path(group)
+    click_link "Edit"
+
+    new_name = "Cyberdigital Cyberservices"
+    fill_in "Team name", with: new_name
+
+    within('.group-parent') do
+      click_link "Edit"
+    end
+
+    click_in_org_browser "Digital Services"
+    click_button "Update"
+
+    group.reload
+    expect(group.name).to eql(new_name)
+    expect(group.parent).to eql(org)
+  end
+
   scenario 'UI elements on the new/edit pages' do
     visit new_group_path
     expect(page).not_to have_selector('.search-box')
