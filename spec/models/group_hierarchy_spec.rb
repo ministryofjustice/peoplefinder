@@ -55,13 +55,13 @@ RSpec.describe GroupHierarchy, type: :model do
       end
     end
   end
-end
 
-def create_hierarchy_of_groups
-  a = create(:group, name: 'A')
-  b = create(:group, name: 'B', parent: a)
-  c = create(:group, name: 'C', parent: b)
-  d = create(:group, name: 'D', parent: b)
-  e = create(:group, name: 'E', parent: a)
-  [a, b, c, d, e]
+  def create_hierarchy_of_groups
+    a = create(:group, name: 'A')
+    b = create(:group, name: 'B', parent: a)
+    c = create(:group, name: 'C', parent: b)
+    d = create(:group, name: 'D', parent: b)
+    e = create(:group, name: 'E', parent: a)
+    [a, b, c, d, e]
+  end
 end
