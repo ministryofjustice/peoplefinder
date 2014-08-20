@@ -23,14 +23,18 @@ private
   end
 
   def children(group)
-    lookup.select { |g| g.parent_id == group.id }.sort_by(&:name)
+    child_map[group.id].sort_by(&:name)
   end
 
   def group_path(lg)
     Rails.application.routes.url_helpers.group_path(id: lg.id)
   end
 
-  def lookup
-    @lookup ||= Group.all
+  def child_map
+    @child_map ||= Hash.new { |h, k| h[k] = [] }.tap { |hash|
+      Group.all.each do |group|
+        hash[group.parent_id] << group
+      end
+    }
   end
 end
