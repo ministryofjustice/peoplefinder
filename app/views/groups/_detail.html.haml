@@ -1,12 +1,6 @@
-.title_with_edit
-  .grid-wrapper
-    .grid.grid-3-4
-      .inner-block
-        %h1= @group
-    .grid.grid-1-4
-      .edit-link
-        = link_to 'Edit this team', edit_group_path(@group)
-
+.title-with-edit
+  %h1= @group
+  = link_to 'Edit this team', edit_group_path(@group)
 
 %div.grid-wrapper.details
   %div.grid.grid-1-3

@@ -1,13 +1,8 @@
 = render partial: 'breadcrumbs'
 
-.title_with_edit
-  .grid-wrapper
-    .grid.grid-3-4
-      .inner-block
-        %h1= @person
-    .grid.grid-1-4
-      .edit-link
-        = link_to 'Edit this profile', edit_person_path(@person)
+.title-with-edit
+  %h1= @person
+  = link_to 'Edit this profile', edit_person_path(@person)
 
 .grid-wrapper
   .grid.grid-1-3

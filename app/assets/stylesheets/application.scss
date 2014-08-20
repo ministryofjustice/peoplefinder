@@ -73,16 +73,17 @@ strong {
   font-weight: bold;
 }
 
-.title_with_edit {
+.title-with-edit {
   border-bottom: 1px solid $blackish;
   margin-bottom: 30px;
   h1 {
     border: 0 !important;
     margin: 30px 0 0 0;
+    max-width: 50%;
   }
-  .edit-link {
-    height: 100%;
-    padding: 61px 0 0 36px;
+  a {
+    float: right;
+    margin:-39px 89px 0 0;
   }
 }
 
