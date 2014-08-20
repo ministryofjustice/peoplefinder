@@ -22,13 +22,13 @@ RSpec.describe Group, type: :model do
     child = create(:group, parent: parent)
     grandchild = create(:group, parent: child)
 
-    expect(grandchild.hierarchy.to_a).to eql([grandparent, parent, child, grandchild])
+    expect(grandchild.path.to_a).to eql([grandparent, parent, child, grandchild])
   end
 
   it "knows when it has no ancestors" do
     department = create(:group, parent: nil)
 
-    expect(department.hierarchy.to_a).to eql([department])
+    expect(department.path.to_a).to eql([department])
   end
 
   it "does not permit cyclic graphs" do

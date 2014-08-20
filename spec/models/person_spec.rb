@@ -93,22 +93,22 @@ RSpec.describe Person, type: :model do
     end
   end
 
-  context 'hierarchy' do
+  context 'path' do
     let(:person) { described_class.new }
 
     context 'when there are no memberships' do
       it 'contains only itself' do
-        expect(person.hierarchy).to eql([person])
+        expect(person.path).to eql([person])
       end
     end
 
     context 'when there is one membership' do
-      it 'contains the group hierarchy' do
+      it 'contains the group path' do
         group_a = Group.new
         group_b = Group.new
-        allow(group_b).to receive(:hierarchy) { [group_a, group_b] }
+        allow(group_b).to receive(:path) { [group_a, group_b] }
         person.groups << group_b
-        expect(person.hierarchy).to eql([group_a, group_b, person])
+        expect(person.path).to eql([group_a, group_b, person])
       end
     end
 
@@ -116,22 +116,22 @@ RSpec.describe Person, type: :model do
       let(:groups) { 4.times.map { Group.new } }
 
       before do
-        allow(groups[1]).to receive(:hierarchy) { [groups[0], groups[1]] }
-        allow(groups[3]).to receive(:hierarchy) { [groups[2], groups[3]] }
+        allow(groups[1]).to receive(:path) { [groups[0], groups[1]] }
+        allow(groups[3]).to receive(:path) { [groups[2], groups[3]] }
         person.groups << groups[1]
         person.groups << groups[3]
       end
 
-      it 'uses the first group hierarchy' do
-        expect(person.hierarchy).to eql([groups[0], groups[1], person])
+      it 'uses the first group path' do
+        expect(person.path).to eql([groups[0], groups[1], person])
       end
 
-      it 'uses the group hint to choose the hierarchy' do
-        expect(person.hierarchy(groups[3])).to eql([groups[2], groups[3], person])
+      it 'uses the group hint to choose the path' do
+        expect(person.path(groups[3])).to eql([groups[2], groups[3], person])
       end
 
-      it 'uses the first group hierarchy if the hint is unhelpful' do
-        expect(person.hierarchy(Group.new)).to eql([groups[0], groups[1], person])
+      it 'uses the first group path if the hint is unhelpful' do
+        expect(person.path(Group.new)).to eql([groups[0], groups[1], person])
       end
     end
   end

@@ -5,7 +5,7 @@
       .title
         - if membership.role.present?
           %strong= membership.role
-        = breadcrumbs(membership.group.hierarchy)
+        = breadcrumbs(membership.path)
       .cta
         = link_to 'Edit', '#', class: 'show-editable-fields'
       .cta

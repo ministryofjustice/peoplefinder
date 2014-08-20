@@ -9,7 +9,7 @@ class Home
     'Home'
   end
 
-  def self.hierarchy
+  def self.path
     [instance]
   end
 end

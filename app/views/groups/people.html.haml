@@ -1,5 +1,5 @@
 - content_for :breadcrumbs do
-  = breadcrumbs(Home.hierarchy + @group.hierarchy + ['All people'])
+  = breadcrumbs(Home.path + @group.path + ['All people'])
 
 %h1 People in #{ @group.name }
 .grid-wrapper

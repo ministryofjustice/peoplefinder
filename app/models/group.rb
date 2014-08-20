@@ -39,10 +39,6 @@ class Group < ActiveRecord::Base
     ancestry_depth
   end
 
-  def hierarchy
-    path
-  end
-
   def leadership
     leaderships.first
   end

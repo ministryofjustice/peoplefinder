@@ -1,5 +1,5 @@
 - content_for :breadcrumbs do
-  = breadcrumbs(Home.hierarchy << 'Search results')
+  = breadcrumbs(Home.path + ['Search results'])
 
 #search_results
   %h1.noborder Search results

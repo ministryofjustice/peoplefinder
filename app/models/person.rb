@@ -46,8 +46,8 @@ class Person < ActiveRecord::Base
     memberships.map { |m| [m.group_name, m.role].join(', ') }.join('; ')
   end
 
-  def hierarchy(hint_group = nil)
-    group_hierarchy(hint_group) + [self]
+  def path(hint_group = nil)
+    group_path(hint_group) + [self]
   end
 
   def valid_email?(email = nil)
@@ -57,9 +57,9 @@ class Person < ActiveRecord::Base
 
 private
 
-  def group_hierarchy(hint_group)
+  def group_path(hint_group)
     return [] if groups.empty?
-    hierarchies = groups.map(&:hierarchy)
-    hierarchies.find { |a| a.include?(hint_group) } || hierarchies.first
+    paths = groups.map(&:path)
+    paths.find { |a| a.include?(hint_group) } || paths.first
   end
 end
