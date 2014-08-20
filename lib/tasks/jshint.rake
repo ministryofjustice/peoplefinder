@@ -7,10 +7,8 @@ namespace :jshint do
     puts "Running JSHint"
     linter = Jshint::Lint.new
     linter.lint
-    reporter = Jshint::Reporters::Default.new(linter.errors)
-    reported = reporter.report.strip
-    puts reported
-    fail unless reported =~ /\A0 errors/
+    puts Jshint::Reporters::Default.new(linter.errors).report
+    fail if linter.errors.any? { |_, errors| errors.any? }
   end
 end
 
