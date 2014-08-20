@@ -17,7 +17,7 @@
     .inner-block
       - @person.memberships.each do |membership|
         %h4= membership.role
-        = breadcrumbs(membership.path - [membership.path.first])
+        = breadcrumbs(membership.path.drop(1))
 
       %p= @person.location
       %p= contact_details(@person)
