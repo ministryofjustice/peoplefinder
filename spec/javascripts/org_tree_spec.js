@@ -19,53 +19,17 @@ describe('OrgTree', function() {
   };
 
   it('marks nodes including and below current disabled', function() {
-    var expected = {
-      id: 1,
-      name: 'A',
-      url: '/a',
-      disabled: false,
-      children: [{
-        id: 2,
-        name: 'B',
-        url: '/b',
-        disabled: true,
-        children: [{
-          id: 3,
-          name: 'C',
-          url: '/c',
-          disabled: true,
-          children: []
-        }]
-      }]
-    };
-
     var actual = new OrgTree(input, 2).tree;
-    actual.should.eql(expected);
+    actual.disabled.should.be.false;
+    actual.children[0].disabled.should.be.true;
+    actual.children[0].children[0].disabled.should.be.true;
   });
 
   it('marks no nodes disabled when passed an invalid current id', function() {
-    var expected = {
-      id: 1,
-      name: 'A',
-      url: '/a',
-      disabled: false,
-      children: [{
-        id: 2,
-        name: 'B',
-        url: '/b',
-        disabled: false,
-        children: [{
-          id: 3,
-          name: 'C',
-          url: '/c',
-          disabled: false,
-          children: []
-        }]
-      }]
-    };
-
     var actual = new OrgTree(input, null).tree;
-    actual.should.eql(expected);
+    actual.disabled.should.be.false;
+    actual.children[0].disabled.should.be.false;
+    actual.children[0].children[0].disabled.should.be.false;
   });
 
   it('finds the path to a given id', function() {
