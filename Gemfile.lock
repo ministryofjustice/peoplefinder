@@ -96,6 +96,7 @@ GEM
       timers (~> 1.1.0)
     cliver (0.3.2)
     coderay (1.1.0)
+    colorize (0.7.3)
     diff-lcs (1.2.5)
     dotenv (0.11.1)
       dotenv-deployment (~> 0.0.2)
@@ -178,6 +179,12 @@ GEM
     json (1.8.1)
     jwt (1.0.0)
     kgio (2.9.2)
+    konacha (3.2.4)
+      actionpack (>= 3.1, < 5)
+      capybara
+      colorize
+      railties (>= 3.1, < 5)
+      sprockets
     kramdown (0.13.8)
     launchy (2.4.2)
       addressable (~> 2.3)
@@ -388,6 +395,7 @@ DEPENDENCIES
   jbuilder (~> 2.0)
   jquery-rails
   jshint!
+  konacha
   launchy
   mail
   mini_magick

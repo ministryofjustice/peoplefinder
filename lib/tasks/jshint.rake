@@ -5,7 +5,7 @@ if %w[development test].include? Rails.env
   namespace :jshint do
     desc "Runs JSHint on this project's JavaScript assets"
     task :lint_with_fail_on_error => :environment do
-      puts "Running JSHint"
+      puts "Running JSHint..."
       linter = Jshint::Lint.new
       linter.lint
       puts Jshint::Reporters::Default.new(linter.errors).report

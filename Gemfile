@@ -44,6 +44,7 @@ group :development, :test do
   gem 'jshint',
     git: 'https://github.com/lowjoel/jshint.git',
     tag: 'a88bd7a0a0ccb70133b2b109cca8fbd8fd15d315'
+  gem 'konacha'
   gem 'pry'
   gem 'rspec-mocks'
   gem 'rspec-rails', '~> 3.0.0'
