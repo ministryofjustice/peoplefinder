@@ -38,7 +38,7 @@ feature "Person maintenance" do
 
   scenario 'Adding an additional role', js: true do
     person = create_person_in_digital_justice
-    create(:group, parent: Group.departments.first, name: 'Communications')
+    create(:group, name: 'Communications')
 
     javascript_log_in
     visit edit_person_path(person)

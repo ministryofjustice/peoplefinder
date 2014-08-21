@@ -21,12 +21,12 @@ class Group < ActiveRecord::Base
 
   before_destroy :check_deletability
 
-  def self.departments
-    roots
+  def self.department
+    roots.first
   end
 
   def self.by_hierarchical_slug(str)
-    str.split('/').inject(departments) { |group, slug|
+    str.split('/').inject(roots) { |group, slug|
       group.first.children.where(slug: slug)
     }
   end

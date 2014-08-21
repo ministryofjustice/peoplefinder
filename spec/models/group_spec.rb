@@ -3,10 +3,10 @@ require 'rails_helper'
 RSpec.describe Group, type: :model do
   it { should have_many(:leaders) }
 
-  it "lists orphaned groups as departments" do
+  it "gives first orphaned groups as department" do
     parent = create(:department)
     create(:group, parent: parent)
-    expect(described_class.departments.to_a).to eql([parent])
+    expect(described_class.department).to eql(parent)
   end
 
   it "calculates its level" do

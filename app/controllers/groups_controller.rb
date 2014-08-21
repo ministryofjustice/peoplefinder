@@ -4,7 +4,7 @@ class GroupsController < ApplicationController
 
   # GET /groups
   def index
-    @group = Group.departments.first || Group.first
+    @group = Group.department || Group.first
     if @group
       redirect_to @group
     else
