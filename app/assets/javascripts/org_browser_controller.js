@@ -13,20 +13,14 @@ peoplefinderApp.controller('OrgBrowserCtrl', function($scope, $element, $http) {
   };
 
   var jsonLoaded = function(tree) {
-    var current, path;
-
+    var current;
     if ($scope.selectMode) {
       current = parseInt($element.data('current-id'), 10);
     }
 
     var orgTree = new OrgTree(tree, current);
+    var path = orgTree.pathToNodeId($scope.selectedId);
 
-    if ($scope.selectMode && $scope.selectedId) {
-      path = orgTree.pathToNodeId($scope.selectedId);
-      $scope.select(path[path.length - 1]);
-    } else {
-      path = orgTree.pathToRoot();
-    }
     path.forEach(function(group) { $scope.moveDown(group); });
   };
 

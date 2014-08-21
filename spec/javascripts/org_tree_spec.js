@@ -43,7 +43,7 @@ describe('OrgTree', function() {
   it('finds the path to the root', function() {
     var expected = ['A'];
     var actual = new OrgTree(input, null).
-      pathToRoot().
+      pathToNodeId(null).
       map(function(n) { return n.name; });
     expect(actual).to.eql(expected);
   });

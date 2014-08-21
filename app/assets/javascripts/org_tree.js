@@ -17,6 +17,8 @@ OrgTree.prototype.augmentTree = function(node, currentNodeId, disabled) {
 };
 
 OrgTree.prototype.pathToNodeId = function(id, node, path) {
+  if (!id) { return [this.tree]; }
+
   var self = this;
   node = node || this.tree;
   path = path || [node];
@@ -30,8 +32,4 @@ OrgTree.prototype.pathToNodeId = function(id, node, path) {
   }
 
   return null;
-};
-
-OrgTree.prototype.pathToRoot = function() {
-  return [this.tree];
 };
