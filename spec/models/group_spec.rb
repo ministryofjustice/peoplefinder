@@ -9,13 +9,6 @@ RSpec.describe Group, type: :model do
     expect(described_class.department).to eql(parent)
   end
 
-  it "calculates its level" do
-    parent = create(:department)
-    child = create(:group, parent: parent)
-    expect(parent.level).to eql(0)
-    expect(child.level).to eql(1)
-  end
-
   it "knows about its ancestors" do
     grandparent = create(:group, parent: nil)
     parent = create(:group, parent: grandparent)

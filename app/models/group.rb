@@ -35,10 +35,6 @@ class Group < ActiveRecord::Base
     name
   end
 
-  def level
-    ancestry_depth
-  end
-
   def leadership
     leaderships.first
   end
