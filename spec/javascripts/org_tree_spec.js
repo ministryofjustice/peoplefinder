@@ -20,16 +20,16 @@ describe('OrgTree', function() {
 
   it('marks nodes including and below current disabled', function() {
     var actual = new OrgTree(input, 2).tree;
-    actual.disabled.should.be.false;
-    actual.children[0].disabled.should.be.true;
-    actual.children[0].children[0].disabled.should.be.true;
+    expect(actual.disabled).to.be.false;
+    expect(actual.children[0].disabled).to.be.true;
+    expect(actual.children[0].children[0].disabled).to.be.true;
   });
 
   it('marks no nodes disabled when passed an invalid current id', function() {
     var actual = new OrgTree(input, null).tree;
-    actual.disabled.should.be.false;
-    actual.children[0].disabled.should.be.false;
-    actual.children[0].children[0].disabled.should.be.false;
+    expect(actual.disabled).to.be.false;
+    expect(actual.children[0].disabled).to.be.false;
+    expect(actual.children[0].children[0].disabled).to.be.false;
   });
 
   it('finds the path to a given id', function() {
@@ -37,7 +37,7 @@ describe('OrgTree', function() {
     var actual = new OrgTree(input, null).
       pathToNodeId(3).
       map(function(n) { return n.name; });
-    actual.should.eql(expected);
+    expect(actual).to.eql(expected);
   });
 
   it('finds the path to the root', function() {
@@ -45,6 +45,6 @@ describe('OrgTree', function() {
     var actual = new OrgTree(input, null).
       pathToRoot().
       map(function(n) { return n.name; });
-    actual.should.eql(expected);
+    expect(actual).to.eql(expected);
   });
 });
