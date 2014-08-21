@@ -14,4 +14,26 @@ RSpec.describe EmailAddress do
       end
     end
   end
+
+  describe '.valid_address' do
+    it 'is nil' do
+      expect(described_class.new(nil)).not_to be_valid_address
+    end
+
+    it 'is an empty string' do
+      expect(described_class.new('')).not_to be_valid_address
+    end
+
+    it 'is badly formatted' do
+      expect(described_class.new('me-at-example.co.uk')).not_to be_valid_address
+    end
+
+    it 'is from an invalid domain' do
+      expect(described_class.new('me-at-example.co.uk')).not_to be_valid_address
+    end
+
+    it 'is valid' do
+      expect(described_class.new("me@#{ Rails.configuration.valid_login_domains.first }")).to be_valid_address
+    end
+  end
 end

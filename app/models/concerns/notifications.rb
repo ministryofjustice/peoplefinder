@@ -51,8 +51,7 @@ module Notifications
   private
 
     def should_send_email_notification?(email, current_user)
-      valid_email?(email) && current_user.email != email &&
-        EmailAddress.new(email).valid_domain?
+      EmailAddress.new(email).valid_address? && current_user.email != email
     end
   end
 end

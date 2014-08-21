@@ -5,8 +5,6 @@ class Person < ActiveRecord::Base
   include Notifications
   include WorkDays
 
-  VALID_EMAIL_PATTERN = /\A[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]+\z/
-
   has_paper_trail ignore: [:updated_at, :created_at, :id, :slug]
   mount_uploader :image, ImageUploader
 
@@ -48,11 +46,6 @@ class Person < ActiveRecord::Base
 
   def path(hint_group = nil)
     group_path(hint_group) + [self]
-  end
-
-  def valid_email?(email = nil)
-    email ||= self.email
-    email.present? && email.match(VALID_EMAIL_PATTERN)
   end
 
 private
