@@ -1,13 +1,7 @@
-/* global angular, document, OrgTree, FormInputMapper */
-
-var peoplefinderApp = angular.module('peoplefinderApp', ['ngAnimate']);
-
-peoplefinderApp.injectNewContainer = function(container) {
-  angular.element(document).injector().invoke(function ($compile) {
-    var scope = angular.element(container).scope();
-    $compile(container)(scope);
-  }, this);
-};
+/* global peoplefinderApp, OrgTree, FormInputMapper */
+//= require peoplefinder_app
+//= require org_tree
+//= require form_input_mapper
 
 peoplefinderApp.controller('OrgBrowserCtrl', function($scope, $element, $http) {
   var initialize = function() {
@@ -22,7 +16,7 @@ peoplefinderApp.controller('OrgBrowserCtrl', function($scope, $element, $http) {
     var current, path;
 
     if ($scope.selectMode) {
-      current = parseInt($element.attr('data-current-id'), 10);
+      current = parseInt($element.data('current-id'), 10);
     }
 
     var orgTree = new OrgTree(tree, current);

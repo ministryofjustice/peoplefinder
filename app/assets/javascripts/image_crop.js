@@ -1,4 +1,6 @@
 /* global $ */
+//= require Jcrop/js/jquery.Jcrop.min
+
 $(window).load(function(){
   var stashCoords = function(coords) {
     $('#person_crop_x').val(coords.x);
