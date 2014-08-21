@@ -10,15 +10,14 @@ gem 'elasticsearch-model', '~> 0.1.4'
 gem 'elasticsearch-rails', '~> 0.1.4'
 gem 'fog', '~> 1.20.0'
 gem 'friendly_id', '~> 5.0.0'
-gem 'govuk_template'
-gem 'govuk_frontend_toolkit'
 gem 'govspeak'
+gem 'govuk_frontend_toolkit'
+gem 'govuk_template'
 gem 'haml-rails'
 gem 'jbuilder', '~> 2.0'
 gem 'jquery-rails'
 gem 'mail'
 gem 'mini_magick'
-
 gem 'moj_internal_template',
   git: 'https://github.com/ministryofjustice/moj_internal_template.git',
   branch: 'master'
@@ -26,12 +25,12 @@ gem 'omniauth-gplus',
   git: 'https://github.com/ministryofjustice/omniauth-gplus.git'
 gem 'paper_trail', '~> 3.0.2'
 gem 'pg'
+gem 'recipient_interceptor', '~> 0.1.2'
 gem 'sass-rails', '~> 4.0.3'
 gem 'simple_form', '~> 3.1.0.rc1'
-gem 'recipient_interceptor', '~> 0.1.2'
 gem 'uglifier', '>= 1.3.0'
-gem 'will_paginate', '~> 3.0'
 gem 'unicorn', '~> 4.8.3'
+gem 'will_paginate', '~> 3.0'
 
 group :development do
   gem 'spring'
@@ -40,14 +39,14 @@ group :development do
 end
 
 group :development, :test do
+  gem 'dotenv-rails'
+  gem 'guard-rspec', require: false
   gem 'jshint',
     git: 'https://github.com/lowjoel/jshint.git',
     tag: 'a88bd7a0a0ccb70133b2b109cca8fbd8fd15d315'
-  gem 'dotenv-rails'
   gem 'pry'
-  gem 'rspec-rails', '~> 3.0.0'
   gem 'rspec-mocks'
-  gem 'guard-rspec', require: false
+  gem 'rspec-rails', '~> 3.0.0'
   gem 'rubocop'
   gem 'rubocop-rspec'
 end
@@ -64,6 +63,6 @@ group :test do
 end
 
 group :production do
-  gem 'rails_12factor'
   gem 'appsignal'
+  gem 'rails_12factor'
 end
