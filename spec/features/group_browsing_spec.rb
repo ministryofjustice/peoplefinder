@@ -101,6 +101,19 @@ feature "Group browsing" do
     end
   end
 
+  scenario "redirecting from /groups" do
+    create(:group, name: 'moj')
+
+    visit '/groups/moj'
+    expect(current_path).to eql('/teams/moj')
+
+    visit '/groups/moj/edit'
+    expect(current_path).to eql('/teams/moj/edit')
+
+    visit '/groups/moj/people'
+    expect(current_path).to eql('/teams/moj/people')
+  end
+
   def add_people_to_group(names, group)
     names.each do |gn, sn|
       person = create(:person, given_name: gn, surname: sn)
