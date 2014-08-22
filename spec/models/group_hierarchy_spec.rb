@@ -8,29 +8,29 @@ RSpec.describe GroupHierarchy, type: :model do
     expected = {
       id: a.id,
       name: 'A',
-      url: '/groups/a',
+      url: '/teams/a',
       children: [
         {
           id: b.id,
           name: 'B',
-          url: '/groups/b',
+          url: '/teams/b',
           children: [
             {
               id: c.id,
               name: 'C',
-              url: '/groups/c',
+              url: '/teams/c',
               children: []
             }, {
               id: d.id,
               name: 'D',
-              url: '/groups/d',
+              url: '/teams/d',
               children: []
             }
           ]
         }, {
           id: e.id,
           name: 'E',
-          url: '/groups/e',
+          url: '/teams/e',
           children: []
         }
       ]

@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   root 'home#show', as: :home
 
-  resources :groups do
+  resources :groups, path: 'teams' do
     resources :groups, only: [:new]
     get :people, on: :member, action: 'all_people'
   end
