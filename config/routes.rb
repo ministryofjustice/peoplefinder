@@ -18,7 +18,7 @@ Rails.application.routes.draw do
   match '/auth/:provider/callback', to: 'sessions#create', via: [:get, :post]
   match '/audit_trail', to: 'versions#index', via: [:get]
   match '/audit_trail/undo/:id', to: 'versions#undo', via: [:post]
-  match '/search', to: 'people#search', via: [:get]
+  match '/search', to: 'search#index', via: [:get]
   match '/org.json', to: 'org#show', via: [:get]
 
   match '/404', to: 'errors#file_not_found', via: :all

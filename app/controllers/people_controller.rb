@@ -4,10 +4,6 @@ class PeopleController < ApplicationController
   before_action :set_groups,
     only: [:new, :edit, :create, :update, :add_membership]
 
-  def search
-    @people = Person.fuzzy_search(params[:query]).records.limit(100)
-  end
-
   # GET /people
   def index
     redirect_to '/'
