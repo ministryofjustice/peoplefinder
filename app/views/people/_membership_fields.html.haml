@@ -3,7 +3,7 @@
   - unless membership.new_record?
     .form-group.editable-summary
       .title
-        - if membership.role.present?
+        - if membership.role?
           %strong= membership.role
         = breadcrumbs(membership.path)
       .cta

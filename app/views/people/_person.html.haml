@@ -11,7 +11,7 @@
           - else
             - person.memberships.each do |membership|
               .meta
-                = "#{ membership.role }, " if membership.role.present?
+                = "#{ membership.role }, " if membership.role?
                 = link_to membership.group, membership.group
 
           .meta= person.phone

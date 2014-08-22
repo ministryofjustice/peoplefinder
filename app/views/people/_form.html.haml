@@ -47,7 +47,7 @@
 
     = image_tag @person.image.medium, class: 'preview'
     %p
-      - if @person.image.present?
+      - if @person.image?
         = link_to 'Crop image', edit_person_image_path(@person)
 
   .form-group
