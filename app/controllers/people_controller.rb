@@ -1,6 +1,8 @@
 class PeopleController < ApplicationController
   before_action :set_person, only: [:show, :edit, :update, :destroy]
   before_action :set_hint_group
+  before_action :set_groups,
+    only: [:new, :edit, :create, :update, :add_membership]
 
   def search
     @people = Person.fuzzy_search(params[:query]).records.limit(100)
@@ -19,13 +21,11 @@ class PeopleController < ApplicationController
   def new
     @person = Person.new
     @person.memberships.build group: group_from_group_id
-    set_groups
   end
 
   # GET /people/1/edit
   def edit
     @person.memberships.build if @person.memberships.empty?
-    set_groups
   end
 
   # POST /people
@@ -33,10 +33,10 @@ class PeopleController < ApplicationController
     @person = Person.new(person_params)
 
     if @person.valid?
-      duplicate_people ? render(:confirm) : create_and_redirect
+      confirm_or_create
     else
       error :create_error
-      set_groups && render(:new)
+      render :new
     end
   end
 
@@ -46,10 +46,10 @@ class PeopleController < ApplicationController
     @person.assign_attributes(person_params)
 
     if @person.valid?
-      duplicate_people ? render(:confirm) : update_and_redirect
+      confirm_or_update
     else
       error :update_error
-      set_groups && render(:edit)
+      render :edit
     end
   end
 
@@ -64,7 +64,6 @@ class PeopleController < ApplicationController
   def add_membership
     set_person if params[:id].present?
     @person ||= Person.new
-    set_groups
     render 'add_membership', layout: false
   end
 
@@ -102,27 +101,32 @@ private
     params[:group_id] ? Group.friendly.find(params[:group_id]) : nil
   end
 
-  def duplicate_people
+  def namesakes?
     return false if params['commit'] == 'Continue'
 
-    @people = Person.
-      where(surname: @person.surname).
-      where(given_name: @person.given_name).
-      where.not(id: @person.id)
+    @people = Person.namesakes(@person)
     @people.present?
   end
 
-  def create_and_redirect
-    @person.save
-    @person.send_create_email!(current_user)
-    notice :profile_created, person: @person
-    redirect_to successful_redirect_path
+  def confirm_or_create
+    if namesakes?
+      render(:confirm)
+    else
+      @person.save
+      @person.send_create_email!(current_user)
+      notice :profile_created, person: @person
+      redirect_to successful_redirect_path
+    end
   end
 
-  def update_and_redirect
-    @person.save
-    @person.send_update_email!(current_user, @old_email)
-    notice :profile_updated, person: @person
-    redirect_to successful_redirect_path
+  def confirm_or_update
+    if namesakes?
+      render(:confirm)
+    else
+      @person.save
+      @person.send_update_email!(current_user, @old_email)
+      notice :profile_updated, person: @person
+      redirect_to successful_redirect_path
+    end
   end
 end

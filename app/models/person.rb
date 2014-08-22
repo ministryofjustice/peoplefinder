@@ -24,6 +24,12 @@ class Person < ActiveRecord::Base
 
   friendly_id :slug_source, use: :slugged
 
+  def self.namesakes(person)
+    where(surname: person.surname).
+    where(given_name: person.given_name).
+    where.not(id: person.id)
+  end
+
   def name
     [given_name, surname].compact.join(' ').strip
   end
