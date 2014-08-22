@@ -123,14 +123,20 @@ RSpec.describe GroupsController, type: :controller do
     end
 
     describe "with invalid params" do
-      it "assigns a newly created but unsaved group as @group" do
+      before do
         post :create, { group: invalid_attributes }, valid_session
+      end
+
+      it "assigns a newly created but unsaved group as @group" do
         expect(assigns(:group)).to be_a_new(Group)
       end
 
       it "re-renders the 'new' template" do
-        post :create, { group: invalid_attributes }, valid_session
         expect(response).to render_template("new")
+      end
+
+      it "shows an error message" do
+        expect(flash[:error]).to match(/created/)
       end
     end
   end
@@ -164,14 +170,20 @@ RSpec.describe GroupsController, type: :controller do
     describe "with invalid params" do
       let(:group) { create(:group, valid_attributes) }
 
-      it "assigns the group as @group" do
+      before do
         put :update, { id: group.to_param, group: invalid_attributes }, valid_session
+      end
+
+      it "assigns the group as @group" do
         expect(assigns(:group)).to eq(group)
       end
 
       it "re-renders the 'edit' template" do
-        put :update, { id: group.to_param, group: invalid_attributes }, valid_session
         expect(response).to render_template("edit")
+      end
+
+      it "shows an error message" do
+        expect(flash[:error]).to match(/updated/)
       end
     end
   end

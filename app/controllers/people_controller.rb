@@ -35,6 +35,7 @@ class PeopleController < ApplicationController
     if @person.valid?
       duplicate_people ? render(:confirm) : create_and_redirect
     else
+      error :create_error
       set_groups && render(:new)
     end
   end
@@ -47,6 +48,7 @@ class PeopleController < ApplicationController
     if @person.valid?
       duplicate_people ? render(:confirm) : update_and_redirect
     else
+      error :update_error
       set_groups && render(:edit)
     end
   end

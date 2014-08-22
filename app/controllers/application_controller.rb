@@ -38,4 +38,8 @@ private
   def notice(partial_key, options = {})
     i18n_flash :notice, partial_key, options
   end
+
+  def error(partial_key, options = {})
+    i18n_flash :error, partial_key, options
+  end
 end

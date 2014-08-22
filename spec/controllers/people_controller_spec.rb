@@ -112,19 +112,24 @@ RSpec.describe PeopleController, type: :controller do
     end
 
     describe "with invalid params" do
-      it "assigns a newly created but unsaved person as @person" do
+      before do
         post :create, { person: invalid_attributes }, valid_session
+      end
+
+      it "assigns a newly created but unsaved person as @person" do
         expect(assigns(:person)).to be_a_new(Person)
       end
 
       it "re-renders the 'new' template" do
-        post :create, { person: invalid_attributes }, valid_session
         expect(response).to render_template("new")
       end
 
       it "assigns the @groups collection" do
-        post :create, { person: invalid_attributes }, valid_session
         expect(assigns(:groups)).to include(group)
+      end
+
+      it "shows an error message" do
+        expect(flash[:error]).to match(/created/)
       end
     end
 
@@ -175,19 +180,24 @@ RSpec.describe PeopleController, type: :controller do
     end
 
     describe "with invalid params" do
-      it "assigns the person as @person" do
+      before do
         put :update, { id: person.to_param, person: invalid_attributes }, valid_session
+      end
+
+      it "assigns the person as @person" do
         expect(assigns(:person)).to eq(person)
       end
 
       it "re-renders the 'edit' template" do
-        put :update, { id: person.to_param, person: invalid_attributes }, valid_session
         expect(response).to render_template("edit")
       end
 
       it "assigns the @groups collection" do
-        post :create, { person: invalid_attributes }, valid_session
         expect(assigns(:groups)).to include(group)
+      end
+
+      it "shows an error message" do
+        expect(flash[:error]).to match(/update/)
       end
     end
 

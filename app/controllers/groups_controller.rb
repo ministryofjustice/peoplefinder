@@ -39,6 +39,7 @@ class GroupsController < ApplicationController
       notice :group_created, group: @group
       redirect_to @group
     else
+      error :create_error
       render :new
     end
   end
@@ -49,6 +50,7 @@ class GroupsController < ApplicationController
       notice :group_updated, group: @group
       redirect_to @group
     else
+      error :update_error
       render :edit
     end
   end

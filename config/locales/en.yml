@@ -25,6 +25,8 @@ en:
       group_created: "Created %{group}"
       group_updated: "Updated %{group}"
       group_deleted: "Deleted %{group}"
+      create_error: "The record was not created. Please check the errors below"
+      update_error: "The details were not updated. Please check the errors below"
     home:
       top_level_group_needed: "To use the People Finder, first create a top-level group (without a parent)"
     memberships:
@@ -33,9 +35,12 @@ en:
       profile_created: "Created %{person}’s profile"
       profile_updated: "Updated %{person}’s profile"
       profile_deleted: "Deleted %{person}’s profile"
+      create_error: "The profile was not created. Please check the errors below"
+      update_error: "The profile was not updated. Please check the errors below"
     person_image:
       no_image_uploaded: "No image has been uploaded for %{person}"
       image_cropped: "Cropped %{person}’s image"
+      update_error: "There was an error updating the image"
   people:
     day_names:
       works_monday: "Monday"
@@ -80,7 +85,7 @@ en:
       delete_this_profile: "Delete this profile"
       delete_this_team: "Delete this team"
       duplicate_names_hint: "There are existing profiles that have the same name. Check that it's not one of these before continuing."
-      editing_alert: "You are currently editing this page - click the update button to finish"
+      editing_alert: "You are currently editing this page. Click the update button to finish"
       hint_add_person_as_leader: "Note that more than one person can be assigned<br/>as leader of a particular team."
       hint_add_person_team_not_found: "If the team cannot be found you will need to add it first before you can assign a<br/>person to it. This can be done from the page the new team would be located within."
       hint_add_person_to_team: "Use this organisation browser to select the team which this person belongs to."

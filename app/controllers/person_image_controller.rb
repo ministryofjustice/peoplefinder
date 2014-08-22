@@ -16,6 +16,7 @@ class PersonImageController < ApplicationController
       notice :image_cropped, person: @person
       redirect_to person_path(@person, cache_bust: Time.now.to_i)
     else
+      error :update_error
       render action: 'edit'
     end
   end

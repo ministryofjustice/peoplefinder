@@ -47,6 +47,8 @@ RSpec.describe PersonImageController, type: :controller do
         person: { crop_x: 10, crop_y: 20, crop_w: 200, crop_h: 200 }
 
       expect(response).to render_template(:edit)
+
+      expect(flash[:error]).to match(/error/)
     end
   end
 end

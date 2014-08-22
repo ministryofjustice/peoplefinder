@@ -3,6 +3,9 @@ $darkblue: #005EA5;
 $turqoise: rgba(#28A197, 0.5);
 $opaqueblue: rgba(#2B8CC4, 0.25);
 $paleblue: rgba(#9BB7CE, 0.5);
+$error-fg: #df3034;
+$error-bg: rgba($error-fg, 0.5);
+$notice-bg: #c9d8bd;
 
 @import "people";
 @import "groups";
@@ -36,12 +39,16 @@ $paleblue: rgba(#9BB7CE, 0.5);
   position: absolute;
 }
 #flash-messages {
+  text-align: center;
   .flash-message {
     margin: 15px 0;
     padding: 15px;
   }
   .notice {
-    background-color: #c9d8bd;
+    background-color: $notice-bg;
+  }
+  .error {
+    background-color: $error-bg;
   }
 }
 
@@ -160,11 +167,11 @@ form .text .wider   {
 
 .field_with_errors {
   input {
-    outline: solid 4px #df3034;
+    outline: solid 4px $error-fg;
   }
   .error {
     margin-left: 1em;
-    color: #df3034;
+    color: $error-fg;
   }
 }
 
