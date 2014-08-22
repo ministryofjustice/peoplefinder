@@ -61,7 +61,13 @@ class Group < ActiveRecord::Base
   end
 
   def slug_candidates
-    name
+    candidates = [name]
+    candidates <<  [parent.name, name] if parent.present?
+    candidates
+  end
+
+  def should_generate_new_friendly_id?
+    true
   end
 
 private

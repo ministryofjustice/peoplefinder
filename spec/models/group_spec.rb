@@ -147,4 +147,34 @@ RSpec.describe Group, type: :model do
       expect(department.reload.editable_parent?).to be false
     end
   end
+
+  describe '.slug_candidates' do
+    let(:department) { create(:department, name: 'MOJ') }
+    let(:team) { create(:group, parent: department, name: 'CS') }
+
+    it 'sets the department slug_candidate' do
+      expect(department.slug_candidates).to eql(%w[MOJ])
+    end
+
+    it 'sets the team slug_candidate' do
+      expect(team.slug_candidates).to eql(['CS', %w[MOJ CS]])
+    end
+  end
+
+  describe '.should_generate_new_friendly_id?' do
+    let(:team) { create(:group, name: 'Digital Services') }
+
+    context 'when the team is first created' do
+      it 'sets the slug' do
+        expect(team.slug).to eql('digital-services')
+      end
+
+      context 'when the team name is changed' do
+        it 'gets the updated slug when the name is changed' do
+          team.update_attributes(name: 'Analog Services')
+          expect(team.reload.slug).to eql('analog-services')
+        end
+      end
+    end
+  end
 end
