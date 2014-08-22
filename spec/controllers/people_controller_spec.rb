@@ -20,16 +20,11 @@ RSpec.describe PeopleController, type: :controller do
     attributes_for(:person).merge(image: File.open(sample_image))
   }
 
-  # This should return the minimal set of values that should be in the session
-  # in order to pass any filters (e.g. authentication) defined in
-  # PersonsController. Be sure to keep this updated too.
-  let(:valid_session) { {} }
-
   let(:group) { create(:group) }
 
   describe "GET index" do
     it "redirects to the root" do
-      get :index, {}, valid_session
+      get :index, {}
       expect(response).to redirect_to('/')
     end
   end
@@ -37,24 +32,24 @@ RSpec.describe PeopleController, type: :controller do
   describe "GET show" do
     it "assigns the requested person as @person" do
       person = create(:person, valid_attributes)
-      get :show, { id: person.to_param }, valid_session
+      get :show, id: person.to_param
       expect(assigns(:person)).to eq(person)
     end
   end
 
   describe "GET new" do
     it "assigns a new person as @person" do
-      get :new, {}, valid_session
+      get :new, {}
       expect(assigns(:person)).to be_a_new(Person)
     end
 
     it "builds a membership object" do
-      get :new, {}, valid_session
+      get :new, {}
       expect(assigns(:person).memberships.length).to eql(1)
     end
 
     it "sets groups" do
-      get :new, {}, valid_session
+      get :new, {}
       expect(assigns(:groups)).to include(group)
     end
   end
@@ -63,24 +58,24 @@ RSpec.describe PeopleController, type: :controller do
     let(:person) { create(:person, valid_attributes) }
 
     it "assigns the requested person as @person" do
-      get :edit, { id: person.to_param }, valid_session
+      get :edit, id: person.to_param
       expect(assigns(:person)).to eq(person)
     end
 
     it "sets groups" do
-      get :edit, { id: person.to_param }, valid_session
+      get :edit, id: person.to_param
       expect(assigns(:groups)).to include(group)
     end
 
     context 'building memberships' do
       it "builds a membership if there isn't one already" do
-        get :edit, { id: person.to_param }, valid_session
+        get :edit, id: person.to_param
         expect(assigns(:person).memberships.length).to eql(1)
       end
 
-      it " does not build a membership when there is one already" do
+      it "does not build a membership when there is one already" do
         person.memberships.create(group: group)
-        get :edit, { id: person.to_param }, valid_session
+        get :edit, id: person.to_param
         expect(assigns(:person).memberships.length).to eql(1)
       end
     end
@@ -90,30 +85,35 @@ RSpec.describe PeopleController, type: :controller do
     describe "with valid params" do
       it "creates a new Person" do
         expect {
-          post :create, { person: valid_attributes }, valid_session
+          post :create, person: valid_attributes
         }.to change(Person, :count).by(1)
       end
 
       it "assigns a newly created person as @person" do
-        post :create, { person: valid_attributes }, valid_session
+        post :create, person: valid_attributes
         expect(assigns(:person)).to be_a(Person)
         expect(assigns(:person)).to be_persisted
       end
 
       it "redirects to the created person" do
-        post :create, { person: valid_attributes }, valid_session
+        post :create, person: valid_attributes
         expect(response).to redirect_to(Person.last)
       end
+    end
 
-      it "redirect to the cropping tool if an image has been attached" do
-        post :create, { person: valid_attributes_with_image }, valid_session
+    describe "with an attached image" do
+      before do
+        post :create, person: valid_attributes_with_image
+      end
+
+      it "redirects to the cropping tool" do
         expect(response).to redirect_to(edit_person_image_path(Person.last))
       end
     end
 
     describe "with invalid params" do
       before do
-        post :create, { person: invalid_attributes }, valid_session
+        post :create, person: invalid_attributes
       end
 
       it "assigns a newly created but unsaved person as @person" do
@@ -136,7 +136,7 @@ RSpec.describe PeopleController, type: :controller do
     describe 'with duplicate name' do
       it "renders the 'confirm' template" do
         create(:person, given_name: 'Bo', surname: 'Diddley')
-        post :create, { person: { given_name: 'Bo', surname: 'Diddley' } }, valid_session
+        post :create, person: { given_name: 'Bo', surname: 'Diddley' }
         expect(response).to render_template('confirm')
       end
     end
@@ -155,8 +155,11 @@ RSpec.describe PeopleController, type: :controller do
         )
       }
 
+      before do
+        put :update, id: person.to_param, person: new_attributes
+      end
+
       it "updates the requested person" do
-        put :update, { id: person.to_param, person: new_attributes }, valid_session
         person.reload
         new_attributes.each do |attr, value|
           expect(person.send(attr)).to eql(value)
@@ -164,24 +167,27 @@ RSpec.describe PeopleController, type: :controller do
       end
 
       it "assigns the requested person as @person" do
-        put :update, { id: person.to_param, person: valid_attributes }, valid_session
         expect(assigns(:person)).to eq(person)
       end
 
       it "redirects to the person" do
-        put :update, { id: person.to_param, person: valid_attributes }, valid_session
         expect(response).to redirect_to(person)
       end
+    end
 
-      it "redirects to the cropping tool if an image has been attached" do
-        put :update, { id: person.to_param, person: valid_attributes_with_image }, valid_session
+    describe "with an attached image" do
+      before do
+        put :update, id: person.to_param, person: valid_attributes_with_image
+      end
+
+      it "redirects to the cropping tool" do
         expect(response).to redirect_to(edit_person_image_path(person))
       end
     end
 
     describe "with invalid params" do
       before do
-        put :update, { id: person.to_param, person: invalid_attributes }, valid_session
+        put :update, id: person.to_param, person: invalid_attributes
       end
 
       it "assigns the person as @person" do
@@ -205,7 +211,7 @@ RSpec.describe PeopleController, type: :controller do
       it "renders the 'confirm' template" do
         create(:person, given_name: 'Bo', surname: 'Diddley')
         person = create(:person, given_name: 'Bobbie', surname: 'Browne')
-        put :update, { id: person.to_param, person: { given_name: 'Bo', surname: 'Diddley' } }, valid_session
+        put :update, id: person.to_param, person: { given_name: 'Bo', surname: 'Diddley' }
         expect(response).to render_template('confirm')
       end
     end
@@ -215,19 +221,19 @@ RSpec.describe PeopleController, type: :controller do
     it "destroys the requested person" do
       person = create(:person, valid_attributes)
       expect {
-        delete :destroy, { id: person.to_param }, valid_session
+        delete :destroy, id: person.to_param
       }.to change(Person, :count).by(-1)
     end
 
     it "redirects to the people list" do
       person = create(:person, valid_attributes)
-      delete :destroy, { id: person.to_param }, valid_session
+      delete :destroy, id: person.to_param
       expect(response).to redirect_to(home_path)
     end
 
     it "sets a flash message" do
       person = create(:person, valid_attributes)
-      delete :destroy, { id: person.to_param }, valid_session
+      delete :destroy, id: person.to_param
       expect(flash[:notice]).to include("Deleted #{person}’s profile")
     end
   end
