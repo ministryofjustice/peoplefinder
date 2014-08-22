@@ -6,6 +6,7 @@ OrgTree.prototype.augmentTree = function(node, currentNodeId, disabled) {
   var self = this;
 
   if (node.id === currentNodeId) { disabled = true; }
+
   return {
     id: node.id,
     name: node.name,
@@ -20,12 +21,11 @@ OrgTree.prototype.augmentTree = function(node, currentNodeId, disabled) {
 OrgTree.prototype.pathToNodeId = function(id, node, path) {
   var self = this;
 
-  if (!id) { return [self.tree]; }
-
   node = node || self.tree;
-  if (node.id === id) { return path; }
-
   path = path || [node];
+
+  if (!id) { return [self.tree]; }
+  if (node.id === id) { return path; }
 
   for (var i = 0, ii = node.children.length; i < ii; i++) {
     var child = node.children[i];

@@ -40,7 +40,15 @@ describe('OrgTree', function() {
     expect(actual).to.eql(expected);
   });
 
-  it('finds the path to the root', function() {
+  it('finds the path to the root by id', function() {
+    var expected = ['A'];
+    var actual = new OrgTree(input, null).
+      pathToNodeId(1).
+      map(function(n) { return n.name; });
+    expect(actual).to.eql(expected);
+  });
+
+  it('finds the path to the root for no id', function() {
     var expected = ['A'];
     var actual = new OrgTree(input, null).
       pathToNodeId(null).
