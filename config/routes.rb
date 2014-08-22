@@ -10,10 +10,10 @@ Rails.application.routes.draw do
     collection do
       get :add_membership
     end
-    resource :image, controller: 'person_image'
+    resource :image, controller: 'person_image', only: [:edit, :update]
   end
   resources :memberships, only: [:destroy]
-  resource :sessions
+  resource :sessions, only: [:new, :create, :destroy]
 
   match '/auth/:provider/callback', to: 'sessions#create', via: [:get, :post]
   match '/audit_trail', to: 'versions#index', via: [:get]
