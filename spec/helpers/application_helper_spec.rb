@@ -35,8 +35,8 @@ RSpec.describe ApplicationHelper, type: :helper do
       digital_service = create(:group, parent: justice, name: 'Digital Services')
       generated = breadcrumbs([justice, digital_service])
       fragment = Capybara::Node::Simple.new(generated)
-      expect(fragment).to have_selector("a[href='/groups/#{justice.id}']", text: 'Justice')
-      expect(fragment).to have_selector("a[href='/groups/#{digital_service.id}']", text: 'Digital Services')
+      expect(fragment).to have_selector('a[href="/groups/justice"]', text: 'Justice')
+      expect(fragment).to have_selector('a[href="/groups/digital-services"]', text: 'Digital Services')
     end
   end
 end

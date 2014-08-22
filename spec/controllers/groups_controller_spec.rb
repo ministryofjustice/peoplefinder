@@ -61,23 +61,10 @@ RSpec.describe GroupsController, type: :controller do
   end
 
   describe "GET show" do
-    let(:department) { create(:department) }
-    let(:team) { create(:group, name: 'A Team', parent: department) }
-    let!(:subteam) { create(:group, name: 'A Subteam', parent: team) }
-
-    it "redirects a numeric ID to the slugged route" do
-      get :show, id: subteam.to_param
-      expect(response).to redirect_to('/teams/a-team/a-subteam')
-    end
-
     it "assigns the requested group as @group" do
-      get :show, id: 'a-team/a-subteam'
-      expect(assigns(:group)).to eq(subteam)
-    end
-
-    it "assigns the department as @group" do
-      get :show, id: ''
-      expect(assigns(:group)).to eq(department)
+      group = create(:group, valid_attributes)
+      get :show, { id: group.to_param }, valid_session
+      expect(assigns(:group)).to eq(group)
     end
   end
 
