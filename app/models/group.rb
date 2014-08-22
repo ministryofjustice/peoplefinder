@@ -67,7 +67,7 @@ class Group < ActiveRecord::Base
   end
 
   def should_generate_new_friendly_id?
-    true
+    name_changed?
   end
 
 private
