@@ -27,6 +27,18 @@ feature "Authentication" do
     click_link "log in"
     expect(page).to have_text(/log in with an MOJ DS or GDS account/)
   end
+
+  scenario 'Being redirected to desired path after logging in' do
+    OmniAuth.config.mock_auth[:gplus] = valid_user
+
+    group = create(:group)
+    path = group_path(group)
+
+    visit path
+    click_link "log in"
+
+    expect(current_path).to eql(path)
+  end
 end
 
 def invalid_user

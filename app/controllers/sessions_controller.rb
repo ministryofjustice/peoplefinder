@@ -5,7 +5,7 @@ class SessionsController < ApplicationController
     user = User.from_auth_hash(auth_hash)
     session['current_user'] = user
     if user
-      redirect_to '/'
+      redirect_to_desired_path
     else
       render :failed
     end

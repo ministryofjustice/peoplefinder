@@ -21,7 +21,15 @@ private
   helper_method :logged_in?
 
   def ensure_user
-    redirect_to new_sessions_path unless logged_in?
+    return true if logged_in?
+    session[:desired_path] = request.fullpath
+    redirect_to new_sessions_path
+  end
+
+  def redirect_to_desired_path
+    path = session.fetch(:desired_path, '/')
+    session.delete :desired_path
+    redirect_to path
   end
 
   def set_hint_group
