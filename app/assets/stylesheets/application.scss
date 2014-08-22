@@ -158,6 +158,16 @@ form .text .wider   {
   }
 }
 
+.field_with_errors {
+  input {
+    outline: solid 4px #df3034;
+  }
+  .error {
+    margin-left: 1em;
+    color: #df3034;
+  }
+}
+
 @media screen and (max-width: 640px) {
  .form-hint{
    width: 50%;
