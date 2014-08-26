@@ -36,6 +36,7 @@ group :test do
 end
 
 group :development, :test do
+  gem 'factory_girl'
   gem 'guard'
   gem 'guard-rspec', require: false
   gem 'pry'
