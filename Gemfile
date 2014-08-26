@@ -31,6 +31,7 @@ gem 'simple_form', '~> 3.1.0.rc1'
 gem 'uglifier', '>= 1.3.0'
 gem 'unicorn', '~> 4.8.3'
 gem 'will_paginate', '~> 3.0'
+gem 'rack-timeout'
 
 group :development do
   gem 'spring'
