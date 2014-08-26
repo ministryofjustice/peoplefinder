@@ -18,17 +18,11 @@ ActiveRecord::Schema.define(version: 20140709110015) do
 
   create_table "users", force: true do |t|
     t.text     "name"
-    t.text     "email",                null: false
+    t.text     "email",      null: false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "staff_number"
-    t.text     "grade"
-    t.text     "organisation"
-    t.string   "password_digest"
-    t.string   "password_reset_token"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
-  add_index "users", ["password_reset_token"], name: "index_users_on_password_reset_token", using: :btree
 
 end
