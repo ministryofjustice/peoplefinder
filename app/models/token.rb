@@ -1,5 +1,6 @@
 class Token < ActiveRecord::Base
   belongs_to :user
+  belongs_to :review
   after_initialize :generate_value
 
   def object

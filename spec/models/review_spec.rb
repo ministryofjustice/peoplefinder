@@ -7,6 +7,10 @@ RSpec.describe Review, type: :model do
     expect(review).to belong_to(:subject)
   end
 
+  it 'has_one token' do
+    expect(review).to have_one(:token)
+  end
+
   describe 'validations' do
     let(:review) { build(:review) }
 
@@ -27,6 +31,13 @@ RSpec.describe Review, type: :model do
     it 'requires a subject' do
       review.subject = nil
       expect(review).not_to be_valid
+    end
+  end
+
+  describe 'after_create' do
+    it 'generates a token' do
+      review = create(:review)
+      expect(review.token).to be_present
     end
   end
 end
