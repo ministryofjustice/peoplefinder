@@ -10,21 +10,6 @@ en:
       # html: '<abbr title="required">*</abbr>'
     error_notification:
       default_message: "Please review the problems below:"
-    labels:
-      responsibilities_agreement:
-        fast_stream_headcount: "Fast stream"
-        payband_1_headcount: "Payband 1"
-        payband_a_headcount: "Payband A"
-        payband_b_headcount: "Payband B"
-        payband_c_headcount: "Payband C"
-        payband_d_headcount: "Payband D"
-        payband_e_headcount: "Payband E"
-      objectives_agreement:
-        objectives_signed_off_by_manager: "Sign-off %{name}"
-        objectives_signed_off_by_staff_member: "Sign-off %{name}"
-      budgetary_responsibilities:
-        budget_type: "Type"
-
     # Examples
     # labels:
     #   defaults:

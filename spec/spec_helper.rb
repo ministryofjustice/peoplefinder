@@ -8,7 +8,6 @@ SimpleCov.start 'rails' do
 end
 
 require "factory_girl"
-require 'ffaker'
 
 require 'capybara/poltergeist'
 Capybara.javascript_driver = :poltergeist
@@ -92,6 +91,4 @@ RSpec.configure do |config|
   end
 
   config.include FactoryGirl::Syntax::Methods
-  config.include SpecSupport::Login
-  config.include SpecSupport::SharedSteps
 end

@@ -29,7 +29,6 @@ module SCSAppraisals
     config.valid_login_domains = %w[
       digital.justice.gov.uk
       digital.cabinet-office.gov.uk
-      example.com
     ]
 
     config.noreply_email = ENV['EMAIL_NOREPLY_ADDRESS']
@@ -48,10 +47,9 @@ module SCSAppraisals
     config.generators do |g|
       g.test_framework :rspec, fixture: true, views: false
       g.integration_tool :rspec, fixture: true, views: true
-      g.fixture_replacement :factory_girl, dir: 'spec/support/factories'
+      g.fixture_replacement :factory_girl, dir: "spec/support/factories"
     end
 
-    config.active_record.schema_format = :sql
     config.action_mailer.default_url_options = { host: ENV['HOST'] }
   end
 end
