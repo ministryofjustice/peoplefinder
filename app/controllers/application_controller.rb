@@ -7,7 +7,7 @@ class ApplicationController < ActionController::Base
 private
 
   def current_user
-    session['current_user']
+    @current_user ||= User.where(id: session['current_user_id']).first
   end
   helper_method :current_user
 
@@ -17,12 +17,12 @@ private
   helper_method :logged_in?
 
   def ensure_user
-    redirect_to new_sessions_path unless logged_in?
+    render 'shared/forbidden', status: 500 unless logged_in?
   end
 
   def i18n_flash(type, partial_key, options = {})
     full_key =
-      ["controllers", controller_name, action_name, partial_key].join(".")
+      ['controllers', controller_name, action_name, partial_key].join('.')
     flash[type] = I18n.t(full_key, options)
   end
 
