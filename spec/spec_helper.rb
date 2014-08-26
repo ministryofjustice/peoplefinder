@@ -1,6 +1,5 @@
 require 'simplecov'
 require 'simplecov-rcov'
-require 'capybara/email/rspec'
 
 SimpleCov.formatter = SimpleCov::Formatter::RcovFormatter
 SimpleCov.start 'rails' do

@@ -1,0 +1,3 @@
+= content_for :log_in_out do
+  - if logged_in?
+    = "Logged in as #{ current_user }"

@@ -46,9 +46,6 @@ GEM
       rack (>= 1.0.0)
       rack-test (>= 0.5.4)
       xpath (~> 2.0)
-    capybara-email (2.4.0)
-      capybara (~> 2.4)
-      mail
     celluloid (0.15.2)
       timers (~> 1.1.0)
     cliver (0.3.2)
@@ -59,9 +56,6 @@ GEM
     dotenv-deployment (0.0.2)
     dotenv-rails (0.11.1)
       dotenv (= 0.11.1)
-    email_spec (1.6.0)
-      launchy (~> 2.1)
-      mail (~> 2.2)
     erubis (2.7.0)
     execjs (2.2.1)
     factory_girl (4.4.0)
@@ -246,9 +240,7 @@ PLATFORMS
 
 DEPENDENCIES
   capybara
-  capybara-email
   dotenv-rails
-  email_spec
   factory_girl
   factory_girl_rails
   govuk_frontend_toolkit
