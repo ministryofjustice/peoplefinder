@@ -13,6 +13,17 @@
 
 ActiveRecord::Schema.define(version: 20140826134852) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+  enable_extension "hstore"
+
+  create_table "reviews", force: true do |t|
+    t.integer "subject_id"
+    t.text    "author_name"
+    t.text    "author_email"
+    t.text    "relationship"
+  end
+
   create_table "tokens", force: true do |t|
     t.text     "value"
     t.integer  "user_id"
@@ -22,16 +33,9 @@ ActiveRecord::Schema.define(version: 20140826134852) do
 
   add_index "tokens", ["user_id"], name: "index_tokens_on_user_id", using: :btree
 
-  create_table "reviews", force: true do |t|
-    t.integer "subject_id"
-    t.text    "author_name"
-    t.text    "author_email"
-    t.text    "relationship"
-  end
-
   create_table "users", force: true do |t|
     t.text     "name"
-    t.text     "email",                null: false
+    t.text     "email",      null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
