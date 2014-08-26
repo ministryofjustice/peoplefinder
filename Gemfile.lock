@@ -53,7 +53,6 @@ GEM
       timers (~> 1.1.0)
     cliver (0.3.2)
     coderay (1.1.0)
-    daemons (1.1.9)
     diff-lcs (1.2.5)
     dotenv (0.11.1)
       dotenv-deployment (~> 0.0.2)
@@ -64,7 +63,6 @@ GEM
       launchy (~> 2.1)
       mail (~> 2.2)
     erubis (2.7.0)
-    eventmachine (1.0.3)
     execjs (2.2.1)
     factory_girl (4.4.0)
       activesupport (>= 3.0.0)
@@ -103,6 +101,7 @@ GEM
       railties (>= 3.0, < 5.0)
       thor (>= 0.14, < 2.0)
     json (1.8.1)
+    kgio (2.9.2)
     launchy (2.4.2)
       addressable (~> 2.3)
     listen (2.7.9)
@@ -138,6 +137,7 @@ GEM
     rack (1.5.2)
     rack-test (0.6.2)
       rack (>= 1.0)
+    rack-timeout (0.0.4)
     rails (4.1.5)
       actionmailer (= 4.1.5)
       actionpack (= 4.1.5)
@@ -159,6 +159,7 @@ GEM
       rake (>= 0.8.7)
       thor (>= 0.18.1, < 2.0)
     rainbow (2.0.0)
+    raindrops (0.13.0)
     rake (10.3.2)
     rb-fsevent (0.9.4)
     rb-inotify (0.9.5)
@@ -218,10 +219,6 @@ GEM
       actionpack (>= 3.0)
       activesupport (>= 3.0)
       sprockets (~> 2.8)
-    thin (1.6.2)
-      daemons (>= 1.0.9)
-      eventmachine (>= 1.0.0)
-      rack (>= 1.0.0)
     thor (0.19.1)
     thread_safe (0.3.4)
     tilt (1.4.1)
@@ -234,6 +231,10 @@ GEM
     uglifier (2.5.1)
       execjs (>= 0.3.0)
       json (>= 1.8.0)
+    unicorn (4.8.3)
+      kgio (~> 2.6)
+      rack
+      raindrops (~> 0.7)
     websocket-driver (0.3.4)
     xpath (2.0.0)
       nokogiri (~> 1.3)
@@ -261,6 +262,7 @@ DEPENDENCIES
   pg
   poltergeist
   pry
+  rack-timeout
   rails (~> 4.1.5)
   rails_12factor
   rspec-mocks
@@ -272,5 +274,5 @@ DEPENDENCIES
   simplecov (~> 0.7.1)
   simplecov-rcov
   spring
-  thin
   uglifier (>= 1.3.0)
+  unicorn (~> 4.8.3)

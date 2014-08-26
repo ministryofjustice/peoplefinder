@@ -51,5 +51,7 @@ module SCSAppraisals
     end
 
     config.action_mailer.default_url_options = { host: ENV['HOST'] }
+
+    config.rack_timeout = (ENV['RACK_TIMEOUT'] || 14)
   end
 end

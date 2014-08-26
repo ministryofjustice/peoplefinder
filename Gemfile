@@ -14,10 +14,11 @@ gem 'pg'
 gem 'sass-rails', '~> 4.0.3'
 gem 'simple_form', '~> 3.1.0.rc1'
 gem 'uglifier', '>= 1.3.0'
+gem 'unicorn', '~> 4.8.3'
+gem 'rack-timeout'
 
 group :development do
   gem 'spring'
-  gem 'thin'
 end
 
 group :test do
@@ -45,4 +46,5 @@ end
 
 group :production do
   gem 'rails_12factor'
+
 end
