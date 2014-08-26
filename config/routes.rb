@@ -4,4 +4,6 @@ Rails.application.routes.draw do
   resource :dashboard, only: [:show]
 
   get "/go/:id", to: "tokens#show", as: :token
+
+  resources :reviews
 end
