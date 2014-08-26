@@ -22,6 +22,13 @@ ActiveRecord::Schema.define(version: 20140826134852) do
 
   add_index "tokens", ["user_id"], name: "index_tokens_on_user_id", using: :btree
 
+  create_table "reviews", force: true do |t|
+    t.integer "subject_id"
+    t.text    "author_name"
+    t.text    "author_email"
+    t.text    "relationship"
+  end
+
   create_table "users", force: true do |t|
     t.text     "name"
     t.text     "email",                null: false
