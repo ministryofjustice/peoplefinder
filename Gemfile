@@ -39,6 +39,7 @@ group :development, :test do
   gem 'guard'
   gem 'guard-rspec', require: false
   gem 'pry'
+  gem 'pry-rails'
   gem 'dotenv-rails'
   gem 'rubocop', require: false
 end
