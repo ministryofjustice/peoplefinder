@@ -6,6 +6,10 @@ class Token < ActiveRecord::Base
     user
   end
 
+  def to_param
+    value
+  end
+
 private
 
   def generate_value

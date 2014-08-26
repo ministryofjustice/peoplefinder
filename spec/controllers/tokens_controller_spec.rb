@@ -7,7 +7,7 @@ RSpec.describe TokensController, type: :controller do
 
     before do
       token = create(:token, user: user)
-      get :show, token: token.value
+      get :show, id: token
     end
 
     it 'redirects to the dashboard page' do
@@ -21,7 +21,7 @@ RSpec.describe TokensController, type: :controller do
 
   describe 'with a bogus token' do
     before do
-      get :show, token: 'garbage'
+      get :show, id: 'garbage'
     end
 
     it 'returns 500 forbidden' do
