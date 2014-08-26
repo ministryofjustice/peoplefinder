@@ -37,9 +37,11 @@ group :test do
 end
 
 group :development, :test do
+  gem 'factory_girl'
   gem 'guard'
   gem 'guard-rspec', require: false
   gem 'pry'
+  gem 'pry-rails'
   gem 'dotenv-rails'
   gem 'rubocop', require: false
 end

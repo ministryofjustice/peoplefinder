@@ -7,10 +7,24 @@ FactoryGirl.define do
     "Insecure%03d" % n
   end
 
+  sequence :name do |n|
+    "Name-%04d" % n
+  end
+
   factory :user do
     email { generate(:email) }
   end
 
   factory :token do
+  end
+
+  factory :review do
+    subject
+    author_name { generate(:name) }
+    author_email { generate(:email) }
+  end
+
+  factory :subject, class: User do
+    email { generate(:email) }
   end
 end
