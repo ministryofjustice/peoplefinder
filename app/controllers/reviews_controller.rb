@@ -1,5 +1,6 @@
 class ReviewsController < ApplicationController
-  before_action :load_explicit_subject
+  before_action :load_explicit_subject, only: [:index, :create]
+  before_action :ensure_review, only: [:edit]
 
   def index
     @review = scope.new
@@ -15,6 +16,9 @@ class ReviewsController < ApplicationController
     else
       render action: :index
     end
+  end
+
+  def edit
   end
 
 private
@@ -33,5 +37,10 @@ private
       @subject = current_user.managees.find(params[:user_id])
     end
     true
+  end
+
+  def ensure_review
+    @review = Review.where(id: session[:review_id]).first
+    access_denied unless @review
   end
 end

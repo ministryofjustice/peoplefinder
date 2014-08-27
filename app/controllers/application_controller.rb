@@ -25,6 +25,10 @@ private
     false
   end
 
+  def access_denied
+    render 'shared/forbidden', status: 403
+  end
+
   def i18n_flash(type, partial_key, options = {})
     full_key =
       ['controllers', controller_name, action_name, partial_key].join('.')

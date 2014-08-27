@@ -81,6 +81,25 @@ RSpec.describe ReviewsController, type: :controller do
     end
   end
 
+  describe 'GET edit' do
+    let(:review) { create(:review) }
+
+    context 'with an authenticated sesssion' do
+      it 'renders the edit template' do
+        controller.session[:review_id] = review.id
+        get :edit, id: review.id
+        expect(response).to render_template('edit')
+      end
+    end
+
+    context 'without an authenticated session' do
+      it 'returns 403 forbidden' do
+        get :edit, id: review.id
+        expect(response.status).to eql(403)
+      end
+    end
+  end
+
   def valid_attributes
     {
       relationship: 'Colleague',
