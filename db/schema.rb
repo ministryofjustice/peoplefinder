@@ -11,13 +11,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140827095405) do
+ActiveRecord::Schema.define(version: 20140827124720) do
 
   create_table "reviews", force: true do |t|
     t.integer "subject_id"
     t.text    "author_name"
     t.text    "author_email"
     t.text    "relationship"
+    t.text    "status"
   end
 
   create_table "tokens", force: true do |t|

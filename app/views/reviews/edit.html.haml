@@ -1,0 +1,3 @@
+= simple_form_for @review do |f|
+  = f.input :status, as: :select, collection: ['accepted', 'declined']
+  = f.button :submit, label: 'Update'

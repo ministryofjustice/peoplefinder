@@ -9,12 +9,7 @@ feature 'Review maintenance' do
   end
 
   scenario 'Invite a new person to give me feedback' do
-    visit reviews_path
-
-    fill_in 'Name', with: 'Danny Boy'
-    fill_in 'Email', with: 'danny@example.com'
-    fill_in 'Relationship', with: 'Colleague'
-    click_button 'Create'
+    create_a_feedback_request
 
     review = me.reviews_received.last
     expect(review.author_name).to eql('Danny Boy')
@@ -48,5 +43,34 @@ feature 'Review maintenance' do
 
     link = links_in_email(mail).first
     expect(link).to eql(token_url(review.tokens.last))
+  end
+
+  scenario 'Accept a feedback request' do
+    create_a_feedback_request
+
+    visit token_url(Token.last)
+    select 'accept', from: 'Status'
+    click_button 'Update'
+
+    expect(Review.last).to be_accepted
+  end
+
+  scenario 'Decline a feedback request' do
+    create_a_feedback_request
+
+    visit token_url(Token.last)
+    select 'decline', from: 'Status'
+    click_button 'Update'
+
+    expect(Review.last).to be_declined
+  end
+
+  def create_a_feedback_request
+    visit reviews_path
+
+    fill_in 'Name', with: 'Danny Boy'
+    fill_in 'Email', with: 'danny@example.com'
+    fill_in 'Relationship', with: 'Colleague'
+    click_button 'Create'
   end
 end
