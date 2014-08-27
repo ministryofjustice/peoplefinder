@@ -24,8 +24,8 @@ RSpec.describe TokensController, type: :controller do
       get :show, id: 'garbage'
     end
 
-    it 'returns 500 forbidden' do
-      expect(response.status).to eql(500)
+    it 'returns 403 forbidden' do
+      expect(response.status).to eql(403)
     end
   end
 end

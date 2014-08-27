@@ -7,7 +7,7 @@ class TokensController < ApplicationController
       session[:current_user_id] = token.user_id
       redirect_to dashboard_path
     else
-      render 'shared/forbidden', status: 500
+      render 'shared/forbidden', status: 403
     end
   end
 end
