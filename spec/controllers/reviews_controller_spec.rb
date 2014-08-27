@@ -1,17 +1,21 @@
 require 'rails_helper'
 RSpec.describe ReviewsController, type: :controller do
+  let(:me) { create(:user) }
+
   before do
-    authenticate_as(create(:user))
+    authenticate_as me
   end
 
   describe 'GET new' do
-    it 'assigns a new review' do
+    before do
       get :index
+    end
+
+    it 'assigns a new review' do
       expect(assigns(:review)).to be_a(Review)
     end
 
     it 'assigns existing reviews' do
-      get :index
       expect(assigns(:reviews)).not_to be_nil
     end
   end
@@ -27,6 +31,11 @@ RSpec.describe ReviewsController, type: :controller do
       it 'redirects back to the index' do
         post :create, review: valid_attributes
         expect(response).to redirect_to(reviews_path)
+      end
+
+      it 'assigns the review to me' do
+        post :create, review: valid_attributes
+        expect(Review.last.subject).to eql(me)
       end
     end
 
