@@ -6,7 +6,7 @@ feature 'Review maintenance' do
     visit token_path(token)
   end
 
-  scenario 'Invite new person to give me feedback' do
+  scenario 'Invite a new person to give me feedback' do
     visit reviews_path
 
     fill_in 'Name', with: 'Danny Boy'
@@ -18,5 +18,9 @@ feature 'Review maintenance' do
     expect(review.author_name).to eql('Danny Boy')
     expect(review.author_email).to eql('danny@example.com')
     expect(review.relationship).to eql('Colleague')
+
+    mail = ActionMailer::Base.deliveries.last
+    expect(mail.subject).to eq('Request for feedback')
+    expect(mail).to have_text(token_path(review.tokens.last))
   end
 end

@@ -6,9 +6,10 @@ class ReviewsController < ApplicationController
 
   def create
     @review = Review.new(review_params)
-    @review.subject = User.find_or_create_by(email: 'elena@example.com')
+    @review.subject = current_user
 
     if @review.save
+      @review.send_feedback_request
       redirect_to reviews_path
     else
       render action: :index

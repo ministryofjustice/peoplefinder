@@ -7,8 +7,8 @@ RSpec.describe Review, type: :model do
     expect(review).to belong_to(:subject)
   end
 
-  it 'has_one token' do
-    expect(review).to have_one(:token)
+  it 'has_many tokens' do
+    expect(review).to have_many(:tokens)
   end
 
   describe 'validations' do
@@ -34,10 +34,12 @@ RSpec.describe Review, type: :model do
     end
   end
 
-  describe 'after_create' do
-    it 'generates a token' do
-      review = create(:review)
-      expect(review.token).to be_present
+  describe '.send_feedback_request' do
+    let(:review) { create(:review) }
+    subject { review.send_feedback_request }
+
+    it 'sends a feedback request email' do
+      expect { subject }.to change { ActionMailer::Base.deliveries.count }.by(1)
     end
   end
 end
