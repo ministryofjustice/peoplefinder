@@ -17,7 +17,12 @@ private
   helper_method :logged_in?
 
   def ensure_user
-    render 'shared/forbidden', status: 403 unless logged_in?
+    logged_in? || forbidden
+  end
+
+  def forbidden
+    render 'shared/forbidden', status: :forbidden
+    false
   end
 
   def i18n_flash(type, partial_key, options = {})
