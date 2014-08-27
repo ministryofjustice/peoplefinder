@@ -43,6 +43,7 @@
   .form-group
     %h3.line-above Photograph
     %p.form-hint= info_text('photo_upload_hint')
+    %p.form-hint= info_text('photo_size_hint')
     = f.input :image, as: :file, label: false
 
     = image_tag @person.image.medium, class: 'preview'
