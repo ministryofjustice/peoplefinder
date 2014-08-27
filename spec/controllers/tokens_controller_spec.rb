@@ -27,8 +27,8 @@ RSpec.describe TokensController, type: :controller do
       get :show, id: token
     end
 
-    it 'redirects to the edit review page' do
-      expect(response).to redirect_to(edit_review_path(review))
+    it 'redirects to the edit acceptance page' do
+      expect(response).to redirect_to(edit_acceptance_path(review))
     end
 
     it 'sets the review in the session' do

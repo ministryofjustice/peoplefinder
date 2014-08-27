@@ -18,7 +18,7 @@ private
 
     elsif token.review
       session[:review_id] = token.review_id
-      redirect_to edit_review_path(token.review)
+      redirect_to edit_acceptance_path(token.review)
     end
   end
 end

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-feature 'Respond to feedback request' do
+feature 'Acceptance maintenance' do
   scenario 'Accept a feedback request' do
     visit token_url(create(:review_token))
 

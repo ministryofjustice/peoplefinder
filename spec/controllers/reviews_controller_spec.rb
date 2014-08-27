@@ -83,56 +83,6 @@ RSpec.describe ReviewsController, type: :controller do
     end
   end
 
-  describe 'GET edit' do
-    let(:review) { create(:review) }
-
-    context 'with an authenticated sesssion' do
-      it 'renders the edit template' do
-        authenticate_as review
-        get :edit, id: review.id
-        expect(response).to render_template('edit')
-      end
-    end
-
-    context 'without an authenticated session' do
-      it 'returns 403 forbidden' do
-        get :edit, id: review.id
-        expect(response).to be_forbidden
-      end
-    end
-  end
-
-  describe 'PUT update' do
-    let(:review) { create(:review) }
-
-    context 'with an authenticated session' do
-      before do
-        authenticate_as review
-      end
-
-      context 'with valid inputs' do
-        it 'redirects to the edit template' do
-          put :update, id: review.id, review: { status: 'accepted' }
-          expect(response).to redirect_to(edit_review_path(review))
-        end
-      end
-
-      context 'with invalid inputs' do
-        it 'renders the edit template' do
-          put :update, id: review.id, review: { author_email: '' }
-          expect(response).to render_template('edit')
-        end
-      end
-    end
-
-    context 'without an authenticated session' do
-      it 'returns 403 forbidden' do
-        put :update, id: review.id
-        expect(response).to be_forbidden
-      end
-    end
-  end
-
   def valid_attributes
     {
       relationship: 'Colleague',

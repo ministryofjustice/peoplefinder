@@ -6,6 +6,8 @@ Rails.application.routes.draw do
   get "/go/:id", to: "tokens#show", as: :token
 
   resources :reviews
+  resources :acceptances, only: [:edit, :update]
+  resources :submissions, only: [:index]
 
   resources :users, only: [] do
     resources :reviews

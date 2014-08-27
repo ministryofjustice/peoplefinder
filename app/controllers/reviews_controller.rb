@@ -1,7 +1,5 @@
 class ReviewsController < ApplicationController
   before_action :load_explicit_subject, only: [:index, :create]
-  skip_before_action :ensure_user, only: [:edit, :update]
-  before_action :ensure_review, only: [:edit, :update]
 
   def index
     @review = scope.new
@@ -19,22 +17,11 @@ class ReviewsController < ApplicationController
     end
   end
 
-  def edit
-  end
-
-  def update
-    if @review.update_attributes(review_params)
-      redirect_to edit_review_path
-    else
-      render action: 'edit'
-    end
-  end
-
 private
 
   def review_params
     params.require(:review).
-      permit(:author_email, :author_name, :relationship, :status)
+      permit(:author_email, :author_name, :relationship)
   end
 
   def scope
@@ -46,10 +33,5 @@ private
       @subject = current_user.managees.find(params[:user_id])
     end
     true
-  end
-
-  def ensure_review
-    @review = Review.where(id: session[:review_id]).first
-    forbidden unless @review
   end
 end
