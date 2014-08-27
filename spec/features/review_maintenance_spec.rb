@@ -21,9 +21,11 @@ feature 'Review maintenance' do
     expect(review.author_email).to eql('danny@example.com')
     expect(review.relationship).to eql('Colleague')
 
-    mail = ActionMailer::Base.deliveries.last
+    mail = last_email
     expect(mail.subject).to eq('Request for feedback')
-    expect(mail).to have_text(token_path(review.tokens.last))
+
+    link = links_in_email(mail).first
+    expect(link).to eql(token_url(review.tokens.last))
   end
 
   scenario 'Invite a new person to give my managee feedback' do
@@ -41,8 +43,10 @@ feature 'Review maintenance' do
     expect(review.author_email).to eql('danny@example.com')
     expect(review.relationship).to eql('Colleague')
 
-    mail = ActionMailer::Base.deliveries.last
+    mail = last_email
     expect(mail.subject).to eq('Request for feedback')
-    expect(mail).to have_text(token_path(review.tokens.last))
+
+    link = links_in_email(mail).first
+    expect(link).to eql(token_url(review.tokens.last))
   end
 end
