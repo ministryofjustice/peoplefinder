@@ -19,6 +19,23 @@ RSpec.describe TokensController, type: :controller do
     end
   end
 
+  describe 'with a valid review token' do
+    let(:review) { create(:review) }
+
+    before do
+      token = create(:token, review: review)
+      get :show, id: token
+    end
+
+    it 'redirects to the edit review page' do
+      expect(response).to redirect_to(edit_review_path(review))
+    end
+
+    it 'sets the review in the session' do
+      expect(session[:review_id]).to eql(review.id)
+    end
+  end
+
   describe 'with a bogus token' do
     before do
       get :show, id: 'garbage'
