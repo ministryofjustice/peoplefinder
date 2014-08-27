@@ -17,8 +17,9 @@ private
       redirect_to dashboard_path
 
     elsif token.review
-      session[:review_id] = token.review_id
-      redirect_to edit_acceptance_path(token.review)
+      user = User.find_or_create_by(email: token.review.author_email)
+      session[:current_user_id] = user.id
+      redirect_to submissions_path
     end
   end
 end

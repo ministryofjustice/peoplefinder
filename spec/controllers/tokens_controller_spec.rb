@@ -27,12 +27,22 @@ RSpec.describe TokensController, type: :controller do
       get :show, id: token
     end
 
-    it 'redirects to the edit acceptance page' do
-      expect(response).to redirect_to(edit_acceptance_path(review))
+    it 'redirects to the submissions list' do
+      expect(response).to redirect_to(submissions_path)
     end
 
-    it 'sets the review in the session' do
-      expect(session[:review_id]).to eql(review.id)
+    context 'with a new user' do
+      it 'creates a user and stores the id in the session' do
+        User.where(email: review.subject.email).delete_all
+        expect(session[:current_user_id]).to eql(User.last.id)
+      end
+    end
+
+    context 'with an existing user' do
+      it 'finds the user and stores the id in the session' do
+        user = User.where(email: review.author_email).first
+        expect(session[:current_user_id]).to eql(user.id)
+      end
     end
   end
 

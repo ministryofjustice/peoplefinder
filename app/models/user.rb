@@ -3,6 +3,7 @@ class User < ActiveRecord::Base
   belongs_to :manager, class_name: 'User'
   has_many :managees, foreign_key: :manager_id, class_name: 'User'
   has_many :reviews_received, foreign_key: :subject_id, class_name: 'Review'
+  has_many :submissions, class_name: 'Review', foreign_key: 'author_email', primary_key: 'email'
 
   def to_s
     [name, email].reject(&:blank?).first

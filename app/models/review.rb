@@ -1,5 +1,6 @@
 class Review < ActiveRecord::Base
   belongs_to :subject, class_name: 'User'
+  belongs_to :author, class_name: 'User', foreign_key: 'author_email', primary_key: 'email'
   has_many :tokens
 
   validates :subject, presence: true

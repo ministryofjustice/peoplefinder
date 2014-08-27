@@ -1,8 +1,16 @@
 require 'rails_helper'
 
-feature 'Acceptance maintenance' do
+feature 'Submissions maintenance' do
+  let(:review) { create(:review) }
+  let(:subject_name) { review.subject.name }
+  let(:token) { create(:token, review: review) }
+
+  before do
+    visit token_url(token)
+  end
+
   scenario 'Accept a feedback request' do
-    visit token_url(create(:review_token))
+    click_link subject_name
 
     select 'accept', from: 'Status'
     click_button 'Update'
@@ -11,8 +19,7 @@ feature 'Acceptance maintenance' do
   end
 
   scenario 'Decline a feedback request' do
-    visit token_url(create(:review_token))
-
+    click_link subject_name
     select 'decline', from: 'Status'
     click_button 'Update'
 

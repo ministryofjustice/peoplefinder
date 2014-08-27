@@ -24,10 +24,6 @@ FactoryGirl.define do
     author_email { generate(:email) }
   end
 
-  factory :review_token, class: Token do
-    review
-  end
-
   factory :subject, class: User do
     email { generate(:email) }
   end

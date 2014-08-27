@@ -1,12 +1,15 @@
 require 'rails_helper'
 RSpec.describe AcceptancesController, type: :controller do
+  let(:author) { create(:user) }
+  let(:review) { create(:review, author: author) }
 
   describe 'GET edit' do
     let(:review) { create(:review) }
 
     context 'with an authenticated sesssion' do
+      before { authenticate_as(author) }
+
       it 'renders the edit template' do
-        authenticate_as review
         get :edit, id: review.id
         expect(response).to render_template('edit')
       end
@@ -24,9 +27,7 @@ RSpec.describe AcceptancesController, type: :controller do
     let(:review) { create(:review) }
 
     context 'with an authenticated session' do
-      before do
-        authenticate_as review
-      end
+      before { authenticate_as(author) }
 
       it 'redirects to the submissions list' do
         put :update, id: review.id, review: { status: 'accepted' }
