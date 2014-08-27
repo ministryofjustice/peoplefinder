@@ -1,4 +1,4 @@
-= simple_form_for @review do |f|
+= simple_form_for [@subject, @review].compact do |f|
   = f.input :author_email, label: 'Email'
   = f.input :author_name, label: 'Name'
   = f.input :relationship, label: 'Relationship'

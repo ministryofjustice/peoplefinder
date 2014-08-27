@@ -1,4 +1,6 @@
 class ReviewsController < ApplicationController
+  before_action :load_explicit_subject
+
   def index
     @review = scope.new
     @reviews = scope.all
@@ -23,14 +25,13 @@ private
   end
 
   def scope
-    subject.reviews_received
+    (@subject || current_user).reviews_received
   end
 
-  def subject
+  def load_explicit_subject
     if params[:user_id]
-      current_user.managees.find(params[:user_id])
-    else
-      current_user
+      @subject = current_user.managees.find(params[:user_id])
     end
+    true
   end
 end
