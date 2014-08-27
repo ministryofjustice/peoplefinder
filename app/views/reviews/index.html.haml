@@ -1,5 +1,11 @@
+%ul
+  - @reviews.each do |review|
+    %li
+      = review.author_name
+      = t(review.status, scope: 'reviews.statuses')
+
 = simple_form_for [@subject, @review].compact do |f|
-  = f.input :author_email, label: 'Email'
-  = f.input :author_name, label: 'Name'
-  = f.input :relationship, label: 'Relationship'
+  = f.input :author_email
+  = f.input :author_name
+  = f.input :relationship
   = f.button :submit

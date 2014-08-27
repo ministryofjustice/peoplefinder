@@ -10,6 +10,11 @@ en:
       # html: '<abbr title="required">*</abbr>'
     error_notification:
       default_message: "Please review the problems below:"
+    labels:
+      review:
+        author_email: 'Email'
+        author_name: 'Name'
+        relationship: 'Relationship'
     # Examples
     # labels:
     #   defaults:

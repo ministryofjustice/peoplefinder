@@ -21,3 +21,10 @@
 
 en:
   hello: "Hello world"
+  reviews:
+    statuses:
+      accepted: 'Accepted'
+      completed: 'Completed'
+      incomplete: 'Incomplete'
+      rejected: 'Rejected'
+      no_response: 'No response'
