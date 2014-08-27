@@ -2,12 +2,9 @@ require 'rails_helper'
 RSpec.describe ReviewsController, type: :controller do
   let(:me) { create(:user) }
 
-  before do
-    authenticate_as me
-  end
-
   describe 'GET new' do
     before do
+      authenticate_as me
       get :index
     end
 
@@ -21,6 +18,11 @@ RSpec.describe ReviewsController, type: :controller do
   end
 
   describe 'POST create' do
+    before do
+      authenticate_as me
+      get :index
+    end
+
     describe 'with valid params and implicit subject' do
       it 'creates a new Review' do
         expect {
@@ -86,7 +88,7 @@ RSpec.describe ReviewsController, type: :controller do
 
     context 'with an authenticated sesssion' do
       it 'renders the edit template' do
-        controller.session[:review_id] = review.id
+        authenticate_as review
         get :edit, id: review.id
         expect(response).to render_template('edit')
       end
@@ -95,7 +97,7 @@ RSpec.describe ReviewsController, type: :controller do
     context 'without an authenticated session' do
       it 'returns 403 forbidden' do
         get :edit, id: review.id
-        expect(response.status).to eql(403)
+        expect(response).to be_forbidden
       end
     end
   end

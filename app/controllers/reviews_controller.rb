@@ -1,5 +1,6 @@
 class ReviewsController < ApplicationController
   before_action :load_explicit_subject, only: [:index, :create]
+  skip_before_action :ensure_user, only: [:edit]
   before_action :ensure_review, only: [:edit]
 
   def index
