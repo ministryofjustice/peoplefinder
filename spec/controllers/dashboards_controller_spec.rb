@@ -21,7 +21,7 @@ RSpec.describe DashboardsController, type: :controller do
     end
 
     it 'returns 403 forbidden' do
-      expect(response.status).to eql(403)
+      expect(response).to be_forbidden
     end
   end
 end
