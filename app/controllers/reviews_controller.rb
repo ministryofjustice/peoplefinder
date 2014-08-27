@@ -41,6 +41,6 @@ private
 
   def ensure_review
     @review = Review.where(id: session[:review_id]).first
-    access_denied unless @review
+    forbidden unless @review
   end
 end
