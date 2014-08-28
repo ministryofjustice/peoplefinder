@@ -12,12 +12,4 @@ class Review < ActiveRecord::Base
   def send_feedback_request
     ReviewMailer.feedback_request(self, tokens.create).deliver
   end
-
-  def accepted?
-    status =~ /accept/
-  end
-
-  def rejected?
-    status =~ /reject/
-  end
 end
