@@ -2,7 +2,7 @@ require 'rails_helper'
 RSpec.describe SubmissionsController, type: :controller do
 
   let(:author) { create(:user) }
-  let!(:review) { create(:review, author: author) }
+  let!(:submission) { create(:submission, author: author) }
 
   describe 'GET index' do
     context 'with an authenticated sesssion' do
@@ -15,7 +15,7 @@ RSpec.describe SubmissionsController, type: :controller do
 
       it 'assigns the submissions' do
         get :index
-        expect(assigns(:submissions)).to include(review)
+        expect(assigns(:submissions)).to include(submission)
       end
     end
 
@@ -32,19 +32,19 @@ RSpec.describe SubmissionsController, type: :controller do
       before { authenticate_as(author) }
 
       it 'renders the edit template' do
-        get :edit, id: review.id
+        get :edit, id: submission.id
         expect(response).to render_template('edit')
       end
 
       it 'assigns the submission' do
-        get :edit, id: review.id
-        expect(assigns(:submission)).to eql(review)
+        get :edit, id: submission.id
+        expect(assigns(:submission)).to eql(submission)
       end
     end
 
     context 'without an authenticated session' do
       it 'returns 403 forbidden' do
-        get :edit, id: review.id
+        get :edit, id: submission.id
         expect(response).to be_forbidden
       end
     end
@@ -55,14 +55,14 @@ RSpec.describe SubmissionsController, type: :controller do
       before { authenticate_as(author) }
 
       it 'redirects to the submissions list' do
-        put :update, id: review.id, review: valid_attributes
+        put :update, id: submission.id, submission: valid_attributes
         expect(response).to redirect_to(submissions_path)
       end
     end
 
     context 'without an authenticated session' do
       it 'returns 403 forbidden' do
-        put :update, id: review.id
+        put :update, id: submission.id
         expect(response).to be_forbidden
       end
     end

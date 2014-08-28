@@ -5,18 +5,18 @@ class AcceptancesController < ApplicationController
   end
 
   def update
-    @acceptance.update_attributes(review_params)
+    @acceptance.update_attributes(acceptance_params)
     redirect_to submissions_path
   end
 
 private
 
-  def review_params
-    params.require(:review).
+  def acceptance_params
+    params.require(:acceptance).
       permit(:status)
   end
 
   def set_acceptance
-    @acceptance = current_user.submissions.where(id: params[:id]).first
+    @acceptance = current_user.acceptances.where(id: params[:id]).first
   end
 end

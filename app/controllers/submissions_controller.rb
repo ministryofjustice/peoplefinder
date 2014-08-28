@@ -16,7 +16,7 @@ class SubmissionsController < ApplicationController
 private
 
   def submission_params
-    params.require(:review).
+    params.require(:submission).
       permit(:rating, :achievements, :improvements)
   end
 

@@ -1,4 +1,4 @@
-= simple_form_for @submission, url: submission_path(@submission) do |f|
+= simple_form_for @submission do |f|
   = f.input :rating, as: :radio_buttons, collection: %w{ Good Bad }
   = f.input :achievements
   = f.input :improvements

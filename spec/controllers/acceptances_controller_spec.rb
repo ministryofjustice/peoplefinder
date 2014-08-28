@@ -1,26 +1,26 @@
 require 'rails_helper'
 RSpec.describe AcceptancesController, type: :controller do
   let(:author) { create(:user) }
-  let(:review) { create(:review, author: author) }
+  let(:acceptance) { create(:acceptance, author: author) }
 
   describe 'GET edit' do
     context 'with an authenticated sesssion' do
       before { authenticate_as(author) }
 
       it 'assigns the review as an acceptance' do
-        get :edit, id: review.id
-        expect(assigns(:acceptance)).to eql(review)
+        get :edit, id: acceptance.id
+        expect(assigns(:acceptance)).to eql(acceptance)
       end
 
       it 'renders the edit template' do
-        get :edit, id: review.id
+        get :edit, id: acceptance.id
         expect(response).to render_template('edit')
       end
     end
 
     context 'without an authenticated session' do
       it 'returns 403 forbidden' do
-        get :edit, id: review.id
+        get :edit, id: acceptance.id
         expect(response).to be_forbidden
       end
     end
@@ -31,14 +31,14 @@ RSpec.describe AcceptancesController, type: :controller do
       before { authenticate_as(author) }
 
       it 'redirects to the submissions list' do
-        put :update, id: review.id, review: { status: 'accepted' }
+        put :update, id: acceptance.id, acceptance: { status: 'accepted' }
         expect(response).to redirect_to(submissions_path)
       end
     end
 
     context 'without an authenticated session' do
       it 'returns 403 forbidden' do
-        put :update, id: review.id
+        put :update, id: acceptance.id
         expect(response).to be_forbidden
       end
     end

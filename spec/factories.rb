@@ -24,6 +24,19 @@ FactoryGirl.define do
     author_email { generate(:email) }
   end
 
+  factory :submission do
+    subject
+    author_name { generate(:name) }
+    author_email { generate(:email) }
+    status 'accepted'
+  end
+
+  factory :acceptance do
+    subject
+    author_name { generate(:name) }
+    author_email { generate(:email) }
+  end
+
   factory :subject, class: User do
     email { generate(:email) }
   end
