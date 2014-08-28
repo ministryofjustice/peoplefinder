@@ -7,7 +7,7 @@ Rails.application.routes.draw do
 
   resources :reviews
   resources :acceptances, only: [:edit, :update]
-  resources :submissions, only: [:index]
+  resources :submissions, only: [:index, :edit, :update]
 
   resources :users, only: [:index] do
     resources :reviews

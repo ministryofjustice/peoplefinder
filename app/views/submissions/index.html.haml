@@ -1,4 +1,7 @@
 - @submissions.each do |submission|
   %p
     %strong= submission.author_name
-    = link_to 'Accept / Reject', edit_acceptance_path(submission)
+    - if submission.accepted?
+      = link_to 'Add feedback', edit_submission_path(submission)
+    - else
+      = link_to 'Accept / Reject', edit_acceptance_path(submission)

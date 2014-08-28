@@ -22,6 +22,23 @@ feature 'Submissions maintenance' do
     expect(Review.last).to be_declined
   end
 
+  scenario 'Submit feedback' do
+    accept_feedback_request
+    click_link 'Add feedback'
+
+    expect(page).to have_text(subject_name)
+
+    choose 'Good'
+    fill_in 'Achievements', with: 'Some good stuff'
+    fill_in 'Improvements', with: 'Could learn to...'
+    click_button 'Submit'
+
+    review = Review.last
+    expect(review.rating).to eql('Good')
+    expect(review.achievements).to eql('Some good stuff')
+    expect(review.improvements).to eql('Could learn to...')
+  end
+
   def accept_feedback_request
     click_link 'Accept / Reject'
     choose 'accepted'

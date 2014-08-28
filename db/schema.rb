@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140827124720) do
+ActiveRecord::Schema.define(version: 20140828103735) do
 
   create_table "reviews", force: true do |t|
     t.integer "subject_id"
@@ -19,6 +19,9 @@ ActiveRecord::Schema.define(version: 20140827124720) do
     t.text    "author_email"
     t.text    "relationship"
     t.text    "status"
+    t.string  "rating"
+    t.text    "achievements"
+    t.text    "improvements"
   end
 
   create_table "tokens", force: true do |t|
