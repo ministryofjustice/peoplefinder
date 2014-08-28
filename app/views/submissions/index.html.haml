@@ -13,7 +13,13 @@
       = f.button :submit, label: 'Update'
 
 
+- unless @submissions.empty?
+  %h2
+    You have accepted 360 feedback requests for
+    #{ pluralize(@submissions.count, 'colleague') }:
+
 - @submissions.each do |submission|
+
   %p
     %strong= submission.author_name
     = link_to 'Add feedback', edit_submission_path(submission)

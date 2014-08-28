@@ -14,7 +14,7 @@ feature 'Feedback request maintenance' do
     choose 'Accept'
     click_button 'Update'
 
-    expect(FeedbackRequest.last).to be_accepted
+    expect(page).to have_text 'You have accepted 360 feedback requests for 1 colleague:'
   end
 
   scenario 'Reject a feedback request' do
