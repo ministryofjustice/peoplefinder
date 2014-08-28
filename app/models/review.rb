@@ -1,6 +1,8 @@
 class Review < ActiveRecord::Base
   belongs_to :subject, class_name: 'User'
-  belongs_to :author, class_name: 'User', foreign_key: 'author_email', primary_key: 'email'
+  belongs_to :author, class_name: 'User', foreign_key: 'author_email',
+                      primary_key: 'email'
+
   has_many :tokens
 
   validates :subject, presence: true
@@ -12,10 +14,10 @@ class Review < ActiveRecord::Base
   end
 
   def accepted?
-    status =~ /accept/
+    status.downcase =~ /accept/
   end
 
   def declined?
-    status =~ /decline/
+    status.downcase =~ /decline/
   end
 end

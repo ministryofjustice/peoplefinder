@@ -1,0 +1,4 @@
+- @submissions.each do |submission|
+  %p
+    %strong= submission.author_name
+    = link_to 'Accept / Reject', edit_acceptance_path(submission)

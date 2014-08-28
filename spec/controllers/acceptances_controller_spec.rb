@@ -4,10 +4,13 @@ RSpec.describe AcceptancesController, type: :controller do
   let(:review) { create(:review, author: author) }
 
   describe 'GET edit' do
-    let(:review) { create(:review) }
-
     context 'with an authenticated sesssion' do
       before { authenticate_as(author) }
+
+      it 'assigns the review as an acceptance' do
+        get :edit, id: review.id
+        expect(assigns(:acceptance)).to eql(review)
+      end
 
       it 'renders the edit template' do
         get :edit, id: review.id
@@ -24,8 +27,6 @@ RSpec.describe AcceptancesController, type: :controller do
   end
 
   describe 'PUT update' do
-    let(:review) { create(:review) }
-
     context 'with an authenticated session' do
       before { authenticate_as(author) }
 

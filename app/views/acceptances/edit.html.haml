@@ -1,3 +1,3 @@
 = simple_form_for @acceptance, url: acceptance_path(@acceptance) do |f|
-  = f.input :status, as: :select, collection: ['accepted', 'declined']
+  = f.input :status, as: :radio_buttons, collection: %w{ Accepted Declined }
   = f.button :submit, label: 'Update'
