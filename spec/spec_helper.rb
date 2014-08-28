@@ -5,6 +5,7 @@ SimpleCov.formatter = SimpleCov::Formatter::RcovFormatter
 SimpleCov.start 'rails' do
   add_filter '/gem/'
 end
+SimpleCov.minimum_coverage 100
 
 require "factory_girl"
 
