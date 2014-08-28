@@ -10,17 +10,17 @@ feature 'Feedback request maintenance' do
   end
 
   scenario 'Accept a feedback request' do
-    click_link 'Accept / Reject'
-    choose 'accepted'
+    expect(page).to have_text 'You have feedback requests from 1 colleague:'
+    choose 'Accept'
     click_button 'Update'
+
     expect(FeedbackRequest.last).to be_accepted
   end
 
-  scenario 'Decline a feedback request' do
-    click_link 'Accept / Reject'
-    choose 'declined'
+  scenario 'Reject a feedback request' do
+    choose 'Reject'
     click_button 'Update'
 
-    expect(FeedbackRequest.last).to be_declined
+    expect(FeedbackRequest.last).to be_rejected
   end
 end

@@ -1,8 +1,5 @@
 class FeedbackRequestsController < ApplicationController
-  before_action :set_feedback_request, only: [:edit, :update]
-
-  def edit
-  end
+  before_action :set_feedback_request, only: [:update]
 
   def update
     @feedback_request.update_attributes(feedback_request_params)

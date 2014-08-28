@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   get "/go/:id", to: "tokens#show", as: :token
 
   resources :reviews
-  resources :feedback_requests, only: [:edit, :update]
+  resources :feedback_requests, only: [:update]
   resources :submissions, only: [:index, :edit, :update]
 
   resources :users, only: [:index] do

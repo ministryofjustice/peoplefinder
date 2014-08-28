@@ -2,7 +2,8 @@ class SubmissionsController < ApplicationController
   before_action :set_submission, only: [:edit, :update]
 
   def index
-    @submissions = current_user.submissions.all
+    @submissions = scope.submissions.all
+    @feedback_requests = scope.feedback_requests.all
   end
 
   def edit
@@ -21,6 +22,10 @@ private
   end
 
   def set_submission
-    @submission = current_user.submissions.where(id: params[:id]).first
+    @submission = scope.submissions.where(id: params[:id]).first
+  end
+
+  def scope
+    current_user
   end
 end

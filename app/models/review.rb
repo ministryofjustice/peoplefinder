@@ -17,7 +17,7 @@ class Review < ActiveRecord::Base
     status =~ /accept/
   end
 
-  def declined?
-    status =~ /decline/
+  def rejected?
+    status =~ /reject/
   end
 end

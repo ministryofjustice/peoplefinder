@@ -1,7 +1,19 @@
+- unless @feedback_requests.empty?
+  %h2
+    You have feedback requests from
+    #{ pluralize(@feedback_requests.count, 'colleague') }:
+
+  - @feedback_requests.each do |feedback_request|
+    %h4= feedback_request.subject.name
+
+    %p Please accept or reject this request:
+    = simple_form_for feedback_request do |f|
+      = f.input :status, as: :radio_buttons,
+                         collection: FeedbackRequest::TRANSITIONS.map{|s| [s.humanize, s] }
+      = f.button :submit, label: 'Update'
+
+
 - @submissions.each do |submission|
   %p
     %strong= submission.author_name
-    - if submission.accepted?
-      = link_to 'Add feedback', edit_submission_path(submission)
-    - else
-      = link_to 'Accept / Reject', edit_feedback_request_path(submission)
+    = link_to 'Add feedback', edit_submission_path(submission)
