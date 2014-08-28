@@ -1,0 +1,19 @@
+files: ["**/*.js"] # No need to put app/assets/ or vendor/assets here
+options:
+  boss:       true
+  browser:    true
+  curly:      true
+  eqeqeq:     true
+  eqnull:     true
+  expr:       true
+  immed:      true
+  indent:     2
+  latedef:    true
+  newcap:     true
+  noarg:      true
+  quotmark:   true
+  sub:        true
+  trailing:   true
+  undef:      true
+  unused:     true
+  maxlen:     80

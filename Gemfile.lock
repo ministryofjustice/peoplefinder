@@ -8,6 +8,16 @@ GIT
       govuk_template (= 0.8.1)
       rails (~> 4)
 
+GIT
+  remote: https://github.com/threedaymonk/jshint.git
+  revision: b7fb727e07c76f6e388979169ea0c3b95e3075dd
+  branch: master
+  specs:
+    jshint (0.0.2)
+      execjs (>= 1.4.0)
+      multi_json (~> 1.0)
+      therubyracer (~> 0.12.1)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -99,6 +109,7 @@ GEM
     kgio (2.9.2)
     launchy (2.4.2)
       addressable (~> 2.3)
+    libv8 (3.16.14.3)
     listen (2.7.9)
       celluloid (>= 0.15.2)
       rb-fsevent (>= 0.9.3)
@@ -163,6 +174,7 @@ GEM
       ffi (>= 0.5.0)
     recipient_interceptor (0.1.2)
       mail
+    ref (1.0.5)
     rspec (3.0.0)
       rspec-core (~> 3.0.0)
       rspec-expectations (~> 3.0.0)
@@ -218,6 +230,9 @@ GEM
       actionpack (>= 3.0)
       activesupport (>= 3.0)
       sprockets (~> 2.8)
+    therubyracer (0.12.1)
+      libv8 (~> 3.16.14.0)
+      ref
     thor (0.19.1)
     thread_safe (0.3.4)
     tilt (1.4.1)
@@ -253,6 +268,7 @@ DEPENDENCIES
   haml-rails
   jbuilder (~> 2.0)
   jquery-rails
+  jshint!
   launchy
   mail
   minitest
