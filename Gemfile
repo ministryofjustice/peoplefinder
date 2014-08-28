@@ -2,8 +2,8 @@ source 'https://rubygems.org'
 ruby '2.1.1'
 gem 'rails', '~> 4.1.5'
 
-gem 'govuk_template'
 gem 'govuk_frontend_toolkit'
+gem 'govuk_template'
 gem 'haml-rails'
 gem 'jbuilder', '~> 2.0'
 gem 'jquery-rails'
@@ -12,12 +12,12 @@ gem 'moj_internal_template',
   git: 'https://github.com/ministryofjustice/moj_internal_template.git',
   branch: 'master'
 gem 'pg'
+gem 'rack-timeout'
+gem 'recipient_interceptor', '~> 0.1.2'
 gem 'sass-rails', '~> 4.0.3'
 gem 'simple_form', '~> 3.1.0.rc1'
-gem 'recipient_interceptor', '~> 0.1.2'
 gem 'uglifier', '>= 1.3.0'
 gem 'unicorn', '~> 4.8.3'
-gem 'rack-timeout'
 
 group :development do
   gem 'spring'
@@ -29,24 +29,23 @@ group :test do
   gem 'launchy'
   gem 'minitest'
   gem 'poltergeist', require: 'capybara/poltergeist'
-  gem 'rspec-rails', '~> 3.0.0'
   gem 'rspec-mocks'
+  gem 'rspec-rails', '~> 3.0.0'
   gem 'shoulda-matchers'
   gem 'simplecov', '~> 0.7.1', require: false
   gem 'simplecov-rcov', require: false
 end
 
 group :development, :test do
+  gem 'dotenv-rails'
   gem 'factory_girl'
   gem 'guard'
   gem 'guard-rspec', require: false
   gem 'pry'
   gem 'pry-rails'
-  gem 'dotenv-rails'
   gem 'rubocop', require: false
 end
 
 group :production do
   gem 'rails_12factor'
-
 end
