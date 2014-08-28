@@ -7,7 +7,7 @@ class User < ActiveRecord::Base
   has_many :reviews_received, foreign_key: :subject_id, class_name: 'Review'
 
   has_many :submissions, foreign_key: 'author_email', primary_key: 'email'
-  has_many :acceptances, foreign_key: 'author_email', primary_key: 'email'
+  has_many :feedback_requests, foreign_key: 'author_email', primary_key: 'email'
 
   default_scope { order(:name) }
 

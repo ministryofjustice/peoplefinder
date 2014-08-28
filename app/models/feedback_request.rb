@@ -1,0 +1,2 @@
+class FeedbackRequest < Review
+end

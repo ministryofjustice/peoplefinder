@@ -1,2 +1,0 @@
-class Acceptance < Review
-end

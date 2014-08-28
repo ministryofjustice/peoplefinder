@@ -4,4 +4,4 @@
     - if submission.accepted?
       = link_to 'Add feedback', edit_submission_path(submission)
     - else
-      = link_to 'Accept / Reject', edit_acceptance_path(submission)
+      = link_to 'Accept / Reject', edit_feedback_request_path(submission)

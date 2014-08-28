@@ -31,7 +31,7 @@ FactoryGirl.define do
     status 'accepted'
   end
 
-  factory :acceptance do
+  factory :feedback_request do
     subject
     author_name { generate(:name) }
     author_email { generate(:email) }
