@@ -19,8 +19,10 @@ feature 'Feedback request maintenance' do
 
   scenario 'Reject a feedback request' do
     choose 'Reject'
+    expect(page).to have_text 'Please explain why you have rejected the request'
+    fill_in 'feedback_request_rejection_reason', with: 'Some stuff'
     click_button 'Update'
 
-    expect(FeedbackRequest.last).to be_rejected
+    expect(FeedbackRequest.last.rejection_reason).to eql('Some stuff')
   end
 end

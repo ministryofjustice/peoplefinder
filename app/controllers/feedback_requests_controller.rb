@@ -10,7 +10,7 @@ private
 
   def feedback_request_params
     params.require(:feedback_request).
-      permit(:status)
+      permit(:status, :rejection_reason)
   end
 
   def set_feedback_request
