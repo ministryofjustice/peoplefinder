@@ -42,4 +42,10 @@ RSpec.describe Review, type: :model do
       expect { subject }.to change { ActionMailer::Base.deliveries.count }.by(1)
     end
   end
+
+  describe 'status' do
+    it 'should be "no response" initially' do
+      expect(review.status).to eql('no_response')
+    end
+  end
 end
