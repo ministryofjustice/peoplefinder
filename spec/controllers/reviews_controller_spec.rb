@@ -39,6 +39,11 @@ RSpec.describe ReviewsController, type: :controller do
         post :create, review: valid_attributes
         expect(Review.last.subject).to eql(me)
       end
+
+      it 'shows an information message' do
+        post :create, review: valid_attributes
+        expect(flash[:notice]).to match(/Invited Danny Boy/)
+      end
     end
 
     describe 'with valid params and explicit subject' do
@@ -60,6 +65,11 @@ RSpec.describe ReviewsController, type: :controller do
         expect(Review.last.subject).to eql(managee)
       end
 
+      it 'shows an information message' do
+        post :create, user_id: managee.to_param, review: valid_attributes
+        expect(flash[:notice]).to match(/Invited Danny Boy/)
+      end
+
       it 'checks that the subject is a managee of the current user' do
         third_party = create(:user)
         expect {
@@ -79,6 +89,10 @@ RSpec.describe ReviewsController, type: :controller do
 
       it 're-renders the index template' do
         expect(response).to render_template('index')
+      end
+
+      it 'shows an error message' do
+        expect(flash[:error]).to match(/errors/)
       end
     end
   end

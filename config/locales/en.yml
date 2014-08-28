@@ -20,7 +20,10 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
+  controllers:
+    reviews:
+      created: 'Invited %{name}'
+      create_error: 'No invitation sent. Please check the errors below'
   reviews:
     statuses:
       accepted: 'Accepted'

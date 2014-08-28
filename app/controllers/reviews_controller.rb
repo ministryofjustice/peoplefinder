@@ -11,8 +11,10 @@ class ReviewsController < ApplicationController
 
     if @review.save
       @review.send_feedback_request
+      notice :created, name: @review.author_name
       redirect_to action: :index
     else
+      error :create_error
       render action: :index
     end
   end
