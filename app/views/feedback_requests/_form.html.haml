@@ -1,0 +1,7 @@
+%h4= feedback_request.subject.name
+
+%p Please accept or reject this request:
+= simple_form_for feedback_request do |f|
+  = f.input :status, as: :radio_buttons,
+                     collection: FeedbackRequest::TRANSITIONS.map{|s| [s.humanize, s] }
+  = f.button :submit, label: 'Update'
