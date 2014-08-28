@@ -8,6 +8,8 @@ class User < ActiveRecord::Base
   has_many :submissions, class_name: 'Review', foreign_key: 'author_email',
                          primary_key: 'email'
 
+  default_scope { order(:name) }
+
   def to_s
     [name, email].reject(&:blank?).first
   end

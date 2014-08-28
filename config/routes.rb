@@ -9,7 +9,7 @@ Rails.application.routes.draw do
   resources :acceptances, only: [:edit, :update]
   resources :submissions, only: [:index]
 
-  resources :users, only: [] do
+  resources :users, only: [:index] do
     resources :reviews
   end
 end

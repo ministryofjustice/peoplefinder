@@ -21,13 +21,14 @@ feature 'Review status' do
   end
 
   scenario "viewing the status of my managees' feedback" do
-    managee = create(:user, manager: me)
+    managee = create(:user, name: 'Joe Worker', manager: me)
 
     create :review, subject: managee, author_name: 'Foxtrot', status: 'no_response'
     create :review, subject: managee, author_name: 'Golf', status: 'accepted'
     create :review, subject: managee, author_name: 'Hotel', status: 'completed'
 
-    visit user_reviews_path(managee)
+    visit users_path
+    click_link managee.name
 
     expect(page).to have_text('Foxtrot No response')
     expect(page).to have_text('Golf Accepted')
