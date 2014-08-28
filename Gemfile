@@ -44,6 +44,7 @@ group :development, :test do
   gem 'jshint',
     git: 'https://github.com/threedaymonk/jshint.git',
     branch: 'master'
+  gem 'konacha'
   gem 'pry'
   gem 'pry-rails'
   gem 'rubocop', require: false
