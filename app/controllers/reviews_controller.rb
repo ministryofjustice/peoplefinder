@@ -11,7 +11,7 @@ class ReviewsController < ApplicationController
 
     if @review.save
       @review.send_feedback_request
-      redirect_to reviews_path
+      redirect_to action: :index
     else
       render action: :index
     end

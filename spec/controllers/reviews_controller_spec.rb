@@ -52,7 +52,7 @@ RSpec.describe ReviewsController, type: :controller do
 
       it 'redirects back to the index' do
         post :create, user_id: managee.to_param, review: valid_attributes
-        expect(response).to redirect_to(reviews_path)
+        expect(response).to redirect_to(user_reviews_path(managee))
       end
 
       it 'assigns the review to the managee' do
