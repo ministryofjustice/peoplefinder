@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140828142650) do
+ActiveRecord::Schema.define(version: 20140828142846) do
 
   create_table "reviews", force: true do |t|
     t.integer "subject_id"
@@ -24,6 +24,8 @@ ActiveRecord::Schema.define(version: 20140828142650) do
     t.text    "improvements"
     t.text    "rejection_reason"
   end
+
+  add_index "reviews", ["author_email"], name: "index_reviews_on_author_email", using: :btree
 
   create_table "tokens", force: true do |t|
     t.text     "value"
