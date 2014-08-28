@@ -14,10 +14,10 @@ class Review < ActiveRecord::Base
   end
 
   def accepted?
-    status.downcase =~ /accept/
+    status =~ /accept/
   end
 
   def declined?
-    status.downcase =~ /decline/
+    status =~ /decline/
   end
 end

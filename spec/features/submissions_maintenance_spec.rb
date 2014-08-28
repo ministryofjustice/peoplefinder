@@ -10,18 +10,21 @@ feature 'Submissions maintenance' do
   end
 
   scenario 'Accept a feedback request' do
-    click_link 'Accept / Reject'
-    choose 'Accepted'
-    click_button 'Update'
-
+    accept_feedback_request
     expect(Review.last).to be_accepted
   end
 
   scenario 'Decline a feedback request' do
     click_link 'Accept / Reject'
-    choose 'Declined'
+    choose 'declined'
     click_button 'Update'
 
     expect(Review.last).to be_declined
+  end
+
+  def accept_feedback_request
+    click_link 'Accept / Reject'
+    choose 'accepted'
+    click_button 'Update'
   end
 end
