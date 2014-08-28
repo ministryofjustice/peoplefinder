@@ -43,8 +43,8 @@ group :development, :test do
   gem 'dotenv-rails'
   gem 'guard-rspec', require: false
   gem 'jshint',
-    git: 'https://github.com/lowjoel/jshint.git',
-    tag: 'a88bd7a0a0ccb70133b2b109cca8fbd8fd15d315'
+    git: 'https://github.com/threedaymonk/jshint.git',
+    branch: 'master'
   gem 'konacha'
   gem 'pry'
   gem 'rspec-mocks'

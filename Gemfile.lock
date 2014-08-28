@@ -10,16 +10,6 @@ GIT
       mime-types (>= 1.16)
 
 GIT
-  remote: https://github.com/lowjoel/jshint.git
-  revision: a88bd7a0a0ccb70133b2b109cca8fbd8fd15d315
-  tag: a88bd7a0a0ccb70133b2b109cca8fbd8fd15d315
-  specs:
-    jshint (0.0.2)
-      execjs (>= 1.4.0)
-      multi_json (~> 1.0)
-      therubyracer (~> 0.12.1)
-
-GIT
   remote: https://github.com/ministryofjustice/moj_internal_template.git
   revision: e90118ed0982f5675731dba81fcdd36712f11097
   branch: master
@@ -35,6 +25,16 @@ GIT
   specs:
     omniauth-gplus (2.0.1)
       omniauth-oauth2 (~> 1.1)
+
+GIT
+  remote: https://github.com/threedaymonk/jshint.git
+  revision: b7fb727e07c76f6e388979169ea0c3b95e3075dd
+  branch: master
+  specs:
+    jshint (0.0.2)
+      execjs (>= 1.4.0)
+      multi_json (~> 1.0)
+      therubyracer (~> 0.12.1)
 
 GEM
   remote: https://rubygems.org/
