@@ -3,8 +3,6 @@ RSpec.describe SubmissionsController, type: :controller do
 
   let(:author) { create(:user) }
   let!(:submission) { create(:submission, author: author) }
-  let!(:feedback_request) { create(:feedback_request, author: author) }
-
   describe 'GET index' do
     context 'with an authenticated sesssion' do
       before { authenticate_as(author) }
@@ -17,11 +15,6 @@ RSpec.describe SubmissionsController, type: :controller do
       it 'assigns the submissions' do
         get :index
         expect(assigns(:submissions)).to include(submission)
-      end
-
-      it 'assigns the feedback_requests' do
-        get :index
-        expect(assigns(:feedback_requests)).to include(feedback_request)
       end
     end
 

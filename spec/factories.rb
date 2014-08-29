@@ -28,14 +28,6 @@ FactoryGirl.define do
     subject
     author_name { generate(:name) }
     author_email { generate(:email) }
-    status 'accepted'
-  end
-
-  factory :feedback_request do
-    subject
-    author_name { generate(:name) }
-    author_email { generate(:email) }
-    status 'no_response'
   end
 
   factory :subject, class: User do

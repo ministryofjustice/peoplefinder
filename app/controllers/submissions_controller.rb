@@ -3,7 +3,6 @@ class SubmissionsController < ApplicationController
 
   def index
     @submissions = scope.submissions.all
-    @feedback_requests = scope.feedback_requests.all
   end
 
   def edit
@@ -18,7 +17,8 @@ private
 
   def submission_params
     params.require(:submission).
-      permit(:rating, :achievements, :improvements, :submitted)
+      permit(:rating, :achievements, :improvements, :submitted,
+            :status, :rejection_reason)
   end
 
   def set_submission

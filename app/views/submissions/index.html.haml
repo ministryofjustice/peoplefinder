@@ -1,17 +1,6 @@
-- unless @feedback_requests.empty?
-  %h2
-    You have feedback requests from
-    #{ pluralize(@feedback_requests.count, 'colleague') }:
-
-  = render partial: 'feedback_requests/form', collection: @feedback_requests, as: :feedback_request
-
-- unless @submissions.empty?
-  %h2
-    You have accepted 360 feedback requests for
-    #{ pluralize(@submissions.count, 'colleague') }:
+%h2
+  You have 360 feedback requests from
+  #{ pluralize(@submissions.count, 'colleague') }:
 
 - @submissions.each do |submission|
-
-  %p
-    %strong= submission.author_name
-    = link_to 'Add feedback', edit_submission_path(submission)
+  = render partial: submission.status.to_s, locals: { submission: submission }

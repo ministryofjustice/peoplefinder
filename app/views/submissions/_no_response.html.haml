@@ -1,9 +1,9 @@
-%h4= feedback_request.subject.name
+%h4= submission.subject.name
 
 %p Please accept or reject this request:
-= simple_form_for feedback_request do |f|
+= simple_form_for submission, url: submission_path(submission) do |f|
   = f.input :status, as: :radio_buttons,
-                     collection: FeedbackRequest::TRANSITIONS.map{|s| [s.humanize, s] }
+                     collection: [['Accept', 'accepted'], ['Reject', 'rejected']]
 
   .rejection_reason_fields.hidden
     %p Please explain why you have rejected the request
