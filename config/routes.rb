@@ -1,6 +1,4 @@
 Rails.application.routes.draw do
-  root "home#index"
-
   get "/go/:id", to: "tokens#show", as: :token
 
   resources :reviews
