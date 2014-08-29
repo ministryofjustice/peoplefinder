@@ -25,6 +25,16 @@ feature 'Submissions maintenance' do
     expect(Submission.last.status).to eql('rejected')
   end
 
+  scenario 'Accept a previously rejected feedback request' do
+    visit token_url(build_token('rejected'))
+    Submission.last.update_attributes(rejection_reason: 'Wrong button')
+
+    click_button 'Accept request'
+
+    expect(Submission.last.rejection_reason).to be_empty
+    expect(Submission.last.status).to eql('started')
+  end
+
   scenario 'Submit feedback' do
     visit token_url(build_token('started'))
 
