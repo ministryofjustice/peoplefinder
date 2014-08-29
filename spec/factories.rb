@@ -11,7 +11,7 @@ FactoryGirl.define do
     "Name-%04d" % n
   end
 
-  factory :user do
+  factory :user, aliases: [:author, :subject] do
     email { generate(:email) }
   end
 
@@ -20,17 +20,13 @@ FactoryGirl.define do
 
   factory :review do
     subject
+    author
     author_name { generate(:name) }
-    author_email { generate(:email) }
   end
 
   factory :submission do
     subject
+    author
     author_name { generate(:name) }
-    author_email { generate(:email) }
-  end
-
-  factory :subject, class: User do
-    email { generate(:email) }
   end
 end
