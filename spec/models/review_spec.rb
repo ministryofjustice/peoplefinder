@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Review, type: :model do
-  let(:review) { Review.new }
+  let(:review) { build(:review) }
 
   it 'belongs_to a subject' do
     expect(review).to belong_to(:subject)
@@ -12,8 +12,6 @@ RSpec.describe Review, type: :model do
   end
 
   describe 'validations' do
-    let(:review) { build(:review) }
-
     it 'is valid' do
       expect(review).to be_valid
     end
@@ -32,14 +30,19 @@ RSpec.describe Review, type: :model do
       review.subject = nil
       expect(review).not_to be_valid
     end
+
+    it 'restricts status to the whitelist' do
+      review.status = 'garbage'
+      expect(review).not_to be_valid
+    end
   end
 
   describe '.send_feedback_request' do
-    let(:review) { create(:review) }
-    subject { review.send_feedback_request }
-
     it 'sends a feedback request email' do
-      expect { subject }.to change { ActionMailer::Base.deliveries.count }.by(1)
+      review.save!
+      expect {
+        review.send_feedback_request
+      }.to change { ActionMailer::Base.deliveries.count }.by(1)
     end
   end
 

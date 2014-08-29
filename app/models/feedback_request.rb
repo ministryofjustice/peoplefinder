@@ -1,3 +1,3 @@
 class FeedbackRequest < Review
-  TRANSITIONS = %w[ accept reject ]
+  TRANSITIONS = %w[ accepted rejected ]
 end

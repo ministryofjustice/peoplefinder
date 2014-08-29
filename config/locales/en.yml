@@ -26,8 +26,8 @@ en:
       create_error: 'No invitation sent. Please check the errors below'
   reviews:
     statuses:
-      accepted: 'Accepted'
-      completed: 'Completed'
-      incomplete: 'Incomplete'
-      rejected: 'Rejected'
       no_response: 'No response'
+      accepted: 'Accepted'
+      rejected: 'Rejected'
+      started: 'Started'
+      submitted: 'Submitted'
