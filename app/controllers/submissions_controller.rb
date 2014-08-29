@@ -18,7 +18,7 @@ private
 
   def submission_params
     params.require(:submission).
-      permit(:rating, :achievements, :improvements)
+      permit(:rating, :achievements, :improvements, :submitted)
   end
 
   def set_submission
