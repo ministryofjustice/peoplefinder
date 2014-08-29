@@ -37,15 +37,6 @@ RSpec.describe Review, type: :model do
     end
   end
 
-  describe '.send_feedback_request' do
-    it 'sends a feedback request email' do
-      review.save!
-      expect {
-        review.send_feedback_request
-      }.to change { ActionMailer::Base.deliveries.count }.by(1)
-    end
-  end
-
   describe 'status' do
     it 'should be "no response" initially' do
       expect(review.status).to eql('no_response')
