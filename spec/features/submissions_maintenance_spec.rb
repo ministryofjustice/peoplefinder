@@ -51,6 +51,20 @@ feature 'Submissions maintenance' do
     expect(submission.improvements).to eql('Could learn to...')
   end
 
+  scenario 'View the leadership model' do
+    visit token_url(build_token('started'))
+
+    click_link 'Add feedback'
+    click_link 'Leadership model'
+
+    within('h1') do
+      expect(page).to have_text('Leadership Model')
+    end
+
+    click_link 'Back'
+    expect(page).to have_link('Leadership model', href: leadership_model_path)
+  end
+
   def build_token(status)
     create(:review, status: status).tokens.create
   end

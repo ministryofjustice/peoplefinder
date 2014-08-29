@@ -9,4 +9,6 @@ Rails.application.routes.draw do
   resources :users, only: [:index] do
     resources :reviews
   end
+
+  get 'leadership_model', to: 'pages#leadership_model', as: :leadership_model
 end
