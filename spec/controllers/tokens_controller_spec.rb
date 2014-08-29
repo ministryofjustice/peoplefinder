@@ -10,8 +10,8 @@ RSpec.describe TokensController, type: :controller do
       get :show, id: token
     end
 
-    it 'redirects to the dashboard page' do
-      expect(response).to redirect_to(dashboard_path)
+    it 'redirects to the reviews page' do
+      expect(response).to redirect_to(reviews_path)
     end
 
     it 'sets the user in the session' do

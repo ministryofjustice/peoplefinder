@@ -14,7 +14,7 @@ private
   def authenticate_with(token)
     if token.user
       session[:current_user_id] = token.user_id
-      redirect_to dashboard_path
+      redirect_to reviews_path
 
     elsif token.review
       user = User.find_or_create_by(email: token.review.author_email)
