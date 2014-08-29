@@ -1,5 +1,5 @@
 class Review < ActiveRecord::Base
-  STATUSES = %w[ no_response accepted rejected started completed ]
+  STATUSES = %w[ no_response rejected started completed ]
 
   belongs_to :subject, class_name: 'User'
   belongs_to :author, class_name: 'User', foreign_key: 'author_email',

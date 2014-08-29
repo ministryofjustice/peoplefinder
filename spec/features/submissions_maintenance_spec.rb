@@ -10,7 +10,7 @@ feature 'Submissions maintenance' do
     choose 'Accept'
     click_button 'Update'
 
-    expect(Submission.last.status).to eql('accepted')
+    expect(Submission.last.status).to eql('started')
   end
 
   scenario 'Reject a feedback request' do
@@ -22,10 +22,11 @@ feature 'Submissions maintenance' do
     click_button 'Update'
 
     expect(Submission.last.rejection_reason).to eql('Some stuff')
+    expect(Submission.last.status).to eql('started')
   end
 
   scenario 'Submit feedback' do
-    visit token_url(build_token('accepted'))
+    visit token_url(build_token('started'))
 
     click_link 'Add feedback'
 

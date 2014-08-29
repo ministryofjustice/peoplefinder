@@ -27,7 +27,6 @@ en:
   reviews:
     statuses:
       no_response: 'No response'
-      accepted: 'Accepted'
       rejected: 'Rejected'
       started: 'Started'
       submitted: 'Submitted'

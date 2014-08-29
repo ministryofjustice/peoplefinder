@@ -16,9 +16,9 @@ class SubmissionsController < ApplicationController
 private
 
   def submission_params
-    params.require(:submission).
-      permit(:rating, :achievements, :improvements, :submitted,
-            :status, :rejection_reason)
+    params.require(:submission).permit(
+      :rating, :achievements, :improvements, :submitted,
+      :status, :rejection_reason)
   end
 
   def set_submission

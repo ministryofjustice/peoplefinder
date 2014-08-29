@@ -10,13 +10,13 @@ feature 'Review status' do
 
   scenario 'viewing the status of my feedback' do
     create :review, subject: me, author_name: 'Foxtrot', status: 'no_response'
-    create :review, subject: me, author_name: 'Golf', status: 'accepted'
+    create :review, subject: me, author_name: 'Golf', status: 'started'
     create :review, subject: me, author_name: 'Hotel', status: 'completed'
 
     visit reviews_path
 
     expect(page).to have_text('Foxtrot No response')
-    expect(page).to have_text('Golf Accepted')
+    expect(page).to have_text('Golf Started')
     expect(page).to have_text('Hotel Completed')
   end
 
@@ -24,14 +24,14 @@ feature 'Review status' do
     managee = create(:user, name: 'Joe Worker', manager: me)
 
     create :review, subject: managee, author_name: 'Foxtrot', status: 'no_response'
-    create :review, subject: managee, author_name: 'Golf', status: 'accepted'
+    create :review, subject: managee, author_name: 'Golf', status: 'started'
     create :review, subject: managee, author_name: 'Hotel', status: 'completed'
 
     visit users_path
     click_link managee.name
 
     expect(page).to have_text('Foxtrot No response')
-    expect(page).to have_text('Golf Accepted')
+    expect(page).to have_text('Golf Started')
     expect(page).to have_text('Hotel Completed')
   end
 end
