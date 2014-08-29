@@ -1,0 +1,3 @@
+= simple_form_for review, url: reminders_path, method: :post do |f|
+  = f.hidden_field :review_id, value: review.id
+  = f.button :submit, 'Send reminder'

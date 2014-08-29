@@ -5,6 +5,9 @@
       = review.author_name
       = t(review.status, scope: 'reviews.statuses')
 
+      - if review.status == 'no_response'
+        = render partial: 'send_reminder', locals: { review: review }
+
 = simple_form_for [@subject, @review].compact do |f|
   = f.input :author_email
   = f.input :author_name

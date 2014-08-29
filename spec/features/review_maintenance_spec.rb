@@ -18,6 +18,17 @@ feature 'Review maintenance' do
     check_mail_attributes(last_email, review)
   end
 
+  scenario 'Remind person to give me feedback' do
+    create(:review, subject: me)
+
+    visit reviews_path
+    click_button 'Send reminder'
+
+    review = me.reviews_received.last
+
+    check_mail_attributes(last_email, review)
+  end
+
   scenario 'Invite a new person to give my managee feedback' do
     managee = create(:user, manager: me)
 

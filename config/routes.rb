@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   resources :reviews
   resources :feedback_requests, only: [:update]
   resources :submissions, only: [:index, :edit, :update]
+  resources :reminders, only: [:create]
 
   resources :users, only: [:index] do
     resources :reviews
