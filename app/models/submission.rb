@@ -5,6 +5,6 @@ class Submission < Review
 private
 
   def update_status
-    self.status = submitted ? 'submitted' : 'started'
+    self.status = 'submitted' if submitted
   end
 end

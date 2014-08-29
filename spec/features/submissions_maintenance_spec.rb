@@ -22,7 +22,7 @@ feature 'Submissions maintenance' do
     click_button 'Update'
 
     expect(Submission.last.rejection_reason).to eql('Some stuff')
-    expect(Submission.last.status).to eql('started')
+    expect(Submission.last.status).to eql('rejected')
   end
 
   scenario 'Submit feedback' do
