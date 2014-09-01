@@ -1,3 +1,4 @@
+//= require spec_helper
 //= require org_tree
 
 describe('OrgTree', function() {

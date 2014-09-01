@@ -12,6 +12,13 @@ Rails.application.config.assets.precompile += %w[
   jquery.Jcrop.min.js
 ]
 
+unless Rails.env.production?
+  Rails.application.config.assets.precompile += %w[ teaspoon.css
+                                                    teaspoon-teaspoon.js
+                                                    mocha/1.17.1.js
+                                                    teaspoon-mocha.js ]
+end
+
 Dir.chdir(Rails.root.join('vendor', 'assets', 'components')) do
   Rails.application.config.assets.precompile += Dir['**/*.{js,css}']
 end
