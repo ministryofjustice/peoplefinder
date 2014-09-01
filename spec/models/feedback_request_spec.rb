@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Reminder, type: :model do
+RSpec.describe FeedbackRequest, type: :model do
   it 'sends a feedback request reminder to the user' do
     review = create(:review)
     token = double(:token)
