@@ -1,8 +1,7 @@
-= simple_form_for @submission do |f|
+= simple_form_for @submission, html: { class: 'autosave' } do |f|
   = f.input :rating, as: :radio_buttons, collection: %w{ Good Bad }
   = f.input :achievements
   = f.input :improvements
-  = f.hidden_field :submitted, value: true
   = f.button :submit, 'Submit'
 
 = link_to 'Leadership model', leadership_model_path

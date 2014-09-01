@@ -29,11 +29,26 @@ RSpec.describe SubmissionsController, type: :controller do
 
   describe 'PUT update' do
     context 'with an authenticated session' do
-      before { authenticate_as(author) }
+      before do
+        authenticate_as(author)
+        submission.status = 'started'
+        submission.save!
+      end
 
       it 'redirects to the replies list' do
         put :update, id: submission.id, submission: valid_attributes
         expect(response).to redirect_to(replies_path)
+      end
+
+      it 'changes the submission to submitted' do
+        put :update, id: submission.id, submission: valid_attributes
+        expect(submission.reload.status).to eql('submitted')
+      end
+
+      it 'keeps the status as started when autosave is set' do
+        put :update,
+          id: submission.id, submission: valid_attributes, autosave: 1
+        expect(submission.reload.status).to eql('started')
       end
     end
 

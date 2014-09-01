@@ -1,10 +1,10 @@
 require 'rails_helper'
 
-feature 'Submissions maintenance' do
+feature 'Submitting feedback' do
   let(:me) { create(:user) }
 
   scenario 'Submit feedback' do
-    visit token_url(build_token('started'))
+    visit token_path(build_token('started'))
 
     click_link 'Add feedback'
 
@@ -17,6 +17,24 @@ feature 'Submissions maintenance' do
     expect(submission.rating).to eql('Good')
     expect(submission.achievements).to eql('Some good stuff')
     expect(submission.improvements).to eql('Could learn to...')
+    expect(submission.status).to eql('submitted')
+  end
+
+  scenario 'Autosave feedback', js: true do
+    visit token_path(build_token('started'))
+
+    click_link 'Add feedback'
+
+    choose 'Good'
+    fill_in 'Achievements', with: 'Some good stuff'
+    fill_in 'Improvements', with: 'Could learn to...'
+    sleep 0.2
+
+    submission = Submission.last
+    expect(submission.rating).to eql('Good')
+    expect(submission.achievements).to eql('Some good stuff')
+    expect(submission.improvements).to eql('Could learn to...')
+    expect(submission.status).to eql('started')
   end
 
   scenario 'View the leadership model' do

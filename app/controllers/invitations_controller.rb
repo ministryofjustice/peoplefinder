@@ -1,9 +1,6 @@
 class InvitationsController < ApplicationController
   before_action :set_invitation, only: [:edit, :update]
 
-  def edit
-  end
-
   def update
     @invitation.update_attributes(invitation_params)
     redirect_to replies_path

@@ -6,6 +6,9 @@ class SubmissionsController < ApplicationController
 
   def update
     @submission.update_attributes(submission_params)
+    unless params[:autosave].present?
+      @submission.update_attributes(status: 'submitted')
+    end
     redirect_to replies_path
   end
 
