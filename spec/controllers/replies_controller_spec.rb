@@ -3,6 +3,8 @@ RSpec.describe RepliesController, type: :controller do
 
   let(:author) { create(:user) }
   let!(:reply) { create(:reply, author: author) }
+  before { create(:review_period) }
+
   describe 'GET index' do
     context 'with an authenticated sesssion' do
       before { authenticate_as(author) }
