@@ -1,5 +1,5 @@
 class ReviewsController < ApplicationController
-  before_action :load_explicit_subject, only: [:index, :create]
+  before_action :load_explicit_subject, only: [:index, :create, :show]
 
   def index
     @review = scope.new
@@ -17,6 +17,10 @@ class ReviewsController < ApplicationController
       error :create_error
       render action: :index
     end
+  end
+
+  def show
+    @review = scope.submitted.where(id: params[:id]).first
   end
 
 private

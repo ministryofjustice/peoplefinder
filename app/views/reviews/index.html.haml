@@ -2,11 +2,15 @@
 %ul
   - @reviews.each do |review|
     %li
-      = review.author_name
+      - if review.status == 'submitted'
+        = link_to review.author_name, review_path(review)
+      - else
+        = review.author_name
       = t(review.status, scope: 'reviews.statuses')
 
       - if review.status == 'no_response'
         = render partial: 'send_reminder', locals: { review: review }
+
 
 = simple_form_for [@subject, @review].compact do |f|
   = f.input :author_email

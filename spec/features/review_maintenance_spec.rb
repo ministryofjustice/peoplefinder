@@ -41,6 +41,21 @@ feature 'Review maintenance' do
     check_mail_attributes(last_email, review)
   end
 
+  scenario 'See feedback completed for me' do
+    review = create(:review, submitted_review_attributes.merge(subject: me))
+    visit reviews_path
+
+    click_link 'Danny Boy'
+
+    expect(page).to have_text('Feedback from Danny Boy')
+    expect(page).to have_text(review.rating)
+    expect(page).to have_text(review.achievements)
+    expect(page).to have_text(review.improvements)
+
+    click_link 'Back'
+    expect(page).to have_link('Danny Boy', href: review_path(review))
+  end
+
   def fill_in_feedback_request_form
     fill_in 'Name', with: 'Danny Boy'
     fill_in 'Email', with: 'danny@example.com'
@@ -58,5 +73,15 @@ feature 'Review maintenance' do
     expect(mail.subject).to eq('Request for feedback')
     link = links_in_email(mail).first
     expect(link).to eql(token_url(review.tokens.last))
+  end
+
+  def submitted_review_attributes
+    {
+      author_name: 'Danny Boy',
+      rating: 'Good',
+      achievements: 'Something done well',
+      improvements: 'Could be better',
+      status: 'submitted'
+    }
   end
 end

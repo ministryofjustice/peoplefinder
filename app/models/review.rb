@@ -11,4 +11,6 @@ class Review < ActiveRecord::Base
   validates :author_email, presence: true
   validates :author_name, presence: true
   validates :status, inclusion: { in: STATUSES }
+
+  scope :submitted, -> { where(status: 'submitted') }
 end

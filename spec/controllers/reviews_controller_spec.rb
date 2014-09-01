@@ -96,6 +96,40 @@ RSpec.describe ReviewsController, type: :controller do
     end
   end
 
+  describe 'GET show' do
+    let(:review) { create(:review, subject: me) }
+
+    before do
+      authenticate_as me
+    end
+
+    context 'with a review that has been submitted' do
+      before do
+        review.update_attributes(status: 'submitted')
+        get :show, id: review.id
+      end
+
+      it 'assigns the review' do
+        expect(assigns(:review)).to eql(review)
+      end
+
+      it 'renders the show template' do
+        expect(response).to render_template('show')
+      end
+    end
+
+    context 'with a review that has not been submitted' do
+      before do
+        review.update_attributes(status: 'started')
+        get :show, id: review.id
+      end
+
+      it 'should not assign the review' do
+        expect(assigns(:review)).to be_nil
+      end
+    end
+  end
+
   def valid_attributes
     {
       relationship: 'Colleague',
