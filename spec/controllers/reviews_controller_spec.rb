@@ -20,7 +20,6 @@ RSpec.describe ReviewsController, type: :controller do
   describe 'POST create' do
     before do
       authenticate_as me
-      get :index
     end
 
     describe 'with valid params and implicit subject' do
