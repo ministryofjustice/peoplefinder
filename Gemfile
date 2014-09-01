@@ -45,12 +45,12 @@ group :development, :test do
   gem 'jshint',
     git: 'https://github.com/threedaymonk/jshint.git',
     branch: 'master'
-  gem 'konacha'
   gem 'pry'
   gem 'rspec-mocks'
   gem 'rspec-rails', '~> 3.0.0'
   gem 'rubocop'
   gem 'rubocop-rspec'
+  gem 'teaspoon'
 end
 
 group :test do
