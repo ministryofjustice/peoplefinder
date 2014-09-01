@@ -3,7 +3,7 @@
 %p Please accept or reject this request:
 = simple_form_for reply, as: :invitation, url: invitation_path(reply) do |f|
   = f.input :status, as: :radio_buttons,
-                     collection: [['Accept', 'started'], ['Reject', 'rejected']]
+                     collection: [['Accept', 'accepted'], ['Reject', 'rejected']]
 
   .rejection_reason_fields.hidden
     %p Please explain why you have rejected the request

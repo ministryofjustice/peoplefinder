@@ -11,13 +11,13 @@ RSpec.describe InvitationsController, type: :controller do
       end
 
       it 'redirects to the replies list' do
-        put :update, id: invitation.id, invitation: { status: 'started' }
+        put :update, id: invitation.id, invitation: { status: 'accepted' }
         expect(response).to redirect_to(replies_path)
       end
 
-      it 'changes the invitation to started' do
-        put :update, id: invitation.id, invitation: { status: 'started' }
-        expect(invitation.reload.status).to eql('started')
+      it 'changes the invitation to accepted' do
+        put :update, id: invitation.id, invitation: { status: 'accepted' }
+        expect(invitation.reload.status).to eql('accepted')
       end
 
       it 'changes the invitation to rejected' do

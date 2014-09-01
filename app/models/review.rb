@@ -1,5 +1,5 @@
 class Review < ActiveRecord::Base
-  STATUSES = %w[ no_response rejected started submitted ]
+  STATUSES = %w[ no_response rejected accepted started submitted ]
 
   belongs_to :review_period
   belongs_to :subject, class_name: 'User'

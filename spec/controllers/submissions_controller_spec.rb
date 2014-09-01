@@ -31,7 +31,7 @@ RSpec.describe SubmissionsController, type: :controller do
     context 'with an authenticated session' do
       before do
         authenticate_as(author)
-        submission.status = 'started'
+        submission.status = 'accepted'
         submission.save!
       end
 
@@ -45,7 +45,7 @@ RSpec.describe SubmissionsController, type: :controller do
         expect(submission.reload.status).to eql('submitted')
       end
 
-      it 'keeps the status as started when autosave is set' do
+      it 'changes the submission to started on autosave' do
         put :update,
           id: submission.id, submission: valid_attributes, autosave: 1
         expect(submission.reload.status).to eql('started')

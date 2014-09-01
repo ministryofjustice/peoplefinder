@@ -28,5 +28,6 @@ en:
     statuses:
       no_response: 'No response'
       rejected: 'Rejected'
+      accepted: 'Accepted'
       started: 'Started'
       submitted: 'Completed'

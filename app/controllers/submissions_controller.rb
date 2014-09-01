@@ -6,16 +6,14 @@ class SubmissionsController < ApplicationController
 
   def update
     @submission.update_attributes(submission_params)
-    unless params[:autosave].present?
-      @submission.update_attributes(status: 'submitted')
-    end
     redirect_to replies_path
   end
 
 private
 
   def submission_params
-    params.require(:submission).permit(:rating, :achievements, :improvements)
+    params.require(:submission).permit(:rating, :achievements, :improvements).
+      merge(status: params[:autosave].present? ? 'started' : 'submitted')
   end
 
   def set_submission

@@ -4,7 +4,7 @@ feature 'Submitting feedback' do
   let(:me) { create(:user) }
 
   scenario 'Submit feedback' do
-    visit token_path(build_token('started'))
+    visit token_path(build_token('accepted'))
 
     click_link 'Add feedback'
 
@@ -21,7 +21,7 @@ feature 'Submitting feedback' do
   end
 
   scenario 'Autosave feedback', js: true do
-    visit token_path(build_token('started'))
+    visit token_path(build_token('accepted'))
 
     click_link 'Add feedback'
 
@@ -38,7 +38,7 @@ feature 'Submitting feedback' do
   end
 
   scenario 'View the leadership model' do
-    visit token_url(build_token('started'))
+    visit token_url(build_token('accepted'))
 
     click_link 'Add feedback'
     click_link 'Leadership model'
