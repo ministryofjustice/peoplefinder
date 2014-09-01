@@ -1,3 +1,5 @@
+= render partial: 'shared/dashboard'
+
 %h1 Feedback from #{ @review.author_name}
 
 %p General performance rating: #{ @review.rating}
@@ -8,4 +10,4 @@
 %h4 Where would a different approach or behaviour have worked better and why?
 %p #{ @review.improvements }
 
-= link_to 'Back to participant list', reviews_path
+= link_to 'Back to participant list', :back

@@ -1,1 +1,4 @@
 %h1 #{current_user}’s dashboard
+
+- if @subject
+  %h2 Direct report: #{ @subject.name }

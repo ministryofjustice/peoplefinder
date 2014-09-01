@@ -56,6 +56,30 @@ feature 'Review maintenance' do
     expect(page).to have_link('Danny Boy', href: review_path(review))
   end
 
+  scenario 'See feedback completed for my managee' do
+    managee = create(:user, manager: me, name: 'Marvin Managee')
+    review = create(:review, submitted_review_attributes.merge(subject: managee))
+
+    visit users_path
+
+    within('ul') do
+      click_link 'Marvin Managee'
+    end
+
+    expect(page).to have_text('Direct report: Marvin Managee')
+    click_link 'Danny Boy'
+
+    expect(page).to have_text('Direct report: Marvin Managee')
+    expect(page).to have_text('Feedback from Danny Boy')
+    expect(page).to have_text(review.rating)
+    expect(page).to have_text(review.achievements)
+    expect(page).to have_text(review.improvements)
+
+    click_link 'Back'
+    expect(page).to have_link('Danny Boy', href: polymorphic_path([managee, review]))
+    expect(page).to have_text('Direct report: Marvin Managee')
+  end
+
   def fill_in_feedback_request_form
     fill_in 'Name', with: 'Danny Boy'
     fill_in 'Email', with: 'danny@example.com'

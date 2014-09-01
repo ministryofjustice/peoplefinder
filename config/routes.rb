@@ -8,7 +8,7 @@ Rails.application.routes.draw do
   resources :submissions, only: [:index, :edit, :update]
   resources :reminders, only: [:create]
 
-  resources :users, only: [:index] do
+  resources :users, only: [:index, :show] do
     resources :reviews
   end
 

@@ -3,7 +3,7 @@
   - @reviews.each do |review|
     %li
       - if review.status == 'submitted'
-        = link_to review.author_name, review_path(review)
+        = link_to review.author_name, polymorphic_path([@subject,review].compact)
       - else
         = review.author_name
       = t(review.status, scope: 'reviews.statuses')
