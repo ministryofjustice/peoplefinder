@@ -11,7 +11,7 @@ feature 'Review status' do
   scenario 'viewing the status of my feedback' do
     create :review, subject: me, author_name: 'Foxtrot', status: 'no_response'
     create :review, subject: me, author_name: 'Golf', status: 'started'
-    create :review, subject: me, author_name: 'Hotel', status: 'completed'
+    create :review, subject: me, author_name: 'Hotel', status: 'submitted'
 
     visit reviews_path
 
@@ -25,7 +25,7 @@ feature 'Review status' do
 
     create :review, subject: managee, author_name: 'Foxtrot', status: 'no_response'
     create :review, subject: managee, author_name: 'Golf', status: 'started'
-    create :review, subject: managee, author_name: 'Hotel', status: 'completed'
+    create :review, subject: managee, author_name: 'Hotel', status: 'submitted'
 
     visit users_path
     click_link managee.name
