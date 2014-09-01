@@ -1,0 +1,2 @@
+class Reply < Review
+end

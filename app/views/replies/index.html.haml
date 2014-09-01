@@ -1,0 +1,6 @@
+%h2
+  You have 360 feedback requests from
+  #{ pluralize(@replies.count, 'colleague') }:
+
+- @replies.each do |reply|
+  = render partial: reply.status.to_s, locals: { reply: reply }

@@ -27,8 +27,8 @@ RSpec.describe TokensController, type: :controller do
       get :show, id: token
     end
 
-    it 'redirects to the submissions list' do
-      expect(response).to redirect_to(submissions_path)
+    it 'redirects to the replies list' do
+      expect(response).to redirect_to(replies_path)
     end
 
     context 'with a new user' do

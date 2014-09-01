@@ -3,28 +3,6 @@ RSpec.describe SubmissionsController, type: :controller do
 
   let(:author) { create(:user) }
   let!(:submission) { create(:submission, author: author) }
-  describe 'GET index' do
-    context 'with an authenticated sesssion' do
-      before { authenticate_as(author) }
-
-      it 'renders the index template' do
-        get :index
-        expect(response).to render_template('index')
-      end
-
-      it 'assigns the submissions' do
-        get :index
-        expect(assigns(:submissions)).to include(submission)
-      end
-    end
-
-    context 'without an authenticated session' do
-      it 'returns 403 forbidden' do
-        get :index
-        expect(response).to be_forbidden
-      end
-    end
-  end
 
   describe 'GET edit' do
     context 'with an authenticated sesssion' do
@@ -53,9 +31,9 @@ RSpec.describe SubmissionsController, type: :controller do
     context 'with an authenticated session' do
       before { authenticate_as(author) }
 
-      it 'redirects to the submissions list' do
+      it 'redirects to the replies list' do
         put :update, id: submission.id, submission: valid_attributes
-        expect(response).to redirect_to(submissions_path)
+        expect(response).to redirect_to(replies_path)
       end
     end
 

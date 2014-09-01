@@ -18,21 +18,5 @@ RSpec.describe Submission, type: :model do
         expect(submission.status).to eql('rejected')
       end
     end
-
-    context 'when the status is set to "started"' do
-      before { submission.status = 'started' }
-
-      it 'is "submitted" after update with submitted=true' do
-        submission.submitted = true
-        submission.save!
-        expect(submission.status).to eql('submitted')
-      end
-
-      it 'is "started" after update with submitted=false' do
-        submission.submitted = false
-        submission.save!
-        expect(submission.status).to eql('started')
-      end
-    end
   end
 end

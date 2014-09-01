@@ -19,7 +19,7 @@ private
     elsif token.review
       user = User.find_or_create_by(email: token.review.author_email)
       session[:current_user_id] = user.id
-      redirect_to submissions_path
+      redirect_to replies_path
     end
   end
 end

@@ -1,6 +1,6 @@
-= simple_form_for submission, url: submission_path(submission) do |f|
+= simple_form_for reply, as: :invitation, url: invitation_path(reply) do |f|
   %p
-  %strong= submission.subject.name
+  %strong= reply.subject.name
   = f.input :status, as: :hidden, input_html: { value: 'started' }
   = f.input :rejection_reason, as: :hidden, input_html: { value: '' }
   = f.button :submit, 'Accept request'

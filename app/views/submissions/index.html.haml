@@ -1,6 +1,0 @@
-%h2
-  You have 360 feedback requests from
-  #{ pluralize(@submissions.count, 'colleague') }:
-
-- @submissions.each do |submission|
-  = render partial: submission.status.to_s, locals: { submission: submission }

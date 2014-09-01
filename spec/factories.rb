@@ -24,9 +24,23 @@ FactoryGirl.define do
     author_name { generate(:name) }
   end
 
+  factory :reply do
+    subject
+    author
+    author_name { generate(:name) }
+  end
+
+  factory :invitation do
+    subject
+    author
+    author_name { generate(:name) }
+    status 'no_response'
+  end
+
   factory :submission do
     subject
     author
     author_name { generate(:name) }
+    status 'started'
   end
 end
