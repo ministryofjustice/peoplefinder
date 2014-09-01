@@ -1,3 +1,3 @@
 class Submission < Reply
-  default_scope { where(status: %w[ accepted started submitted ]) }
+  default_scope { where(status: [:accepted, :started, :submitted]) }
 end

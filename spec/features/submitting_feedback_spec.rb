@@ -4,7 +4,7 @@ feature 'Submitting feedback' do
   let(:me) { create(:user) }
 
   scenario 'Submit feedback' do
-    visit token_path(build_token('accepted'))
+    visit token_path(build_token(:accepted))
 
     click_link 'Add feedback'
 
@@ -17,11 +17,11 @@ feature 'Submitting feedback' do
     expect(submission.rating).to eql('Good')
     expect(submission.achievements).to eql('Some good stuff')
     expect(submission.improvements).to eql('Could learn to...')
-    expect(submission.status).to eql('submitted')
+    expect(submission.status).to eql(:submitted)
   end
 
   scenario 'Autosave feedback', js: true do
-    visit token_path(build_token('accepted'))
+    visit token_path(build_token(:accepted))
 
     click_link 'Add feedback'
 
@@ -34,11 +34,11 @@ feature 'Submitting feedback' do
     expect(submission.rating).to eql('Good')
     expect(submission.achievements).to eql('Some good stuff')
     expect(submission.improvements).to eql('Could learn to...')
-    expect(submission.status).to eql('started')
+    expect(submission.status).to eql(:started)
   end
 
   scenario 'View the leadership model' do
-    visit token_url(build_token('accepted'))
+    visit token_url(build_token(:accepted))
 
     click_link 'Add feedback'
     click_link 'Leadership model'

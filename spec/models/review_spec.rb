@@ -39,7 +39,7 @@ RSpec.describe Review, type: :model do
 
   describe 'status' do
     it 'should be "no response" initially' do
-      expect(review.status).to eql('no_response')
+      expect(review.status).to eql(:no_response)
     end
   end
 

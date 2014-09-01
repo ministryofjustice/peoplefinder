@@ -106,7 +106,7 @@ feature 'Review maintenance' do
       rating: 'Good',
       achievements: 'Something done well',
       improvements: 'Could be better',
-      status: 'submitted'
+      status: :submitted
     }
   end
 end

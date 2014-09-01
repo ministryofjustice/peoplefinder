@@ -2,13 +2,13 @@
 %ul
   - @reviews.each do |review|
     %li
-      - if review.status == 'submitted'
+      - if review.status == :submitted
         = link_to review.author_name, polymorphic_path([@subject,review].compact)
       - else
         = review.author_name
       = t(review.status, scope: 'reviews.statuses')
 
-      - if review.status == 'no_response'
+      - if review.status == :no_response
         = render partial: 'send_reminder', locals: { review: review }
 
 

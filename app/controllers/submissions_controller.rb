@@ -13,7 +13,7 @@ private
 
   def submission_params
     params.require(:submission).permit(:rating, :achievements, :improvements).
-      merge(status: params[:autosave].present? ? 'started' : 'submitted')
+      merge(status: params[:autosave].present? ? :started : :submitted)
   end
 
   def set_submission

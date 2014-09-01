@@ -1,3 +1,3 @@
 class Invitation < Reply
-  default_scope { where(status: %w[ no_response rejected ]) }
+  default_scope { where(status: [:no_response, :rejected]) }
 end

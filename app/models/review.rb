@@ -1,5 +1,5 @@
 class Review < ActiveRecord::Base
-  STATUSES = %w[ no_response rejected accepted started submitted ]
+  STATUSES = [:no_response, :rejected, :accepted, :started, :submitted]
 
   belongs_to :review_period
   belongs_to :subject, class_name: 'User'
@@ -12,9 +12,15 @@ class Review < ActiveRecord::Base
   validates :subject, presence: true
   validates :author_email, presence: true
   validates :author_name, presence: true
-  validates :status, inclusion: { in: STATUSES }
+  validates :status, presence: true, inclusion: { in: STATUSES }
 
-  scope :submitted, -> { where(status: 'submitted') }
+  scope :submitted, -> { where(status: :submitted) }
+
+  # Convert status to a symbol safely
+  STATUS_LOOKUP = Hash[STATUSES.map(&:to_s).zip(STATUSES)]
+  def status
+    STATUS_LOOKUP[super.to_s]
+  end
 
   before_validation(on: :create) do
     self.review_period = ReviewPeriod.current

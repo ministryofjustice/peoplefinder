@@ -36,7 +36,7 @@ FactoryGirl.define do
     subject
     author
     author_name { generate(:name) }
-    status 'no_response'
+    status :no_response
     review_period
   end
 
@@ -44,7 +44,7 @@ FactoryGirl.define do
     subject
     author
     author_name { generate(:name) }
-    status 'started'
+    status :started
     review_period
   end
 

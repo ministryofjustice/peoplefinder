@@ -106,7 +106,7 @@ RSpec.describe ReviewsController, type: :controller do
 
     context 'with a review that has been submitted' do
       before do
-        review.update_attributes(status: 'submitted')
+        review.update_attributes(status: :submitted)
         get :show, id: review.id
       end
 
@@ -121,7 +121,7 @@ RSpec.describe ReviewsController, type: :controller do
 
     context 'with a review that has not been submitted' do
       before do
-        review.update_attributes(status: 'started')
+        review.update_attributes(status: :started)
         get :show, id: review.id
       end
 
