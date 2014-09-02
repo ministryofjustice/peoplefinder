@@ -1,3 +1,1 @@
-%p
-  %strong= reply.author_name
-  = link_to 'Add feedback', edit_submission_path(reply)
+= render partial: 'accepted', locals: { reply: reply }
