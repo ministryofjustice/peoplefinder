@@ -13,7 +13,7 @@ feature 'Review maintenance' do
     visit reviews_path
     fill_in_feedback_request_form
 
-    review = me.reviews_received.last
+    review = me.reviews.last
     check_review_attributes(review)
 
     check_mail_attributes(last_email, review)
@@ -25,7 +25,7 @@ feature 'Review maintenance' do
     visit reviews_path
     click_button 'Send reminder'
 
-    review = me.reviews_received.last
+    review = me.reviews.last
 
     check_mail_attributes(last_email, review)
   end
@@ -36,7 +36,7 @@ feature 'Review maintenance' do
     visit user_reviews_path(managee)
     fill_in_feedback_request_form
 
-    review = managee.reviews_received.last
+    review = managee.reviews.last
     check_review_attributes(review)
 
     check_mail_attributes(last_email, review)

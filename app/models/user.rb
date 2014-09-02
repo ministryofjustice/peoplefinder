@@ -4,7 +4,7 @@ class User < ActiveRecord::Base
   belongs_to :manager, class_name: 'User'
 
   has_many :managees, foreign_key: :manager_id, class_name: 'User'
-  has_many :reviews_received, foreign_key: :subject_id, class_name: 'Review'
+  has_many :reviews, foreign_key: :subject_id
   has_many :replies, foreign_key: 'author_email', primary_key: 'email'
   has_many :submissions, foreign_key: 'author_email', primary_key: 'email'
   has_many :invitations, foreign_key: 'author_email', primary_key: 'email'

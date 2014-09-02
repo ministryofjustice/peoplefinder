@@ -17,11 +17,10 @@ private
   end
 
   def set_review
-    @review = scope.reviews_received.
-                    where(id: reminder_params[:review_id]).first
+    @review = scope.where(id: reminder_params[:review_id]).first
   end
 
   def scope
-    current_user
+    current_user.reviews
   end
 end

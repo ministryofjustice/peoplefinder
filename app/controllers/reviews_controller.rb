@@ -31,7 +31,7 @@ private
   end
 
   def scope
-    (@subject || current_user).reviews_received
+    (@subject || current_user).reviews
   end
 
   def load_explicit_subject
