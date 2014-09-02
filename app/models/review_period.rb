@@ -1,9 +1,5 @@
 class ReviewPeriod < ActiveRecord::Base
-  validate on: :create do
-    if ReviewPeriod.current
-      errors.add(:base, 'There is already a current review period')
-    end
-  end
+  validate :unique_current_review_period, on: :create
 
   def self.current
     ReviewPeriod.where(ended_at: nil).first
@@ -11,5 +7,13 @@ class ReviewPeriod < ActiveRecord::Base
 
   def close!
     update_attributes(ended_at: Time.now)
+  end
+
+private
+
+  def unique_current_review_period
+    if ReviewPeriod.current
+      errors.add(:base, 'There is already a current review period')
+    end
   end
 end
