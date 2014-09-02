@@ -24,6 +24,11 @@ RSpec.describe InvitationsController, type: :controller do
         put :update, id: invitation.id, invitation: { status: :rejected }
         expect(invitation.reload.status).to eql(:rejected)
       end
+
+      it 'returns an error message is the status was invalid' do
+        put :update, id: invitation.id, invitation: { status: :cheese_sandwich }
+        expect(request.flash[:error]).to_not be_empty
+      end
     end
 
     context 'without an authenticated session' do

@@ -24,6 +24,10 @@ en:
     reviews:
       created: 'Invited %{name}'
       create_error: 'No invitation sent. Please check the errors below'
+    invitations:
+      accepted: "Thank you for accepting the invitation"
+      rejected: "You have rejected the invitation to provide feedback"
+      update_error: 'There was an error updating the status'
   reviews:
     statuses:
       no_response: 'No response'

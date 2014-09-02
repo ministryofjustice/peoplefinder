@@ -2,7 +2,12 @@ class InvitationsController < ApplicationController
   before_action :set_invitation, only: [:edit, :update]
 
   def update
-    @invitation.update_attributes(invitation_params)
+    if @invitation.change_state(invitation_params[:status],
+      invitation_params[:rejection_reason])
+      notice(invitation_params[:status].to_sym)
+    else
+      error(:update_error)
+    end
     redirect_to replies_path
   end
 
