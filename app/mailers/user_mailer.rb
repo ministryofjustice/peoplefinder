@@ -6,4 +6,10 @@ class UserMailer < ActionMailer::Base
     @token = token
     mail to: @user.email
   end
+
+  def closure_notification(user, token)
+    @user = user
+    @token = token
+    mail to: @user.email
+  end
 end
