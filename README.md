@@ -14,6 +14,23 @@ For email to work, certain environment variables must be set:
 For local development, you can use a `.env` file; see `.env.sample` for an
 example.
 
+## Closing the review period
+
+At the end of the feedback process, you can 'close' the review period
+by setting an environment variable:
+
+`REVIEW_PERIOD=CLOSED`
+
+When the review period is 'closed', you can notify the participants that
+their feedback is ready to be viewed:
+
+`ReviewPeriod.new.send_closure_notifications`
+
+To check the list of participants:
+
+`ReviewPeriod.new.participants`
+
+
 ## Utilities
 
 CI by [Travis](https://travis-ci.org/ministryofjustice/scs_appraisals).
