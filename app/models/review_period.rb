@@ -1,7 +1,4 @@
 class ReviewPeriod
-  def initialize
-  end
-
   def send_closure_notifications
     if ENV['REVIEW_PERIOD'] == 'CLOSED'
       participants.each do |participant|
