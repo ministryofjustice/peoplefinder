@@ -3,7 +3,7 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   # protect_from_forgery with: :exception
   before_action :ensure_user
-  before_action :check_review_period_closure
+  before_action :check_review_period_is_open
 
 private
 
@@ -26,7 +26,7 @@ private
     false
   end
 
-  def check_review_period_closure
+  def check_review_period_is_open
     if ENV['REVIEW_PERIOD'] == 'CLOSED'
       render text: t(:review_period_closed)
     end

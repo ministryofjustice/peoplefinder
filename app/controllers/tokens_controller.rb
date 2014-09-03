@@ -1,5 +1,5 @@
 class TokensController < ApplicationController
-  skip_before_action :ensure_user, :check_review_period_closure
+  skip_before_action :ensure_user, :check_review_period_is_open
 
   def show
     token = Token.where(value: params[:id]).first
