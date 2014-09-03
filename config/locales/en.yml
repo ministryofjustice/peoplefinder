@@ -35,3 +35,4 @@ en:
       accepted: 'Accepted'
       started: 'Started'
       submitted: 'Completed'
+  review_period_closed: 'Feedback report period has ended'

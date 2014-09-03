@@ -3,6 +3,7 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   # protect_from_forgery with: :exception
   before_action :ensure_user
+  before_action :check_review_period_closure
 
 private
 
@@ -23,6 +24,12 @@ private
   def forbidden
     render 'shared/forbidden', status: :forbidden
     false
+  end
+
+  def check_review_period_closure
+    if ENV['REVIEW_PERIOD'] == 'CLOSED'
+      render text: t(:review_period_closed)
+    end
   end
 
   def i18n_flash(type, partial_key, options = {})
