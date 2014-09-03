@@ -8,6 +8,7 @@ class User < ActiveRecord::Base
   has_many :replies, foreign_key: 'author_email', primary_key: 'email'
   has_many :submissions, foreign_key: 'author_email', primary_key: 'email'
   has_many :invitations, foreign_key: 'author_email', primary_key: 'email'
+  validates :email, format: /.@./
 
   default_scope { order(:name) }
 
