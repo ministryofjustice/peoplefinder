@@ -36,32 +36,7 @@ Teaspoon.configure do |config|
   # - with the cli: teaspoon --suite=[suite_name]
   config.suite do |suite|
 
-    # Specify the framework you would like to use. This allows you to select versions, and will do some basic setup for
-    # you -- which you can override with the directives below. This should be specified first, as it can override other
-    # directives.
-    # Note: If no version is specified, the latest is assumed.
-    #
-    # Available: jasmine[1.3.1, 2.0.0], mocha[1.10.0, 1.17.1] qunit[1.12.0, 1.14.0]
     suite.use_framework :mocha
-
-    # Specify a file matcher as a regular expression and all matching files will be loaded when the suite is run. These
-    # files need to be within an asset path. You can add asset paths using the `config.asset_paths`.
-    # suite.matcher = "{spec/javascripts,app/assets}/**/*_spec.{js,js.coffee,coffee}"
-
-    # This suites spec helper, which can require additional support files. This file is loaded before any of your test
-    # files are loaded.
-    # suite.helper = "spec_helper"
-
-    # The core Teaspoon javascripts. It's recommended to include only the base files here, as you can require support
-    # libraries from your spec helper.
-    # Note: For CoffeeScript files use `"teaspoon/jasmine"` etc.
-    #
-    # Available: teaspoon-jasmine, teaspoon-mocha, teaspoon-qunit
-    # suite.javascripts = ["mocha/1.17.1", "teaspoon-mocha"]
-
-    # You can include your own stylesheets if you want to change how Teaspoon looks.
-    # Note: Spec related CSS can and should be loaded using fixtures.
-    # suite.stylesheets = ["teaspoon"]
 
     # Partial to be rendered in the head tag of the runner. You can use the provided ones or define your own by creating
     # a `_boot.html.erb` in your fixtures path, and adjust the config to `"/boot"` for instance.
@@ -157,26 +132,24 @@ Teaspoon.configure do |config|
   # - with the cli: teaspoon --coverage=[coverage_name]
 
   # Specify that you always want a coverage configuration to be used.
-  # config.use_coverage = nil
+  config.use_coverage = :CI
 
-  # config.coverage do |coverage|
+  config.coverage :CI do |coverage|
 
-  # Which coverage reports Instanbul should generate. Correlates directly to what Istanbul supports.
-  #
-  # Available: text-summary, text, html, lcov, lcovonly, cobertura, teamcity
-  # coverage.reports = ["text-summary", "html"]
+    # Available: text-summary, text, html, lcov, lcovonly, cobertura, teamcity
+    coverage.reports = ["text", "text-summary", "html"]
 
-  # The path that the coverage should be written to - when there's an artifact to write to disk.
-  # Note: Relative to `config.root`.
-  # coverage.output_dir = "coverage"
+    # The path that the coverage should be written to - when there's an artifact to write to disk.
+    # Note: Relative to `config.root`.
+    # coverage.output_dir = "coverage/js"
 
-  # Various thresholds requirements can be defined, and those thresholds will be checked at the end of a run. If any
-  # aren't met the run will fail with a message. Thresholds can be defined as a percentage (0-100), or nil.
-  # coverage.statements = nil
-  # coverage.functions = nil
-  # coverage.branches = nil
-  # coverage.lines = nil
+    # Various thresholds requirements can be defined, and those thresholds will be checked at the end of a run. If any
+    # aren't met the run will fail with a message. Thresholds can be defined as a percentage (0-100), or nil.
+    coverage.statements = 80
+    coverage.functions = 100
+    coverage.branches = 80
+    coverage.lines = 80
 
-  # end
+  end
 
 end

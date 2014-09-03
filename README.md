@@ -61,6 +61,10 @@ You'll need to install PhantomJS in order to run the headless browser tests.
 
 `brew install phantomjs`
 
+Also, if you'd like test coverage for Javascript you'll need to have Node and Istanbul installed. The easiest way to do this is installing Node via nvm and then use npm to install Istanbul like so:
+
+`npm install -g istanbul`
+
 ## Utilities
 
 CI by [Travis](https://travis-ci.org/ministryofjustice/peoplefinder).

@@ -5,13 +5,9 @@
 
 var Funnel = {
     attrScope: 'pf',
-    source: null,
-    init: function(scope, source){
+    init: function(scope){
         if(scope){
             this.attrScope = scope;
-        }
-        if(source){
-            this.source = source;
         }
         return this;
     },
@@ -28,12 +24,7 @@ var Funnel = {
         ga.apply(['send', 'event'].concat(args));
     },
     sendPageView: function(locator){
-        var val = null;
-        if(this.source){
-            val = jQuery(locator, this.source).data('pageview');
-        }else{
-            val = jQuery(locator).data('pageview');
-        }
+        var val = jQuery(locator).data('pageview');
         ga('send', val);
     },
     update: function(){
