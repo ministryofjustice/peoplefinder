@@ -1,11 +1,12 @@
 require 'rails_helper'
 
-feature 'Closed review period' do
+feature 'Closed review period', closed_review_period: true do
   let(:me) { create(:user) }
-  let!(:review) { create(:review, subject: me) }
-
-  before(:each) { ENV['REVIEW_PERIOD'] = 'CLOSED' }
-  after(:each) { ENV['REVIEW_PERIOD'] = nil }
+  let!(:review) do
+    create(:review, subject: me,
+                    author_name: 'Danny Boy',
+                    achievements: 'Some good stuff')
+  end
 
   scenario 'As the subject of a review' do
     ReviewPeriod.new.send_closure_notifications

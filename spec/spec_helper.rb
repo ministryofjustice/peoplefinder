@@ -93,4 +93,5 @@ RSpec.configure do |config|
   config.include FactoryGirl::Syntax::Methods
   config.include SpecSupport::Authentication
   config.include SpecSupport::Features
+  config.include SpecSupport::ReviewPeriod
 end

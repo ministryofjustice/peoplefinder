@@ -26,10 +26,13 @@ private
     false
   end
 
+  def review_period_closed?
+    ENV['REVIEW_PERIOD'] == 'CLOSED'
+  end
+  helper_method :review_period_closed?
+
   def check_review_period_is_open
-    if ENV['REVIEW_PERIOD'] == 'CLOSED'
-      render text: t(:review_period_closed)
-    end
+    redirect_to results_reviews_path if review_period_closed?
   end
 
   def i18n_flash(type, partial_key, options = {})

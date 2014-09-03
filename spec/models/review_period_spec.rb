@@ -22,9 +22,7 @@ RSpec.describe ReviewPeriod do
     end
   end
 
-  context 'When the REVIEW_PERIOD is CLOSED' do
-    before { ENV['REVIEW_PERIOD'] = 'CLOSED' }
-    after { ENV['REVIEW_PERIOD'] = nil }
+  context 'When the REVIEW_PERIOD is CLOSED', closed_review_period: true do
 
     it 'sends closure notifications to three people' do
       expect {
