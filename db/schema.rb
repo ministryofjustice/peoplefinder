@@ -11,13 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140901143425) do
-
-  create_table "review_periods", force: true do |t|
-    t.datetime "ended_at"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
+ActiveRecord::Schema.define(version: 20140903094714) do
 
   create_table "reviews", force: true do |t|
     t.integer "subject_id"
@@ -29,7 +23,6 @@ ActiveRecord::Schema.define(version: 20140901143425) do
     t.text    "achievements"
     t.text    "improvements"
     t.text    "rejection_reason"
-    t.integer "review_period_id"
   end
 
   add_index "reviews", ["author_email"], name: "index_reviews_on_author_email", using: :btree

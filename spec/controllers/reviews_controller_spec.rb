@@ -1,7 +1,6 @@
 require 'rails_helper'
 RSpec.describe ReviewsController, type: :controller do
   let(:me) { create(:user) }
-  before { create(:review_period) }
 
   describe 'GET new' do
     before do

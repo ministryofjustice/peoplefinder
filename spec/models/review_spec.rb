@@ -42,29 +42,4 @@ RSpec.describe Review, type: :model do
       expect(review.status).to eql(:no_response)
     end
   end
-
-  describe 'review period' do
-    let(:review) { build(:review, review_period: nil) }
-
-    context 'with a current review period on create' do
-      before do
-        ReviewPeriod.create
-        review.save!
-      end
-
-      it 'sets the review_period on create' do
-        expect(review.review_period).to eql(ReviewPeriod.current)
-      end
-
-      it 'is valid' do
-        expect(review).to be_valid
-      end
-    end
-
-    context 'without a current review period on create' do
-      it 'has a validation error' do
-        expect { review.save! }.to raise_error(ActiveRecord::RecordInvalid)
-      end
-    end
-  end
 end

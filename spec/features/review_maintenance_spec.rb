@@ -4,7 +4,6 @@ feature 'Review maintenance' do
   let(:me) { create(:user) }
 
   before do
-    create(:review_period)
     token = create(:token, user: me)
     visit token_path(token)
   end
