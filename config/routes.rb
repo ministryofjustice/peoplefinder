@@ -16,6 +16,9 @@ Rails.application.routes.draw do
 
   namespace :results do
     resources :reviews, only: [:index]
+    resources :users, only: [:index] do
+      resources :reviews, only: [:index]
+    end
   end
 
   get 'leadership_model', to: 'pages#leadership_model', as: :leadership_model

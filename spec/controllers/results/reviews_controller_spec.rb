@@ -18,6 +18,14 @@ RSpec.describe Results::ReviewsController, type: :controller do
     it 'assigns the reviews' do
       expect(assigns(:reviews)).to include(review)
     end
+
+    context 'as a manager with ' do
+      let(:user) { create(:user, manager: me) }
+
+      it 'assigns the users (for that manager)' do
+        expect(assigns(:users)).to include(user)
+      end
+    end
   end
 
   context 'when the review period is *not* closed' do
