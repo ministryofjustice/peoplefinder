@@ -12,6 +12,8 @@ class User < ActiveRecord::Base
 
   default_scope { order(:name) }
 
+  scope :participants, -> { where(participant: true) }
+
   def to_s
     [name, email].reject(&:blank?).first
   end

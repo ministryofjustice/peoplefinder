@@ -19,6 +19,9 @@ END
     expect(alice.name).to eql('Alice')
     expect(bob.name).to eql('Bob')
     expect(charlie.name).to eql('Charlie')
+
+    expect(alice).to be_participant
+    expect(User.participants.map(&:name).sort).to eql(%w[Alice Bob Charlie])
   end
 
   it 'creates management relationships based on manager email' do

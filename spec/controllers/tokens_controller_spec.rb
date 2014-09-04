@@ -32,9 +32,14 @@ RSpec.describe TokensController, type: :controller do
     end
 
     context 'with a new user' do
+      before { User.where(email: review.subject.email).delete_all }
+
       it 'creates a user and stores the id in the session' do
-        User.where(email: review.subject.email).delete_all
         expect(session[:current_user_id]).to eql(User.last.id)
+      end
+
+      it 'creates a user that is *not* a participant' do
+        expect(User.last).not_to be_participant
       end
     end
 

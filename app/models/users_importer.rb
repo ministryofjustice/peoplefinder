@@ -23,7 +23,8 @@ private
 
   def create_users(csv)
     csv.each do |row|
-      User.create!(name: row[:name], email: row[:email])
+      User.create!(name: row[:name], email: row[:email],
+                   participant: true)
     end
   end
 

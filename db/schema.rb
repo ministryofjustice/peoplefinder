@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140903094714) do
+ActiveRecord::Schema.define(version: 20140904111334) do
 
   create_table "reviews", force: true do |t|
     t.integer "subject_id"
@@ -43,6 +43,7 @@ ActiveRecord::Schema.define(version: 20140903094714) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "manager_id"
+    t.boolean  "participant", default: false
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
