@@ -14,6 +14,20 @@ For email to work, certain environment variables must be set:
 For local development, you can use a `.env` file; see `.env.sample` for an
 example.
 
+## Opening the review period
+
+Set the review process to open via the environment variable:
+
+```sh
+REVIEW_PERIOD=OPEN
+```
+
+You can send introduction emails to all users in the system:
+
+```ruby
+ReviewPeriod.new.send_introductions
+```
+
 ## Closing the review period
 
 At the end of the feedback process, you can 'close' the review period
