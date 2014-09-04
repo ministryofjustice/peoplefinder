@@ -21,6 +21,6 @@ unless Rails.env.production?
                                                     teaspoon-mocha.js ]
 end
 
-Dir.chdir(Rails.root.join('vendor', 'assets', 'components')) do
+Dir.chdir(Peoplefinder::Engine.root.join('vendor', 'assets', 'components')) do
   Rails.application.config.assets.precompile += Dir['**/*.{js,css}']
 end
