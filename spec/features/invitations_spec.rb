@@ -14,7 +14,7 @@ feature 'Submissions maintenance' do
     expect(page).to have_text('Thank you for accepting the invitation')
   end
 
-  scenario 'Reject a feedback request' do
+  scenario 'Reject a feedback request with a reason' do
     visit token_url(build_token(:no_response))
 
     choose 'Reject'
@@ -27,6 +27,18 @@ feature 'Submissions maintenance' do
 
     expect(last_email.subject).to eql('Request for feedback has been rejected')
     expect(links_in_email(last_email).first).to match(%r{http:\/\/www.example.com\/go\/\w+-\w+-\w+-\w+-\w+})
+  end
+
+  scenario 'Attempt to reject a feedback request without a reason' do
+    visit token_url(build_token(:no_response))
+
+    choose 'Reject'
+    expect(page).to have_text 'Please explain why you have rejected the request'
+    fill_in 'Rejection reason', with: ''
+    click_button 'Update'
+
+    expect(Reply.last.rejection_reason).to be_blank
+    expect(Reply.last.status).to eql(:no_response)
   end
 
   scenario 'Accept a previously rejected feedback request' do

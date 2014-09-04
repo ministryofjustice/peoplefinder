@@ -6,7 +6,7 @@
                      collection: [['Accept', :started], ['Reject', :rejected]]
 
   .rejection_reason_fields.hidden
-    %p Please explain why you have rejected the request
+    %p You must explain the reason why you are rejecting this request
     = f.input :rejection_reason
 
   = f.button :submit, label: 'Update'

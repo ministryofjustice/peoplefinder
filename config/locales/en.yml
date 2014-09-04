@@ -36,3 +36,7 @@ en:
       started: 'Started'
       submitted: 'Completed'
   review_period_closed: 'Feedback report period has ended'
+  invitations:
+    errors:
+      mandatory_reason: 'If rejecting, please include a reason'
+      invalid_state: '%{state} is not a valid state'

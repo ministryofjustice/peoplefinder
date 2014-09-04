@@ -7,16 +7,34 @@ class Invitation < Reply
   end
 
   def change_state(state, reason = nil)
-    successful_update = false
-    new_state = STATUS_LOOKUP[state]
-    if STATUSES.include?(new_state)
-      successful_update =  update_attributes(status: new_state,
-                                             rejection_reason: reason)
-      communicate_change
+    self.attributes = { status: STATUS_LOOKUP[state], rejection_reason: reason }
+    if valid_status? && valid_reason?
+      save.tap do
+        communicate_change
+      end
     else
-      errors.add(:status, "#{new_state} is not a valid state")
+      false
     end
-    successful_update
+  end
+
+  def valid_status?
+    if STATUSES.include?(status)
+      true
+    else
+      errors.add(:status,
+        I18n.translate('invitations.errors.invalid_state', state: status))
+      false
+    end
+  end
+
+  def valid_reason?
+    if status == :rejected && rejection_reason.blank?
+      errors.add(:rejection_reason,
+        I18n.translate('invitations.errors.mandatory_reason'))
+      false
+    else
+      true
+    end
   end
 
 protected
