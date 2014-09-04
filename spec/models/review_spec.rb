@@ -31,6 +31,11 @@ RSpec.describe Review, type: :model do
       expect(review).not_to be_valid
     end
 
+    it 'requires the subject to be a participant' do
+      review.subject.participant = false
+      expect(review).not_to be_valid
+    end
+
     it 'restricts status to the whitelist' do
       review.status = 'garbage'
       expect(review).not_to be_valid
