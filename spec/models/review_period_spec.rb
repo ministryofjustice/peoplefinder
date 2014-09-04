@@ -12,18 +12,6 @@ RSpec.describe ReviewPeriod do
     let!(:bobs_review)  { create(:review, subject: bob) }
     let!(:charlies_review)  { create(:review, subject: charlie) }
 
-    describe '.participants' do
-      it 'knows about all three users' do
-        [alice, bob, charlie].each do |user|
-          expect(subject.participants).to include(user)
-        end
-      end
-
-      it 'has exactly three elements' do
-        expect(subject.participants.length).to eql(3)
-      end
-    end
-
     it 'does not send introduction emails' do
       expect(Introduction).not_to receive(:new)
       subject.send_introductions
