@@ -9,7 +9,7 @@ class ReviewPeriod
 
   def send_introductions
     return unless open?
-    User.all.each do |user|
+    User.participants.each do |user|
       Introduction.new(user).send
     end
   end
