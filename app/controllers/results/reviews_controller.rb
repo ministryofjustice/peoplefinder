@@ -1,5 +1,5 @@
 module  Results
-  class ReviewsController < ApplicationController
+  class ReviewsController < ParticipantsController
     skip_before_action :check_review_period_is_open
     before_action :ensure_review_period_is_closed
     before_action :load_explicit_subject, only: [:index]

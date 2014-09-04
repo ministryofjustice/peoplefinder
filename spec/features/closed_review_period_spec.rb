@@ -36,7 +36,7 @@ feature 'Closed review period', closed_review_period: true do
 
   scenario 'As an author using a review token' do
     visit token_url(review.tokens.create)
-    expect(page).to have_text('Feedback report period has ended')
+    access_is_denied
   end
 
   def check_my_feedback_from_danny_boy

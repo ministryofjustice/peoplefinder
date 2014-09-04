@@ -80,6 +80,12 @@ feature 'Review maintenance' do
     expect(page).to have_text('Direct report: Marvin Managee')
   end
 
+  scenario 'As a user who is *not* a participant' do
+    me.update_attributes participant: false
+    visit reviews_path
+    access_is_denied
+  end
+
   def fill_in_feedback_request_form
     fill_in 'Name', with: 'Danny Boy'
     fill_in 'Email', with: 'danny@example.com'
