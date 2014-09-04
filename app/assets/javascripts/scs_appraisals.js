@@ -1,10 +1,10 @@
 /* global $, config */
 $(function() {
-  $(document).on('click', '#submission_status_rejected', function() {
+  $(document).on('click', '#invitation_status_rejected', function() {
     $(this.form).find('.rejection_reason_fields').removeClass('hidden');
   });
 
-  $(document).on('click', '#submission_status_started', function() {
+  $(document).on('click', '#invitation_status_accepted', function() {
     $(this.form).find('.rejection_reason_fields').addClass('hidden');
   });
 

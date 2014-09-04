@@ -41,6 +41,16 @@ feature 'Submissions maintenance' do
     expect(Reply.last.status).to eql(:no_response)
   end
 
+  scenario 'Toggle display of the reject reason field', js: true do
+    visit token_path(build_token(:no_response))
+
+    choose 'Reject'
+    expect(page).to have_text 'Please explain'
+
+    choose 'Accept'
+    expect(page).not_to have_text 'Please explain'
+  end
+
   scenario 'Accept a previously rejected feedback request' do
     visit token_url(build_token(:rejected))
     Reply.last.update_attributes(rejection_reason: 'Wrong button')
