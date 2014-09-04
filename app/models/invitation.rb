@@ -28,7 +28,7 @@ class Invitation < Reply
   end
 
   def valid_reason?
-    if status == :rejected && rejection_reason.blank?
+    if rejected? && rejection_reason.blank?
       errors.add(:rejection_reason,
         I18n.translate('invitations.errors.mandatory_reason'))
       false
