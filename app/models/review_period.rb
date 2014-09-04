@@ -7,6 +7,13 @@ class ReviewPeriod
     ENV['REVIEW_PERIOD'] == 'CLOSED'
   end
 
+  def send_introductions
+    return unless open?
+    User.all.each do |user|
+      Introduction.new(user).send
+    end
+  end
+
   def send_closure_notifications
     return if open?
     participants.each do |participant|
