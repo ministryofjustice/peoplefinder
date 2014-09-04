@@ -4,6 +4,7 @@
 - content_for :content do
   .class
     %main#content{role: 'main'}
+      = render partial: 'layouts/partials/phase'
       = flash_messages
       .inner-block
         = yield

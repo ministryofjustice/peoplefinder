@@ -26,6 +26,9 @@ module SCSAppraisals
     #
     config.app_title = 'SCS Appraisals'
 
+    config.phase = 'alpha'
+    config.feedback_url = '#' # TODO: set me
+
     config.valid_login_domains = %w[
       digital.justice.gov.uk
       digital.cabinet-office.gov.uk
