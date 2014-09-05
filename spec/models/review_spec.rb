@@ -47,4 +47,10 @@ RSpec.describe Review, type: :model do
       expect(review.status).to eql(:no_response)
     end
   end
+
+  describe 'invitation message' do
+    it 'has a default value' do
+      expect(review.invitation_message).to match(/give me some feedback/)
+    end
+  end
 end

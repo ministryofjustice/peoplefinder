@@ -17,6 +17,8 @@ class Review < ActiveRecord::Base
 
   scope :submitted, -> { where(status: :submitted) }
 
+  after_initialize :prefill_invitation_message
+
   # Convert status to a symbol safely
   STATUS_LOOKUP = Hash[STATUSES.map(&:to_s).zip(STATUSES)]
   def status
@@ -24,6 +26,10 @@ class Review < ActiveRecord::Base
   end
 
 private
+
+  def prefill_invitation_message
+    self.invitation_message ||= I18n.t('reviews.default_invitation_message')
+  end
 
   def subject_is_participant
     if subject && !subject.participant

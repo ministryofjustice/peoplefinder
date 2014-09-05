@@ -31,6 +31,7 @@ en:
     reminders:
       reminder_sent: 'A reminder has been sent'
   reviews:
+    default_invitation_message: 'Please give me some feedback'
     statuses:
       no_response: 'No response'
       declined: 'Declined'
