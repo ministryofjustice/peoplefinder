@@ -13,9 +13,6 @@
 
 ActiveRecord::Schema.define(version: 20140905135531) do
 
-  # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
-
   create_table "reviews", force: true do |t|
     t.integer "subject_id"
     t.text    "author_name"
