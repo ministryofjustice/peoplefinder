@@ -7,7 +7,7 @@ RSpec.describe UsersController, type: :controller do
   end
 
   describe 'GET index' do
-    it 'should list all my managees in alphabetical order' do
+    it 'lists all my managees in alphabetical order' do
       user_a = create(:user, manager: me, name: 'Zelda')
       user_b = create(:user, manager: me, name: 'Ada')
       create(:user)

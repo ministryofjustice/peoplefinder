@@ -2,17 +2,17 @@ require 'rails_helper'
 
 RSpec.describe User, type: :model do
 
+  subject { described_class.new }
+
   context "to_s" do
-    it "should use name if available" do
-      user = User.new
-      user.name = 'John Doe'
-      expect(user.to_s).to eql('John Doe')
+    it "uses name if available" do
+      subject.name = 'John Doe'
+      expect(subject.to_s).to eql('John Doe')
     end
 
-    it "should use email if name is unavailable" do
-      user = User.new
-      user.email = 'user@example.com'
-      expect(user.to_s).to eql('user@example.com')
+    it "uses email if name is unavailable" do
+      subject.email = 'user@example.com'
+      expect(subject.to_s).to eql('user@example.com')
     end
   end
 end

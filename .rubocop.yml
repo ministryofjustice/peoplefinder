@@ -73,3 +73,5 @@ Style/PercentLiteralDelimiters:
   PreferredDelimiters:
     '%w': '[]'
     '%W': '[]'
+
+require: rubocop-rspec

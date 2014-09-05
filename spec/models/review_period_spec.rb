@@ -6,7 +6,7 @@ RSpec.describe ReviewPeriod do
   let(:bob) { create(:user, name: 'bob', manager: alice) }
   let(:charlie) { create(:user, name: 'charlie', manager: bob) }
 
-  subject { ReviewPeriod.new }
+  subject { described_class.new }
 
   context 'When the REVIEW_PERIOD is CLOSED', closed_review_period: true do
     let!(:bobs_review)  { create(:review, subject: bob) }

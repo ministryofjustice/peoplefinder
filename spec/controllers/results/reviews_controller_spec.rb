@@ -29,7 +29,7 @@ RSpec.describe Results::ReviewsController, type: :controller do
   end
 
   context 'when the review period is *not* closed' do
-    it 'should be forbidden' do
+    it 'is forbidden' do
       get :index
       expect(response).to be_forbidden
     end

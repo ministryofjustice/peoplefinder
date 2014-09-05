@@ -124,7 +124,7 @@ RSpec.describe ReviewsController, type: :controller do
         get :show, id: review.id
       end
 
-      it 'should not assign the review' do
+      it 'does not assign the review' do
         expect(assigns(:review)).to be_nil
       end
     end
