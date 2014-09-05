@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-feature 'Submissions maintenance' do
+feature 'Invitations' do
   let(:me) { create(:user) }
 
   scenario 'Accept a feedback request' do
