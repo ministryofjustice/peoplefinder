@@ -8,11 +8,11 @@ class ReviewMailer < ActionMailer::Base
     mail to: review.author_email, subject: 'Request for feedback'
   end
 
-  def request_rejected(review, token)
+  def request_declined(review, token)
     @recipient_name = review.author_name
     @subject_name = review.subject.name
     @token = token
     mail to: review.author_email,
-         subject: 'Request for feedback has been rejected'
+         subject: 'Request for feedback has been declined'
   end
 end

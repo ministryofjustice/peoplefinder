@@ -1,13 +1,13 @@
 class Invitation < Reply
-  default_scope { where(status: [:no_response, :rejected]) }
-  validates :rejection_reason, length: { in: 0..300 }, allow_nil: true
+  default_scope { where(status: [:no_response, :declined]) }
+  validates :reason_declined, length: { in: 0..300 }, allow_nil: true
 
-  def rejected?
-    status == :rejected
+  def declined?
+    status == :declined
   end
 
   def change_state(state, reason = nil)
-    self.attributes = { status: STATUS_LOOKUP[state], rejection_reason: reason }
+    self.attributes = { status: STATUS_LOOKUP[state], reason_declined: reason }
     if valid_status? && valid_reason?
       save.tap do
         communicate_change
@@ -28,8 +28,8 @@ class Invitation < Reply
   end
 
   def valid_reason?
-    if rejected? && rejection_reason.blank?
-      errors.add(:rejection_reason,
+    if declined? && reason_declined.blank?
+      errors.add(:reason_declined,
         I18n.translate('invitations.errors.mandatory_reason'))
       false
     else
@@ -40,9 +40,9 @@ class Invitation < Reply
 protected
 
   def communicate_change
-    if rejected?
+    if declined?
       token = tokens.create!
-      ReviewMailer.request_rejected(self, token).deliver
+      ReviewMailer.request_declined(self, token).deliver
     end
   end
 end

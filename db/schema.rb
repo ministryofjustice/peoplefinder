@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140904111334) do
+ActiveRecord::Schema.define(version: 20140905092945) do
 
   create_table "reviews", force: true do |t|
     t.integer "subject_id"
@@ -22,7 +22,7 @@ ActiveRecord::Schema.define(version: 20140904111334) do
     t.string  "rating"
     t.text    "achievements"
     t.text    "improvements"
-    t.text    "rejection_reason"
+    t.text    "reason_declined"
   end
 
   add_index "reviews", ["author_email"], name: "index_reviews_on_author_email", using: :btree

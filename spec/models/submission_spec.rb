@@ -12,10 +12,10 @@ RSpec.describe Submission, type: :model do
         expect(submission.status).to eql(:started)
       end
 
-      it 'is "rejected" after update with status=rejected' do
-        submission.status = :rejected
+      it 'is "declined" after update with status=declined' do
+        submission.status = :declined
         submission.save!
-        expect(submission.status).to eql(:rejected)
+        expect(submission.status).to eql(:declined)
       end
     end
   end

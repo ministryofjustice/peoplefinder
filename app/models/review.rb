@@ -1,5 +1,5 @@
 class Review < ActiveRecord::Base
-  STATUSES = [:no_response, :rejected, :accepted, :started, :submitted]
+  STATUSES = [:no_response, :declined, :accepted, :started, :submitted]
 
   belongs_to :subject, -> { where participant: true }, class_name: 'User'
   belongs_to :author, class_name: 'User', foreign_key: 'author_email',

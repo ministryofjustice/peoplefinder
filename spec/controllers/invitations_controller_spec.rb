@@ -20,12 +20,12 @@ RSpec.describe InvitationsController, type: :controller do
         expect(invitation.reload.status).to eql(:accepted)
       end
 
-      it 'changes the invitation to rejected, but only when a reason is given' do
-        put :update, id: invitation.id, invitation: { status: :rejected }
+      it 'changes the invitation to declined, but only when a reason is given' do
+        put :update, id: invitation.id, invitation: { status: :declined }
         expect(invitation.reload.status).to eql(:no_response)
 
-        put :update, id: invitation.id, invitation: { status: :rejected, rejection_reason: 'Busy pondering the meaning of life' }
-        expect(invitation.reload.status).to eql(:rejected)
+        put :update, id: invitation.id, invitation: { status: :declined, reason_declined: 'Busy pondering the meaning of life' }
+        expect(invitation.reload.status).to eql(:declined)
       end
 
       it 'returns an error message is the status was invalid' do

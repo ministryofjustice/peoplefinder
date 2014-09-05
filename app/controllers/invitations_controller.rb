@@ -3,7 +3,7 @@ class InvitationsController < ApplicationController
 
   def update
     if @invitation.change_state(invitation_params[:status],
-      invitation_params[:rejection_reason])
+      invitation_params[:reason_declined])
       notice(invitation_params[:status].to_sym)
     else
       error(:update_error)
@@ -14,7 +14,7 @@ class InvitationsController < ApplicationController
 private
 
   def invitation_params
-    params.require(:invitation).permit(:status, :rejection_reason)
+    params.require(:invitation).permit(:status, :reason_declined)
   end
 
   def set_invitation

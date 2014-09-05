@@ -2,5 +2,5 @@
   %p
   %strong= reply.subject.name
   = f.input :status, as: :hidden, input_html: { value: :accepted }
-  = f.input :rejection_reason, as: :hidden, input_html: { value: '' }
+  = f.input :reason_declined, as: :hidden, input_html: { value: '' }
   = f.button :submit, 'Accept request'

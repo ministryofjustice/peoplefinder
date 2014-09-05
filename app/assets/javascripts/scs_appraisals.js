@@ -1,11 +1,11 @@
 /* global $, config */
 $(function() {
-  $(document).on('click', '#invitation_status_rejected', function() {
-    $(this.form).find('.rejection_reason_fields').removeClass('hidden');
+  $(document).on('click', '#invitation_status_declined', function() {
+    $(this.form).find('.reason_declined_fields').removeClass('hidden');
   });
 
   $(document).on('click', '#invitation_status_accepted', function() {
-    $(this.form).find('.rejection_reason_fields').addClass('hidden');
+    $(this.form).find('.reason_declined_fields').addClass('hidden');
   });
 
   var autosaved = function() {
