@@ -28,6 +28,8 @@ en:
       accepted: "Thank you for accepting the invitation"
       declined: "You have declined the invitation to provide feedback"
       update_error: 'There was an error updating the status'
+    reminders:
+      reminder_sent: 'A reminder has been sent'
   reviews:
     statuses:
       no_response: 'No response'
@@ -35,8 +37,15 @@ en:
       accepted: 'Accepted'
       started: 'Started'
       submitted: 'Completed'
+    errors:
+      subject_must_be_participant: 'must be a participant'
   review_period_closed: 'Feedback report period has ended'
   invitations:
     errors:
       mandatory_reason: 'If declining, please include a reason'
       invalid_state: '%{state} is not a valid state'
+  review_mailer:
+    feedback_request:
+      subject: 'Request for feedback'
+    request_declined:
+      subject: 'Request for feedback has been declined'

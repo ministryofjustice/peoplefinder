@@ -25,7 +25,7 @@ private
 
   def subject_is_participant
     if subject && !subject.participant
-      errors.add(:subject, 'must be a participant')
+      errors.add :subject, I18n.t('reviews.errors.subject_must_be_participant')
     end
   end
 end

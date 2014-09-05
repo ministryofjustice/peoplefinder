@@ -5,9 +5,9 @@ class RemindersController < ApplicationController
     return forbidden unless @review
 
     @reminder = FeedbackRequest.new(@review)
-
-    notice = @reminder.send ? 'A reminder has been sent' : nil
-    redirect_to reviews_path, notice: notice
+    sent = @reminder.send
+    notice :reminder_sent if sent
+    redirect_to reviews_path
   end
 
 private
