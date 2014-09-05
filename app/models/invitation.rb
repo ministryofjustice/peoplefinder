@@ -1,4 +1,6 @@
 class Invitation < Reply
+  include TranslatedErrors
+
   default_scope { where(status: [:no_response, :declined]) }
   validates :reason_declined, length: { in: 0..300 }, allow_nil: true
 
@@ -21,16 +23,14 @@ class Invitation < Reply
     if STATUSES.include?(status)
       true
     else
-      errors.add(:status,
-        I18n.translate('invitations.errors.invalid_state', state: status))
+      add_translated_error :status, :invalid_state, state: status
       false
     end
   end
 
   def valid_reason?
     if declined? && reason_declined.blank?
-      errors.add(:reason_declined,
-        I18n.translate('invitations.errors.mandatory_reason'))
+      add_translated_error :reason_declined, :mandatory_reason
       false
     else
       true

@@ -1,4 +1,6 @@
 class Review < ActiveRecord::Base
+  include TranslatedErrors
+
   STATUSES = [:no_response, :declined, :accepted, :started, :submitted]
 
   belongs_to :subject, -> { where participant: true }, class_name: 'User'
@@ -8,10 +10,10 @@ class Review < ActiveRecord::Base
   has_many :tokens
 
   validates :subject, presence: true
-  validate :subject_is_participant
   validates :author_email, presence: true
   validates :author_name, presence: true
   validates :status, presence: true, inclusion: { in: STATUSES }
+  validate :subject_is_participant
 
   scope :submitted, -> { where(status: :submitted) }
 
@@ -25,7 +27,7 @@ private
 
   def subject_is_participant
     if subject && !subject.participant
-      errors.add :subject, I18n.t('reviews.errors.subject_must_be_participant')
+      add_translated_error :subject, :subject_must_be_participant
     end
   end
 end
