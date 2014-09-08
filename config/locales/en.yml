@@ -30,6 +30,10 @@ en:
       update_error: 'There was an error updating the status'
     reminders:
       reminder_sent: 'A reminder has been sent'
+  dashboard:
+      your_feedback: 'Your feedback'
+      your_direct_reports: 'Your direct reports'
+      feedback_requests: 'Feedback requests'
   reviews:
     default_invitation_message: 'Please give me some feedback'
     statuses:
