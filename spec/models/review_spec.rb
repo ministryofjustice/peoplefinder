@@ -50,7 +50,7 @@ RSpec.describe Review, type: :model do
 
   describe 'invitation message' do
     it 'has a default value' do
-      expect(review.invitation_message).to match(/give me some feedback/)
+      expect(review.invitation_message).to match(/offer 360 feedback/)
     end
   end
 end

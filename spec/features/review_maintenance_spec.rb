@@ -108,7 +108,7 @@ feature 'Review maintenance' do
 
   def check_mail_attributes(mail, review)
     expect(mail.subject).to eq('Request for feedback')
-    expect(mail.body.encoded).to match(/give me some feedback/)
+    expect(mail.body.encoded).to match(/offer 360 feedback/)
     link = links_in_email(mail).first
     expect(link).to eql(token_url(review.tokens.last))
   end

@@ -35,7 +35,9 @@ en:
       your_direct_reports: 'Your direct reports'
       feedback_requests: 'Feedback requests'
   reviews:
-    default_invitation_message: 'Please give me some feedback'
+    default_invitation_message: >-
+      I'd like you to offer 360 feedback on my performance when I've worked
+      with you.
     statuses:
       no_response: 'No response'
       declined: 'Declined'
