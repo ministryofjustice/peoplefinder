@@ -53,7 +53,7 @@ feature 'Dashboard navigation' do
   end
 
   def direct_reports_feedback
-    'Your direct reports\' feedback'
+    'Your direct reports'
   end
 
   def feedback_requests
