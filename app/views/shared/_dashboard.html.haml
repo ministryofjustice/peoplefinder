@@ -1,23 +1,37 @@
 %h1 #{ app_name }
 
-- if current_user.participant?
-  %ul#dashboard
-    - if current_user.manager.present?
+- if review_period_closed?
+  - if current_user.manager && current_user.managees.present?
+    %ul#dashboard
       - if your_feedback_tab?
         %li.active Your feedback
       - else
-        %li.linkable= link_to 'Your feedback', reviews_path
+        %li= link_to 'Your feedback', results_reviews_path
 
-    - if current_user.managees.present?
       - if direct_reports_tab?
         %li.active Your direct reports
       - else
-        %li.linkable= link_to 'Your direct reports', users_path
+        %li= link_to 'Your direct reports', results_users_path
 
-    - if feedback_requests_tab?
-      %li.active Feedback requests
-    - else
-      %li.linkable= link_to 'Feedback requests', feedback_requests_path
+- else
+  - if current_user.participant?
+    %ul#dashboard
+      - if current_user.manager.present?
+        - if your_feedback_tab?
+          %li.active Your feedback
+        - else
+          %li.linkable= link_to 'Your feedback', reviews_path
+
+      - if current_user.managees.present?
+        - if direct_reports_tab?
+          %li.active Your direct reports
+        - else
+          %li.linkable= link_to 'Your direct reports', users_path
+
+      - if feedback_requests_tab?
+        %li.active Feedback requests
+      - else
+        %li.linkable= link_to 'Feedback requests', feedback_requests_path
 
 - if @subject
   %h2 Direct report: #{ @subject.name }

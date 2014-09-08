@@ -11,6 +11,7 @@ feature 'Closed review period', closed_review_period: true do
   end
 
   scenario 'As the subject of a review' do
+    me.update_attributes(manager: create(:user))
     ReviewPeriod.new.send_closure_notifications
     visit links_in_email(last_email).first
 
@@ -18,19 +19,20 @@ feature 'Closed review period', closed_review_period: true do
   end
 
   scenario 'As a manager with managees who has received feedback' do
+    me.update_attributes(manager: create(:user))
     charlie = create(:user, name: 'Charlie', manager: me)
     create(:review, subject: charlie, author_name: 'Elena')
 
     visit token_path(me.tokens.create)
 
     check_my_feedback_from_danny_boy
-    expect(page).to have_text('My direct reports')
 
+    click_link('Your direct reports')
     click_link('Charlie')
     expect(page).to have_text('Charlie\'s feedback')
     expect(page).to have_text('Feedback from Elena')
 
-    click_link('My feedback')
+    click_link('Your feedback')
     check_my_feedback_from_danny_boy
   end
 

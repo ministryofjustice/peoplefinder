@@ -15,6 +15,13 @@ feature 'Dashboard navigation' do
     expect(page).to have_text('You have 1 direct report')
   end
 
+  scenario 'As Alice - when the review period is closed', closed_review_period: true do
+    create(:user, manager: me)
+    visit token_url(token)
+
+    expect(page).not_to have_css('ul#dashboard')
+  end
+
   scenario 'As Bob - manages people and receives feedback' do
     create(:user, manager: me)
     me.update_attributes(manager: create(:user))
@@ -29,13 +36,24 @@ feature 'Dashboard navigation' do
     expect(page).not_to have_link(feedback_requests)
   end
 
-  scenario 'As Charlie - receives feedback but does not manage people' do
+  scenario 'As Bob - when the review period is closed', closed_review_period: true do
+    create(:user, manager: me)
     me.update_attributes(manager: create(:user))
     visit token_url(token)
 
-    expect(page).to have_text(your_feedback)
-    expect(page).not_to have_text(direct_reports_feedback)
-    expect(page).to have_link(feedback_requests)
+    within('ul#dashboard') do
+      expect(page).to have_text(your_feedback)
+      expect(page).to have_link(direct_reports_feedback)
+      expect(page).not_to have_text(feedback_requests)
+    end
+  end
+
+  scenario 'As Charlie - receives feedback but does not manage people', closed_review_period: true do
+    me.update_attributes(manager: create(:user))
+    create(:review, subject: me)
+    visit token_url(token)
+
+    expect(page).not_to have_css('ul#dashboard')
   end
 
   scenario 'As Danny - only gives feedback' do

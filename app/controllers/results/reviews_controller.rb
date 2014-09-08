@@ -3,10 +3,10 @@ module  Results
     skip_before_action :check_review_period_is_open
     before_action :ensure_review_period_is_closed
     before_action :load_explicit_subject, only: [:index]
+    before_action :redirect_unless_user_receives_feedback, only: [:index]
 
     def index
       @reviews = scope.reviews
-      @users = current_user.managees
     end
 
   private
@@ -24,6 +24,10 @@ module  Results
         @subject = current_user.managees.find(params[:user_id])
       end
       true
+    end
+
+    def redirect_unless_user_receives_feedback
+      redirect_to results_users_path unless (@subject || current_user).manager
     end
   end
 end

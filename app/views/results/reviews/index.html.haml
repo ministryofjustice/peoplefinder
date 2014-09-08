@@ -1,10 +1,5 @@
 %p= t(:review_period_closed)
 
-- unless @users.empty?
-  %p My direct reports
-  - @users.each do |user|
-    = link_to user.name, results_user_reviews_path(user)
-
 = link_to 'My feedback', results_reviews_path
 
 - unless @reviews.empty?

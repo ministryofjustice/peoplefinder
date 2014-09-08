@@ -9,21 +9,45 @@ RSpec.describe Results::ReviewsController, type: :controller do
   end
 
   describe 'GET index', closed_review_period: true do
-    before { get :index }
+    context 'when the current user receives feedback' do
+      before do
+        me.update_attributes(manager: create(:user))
+        get :index
+      end
 
-    it 'renders the index template' do
-      expect(response).to render_template('index')
+      it 'assigns existing reviews' do
+        expect(assigns(:reviews)).not_to be_nil
+      end
+
+      it 'renders the index template' do
+        expect(response).to render_template('index')
+      end
     end
 
-    it 'assigns the reviews' do
-      expect(assigns(:reviews)).to include(review)
+    context 'when there is no user who receives feedback' do
+      before do
+        get :index
+      end
+
+      it 'redirects to the users page' do
+        expect(response).to redirect_to(results_users_path)
+      end
     end
 
-    context 'as a manager with ' do
-      let(:user) { create(:user, manager: me) }
+    context 'when the input user receives feedback' do
+      let(:managee) { create(:user, manager: me) }
+      let!(:managee_review) { create(:review, subject: managee) }
 
-      it 'assigns the users (for that manager)' do
-        expect(assigns(:users)).to include(user)
+      before do
+        get :index, user_id: managee.to_param
+      end
+
+      it 'renders the index template' do
+        expect(response).to render_template('index')
+      end
+
+      it 'assigns the reviews' do
+        expect(assigns(:reviews)).to include(managee_review)
       end
     end
   end
