@@ -8,7 +8,7 @@
 = link_to 'My feedback', results_reviews_path
 
 - unless @reviews.empty?
-  %h1
+  %h2
     - if @reviews.first.subject == current_user
       = 'My'
     - else

@@ -43,7 +43,7 @@ feature 'Submitting feedback' do
     click_link 'Add feedback'
     click_link 'Leadership model'
 
-    within('h1') do
+    within('h2') do
       expect(page).to have_text('Leadership Model')
     end
 
