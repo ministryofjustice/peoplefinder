@@ -12,9 +12,4 @@
       - if review.status == :no_response
         = render partial: 'send_reminder', locals: { review: review }
 
-
-= simple_form_for [@subject, @review].compact do |f|
-  = f.input :author_email
-  = f.input :author_name
-  = f.input :relationship
-  = f.button :submit
+= render partial: 'add_reviewer'

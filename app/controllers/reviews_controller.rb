@@ -29,7 +29,7 @@ private
 
   def review_params
     params.require(:review).
-      permit(:author_email, :author_name, :relationship)
+      permit(:author_email, :author_name, :relationship, :invitation_message)
   end
 
   def scope

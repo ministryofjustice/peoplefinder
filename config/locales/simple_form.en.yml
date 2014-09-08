@@ -15,6 +15,7 @@ en:
         author_email: 'Email'
         author_name: 'Name'
         relationship: 'Relationship'
+        invitation_message: 'Message text'
     # Examples
     # labels:
     #   defaults:

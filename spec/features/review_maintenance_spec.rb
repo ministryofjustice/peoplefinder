@@ -97,6 +97,7 @@ feature 'Review maintenance' do
     fill_in 'Name', with: 'Danny Boy'
     fill_in 'Email', with: 'danny@example.com'
     fill_in 'Relationship', with: 'Colleague'
+    fill_in 'Message text', with: 'PLEASE FEED ME'
     click_button 'Create'
   end
 
@@ -104,11 +105,12 @@ feature 'Review maintenance' do
     expect(review.author_name).to eql('Danny Boy')
     expect(review.author_email).to eql('danny@example.com')
     expect(review.relationship).to eql('Colleague')
+    expect(review.invitation_message).to eql('PLEASE FEED ME')
   end
 
   def check_mail_attributes(mail, review)
     expect(mail.subject).to eq('Request for feedback')
-    expect(mail.body.encoded).to match(/offer 360 feedback/)
+    expect(mail.body.encoded).to match(review.invitation_message)
     link = links_in_email(mail).first
     expect(link).to eql(token_url(review.tokens.last))
   end

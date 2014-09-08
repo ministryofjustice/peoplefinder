@@ -1,0 +1,6 @@
+= simple_form_for [@subject, @review].compact do |f|
+  = f.input :author_email
+  = f.input :author_name
+  = f.input :relationship
+  = f.input :invitation_message, as: :text
+  = f.button :submit
