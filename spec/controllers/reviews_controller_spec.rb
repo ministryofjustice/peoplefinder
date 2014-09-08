@@ -2,7 +2,7 @@ require 'rails_helper'
 RSpec.describe ReviewsController, type: :controller do
   let(:me) { create(:user) }
 
-  describe 'GET new' do
+  describe 'GET index' do
     before do
       authenticate_as me
       get :index
