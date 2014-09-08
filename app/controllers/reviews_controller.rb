@@ -4,7 +4,7 @@ class ReviewsController < ParticipantsController
 
   def index
     @review = scope.new
-    @reviews = scope.all
+    load_reviews
   end
 
   def create
@@ -16,6 +16,7 @@ class ReviewsController < ParticipantsController
       redirect_to action: :index
     else
       error :create_error
+      load_reviews
       render action: :index
     end
   end
@@ -44,5 +45,9 @@ private
 
   def redirect_unless_user_receives_feedback
     redirect_to users_path unless (@subject || current_user).manager
+  end
+
+  def load_reviews
+    @reviews = scope.all
   end
 end

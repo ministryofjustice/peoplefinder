@@ -18,6 +18,13 @@ feature 'Review maintenance' do
     check_mail_attributes(last_email, review)
   end
 
+  scenario 'Submit feedback request with invalid data' do
+    visit reviews_path
+
+    click_button 'Create'
+    expect(page).to have_text('check the errors below')
+  end
+
   scenario 'Remind person to give me feedback' do
     create(:review, subject: me)
 
