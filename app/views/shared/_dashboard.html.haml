@@ -1,4 +1,14 @@
 %h1 #{ app_name }
 
+- if current_user.participant?
+  %ul
+    - if current_user.manager.present?
+      %li= link_to_unless your_feedback_tab?, 'Your feedback', reviews_path
+
+    - if current_user.managees.present?
+      %li= link_to_unless direct_reports_tab?,  'Your direct reports\' feedback', users_path
+
+    %li= link_to_unless feedback_requests_tab?, 'Feedback requests', feedback_requests_path
+
 - if @subject
   %h2 Direct report: #{ @subject.name }

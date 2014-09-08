@@ -15,6 +15,32 @@ module ApplicationHelper
     'SCS 360&deg; Appraisals'.html_safe
   end
 
+  def active_tab
+    case controller_name
+    when 'reviews'
+      @subject ? :direct_reports : :your_feedback
+
+    when 'users'
+      :direct_reports
+
+    when 'invitations', 'replies', 'submissions', 'pages'
+      :feedback_requests
+
+    end
+  end
+
+  def your_feedback_tab?
+    active_tab == :your_feedback
+  end
+
+  def direct_reports_tab?
+    active_tab == :direct_reports
+  end
+
+  def feedback_requests_tab?
+    active_tab == :feedback_requests
+  end
+
 private
 
   def flash_message(type)
