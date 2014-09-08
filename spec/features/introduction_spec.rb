@@ -2,7 +2,7 @@ require 'rails_helper'
 
 feature 'Introduction to the system' do
 
-  let(:user) { create(:user) }
+  let(:user) { create(:user, manager: create(:user)) }
 
   scenario 'Receiving an introductory email and getting in' do
     send_introduction user

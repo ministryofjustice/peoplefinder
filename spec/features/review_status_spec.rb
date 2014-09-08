@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 feature 'Review status' do
-  let(:me) { create(:user) }
+  let(:me) { create(:user, manager: create(:user)) }
 
   before do
     token = create(:token, user: me)

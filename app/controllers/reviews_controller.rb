@@ -1,5 +1,6 @@
 class ReviewsController < ParticipantsController
   before_action :load_explicit_subject, only: [:index, :create, :show]
+  before_action :redirect_unless_user_receives_feedback, only: [:index]
 
   def index
     @review = scope.new
@@ -39,5 +40,9 @@ private
       @subject = current_user.managees.find(params[:user_id])
     end
     true
+  end
+
+  def redirect_unless_user_receives_feedback
+    redirect_to users_path unless (@subject || current_user).manager
   end
 end

@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 feature 'Review maintenance' do
-  let(:me) { create(:user) }
+  let(:me) { create(:user, manager: create(:user)) }
 
   before do
     token = create(:token, user: me)
@@ -62,7 +62,7 @@ feature 'Review maintenance' do
 
     visit users_path
 
-    within('ul') do
+    within('ul#users') do
       click_link 'Marvin Managee'
     end
 

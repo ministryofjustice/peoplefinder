@@ -1,4 +1,7 @@
-%ul
+= render partial: 'shared/dashboard'
+
+You have #{ pluralize(@users.length, 'direct report') }.
+%ul#users
   - @users.each do |user|
     %li
       = link_to(user, [user, :reviews])
