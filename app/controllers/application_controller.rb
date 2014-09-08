@@ -22,7 +22,7 @@ private
   end
 
   def forbidden
-    render 'shared/forbidden', status: :forbidden
+    render 'shared/forbidden', status: :forbidden, layout: 'error'
     false
   end
 
