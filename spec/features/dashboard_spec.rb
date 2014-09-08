@@ -20,9 +20,13 @@ feature 'Dashboard navigation' do
     me.update_attributes(manager: create(:user))
     visit token_url(token)
 
-    expect(page).to have_text(your_feedback)
+    expect(page).not_to have_link(your_feedback)
     expect(page).to have_link(direct_reports_feedback)
     expect(page).to have_link(feedback_requests)
+
+    click_link(feedback_requests)
+    expect(page).to have_link(your_feedback)
+    expect(page).not_to have_link(feedback_requests)
   end
 
   scenario 'As Charlie - receives feedback but does not manage people' do

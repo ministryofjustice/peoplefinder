@@ -23,7 +23,7 @@ module ApplicationHelper
     when 'users'
       :direct_reports
 
-    when 'invitations', 'replies', 'submissions', 'pages'
+    when 'feedback_requests', 'invitations', 'replies', 'submissions', 'pages'
       :feedback_requests
 
     end
