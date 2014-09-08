@@ -12,9 +12,9 @@ en:
       default_message: "Please review the problems below:"
     labels:
       review:
-        author_email: 'Email'
+        author_email: 'Email address'
         author_name: 'Name'
-        relationship: 'Relationship'
+        relationship: 'Your working relationship'
         invitation_message: 'Message text'
     # Examples
     # labels:

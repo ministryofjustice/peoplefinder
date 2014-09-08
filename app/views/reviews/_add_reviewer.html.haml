@@ -1,6 +1,11 @@
+- if @reviews.any?
+  %h2 Ask another person to provide feedback about you
+- else
+  %h2 Invite people to give you feedback
+
 = simple_form_for [@subject, @review].compact do |f|
-  = f.input :author_email
-  = f.input :author_name
-  = f.input :relationship
+  = f.input :author_name, as: :string
+  = f.input :author_email, as: :string
+  = f.input :relationship, as: :string
   = f.input :invitation_message, as: :text
   = f.button :submit

@@ -21,7 +21,7 @@ feature 'Review maintenance' do
   scenario 'Submit feedback request with invalid data' do
     visit reviews_path
 
-    click_button 'Create'
+    click_button 'Send'
     expect(page).to have_text('check the errors below')
   end
 
@@ -95,10 +95,10 @@ feature 'Review maintenance' do
 
   def fill_in_feedback_request_form
     fill_in 'Name', with: 'Danny Boy'
-    fill_in 'Email', with: 'danny@example.com'
-    fill_in 'Relationship', with: 'Colleague'
+    fill_in 'Email address', with: 'danny@example.com'
+    fill_in 'Your working relationship', with: 'Colleague'
     fill_in 'Message text', with: 'PLEASE FEED ME'
-    click_button 'Create'
+    click_button 'Send'
   end
 
   def check_review_attributes(review)
