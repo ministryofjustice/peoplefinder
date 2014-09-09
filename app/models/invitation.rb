@@ -9,7 +9,7 @@ class Invitation < Reply
   end
 
   def change_state(state, reason = nil)
-    self.attributes = { status: STATUS_LOOKUP[state], reason_declined: reason }
+    self.attributes = { status: state, reason_declined: reason }
     if valid_status? && valid_reason?
       save.tap do
         communicate_change

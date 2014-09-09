@@ -1,5 +1,6 @@
 class Review < ActiveRecord::Base
   include TranslatedErrors
+  extend SymbolField
 
   STATUSES = [:no_response, :declined, :accepted, :started, :submitted]
 
@@ -21,11 +22,7 @@ class Review < ActiveRecord::Base
 
   after_initialize :prefill_invitation_message
 
-  # Convert status to a symbol safely
-  STATUS_LOOKUP = Hash[STATUSES.map(&:to_s).zip(STATUSES)]
-  def status
-    STATUS_LOOKUP[super.to_s]
-  end
+  symbol_field :status, STATUSES
 
 private
 
