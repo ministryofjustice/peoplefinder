@@ -19,7 +19,7 @@ feature 'Dashboard navigation' do
     create(:user, manager: me)
     visit token_url(token)
 
-    expect(page).not_to have_css('ul#dashboard')
+    expect(page).not_to have_css('ul#tab_navigation')
   end
 
   scenario 'As Bob - manages people and receives feedback' do
@@ -41,7 +41,7 @@ feature 'Dashboard navigation' do
     me.update_attributes(manager: create(:user))
     visit token_url(token)
 
-    within('ul#dashboard') do
+    within('ul#tab_navigation') do
       expect(page).to have_text(your_feedback)
       expect(page).to have_link(direct_reports_feedback)
       expect(page).not_to have_text(feedback_requests)
@@ -53,7 +53,7 @@ feature 'Dashboard navigation' do
     create(:review, subject: me)
     visit token_url(token)
 
-    expect(page).not_to have_css('ul#dashboard')
+    expect(page).not_to have_css('ul#tab_navigation')
   end
 
   scenario 'As Danny - only gives feedback' do
