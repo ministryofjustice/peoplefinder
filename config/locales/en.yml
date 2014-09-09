@@ -70,3 +70,10 @@ en:
         theirs:
           one: 'One person has been asked for feedback'
           other: '%{count} people have been asked for feedback'
+      add_reviewer_title:
+        none:
+          mine: 'Invite people to give you feedback'
+          theirs: 'Invite people to give %{name} feedback'
+        some:
+          mine: 'Ask another person to provide feedback about you'
+          theirs: 'Ask another person to provide feedback about %{name}'

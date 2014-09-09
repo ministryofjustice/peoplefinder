@@ -1,7 +1,4 @@
-- if @reviews.any?
-  %h2 Ask another person to provide feedback about you
-- else
-  %h2 Invite people to give you feedback
+%h2= role_translate(@reviews.any? ? :some : :none, scope: 'views.reviews.add_reviewer_title')
 
 = simple_form_for [@subject, @review].compact do |f|
   = f.input :author_name, as: :string
