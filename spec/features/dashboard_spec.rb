@@ -12,7 +12,7 @@ feature 'Dashboard navigation' do
     expect(page).to have_text(direct_reports_feedback)
     expect(page).to have_link(feedback_requests, href: feedback_requests_path)
 
-    expect(page).to have_text('You have 1 direct report')
+    expect(page).to have_text('You have one direct report')
   end
 
   scenario 'As Alice - when the review period is closed', closed_review_period: true do

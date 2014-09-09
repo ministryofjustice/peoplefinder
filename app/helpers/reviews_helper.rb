@@ -1,7 +1,11 @@
 module ReviewsHelper
   def review_completion(user)
-    "#{ user.reviews.submitted.count }\
-    of #{ user.reviews.count } completed"
+    I18n.t(
+      'completion',
+      scope: 'helpers.reviews',
+      submitted: user.reviews.submitted.count,
+      total: user.reviews.count
+    )
   end
 
   def role_translate(key, options = {})

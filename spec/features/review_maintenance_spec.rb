@@ -103,7 +103,7 @@ feature 'Review maintenance' do
 
     visit users_path
 
-    expect(page).to have_text('You have 1 direct report who requires feedback.')
+    expect(page).to have_text('You have one direct report who requires feedback')
     within('#users') do
       expect(page).to have_link('Marvin Managee', href: user_reviews_path(managee))
       expect(page).to have_text('1 of 2 complete')

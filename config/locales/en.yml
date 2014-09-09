@@ -34,6 +34,8 @@ en:
     submit:
       review:
         create: 'Send'
+    reviews:
+      completion: '%{submitted} of %{total} completed'
   reviews:
     default_invitation_message: >-
       I'd like you to offer 360 feedback on my performance when I've worked
@@ -78,3 +80,11 @@ en:
           mine: 'Ask another person to provide feedback about you'
           theirs: 'Ask another person to provide feedback about %{name}'
       show_review_title: 'Feedback from %{author}'
+    users:
+      index_title: 'Your direct reports'
+      index_standfirst:
+        one: 'You have one direct report who requires feedback'
+        other: 'Your have %{count} direct reports who require feedback'
+      list:
+        name_header: 'Name'
+        status_header: 'Feedback status'
