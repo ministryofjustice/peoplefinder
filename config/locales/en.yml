@@ -77,3 +77,4 @@ en:
         some:
           mine: 'Ask another person to provide feedback about you'
           theirs: 'Ask another person to provide feedback about %{name}'
+      show_review_title: 'Feedback from %{author}'

@@ -9,8 +9,9 @@ feature 'Submitting feedback' do
     click_link 'Add feedback'
 
     choose 'Good'
-    fill_in 'Achievements', with: 'Some good stuff'
-    fill_in 'Improvements', with: 'Could learn to...'
+    fill_in 'What worked well and why?', with: 'Some good stuff'
+    fill_in 'Where would a different approach or behaviour have worked better and why?',
+      with: 'Could learn to...'
     click_button 'Submit'
 
     submission = Submission.last
@@ -26,8 +27,9 @@ feature 'Submitting feedback' do
     click_link 'Add feedback'
 
     choose 'Good'
-    fill_in 'Achievements', with: 'Some good stuff'
-    fill_in 'Improvements', with: 'Could learn to...'
+    fill_in 'What worked well and why?', with: 'Some good stuff'
+    fill_in 'Where would a different approach or behaviour have worked better and why?',
+      with: 'Could learn to...'
     sleep 0.2
 
     submission = Submission.last

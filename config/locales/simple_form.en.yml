@@ -16,6 +16,12 @@ en:
         author_name: 'Name'
         relationship: 'Your working relationship'
         invitation_message: 'Message text'
+      submission:
+        rating: 'General performance rating'
+        achievements: 'What worked well and why?'
+        improvements: >-
+          Where would a different approach or behaviour have worked better and
+          why?
     # Examples
     # labels:
     #   defaults:
