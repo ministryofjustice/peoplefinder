@@ -48,6 +48,7 @@ feature 'Invitations' do
     fill_in 'Reason declined', with: ''
     click_button 'Update'
 
+    expect(page).to have_text 'A reason is required when rejecting an invitation'
     expect(Reply.last.reason_declined).to be_blank
     expect(Reply.last.status).to eql(:no_response)
   end
