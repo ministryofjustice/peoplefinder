@@ -11,6 +11,8 @@ class Review < ActiveRecord::Base
 
   validates :subject, presence: true
   validates :author_email, presence: true
+  validates :author_email, uniqueness: { scope: :subject_id,
+                                         message: 'has already been invited' }
   validates :author_name, presence: true
   validates :status, presence: true, inclusion: { in: STATUSES }
   validate :subject_is_participant

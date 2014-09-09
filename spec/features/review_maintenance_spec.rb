@@ -18,6 +18,15 @@ feature 'Review maintenance' do
     check_mail_attributes(last_email, review)
   end
 
+  scenario 'Invite a person that has already been invited' do
+    visit reviews_path
+    fill_in_feedback_request_form
+    fill_in_feedback_request_form
+
+    expect(Review.all.count).to eql(1)
+    expect(page).to have_text('already been invited')
+  end
+
   scenario 'Submit feedback request with invalid data' do
     visit reviews_path
 
