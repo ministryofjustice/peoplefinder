@@ -1,7 +1,6 @@
-%h2 Feedback received
+%h2= t('views.reviews.feedback_received_title')
 
-%p
-  You’ve asked #{ pluralize(@reviews.length, 'person') } to give you feedback
+%p= role_translate('views.reviews.feedback_received_standfirst', count: @reviews.length)
 
 %ul
   - @reviews.each do |review|

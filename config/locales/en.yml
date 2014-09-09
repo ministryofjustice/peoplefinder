@@ -60,3 +60,13 @@ en:
       your_feedback: 'Your feedback'
       your_direct_reports: 'Your direct reports'
       feedback_requests: 'Feedback requests'
+  views:
+    reviews:
+      feedback_received_title: 'Feedback received'
+      feedback_received_standfirst:
+        mine:
+          one: 'You’ve asked one person to give you feedback'
+          other: 'You’ve asked %{count} people to give you feedback'
+        theirs:
+          one: 'One person has been asked for feedback'
+          other: '%{count} people have been asked for feedback'

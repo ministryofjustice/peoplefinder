@@ -25,6 +25,14 @@ class ReviewsController < ParticipantsController
     @review = scope.submitted.where(id: params[:id]).first
   end
 
+protected
+
+  def role_translate(key, options = {})
+    subkey = @subject ? 'theirs' : 'mine'
+    I18n.t([key, subkey].join('.'), options)
+  end
+  helper_method :role_translate
+
 private
 
   def review_params
