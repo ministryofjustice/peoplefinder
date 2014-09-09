@@ -2,7 +2,8 @@ class Review < ActiveRecord::Base
   include TranslatedErrors
   extend SymbolField
 
-  STATUSES = [:no_response, :declined, :accepted, :started, :submitted]
+  STATUSES = %i[ no_response declined accepted started submitted ]
+  RELATIONSHIPS = %i[ peer line_manager direct_report supplier project_member ]
 
   belongs_to :subject, -> { where participant: true }, class_name: 'User'
   belongs_to :author, class_name: 'User', foreign_key: 'author_email',
@@ -16,6 +17,7 @@ class Review < ActiveRecord::Base
                                          message: 'has already been invited' }
   validates :author_name, presence: true
   validates :status, presence: true, inclusion: { in: STATUSES }
+  validates :relationship, presence: true, inclusion: { in: RELATIONSHIPS }
   validate :subject_is_participant
 
   scope :submitted, -> { where(status: :submitted) }
@@ -23,6 +25,7 @@ class Review < ActiveRecord::Base
   after_initialize :prefill_invitation_message
 
   symbol_field :status, STATUSES
+  symbol_field :relationship, RELATIONSHIPS
 
 private
 

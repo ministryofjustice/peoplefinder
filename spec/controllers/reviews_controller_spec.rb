@@ -165,7 +165,8 @@ RSpec.describe ReviewsController, type: :controller do
     {
       relationship: 'Colleague',
       author_email: 'danny@example.com',
-      author_name: 'Danny Boy'
+      author_name: 'Danny Boy',
+      relationship: 'peer'
     }
   end
 end

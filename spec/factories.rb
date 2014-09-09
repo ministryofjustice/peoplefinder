@@ -27,18 +27,21 @@ FactoryGirl.define do
     subject
     author
     author_name { generate(:name) }
+    relationship :peer
   end
 
   factory :reply do
     subject
     author
     author_name { generate(:name) }
+    relationship :peer
   end
 
   factory :invitation do
     subject
     author
     author_name { generate(:name) }
+    relationship :peer
     status :no_response
   end
 
@@ -46,6 +49,7 @@ FactoryGirl.define do
     subject
     author
     author_name { generate(:name) }
+    relationship :peer
     status :started
   end
 end

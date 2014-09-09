@@ -119,7 +119,7 @@ feature 'Review maintenance' do
   def fill_in_feedback_request_form
     fill_in 'Name', with: 'Danny Boy'
     fill_in 'Email address', with: 'danny@example.com'
-    fill_in 'Your working relationship', with: 'Colleague'
+    select 'Peer', from: 'Your working relationship'
     fill_in 'Message text', with: 'PLEASE FEED ME'
     click_button 'Send'
   end
@@ -127,7 +127,7 @@ feature 'Review maintenance' do
   def check_review_attributes(review)
     expect(review.author_name).to eql('Danny Boy')
     expect(review.author_email).to eql('danny@example.com')
-    expect(review.relationship).to eql('Colleague')
+    expect(review.relationship).to eql(:peer)
     expect(review.invitation_message).to eql('PLEASE FEED ME')
   end
 

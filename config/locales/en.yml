@@ -46,6 +46,12 @@ en:
       accepted: 'Accepted'
       started: 'Started'
       submitted: 'Completed'
+    relationships:
+      peer: 'Peer'
+      line_manager: 'Line manager'
+      direct_report: 'Direct report'
+      supplier: 'Supplier'
+      project_member: 'Project member'
     errors:
       subject_must_be_participant: 'must be a participant'
   review_period_closed: 'Feedback report period has ended'

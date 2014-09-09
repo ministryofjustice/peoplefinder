@@ -3,6 +3,6 @@
 = simple_form_for [@subject, @review].compact do |f|
   = f.input :author_name, as: :string
   = f.input :author_email, as: :string
-  = f.input :relationship, as: :string
+  = f.input :relationship, collection: Review::RELATIONSHIPS, label_method: ->(v){ t(v, scope: 'reviews.relationships') }
   = f.input :invitation_message, as: :text
   = f.button :submit
