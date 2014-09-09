@@ -1,5 +1,13 @@
-You have #{ pluralize(@users.length, 'direct report') }.
-%ul#users
+%h2 Your direct reports
+
+%p
+  You have #{ pluralize(@users.length, 'direct report') }
+  who require#{ 's' if @users.length == 1 } feedback.
+
+%table#users
+  %th Name
+  %th Feedback status
   - @users.each do |user|
-    %li
-      = link_to(user, [user, :reviews])
+    %tr{ class: "#{ cycle('stripe', '') }" }
+      %td.name= link_to(user, [user, :reviews])
+      %td= review_completion(user)

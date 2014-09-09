@@ -69,7 +69,7 @@ feature 'Review maintenance' do
 
     visit users_path
 
-    within('ul#users') do
+    within('#users') do
       click_link 'Marvin Managee'
     end
 
@@ -85,6 +85,20 @@ feature 'Review maintenance' do
     click_link 'Back'
     expect(page).to have_link('Danny Boy', href: polymorphic_path([managee, review]))
     expect(page).to have_text('Direct report: Marvin Managee')
+  end
+
+  scenario 'See the list of my managees' do
+    managee = create(:user, manager: me, name: 'Marvin Managee')
+    create(:review, submitted_review_attributes.merge(subject: managee))
+    create(:review, subject: managee)
+
+    visit users_path
+
+    expect(page).to have_text('You have 1 direct report who requires feedback.')
+    within('#users') do
+      expect(page).to have_link('Marvin Managee', href: user_reviews_path(managee))
+      expect(page).to have_text('1 of 2 complete')
+    end
   end
 
   scenario 'As a user who is *not* a participant' do
