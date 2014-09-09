@@ -1,4 +1,4 @@
-class UsersController < ApplicationController
+class UsersController < ParticipantsController
   def index
     @users = scope.all
   end
