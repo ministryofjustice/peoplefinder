@@ -3,6 +3,7 @@ class Review < ActiveRecord::Base
   extend SymbolField
 
   STATUSES = %i[ no_response declined accepted started submitted ]
+  REMINDABLE_STATUSES = %i[ no_response accepted started ]
   RELATIONSHIPS = %i[ peer line_manager direct_report supplier project_member ]
 
   belongs_to :subject, -> { where participant: true }, class_name: 'User'
@@ -26,6 +27,14 @@ class Review < ActiveRecord::Base
 
   symbol_field :status, STATUSES
   symbol_field :relationship, RELATIONSHIPS
+
+  def remindable?
+    REMINDABLE_STATUSES.include?(status)
+  end
+
+  def complete?
+    status == :submitted
+  end
 
 private
 

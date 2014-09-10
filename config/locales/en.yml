@@ -41,9 +41,9 @@ en:
       I'd like you to offer 360 feedback on my performance when I've worked
       with you.
     statuses:
-      no_response: 'No response'
+      no_response: 'Pending'
       declined: 'Declined'
-      accepted: 'Accepted'
+      accepted: 'Started'
       started: 'Started'
       submitted: 'Completed'
     relationships:
@@ -86,6 +86,12 @@ en:
           mine: 'Ask another person to provide feedback about you'
           theirs: 'Ask another person to provide feedback about %{name}'
       show_review_title: 'Feedback from %{author}'
+      list:
+        name_header: 'Name'
+        relationship_header: 'Working relationship'
+        status_header: 'Feedback status'
+        action_header: 'Action'
+      view_feedback: 'View feedback'
     users:
       index_title: 'Your direct reports'
       index_standfirst:

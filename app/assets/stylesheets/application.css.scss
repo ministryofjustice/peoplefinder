@@ -77,3 +77,23 @@ table {
       font-weight: bold;
     }
 }
+
+.indicator-dot {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  margin: 0 5px 0 0;
+  padding: 0;
+  border-radius: 5px;
+}
+.review-status-declined .indicator-dot {
+  background-color: #df3034;
+}
+.review-status-no_response .indicator-dot,
+.review-status-accepted .indicator-dot,
+.review-status-started .indicator-dot {
+  background-color: #ffbf47;
+}
+.review-status-submitted .indicator-dot {
+  background-color: #5baf19
+}

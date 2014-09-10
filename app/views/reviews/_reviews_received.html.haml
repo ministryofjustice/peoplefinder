@@ -2,15 +2,23 @@
 
 %p= role_translate('views.reviews.feedback_received_standfirst', count: @reviews.length)
 
-%ul
-  - @reviews.each do |review|
-    %li
-      - if review.status == :submitted
-        = link_to review.author_name, polymorphic_path([@subject,review].compact)
-      - else
-        = review.author_name
-      = t(review.status, scope: 'reviews.statuses')
-
-      - if review.status == :no_response
-        = render partial: 'send_reminder', locals: { review: review }
-
+%table
+  %thead
+    %tr
+      %th= t('list.name_header', scope: 'views.reviews')
+      %th= t('list.relationship_header', scope: 'views.reviews')
+      %th= t('list.status_header', scope: 'views.reviews')
+      %th= t('list.action_header', scope: 'views.reviews')
+  %tbody
+    - @reviews.each do |review|
+      %tr{ class: "#{ cycle('stripe', '') }" }
+        %td= review.author_name
+        %td= t(review.relationship, scope: 'reviews.relationships')
+        %td{ class: "review-status-#{ review.status }" }
+          %span{ class: "indicator-dot" }
+          =t(review.status, scope: 'reviews.statuses')
+        %td
+          -if review.remindable?
+            = render partial: 'send_reminder', locals: { review: review }
+          -if review.complete?
+            = link_to t('views.reviews.view_feedback'), polymorphic_path([@subject,review].compact)
