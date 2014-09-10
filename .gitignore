@@ -14,4 +14,5 @@
 /spec/dummy/db/*.sqlite3-journal
 /spec/dummy/log/*.log
 /spec/dummy/tmp/
+/spec/dummy/public/uploads
 /spec/dummy/.sass-cache
