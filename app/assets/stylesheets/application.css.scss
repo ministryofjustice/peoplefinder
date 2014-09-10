@@ -2,14 +2,14 @@ $grey-background: rgba(#DEE0E2, 0.5);
 $grey-border: #BFC1C3;
 
 #flash-messages {
- .flash-message {
-   border: 1px solid black;
-   margin: 15px 0;
-   padding: 15px;
- }
- .notice {
-   background-color: #ffd;
- }
+  .flash-message {
+    border: 1px solid black;
+    margin: 15px 0;
+    padding: 15px;
+  }
+  .notice {
+    background-color: #ffd;
+  }
 }
 
 input[type="radio"] {
@@ -73,9 +73,9 @@ table {
     }
   }
   td.name {
-      font-size: 24px;
-      font-weight: bold;
-    }
+    font-size: 24px;
+    font-weight: bold;
+  }
 }
 
 .indicator-dot {
