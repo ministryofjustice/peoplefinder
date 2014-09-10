@@ -54,6 +54,7 @@ ul#tab_navigation {
 
 .form-label-bold {
   font-size: 19px;
+  margin-top: 19px;
 }
 
 table {
@@ -75,6 +76,9 @@ table {
   td.name {
     font-size: 24px;
     font-weight: bold;
+  }
+  .button {
+    margin: 0;
   }
 }
 

@@ -12,7 +12,7 @@
   %tbody
     - @reviews.each do |review|
       %tr{ class: "#{ cycle('stripe', '') }" }
-        %td= review.author_name
+        %td.name= review.author_name
         %td= t(review.relationship, scope: 'reviews.relationships')
         %td{ class: "review-status-#{ review.status }" }
           %span{ class: "indicator-dot" }
