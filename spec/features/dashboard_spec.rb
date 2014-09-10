@@ -10,7 +10,7 @@ feature 'Dashboard navigation' do
 
     expect(page).not_to have_text(your_feedback)
     expect(page).to have_text(direct_reports_feedback)
-    expect(page).to have_link(feedback_requests, href: feedback_requests_path)
+    expect(page).to have_link(feedback_requests, href: replies_path)
 
     expect(page).to have_text('You have one direct report')
   end

@@ -31,7 +31,7 @@
       - if feedback_requests_tab?
         %li.active #{ t('tab_navigation.feedback_requests') }
       - else
-        %li.linkable= link_to t('tab_navigation.feedback_requests'), feedback_requests_path
+        %li.linkable= link_to t('tab_navigation.feedback_requests'), replies_path
 
 - if @subject
   %h2 Direct report: #{ @subject.name }
