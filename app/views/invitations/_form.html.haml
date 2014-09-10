@@ -2,8 +2,7 @@
 
 %p Please accept or decline this request:
 = simple_form_for submission, url: submission_path(submission) do |f|
-  = f.input :status, as: :radio_buttons,
-                     collection: [['Accept', :started], ['Declined', :declined]]
+  = f.input :status, as: :radio_buttons, collection: %i[ started declined ], label_method: ->(v) { t(v, scope: 'reviews.statuses' }
 
   .reason_declined_fields.hidden
     %p You must explain the reason why you are declining this request
