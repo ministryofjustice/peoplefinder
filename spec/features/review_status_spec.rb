@@ -17,13 +17,13 @@ feature 'Review status' do
       relationship: :supplier
     create :review,
       subject: me, author_name: 'Hotel', status: :submitted,
-      relationship: :project_member
+      relationship: :customer
 
     visit reviews_path
 
     expect(page).to have_text('Foxtrot Peer Pending')
     expect(page).to have_text('Golf Supplier Started')
-    expect(page).to have_text('Hotel Project member Completed')
+    expect(page).to have_text('Hotel Customer/stakeholder Completed')
   end
 
   scenario "viewing the status of my managees' feedback" do
@@ -37,13 +37,13 @@ feature 'Review status' do
       relationship: :supplier
     create :review,
       subject: managee, author_name: 'Hotel', status: :submitted,
-      relationship: :project_member
+      relationship: :customer
 
     visit users_path
     click_link managee.name
 
     expect(page).to have_text('Foxtrot Peer Pending')
     expect(page).to have_text('Golf Supplier Started')
-    expect(page).to have_text('Hotel Project member Completed')
+    expect(page).to have_text('Hotel Customer/stakeholder Completed')
   end
 end

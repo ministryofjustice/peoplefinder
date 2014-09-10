@@ -51,7 +51,7 @@ en:
       line_manager: 'Line manager'
       direct_report: 'Direct report'
       supplier: 'Supplier'
-      project_member: 'Project member'
+      customer: 'Customer/stakeholder'
     errors:
       subject_must_be_participant: 'must be a participant'
   review_period_closed: 'Feedback report period has ended'
