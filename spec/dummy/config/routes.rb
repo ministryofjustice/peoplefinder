@@ -1,4 +1,4 @@
 Rails.application.routes.draw do
 
-  mount Peoplefinder::Engine => "/peoplefinder"
+  mount Peoplefinder::Engine => "/"
 end
