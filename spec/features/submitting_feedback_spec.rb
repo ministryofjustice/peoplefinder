@@ -8,6 +8,8 @@ feature 'Submitting feedback' do
 
     click_link 'Add feedback'
 
+    expect(page).to have_link('Return to dashboard', href: replies_path)
+
     Review::RATING_FIELDS.each do |rating_field|
       within(".submission_#{ rating_field }") do
         choose '3'

@@ -8,6 +8,7 @@
         = render partial: 'layouts/partials/phase'
       = flash_messages
       .inner-block
+        .top-left= yield :top_left
         = render partial: 'shared/tab_navigation'
         = yield
 = render partial: "shared/loginout"
