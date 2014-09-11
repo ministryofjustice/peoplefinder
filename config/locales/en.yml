@@ -117,3 +117,10 @@ en:
       list:
         name_header: 'Name'
         status_header: 'Feedback status'
+  activerecord:
+    errors:
+      models:
+        review:
+          attributes:
+            author_email:
+              taken: 'Email address has already been invited'
