@@ -61,10 +61,6 @@ RSpec.describe SubmissionsController, type: :controller do
   end
 
   def valid_attributes
-    {
-      rating: 'good',
-      achievements: 'some stuff',
-      improvements: 'other stuff'
-    }
+    { rating_1: 1 }
   end
 end

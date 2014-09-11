@@ -64,9 +64,6 @@ feature 'Review maintenance' do
     click_link 'View feedback'
 
     expect(page).to have_text('Feedback from Danny Boy')
-    expect(page).to have_text(review.rating)
-    expect(page).to have_text(review.achievements)
-    expect(page).to have_text(review.improvements)
 
     click_link 'Back'
     expect(page).to have_link('View feedback', href: review_path(review))
@@ -85,11 +82,7 @@ feature 'Review maintenance' do
     expect(page).to have_text('Direct report: Marvin Managee')
     click_link 'View feedback'
 
-    expect(page).to have_text('Direct report: Marvin Managee')
     expect(page).to have_text('Feedback from Danny Boy')
-    expect(page).to have_text(review.rating)
-    expect(page).to have_text(review.achievements)
-    expect(page).to have_text(review.improvements)
 
     click_link 'Back'
     expect(page).to have_link('View feedback', href: polymorphic_path([managee, review]))
@@ -141,9 +134,7 @@ feature 'Review maintenance' do
   def submitted_review_attributes
     {
       author_name: 'Danny Boy',
-      rating: 'Good',
-      achievements: 'Something done well',
-      improvements: 'Could be better',
+      rating_1: 3,
       status: :submitted
     }
   end

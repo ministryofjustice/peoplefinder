@@ -5,6 +5,7 @@ class Review < ActiveRecord::Base
   STATUSES = %i[ no_response declined accepted started submitted ]
   REMINDABLE_STATUSES = %i[ no_response accepted started ]
   RELATIONSHIPS = %i[ peer line_manager direct_report supplier customer ]
+  RATING_FIELDS = 1.upto(11).map { |i| "rating_#{ i }".to_sym }
 
   belongs_to :subject, -> { where participant: true }, class_name: 'User'
   belongs_to :author, class_name: 'User', foreign_key: 'author_email',

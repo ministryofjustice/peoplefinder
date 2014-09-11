@@ -8,16 +8,22 @@ feature 'Submitting feedback' do
 
     click_link 'Add feedback'
 
-    choose 'Good'
-    fill_in 'What worked well and why?', with: 'Some good stuff'
-    fill_in 'Where would a different approach or behaviour have worked better and why?',
-      with: 'Could learn to...'
+    Review::RATING_FIELDS.each do |rating_field|
+      within(".submission_#{ rating_field }") do
+        choose '3'
+      end
+    end
+
+    fill_in 'Leadership comments', with: 'Some good stuff'
+    fill_in 'How we work comments', with: 'Could learn to...'
     click_button 'Submit'
 
     submission = Submission.last
-    expect(submission.rating).to eql('Good')
-    expect(submission.achievements).to eql('Some good stuff')
-    expect(submission.improvements).to eql('Could learn to...')
+    Review::RATING_FIELDS.each do |rating_field|
+      expect(submission.send(rating_field)).to eql(3)
+    end
+    expect(submission.leadership_comments).to eql('Some good stuff')
+    expect(submission.how_we_work_comments).to eql('Could learn to...')
     expect(submission.status).to eql(:submitted)
   end
 
@@ -26,16 +32,18 @@ feature 'Submitting feedback' do
 
     click_link 'Add feedback'
 
-    choose 'Good'
-    fill_in 'What worked well and why?', with: 'Some good stuff'
-    fill_in 'Where would a different approach or behaviour have worked better and why?',
-      with: 'Could learn to...'
+    within(".submission_rating_1") do
+      choose '3'
+    end
+    fill_in 'Leadership comments', with: 'Some good stuff'
+    fill_in 'How we work comments', with: 'Could learn to...'
+
     sleep 0.2
 
     submission = Submission.last
-    expect(submission.rating).to eql('Good')
-    expect(submission.achievements).to eql('Some good stuff')
-    expect(submission.improvements).to eql('Could learn to...')
+    expect(submission.rating_1).to eql(3)
+    expect(submission.leadership_comments).to eql('Some good stuff')
+    expect(submission.how_we_work_comments).to eql('Could learn to...')
     expect(submission.status).to eql(:started)
   end
 

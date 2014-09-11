@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140905135531) do
+ActiveRecord::Schema.define(version: 20140911125448) do
 
   create_table "reviews", force: true do |t|
     t.integer "subject_id"
@@ -19,11 +19,21 @@ ActiveRecord::Schema.define(version: 20140905135531) do
     t.text    "author_email"
     t.text    "relationship"
     t.text    "status",       default: "no_response", null: false
-    t.string  "rating"
-    t.text    "achievements"
-    t.text    "improvements"
     t.text    "reason_declined"
     t.text    "invitation_message",                         null: false
+    t.integer "rating_1"
+    t.integer "rating_2"
+    t.integer "rating_3"
+    t.integer "rating_4"
+    t.integer "rating_5"
+    t.integer "rating_6"
+    t.integer "rating_7"
+    t.integer "rating_8"
+    t.integer "rating_9"
+    t.integer "rating_10"
+    t.integer "rating_11"
+    t.text    "leadership_comments"
+    t.text    "how_we_work_comments"
   end
 
   add_index "reviews", ["author_email"], name: "index_reviews_on_author_email", using: :btree
