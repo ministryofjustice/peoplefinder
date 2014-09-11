@@ -38,6 +38,18 @@ en:
         create: 'Send'
     reviews:
       completion: '%{submitted} of %{total} completed'
+    label:
+      review:
+        author_email: 'Email address'
+        author_name: 'Name'
+        relationship: 'Your working relationship'
+        invitation_message: 'Message text'
+      submission:
+        rating: 'General performance rating'
+        achievements: 'What worked well and why?'
+        improvements: >-
+          Where would a different approach or behaviour have worked better and
+          why?
   reviews:
     default_invitation_message: >-
       I'd like you to offer 360 feedback on my performance when I've worked

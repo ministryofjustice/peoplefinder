@@ -101,3 +101,7 @@ table {
 .review-status-submitted .indicator-dot {
   background-color: #5baf19
 }
+
+.field_with_errors input{
+  border: 3px solid red;
+}

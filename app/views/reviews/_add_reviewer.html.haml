@@ -1,8 +1,9 @@
 %h3= role_translate(@reviews.any? ? :some : :none, scope: 'views.reviews.add_reviewer_title')
 
-= simple_form_for [@subject, @review].compact do |f|
-  = f.input :author_name, as: :string
-  = f.input :author_email, as: :string
-  = f.input :relationship, collection: Review::RELATIONSHIPS, default: :peer, label_method: ->(v){ t(v, scope: 'reviews.relationships') }
-  = f.input :invitation_message, as: :text
-  = f.button :submit
+= form_for [@subject, @review].compact do |f|
+  = f.text_field :author_name
+  = f.text_field :author_email
+  = f.collection_select(:relationship, Review::RELATIONSHIPS, default: :peer){ |v| t(v, scope: 'reviews.relationships') }
+  = f.text_area :invitation_message
+  %fieldset
+    = f.button
