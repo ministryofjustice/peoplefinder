@@ -5,9 +5,6 @@ en:
     required:
       text: 'required'
       mark: '*'
-      # You can uncomment the line below if you need to overwrite the whole required html.
-      # When using html, text and mark won't be used.
-      # html: '<abbr title="required">*</abbr>'
     error_notification:
       default_message: "Please review the problems below:"
     labels:
@@ -16,28 +13,3 @@ en:
         author_name: 'Name'
         relationship: 'Your working relationship'
         invitation_message: 'Message text'
-      submission:
-        rating: 'General performance rating'
-        achievements: 'What worked well and why?'
-        improvements: >-
-          Where would a different approach or behaviour have worked better and
-          why?
-    # Examples
-    # labels:
-    #   defaults:
-    #     password: 'Password'
-    #   user:
-    #     new:
-    #       email: 'E-mail to sign in.'
-    #     edit:
-    #       email: 'E-mail.'
-    # hints:
-    #   defaults:
-    #     username: 'User name to sign in.'
-    #     password: 'No special characters, please.'
-    # include_blanks:
-    #   defaults:
-    #     age: 'Rather not say'
-    # prompts:
-    #   defaults:
-    #     age: 'Select your age'

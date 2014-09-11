@@ -1,18 +1,18 @@
 - content_for :top_left do
   = link_to 'Return to dashboard', replies_path
 
-= simple_form_for @submission, html: { class: 'autosave' } do |f|
+= form_for @submission, html: { class: 'autosave' } do |f|
 
   - Review::RATING_FIELDS.slice(0,4).each do |rating|
-    = f.input rating, as: :radio_buttons, collection: %w{ 3 }
+    = f.radio_buttons(rating, %w[ 1 2 3 4 0 ]){ |v| t(v, scope: 'submissions.ratings') }
 
-  = f.input :leadership_comments
+  = f.text_area :leadership_comments
 
   - Review::RATING_FIELDS.slice(4,7).each do |rating|
-    = f.input rating, as: :radio_buttons, collection: %w{ 3 }
+    = f.radio_buttons(rating, %w[ 1 2 3 4 0 ]){ |v| t(v, scope: 'submissions.ratings') }
 
-  = f.input :how_we_work_comments
+  = f.text_area :how_we_work_comments
 
-  = f.button :submit, 'Submit'
+  = f.button
 
 = link_to 'Leadership model', leadership_model_path

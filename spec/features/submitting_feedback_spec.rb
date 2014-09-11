@@ -11,13 +11,13 @@ feature 'Submitting feedback' do
     expect(page).to have_link('Return to dashboard', href: replies_path)
 
     Review::RATING_FIELDS.each do |rating_field|
-      within(".submission_#{ rating_field }") do
+      within("#submission_#{ rating_field }") do
         choose '3'
       end
     end
 
-    fill_in 'Leadership comments', with: 'Some good stuff'
-    fill_in 'How we work comments', with: 'Could learn to...'
+    fill_in 'submission_leadership_comments', with: 'Some good stuff'
+    fill_in 'submission_how_we_work_comments', with: 'Could learn to...'
     click_button 'Submit'
 
     submission = Submission.last
@@ -34,11 +34,11 @@ feature 'Submitting feedback' do
 
     click_link 'Add feedback'
 
-    within(".submission_rating_1") do
+    within("#submission_rating_1") do
       choose '3'
     end
-    fill_in 'Leadership comments', with: 'Some good stuff'
-    fill_in 'How we work comments', with: 'Could learn to...'
+    fill_in 'submission_leadership_comments', with: 'Some good stuff'
+    fill_in 'submission_how_we_work_comments', with: 'Could learn to...'
 
     sleep 0.2
 
