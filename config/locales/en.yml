@@ -32,6 +32,8 @@ en:
       reminder_sent: 'A reminder has been sent'
   helpers:
     submit:
+      invitation:
+        update: 'Update'
       review:
         create: 'Send'
     reviews:
