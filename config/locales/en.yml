@@ -59,6 +59,9 @@ en:
     errors:
       mandatory_reason: 'If declining, please include a reason'
       invalid_state: '%{state} is not a valid state'
+    statuses:
+      accepted: 'Accept'
+      declined: 'Decline'
   review_mailer:
     feedback_request:
       subject: 'Request for feedback'

@@ -2,11 +2,13 @@
 
 %p Please accept or decline this request:
 = simple_form_for reply, as: :invitation, url: invitation_path(reply) do |f|
-  = f.input :status, as: :radio_buttons,
-                     collection: [['Accept', :accepted], ['Decline', :declined]]
+  %fieldset.inline
+  = f.input :status, as: :radio_buttons, collection: %i[ accepted declined ], item_wrapper_class: 'block-label', label_method: ->(v) { t(v, scope: 'invitations.statuses') }
 
-  .reason_declined_fields.hidden
-    %p Please explain why you have declined the request
-    = f.input :reason_declined
+  %fieldset
+    .reason_declined_fields.hidden
+      %p Please explain why you have declined the request
+      = f.input :reason_declined
 
-  = f.button :submit, label: 'Update'
+  %fieldset
+    = f.button :submit, label: 'Update'
