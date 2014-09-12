@@ -38,8 +38,14 @@ $(function() {
     indicate('failed');
   };
 
+  var refreshRadioStyles = function() {
+    $('input:radio').parent().removeClass('selected');
+    $('input:radio:checked').parent().addClass('selected');
+  };
+
   $('form.autosave input, form.autosave textarea').
     on('change input', function() {
+      refreshRadioStyles();
       var form = this.form;
       autosaveNeeded();
       clearTimeout(form.autosaveTimeout);
@@ -47,4 +53,6 @@ $(function() {
         autosave(form);
       }, config.AUTOSAVE_DELAY);
     });
+
+  refreshRadioStyles();
 });
