@@ -9,18 +9,42 @@ $(function() {
     $(this.form).find('.reason_declined_fields').addClass('hidden');
   });
 
-  var autosaved = function() {
-    // TODO: Some kind of toast notification
+  var autosave = function(form) {
+    autosaveStarted();
+    var data = $(form).serialize() + '&autosave=1';
+    $.post($(form).attr('action'), data).
+      done(autosaveSucceeded).
+      fail(autosaveFailed);
+  };
+
+  var indicate = function(name) {
+    $('.autosave-status .indicator').hide();
+    if (name) { $('.autosave-status .' + name).show(); }
+  };
+
+  var autosaveNeeded = function() {
+    indicate('needed');
+  };
+
+  var autosaveStarted = function() {
+    indicate('saving');
+  };
+
+  var autosaveSucceeded = function() {
+    indicate('saved');
+  };
+
+  var autosaveFailed = function() {
+    indicate('failed');
   };
 
   $('form.autosave input, form.autosave textarea').
     on('change input', function() {
       var form = this.form;
+      autosaveNeeded();
       clearTimeout(form.autosaveTimeout);
-
       form.autosaveTimeout = setTimeout(function() {
-        var data = $(form).serialize() + '&autosave=1';
-        $.post($(form).attr('action'), data, autosaved);
+        autosave(form);
       }, config.AUTOSAVE_DELAY);
     });
 });

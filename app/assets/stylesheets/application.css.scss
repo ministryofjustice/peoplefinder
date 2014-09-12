@@ -164,7 +164,27 @@ hr.more-space {
   margin-top: 60px;
 }
 
-.action-row a {
-  display: inline-block;
-  padding: 8px;
+.action-row button {
+  float: left;
+}
+
+.action-row div {
+  float: left;
+  padding: 8px 0;
+}
+
+.action-row div.autosave-status {
+  float: right;
+  color: #6f777b;
+}
+
+.autosave-status .indicator {
+  display: none;
+}
+
+.autosave-status .saved {
+  background-image: image-url('saved_tick.gif');
+  background-repeat: no-repeat;
+  background-position: 0px 2px;
+  padding-left: 31px;
 }

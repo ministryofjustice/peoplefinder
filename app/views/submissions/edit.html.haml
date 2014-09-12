@@ -35,4 +35,9 @@
 
   %div.action-row
     = f.button
-    = link_to t('submissions.return_to_dashboard'), replies_path
+    %div
+      = link_to t('submissions.return_to_dashboard'), replies_path
+    %div.autosave-status
+      %span.saving.indicator= t('submissions.autosave.saving')
+      %span.saved.indicator= t('submissions.autosave.saved')
+      %span.failed.indicator= t('submissions.autosave.failed')

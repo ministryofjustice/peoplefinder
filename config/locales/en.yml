@@ -137,6 +137,11 @@ en:
       '4': '4'
       '0': 'N/A'
     return_to_dashboard: 'Return to dashboard'
+    autosave:
+      needed: ''
+      saving: 'Saving changes'
+      saved: 'All changes saved'
+      failed: 'Failed to save progress'
   invitations:
     errors:
       mandatory_reason: 'If declining, please include a reason'

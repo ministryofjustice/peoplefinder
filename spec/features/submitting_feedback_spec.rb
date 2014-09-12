@@ -40,6 +40,8 @@ feature 'Submitting feedback' do
     fill_in 'submission_leadership_comments', with: 'Some good stuff'
     fill_in 'submission_how_we_work_comments', with: 'Could learn to...'
 
+    expect(page).not_to have_text('All changes saved')
+
     sleep 0.2
 
     submission = Submission.last
@@ -47,6 +49,8 @@ feature 'Submitting feedback' do
     expect(submission.leadership_comments).to eql('Some good stuff')
     expect(submission.how_we_work_comments).to eql('Could learn to...')
     expect(submission.status).to eql(:started)
+
+    expect(page).to have_text('All changes saved')
   end
 
   scenario 'View the leadership model' do
