@@ -57,7 +57,7 @@ en:
         rating_4: >-
           4) Lives Our Values
         rating_5: >-
-          5) Understands their role and plays their part in delivering the MoJ
+          5) Understands their role and plays their part in delivering the MOJ
           story
         rating_6: >-
           6) Takes responsibility for their own development, building the
@@ -129,7 +129,7 @@ en:
     section_2:
       title: 'How We Work'
       intro: |
-        Please refer to the [MoJ Story](/moj_story) for help with this section.
+        Please refer to the [MOJ Story](/moj_story) for help with this section.
     ratings:
       '1': '1'
       '2': '2'
