@@ -1,5 +1,5 @@
 class GDSFormBuilder < ActionView::Helpers::FormBuilder
-  attr_reader :template
+  attr_reader :template, :object_name
 
   def text_area(method, options = {})
     with_label(method) {
@@ -12,11 +12,13 @@ class GDSFormBuilder < ActionView::Helpers::FormBuilder
   end
 
   def radio_buttons(method, values, &labeler)
-    values.map { |value|
-      label(method, value: value, class: 'block-label') {
-        radio_button(method, value) + labeler.call(value)
-      }
-    }.join.html_safe
+    template.content_tag(:fieldset, id: [object_name, method].join('_')) {
+      values.map { |value|
+        label(method, value: value, class: 'block-label') {
+          radio_button(method, value) + labeler.call(value)
+        }
+      }.join.html_safe
+    }
   end
 
   def text_field(method, options = {})
