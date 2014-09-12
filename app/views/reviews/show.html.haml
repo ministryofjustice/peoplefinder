@@ -1,11 +1,11 @@
 %h2= t('views.reviews.show_review_title', author: @review.author_name)
 
-%p #{ t('simple_form.labels.submission.rating') }: #{ @review.rating}
+%p #{ t('simple_form.labels.submission.rating') }: #{ @review.rating_1}
 
 %h4= t('simple_form.labels.submission.achievements')
-%p= @review.achievements
+%p= @review.leadership_comments
 
 %h4= t('simple_form.labels.submission.improvements')
-%p= @review.improvements
+%p= @review.how_we_work_comments
 
 = link_to 'Back to participant list', :back

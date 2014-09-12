@@ -61,15 +61,12 @@ feature 'Review maintenance' do
     review = create(:review, submitted_review_attributes.merge(subject: me))
     visit reviews_path
 
-    click_link 'Danny Boy'
+    click_link 'View feedback'
 
     expect(page).to have_text('Feedback from Danny Boy')
-    expect(page).to have_text(review.rating)
-    expect(page).to have_text(review.achievements)
-    expect(page).to have_text(review.improvements)
 
     click_link 'Back'
-    expect(page).to have_link('Danny Boy', href: review_path(review))
+    expect(page).to have_link('View feedback', href: review_path(review))
   end
 
   scenario 'See feedback completed for my managee' do
@@ -83,16 +80,12 @@ feature 'Review maintenance' do
     end
 
     expect(page).to have_text('Direct report: Marvin Managee')
-    click_link 'Danny Boy'
+    click_link 'View feedback'
 
-    expect(page).to have_text('Direct report: Marvin Managee')
     expect(page).to have_text('Feedback from Danny Boy')
-    expect(page).to have_text(review.rating)
-    expect(page).to have_text(review.achievements)
-    expect(page).to have_text(review.improvements)
 
     click_link 'Back'
-    expect(page).to have_link('Danny Boy', href: polymorphic_path([managee, review]))
+    expect(page).to have_link('View feedback', href: polymorphic_path([managee, review]))
     expect(page).to have_text('Direct report: Marvin Managee')
   end
 
@@ -141,9 +134,7 @@ feature 'Review maintenance' do
   def submitted_review_attributes
     {
       author_name: 'Danny Boy',
-      rating: 'Good',
-      achievements: 'Something done well',
-      improvements: 'Could be better',
+      rating_1: 3,
       status: :submitted
     }
   end

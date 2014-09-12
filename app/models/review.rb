@@ -3,7 +3,9 @@ class Review < ActiveRecord::Base
   extend SymbolField
 
   STATUSES = %i[ no_response declined accepted started submitted ]
-  RELATIONSHIPS = %i[ peer line_manager direct_report supplier project_member ]
+  REMINDABLE_STATUSES = %i[ no_response accepted started ]
+  RELATIONSHIPS = %i[ peer line_manager direct_report supplier customer ]
+  RATING_FIELDS = 1.upto(11).map { |i| "rating_#{ i }".to_sym }
 
   belongs_to :subject, -> { where participant: true }, class_name: 'User'
   belongs_to :author, class_name: 'User', foreign_key: 'author_email',
@@ -13,8 +15,7 @@ class Review < ActiveRecord::Base
 
   validates :subject, presence: true
   validates :author_email, presence: true
-  validates :author_email, uniqueness: { scope: :subject_id,
-                                         message: 'has already been invited' }
+  validates :author_email, uniqueness: { scope: :subject_id }
   validates :author_name, presence: true
   validates :status, presence: true, inclusion: { in: STATUSES }
   validates :relationship, presence: true, inclusion: { in: RELATIONSHIPS }
@@ -26,6 +27,14 @@ class Review < ActiveRecord::Base
 
   symbol_field :status, STATUSES
   symbol_field :relationship, RELATIONSHIPS
+
+  def remindable?
+    REMINDABLE_STATUSES.include?(status)
+  end
+
+  def complete?
+    status == :submitted
+  end
 
 private
 

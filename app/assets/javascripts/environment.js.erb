@@ -1,5 +1,11 @@
+/* global $ */
+
 var config = {
   AUTOSAVE_DELAY: 5000
 };
 
-//= require ./environments/<%= Rails.env %>
+if ('<%= Rails.env %>' === 'test') {
+  $.extend(config, {
+    AUTOSAVE_DELAY: 50
+  });
+}

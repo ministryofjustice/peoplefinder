@@ -1,8 +1,6 @@
 require 'rails_helper'
 
 feature 'Invitations' do
-  let(:me) { create(:user) }
-
   scenario 'Accept a feedback request' do
     visit token_url(build_token(:no_response))
 
@@ -36,8 +34,12 @@ feature 'Invitations' do
 
     expect(last_email.subject).to eql('Request for feedback has been declined')
     expect(last_email.to.first).to eql(Reply.last.subject.email)
-    expect(last_email.to.first).to_not eql(me.email)
-    expect(links_in_email(last_email).first).to match(%r{http:\/\/www.example.com\/go\/\w+-\w+-\w+-\w+-\w+})
+    expect(last_email).to have_text("#{ Reply.last.author_name } has declined")
+
+    visit(links_in_email(last_email).first)
+    within('#log-in-out') do
+      expect(page).to have_text(Reply.last.subject.email)
+    end
   end
 
   scenario 'Attempt to decline a feedback request without a reason' do

@@ -12,7 +12,8 @@ class SubmissionsController < ApplicationController
 private
 
   def submission_params
-    params.require(:submission).permit(:rating, :achievements, :improvements).
+    params.require(:submission).permit(Review::RATING_FIELDS,
+      :leadership_comments, :how_we_work_comments).
       merge(status: params[:autosave].present? ? :started : :submitted)
   end
 

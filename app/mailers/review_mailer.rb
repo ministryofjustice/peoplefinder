@@ -11,7 +11,7 @@ class ReviewMailer < ActionMailer::Base
 
   def request_declined(review, token)
     @recipient_name = review.subject.name
-    @decliner_name = review.author.name
+    @decliner_name = review.author_name
     @token = token
     mail to: review.subject.email
   end

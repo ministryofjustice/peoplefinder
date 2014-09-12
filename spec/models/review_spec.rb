@@ -53,4 +53,30 @@ RSpec.describe Review, type: :model do
       expect(review.invitation_message).to match(/offer 360 feedback/)
     end
   end
+
+  it 'is remindable if the status is no_response, accepted, or started' do
+    %i[ no_response accepted started ].each do |status|
+      review.status = status
+      expect(review).to be_remindable
+    end
+  end
+
+  it 'is not remindable if the status is declined or submitted' do
+    %i[ declined submitted ].each do |status|
+      review.status = status
+      expect(review).not_to be_remindable
+    end
+  end
+
+  it 'is complete if the status is submitted' do
+    review.status = :submitted
+    expect(review).to be_complete
+  end
+
+  it 'is not complete if the status is not submitted' do
+    %i[ no_response declined accepted started ].each do |status|
+      review.status = status
+      expect(review).not_to be_complete
+    end
+  end
 end

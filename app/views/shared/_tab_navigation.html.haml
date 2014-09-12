@@ -1,4 +1,4 @@
-%h1 #{ app_name }
+%h1= content_for?(:page_title) ? yield(:page_title) : app_name
 
 - if review_period_closed?
   - if current_user.manager && current_user.managees.present?
@@ -31,7 +31,7 @@
       - if feedback_requests_tab?
         %li.active #{ t('tab_navigation.feedback_requests') }
       - else
-        %li.linkable= link_to t('tab_navigation.feedback_requests'), feedback_requests_path
+        %li.linkable= link_to t('tab_navigation.feedback_requests'), replies_path
 
 - if @subject
   %h2 Direct report: #{ @subject.name }

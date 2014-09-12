@@ -32,18 +32,61 @@ en:
       reminder_sent: 'A reminder has been sent'
   helpers:
     submit:
+      invitation:
+        update: 'Update'
       review:
         create: 'Send'
+      submission:
+        update: 'Submit'
     reviews:
       completion: '%{submitted} of %{total} completed'
+    label:
+      review:
+        author_email: 'Email address'
+        author_name: 'Name'
+        relationship: 'Your working relationship'
+        invitation_message: 'Message text'
+      submission:
+        rating: 'General performance rating.'
+        rating_1: >-
+          1) Sets Future Direction
+        rating_2: >-
+          2) Manages Effectively and Delivers Results
+        rating_3: >-
+          3) Engages People and Develops Capability
+        rating_4: >-
+          4) Lives Our Values
+        rating_5: >-
+          5) Understands their role and plays their part in delivering the MoJ
+          story
+        rating_6: >-
+          6) Takes responsibility for their own development, building the
+          skills they need to deliver improved performance
+        rating_7: >-
+          7) Innovates and works at pace to improve all our policies and
+          services
+        rating_8: >-
+          8) Manages risk effectively and delivers effective value for money
+        rating_9: >-
+          9) Knows what good leadership looks like and continually improves
+          their own leadership skills
+        rating_10: >-
+          10) Breaks down silos and works together collaboratively to deliver
+          better justive outcomes
+        rating_11: >-
+          11) Involves all staff in managing change
+        leadership_comments: 'Please cite specific examples of leadership qualities (optional)'
+        how_we_work_comments: 'Please cite specific examples relating to How We Work'
+      invitation:
+        status: 'Your response'
   reviews:
     default_invitation_message: >-
       I'd like you to offer 360 feedback on my performance when I've worked
       with you.
     statuses:
-      no_response: 'No response'
+      no_response: 'Pending'
       declined: 'Declined'
-      accepted: 'Accepted'
+      accepted: 'Started'
       started: 'Started'
       submitted: 'Completed'
     relationships:
@@ -51,14 +94,62 @@ en:
       line_manager: 'Line manager'
       direct_report: 'Direct report'
       supplier: 'Supplier'
-      project_member: 'Project member'
+      customer: 'Customer/stakeholder'
     errors:
       subject_must_be_participant: 'must be a participant'
   review_period_closed: 'Feedback report period has ended'
+  submissions:
+    title: 'Feedback for %{name}'
+    intro: |
+      Managing Performance in the Senior Civil Service requires an end of year
+      appraisal to take into account ‘how’ an individual operates in terms of
+      their leadership behaviour and people management skills.
+      Your feedback is appreciated in order to form a rounded picture of
+      performance.
+
+      The scores for each section are on a four point scale (plus you can
+      answer not applicable too):
+
+      1
+      : Limited capability, extensive development needed
+
+      2
+      : Moderate capability, some development needed
+
+      3
+      : Capable, an area of considerable strength
+
+      4
+      : Highly capable, an area of considerable strength
+    section_1:
+      title: 'Leadership qualities'
+      intro: |
+        Please refer to the [Leadership Model](/leadership_model) for help
+        with this section.
+    section_2:
+      title: 'How We Work'
+      intro: |
+        Please refer to the [MoJ Story](/moj_story) for help with this section.
+    ratings:
+      '1': '1'
+      '2': '2'
+      '3': '3'
+      '4': '4'
+      '0': 'N/A'
+    return_to_dashboard: 'Return to dashboard'
+    autosave:
+      needed: ''
+      saving: 'Saving changes'
+      saved: 'All changes saved'
+      failed: 'Failed to save progress'
   invitations:
     errors:
       mandatory_reason: 'If declining, please include a reason'
       invalid_state: '%{state} is not a valid state'
+    statuses:
+      accepted: 'Accept'
+      declined: 'Decline'
+    accept: 'Accept request'
   review_mailer:
     feedback_request:
       subject: 'Request for feedback'
@@ -86,6 +177,12 @@ en:
           mine: 'Ask another person to provide feedback about you'
           theirs: 'Ask another person to provide feedback about %{name}'
       show_review_title: 'Feedback from %{author}'
+      list:
+        name_header: 'Name'
+        relationship_header: 'Working relationship'
+        status_header: 'Feedback status'
+        action_header: 'Action'
+      view_feedback: 'View feedback'
     users:
       index_title: 'Your direct reports'
       index_standfirst:
@@ -94,3 +191,10 @@ en:
       list:
         name_header: 'Name'
         status_header: 'Feedback status'
+  activerecord:
+    errors:
+      models:
+        review:
+          attributes:
+            author_email:
+              taken: 'Email address has already been invited'

@@ -1,7 +1,43 @@
-= simple_form_for @submission, html: { class: 'autosave' } do |f|
-  = f.input :rating, as: :radio_buttons, collection: %w{ Good Bad }
-  = f.input :achievements
-  = f.input :improvements
-  = f.button :submit, 'Submit'
+- content_for :top_left do
+  = link_to t('submissions.return_to_dashboard'), replies_path
 
-= link_to 'Leadership model', leadership_model_path
+- content_for :page_title do
+  = t('submissions.title', name: @submission.subject_name)
+
+%div.intro
+  = govspeak(t('submissions.intro'))
+
+%hr
+
+= form_for @submission, html: { class: 'autosave submission-form' } do |f|
+
+  %h2= t('submissions.section_1.title')
+
+  = govspeak(t('submissions.section_1.intro'))
+
+  - Review::RATING_FIELDS[0 .. 3].each do |rating|
+    = f.radio_buttons(rating, %w[ 1 2 3 4 0 ], inline: true){ |v| t(v, scope: 'submissions.ratings') }
+
+  = f.text_area :leadership_comments
+
+  %hr.more-space
+
+  %h2= t('submissions.section_2.title')
+
+  = govspeak(t('submissions.section_2.intro'))
+
+  - Review::RATING_FIELDS[4 .. -1].each do |rating|
+    = f.radio_buttons(rating, %w[ 1 2 3 4 0 ], inline: true){ |v| t(v, scope: 'submissions.ratings') }
+
+  = f.text_area :how_we_work_comments
+
+  %hr.more-space
+
+  %div.action-row
+    = f.button
+    %div
+      = link_to t('submissions.return_to_dashboard'), replies_path
+    %div.autosave-status
+      %span.saving.indicator= t('submissions.autosave.saving')
+      %span.saved.indicator= t('submissions.autosave.saved')
+      %span.failed.indicator= t('submissions.autosave.failed')

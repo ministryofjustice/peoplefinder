@@ -41,7 +41,7 @@ protected
 
   def communicate_change
     if declined?
-      token = tokens.create!
+      token = subject.tokens.create!
       ReviewMailer.request_declined(self, token).deliver
     end
   end

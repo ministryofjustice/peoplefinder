@@ -3,9 +3,12 @@
 %p= t('index_standfirst', scope: 'views.users', count: @users.length)
 
 %table#users
-  %th= t('list.name_header', scope: 'views.users')
-  %th= t('list.status_header', scope: 'views.users')
-  - @users.each do |user|
-    %tr{ class: "#{ cycle('stripe', '') }" }
-      %td.name= link_to(user, [user, :reviews])
-      %td= review_completion(user)
+  %thead
+    %tr
+      %th= t('list.name_header', scope: 'views.users')
+      %th= t('list.status_header', scope: 'views.users')
+  %tbody
+    - @users.each do |user|
+      %tr{ class: "#{ cycle('stripe', '') }" }
+        %td.name= link_to(user, [user, :reviews])
+        %td= review_completion(user)
