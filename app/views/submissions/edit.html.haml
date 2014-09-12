@@ -1,5 +1,5 @@
 - content_for :top_left do
-  = link_to 'Return to dashboard', replies_path
+  = link_to t('submissions.return_to_dashboard'), replies_path
 
 - content_for :page_title do
   = t('submissions.title', name: @submission.subject_name)
@@ -35,4 +35,4 @@
 
   %div.action-row
     = f.button
-    = link_to 'Return to dashboard', replies_path
+    = link_to t('submissions.return_to_dashboard'), replies_path

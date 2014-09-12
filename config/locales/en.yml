@@ -136,6 +136,7 @@ en:
       '3': '3'
       '4': '4'
       '0': 'N/A'
+    return_to_dashboard: 'Return to dashboard'
   invitations:
     errors:
       mandatory_reason: 'If declining, please include a reason'
