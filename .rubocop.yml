@@ -9,7 +9,6 @@ AllCops:
     - '**/*.gemspec'
     - '**/Rakefile'
     - '**/Vagrantfile'
-    - 'config/initializers/simple_form.rb'
     - 'spec/rails_helper.rb'
   RunRailsCops: true
 
