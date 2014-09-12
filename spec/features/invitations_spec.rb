@@ -24,17 +24,19 @@ feature 'Invitations' do
     expect(Reply.last.status).to eql(:declined)
   end
 
-  scenario 'Decline a feedback request and email subject of declined status' do
+  scenario 'Decline a feedback request and email subject of declined status with reason' do
     visit token_url(build_token(:no_response))
 
     choose 'Decline'
+    reason = "I don't know you well enough to comment on your performance"
     expect(page).to have_text 'Please explain why you have declined the request'
-    fill_in 'Reason declined', with: 'Some stuff'
+    fill_in 'Reason declined', with: reason
     click_button 'Update'
 
     expect(last_email.subject).to eql('Request for feedback has been declined')
     expect(last_email.to.first).to eql(Reply.last.subject.email)
     expect(last_email).to have_text("#{ Reply.last.author_name } has declined")
+    expect(email_contains(last_email, reason)).to include(reason)
 
     visit(links_in_email(last_email).first)
     within('#log-in-out') do

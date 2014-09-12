@@ -12,7 +12,11 @@ module SpecSupport
     end
 
     def links_in_email(delivery)
-      delivery.body.encoded.scan(/https?:\S+/)
+      email_contains(delivery, /https?:\S+/)
+    end
+
+    def email_contains(delivery, matcher)
+      delivery.body.encoded.scan(matcher)
     end
   end
 end

@@ -13,6 +13,7 @@ class ReviewMailer < ActionMailer::Base
     @recipient_name = review.subject.name
     @decliner_name = review.author_name
     @token = token
+    @reason = review.reason_declined
     mail to: review.subject.email
   end
 end

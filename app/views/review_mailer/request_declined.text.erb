@@ -1,5 +1,7 @@
 Hello <%= @recipient_name %>,
 
-<%= @decliner_name %> has declined to leave you feedback.
+<%= @decliner_name %> has declined to leave you feedback for the following reason:
+
+<%= @reason %>
 
 <%= token_url(@token) %>
