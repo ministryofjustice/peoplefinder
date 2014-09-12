@@ -2,6 +2,7 @@ source 'https://rubygems.org'
 ruby '2.1.1'
 gem 'rails', '~> 4.1.5'
 
+gem 'govspeak'
 gem 'govuk_frontend_toolkit'
 gem 'govuk_template'
 gem 'haml-rails'

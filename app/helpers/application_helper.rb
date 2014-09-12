@@ -41,6 +41,12 @@ module ApplicationHelper
     active_tab == :feedback_requests
   end
 
+  def govspeak(source)
+    options = { header_offset: 2 }
+    doc = Govspeak::Document.new(source, options)
+    doc.to_html.html_safe
+  end
+
 private
 
   def flash_message(type)

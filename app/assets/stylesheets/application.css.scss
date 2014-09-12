@@ -113,17 +113,58 @@ table {
   border: 3px solid red;
 }
 
-.submission-form {
-  .block-label:nth-child(2) {
+$rating-1-color: rgba(255, 191, 71, 0.25);
+$rating-2-color: rgba(255, 191, 71, 0.5);
+$rating-3-color: rgba(255, 191, 71, 0.75);
+$rating-4-color: rgba(255, 191, 71, 1.0);
+
+.intro {
+  dt, dd {
+    height: 25px;
+    line-height: 25px;
+    padding: 10px;
+  }
+  dt {
+    clear: left;
+    float: left;
+    width: 25px;
+    font-size: 24px;
     background-color: rgba(255, 191, 71, 0.25);
+    text-align: center;
+    margin-right: 15px;
   }
-  .block-label:nth-child(3) {
-    background-color: rgba(255, 191, 71, 0.5);
+  dd {
+    margin: 10px 0;
   }
-  .block-label:nth-child(4) {
-    background-color: rgba(255, 191, 71, 0.75);
+  dt:nth-child(1) { background-color: $rating-1-color }
+  dt:nth-child(3) { background-color: $rating-2-color }
+  dt:nth-child(5) { background-color: $rating-3-color }
+  dt:nth-child(7) { background-color: $rating-4-color }
+}
+
+.submission-form {
+  .block-label:nth-child(2) { background-color: $rating-1-color; }
+  .block-label:nth-child(3) { background-color: $rating-2-color; }
+  .block-label:nth-child(4) { background-color: $rating-3-color; }
+  .block-label:nth-child(5) { background-color: $rating-4-color; }
+
+  textarea {
+    width: 75%;
+    height: 180px;
   }
-  .block-label:nth-child(5) {
-    background-color: rgba(255, 191, 71, 1.0);
-  }
+}
+
+hr {
+  border: none;
+  border-bottom: 1px solid #BFC1C3;
+  margin: 30px 0;
+}
+
+hr.more-space {
+  margin-top: 60px;
+}
+
+.action-row a {
+  display: inline-block;
+  padding: 8px;
 }

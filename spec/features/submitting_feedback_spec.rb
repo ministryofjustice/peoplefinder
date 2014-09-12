@@ -53,14 +53,14 @@ feature 'Submitting feedback' do
     visit token_url(build_token(:accepted))
 
     click_link 'Add feedback'
-    click_link 'Leadership model'
+    click_link 'Leadership Model'
 
     within('h2') do
       expect(page).to have_text('Leadership Model')
     end
 
     click_link 'Back'
-    expect(page).to have_link('Leadership model', href: leadership_model_path)
+    expect(page).to have_link('Leadership Model', href: leadership_model_path)
   end
 
   def build_token(status)

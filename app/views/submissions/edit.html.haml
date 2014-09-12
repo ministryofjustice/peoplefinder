@@ -1,19 +1,36 @@
 - content_for :top_left do
   = link_to 'Return to dashboard', replies_path
 
+- content_for :page_title do
+  = t('submissions.title', name: @submission.subject_name)
+
+%div.intro
+  = govspeak(t('submissions.intro'))
+
+%hr
+
 = form_for @submission, html: { class: 'autosave submission-form' } do |f|
 
-  - Review::RATING_FIELDS.slice(0,4).each do |rating|
+  %h2= t('submissions.section_1.title')
+
+  = govspeak(t('submissions.section_1.intro'))
+
+  - Review::RATING_FIELDS[0 .. 3].each do |rating|
     = f.radio_buttons(rating, %w[ 1 2 3 4 0 ], inline: true){ |v| t(v, scope: 'submissions.ratings') }
 
   = f.text_area :leadership_comments
 
-  - Review::RATING_FIELDS.slice(4,7).each do |rating|
+  %h2= t('submissions.section_2.title')
+
+  = govspeak(t('submissions.section_2.intro'))
+
+  - Review::RATING_FIELDS[4 .. -1].each do |rating|
     = f.radio_buttons(rating, %w[ 1 2 3 4 0 ], inline: true){ |v| t(v, scope: 'submissions.ratings') }
 
   = f.text_area :how_we_work_comments
 
-  %fieldset
-    = f.button
+  %hr.more-space
 
-= link_to 'Leadership model', leadership_model_path
+  %div.action-row
+    = f.button
+    = link_to 'Return to dashboard', replies_path
