@@ -34,6 +34,7 @@ feature 'Invitations' do
 
     expect(last_email.subject).to eql('Request for feedback has been declined')
     expect(last_email.to.first).to eql(Reply.last.subject.email)
+    expect(last_email).to have_text("#{ Reply.last.author_name } has declined")
 
     visit(links_in_email(last_email).first)
     within('#log-in-out') do
