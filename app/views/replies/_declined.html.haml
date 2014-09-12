@@ -1,6 +1,6 @@
-= simple_form_for reply, as: :invitation, url: invitation_path(reply) do |f|
+= form_for reply, as: :invitation, url: invitation_path(reply) do |f|
   %p
-  %strong= reply.subject.name
-  = f.input :status, as: :hidden, input_html: { value: :accepted }
-  = f.input :reason_declined, as: :hidden, input_html: { value: '' }
-  = f.button :submit, 'Accept request'
+    %strong= reply.subject.name
+  = f.hidden_field :status, value: :accepted
+  = f.hidden_field :reason_declined, value: ''
+  = f.button t('invitations.accept')

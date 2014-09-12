@@ -143,6 +143,7 @@ en:
     statuses:
       accepted: 'Accept'
       declined: 'Decline'
+    accept: 'Accept request'
   review_mailer:
     feedback_request:
       subject: 'Request for feedback'
