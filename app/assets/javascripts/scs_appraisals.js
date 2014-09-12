@@ -1,3 +1,4 @@
+//= require environment
 /* global $, config */
 $(function() {
   $(document).on('click', '#invitation_status_declined', function() {
