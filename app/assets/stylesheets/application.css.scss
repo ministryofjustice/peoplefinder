@@ -147,6 +147,7 @@ $rating-4-color: rgba(255, 191, 71, 1.0);
     padding: 10px 30px 10px 45px;
     input {
       top: 13px;
+      left: 15px;
     }
     line-height: 25px;
     font-size: 24px;
@@ -159,6 +160,10 @@ $rating-4-color: rgba(255, 191, 71, 1.0);
     background-color: white;
     border: 3px solid $rating-4-color;
     padding: 8px 28px 8px 43px;
+    input {
+      top: 11px;
+      left: 13px;
+    }
   }
 
   textarea {
