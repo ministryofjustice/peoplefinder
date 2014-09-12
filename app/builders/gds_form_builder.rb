@@ -11,14 +11,22 @@ class GDSFormBuilder < ActionView::Helpers::FormBuilder
     label(method, text, add_class(options, 'form-label-bold'))
   end
 
-  def radio_buttons(method, values, &labeler)
-    template.content_tag(:fieldset, id: [object_name, method].join('_')) {
-      values.map { |value|
-        label(method, value: value, class: 'block-label') {
-          radio_button(method, value) + labeler.call(value)
-        }
-      }.join.html_safe
+  def radio_buttons(method, values, options = {}, &labeler)
+    radio_button_fieldset(method, options) {
+      with_label(method) {
+        values.map { |value|
+          label(method, value: value, class: 'block-label') {
+            radio_button(method, value) + labeler.call(value)
+          }
+        }.join.html_safe
+      }
     }
+  end
+
+  def radio_button_fieldset(method, options, &blk)
+    id = [object_name, method].join('_')
+    klass = options[:inline] ? 'inline' : ''
+    template.content_tag(:fieldset, id: id, class: klass, &blk)
   end
 
   def text_field(method, options = {})

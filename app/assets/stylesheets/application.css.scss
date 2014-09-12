@@ -112,3 +112,18 @@ table {
 .field_with_errors input{
   border: 3px solid red;
 }
+
+.submission-form {
+  .block-label:nth-child(2) {
+    background-color: rgba(255, 191, 71, 0.25);
+  }
+  .block-label:nth-child(3) {
+    background-color: rgba(255, 191, 71, 0.5);
+  }
+  .block-label:nth-child(4) {
+    background-color: rgba(255, 191, 71, 0.75);
+  }
+  .block-label:nth-child(5) {
+    background-color: rgba(255, 191, 71, 1.0);
+  }
+}

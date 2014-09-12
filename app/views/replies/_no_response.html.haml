@@ -2,8 +2,7 @@
 
 %p Please accept or decline this request:
 = form_for reply, as: :invitation, url: invitation_path(reply) do |f|
-  %fieldset.inline
-    = f.radio_buttons(:status, %i[ accepted declined ]){ |v| t(v, scope: 'invitations.statuses') }
+  = f.radio_buttons(:status, %i[ accepted declined ], inline: true){ |v| t(v, scope: 'invitations.statuses') }
 
   %fieldset
     .reason_declined_fields.hidden
