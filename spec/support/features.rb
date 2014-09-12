@@ -14,5 +14,9 @@ module SpecSupport
     def links_in_email(delivery)
       delivery.body.encoded.scan(/https?:\S+/)
     end
+
+    def email_contains(delivery, matcher)
+      delivery.body.encoded.scan(matcher).first
+    end
   end
 end
