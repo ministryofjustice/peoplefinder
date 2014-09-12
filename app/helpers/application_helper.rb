@@ -47,6 +47,10 @@ module ApplicationHelper
     doc.to_html.html_safe
   end
 
+  def back_link
+    link_to t('common.go_back'), :back
+  end
+
 private
 
   def flash_message(type)

@@ -59,12 +59,26 @@ feature 'Submitting feedback' do
     click_link 'Add feedback'
     click_link 'Leadership Model'
 
-    within('h2') do
+    within('h1') do
       expect(page).to have_text('Leadership Model')
     end
 
     click_link 'Back'
     expect(page).to have_link('Leadership Model', href: leadership_model_path)
+  end
+
+  scenario 'View the MOJ story' do
+    visit token_url(build_token(:accepted))
+
+    click_link 'Add feedback'
+    click_link 'MOJ Story'
+
+    within('h1') do
+      expect(page).to have_text('MOJ Story')
+    end
+
+    click_link 'Back'
+    expect(page).to have_link('MOJ Story', href: moj_story_path)
   end
 
   def build_token(status)

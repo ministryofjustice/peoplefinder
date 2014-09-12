@@ -21,5 +21,7 @@ Rails.application.routes.draw do
     end
   end
 
-  get 'leadership_model', to: 'pages#leadership_model', as: :leadership_model
+  %i[ leadership_model moj_story ].each do |page|
+    get page.to_s.gsub(/_/, '-'), to: 'pages#show', id: page, as: page
+  end
 end

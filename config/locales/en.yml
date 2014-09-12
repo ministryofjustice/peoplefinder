@@ -79,6 +79,18 @@ en:
         how_we_work_comments: 'Please cite specific examples relating to How We Work'
       invitation:
         status: 'Your response'
+  common:
+    go_back: 'Back'
+  pages:
+    leadership_model:
+      title: 'The Leadership Model'
+      body: |
+        TODO: Some text about the Leadership Model goes here.
+    moj_story:
+      title: 'The MOJ Story'
+      body: |
+        TODO: Once upon a time, there was a Ministry who lived in a place
+        called Petty France.
   reviews:
     default_invitation_message: >-
       I'd like you to offer 360 feedback on my performance when I've worked
@@ -124,12 +136,12 @@ en:
     section_1:
       title: 'Leadership qualities'
       intro: |
-        Please refer to the [Leadership Model](/leadership_model) for help
+        Please refer to the [Leadership Model](/leadership-model) for help
         with this section.
     section_2:
       title: 'How We Work'
       intro: |
-        Please refer to the [MOJ Story](/moj_story) for help with this section.
+        Please refer to the [MOJ Story](/moj-story) for help with this section.
     ratings:
       '1': '1'
       '2': '2'

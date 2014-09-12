@@ -1,4 +1,5 @@
 class PagesController < ApplicationController
-  def leadership_model
+  def show
+    @page_name = params[:id]
   end
 end
