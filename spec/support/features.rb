@@ -18,5 +18,9 @@ module SpecSupport
     def email_contains(delivery, matcher)
       delivery.body.encoded.scan(matcher)
     end
+
+    def click_first_link(*args)
+      first(:link, *args).click
+    end
   end
 end

@@ -247,7 +247,16 @@ en:
         some:
           mine: 'Ask another person to provide feedback about you'
           theirs: 'Ask another person to provide feedback about %{name}'
-      show_review_title: 'Feedback from %{author}'
+      show_review_title: 'Feedback for %{subject}'
+      show_review_subtitle: 'Given by %{author}'
+      ratings:
+        '1': '1 – Limited capability'
+        '2': '2 – Moderate capability'
+        '3': '3 – Capable'
+        '4': '4 – Highly capable'
+        '0': 'Not applicable'
+      leadership_comments: 'Specific examples of leadership qualities'
+      how_we_work_comments: 'Specified examples demonstrating How We Work values'
       list:
         name_header: 'Name'
         relationship_header: 'Working relationship'

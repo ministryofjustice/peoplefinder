@@ -118,6 +118,18 @@ $rating-2-color: rgba(255, 191, 71, 0.5);
 $rating-3-color: rgba(255, 191, 71, 0.75);
 $rating-4-color: rgba(255, 191, 71, 1.0);
 
+.rating-view {
+  width: 515px;
+  padding: 10px 15px;
+  line-height: 25px;
+  font-size: 24px;
+  background-color: #dee0e2;
+}
+.rating-view.rating-1 { background-color: $rating-1-color }
+.rating-view.rating-2 { background-color: $rating-2-color }
+.rating-view.rating-3 { background-color: $rating-3-color }
+.rating-view.rating-4 { background-color: $rating-4-color }
+
 .intro {
   dt, dd {
     height: 25px;
@@ -215,4 +227,8 @@ ol {
 ul {
   list-style-type: disc;
   margin-left: 20px;
+}
+
+h4 {
+  margin-top: 30px;
 }

@@ -63,9 +63,10 @@ feature 'Review maintenance' do
 
     click_link 'View feedback'
 
-    expect(page).to have_text('Feedback from Danny Boy')
+    expect(page).to have_text("Feedback for #{me.name}")
+    expect(page).to have_text('Given by Danny Boy')
 
-    click_link 'Back'
+    click_first_link 'Return to dashboard'
     expect(page).to have_link('View feedback', href: review_path(review))
   end
 
@@ -82,9 +83,10 @@ feature 'Review maintenance' do
     expect(page).to have_text('Direct report: Marvin Managee')
     click_link 'View feedback'
 
-    expect(page).to have_text('Feedback from Danny Boy')
+    expect(page).to have_text('Feedback for Marvin Managee')
+    expect(page).to have_text('Given by Danny Boy')
 
-    click_link 'Back'
+    click_first_link 'Return to dashboard'
     expect(page).to have_link('View feedback', href: polymorphic_path([managee, review]))
     expect(page).to have_text('Direct report: Marvin Managee')
   end

@@ -5,7 +5,10 @@ class Review < ActiveRecord::Base
   STATUSES = %i[ no_response declined accepted started submitted ]
   REMINDABLE_STATUSES = %i[ no_response accepted started ]
   RELATIONSHIPS = %i[ peer line_manager direct_report supplier customer ]
-  RATING_FIELDS = 1.upto(11).map { |i| "rating_#{ i }".to_sym }
+
+  SECTION_1_RATING_FIELDS = (1 .. 4).map { |i| :"rating_#{i}" }
+  SECTION_2_RATING_FIELDS = (5 .. 11).map { |i| :"rating_#{i}" }
+  RATING_FIELDS = SECTION_1_RATING_FIELDS + SECTION_2_RATING_FIELDS
 
   belongs_to :subject, -> { where participant: true }, class_name: 'User'
   belongs_to :author, class_name: 'User', foreign_key: 'author_email',
@@ -27,6 +30,8 @@ class Review < ActiveRecord::Base
 
   symbol_field :status, STATUSES
   symbol_field :relationship, RELATIONSHIPS
+
+  delegate :name, to: :subject, prefix: true
 
   def remindable?
     REMINDABLE_STATUSES.include?(status)

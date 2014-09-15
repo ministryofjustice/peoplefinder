@@ -1,11 +1,33 @@
-%h2= t('views.reviews.show_review_title', author: @review.author_name)
+- content_for :top_left do
+  = link_to t('submissions.return_to_dashboard'), :back
 
-%p #{ t('simple_form.labels.submission.rating') }: #{ @review.rating_1}
+- content_for :page_title do
+  = t('views.reviews.show_review_title', subject: @review.subject_name)
 
-%h4= t('simple_form.labels.submission.achievements')
+%h2= t('views.reviews.show_review_subtitle', author: @review.author_name)
+
+%hr
+
+%h2= t('submissions.section_1.title')
+
+- Review::SECTION_1_RATING_FIELDS.each do |rating|
+  %h4= t(rating, scope: 'helpers.label.submission')
+  %p{class: "rating-view rating-#{@review.send(rating)}"}= t(@review.send(rating), scope: 'views.reviews.ratings')
+
+%h4= t('views.reviews.leadership_comments')
 %p= @review.leadership_comments
 
-%h4= t('simple_form.labels.submission.improvements')
+%hr
+
+%h2= t('submissions.section_2.title')
+
+- Review::SECTION_2_RATING_FIELDS.each do |rating|
+  %h4= t(rating, scope: 'helpers.label.submission')
+  %p{class: "rating-view rating-#{@review.send(rating)}"}= t(@review.send(rating), scope: 'views.reviews.ratings')
+
+%h4= t('views.reviews.how_we_work_comments')
 %p= @review.how_we_work_comments
 
-= link_to 'Back to participant list', :back
+%hr
+
+= link_to t('submissions.return_to_dashboard'), :back
