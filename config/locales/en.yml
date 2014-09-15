@@ -221,6 +221,9 @@ en:
       accepted: 'Accept'
       declined: 'Decline'
     accept: 'Accept request'
+  user_mailer:
+    introduction:
+      subject: '360 feedback process has begun'
   review_mailer:
     feedback_request:
       subject: 'Request for feedback'

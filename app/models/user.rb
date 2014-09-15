@@ -17,4 +17,12 @@ class User < ActiveRecord::Base
   def to_s
     [name, email].reject(&:blank?).first
   end
+
+  def manages?
+    managees.any?
+  end
+
+  def managed?
+    manager.present?
+  end
 end

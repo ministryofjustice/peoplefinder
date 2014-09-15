@@ -68,6 +68,9 @@ GEM
     dotenv-deployment (0.0.2)
     dotenv-rails (0.11.1)
       dotenv (= 0.11.1)
+    email_spec (1.6.0)
+      launchy (~> 2.1)
+      mail (~> 2.2)
     erubis (2.7.0)
     execjs (2.2.1)
     factory_girl (4.4.0)
@@ -267,6 +270,7 @@ PLATFORMS
 DEPENDENCIES
   capybara
   dotenv-rails
+  email_spec
   factory_girl
   factory_girl_rails
   govspeak

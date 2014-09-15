@@ -1,5 +1,25 @@
 Hello <%= @user %>,
 
-Welcome to SCS Appraisals. Follow this link to sign in:
+360 feedback plays a vital role in developing performance in line with
+our leadership model and the Ministry of Justice story.
+
+You have 30 days to complete your tasks so please visit your
+personalised 360 feedback dashboard now:
+
+<%= token_url(@token) %>
+
+This online tool makes it easier for you to:
+
+<% if @user.manages? -%>
+* Request feedback on your direct reports
+<% end -%>
+* Monitor progress of feedback requests
+<% if @user.managed? -%>
+* Ask for feedback on your performance
+* View feedback on yourself
+<% end -%>
+
+It’s a good idea to save this email as you’ll need to click the link
+whenever you want to visit your 360 feedback dashboard.
 
 <%= token_url(@token) %>
