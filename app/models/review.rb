@@ -33,6 +33,13 @@ class Review < ActiveRecord::Base
 
   delegate :name, to: :subject, prefix: true
 
+  def self.for_user(user)
+    where(
+      arel_table[:subject_id].eq(user.id).
+      or(arel_table[:author_email].eq(user.email))
+    )
+  end
+
   def remindable?
     REMINDABLE_STATUSES.include?(status)
   end

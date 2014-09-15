@@ -2,12 +2,21 @@ require 'rails_helper'
 RSpec.describe ReviewsController, type: :controller do
   let(:me) { create(:user) }
 
+  let(:valid_attributes) {
+    {
+      relationship: 'Colleague',
+      author_email: 'danny@example.com',
+      author_name: 'Danny Boy',
+      relationship: 'peer'
+    }
+  }
+
   describe 'GET index' do
     before do
       authenticate_as me
     end
 
-    context 'when the current user receives feedback' do
+    describe 'when the current user receives feedback' do
       before do
         me.update_attributes(manager: create(:user))
         get :index
@@ -26,7 +35,7 @@ RSpec.describe ReviewsController, type: :controller do
       end
     end
 
-    context 'when there is no user who receives feedback' do
+    describe 'when there is no user who receives feedback' do
       before do
         get :index
       end
@@ -36,7 +45,7 @@ RSpec.describe ReviewsController, type: :controller do
       end
     end
 
-    context 'when the input user receives feedback' do
+    describe 'when the input user receives feedback' do
       before do
         managee = create(:user, manager: me)
         get :index, user_id: managee.to_param
@@ -128,45 +137,93 @@ RSpec.describe ReviewsController, type: :controller do
   end
 
   describe 'GET show' do
-    let(:review) { create(:review, subject: me) }
-
     before do
       authenticate_as me
     end
 
-    context 'with a review that has been submitted' do
-      before do
-        review.update_attributes(status: :submitted)
-        get :show, id: review.id
-      end
+    describe 'with a non-existent review' do
 
-      it 'assigns the review' do
-        expect(assigns(:review)).to eql(review)
-      end
-
-      it 'renders the show template' do
-        expect(response).to render_template('show')
+      it 'raises a not found exception' do
+        expect {
+          get :show, id: 999
+        }.to raise_exception(ActiveRecord::RecordNotFound)
       end
     end
 
-    context 'with a review that has not been submitted' do
-      before do
-        review.update_attributes(status: :started)
-        get :show, id: review.id
+    describe 'as the subject of the review' do
+      let(:review) { create(:review, subject: me) }
+
+      describe 'with a review that has been submitted' do
+        before do
+          review.update_attributes(status: :submitted)
+          get :show, id: review.to_param
+        end
+
+        it 'assigns the review' do
+          expect(assigns(:review)).to eql(review)
+        end
+
+        it 'renders the show template' do
+          expect(response).to render_template('show')
+        end
       end
 
-      it 'does not assign the review' do
-        expect(assigns(:review)).to be_nil
+      describe 'with a review that has not been submitted' do
+        it 'raises a not found exception' do
+          review.update_attributes(status: :started)
+          expect {
+            get :show, id: review.to_param
+          }.to raise_exception(ActiveRecord::RecordNotFound)
+        end
       end
     end
-  end
 
-  def valid_attributes
-    {
-      relationship: 'Colleague',
-      author_email: 'danny@example.com',
-      author_name: 'Danny Boy',
-      relationship: 'peer'
-    }
+    describe 'as the manager of the subject of the review' do
+      let(:review) { create(:review, subject: subject) }
+      let(:subject) { create(:user, manager: me) }
+
+      describe 'with a review that has been submitted' do
+        before do
+          review.update_attributes(status: :submitted)
+          get :show, user_id: subject.to_param, id: review.to_param
+        end
+
+        it 'assigns the review' do
+          expect(assigns(:review)).to eql(review)
+        end
+
+        it 'renders the show template' do
+          expect(response).to render_template('show')
+        end
+      end
+
+      describe 'with a review that has not been submitted' do
+        it 'raises a not found exception' do
+          review.update_attributes(status: :started)
+          expect {
+            get :show, id: review.to_param
+          }.to raise_exception(ActiveRecord::RecordNotFound)
+        end
+      end
+    end
+
+    describe 'as the author of the review' do
+      let(:review) { create(:review, author_email: me.email) }
+
+      describe 'with a review that has been submitted' do
+        before do
+          review.update_attributes(status: :submitted)
+          get :show, id: review.to_param
+        end
+
+        it 'assigns the review' do
+          expect(assigns(:review)).to eql(review)
+        end
+
+        it 'renders the show template' do
+          expect(response).to render_template('show')
+        end
+      end
+    end
   end
 end

@@ -22,7 +22,8 @@ class ReviewsController < ParticipantsController
   end
 
   def show
-    @review = scope.submitted.where(id: params[:id]).first
+    @review = Review.submitted.
+      for_user(@subject || current_user).find(params[:id])
   end
 
 private
