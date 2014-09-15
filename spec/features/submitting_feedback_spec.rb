@@ -27,6 +27,9 @@ feature 'Submitting feedback' do
     expect(submission.leadership_comments).to eql('Some good stuff')
     expect(submission.how_we_work_comments).to eql('Could learn to...')
     expect(submission.status).to eql(:submitted)
+
+    click_link 'View feedback'
+    expect(page).to have_text("Given by #{me.name}")
   end
 
   scenario 'Autosave feedback', js: true do
