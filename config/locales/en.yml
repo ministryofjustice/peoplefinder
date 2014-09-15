@@ -94,7 +94,7 @@ en:
       location_hint: "e.g. 10.30, 102 Petty France or Room 3, Bristol Crown Court"
       notes_field_hint: "Use this to add any extra information about your role,<br/>e.g. I am based at Bristol County Court on Wednesdays"
       photo_upload_hint: "Add or replace a photograph by clicking 'Choose file'."
-      photo_size_hint: "Please make sure the photo is no more than 3MB in size"
+      photo_size_hint: "Please make sure the photo is no more than 3MB in size."
       profile_deletable: "Note that deleting a profile cannot be undone"
       team_deletable: "Note that team deletion cannot be undone."
       team_not_deletable: "Team deletion is only possible if there are no people associated with it."
