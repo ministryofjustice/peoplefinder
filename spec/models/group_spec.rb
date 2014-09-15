@@ -157,12 +157,12 @@ RSpec.describe Group, type: :model do
     end
 
     it 'sets the team slug_candidate' do
-      expect(team.slug_candidates).to eql(['CS', %w[MOJ CS]])
+      expect(team.slug_candidates).to eql(['CS', %w[MOJ CS], %w[MOJ CS-2]])
     end
   end
 
   describe '.should_generate_new_friendly_id?' do
-    let(:team) { create(:group, name: 'Digital Services') }
+    let!(:team) { create(:group, name: 'Digital Services') }
 
     context 'when the team is first created' do
       it 'sets the slug' do
@@ -173,6 +173,22 @@ RSpec.describe Group, type: :model do
         it 'gets the updated slug when the name is changed' do
           team.update_attributes(name: 'Analog Services')
           expect(team.reload.slug).to eql('analog-services')
+        end
+      end
+    end
+
+    context 'when a group with a duplicate (name and parent name) is added' do
+      let!(:first_duplicate) { create(:group, name: 'Digital Services') }
+
+      it 'prepends the parent' do
+        expect(first_duplicate.slug).to eql('ministry-of-justice-digital-services')
+      end
+
+      context 'when a second duplicate (name and parent name) is added' do
+        let(:second_duplicate) { create(:group, name: 'Digital Services') }
+
+        it 'appends -1 to the group name' do
+          expect(second_duplicate.slug).to eql('ministry-of-justice-digital-services-2')
         end
       end
     end

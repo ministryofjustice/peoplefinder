@@ -18,7 +18,8 @@ class Group < ActiveRecord::Base
 
   has_ancestry cache_depth: true
 
-  validates :name, presence: true, uniqueness: { scope: :ancestry }
+  validates :name, presence: true
+  validates :slug, uniqueness: true
 
   default_scope { order(name: :asc) }
 
@@ -62,12 +63,21 @@ class Group < ActiveRecord::Base
 
   def slug_candidates
     candidates = [name]
-    candidates <<  [parent.name, name] if parent.present?
+    if parent.present?
+      candidates <<  [parent.name, name]
+      candidates <<  [parent.name, name_and_sequence]
+    end
     candidates
   end
 
   def should_generate_new_friendly_id?
     name_changed?
+  end
+
+  def name_and_sequence
+    slug = name.to_param
+    sequence = Group.where("slug like '#{slug}-%'").count + 2
+    "#{slug}-#{sequence}"
   end
 
 private
