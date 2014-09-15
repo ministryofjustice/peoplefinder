@@ -167,16 +167,19 @@ en:
       subject_must_be_participant: 'must be a participant'
   review_period_closed: 'Feedback report period has ended'
   submissions:
-    title: 'Feedback for %{name}'
+    title: 'Feedback on %{name}'
     intro: |
-      Managing Performance in the Senior Civil Service requires an end of year
-      appraisal to take into account ‘how’ an individual operates in terms of
-      their leadership behaviour and people management skills.
-      Your feedback is appreciated in order to form a rounded picture of
-      performance.
+      Please rate %{name}’s leadership and people management skills according to
+      the scores below.
 
-      The scores for each section are on a four point scale (plus you can
-      answer not applicable too):
+      Your input plays an important part in helping to assess their
+      performance.
+      We suggest you set aside around 20 minutes for this task although your
+      work is automatically saved so you can return to it at any time.
+      You also have the option to provide additional details or mark any areas
+      as not applicable.
+
+      # Scores
 
       1
       : Limited capability, extensive development needed
@@ -185,7 +188,7 @@ en:
       : Moderate capability, some development needed
 
       3
-      : Capable, an area of considerable strength
+      : Capable, an area of some strength
 
       4
       : Highly capable, an area of considerable strength

@@ -5,7 +5,7 @@
   = t('submissions.title', name: @submission.subject_name)
 
 %div.intro
-  = govspeak(t('submissions.intro'))
+  = govspeak(t('submissions.intro', name: @submission.subject_name))
 
 %hr
 
