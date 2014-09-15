@@ -4,8 +4,8 @@ class AddRatingsToReviews < ActiveRecord::Migration
     remove_column :reviews, :achievements, :text
     remove_column :reviews, :improvements, :text
 
-    Review::RATING_FIELDS.each do |rating|
-      add_column :reviews, rating, :integer
+    (1 .. 11).each do |i|
+      add_column :reviews, "rating_#{i}", :integer
     end
 
     add_column :reviews, :leadership_comments, :text
