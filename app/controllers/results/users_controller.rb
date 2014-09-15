@@ -1,6 +1,7 @@
 module Results
-  class UsersController < ParticipantsController
+  class UsersController < ApplicationController
     skip_before_action :check_review_period_is_open
+    before_action :ensure_participant
     before_action :ensure_review_period_is_closed
 
     def index

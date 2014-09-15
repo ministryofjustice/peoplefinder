@@ -1,7 +1,7 @@
-class ReviewsController < ParticipantsController
+class ReviewsController < ApplicationController
   before_action :load_explicit_subject, only: [:index, :create, :show]
   before_action :redirect_unless_user_receives_feedback, only: [:index]
-  skip_before_action :ensure_participant, only: [:show]
+  before_action :ensure_participant, except: [:show]
 
   def index
     @review = scope.new

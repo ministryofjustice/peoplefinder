@@ -26,6 +26,10 @@ private
     false
   end
 
+  def ensure_participant
+    forbidden unless current_user.participant
+  end
+
   def review_period_closed?
     ENV['REVIEW_PERIOD'] == 'CLOSED'
   end

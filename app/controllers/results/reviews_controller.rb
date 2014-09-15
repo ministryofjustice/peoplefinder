@@ -1,6 +1,7 @@
-module  Results
-  class ReviewsController < ParticipantsController
+module Results
+  class ReviewsController < ApplicationController
     skip_before_action :check_review_period_is_open
+    before_action :ensure_participant
     before_action :ensure_review_period_is_closed
     before_action :load_explicit_subject, only: [:index]
     before_action :redirect_unless_user_receives_feedback, only: [:index]
