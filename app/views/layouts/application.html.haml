@@ -8,8 +8,9 @@
         = render partial: 'layouts/partials/phase'
       = flash_messages
       .inner-block
-        .top-left= yield :top_left
+        .top-left= yield :back_link
         = render partial: 'shared/tab_navigation'
         = yield
+        .bottom-left= yield :back_link
 = render partial: "shared/loginout"
 = render template: "layouts/moj_internal_template"
