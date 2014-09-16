@@ -1,6 +1,4 @@
 class UserUpdateMailer < ActionMailer::Base
-  default from: 'peoplefinder@digital.justice.gov.uk'
-
   def new_profile_email(person, by_email = nil)
     @person = person
     @by_email = by_email

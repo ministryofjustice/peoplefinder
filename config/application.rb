@@ -41,5 +41,9 @@ module Peoplefinder
     config.rack_timeout = (ENV['RACK_TIMEOUT'] || 14)
 
     config.exceptions_app = routes
+
+    config.action_mailer.default_options = {
+      :from => 'peoplefinder@digital.justice.gov.uk'
+    }
   end
 end
