@@ -20,7 +20,7 @@ module Completion
         OR COALESCE(
           primary_phone_number, secondary_phone_number,''
         ) = ''
-      ")
+      ").order(:email)
       }
 
     def completion_score

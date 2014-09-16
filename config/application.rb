@@ -43,7 +43,7 @@ module Peoplefinder
     config.exceptions_app = routes
 
     config.action_mailer.default_options = {
-      :from => 'peoplefinder@digital.justice.gov.uk'
+      from: 'peoplefinder@digital.justice.gov.uk'
     }
   end
 end
