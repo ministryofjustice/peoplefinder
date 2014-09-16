@@ -13,6 +13,16 @@ module Completion
       :groups
     ]
 
+    scope :inadequate_profiles,
+      lambda { where("
+        COALESCE(image,'') = ''
+        OR COALESCE(location,'') = ''
+        OR COALESCE(
+          primary_phone_number, secondary_phone_number,''
+        ) = ''
+      ")
+      }
+
     def completion_score
       completed = COMPLETION_SCORE_FIELDS.map { |f| send(f).present? }
       (100 * completed.select { |f| f }.length) / COMPLETION_SCORE_FIELDS.length
