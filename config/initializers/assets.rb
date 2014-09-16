@@ -1,3 +1,5 @@
+Rails.application.config.assets.paths << Peoplefinder::Engine.root.join('vendor', 'assets', 'components')
+
 Rails.application.config.assets.precompile += %w[
   gov-static/gov-goodbrowsers.css
   gov-static/gov-ie6.css
