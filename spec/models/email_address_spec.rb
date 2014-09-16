@@ -32,6 +32,10 @@ RSpec.describe EmailAddress do
       expect(described_class.new('me-at-example.co.uk')).not_to be_valid_address
     end
 
+    it 'does not break the mail gem address_list initialiser' do
+      expect(described_class.new('me@')).not_to be_valid_address
+    end
+
     it 'is valid' do
       expect(described_class.new("me@#{ Rails.configuration.valid_login_domains.first }")).to be_valid_address
     end
