@@ -1,0 +1,21 @@
+@media print {
+  #skiplink-container,
+  #global-cookie-message,
+  .phase-banner,
+  .top-left,
+  .bottom-left,
+  ul#tab_navigation,
+  #global-header {
+    color: red;
+    display: none;
+  }
+
+  .rating-view,
+  .rating-view.rating-1,
+  .rating-view.rating-2,
+  .rating-view.rating-3,
+  .rating-view.rating-4 {
+    background-color: white;
+    border: 1px solid black;
+  }
+}

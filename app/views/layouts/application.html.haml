@@ -1,6 +1,6 @@
 - content_for :head do
   = javascript_include_tag "application"
-  = stylesheet_link_tag "application"
+  = stylesheet_link_tag "application", media: :all
 - content_for :content do
   .class
     %main#content{role: 'main'}
