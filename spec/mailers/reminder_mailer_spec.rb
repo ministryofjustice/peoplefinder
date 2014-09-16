@@ -7,7 +7,7 @@ RSpec.describe ReminderMailer do
     let(:mail) { described_class.inadequate_profile(person).deliver }
 
     it 'sets the sender' do
-      expect(mail.from).to include('peoplefinder@digital.justice.gov.uk')
+      expect(mail.from).to include('people-finder@digital.justice.gov.uk')
     end
 
     it 'sets the correct recipient' do
