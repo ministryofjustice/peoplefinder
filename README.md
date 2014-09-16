@@ -148,7 +148,7 @@ If the Peoplefinder is to be successful, profiles need to be populated and maint
 
 ###Inadequate profiles
 
-To view profiles that are deemed to be 'inadequate' (not having a phone number, location and photo):
+To view a list of people whose profiles are deemed to be 'inadequate' (not having a phone number, location and photo):
 
 `rake peoplefinder:inadequate_profiles`
 
