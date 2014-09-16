@@ -29,7 +29,7 @@ namespace :peoplefinder do
 
     if STDIN.gets.chomp == 'Y'
       recipients.each do |recipient|
-        if ReminderMailer.inadequate_profile(recipient)
+        if ReminderMailer.inadequate_profile(recipient).deliver
           puts "Email sent to: #{ recipient.email }"
         end
       end
