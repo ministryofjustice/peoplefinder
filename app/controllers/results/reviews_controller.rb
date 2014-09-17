@@ -22,7 +22,7 @@ module Results
 
     def load_explicit_subject
       if params[:user_id]
-        @subject = current_user.managees.find(params[:user_id])
+        @subject = current_user.direct_reports.find(params[:user_id])
       end
       true
     end

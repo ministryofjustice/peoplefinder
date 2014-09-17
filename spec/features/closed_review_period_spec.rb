@@ -15,7 +15,7 @@ feature 'Closed review period', closed_review_period: true do
     check_my_feedback_from_danny_boy
   end
 
-  scenario 'As a manager with managees who has received feedback' do
+  scenario 'As a manager with direct reports who has received feedback' do
     me.update_attributes(manager: create(:user))
     charlie = create(:user, name: 'Charlie', manager: me)
     create(:review, subject: charlie, author_name: 'Elena')

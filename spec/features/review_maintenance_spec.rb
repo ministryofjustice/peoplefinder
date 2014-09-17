@@ -45,13 +45,13 @@ feature 'Review maintenance' do
     check_mail_attributes(last_email, review)
   end
 
-  scenario 'Invite a new person to give my managee feedback' do
-    managee = create(:user, manager: me)
+  scenario 'Invite a new person to give my direct report feedback' do
+    direct_report = create(:user, manager: me)
 
-    visit user_reviews_path(managee)
+    visit user_reviews_path(direct_report)
     fill_in_feedback_request_form
 
-    review = managee.reviews.last
+    review = direct_report.reviews.last
     check_review_attributes(review)
 
     check_mail_attributes(last_email, review)
@@ -70,9 +70,9 @@ feature 'Review maintenance' do
     expect(page).to have_link('View feedback', href: review_path(review))
   end
 
-  scenario 'See feedback completed for my managee' do
-    managee = create(:user, manager: me, name: 'Marvin Managee')
-    review = create(:review, submitted_review_attributes.merge(subject: managee))
+  scenario 'See feedback completed for my direct report' do
+    direct_report = create(:user, manager: me, name: 'Marvin Managee')
+    review = create(:review, submitted_review_attributes.merge(subject: direct_report))
 
     visit users_path
 
@@ -86,19 +86,19 @@ feature 'Review maintenance' do
     expect(page).to have_text('Given by Danny Boy')
 
     click_first_link 'Return to dashboard'
-    expect(page).to have_link('View feedback', href: polymorphic_path([managee, review]))
+    expect(page).to have_link('View feedback', href: polymorphic_path([direct_report, review]))
   end
 
-  scenario 'See the list of my managees' do
-    managee = create(:user, manager: me, name: 'Marvin Managee')
-    create(:review, submitted_review_attributes.merge(subject: managee))
-    create(:review, subject: managee)
+  scenario 'See the list of my direct reports' do
+    direct_report = create(:user, manager: me, name: 'Marvin Managee')
+    create(:review, submitted_review_attributes.merge(subject: direct_report))
+    create(:review, subject: direct_report)
 
     visit users_path
 
     expect(page).to have_text('You have one direct report who requires feedback')
     within('#users') do
-      expect(page).to have_link('Marvin Managee', href: user_reviews_path(managee))
+      expect(page).to have_link('Marvin Managee', href: user_reviews_path(direct_report))
       expect(page).to have_text('1 of 2 complete')
     end
   end

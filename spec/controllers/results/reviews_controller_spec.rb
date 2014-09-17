@@ -35,11 +35,11 @@ RSpec.describe Results::ReviewsController, type: :controller do
     end
 
     context 'when the input user receives feedback' do
-      let(:managee) { create(:user, manager: me) }
-      let!(:managee_review) { create(:review, subject: managee) }
+      let(:direct_report) { create(:user, manager: me) }
+      let!(:direct_report_review) { create(:review, subject: direct_report) }
 
       before do
-        get :index, user_id: managee.to_param
+        get :index, user_id: direct_report.to_param
       end
 
       it 'renders the index template' do
@@ -47,7 +47,7 @@ RSpec.describe Results::ReviewsController, type: :controller do
       end
 
       it 'assigns the reviews' do
-        expect(assigns(:reviews)).to include(managee_review)
+        expect(assigns(:reviews)).to include(direct_report_review)
       end
     end
   end

@@ -47,8 +47,8 @@ RSpec.describe ReviewsController, type: :controller do
 
     describe 'when the input user receives feedback' do
       before do
-        managee = create(:user, manager: me)
-        get :index, user_id: managee.to_param
+        direct_report = create(:user, manager: me)
+        get :index, user_id: direct_report.to_param
       end
 
       it 'renders the index template' do
@@ -86,30 +86,30 @@ RSpec.describe ReviewsController, type: :controller do
     end
 
     describe 'with valid params and explicit subject' do
-      let(:managee) { create(:user, manager: me) }
+      let(:direct_report) { create(:user, manager: me) }
 
       it 'creates a new Review' do
         expect {
-          post :create, user_id: managee.to_param, review: valid_attributes
+          post :create, user_id: direct_report.to_param, review: valid_attributes
         }.to change(Review, :count).by(1)
       end
 
       it 'redirects back to the index' do
-        post :create, user_id: managee.to_param, review: valid_attributes
-        expect(response).to redirect_to(user_reviews_path(managee))
+        post :create, user_id: direct_report.to_param, review: valid_attributes
+        expect(response).to redirect_to(user_reviews_path(direct_report))
       end
 
-      it 'assigns the review to the managee' do
-        post :create, user_id: managee.to_param, review: valid_attributes
-        expect(Review.last.subject).to eql(managee)
+      it 'assigns the review to the direct report' do
+        post :create, user_id: direct_report.to_param, review: valid_attributes
+        expect(Review.last.subject).to eql(direct_report)
       end
 
       it 'shows an information message' do
-        post :create, user_id: managee.to_param, review: valid_attributes
+        post :create, user_id: direct_report.to_param, review: valid_attributes
         expect(flash[:notice]).to match(/Invited Danny Boy/)
       end
 
-      it 'checks that the subject is a managee of the current user' do
+      it 'checks that the subject is a direct report of the current user' do
         third_party = create(:user)
         expect {
           post :create, user_id: third_party.to_param, review: valid_attributes

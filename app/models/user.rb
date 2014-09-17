@@ -3,7 +3,7 @@ class User < ActiveRecord::Base
 
   belongs_to :manager, class_name: 'User'
 
-  has_many :managees, foreign_key: :manager_id, class_name: 'User'
+  has_many :direct_reports, foreign_key: :manager_id, class_name: 'User'
   has_many :reviews, foreign_key: :subject_id
   has_many :replies, foreign_key: 'author_email', primary_key: 'email'
   has_many :submissions, foreign_key: 'author_email', primary_key: 'email'
@@ -19,7 +19,7 @@ class User < ActiveRecord::Base
   end
 
   def manages?
-    managees.any?
+    direct_reports.any?
   end
 
   def managed?

@@ -1,7 +1,7 @@
 %h1= content_for?(:page_title) ? yield(:page_title) : app_name
 
 - if review_period_closed?
-  - if current_user.manager && current_user.managees.present?
+  - if current_user.manager && current_user.direct_reports.present?
     %ul#tab_navigation
       - if your_feedback_tab?
         %li.active #{ t('tab_navigation.your_feedback') }
@@ -22,7 +22,7 @@
         - else
           %li.linkable= link_to t('tab_navigation.your_feedback'), reviews_path
 
-      - if current_user.managees.present?
+      - if current_user.direct_reports.present?
         - if direct_reports_tab?
           %li.active #{ t('tab_navigation.your_direct_reports') }
         - else

@@ -6,6 +6,6 @@ class UsersController < ApplicationController
   end
 
   def scope
-    current_user.managees
+    current_user.direct_reports
   end
 end

@@ -31,9 +31,9 @@ private
   def create_management_relationships(csv)
     csv.each do |row|
       next if row[:manager_email].blank?
-      managee = lookup_user(row[:email])
+      direct_report = lookup_user(row[:email])
       manager = lookup_user(row[:manager_email])
-      managee.update_attributes(manager: manager)
+      direct_report.update_attributes(manager: manager)
     end
   end
 
