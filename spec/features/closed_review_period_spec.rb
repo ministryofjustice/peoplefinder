@@ -3,8 +3,11 @@ require 'rails_helper'
 feature 'Closed review period', closed_review_period: true do
   let(:me) { create(:user) }
   let!(:review) do
-    create(:review, subject: me,
-                    author_name: 'Danny Boy')
+    create(:complete_review,
+      subject: me,
+      author_name: 'Danny Boy',
+      leadership_comments: 'IS A LEADER'
+    )
   end
 
   scenario 'As the subject of a review' do
@@ -18,7 +21,11 @@ feature 'Closed review period', closed_review_period: true do
   scenario 'As a manager with direct reports who has received feedback' do
     me.update_attributes(manager: create(:user))
     charlie = create(:user, name: 'Charlie', manager: me)
-    create(:review, subject: charlie, author_name: 'Elena')
+    create(:complete_review,
+      subject: charlie,
+      author_name: 'Elena',
+      how_we_work_comments: 'WE WORK'
+    )
 
     visit token_path(me.tokens.create)
 
@@ -27,7 +34,7 @@ feature 'Closed review period', closed_review_period: true do
     click_link('Your direct reports')
     click_link('Charlie')
     expect(page).to have_text('All feedback for Charlie')
-    expect(page).to have_text('Feedback from Elena')
+    expect(page).to have_text('Elena WE WORK')
 
     click_link('Your feedback')
     check_my_feedback_from_danny_boy
@@ -39,6 +46,6 @@ feature 'Closed review period', closed_review_period: true do
   end
 
   def check_my_feedback_from_danny_boy
-    expect(page).to have_text('Feedback from Danny Boy')
+    expect(page).to have_text('Danny Boy IS A LEADER')
   end
 end

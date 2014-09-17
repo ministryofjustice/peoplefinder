@@ -261,6 +261,12 @@ en:
         '3': '3 – Capable'
         '4': '4 – Highly capable'
         '0': 'Not applicable'
+      ratings_without_numbers:
+        '1': 'Limited capability'
+        '2': 'Moderate capability'
+        '3': 'Capable'
+        '4': 'Highly capable'
+        '0': 'Not applicable'
       leadership_comments: 'Specific examples of leadership qualities'
       how_we_work_comments: 'Specified examples demonstrating How We Work values'
       list:

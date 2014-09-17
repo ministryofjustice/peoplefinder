@@ -116,17 +116,41 @@ table {
   border: 3px solid red;
 }
 
+$rating-grey: #dee0e2;
 $rating-1-color: rgba(255, 191, 71, 0.25);
 $rating-2-color: rgba(255, 191, 71, 0.5);
 $rating-3-color: rgba(255, 191, 71, 0.75);
 $rating-4-color: rgba(255, 191, 71, 1.0);
+
+dl.review-aggregation {
+  margin: 20px 0;
+  overflow: auto;
+  dt, dd {
+    padding: 10px 15px;
+    margin: 10px 0;
+    float: left;
+  }
+  dt {
+    clear: left;
+    background-color: $rating-grey;
+    width: 245px;
+  }
+  dd {
+    clear: right;
+    width: 170px;
+  }
+  .rating-1 { background-color: $rating-1-color }
+  .rating-2 { background-color: $rating-2-color }
+  .rating-3 { background-color: $rating-3-color }
+  .rating-4 { background-color: $rating-4-color }
+}
 
 .rating-view {
   width: 270px;
   padding: 10px 15px;
   line-height: 25px;
   font-size: 24px;
-  background-color: #dee0e2;
+  background-color: $rating-grey;
 }
 .rating-view.rating-1 { background-color: $rating-1-color }
 .rating-view.rating-2 { background-color: $rating-2-color }
@@ -191,6 +215,10 @@ hr {
   border: none;
   border-bottom: 1px solid #BFC1C3;
   margin: 30px 0;
+}
+
+hr.invisible {
+  border-bottom: none;
 }
 
 hr.more-space {

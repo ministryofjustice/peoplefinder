@@ -1,5 +1,41 @@
+- content_for :back_link do
+  = link_to t('submissions.return_to_dashboard'), :back
+
 - content_for :page_title do
   = role_translate('views.results.feedback_title')
 
-- @reviews.each do |review|
-  %p Feedback from #{ review.author_name }
+%h2= t('submissions.section_1.title')
+
+- Review::SECTION_1_RATING_FIELDS.each do |field|
+  %h3= t(field, scope: 'helpers.label.submission')
+  %dl.review-aggregation
+    - @review_aggregator.results(field).each do |author_name, rating|
+      %dt= author_name
+      %dd{ class: "rating-#{rating}" }= t(rating, scope: 'views.reviews.ratings_without_numbers')
+
+%hr.invisible
+
+%h3= t(:leadership_comments, scope: 'views.reviews')
+- @review_aggregator.results(:leadership_comments).each do |author_name, comments|
+  %h4= author_name
+  %p= comments
+
+%hr.invisible
+
+%h2= t('submissions.section_2.title')
+
+- Review::SECTION_2_RATING_FIELDS.each do |field|
+  %h3= t(field, scope: 'helpers.label.submission')
+  %dl.review-aggregation
+    - @review_aggregator.results(field).each do |author_name, rating|
+      %dt= author_name
+      %dd{ class: "rating-#{rating}" }= t(rating, scope: 'views.reviews.ratings_without_numbers')
+
+%hr.invisible
+
+%h3= t(:how_we_work_comments, scope: 'view.reviews')
+- @review_aggregator.results(:how_we_work_comments).each do |author_name, comments|
+  %h4= author_name
+  %p= comments
+
+%hr

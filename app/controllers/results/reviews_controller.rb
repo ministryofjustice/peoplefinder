@@ -7,7 +7,7 @@ module Results
     before_action :redirect_unless_user_receives_feedback, only: [:index]
 
     def index
-      @reviews = scope.reviews
+      @review_aggregator = ReviewAggregator.new(scope.reviews)
     end
 
   private
