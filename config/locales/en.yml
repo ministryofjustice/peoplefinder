@@ -165,7 +165,6 @@ en:
       customer: 'Customer/stakeholder'
     errors:
       subject_must_be_participant: 'must be a participant'
-  review_period_closed: 'Feedback report period has ended'
   submissions:
     title: 'Feedback on %{name}'
     intro: |
@@ -234,6 +233,10 @@ en:
       your_direct_reports: 'Your direct reports'
       feedback_requests: 'Feedback requests'
   views:
+    results:
+      feedback_title:
+        mine: 'All your feedback'
+        theirs: 'All feedback for %{name}'
     reviews:
       feedback_received_title: 'Feedback received'
       feedback_received_standfirst:

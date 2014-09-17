@@ -26,7 +26,7 @@ feature 'Closed review period', closed_review_period: true do
 
     click_link('Your direct reports')
     click_link('Charlie')
-    expect(page).to have_text('Charlie\'s feedback')
+    expect(page).to have_text('All feedback for Charlie')
     expect(page).to have_text('Feedback from Elena')
 
     click_link('Your feedback')
@@ -39,7 +39,6 @@ feature 'Closed review period', closed_review_period: true do
   end
 
   def check_my_feedback_from_danny_boy
-    expect(page).to have_text('Feedback report period has ended')
     expect(page).to have_text('Feedback from Danny Boy')
   end
 end

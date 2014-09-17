@@ -1,14 +1,5 @@
-%p= t(:review_period_closed)
-
-= link_to 'My feedback', results_reviews_path
-
-- unless @reviews.empty?
-  %h2
-    - if @reviews.first.subject == current_user
-      = 'My'
-    - else
-      #{ @reviews.first.subject }'s
-    feedback
+- content_for :page_title do
+  = role_translate('views.results.feedback_title')
 
 - @reviews.each do |review|
   %p Feedback from #{ review.author_name }

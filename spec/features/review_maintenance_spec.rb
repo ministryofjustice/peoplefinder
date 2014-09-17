@@ -80,7 +80,6 @@ feature 'Review maintenance' do
       click_link 'Marvin Managee'
     end
 
-    expect(page).to have_text('Direct report: Marvin Managee')
     click_link 'View feedback'
 
     expect(page).to have_text('Feedback for Marvin Managee')
@@ -88,7 +87,6 @@ feature 'Review maintenance' do
 
     click_first_link 'Return to dashboard'
     expect(page).to have_link('View feedback', href: polymorphic_path([managee, review]))
-    expect(page).to have_text('Direct report: Marvin Managee')
   end
 
   scenario 'See the list of my managees' do
