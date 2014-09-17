@@ -5,7 +5,7 @@ module SpecSupport
         User.new('test.user@digital.moj.gov.uk')
     end
 
-    def log_in_as(email)
+    def omni_auth_log_in_as(email)
       OmniAuth.config.test_mode = true
 
       OmniAuth.config.mock_auth[:gplus] = OmniAuth::AuthHash.new(

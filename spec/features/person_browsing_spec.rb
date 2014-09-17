@@ -2,7 +2,7 @@ require 'rails_helper'
 
 feature "Person browsing" do
   before do
-    log_in_as 'test.user@digital.justice.gov.uk'
+    omni_auth_log_in_as 'test.user@digital.justice.gov.uk'
   end
 
   scenario "Using breadcrumbs on a profile page" do

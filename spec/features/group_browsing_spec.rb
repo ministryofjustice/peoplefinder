@@ -2,7 +2,7 @@ require 'rails_helper'
 
 feature "Group browsing" do
   before do
-    log_in_as 'test.user@digital.justice.gov.uk'
+    omni_auth_log_in_as 'test.user@digital.justice.gov.uk'
   end
 
   let!(:department) { create(:department) }
