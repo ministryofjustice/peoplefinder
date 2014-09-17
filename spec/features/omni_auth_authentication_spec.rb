@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-feature "Authentication" do
+feature "OmniAuth Authentication" do
   before do
     OmniAuth.config.test_mode = true
   end
