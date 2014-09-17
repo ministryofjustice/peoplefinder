@@ -79,4 +79,15 @@ RSpec.describe Review, type: :model do
       expect(review).not_to be_complete
     end
   end
+
+  it 'delegates author_name to the author if possible' do
+    author = create(:user, name: 'Robert Roberts')
+    review = create(:review, author: author, author_name: 'bob')
+    expect(review.author_name).to eql('Robert Roberts')
+  end
+
+  it 'uses its own author_name if delegation is not possible' do
+    review = build(:review, author_name: 'bob')
+    expect(review.author_name).to eql('bob')
+  end
 end

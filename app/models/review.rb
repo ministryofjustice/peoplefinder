@@ -48,6 +48,10 @@ class Review < ActiveRecord::Base
     status == :submitted
   end
 
+  def author_name
+    (author && author.name) || super
+  end
+
 private
 
   def prefill_invitation_message
