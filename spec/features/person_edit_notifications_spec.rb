@@ -12,11 +12,11 @@ feature "Person edit notifications" do
     fill_in 'Surname', with: "Smith"
     fill_in 'Email', with: 'bob.smith@digital.justice.gov.uk'
     expect { click_button "Create" }.to change { ActionMailer::Base.deliveries.count }.by(1)
-    mail = ActionMailer::Base.deliveries.last
-    expect(mail.subject).to eq("A new profile on MOJ People Finder has been created for you")
-    expect(mail.to).to eql(['bob.smith@digital.justice.gov.uk'])
-    expect(mail.body.encoded).to match(person_url(Person.last))
-    expect(mail.body.encoded).to match('test.user@digital.justice.gov.uk')
+
+    expect(last_email.subject).to eq("A new profile on MOJ People Finder has been created for you")
+
+    check_email_to_and_from
+    check_email_has_token_link_to(Person.last)
   end
 
   scenario "Creating a person with same email" do
@@ -57,10 +57,9 @@ feature "Person edit notifications" do
     person = create(:person, email: 'bob.smith@digital.justice.gov.uk')
     visit edit_person_path(person)
     expect { click_link('Delete this profile') }.to change { ActionMailer::Base.deliveries.count }.by(1)
-    mail = ActionMailer::Base.deliveries.last
-    expect(mail.subject).to eq("Your profile on MOJ People Finder has been deleted")
-    expect(mail.to).to eql(['bob.smith@digital.justice.gov.uk'])
-    expect(mail.body.encoded).to match('test.user@digital.justice.gov.uk')
+
+    expect(last_email.subject).to eq("Your profile on MOJ People Finder has been deleted")
+    check_email_to_and_from
   end
 
   scenario 'Deleting a person with same email' do
@@ -93,11 +92,11 @@ feature "Person edit notifications" do
     click_link 'Edit this profile'
     fill_in 'Surname', with: 'Smelly Pants'
     expect { click_button 'Update' }.to change { ActionMailer::Base.deliveries.count }.by(1)
-    mail = ActionMailer::Base.deliveries.last
-    expect(mail.subject).to eq("Your profile on MOJ People Finder has been edited")
-    expect(mail.to).to eql(['bob.smith@digital.justice.gov.uk'])
-    expect(mail.body.encoded).to match(person_url(person))
-    expect(mail.body.encoded).to match('test.user@digital.justice.gov.uk')
+
+    expect(last_email.subject).to eq("Your profile on MOJ People Finder has been edited")
+
+    check_email_to_and_from
+    check_email_has_token_link_to(person)
   end
 
   scenario 'Editing a person with an email from invalid domain' do
@@ -138,11 +137,11 @@ feature "Person edit notifications" do
     click_link 'Edit this profile'
     fill_in 'Email', with: 'bob.smith@digital.justice.gov.uk'
     expect { click_button 'Update' }.to change { ActionMailer::Base.deliveries.count }.by(1)
-    mail = ActionMailer::Base.deliveries.last
-    expect(mail.subject).to eq("This email address has been added to a profile on MOJ People Finder")
-    expect(mail.to).to eql(['bob.smith@digital.justice.gov.uk'])
-    expect(mail.body.encoded).to match(person_url(person))
-    expect(mail.body.encoded).to match('test.user@digital.justice.gov.uk')
+
+    expect(last_email.subject).to eq("This email address has been added to a profile on MOJ People Finder")
+
+    check_email_to_and_from
+    check_email_has_token_link_to(person)
   end
 
   scenario 'Editing a person from different email to same email' do
@@ -151,11 +150,11 @@ feature "Person edit notifications" do
     click_link 'Edit this profile'
     fill_in 'Email', with: 'test.user@digital.justice.gov.uk'
     expect { click_button 'Update' }.to change { ActionMailer::Base.deliveries.count }.by(1)
-    mail = ActionMailer::Base.deliveries.last
-    expect(mail.subject).to eq("This email address has been removed from a profile on MOJ People Finder")
-    expect(mail.to).to eql(['bob.smith@digital.justice.gov.uk'])
-    expect(mail.body.encoded).to match(person_url(person))
-    expect(mail.body.encoded).to match('test.user@digital.justice.gov.uk')
+
+    expect(last_email.subject).to eq("This email address has been removed from a profile on MOJ People Finder")
+
+    check_email_to_and_from
+    check_email_has_token_link_to(person)
   end
 
   scenario 'Editing a person from different email to different email' do
@@ -172,5 +171,23 @@ feature "Person edit notifications" do
     click_link 'Edit this profile'
     fill_in 'Email', with: 'test.user'
     expect { click_button 'Update' }.not_to change { ActionMailer::Base.deliveries.count }
+  end
+
+  scenario 'Verifying the link to bob that is render in the emails' do
+    bob = create(:person, email: 'bob@digital.justice.gov.uk', surname: 'bob')
+    visit token_url(Token.for_person(bob), desired_path: person_path(bob))
+
+    within('h1') do
+      expect(page).to have_text('bob')
+    end
+  end
+
+  def check_email_to_and_from
+    expect(last_email.to).to eql(['bob.smith@digital.justice.gov.uk'])
+    expect(last_email.body.encoded).to match('test.user@digital.justice.gov.uk')
+  end
+
+  def check_email_has_token_link_to(person)
+    expect(last_email.body.encoded).to match("http.*tokens\/#{ Token.last.to_param }.*?desired_path=%2Fpeople%2F*#{ person.to_param }")
   end
 end

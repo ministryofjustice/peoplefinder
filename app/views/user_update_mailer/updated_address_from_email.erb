@@ -4,4 +4,4 @@ Your profile on MOJ People Finder been edited<% if @by_email.present? %> by <%= 
 
 It previously had this email address, but this has now been changed to <%= @person.email %>.
 
-To see the updated profile, visit <%= person_url(@person) %>
+To see the updated profile, visit <%= token_url(@token_params) %>.
