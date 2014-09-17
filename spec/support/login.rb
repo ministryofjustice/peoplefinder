@@ -21,6 +21,11 @@ module SpecSupport
       visit 'auth/gplus'
     end
 
+    def token_log_in_as(email)
+      token = create(:token, user_email: email)
+      visit token_path(token)
+    end
+
     def javascript_log_in
       visit '/'
       click_link 'log in'

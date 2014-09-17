@@ -6,6 +6,13 @@ User = Struct.new(:email, :name) do
     EmailAddress.new(email).valid_domain? ? new(email, name) : nil
   end
 
+  def self.from_token(token)
+    email = token.user_email
+    name = token.user_email
+
+    EmailAddress.new(email).valid_domain? ? new(email, name) : nil
+  end
+
   def to_s
     name || email
   end

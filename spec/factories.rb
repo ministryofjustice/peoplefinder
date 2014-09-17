@@ -22,4 +22,10 @@ FactoryGirl.define do
     person
     group
   end
+
+  factory :token do
+    sequence :user_email do |n|
+      "user-%04d@digital.justice.gov.uk" % n
+    end
+  end
 end

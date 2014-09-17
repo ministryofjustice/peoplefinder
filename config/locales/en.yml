@@ -80,6 +80,9 @@ en:
   errors:
     groups:
       memberships_exist: "cannot be deleted until all the memberships have been removed"
+    tokens:
+      invalid_address: "Please enter a valid email address"
+      invalid_domain: "Emails from that domain are not permitted. Please enter a valid MOJ email address"
   views:
     info_text:
       delete_this_profile: "Delete this profile"
