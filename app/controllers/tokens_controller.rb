@@ -31,11 +31,6 @@ class TokensController < ApplicationController
     @token = Token.new
   end
 
-  def destroy
-    session['current_user'] = nil
-    redirect_to '/'
-  end
-
 protected
 
   def token_params
