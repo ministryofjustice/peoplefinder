@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe ReminderMailer do
 
   describe '.inadequate_profile' do
-    let(:person) { create(:person, email: 'test@example.com') }
+    let(:person) { create(:person, email: 'test.user@digital.justice.gov.uk') }
     let(:mail) { described_class.inadequate_profile(person).deliver }
 
     it 'sets the sender' do
@@ -26,8 +26,8 @@ RSpec.describe ReminderMailer do
       expect(mail.body).to have_text("profile is only #{ person.completion_score }% complete")
     end
 
-    it 'includes the page url' do
-      expect(mail.body).to have_text("/people/#{ person.to_param }/edit")
+    it 'includes the token url with desired path' do
+      expect(mail.body).to have_text(token_url(Token.last, desired_path: "/people/#{ person.to_param }/edit"))
     end
   end
 end

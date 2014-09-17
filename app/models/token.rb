@@ -15,6 +15,10 @@ class Token < ActiveRecord::Base
     end
   end
 
+  def self.for_person(person)
+    Token.create!(user_email: person.email)
+  end
+
 private
 
   def generate_value
