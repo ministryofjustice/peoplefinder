@@ -122,10 +122,11 @@ table {
 }
 
 $rating-grey: #dee0e2;
-$rating-1-color: rgba(255, 191, 71, 0.25);
-$rating-2-color: rgba(255, 191, 71, 0.5);
-$rating-3-color: rgba(255, 191, 71, 0.75);
-$rating-4-color: rgba(255, 191, 71, 1.0);
+$rating-1-color: rgba(255, 191, 71, 0.2);
+$rating-2-color: rgba(255, 191, 71, 0.4);
+$rating-3-color: rgba(255, 191, 71, 0.6);
+$rating-4-color: rgba(255, 191, 71, 0.8);
+$rating-5-color: rgba(255, 191, 71, 1.0);
 
 dl.review-aggregation {
   margin: 20px 0;
@@ -158,6 +159,7 @@ dl.review-aggregation {
 .rating-2 { background-color: $rating-2-color }
 .rating-3 { background-color: $rating-3-color }
 .rating-4 { background-color: $rating-4-color }
+.rating-5 { background-color: $rating-5-color }
 
 .intro {
   dt, dd {
@@ -181,6 +183,7 @@ dl.review-aggregation {
   dt:nth-child(3) { background-color: $rating-2-color }
   dt:nth-child(5) { background-color: $rating-3-color }
   dt:nth-child(7) { background-color: $rating-4-color }
+  dt:nth-child(9) { background-color: $rating-5-color }
 }
 
 fieldset.inline {
@@ -216,10 +219,14 @@ fieldset.inline {
   .field_with_errors:nth-child(5) .block-label {
     background-color: $rating-4-color;
   }
+  .block-label:nth-child(6),
+  .field_with_errors:nth-child(6) .block-label {
+    background-color: $rating-5-color;
+  }
   .field_with_errors .block-label.selected,
   .block-label.selected {
     background-color: white;
-    border: 3px solid $rating-4-color;
+    border: 3px solid $rating-5-color;
     padding: 8px 28px 8px 43px;
     input {
       top: 11px;
