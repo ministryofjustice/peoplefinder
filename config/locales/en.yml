@@ -184,16 +184,19 @@ en:
       # Scores
 
       1
-      : Limited capability, extensive development needed
+      : Very rarely
 
       2
-      : Moderate capability, some development needed
+      : Rarely
 
       3
-      : Capable, an area of some strength
+      : Occasionally
 
       4
-      : Highly capable, an area of considerable strength
+      : Frequently
+
+      5
+      : Very frequently
     section_1:
       title: 'Leadership qualities'
       intro: |
@@ -208,6 +211,7 @@ en:
       '2': '2'
       '3': '3'
       '4': '4'
+      '5': '5'
       '0': 'N/A'
     return_to_dashboard: 'Return to dashboard'
     autosave:
@@ -259,16 +263,18 @@ en:
       show_review_title: 'Feedback for %{subject}'
       show_review_subtitle: 'Given by %{author}'
       ratings:
-        '1': '1 – Limited capability'
-        '2': '2 – Moderate capability'
-        '3': '3 – Capable'
-        '4': '4 – Highly capable'
+        '1': '1 – Very rarely'
+        '2': '2 – Rarely'
+        '3': '3 – Occasionally'
+        '4': '4 – Frequently'
+        '5': '5 – Very frequently'
         '0': 'Not applicable'
       ratings_without_numbers:
-        '1': 'Limited capability'
-        '2': 'Moderate capability'
-        '3': 'Capable'
-        '4': 'Highly capable'
+        '1': 'Very rarely'
+        '2': 'Rarely'
+        '3': 'Occasionally'
+        '4': 'Frequently'
+        '5': 'Very frequently'
         '0': 'Not applicable'
       leadership_comments: 'Specific examples of leadership qualities'
       how_we_work_comments: 'Specified examples demonstrating How We Work values'

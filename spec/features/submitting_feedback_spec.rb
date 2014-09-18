@@ -14,7 +14,7 @@ feature 'Submitting feedback' do
 
     Review::RATING_FIELDS.each do |rating_field|
       within("#submission_#{ rating_field }") do
-        choose '3'
+        choose '5'
       end
     end
 
@@ -24,7 +24,7 @@ feature 'Submitting feedback' do
 
     submission = Submission.last
     Review::RATING_FIELDS.each do |rating_field|
-      expect(submission.send(rating_field)).to eql(3)
+      expect(submission.send(rating_field)).to eql(5)
     end
     expect(submission.leadership_comments).to eql('Some good stuff')
     expect(submission.how_we_work_comments).to eql('Could learn to...')

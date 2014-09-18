@@ -16,7 +16,7 @@
   = govspeak(t('submissions.section_1.intro'))
 
   - Review::SECTION_1_RATING_FIELDS.each do |rating|
-    = f.radio_buttons(rating, %w[ 1 2 3 4 0 ], inline: true){ |v| t(v, scope: 'submissions.ratings') }
+    = f.radio_buttons(rating, %w[ 1 2 3 4 5 0 ], inline: true){ |v| t(v, scope: 'submissions.ratings') }
 
   = f.text_area :leadership_comments
 
@@ -27,7 +27,7 @@
   = govspeak(t('submissions.section_2.intro'))
 
   - Review::SECTION_2_RATING_FIELDS.each do |rating|
-    = f.radio_buttons(rating, %w[ 1 2 3 4 0 ], inline: true){ |v| t(v, scope: 'submissions.ratings') }
+    = f.radio_buttons(rating, %w[ 1 2 3 4 5 0 ], inline: true){ |v| t(v, scope: 'submissions.ratings') }
 
   = f.text_area :how_we_work_comments
 

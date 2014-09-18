@@ -12,7 +12,7 @@ FactoryGirl.define do
   end
 
   sequence :rating do |n|
-    n % 5
+    n % 6
   end
 
   sequence :verbiage do |n|
