@@ -9,23 +9,26 @@ feature "OmniAuth Authentication" do
     OmniAuth.config.mock_auth[:gplus] = valid_user
 
     visit '/'
-    expect(page).to have_text("Please log in to continue")
+    expect(page).to have_text("Log in to the people finder")
 
-    click_link "log in"
+    click_link "Log in"
     expect(page).to have_text("Logged in as John Doe")
 
     click_link "Log out"
-    expect(page).to have_text("Please log in to continue")
+    expect(page).to have_text("Log in to the people finder")
   end
 
   scenario 'Log in failure' do
     OmniAuth.config.mock_auth[:gplus] = invalid_user
 
     visit '/'
-    expect(page).to have_text("Please log in to continue")
+    expect(page).to have_text("Log in to the people finder")
 
-    click_link "log in"
-    expect(page).to have_text(/log in with an MOJ DS or GDS account/)
+    click_link "Log in"
+    expect(page).to have_text(/log in with a MOJ or GDS email address/)
+
+    click_link "Return to the log in screen"
+    expect(page).to have_text("Log in to the people finder")
   end
 
   scenario 'Being redirected to desired path after logging in' do
@@ -35,7 +38,7 @@ feature "OmniAuth Authentication" do
     path = group_path(group)
 
     visit path
-    click_link "log in"
+    click_link "Log in"
 
     expect(current_path).to eql(path)
   end

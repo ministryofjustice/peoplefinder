@@ -1,8 +1,1 @@
-%p
-  You need to log in with a valid MOJ email address before you can view the People Finder.
-
-= simple_form_for @token do |token_form|
-  .form-group
-    = token_form.input :user_email, as: :string, label: 'Email address'
-  .form-group
-    = token_form.button :submit, 'Login'
+= render partial: 'sessions/login_page'

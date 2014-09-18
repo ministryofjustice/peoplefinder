@@ -28,7 +28,7 @@ module SpecSupport
 
     def javascript_log_in
       visit '/'
-      click_link 'log in'
+      click_link 'Log in'
     end
   end
 end

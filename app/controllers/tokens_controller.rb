@@ -27,10 +27,6 @@ class TokensController < ApplicationController
     end
   end
 
-  def new
-    @token = Token.new
-  end
-
 protected
 
   def token_params

@@ -1,0 +1,25 @@
+%h1.no-line Log in to the people finder
+.spacer-25
+%h3 Google email accounts
+
+%p
+  If you have a government Google account you can log in quickly
+  with the official authentication screen.
+
+%p
+  = link_to "Log in", "/auth/gplus", class: 'button login-button'
+
+%hr
+.spacer-5
+%h3 Other email addresses
+
+%p Enter a valid Ministry of Justice email address below
+
+= simple_form_for (@token ||= Token.new) do |token_form|
+
+  .form-group{ class: ('gov-uk-field-error' if @token.errors.any?)}
+    %p= @token.errors[:base].join('')
+    = token_form.input :user_email, as: :string, label: false
+  .spacer-20
+  .form-group
+    = token_form.button :submit, 'Log in', class: 'login-button'

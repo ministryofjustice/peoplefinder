@@ -4,24 +4,24 @@ feature 'Token Authentication' do
   before { create(:group) }
 
   scenario 'trying to log in with an invalid email address' do
-    visit new_token_path
-    fill_in 'Email', with: 'Bob'
-    expect { click_button 'Login' }.not_to change { ActionMailer::Base.deliveries.count }
-    expect(page).to have_text('Please enter a valid email address')
+    visit '/'
+    fill_in 'token_user_email', with: 'Bob'
+    expect { click_button 'Log in' }.not_to change { ActionMailer::Base.deliveries.count }
+    expect(page).to have_text('Email address is not formatted correctly')
   end
 
   scenario 'trying to log in with a non-whitelisted email address domain' do
-    visit new_token_path
-    fill_in 'Email', with: 'james@abscond.org'
-    expect { click_button 'Login' }.not_to change { ActionMailer::Base.deliveries.count }
-    expect(page).to have_text('You need to log in with a valid MOJ email address')
+    visit '/'
+    fill_in 'token_user_email', with: 'james@abscond.org'
+    expect { click_button 'Log in' }.not_to change { ActionMailer::Base.deliveries.count }
+    expect(page).to have_text('Email address is not valid')
   end
 
   scenario 'accurate email' do
-    visit new_token_path
-    fill_in 'Email', with: 'james.darling@digital.justice.gov.uk'
-    expect { click_button 'Login' }.to change { ActionMailer::Base.deliveries.count }.by(1)
-    expect(page).to have_text('Please check your email for your login link')
+    visit '/'
+    fill_in 'token_user_email', with: 'james.darling@digital.justice.gov.uk'
+    expect { click_button 'Log in' }.to change { ActionMailer::Base.deliveries.count }.by(1)
+    expect(page).to have_text('Check your email for a link to log in')
 
     expect(last_email.to).to eql(['james.darling@digital.justice.gov.uk'])
     expect(last_email.body.encoded).to have_text(token_url(Token.last))
@@ -45,10 +45,9 @@ feature 'Token Authentication' do
 
   scenario 'logging out' do
     token_log_in_as('james.darling@digital.justice.gov.uk')
-    visit '/'
     expect(page).to have_text('james.darling@digital.justice.gov.uk')
     click_link 'Log out'
     expect(page).not_to have_text('james.darling@digital.justice.gov.uk')
-    expect(page).to have_text('log in to continue')
+    expect(page).to have_text('Log in to the people finder')
   end
 end

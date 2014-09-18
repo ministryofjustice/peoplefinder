@@ -8,10 +8,10 @@ class Token < ActiveRecord::Base
   end
 
   def valid_email_address
-    if !EmailAddress.new(user_email).valid_address?
-      errors.add(:user_email, I18n.t('errors.tokens.invalid_address'))
+    if !EmailAddress.new(user_email).valid_format?
+      errors.add(:base, I18n.t('errors.tokens.invalid_address'))
     elsif !EmailAddress.new(user_email).valid_domain?
-      errors.add(:user_email, I18n.t('errors.tokens.invalid_domain'))
+      errors.add(:base, I18n.t('errors.tokens.invalid_domain'))
     end
   end
 

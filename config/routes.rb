@@ -14,7 +14,7 @@ Rails.application.routes.draw do
   end
   resources :memberships, only: [:destroy]
   resource :sessions, only: [:new, :create, :destroy]
-  resources :tokens, only: [:new, :create, :destroy, :show]
+  resources :tokens, only: [:create, :destroy, :show]
 
   match '/auth/:provider/callback', to: 'sessions#create', via: [:get, :post]
   match '/audit_trail', to: 'versions#index', via: [:get]
