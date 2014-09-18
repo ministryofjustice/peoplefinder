@@ -21,7 +21,10 @@ class Review < ActiveRecord::Base
   validates :author_email, uniqueness: { scope: :subject_id }
   validates :author_name, presence: true
   validates :status, presence: true, inclusion: { in: STATUSES }
-  validates :relationship, presence: true, inclusion: { in: RELATIONSHIPS }
+  validates :relationship, presence: true
+  validates :relationship,
+    inclusion: { in: RELATIONSHIPS },
+    if: ->(a) { a.relationship.present? }
   validate :subject_is_participant
 
   scope :submitted, -> { where(status: :submitted) }
