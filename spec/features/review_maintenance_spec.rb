@@ -112,7 +112,7 @@ feature 'Review maintenance' do
   def fill_in_feedback_request_form
     fill_in 'Name', with: 'Danny Boy'
     fill_in 'Email address', with: 'danny@example.com'
-    select 'Peer', from: 'Your working relationship'
+    select 'Peer', from: 'Working relationship'
     fill_in 'Message text', with: 'PLEASE FEED ME'
     click_button 'Send'
   end

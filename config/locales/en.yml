@@ -44,7 +44,7 @@ en:
       review:
         author_email: 'Email address'
         author_name: 'Name'
-        relationship: 'Your working relationship'
+        relationship: 'Working relationship'
         invitation_message: 'Message text'
       submission:
         rating: 'General performance rating.'
