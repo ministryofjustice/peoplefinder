@@ -288,6 +288,8 @@ en:
         status_header: 'Feedback status'
   activerecord:
     errors:
+      messages:
+        blank: 'Required'
       models:
         review:
           attributes:
