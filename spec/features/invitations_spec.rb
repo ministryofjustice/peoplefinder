@@ -4,7 +4,7 @@ feature 'Invitations' do
   scenario 'Accept a feedback request' do
     visit token_url(build_token(:no_response))
 
-    expect(page).to have_text 'You have 360 feedback requests from 1 colleague:'
+    expect(page).to have_text 'You have 360 feedback requests from one colleague'
     choose 'Accept'
     click_button 'Update'
 

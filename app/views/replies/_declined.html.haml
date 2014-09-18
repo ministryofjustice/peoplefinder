@@ -1,6 +1,4 @@
 = form_for reply, as: :invitation, url: invitation_path(reply) do |f|
-  %p
-    %strong= reply.subject_name
   = f.hidden_field :status, value: :accepted
   = f.hidden_field :reason_declined, value: ''
   = f.button t('invitations.accept')

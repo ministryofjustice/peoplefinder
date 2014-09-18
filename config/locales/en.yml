@@ -240,6 +240,13 @@ en:
       your_direct_reports: 'Your direct reports'
       feedback_requests: 'Feedback requests'
   views:
+    replies:
+      index_title:
+        one: 'You have 360 feedback requests from one colleague'
+        other: 'You have 360 feedback requests from %{count} colleagues'
+      list:
+        name_header: 'Name'
+        action_header: 'Action'
     results:
       feedback_title:
         mine: 'All your feedback'
