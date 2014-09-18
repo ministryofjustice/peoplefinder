@@ -19,4 +19,22 @@ RSpec.describe Submission, type: :model do
       end
     end
   end
+
+  describe 'validity' do
+    it 'is valid if all fields are filled' do
+      expect(submission).to be_valid
+    end
+
+    it 'is valid if fields are empty and status is not submitted' do
+      submission.rating_2 = nil
+      submission.status = :started
+      expect(submission).to be_valid
+    end
+
+    it 'is invalid if fields are empty and status is submitted' do
+      submission.rating_2 = nil
+      submission.status = :submitted
+      expect(submission).not_to be_valid
+    end
+  end
 end

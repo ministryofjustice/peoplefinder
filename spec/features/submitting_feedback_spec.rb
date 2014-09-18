@@ -2,9 +2,11 @@ require 'rails_helper'
 
 feature 'Submitting feedback' do
   let(:me) { create(:user) }
+  let(:review) { create(:review, status: :accepted) }
+  let(:token) { review.tokens.create }
 
   scenario 'Submit feedback' do
-    visit token_path(build_token(:accepted))
+    visit token_path(token)
 
     click_link 'Add feedback'
 
@@ -32,8 +34,19 @@ feature 'Submitting feedback' do
     expect(page).to have_text("Given by #{me.name}")
   end
 
+  scenario 'Attempting to submit incomplete feedback' do
+    visit token_path(token)
+    click_link 'Add feedback'
+    click_button 'Submit'
+
+    expect(page).to have_text('Feedback not submitted')
+
+    submission = Submission.last
+    expect(submission.status).not_to eql(:submitted)
+  end
+
   scenario 'Autosave feedback', js: true do
-    visit token_path(build_token(:accepted))
+    visit token_path(token)
 
     click_link 'Add feedback'
 
@@ -57,7 +70,7 @@ feature 'Submitting feedback' do
   end
 
   scenario 'View the leadership model' do
-    visit token_url(build_token(:accepted))
+    visit token_path(token)
 
     click_link 'Add feedback'
     click_link 'Leadership Model'
@@ -71,7 +84,7 @@ feature 'Submitting feedback' do
   end
 
   scenario 'View the MOJ story' do
-    visit token_url(build_token(:accepted))
+    visit token_path(token)
 
     click_link 'Add feedback'
     click_link 'MOJ Story'
@@ -82,9 +95,5 @@ feature 'Submitting feedback' do
 
     click_link 'Back'
     expect(page).to have_link('MOJ Story', href: moj_story_path)
-  end
-
-  def build_token(status)
-    create(:review, status: status).tokens.create
   end
 end

@@ -30,6 +30,9 @@ en:
       update_error: 'A reason is required when rejecting an invitation'
     reminders:
       reminder_sent: 'A reminder has been sent'
+    submissions:
+      updated: 'Your feedback has been submitted'
+      update_error: 'Feedback not submitted. Please check the missing fields below'
   helpers:
     submit:
       invitation:

@@ -3,6 +3,7 @@ RSpec.describe SubmissionsController, type: :controller do
 
   let(:author) { create(:user) }
   let!(:submission) { create(:submission, author: author) }
+  let(:valid_attributes) { attributes_for(:complete_review) }
 
   describe 'GET edit' do
     context 'with an authenticated sesssion' do
@@ -35,20 +36,51 @@ RSpec.describe SubmissionsController, type: :controller do
         submission.save!
       end
 
-      it 'redirects to the replies list' do
-        put :update, id: submission.id, submission: valid_attributes
-        expect(response).to redirect_to(replies_path)
+      context 'with a complete submission' do
+        before do
+          put :update, id: submission.id, submission: valid_attributes
+        end
+
+        it 'redirects to the replies list' do
+          expect(response).to redirect_to(replies_path)
+        end
+
+        it 'changes the submission to submitted' do
+          expect(submission.reload.status).to eql(:submitted)
+        end
+
+        it 'shows a success message' do
+          expect(flash[:notice]).to match(/has been submitted/)
+        end
       end
 
-      it 'changes the submission to submitted' do
-        put :update, id: submission.id, submission: valid_attributes
-        expect(submission.reload.status).to eql(:submitted)
+      context 'when autosaving' do
+        before do
+          put :update,
+            id: submission.id, submission: valid_attributes, autosave: 1
+        end
+
+        it 'changes the submission to started on autosave' do
+          expect(submission.reload.status).to eql(:started)
+        end
+
+        it 'does not show a success message' do
+          expect(flash[:notice]).to be_nil
+        end
       end
 
-      it 'changes the submission to started on autosave' do
-        put :update,
-          id: submission.id, submission: valid_attributes, autosave: 1
-        expect(submission.reload.status).to eql(:started)
+      context 'with missing fields' do
+        before do
+          put :update, id: submission.id, submission: { rating_1: 1 }
+        end
+
+        it 're-renders the edit template' do
+          expect(response).to render_template('edit')
+        end
+
+        it 'shows an error message' do
+          expect(flash[:error]).to match(/not submitted/)
+        end
       end
     end
 
@@ -58,9 +90,5 @@ RSpec.describe SubmissionsController, type: :controller do
         expect(response).to be_forbidden
       end
     end
-  end
-
-  def valid_attributes
-    { rating_1: 1 }
   end
 end
