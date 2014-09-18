@@ -39,8 +39,8 @@ $(function() {
   };
 
   var refreshRadioStyles = function() {
-    $('input:radio').parent().removeClass('selected');
-    $('input:radio:checked').parent().addClass('selected');
+    $('input:radio').parents('.block-label').removeClass('selected');
+    $('input:radio:checked').parents('.block-label').addClass('selected');
   };
 
   $('form.autosave input, form.autosave textarea').

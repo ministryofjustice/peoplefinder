@@ -112,8 +112,10 @@ table {
   background-color: #5baf19
 }
 
-.field_with_errors input{
-  border: 3px solid red;
+.field_with_errors {
+  input, textarea {
+    border: 3px solid red;
+  }
 }
 
 $rating-grey: #dee0e2;
@@ -139,10 +141,6 @@ dl.review-aggregation {
     clear: right;
     width: 170px;
   }
-  .rating-1 { background-color: $rating-1-color }
-  .rating-2 { background-color: $rating-2-color }
-  .rating-3 { background-color: $rating-3-color }
-  .rating-4 { background-color: $rating-4-color }
 }
 
 .rating-view {
@@ -152,10 +150,11 @@ dl.review-aggregation {
   font-size: 24px;
   background-color: $rating-grey;
 }
-.rating-view.rating-1 { background-color: $rating-1-color }
-.rating-view.rating-2 { background-color: $rating-2-color }
-.rating-view.rating-3 { background-color: $rating-3-color }
-.rating-view.rating-4 { background-color: $rating-4-color }
+
+.rating-1 { background-color: $rating-1-color }
+.rating-2 { background-color: $rating-2-color }
+.rating-3 { background-color: $rating-3-color }
+.rating-4 { background-color: $rating-4-color }
 
 .intro {
   dt, dd {
@@ -181,7 +180,8 @@ dl.review-aggregation {
   dt:nth-child(7) { background-color: $rating-4-color }
 }
 
-.submission-form {
+fieldset.inline {
+  p.error,
   .block-label {
     padding: 10px 30px 10px 45px;
     input {
@@ -189,12 +189,31 @@ dl.review-aggregation {
       left: 15px;
     }
     line-height: 25px;
+  }
+
+  .block-label {
     font-size: 24px;
   }
-  .block-label:nth-child(2) { background-color: $rating-1-color; }
-  .block-label:nth-child(3) { background-color: $rating-2-color; }
-  .block-label:nth-child(4) { background-color: $rating-3-color; }
-  .block-label:nth-child(5) { background-color: $rating-4-color; }
+}
+
+.submission-form {
+  .block-label:nth-child(2),
+  .field_with_errors:nth-child(2) .block-label {
+    background-color: $rating-1-color;
+  }
+  .block-label:nth-child(3),
+  .field_with_errors:nth-child(3) .block-label {
+    background-color: $rating-2-color;
+  }
+  .block-label:nth-child(4),
+  .field_with_errors:nth-child(4) .block-label {
+    background-color: $rating-3-color;
+  }
+  .block-label:nth-child(5),
+  .field_with_errors:nth-child(5) .block-label {
+    background-color: $rating-4-color;
+  }
+  .field_with_errors .block-label.selected,
   .block-label.selected {
     background-color: white;
     border: 3px solid $rating-4-color;
