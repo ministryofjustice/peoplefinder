@@ -10,7 +10,11 @@ class EmailAddress < Mail::Address
     Rails.configuration.valid_login_domains.include?(domain)
   end
 
+  def valid_format?
+    address && address.match(VALID_EMAIL_PATTERN)
+  end
+
   def valid_address?
-    address ? (address.match(VALID_EMAIL_PATTERN) && valid_domain?) : false
+    address ? (valid_format? && valid_domain?) : false
   end
 end
