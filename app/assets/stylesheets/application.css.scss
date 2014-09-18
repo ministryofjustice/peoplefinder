@@ -100,14 +100,17 @@ table {
   padding: 0;
   border-radius: 5px;
 }
+.review-completion-none .indicator-dot,
 .review-status-declined .indicator-dot {
   background-color: #df3034;
 }
+.review-completion-some .indicator-dot,
 .review-status-no_response .indicator-dot,
 .review-status-accepted .indicator-dot,
 .review-status-started .indicator-dot {
   background-color: #ffbf47;
 }
+.review-completion-all .indicator-dot,
 .review-status-submitted .indicator-dot {
   background-color: #5baf19
 }

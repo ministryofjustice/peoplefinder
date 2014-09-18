@@ -25,4 +25,8 @@ class User < ActiveRecord::Base
   def managed?
     manager.present?
   end
+
+  def review_completion
+    ReviewCompletion.new(reviews)
+  end
 end

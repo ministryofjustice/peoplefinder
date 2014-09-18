@@ -11,4 +11,6 @@
     - @users.each do |user|
       %tr{ class: "#{ cycle('stripe', '') }" }
         %td.name= link_to(user, [user, :reviews])
-        %td= review_completion(user)
+        %td{ class: "review-completion-#{ user.review_completion.description }" }
+          %span{ class: "indicator-dot" }
+          =t('completion', scope: 'helpers.reviews', submitted: user.review_completion.completed, total: user.review_completion.total)
