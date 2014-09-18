@@ -1,10 +1,7 @@
-Hello <%= @person %>
-
-Your profile is only <%= @person.completion_score %>% complete, log in to update your details:
+Your current profile is <%= @person.completion_score %>% complete, why not update it today.
 
 <%= token_url(@token, desired_path: edit_person_path(@person)) %>
 
-Update your profile to stop further reminder emails.
+It will only take a few moments and it's the perfect way to make sure your colleagues and co-workers have the most accurate details about you.
 
-Thanks,
-Peoplefinder Team
+Reminder emails will automatically stop when your update is complete.

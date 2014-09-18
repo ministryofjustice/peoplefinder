@@ -15,15 +15,11 @@ RSpec.describe ReminderMailer do
     end
 
     it 'sets the subject' do
-      expect(mail.subject).to have_text('Update your Peoplefinder profile')
-    end
-
-    it 'has a greeting' do
-      expect(mail.body).to have_text("Hello #{ person }")
+      expect(mail.subject).to have_text('Reminder: update your profile today')
     end
 
     it 'describes the profile completion score' do
-      expect(mail.body).to have_text("profile is only #{ person.completion_score }% complete")
+      expect(mail.body).to have_text("profile is #{ person.completion_score }% complete")
     end
 
     it 'includes the token url with desired path' do
