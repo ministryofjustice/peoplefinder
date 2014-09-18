@@ -225,7 +225,7 @@ en:
       subject: '360 feedback process has begun'
   review_mailer:
     feedback_request:
-      subject: 'Request for feedback'
+      subject: '360 feedback request from you'
     request_declined:
       subject: 'Request for feedback has been declined'
   tab_navigation:
