@@ -18,6 +18,16 @@ feature 'Review maintenance' do
     check_mail_attributes(last_email, review)
   end
 
+  scenario 'Invite a new person to give me feedback but omitting a field' do
+    visit reviews_path
+    fill_in 'Name', with: 'Danny Boy'
+    fill_in 'Email address', with: 'danny@example.com'
+    fill_in 'Message text', with: 'PLEASE FEED ME'
+    click_button 'Send'
+
+    expect(Review.all.count).to eql(0)
+  end
+
   scenario 'Invite a person that has already been invited' do
     visit reviews_path
     fill_in_feedback_request_form
