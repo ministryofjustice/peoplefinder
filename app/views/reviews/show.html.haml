@@ -1,10 +1,20 @@
 - content_for :back_link do
-  = link_to t('submissions.return_to_dashboard'), :back
+  - if explicit_subject?
+    = link_to t('views.reviews.return_to_dashboard'), users_path
+    = '>'
+    = link_to t('views.reviews.return_to_user', name: @review.subject), user_reviews_path(@review.subject)
+  - else
+    = link_to t('submissions.return_to_dashboard'), :back
+
 
 - content_for :page_title do
-  = t('views.reviews.show_review_title', subject: @review.subject_name)
+  = role_translate('views.reviews.show_review_title')
 
-%h2= t('views.reviews.show_review_subtitle', author: @review.author_name)
+%h2
+  - if @review.author == current_user
+    = t('views.reviews.show_review_subtitle.by_me')
+  - else
+    = t('views.reviews.show_review_subtitle.by_other', author: @review.author_name)
 
 %hr
 

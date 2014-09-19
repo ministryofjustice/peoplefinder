@@ -4,6 +4,7 @@ class ReviewsController < ApplicationController
   before_action :ensure_participant, except: [:show]
 
   def index
+    suppress_tabs if explicit_subject?
     @review = scope.new
     load_reviews
   end
@@ -23,8 +24,10 @@ class ReviewsController < ApplicationController
   end
 
   def show
+    suppress_tabs
     @review = Review.submitted.
       for_user(@subject || current_user).find(params[:id])
+    @subject = @review.subject
   end
 
 private
@@ -38,8 +41,13 @@ private
     (@subject || current_user).reviews
   end
 
+  def explicit_subject?
+    params[:user_id].present?
+  end
+  helper_method :explicit_subject?
+
   def load_explicit_subject
-    if params[:user_id]
+    if explicit_subject?
       @subject = current_user.direct_reports.find(params[:user_id])
     end
     true

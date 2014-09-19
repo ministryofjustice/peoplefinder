@@ -7,6 +7,15 @@ class ApplicationController < ActionController::Base
 
 private
 
+  def suppress_tabs
+    @suppress_tabs = true
+  end
+
+  def show_tabs?
+    !@suppress_tabs
+  end
+  helper_method :show_tabs?
+
   def current_user
     @current_user ||= User.where(id: session['current_user_id']).first
   end

@@ -1,5 +1,6 @@
 class SubmissionsController < ApplicationController
   before_action :set_submission, only: [:edit, :update]
+  before_action :suppress_tabs
 
   def edit
   end

@@ -9,7 +9,8 @@
       = flash_messages
       .inner-block
         .top-left= yield :back_link
-        = render partial: 'shared/tab_navigation'
+        %h1= content_for?(:page_title) ? yield(:page_title) : app_name
+        = render partial: 'shared/tab_navigation' if show_tabs?
         = yield
 = render partial: "shared/loginout"
 = render template: "layouts/moj_internal_template"

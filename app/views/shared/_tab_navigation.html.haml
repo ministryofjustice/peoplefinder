@@ -1,5 +1,3 @@
-%h1= content_for?(:page_title) ? yield(:page_title) : app_name
-
 - if review_period_closed?
   - if current_user.manager && current_user.direct_reports.present?
     %ul#tab_navigation

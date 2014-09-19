@@ -170,7 +170,7 @@ en:
     errors:
       subject_must_be_participant: 'must be a participant'
   submissions:
-    title: 'Feedback on %{name}'
+    title: 'Feedback for %{name}'
     intro: |
       Please rate %{name}’s leadership and people management skills according to
       the scores below.
@@ -245,9 +245,10 @@ en:
       feedback_requests: 'Feedback requests'
   views:
     replies:
-      index_title:
-        one: 'You have 360 feedback requests from one colleague'
-        other: 'You have 360 feedback requests from %{count} colleagues'
+      index_title: 'Requests for feedback'
+      index_standfirst:
+        one: 'One person has asked you for feedback'
+        other: '%{count} people have asked you for feedback'
       list:
         headers:
           name: 'Name'
@@ -259,6 +260,9 @@ en:
         theirs: 'All feedback for %{name}'
       direct_reports_title: 'Feedback for your direct reports'
     reviews:
+      return_to_dashboard: 'Dashboard'
+      return_to_user: 'Feedback for %{name}'
+      feedback_not_received_title: 'Feedback participants'
       feedback_received_title: 'Feedback received'
       feedback_received_standfirst:
         mine:
@@ -274,8 +278,15 @@ en:
         some:
           mine: 'Ask another person to provide feedback about you'
           theirs: 'Ask another person to provide feedback about %{name}'
-      show_review_title: 'Feedback for %{subject}'
-      show_review_subtitle: 'Given by %{author}'
+      index_title:
+        mine: 'SCS 360° Appraisals'
+        theirs: 'Feedback for %{name}'
+      show_review_title:
+        mine: 'Feedback for you'
+        theirs: 'Feedback for %{name}'
+      show_review_subtitle:
+        by_other: 'Given by %{author}'
+        by_me: 'Given by you'
       ratings:
         '1': '1 – Very rarely'
         '2': '2 – Rarely'
@@ -302,7 +313,7 @@ en:
       index_title: 'Your direct reports'
       index_standfirst:
         one: 'You have one direct report who requires feedback'
-        other: 'Your have %{count} direct reports who require feedback'
+        other: 'You have %{count} direct reports who require feedback'
       list:
         name_header: 'Name'
         status_header: 'Feedback status'

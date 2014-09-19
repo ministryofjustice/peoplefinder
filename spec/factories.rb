@@ -37,7 +37,12 @@ FactoryGirl.define do
     author_name { generate(:name) }
     relationship :peer
 
+    factory :accepted_review do
+      status :accepted
+    end
+
     factory :complete_review do
+      status :submitted
       rating_1 { generate(:rating) }
       rating_2 { generate(:rating) }
       rating_3 { generate(:rating) }
