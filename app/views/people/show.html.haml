@@ -9,6 +9,7 @@
     .inner-block.profile
       .image-background
         = image_tag @person.image.medium, class: 'profile-page'
+      .spacer-15
       %h4 Days worked
       %ul.working_days
         = render 'working_days'
@@ -24,5 +25,10 @@
       %p= @person.description
 
 - if nag_to_complete_your_profile?(@person)
-  %h4 Profile completeness: #{@person.completion_score}%
-  = link_to 'complete your profile', edit_person_path(@person)
+  .complete-your-profile
+    Profile completeness
+    .bar
+      .on{ style: "width: #{ @person.completion_score }%" } &nbsp;
+      .off{ style: "width: #{ 100 - @person.completion_score }%" } &nbsp;
+    .score #{@person.completion_score}%
+    %p= link_to 'complete your profile', edit_person_path(@person)

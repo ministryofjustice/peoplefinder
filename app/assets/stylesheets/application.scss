@@ -8,6 +8,9 @@ $error-bg: rgba($error-fg, 0.5);
 $notice-bg: #c9d8bd;
 $red-error: #DF3034;
 $pink-bg: #FEF7F7;
+$grey-bg: #DEE0E2;
+$green: #006435;
+$border-color: #bfc1c3;
 
 @import "people";
 @import "groups";
@@ -102,6 +105,10 @@ strong {
 
 .spacer-5 {
   height: 5px;
+}
+
+.spacer-15 {
+  height: 15px;
 }
 
 .spacer-20 {

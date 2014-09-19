@@ -49,7 +49,7 @@ img.preview {
   }
   .search-result {
     margin: 15px 0 15px 0;
-    border-top: 1px solid #DEE0E2;
+    border-top: 1px solid $grey-bg;
     .grid-wrapper {
       margin-top: 15px;
       img {
@@ -75,6 +75,38 @@ img.preview {
   }
   .add-new-person {
     margin-top: 60px;
+  }
+}
+
+.complete-your-profile {
+  background-color: $grey-bg;
+  width: 285px;
+  height: 100px;
+  margin-top: 5px;
+  padding: 15px 0 0 15px;
+  font-weight: bold;
+  .bar {
+    line-height: 15px;
+    width: 200px;
+    margin-top: 10px;
+    float: left;
+    .on {
+      background-color: $green;
+      float: left;
+    }
+    .off {
+      background-color: $border-color;
+      float: left;
+    }
+  }
+  .score {
+    float: left;
+    margin-left: 15px;
+    color: $green;
+    font-size: 24px;
+  }
+  a {
+    font-weight: normal;
   }
 }
 
