@@ -1,4 +1,4 @@
-= form_for reply, as: :invitation, url: invitation_path(reply) do |f|
+= form_for reply, as: :invitation, namespace: "invitation_#{reply.id}", url: invitation_path(reply) do |f|
   .one-row
     = f.radio_buttons(:status, %i[ accepted declined ], inline: true){ |v| t(v, scope: 'invitations.statuses') }
     = f.button

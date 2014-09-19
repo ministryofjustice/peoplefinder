@@ -1,12 +1,11 @@
 //= require environment
 /* global $, config */
 $(function() {
-  $(document).on('click', '#invitation_status_declined', function() {
-    $(this.form).find('.reason_declined_fields').removeClass('hidden');
-  });
-
-  $(document).on('click', '#invitation_status_accepted', function() {
-    $(this.form).find('.reason_declined_fields').addClass('hidden');
+  $('form.edit_invitation input').on('change', function() {
+    var isDeclined = $(this.form).find('input:checked').val() === 'declined';
+    var reason = $(this.form).find('.reason_declined_fields');
+    reason.removeClass('hidden');
+    if (isDeclined) { reason.show(); } else { reason.hide(); }
   });
 
   var autosave = function(form) {
