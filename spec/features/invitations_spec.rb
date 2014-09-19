@@ -16,8 +16,7 @@ feature 'Invitations' do
     visit token_url(build_token(:no_response))
 
     choose 'Decline'
-    expect(page).to have_text 'Please explain why you have declined the request'
-    fill_in 'Reason declined', with: 'Some stuff'
+    fill_in 'Reason for declining', with: 'Some stuff'
     click_button 'Update'
 
     expect(Reply.last.reason_declined).to eql('Some stuff')
@@ -29,8 +28,7 @@ feature 'Invitations' do
 
     choose 'Decline'
     reason = "I don't know you well enough to comment on your performance"
-    expect(page).to have_text 'Please explain why you have declined the request'
-    fill_in 'Reason declined', with: reason
+    fill_in 'Reason for declining', with: reason
     click_button 'Update'
 
     expect(last_email.subject).to eql('Request for feedback has been declined')
@@ -48,8 +46,7 @@ feature 'Invitations' do
     visit token_url(build_token(:no_response))
 
     choose 'Decline'
-    expect(page).to have_text 'Please explain why you have declined the request'
-    fill_in 'Reason declined', with: ''
+    fill_in 'Reason for declining', with: ''
     click_button 'Update'
 
     expect(page).to have_text 'A reason is required when rejecting an invitation'
@@ -61,10 +58,10 @@ feature 'Invitations' do
     visit token_path(build_token(:no_response))
 
     choose 'Decline'
-    expect(page).to have_text 'Please explain'
+    expect(page).to have_text 'Reason for declining'
 
     choose 'Accept'
-    expect(page).not_to have_text 'Please explain'
+    expect(page).not_to have_text 'Reason for declining'
   end
 
   scenario 'Accept a previously declined feedback request' do

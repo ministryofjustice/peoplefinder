@@ -293,4 +293,27 @@ h4 {
   margin-top: 30px;
 }
 
+.feedback-requests {
+  label[for='invitation_status'] {
+    display: none;
+  }
+  label[for='invitation_reason_declined'] {
+    font-weight: normal;
+    margin: 15px 0;
+  }
+  textarea {
+    width: 398px;
+  }
+  .one-row {
+    fieldset, label, button {
+      width: auto;
+      float: left;
+      clear: none;
+    }
+    button {
+      margin-top: 11px;
+    }
+  }
+}
+
 @import 'print';

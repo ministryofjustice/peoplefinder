@@ -82,6 +82,7 @@ en:
         how_we_work_comments: 'Please cite specific examples relating to How We Work'
       invitation:
         status: 'Your response'
+        reason_declined: 'Reason for declining'
   common:
     go_back: 'Back'
   pages:
@@ -245,8 +246,10 @@ en:
         one: 'You have 360 feedback requests from one colleague'
         other: 'You have 360 feedback requests from %{count} colleagues'
       list:
-        name_header: 'Name'
-        action_header: 'Action'
+        headers:
+          name: 'Name'
+          status: 'Feedback status'
+          action: 'Action'
     results:
       feedback_title:
         mine: 'All your feedback'
