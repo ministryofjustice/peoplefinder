@@ -170,11 +170,12 @@ dl.review-aggregation {
   dt {
     clear: left;
     float: left;
-    width: 25px;
+    width: 55px;
     font-size: 24px;
-    background-color: rgba(255, 191, 71, 0.25);
+    background-color: $rating-grey;
     text-align: center;
     margin-right: 15px;
+    padding: 10px 0;
   }
   dd {
     margin: 10px 0;
