@@ -257,6 +257,7 @@ en:
       feedback_title:
         mine: 'All your feedback'
         theirs: 'All feedback for %{name}'
+      direct_reports_title: 'Feedback for your direct reports'
     reviews:
       feedback_received_title: 'Feedback received'
       feedback_received_standfirst:

@@ -1,5 +1,7 @@
-You have #{ pluralize(@users.length, 'direct report') }.
-%ul#users
-  - @users.each do |user|
-    %li
-      = link_to(user, [:results, user, :reviews])
+%h2= t('views.results.direct_reports_title')
+
+%table
+  %tbody
+    - @users.each do |user|
+      %tr{ class: "#{ cycle('stripe', '') }" }
+        %td.name= link_to(user, [:results, user, :reviews])
