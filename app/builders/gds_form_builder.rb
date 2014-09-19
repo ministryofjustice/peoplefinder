@@ -52,7 +52,7 @@ class GDSFormBuilder < ActionView::Helpers::FormBuilder
     error_messages = object.errors[method].map { |error|
       template.content_tag(:p, class: 'error') { error }
     }.join.html_safe
-    bold_label(method, nil, options) + content.call + error_messages
+    bold_label(method, nil) + content.call + error_messages
   end
 
   def add_class(options, klass)
