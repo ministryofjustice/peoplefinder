@@ -8,3 +8,4 @@
 /spec/support/uploads/*
 .idea
 /.env
+.ruby-version
