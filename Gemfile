@@ -23,7 +23,7 @@ gem 'moj_internal_template',
   branch: 'master'
 gem 'omniauth-gplus',
   git: 'https://github.com/ministryofjustice/omniauth-gplus.git'
-gem 'paper_trail', '~> 3.0.2'
+gem 'paper_trail', '~> 3.0.5'
 gem 'pg'
 gem 'recipient_interceptor', '~> 0.1.2'
 gem 'sass-rails', '~> 4.0.3'
