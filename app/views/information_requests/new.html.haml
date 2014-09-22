@@ -1,0 +1,15 @@
+- @editing_mode = true
+%h1.no-line Request profile update
+
+= simple_form_for @information_request, url: person_information_requests_path(@person) do |f|
+
+  .form-group{ class: ('gov-uk-field-error' if @information_request.errors.any?) }
+    = f.input :message, label: info_text('information_request_label'),
+                        error: false, required: false
+
+  .spacer-45
+  .form-group
+    = f.button :submit, 'Submit'
+    .cancel
+      = link_to 'Cancel', person_path(@person)
+

@@ -11,5 +11,9 @@ module SpecSupport
     def email_contains(delivery, matcher)
       delivery.body.encoded.scan(matcher)
     end
+
+    def check_email_has_token_link_to(person)
+      expect(last_email.body.encoded).to match("http.*tokens\/#{ Token.last.to_param }.*?desired_path=%2Fpeople%2F*#{ person.to_param }")
+    end
   end
 end

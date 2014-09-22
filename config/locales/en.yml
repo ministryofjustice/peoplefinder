@@ -29,6 +29,8 @@ en:
       update_error: "The details were not updated. Please check the errors below"
     home:
       top_level_group_needed: "To use the People Finder, first create a top-level group (without a parent)"
+    information_requests:
+      message_sent: "Your message has been sent to %{person}"
     memberships:
       member_removed: "Removed %{person} from %{group}"
     people:
@@ -94,6 +96,7 @@ en:
       hint_add_person_to_team: "Use this organisation browser to select the team which this person belongs to."
       hint_team_description: "What is the role and purpose of the team?"
       hint_team_responsibilities: "What are the team's collective responsibilities?"
+      information_request_label: "Enter a message to be sent to the person"
       location_hint: "e.g. 10.30, 102 Petty France or Room 3, Bristol Crown Court"
       notes_field_hint: "Use this to add any extra information about your role,<br/>e.g. I am based at Bristol County Court on Wednesdays"
       photo_upload_hint: "Add or replace a photograph by clicking 'Choose file'."

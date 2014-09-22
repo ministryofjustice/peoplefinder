@@ -160,7 +160,14 @@ feature "Person maintenance" do
     scenario 'when it is incomplete, I request more information' do
       visit person_path(person)
       expect(page).not_to have_text('Profile completeness')
-      expect(page).to have_link('Request completion')
+
+      click_link('Request completion')
+      expect(page).to have_link('Cancel', person_path(person))
+
+      fill_in 'information_request_message', with: 'Hello Bob'
+      click_button('Submit')
+
+      expect(page).to have_text("Your message has been sent to #{ person.name }")
     end
   end
 
