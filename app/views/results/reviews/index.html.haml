@@ -1,11 +1,11 @@
-- if explicit_subject?
+- if scoped_by_subject?
   - content_for :back_link do
     = link_to t('submissions.return_to_dashboard'), :back
 
 - content_for :page_title do
   = role_translate('views.results.feedback_title')
 
-- unless explicit_subject?
+- unless scoped_by_subject?
   %h2= t('views.results.feedback_subtitle.mine')
 
 - Review::SECTION_1_RATING_FIELDS.each do |field|

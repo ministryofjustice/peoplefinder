@@ -1,10 +1,10 @@
 class ReviewsController < ApplicationController
-  before_action :load_explicit_subject, only: [:index, :create, :show]
+  before_action :load_scoped_subject, only: [:index, :create, :show]
   before_action :redirect_unless_user_receives_feedback, only: [:index]
   before_action :ensure_participant, except: [:show]
 
   def index
-    suppress_tabs if explicit_subject?
+    suppress_tabs if scoped_by_subject?
     @review = scope.new
     load_reviews
   end
@@ -39,18 +39,6 @@ private
 
   def scope
     (@subject || current_user).reviews
-  end
-
-  def explicit_subject?
-    params[:user_id].present?
-  end
-  helper_method :explicit_subject?
-
-  def load_explicit_subject
-    if explicit_subject?
-      @subject = current_user.direct_reports.find(params[:user_id])
-    end
-    true
   end
 
   def redirect_unless_user_receives_feedback

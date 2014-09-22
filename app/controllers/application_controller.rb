@@ -7,6 +7,18 @@ class ApplicationController < ActionController::Base
 
 private
 
+  def scoped_by_subject?
+    params[:user_id].present?
+  end
+  helper_method :scoped_by_subject?
+
+  def load_scoped_subject
+    if scoped_by_subject?
+      @subject = current_user.direct_reports.find(params[:user_id])
+    end
+    true
+  end
+
   def suppress_tabs
     @suppress_tabs = true
   end

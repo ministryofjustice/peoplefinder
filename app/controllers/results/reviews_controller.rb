@@ -3,12 +3,12 @@ module Results
     skip_before_action :check_review_period_is_open
     before_action :ensure_participant
     before_action :ensure_review_period_is_closed
-    before_action :load_explicit_subject, only: [:index]
+    before_action :load_scoped_subject, only: [:index]
     before_action :redirect_unless_user_receives_feedback, only: [:index]
 
     def index
       @review_aggregator = ReviewAggregator.new(scope.reviews)
-      suppress_tabs if explicit_subject?
+      suppress_tabs if scoped_by_subject?
     end
 
   private
@@ -19,18 +19,6 @@ module Results
 
     def scope
       @subject || current_user
-    end
-
-    def explicit_subject?
-      params[:user_id].present?
-    end
-    helper_method :explicit_subject?
-
-    def load_explicit_subject
-      if explicit_subject?
-        @subject = current_user.direct_reports.find(params[:user_id])
-      end
-      true
     end
 
     def redirect_unless_user_receives_feedback

@@ -1,5 +1,5 @@
 - content_for :back_link do
-  - if explicit_subject?
+  - if scoped_by_subject?
     = link_to t('views.reviews.return_to_dashboard'), users_path
     = '>'
     = link_to t('views.reviews.return_to_user', name: @review.subject), user_reviews_path(@review.subject)
