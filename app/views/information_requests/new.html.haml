@@ -1,5 +1,5 @@
 - @editing_mode = true
-%h1.no-line Request profile update
+%h1.no-line Request profile update for #{ @person }
 
 = simple_form_for @information_request, url: person_information_requests_path(@person) do |f|
 
@@ -7,7 +7,6 @@
     = f.input :message, label: info_text('information_request_label'),
                         error: false, required: false
 
-  .spacer-45
   .form-group
     = f.button :submit, 'Submit'
     .cancel

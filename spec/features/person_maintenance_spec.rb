@@ -164,6 +164,10 @@ feature "Person maintenance" do
       click_link('Request completion')
       expect(page).to have_link('Cancel', person_path(person))
 
+      within('h1') do
+        expect(page).to have_text(person.name)
+      end
+
       fill_in 'information_request_message', with: 'Hello Bob'
       click_button('Submit')
 
