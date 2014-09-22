@@ -1,10 +1,12 @@
-- content_for :back_link do
-  = link_to t('submissions.return_to_dashboard'), :back
+- if explicit_subject?
+  - content_for :back_link do
+    = link_to t('submissions.return_to_dashboard'), :back
 
 - content_for :page_title do
   = role_translate('views.results.feedback_title')
 
-%h2= t('submissions.section_1.title')
+- unless explicit_subject?
+  %h2= t('views.results.feedback_subtitle.mine')
 
 - Review::SECTION_1_RATING_FIELDS.each do |field|
   %h3= t(field, scope: 'helpers.label.submission')

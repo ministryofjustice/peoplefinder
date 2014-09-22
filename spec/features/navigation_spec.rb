@@ -140,6 +140,45 @@ feature 'Navigation' do
       expect_no_tabs
       expect_page_subheader 'Given by you'
     end
+
+    context 'After the end of the review period' do
+      scenario 'Viewing reviews I have received', closed_review_period: true do
+        # /results/reviews
+
+        create :complete_review, subject: me, author_name: 'Momotaro'
+        visit token_url(token)
+
+        expect_no_back_link
+        expect_page_header 'SCS 360° Appraisals'
+        expect_tabs
+        expect_page_subheader 'All your feedback'
+      end
+
+      scenario 'Visiting dashboard for direct reports', closed_review_period: true do
+        # /results/users
+
+        visit token_url(token)
+        click_link 'Your direct reports'
+
+        expect_no_back_link
+        expect_page_header 'SCS 360° Appraisals'
+        expect_tabs
+        expect_page_subheader 'Feedback for your direct reports'
+      end
+
+      scenario 'Viewing reviews for a direct report', closed_review_period: true do
+        # /results/users/[n]/reviews
+
+        create :complete_review, subject: direct_report, author_name: 'Momotaro'
+        visit token_url(token)
+        click_link 'Your direct reports'
+        click_link 'Charlie'
+
+        expect_back_link '/results/users'
+        expect_page_header 'All feedback for Charlie'
+        expect_no_tabs
+      end
+    end
   end
 
   def expect_back_link(path)

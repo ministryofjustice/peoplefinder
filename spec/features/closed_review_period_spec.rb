@@ -36,7 +36,8 @@ feature 'Closed review period', closed_review_period: true do
     expect(page).to have_text('All feedback for Charlie')
     expect(page).to have_text('Elena WE WORK')
 
-    click_link('Your feedback')
+    click_first_link('Return to dashboard')
+    click_first_link('Your feedback')
     check_my_feedback_from_danny_boy
   end
 

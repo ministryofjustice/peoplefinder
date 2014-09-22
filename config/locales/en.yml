@@ -256,8 +256,10 @@ en:
           action: 'Action'
     results:
       feedback_title:
-        mine: 'All your feedback'
+        mine: 'SCS 360° Appraisals'
         theirs: 'All feedback for %{name}'
+      feedback_subtitle:
+        mine: 'All your feedback'
       direct_reports_title: 'Feedback for your direct reports'
     reviews:
       return_to_dashboard: 'Dashboard'

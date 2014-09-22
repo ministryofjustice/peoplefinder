@@ -8,6 +8,7 @@ module Results
 
     def index
       @review_aggregator = ReviewAggregator.new(scope.reviews)
+      suppress_tabs if explicit_subject?
     end
 
   private
@@ -20,8 +21,13 @@ module Results
       @subject || current_user
     end
 
+    def explicit_subject?
+      params[:user_id].present?
+    end
+    helper_method :explicit_subject?
+
     def load_explicit_subject
-      if params[:user_id]
+      if explicit_subject?
         @subject = current_user.direct_reports.find(params[:user_id])
       end
       true
