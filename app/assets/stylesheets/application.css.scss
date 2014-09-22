@@ -19,11 +19,19 @@ input[type="radio"] {
   -webkit-appearance: radio
 }
 
+#content .inner-block {
+  position: relative;
+}
 .top-left {
   margin-top: 15px;
   a {
     text-decoration: none;
   }
+}
+.top-right {
+  position: absolute;
+  top: 0;
+  right: 0;
 }
 
 h1 {
@@ -264,9 +272,15 @@ hr.more-space {
   padding: 8px 0;
 }
 
+.autosave-status {
+  color: #6f777b;
+}
+
 .action-row div.autosave-status {
   float: right;
-  color: #6f777b;
+}
+.top-right .autosave-status {
+  text-align: right;
 }
 
 .autosave-status .indicator {

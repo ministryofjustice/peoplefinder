@@ -1,6 +1,12 @@
 - content_for :back_link do
   = link_to t('submissions.return_to_dashboard'), replies_path
 
+- content_for :top_right do
+  %div.autosave-status
+    %span.saving.indicator= t('submissions.autosave.saving')
+    %span.saved.indicator= t('submissions.autosave.saved')
+    %span.failed.indicator= t('submissions.autosave.failed')
+
 - content_for :page_title do
   = t('submissions.title', name: @submission.subject_name)
 

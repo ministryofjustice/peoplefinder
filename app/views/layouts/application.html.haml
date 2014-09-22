@@ -9,6 +9,7 @@
       = flash_messages
       .inner-block
         .top-left= yield :back_link
+        .top-right= yield :top_right
         %h1= content_for?(:page_title) ? yield(:page_title) : app_name
         = render partial: 'shared/tab_navigation' if show_tabs?
         = yield
