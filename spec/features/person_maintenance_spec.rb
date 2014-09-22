@@ -142,7 +142,7 @@ feature "Person maintenance" do
   end
 
   context 'Viewing another person\'s profile' do
-    let(:person) { create(:person) }
+    let(:person) { create(:person, email: 'someone.else@digital.justice.gov.uk') }
 
     scenario 'when it is complete' do
       complete_profile!(person)
@@ -150,9 +150,17 @@ feature "Person maintenance" do
       expect(page).not_to have_text('Profile completeness')
     end
 
-    scenario 'when it is incomplete' do
+    scenario 'when it is incomplete and there is no email address' do
+      person.update_attributes email: nil
       visit person_path(person)
       expect(page).not_to have_text('Profile completeness')
+      expect(page).not_to have_link('Request completion')
+    end
+
+    scenario 'when it is incomplete, I request more information' do
+      visit person_path(person)
+      expect(page).not_to have_text('Profile completeness')
+      expect(page).to have_link('Request completion')
     end
   end
 
