@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-ruby '2.1.1'
+ruby '2.1.2'
 gem 'rails', '~> 4.1.5'
 
 gem 'ancestry'
@@ -32,6 +32,7 @@ gem 'uglifier', '>= 1.3.0'
 gem 'unicorn', '~> 4.8.3'
 gem 'will_paginate', '~> 3.0'
 gem 'rack-timeout'
+
 
 group :development do
   gem 'spring'
