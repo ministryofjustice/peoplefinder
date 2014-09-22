@@ -27,7 +27,8 @@ module SCSAppraisals
     config.app_title = 'SCS Feedback'
 
     config.phase = 'alpha'
-    config.feedback_url = '#' # TODO: set me
+    config.feedback_url =
+      'mailto:scs-appraisals-feedback@digital.justice.gov.uk'
 
     config.valid_login_domains = %w[
       digital.justice.gov.uk
