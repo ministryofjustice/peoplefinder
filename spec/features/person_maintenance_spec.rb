@@ -169,8 +169,12 @@ feature "Person maintenance" do
       end
 
       fill_in 'information_request_message', with: 'Hello Bob'
-      click_button('Submit')
+      expect { click_button 'Submit' }.to change { ActionMailer::Base.deliveries.count }.by(1)
 
+      expect(last_email).to have_text('Hello Bob')
+      expect(last_email.to).to include(person.email)
+      expect(last_email.subject).to eql('Request to update your People Finder profile')
+      check_email_has_token_link_to(person)
       expect(page).to have_text("Your message has been sent to #{ person.name }")
     end
   end
