@@ -33,6 +33,7 @@ gem 'unicorn', '~> 4.8.3'
 gem 'will_paginate', '~> 3.0'
 gem 'rack-timeout'
 
+gem 'newrelic_rpm'
 
 group :development do
   gem 'spring'

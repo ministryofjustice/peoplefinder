@@ -202,6 +202,7 @@ GEM
     net-scp (1.2.1)
       net-ssh (>= 2.6.5)
     net-ssh (2.9.1)
+    newrelic_rpm (3.9.4.245)
     nokogiri (1.6.3.1)
       mini_portile (= 0.6.0)
     oauth2 (1.0.0)
@@ -396,6 +397,7 @@ DEPENDENCIES
   mini_magick
   minitest
   moj_internal_template!
+  newrelic_rpm
   omniauth-gplus!
   paper_trail (~> 3.0.5)
   pg
