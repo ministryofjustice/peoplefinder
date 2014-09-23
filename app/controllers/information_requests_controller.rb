@@ -4,9 +4,9 @@ class InformationRequestsController < ApplicationController
   def new
     @information_request = InformationRequest.new(
       recipient: @person,
-      message: "Hello #{ @person }
-                \nI would like you to update your People Finder profile.
-                \nThanks,\n#{current_user}"
+      message: I18n.t('controllers.information_requests.default_message',
+        recipient: @person,
+        sender: current_user)
       )
   end
 

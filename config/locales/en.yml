@@ -30,6 +30,7 @@ en:
     home:
       top_level_group_needed: "To use the People Finder, first create a top-level group (without a parent)"
     information_requests:
+      default_message: "Hello %{recipient}\n\nI would like you to update your People Finder profile.\n\nThanks,\n%{sender}"
       message_sent: "Your message has been sent to %{person}"
     memberships:
       member_removed: "Removed %{person} from %{group}"
