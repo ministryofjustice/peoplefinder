@@ -6,7 +6,7 @@ class InformationRequestsController < ApplicationController
       recipient: @person,
       message: I18n.t('controllers.information_requests.default_message',
         recipient: @person,
-        sender: (current_person || current_user))
+        sender: current_user)
       )
   end
 

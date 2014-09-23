@@ -33,6 +33,13 @@ feature 'Token Authentication' do
     expect(page).to have_text("Logged in as #{ token.user_email }")
   end
 
+  scenario 'logging in when I already have a profile' do
+    person = create(:person, surname: 'Bob', email: 'test.user@digital.justice.gov.uk')
+    token = Token.for_person(person)
+    visit token_path(token)
+    expect(page).to have_text("Logged in as Bob")
+  end
+
   scenario 'following a link from an inadequate profile email' do
     person = create(:person, email: 'test.user@digital.justice.gov.uk')
     ReminderMailer.inadequate_profile(person).deliver
