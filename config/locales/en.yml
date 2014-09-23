@@ -103,6 +103,7 @@ en:
       photo_upload_hint: "Add or replace a photograph by clicking 'Choose file'."
       photo_size_hint: "Please make sure the photo is no more than 3MB in size."
       profile_deletable: "Note that deleting a profile cannot be undone"
-      request_information: "If you require information that is not present<br/>you can ask the person to complete it."
+      request_information: "Is this profile complete?"
+      request_information_link: "Ask the person to update their details"
       team_deletable: "Note that team deletion cannot be undone."
       team_not_deletable: "Team deletion is only possible if there are no people associated with it."

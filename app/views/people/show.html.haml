@@ -37,7 +37,10 @@
       %p= link_to 'complete your profile', edit_person_path(@person)
 
   - else
-    .complete-their-profile
+    .spacer-55
+    %hr
+    .spacer-10
+    %p
       = info_text('request_information')
-
-    = link_to 'Request completion', new_person_information_request_path(@person)
+      <br/>
+      = link_to info_text('request_information_link'), new_person_information_request_path(@person)

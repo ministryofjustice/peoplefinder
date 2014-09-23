@@ -154,14 +154,14 @@ feature "Person maintenance" do
       person.update_attributes email: nil
       visit person_path(person)
       expect(page).not_to have_text('Profile completeness')
-      expect(page).not_to have_link('Request completion')
+      expect(page).not_to have_link('Ask the person to update their details')
     end
 
     scenario 'when it is incomplete, I request more information' do
       visit person_path(person)
       expect(page).not_to have_text('Profile completeness')
 
-      click_link('Request completion')
+      click_link('Ask the person to update their details')
       expect(page).to have_link('Cancel', person_path(person))
 
       within('h1') do
