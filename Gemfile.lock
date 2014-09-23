@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/ministryofjustice/moj_internal_template.git
-  revision: cac59c5d420ee0586fa3c1e157b72c6023e80ec7
+  revision: f8e9712834bc46b13ac0e2c0b6763cf15c6c1c94
   branch: master
   specs:
     moj_internal_template (0.1.0)
