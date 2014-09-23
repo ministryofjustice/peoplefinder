@@ -3,8 +3,8 @@
 
 = simple_form_for @information_request, url: person_information_requests_path(@person) do |f|
 
-  .form-group{ class: ('gov-uk-field-error' if @information_request.errors.any?) }
-    = f.input :message, label: info_text('information_request_label'),
+  .form-group{ class: ('gov-uk-field-error' if @errors = @information_request.errors.any?) }
+    = f.input :message, label: info_text("information_request_label#{ '_error' if @errors }"),
                         error: false, required: false
 
   .form-group
