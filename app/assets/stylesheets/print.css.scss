@@ -5,17 +5,27 @@
   .top-left,
   .bottom-left,
   ul#tab_navigation,
+  .footer-wrapper,
+  .print-button,
   #global-header {
-    color: red;
     display: none;
+  }
+
+  hr {
+    border: none;
   }
 
   .rating-view,
   .rating-view.rating-1,
   .rating-view.rating-2,
   .rating-view.rating-3,
-  .rating-view.rating-4 {
+  .rating-view.rating-4,
+  .review-aggregation dt,
+  .review-aggregation dd {
     background-color: white;
-    border: 1px solid black;
+    border: 1pt solid black;
+  }
+  .review-aggregation dd {
+    border-left: none;
   }
 }
