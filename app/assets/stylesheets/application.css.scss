@@ -16,7 +16,10 @@ $grey-border: #BFC1C3;
 }
 
 input[type="radio"] {
-  -webkit-appearance: radio
+  -webkit-appearance: radio;
+}
+input.form-control[type="select"] {
+  -webkit-appearance: menulist;
 }
 
 #content .inner-block {
