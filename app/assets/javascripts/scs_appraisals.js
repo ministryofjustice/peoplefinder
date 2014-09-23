@@ -1,5 +1,5 @@
 //= require environment
-/* global $, config */
+/* global window, $, config */
 $(function() {
   $('form.edit_invitation input').on('change', function() {
     var isDeclined = $(this.form).find('input:checked').val() === 'declined';
@@ -54,4 +54,6 @@ $(function() {
     });
 
   refreshRadioStyles();
+
+  $('.print-button').on('click', function() { window.print(); });
 });
