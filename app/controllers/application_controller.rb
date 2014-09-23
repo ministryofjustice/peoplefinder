@@ -15,6 +15,13 @@ private
   end
   helper_method :current_user
 
+  def current_person
+    if logged_in?
+      Person.where(email: current_user.email).first
+    end
+  end
+  helper_method :current_person
+
   def logged_in?
     current_user.present?
   end
