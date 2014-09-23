@@ -165,7 +165,7 @@ feature "Person maintenance" do
       expect(page).to have_link('Cancel', person_path(person))
 
       within('h1') do
-        expect(page).to have_text(person.name)
+        expect(page).to have_text('Request profile update')
       end
 
       fill_in 'information_request_message', with: 'Hello Bob'
