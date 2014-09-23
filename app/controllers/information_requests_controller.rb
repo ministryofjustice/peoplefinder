@@ -2,7 +2,12 @@ class InformationRequestsController < ApplicationController
   before_action :set_recipient
 
   def new
-    @information_request = InformationRequest.new(recipient: @person)
+    @information_request = InformationRequest.new(
+      recipient: @person,
+      message: "Hello #{ @person }
+                \nI would like you to update your People Finder profile.
+                \nThanks,\n#{current_user}"
+      )
   end
 
   def create
