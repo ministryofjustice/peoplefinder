@@ -1,8 +1,8 @@
 module SpecSupport
   module Login
     def mock_logged_in_user
-      controller.session[:current_user] =
-        User.new('test.user@digital.moj.gov.uk')
+      controller.session[:current_user_id] =
+        create(:person, email: 'test.user@digital.moj.gov.uk').id
     end
 
     def omni_auth_log_in_as(email)

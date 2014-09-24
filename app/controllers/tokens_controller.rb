@@ -15,11 +15,10 @@ class TokensController < ApplicationController
   def show
     token = Token.where(value: params[:id]).first
     return forbidden unless token
-    user = User.from_token(token)
 
-    session['current_user'] = user
-
-    if user
+    person = Person.from_token(token)
+    if person
+      session['current_user_id'] = person.id
       flash[:notice] = 'Successfully logged in.'
       redirect_to_desired_path
     else

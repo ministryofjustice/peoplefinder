@@ -2,9 +2,9 @@ class SessionsController < ApplicationController
   skip_before_action :ensure_user
 
   def create
-    user = User.from_auth_hash(auth_hash)
-    session['current_user'] = user
-    if user
+    person = Person.from_auth_hash(auth_hash)
+    if person
+      session['current_user_id'] = person.id
       redirect_to_desired_path
     else
       render :failed
@@ -15,7 +15,7 @@ class SessionsController < ApplicationController
   end
 
   def destroy
-    session['current_user'] = nil
+    session['current_user_id'] = nil
     redirect_to '/'
   end
 

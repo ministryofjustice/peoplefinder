@@ -11,7 +11,12 @@ private
   end
 
   def current_user
-    session['current_user']
+    @current_user ||=
+      if session['current_user_id'].present?
+        Person.find(session['current_user_id'])
+      else
+        false
+      end
   end
   helper_method :current_user
 
