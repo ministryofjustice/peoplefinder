@@ -14,6 +14,35 @@ For email to work, certain environment variables must be set:
 For local development, you can use a `.env` file; see `.env.sample` for an
 example.
 
+## Setting it up for development
+
+Create users and their management relationships. This is achieved by
+importing a CSV file using the `UsersImporter` or by creating `User` records:
+
+```ruby
+a = User.create(
+  name: 'name', email: 'user@example.com', participant: true
+)
+b = User.create(
+  name: 'name', email: 'user@example.com', participant: true, manager: a
+)
+```
+
+Start the review process:
+
+```ruby
+ReviewPeriod.new.send_introductions
+```
+
+In development, you can see the emails in the logs. Follow the `/go/` link to
+be logged in as that user.
+
+You can also generate a login link later on by:
+
+```ruby
+path = "/go/#{user.tokens.first.value}"
+```
+
 ## Opening the review period
 
 Set the review process to open via the environment variable:
