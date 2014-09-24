@@ -14,25 +14,34 @@ For email to work, certain environment variables must be set:
 For local development, you can use a `.env` file; see `.env.sample` for an
 example.
 
-## Setting it up for development
+## Initial setup
 
-Create users and their management relationships. This is achieved by
-importing a CSV file using the `UsersImporter` or by creating `User` records:
+First, create users and their management relationships. This is achieved by
+importing a CSV file. A short CSV containing the demo users is included as
+`demo.csv`:
 
-```ruby
-a = User.create(
-  name: 'name', email: 'user@example.com', participant: true
-)
-b = User.create(
-  name: 'name', email: 'user@example.com', participant: true, manager: a
-)
+```sh
+./bin/import_users demo.csv
 ```
 
-Start the review process:
+Sending introduction emails is explained in the next section.
+
+## Opening the review period
+
+Set the review process to open via the `REVIEW_PERIOD` environment variable:
+
+```sh
+REVIEW_PERIOD=OPEN
+```
+
+Next, start the review process:
 
 ```ruby
 ReviewPeriod.new.send_introductions
 ```
+
+This will send introduction emails containing login links to all the users
+created in the previous step.
 
 In development, you can see the emails in the logs. Follow the `/go/` link to
 be logged in as that user.
@@ -41,20 +50,6 @@ You can also generate a login link later on by:
 
 ```ruby
 path = "/go/#{user.tokens.first.value}"
-```
-
-## Opening the review period
-
-Set the review process to open via the environment variable:
-
-```sh
-REVIEW_PERIOD=OPEN
-```
-
-You can send introduction emails to all users in the system:
-
-```ruby
-ReviewPeriod.new.send_introductions
 ```
 
 ## Closing the review period
