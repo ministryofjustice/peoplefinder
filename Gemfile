@@ -34,6 +34,7 @@ gem 'will_paginate', '~> 3.0'
 gem 'rack-timeout'
 
 gem 'newrelic_rpm'
+gem 'unf'
 
 group :development do
   gem 'spring'
