@@ -17,4 +17,20 @@ class EmailAddress < Mail::Address
   def valid_address?
     address ? (valid_format? && valid_domain?) : false
   end
+
+  def inferred_last_name
+    if multipart_local?
+      local.split('.')[1]
+    else
+      local.split('.')[0]
+    end
+  end
+
+  def inferred_first_name
+    local.split('.')[0] if multipart_local?
+  end
+
+  def multipart_local?
+    local.split('.').length > 1
+  end
 end

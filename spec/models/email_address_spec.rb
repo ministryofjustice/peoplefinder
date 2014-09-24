@@ -50,4 +50,29 @@ RSpec.describe EmailAddress do
       expect(described_class.new("me@#{ Rails.configuration.valid_login_domains.first }")).to be_valid_address
     end
   end
+
+  context 'name inferral' do
+    let(:email_john_smith) { described_class.new('john.smith.1@example.com') }
+    let(:email_smithy) { described_class.new('smithy@example.com') }
+
+    describe '.inferred_given_name' do
+      it 'returns john.smith' do
+        expect(email_john_smith.inferred_first_name).to eql('john')
+      end
+
+      it 'returns nil' do
+        expect(email_smithy.inferred_first_name).to be_nil
+      end
+    end
+
+    describe '.inferred_last_name' do
+      it 'returns smith' do
+        expect(email_john_smith.inferred_last_name).to eql('smith')
+      end
+
+      it 'returns smithy' do
+        expect(email_smithy.inferred_last_name).to eql('smithy')
+      end
+    end
+  end
 end
