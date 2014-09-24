@@ -4,6 +4,7 @@ class Person < ActiveRecord::Base
   include Completion
   include Notifications
   include WorkDays
+  include Authentication
 
   has_paper_trail ignore: [:updated_at, :created_at, :id, :slug]
   mount_uploader :image, ImageUploader
