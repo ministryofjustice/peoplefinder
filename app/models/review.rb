@@ -6,8 +6,8 @@ class Review < ActiveRecord::Base
   REMINDABLE_STATUSES = %i[ no_response accepted started ]
   RELATIONSHIPS = %i[ peer line_manager direct_report supplier customer ]
 
-  SECTION_1_RATING_FIELDS = (1 .. 4).map { |i| :"rating_#{i}" }
-  SECTION_2_RATING_FIELDS = (5 .. 11).map { |i| :"rating_#{i}" }
+  SECTION_1_RATING_FIELDS = (1..4).map { |i| :"rating_#{i}" }
+  SECTION_2_RATING_FIELDS = (5..11).map { |i| :"rating_#{i}" }
   RATING_FIELDS = SECTION_1_RATING_FIELDS + SECTION_2_RATING_FIELDS
 
   REQUIRED_FIELDS =
