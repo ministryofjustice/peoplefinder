@@ -40,4 +40,9 @@ Rails.application.configure do
   config.action_mailer.default_url_options = {
     host: 'www.example.com'
   }
+
+  config.valid_login_domains = %w[
+    digital.justice.gov.uk
+    digital.cabinet-office.gov.uk
+  ]
 end
