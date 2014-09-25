@@ -3,6 +3,7 @@ AllCops:
   # rails_helper is excluded because it's full of solecisms, but it's mostly
   # generated code and copy-and-pasted snipets from READMEs.
   Exclude:
+    - 'Guardfile'
     - 'vendor/**/*'
     - 'db/**/*'
     - 'bin/**/*'
