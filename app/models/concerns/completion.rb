@@ -13,6 +13,14 @@ module Completion
       :groups
     ]
 
+    def completion_score_fields
+      fields = COMPLETION_SCORE_FIELDS
+      if no_phone
+        fields -= [:primary_phone_number, :secondary_phone_number]
+      end
+      fields
+    end
+
     scope :inadequate_profiles,
       lambda { where("
         COALESCE(image,'') = ''
@@ -24,8 +32,8 @@ module Completion
       }
 
     def completion_score
-      completed = COMPLETION_SCORE_FIELDS.map { |f| send(f).present? }
-      (100 * completed.select { |f| f }.length) / COMPLETION_SCORE_FIELDS.length
+      completed = completion_score_fields.map { |f| send(f).present? }
+      (100 * completed.select { |f| f }.length) / completion_score_fields.length
     end
 
     def incomplete?

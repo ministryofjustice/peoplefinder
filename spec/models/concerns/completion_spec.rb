@@ -20,11 +20,22 @@ RSpec.describe 'Completion' do # rubocop:disable RSpec/DescribeClass
       expect(person).to be_incomplete
     end
 
-    it 'returns 100 if all fields are filled' do
-      person = Person.new(completed_attributes)
-      person.groups << build(:group)
-      expect(person.completion_score).to eql(100)
-      expect(person).not_to be_incomplete
+    context 'when all the fields are completed' do
+      let(:person) { Person.new(completed_attributes) }
+      before { person.groups << build(:group)  }
+
+      it 'returns 100' do
+        expect(person.completion_score).to eql(100)
+        expect(person).not_to be_incomplete
+      end
+
+      context 'and no_phone = true' do
+        it 'returns 100 even if the primary_phone_number is blank' do
+          person.no_phone = true
+          person.primary_phone_number = nil
+          expect(person.completion_score).to eql(100)
+        end
+      end
     end
   end
 
@@ -39,6 +50,13 @@ RSpec.describe 'Completion' do # rubocop:disable RSpec/DescribeClass
     it 'returns the person when there is neither phone nor secondary number' do
       Person.update_all 'primary_phone_number = \'\', secondary_phone_number = null'
       expect(subject).to include(person)
+    end
+
+    context 'with no_phone = true' do
+      it 'does not return the person even if there is no  primary_phone_number' do
+        Person.update_all 'primary_phone_number = null, no_phone = true'
+        expect(subject).not_to include(person)
+      end
     end
 
     it 'returns the person when there is no location' do
