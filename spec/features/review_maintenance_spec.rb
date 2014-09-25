@@ -68,7 +68,7 @@ feature 'Review maintenance' do
   end
 
   scenario 'See feedback completed for me' do
-    review = create(:review, submitted_review_attributes.merge(subject: me))
+    review = create(:complete_review, author_name: 'Danny Boy', subject: me)
     visit reviews_path
 
     click_link 'View feedback'
@@ -82,7 +82,7 @@ feature 'Review maintenance' do
 
   scenario 'See feedback completed for my direct report' do
     direct_report = create(:user, manager: me, name: 'Marvin Managee')
-    review = create(:review, submitted_review_attributes.merge(subject: direct_report))
+    review = create(:complete_review, author_name: 'Danny Boy', subject: direct_report)
 
     visit users_path
 
@@ -101,7 +101,7 @@ feature 'Review maintenance' do
 
   scenario 'See the list of my direct reports' do
     direct_report = create(:user, manager: me, name: 'Marvin Managee')
-    create(:review, submitted_review_attributes.merge(subject: direct_report))
+    create(:complete_review, author_name: 'Danny Boy', subject: direct_report)
     create(:review, subject: direct_report)
 
     visit users_path
@@ -139,13 +139,5 @@ feature 'Review maintenance' do
     expect(mail.body.encoded).to match(review.invitation_message)
     link = links_in_email(mail).first
     expect(link).to eql(token_url(review.tokens.last))
-  end
-
-  def submitted_review_attributes
-    {
-      author_name: 'Danny Boy',
-      rating_1: 3,
-      status: :submitted
-    }
   end
 end

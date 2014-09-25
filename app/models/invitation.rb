@@ -1,4 +1,4 @@
-class Invitation < Reply
+class Invitation < Review
   include TranslatedErrors
 
   default_scope { where(status: [:no_response, :declined]) }

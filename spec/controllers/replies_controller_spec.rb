@@ -2,7 +2,7 @@ require 'rails_helper'
 RSpec.describe RepliesController, type: :controller do
 
   let(:author) { create(:user) }
-  let!(:reply) { create(:reply, author: author) }
+  let!(:reply) { create(:review, author: author) }
   describe 'GET index' do
     context 'with an authenticated sesssion' do
       before { authenticate_as(author) }

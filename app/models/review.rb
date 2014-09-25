@@ -10,6 +10,14 @@ class Review < ActiveRecord::Base
   SECTION_2_RATING_FIELDS = (5 .. 11).map { |i| :"rating_#{i}" }
   RATING_FIELDS = SECTION_1_RATING_FIELDS + SECTION_2_RATING_FIELDS
 
+  REQUIRED_FIELDS =
+    SECTION_1_RATING_FIELDS + SECTION_2_RATING_FIELDS +
+    %i[ leadership_comments how_we_work_comments ]
+
+  REQUIRED_FIELDS.each do |field|
+    validates field, presence: true, if: ->(a) { a.status == :submitted }
+  end
+
   belongs_to :subject, -> { where participant: true }, class_name: 'User'
   belongs_to :author, class_name: 'User', foreign_key: 'author_email',
                       primary_key: 'email'
@@ -28,6 +36,7 @@ class Review < ActiveRecord::Base
   validate :subject_is_participant
 
   scope :submitted, -> { where(status: :submitted) }
+  scope :editable, -> { where(status: [:accepted, :started]) }
 
   after_initialize :prefill_invitation_message
 

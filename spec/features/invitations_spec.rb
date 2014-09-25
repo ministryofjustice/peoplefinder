@@ -8,7 +8,7 @@ feature 'Invitations' do
     choose 'Accept'
     click_button 'Update'
 
-    expect(Reply.last.status).to eql(:accepted)
+    expect(Review.last.status).to eql(:accepted)
     expect(page).to have_text('Thank you for accepting the invitation')
   end
 
@@ -19,8 +19,8 @@ feature 'Invitations' do
     fill_in 'Reason for declining', with: 'Some stuff'
     click_button 'Update'
 
-    expect(Reply.last.reason_declined).to eql('Some stuff')
-    expect(Reply.last.status).to eql(:declined)
+    expect(Review.last.reason_declined).to eql('Some stuff')
+    expect(Review.last.status).to eql(:declined)
   end
 
   scenario 'Decline a feedback request and email subject of declined status with reason' do
@@ -32,13 +32,13 @@ feature 'Invitations' do
     click_button 'Update'
 
     expect(last_email.subject).to eql('Request for feedback has been declined')
-    expect(last_email.to.first).to eql(Reply.last.subject.email)
-    expect(last_email).to have_text("#{ Reply.last.author_name } has declined")
+    expect(last_email.to.first).to eql(Review.last.subject.email)
+    expect(last_email).to have_text("#{ Review.last.author_name } has declined")
     expect(email_contains(last_email, reason)).to include(reason)
 
     visit(links_in_email(last_email).first)
     within('#log-in-out') do
-      expect(page).to have_text(Reply.last.subject.email)
+      expect(page).to have_text(Review.last.subject.email)
     end
   end
 
@@ -50,8 +50,8 @@ feature 'Invitations' do
     click_button 'Update'
 
     expect(page).to have_text 'A reason is required when rejecting an invitation'
-    expect(Reply.last.reason_declined).to be_blank
-    expect(Reply.last.status).to eql(:no_response)
+    expect(Review.last.reason_declined).to be_blank
+    expect(Review.last.status).to eql(:no_response)
   end
 
   scenario 'Toggle display of the decline reason field', js: true do
@@ -66,12 +66,12 @@ feature 'Invitations' do
 
   scenario 'Accept a previously declined feedback request' do
     visit token_url(build_token(:declined))
-    Reply.last.update_attributes(reason_declined: 'Wrong button')
+    Review.last.update_attributes(reason_declined: 'Wrong button')
 
     click_button 'Accept request'
 
-    expect(Reply.last.reason_declined).to be_empty
-    expect(Reply.last.status).to eql(:accepted)
+    expect(Review.last.reason_declined).to be_empty
+    expect(Review.last.status).to eql(:accepted)
   end
 
   def build_token(status)

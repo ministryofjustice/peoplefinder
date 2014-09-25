@@ -9,15 +9,12 @@ feature 'Review status' do
   end
 
   scenario 'viewing the status of my feedback' do
-    create :review,
-      subject: me, author_name: 'Foxtrot', status: :no_response,
-      relationship: :peer
-    create :review,
-      subject: me, author_name: 'Golf', status: :started,
-      relationship: :supplier
-    create :review,
-      subject: me, author_name: 'Hotel', status: :submitted,
-      relationship: :customer
+    create :no_response_review,
+      subject: me, author_name: 'Foxtrot', relationship: :peer
+    create :started_review,
+      subject: me, author_name: 'Golf', relationship: :supplier
+    create :complete_review,
+      subject: me, author_name: 'Hotel', relationship: :customer
 
     visit reviews_path
 
@@ -29,15 +26,12 @@ feature 'Review status' do
   scenario "viewing the status of my direct reports' feedback" do
     direct_report = create(:user, name: 'Joe Worker', manager: me)
 
-    create :review,
-      subject: direct_report, author_name: 'Foxtrot', status: :no_response,
-      relationship: :peer
-    create :review,
-      subject: direct_report, author_name: 'Golf', status: :started,
-      relationship: :supplier
-    create :review,
-      subject: direct_report, author_name: 'Hotel', status: :submitted,
-      relationship: :customer
+    create :no_response_review,
+      subject: direct_report, author_name: 'Foxtrot', relationship: :peer
+    create :started_review,
+      subject: direct_report, author_name: 'Golf', relationship: :supplier
+    create :complete_review,
+      subject: direct_report, author_name: 'Hotel', relationship: :customer
 
     visit users_path
     click_link direct_report.name
