@@ -12,6 +12,8 @@ AllCops:
     - 'config/initializers/simple_form.rb'
     - 'config/unicorn.rb'
     - 'spec/rails_helper.rb'
+    - 'lib/tasks/brakeman.rake'
+    - 'lib/tasks/elasticsearch.rake'
   RunRailsCops: true
 
 # private/protected/public
@@ -43,12 +45,12 @@ Style/GuardClause:
 
 # Allow long lines in specs, as it's almost impossible to fit RSpec's
 # expectations into 80 characters.
-Style/LineLength:
+Metrics/LineLength:
   Exclude:
     - 'spec/**/*'
 
 # Don't worry about long methods in specs.
-Style/MethodLength:
+Metrics/MethodLength:
   Exclude:
     - 'spec/**/*'
 

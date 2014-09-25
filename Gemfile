@@ -44,7 +44,6 @@ end
 
 group :development, :test do
   gem 'dotenv-rails'
-  gem 'guard-rspec', require: false
   gem 'jshint',
     git: 'https://github.com/threedaymonk/jshint.git',
     branch: 'master'

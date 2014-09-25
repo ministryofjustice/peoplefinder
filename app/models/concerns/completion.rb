@@ -23,13 +23,14 @@ module Completion
     end
 
     scope :inadequate_profiles,
-      lambda { where("
-        COALESCE(image,'') = ''
-        OR COALESCE(location,'') = ''
-        OR COALESCE(
-          primary_phone_number, secondary_phone_number,''
-        ) = ''
-      ").order(:email)
+      lambda {
+        where("
+          COALESCE(image,'') = ''
+          OR COALESCE(location,'') = ''
+          OR COALESCE(
+            primary_phone_number, secondary_phone_number,''
+          ) = ''"
+        ).order(:email)
       }
 
     def completion_score

@@ -11,15 +11,13 @@ module Searchable
       __elasticsearch__.delete_index! index: Person.index_name
     end
 
-    def self.fuzzy_search(query) # rubocop:disable Style/MethodLength
+    def self.fuzzy_search(query)
       search(
         size: 100,
         query: {
           fuzzy_like_this: {
             fields: [:name, :description, :location, :role_and_group],
-            like_text: query,
-            prefix_length: 3,
-            ignore_tf: true
+            like_text: query, prefix_length: 3, ignore_tf: true
           }
         }
       )
