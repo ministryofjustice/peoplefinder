@@ -72,13 +72,6 @@ FactoryGirl.define do
     end
   end
 
-  factory :reply do
-    subject
-    author
-    author_name { generate(:name) }
-    relationship :peer
-  end
-
   factory :invitation do
     subject
     author
@@ -86,5 +79,4 @@ FactoryGirl.define do
     relationship :peer
     status :no_response
   end
-
 end
