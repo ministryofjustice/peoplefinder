@@ -34,9 +34,14 @@ class Review < ActiveRecord::Base
     inclusion: { in: RELATIONSHIPS },
     if: ->(a) { a.relationship.present? }
   validate :subject_is_participant
+  validates :reason_declined,
+    length: { maximum: 300 },
+    presence: true,
+    if: ->(a) { a.status == :declined }
 
   scope :submitted, -> { where(status: :submitted) }
   scope :editable, -> { where(status: [:accepted, :started]) }
+  scope :invited, -> { where(status: [:no_response, :declined]) }
 
   after_initialize :prefill_invitation_message
 

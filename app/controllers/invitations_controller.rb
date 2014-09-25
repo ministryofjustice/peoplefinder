@@ -22,6 +22,6 @@ private
   end
 
   def scope
-    current_user.invitations
+    current_user.invitations.invited
   end
 end

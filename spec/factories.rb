@@ -41,8 +41,9 @@ FactoryGirl.define do
       status :no_response
     end
 
-    factory :rejected_review do
-      status :rejected
+    factory :declined_review do
+      status :declined
+      reason_declined 'Just because'
     end
 
     factory :accepted_review do

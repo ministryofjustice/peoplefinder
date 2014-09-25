@@ -4,7 +4,7 @@ RSpec.describe Invitation do
   describe '.communicate_change' do
     it 'sends appropriate messaging should an invitation be declined' do
       invitation = create(:invitation)
-      invitation.update!(status: :declined)
+      invitation.update!(status: :declined, reason_declined: 'because')
     end
   end
 
@@ -35,33 +35,6 @@ RSpec.describe Invitation do
       invitation = create(:invitation)
       expect { invitation.change_state(:declined.to_s, 'Too busy listening to music') }.to change { ActionMailer::Base.deliveries.count }.by(1)
     end
-  end
-
-  describe '.valid_status?' do
-    it 'returns true for a recognized status' do
-      invitation = create(:invitation)
-      invitation.status = :good_news_everyone
-      expect(invitation.valid_status?).to be_falsey
-
-      invitation.status = :accepted
-      expect(invitation.valid_status?).to be_truthy
-    end
-  end
-
-  describe '.valid_reason?' do
-    let(:invitation) { create(:invitation) }
-    it 'returns true if the reason is empty and the state is not declined' do
-      invitation.reason_declined = nil
-      invitation.status = :accepted
-      expect(invitation.valid_reason?).to be_truthy
-    end
-
-    it 'returns false if the reason is empty and the state is blank' do
-      invitation.reason_declined = ''
-      invitation.status = :declined
-      expect(invitation.valid_reason?).to be_falsey
-    end
-
   end
 
   describe '.declined?' do
