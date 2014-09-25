@@ -10,7 +10,8 @@ module Completion
       :secondary_phone_number,
       :location,
       :description,
-      :groups
+      :groups,
+      :image
     ]
 
     def completion_score_fields

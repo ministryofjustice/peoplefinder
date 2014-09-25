@@ -9,14 +9,14 @@ RSpec.describe 'Completion' do # rubocop:disable RSpec/DescribeClass
       expect(person).to be_incomplete
     end
 
-    it 'returns 50 if half the fields are filled' do
+    it 'returns 44 if the fields are partially filled' do
       person = Person.new(
         given_name: 'Bobby',
         surname: 'Tables',
         email: 'user.example@digital.justice.gov.uk',
         primary_phone_number: '020 7946 0123'
       )
-      expect(person.completion_score).to eql(50)
+      expect(person.completion_score).to eql(44)
       expect(person).to be_incomplete
     end
 

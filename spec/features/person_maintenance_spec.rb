@@ -214,7 +214,8 @@ def person_attributes
     primary_phone_number: '+44-208-123-4567',
     secondary_phone_number: '07777777777',
     location: 'MOJ / Petty France / London',
-    description: 'Lorem ipsum dolor sit amet...'
+    description: 'Lorem ipsum dolor sit amet...',
+    image: Rack::Test::UploadedFile.new(sample_image)
   }
 end
 
