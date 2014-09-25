@@ -3,7 +3,7 @@ require 'rails_helper'
 feature 'Closed review period', closed_review_period: true do
   let(:me) { create(:user) }
   let!(:review) do
-    create(:complete_review,
+    create(:submitted_review,
       subject: me,
       author_name: 'Danny Boy',
       leadership_comments: 'IS A LEADER'
@@ -21,7 +21,7 @@ feature 'Closed review period', closed_review_period: true do
   scenario 'As a manager with direct reports who has received feedback' do
     me.update_attributes(manager: create(:user))
     charlie = create(:user, name: 'Charlie', manager: me)
-    create(:complete_review,
+    create(:submitted_review,
       subject: charlie,
       author_name: 'Elena',
       how_we_work_comments: 'WE WORK'

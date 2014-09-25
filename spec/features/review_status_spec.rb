@@ -13,7 +13,7 @@ feature 'Review status' do
       subject: me, author_name: 'Foxtrot', relationship: :peer
     create :started_review,
       subject: me, author_name: 'Golf', relationship: :supplier
-    create :complete_review,
+    create :submitted_review,
       subject: me, author_name: 'Hotel', relationship: :customer
 
     visit reviews_path
@@ -30,7 +30,7 @@ feature 'Review status' do
       subject: direct_report, author_name: 'Foxtrot', relationship: :peer
     create :started_review,
       subject: direct_report, author_name: 'Golf', relationship: :supplier
-    create :complete_review,
+    create :submitted_review,
       subject: direct_report, author_name: 'Hotel', relationship: :customer
 
     visit users_path

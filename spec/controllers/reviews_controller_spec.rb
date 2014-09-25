@@ -152,7 +152,7 @@ RSpec.describe ReviewsController, type: :controller do
 
     describe 'as the subject of the review' do
       describe 'with a review that has been submitted' do
-        let(:review) { create(:complete_review, subject: me) }
+        let(:review) { create(:submitted_review, subject: me) }
 
         before do
           get :show, id: review.to_param
@@ -182,7 +182,7 @@ RSpec.describe ReviewsController, type: :controller do
       let(:subject) { create(:user, manager: me) }
 
       describe 'with a review that has been submitted' do
-        let(:review) { create(:complete_review, subject: subject) }
+        let(:review) { create(:submitted_review, subject: subject) }
 
         before do
           get :show, user_id: subject.to_param, id: review.to_param
@@ -210,7 +210,7 @@ RSpec.describe ReviewsController, type: :controller do
 
     describe 'as the author of the review' do
       describe 'with a review that has been submitted' do
-        let(:review) { create(:complete_review, author_email: me.email) }
+        let(:review) { create(:submitted_review, author_email: me.email) }
 
         before do
           get :show, id: review.to_param

@@ -54,7 +54,7 @@ FactoryGirl.define do
       status :started
     end
 
-    factory :complete_review do
+    factory :submitted_review do
       status :submitted
       rating_1 { generate(:rating) }
       rating_2 { generate(:rating) }

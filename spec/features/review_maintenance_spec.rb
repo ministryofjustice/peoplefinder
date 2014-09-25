@@ -68,7 +68,7 @@ feature 'Review maintenance' do
   end
 
   scenario 'See feedback completed for me' do
-    review = create(:complete_review, author_name: 'Danny Boy', subject: me)
+    review = create(:submitted_review, author_name: 'Danny Boy', subject: me)
     visit reviews_path
 
     click_link 'View feedback'
@@ -82,7 +82,7 @@ feature 'Review maintenance' do
 
   scenario 'See feedback completed for my direct report' do
     direct_report = create(:user, manager: me, name: 'Marvin Managee')
-    review = create(:complete_review, author_name: 'Danny Boy', subject: direct_report)
+    review = create(:submitted_review, author_name: 'Danny Boy', subject: direct_report)
 
     visit users_path
 
@@ -101,7 +101,7 @@ feature 'Review maintenance' do
 
   scenario 'See the list of my direct reports' do
     direct_report = create(:user, manager: me, name: 'Marvin Managee')
-    create(:complete_review, author_name: 'Danny Boy', subject: direct_report)
+    create(:submitted_review, author_name: 'Danny Boy', subject: direct_report)
     create(:review, subject: direct_report)
 
     visit users_path
