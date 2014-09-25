@@ -32,7 +32,7 @@ feature 'Navigation' do
     scenario 'Viewing a review I have received' do
       # /reviews/[n]
 
-      create :complete_review, subject: me, author_name: 'Momotaro'
+      create :submitted_review, subject: me, author_name: 'Momotaro'
       visit token_url(token)
       click_link 'View feedback'
 
@@ -70,7 +70,7 @@ feature 'Navigation' do
     scenario 'Viewing direct report with reviews' do
       # /users/[n]/reviews
 
-      create :complete_review, subject: direct_report, author_name: 'Momotaro'
+      create :submitted_review, subject: direct_report, author_name: 'Momotaro'
       visit token_url(token)
       click_link 'Your direct reports'
       click_link 'Charlie'
@@ -84,7 +84,7 @@ feature 'Navigation' do
     scenario 'Viewing a review a direct report has received' do
       # /users/[n]/reviews/[m]
 
-      create :complete_review, subject: direct_report, author_name: 'Momotaro'
+      create :submitted_review, subject: direct_report, author_name: 'Momotaro'
       visit token_url(token)
       click_link 'Your direct reports'
       click_link 'Charlie'
@@ -128,7 +128,7 @@ feature 'Navigation' do
     scenario 'Viewing feedback I gave' do
       # /reviews/[n]
 
-      create :complete_review,
+      create :submitted_review,
         author_email: me.email,
         subject: direct_report
       visit token_url(token)
@@ -145,7 +145,7 @@ feature 'Navigation' do
       scenario 'Viewing reviews I have received', closed_review_period: true do
         # /results/reviews
 
-        create :complete_review, subject: me, author_name: 'Momotaro'
+        create :submitted_review, subject: me, author_name: 'Momotaro'
         visit token_url(token)
 
         expect_no_back_link
@@ -169,7 +169,7 @@ feature 'Navigation' do
       scenario 'Viewing reviews for a direct report', closed_review_period: true do
         # /results/users/[n]/reviews
 
-        create :complete_review, subject: direct_report, author_name: 'Momotaro'
+        create :submitted_review, subject: direct_report, author_name: 'Momotaro'
         visit token_url(token)
         click_link 'Your direct reports'
         click_link 'Charlie'

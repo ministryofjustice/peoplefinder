@@ -22,7 +22,7 @@ feature 'Submitting feedback' do
     fill_in 'submission_how_we_work_comments', with: 'Could learn to...'
     click_button 'Submit'
 
-    submission = Submission.last
+    submission = Review.last
     Review::RATING_FIELDS.each do |rating_field|
       expect(submission.send(rating_field)).to eql(5)
     end
@@ -41,7 +41,7 @@ feature 'Submitting feedback' do
 
     expect(page).to have_text('Feedback not submitted')
 
-    submission = Submission.last
+    submission = Review.last
     expect(submission.status).not_to eql(:submitted)
   end
 
@@ -60,7 +60,7 @@ feature 'Submitting feedback' do
 
     sleep 0.2
 
-    submission = Submission.last
+    submission = Review.last
     expect(submission.rating_1).to eql(3)
     expect(submission.leadership_comments).to eql('Some good stuff')
     expect(submission.how_we_work_comments).to eql('Could learn to...')

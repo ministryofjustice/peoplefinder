@@ -2,7 +2,7 @@ require 'rails_helper'
 RSpec.describe InvitationsController, type: :controller do
 
   let(:author) { create(:user) }
-  let!(:invitation) { create(:invitation, author: author) }
+  let!(:invitation) { Invitation.new(create(:review, author: author)) }
 
   describe 'PUT update' do
     context 'with an authenticated session' do

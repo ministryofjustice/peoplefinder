@@ -3,7 +3,7 @@ require 'rails_helper'
 feature 'Closed review period', closed_review_period: true do
   let(:me) { create(:user) }
   let!(:review) do
-    create(:complete_review,
+    create(:submitted_review,
       subject: me,
       author_name: 'Danny Boy',
       leadership_comments: 'IS A LEADER'
@@ -11,7 +11,7 @@ feature 'Closed review period', closed_review_period: true do
   end
 
   scenario 'As the subject of a review' do
-    me.update_attributes(manager: create(:user))
+    me.update manager: create(:user)
     ReviewPeriod.new.send_closure_notifications
     visit links_in_email(last_email).first
 
@@ -19,9 +19,9 @@ feature 'Closed review period', closed_review_period: true do
   end
 
   scenario 'As a manager with direct reports who has received feedback' do
-    me.update_attributes(manager: create(:user))
+    me.update manager: create(:user)
     charlie = create(:user, name: 'Charlie', manager: me)
-    create(:complete_review,
+    create(:submitted_review,
       subject: charlie,
       author_name: 'Elena',
       how_we_work_comments: 'WE WORK'

@@ -18,7 +18,7 @@ RSpec.describe ReviewsController, type: :controller do
 
     describe 'when the current user receives feedback' do
       before do
-        me.update_attributes(manager: create(:user))
+        me.update manager: create(:user)
         get :index
       end
 
@@ -151,11 +151,10 @@ RSpec.describe ReviewsController, type: :controller do
     end
 
     describe 'as the subject of the review' do
-      let(:review) { create(:review, subject: me) }
-
       describe 'with a review that has been submitted' do
+        let(:review) { create(:submitted_review, subject: me) }
+
         before do
-          review.update_attributes(status: :submitted)
           get :show, id: review.to_param
         end
 
@@ -169,8 +168,9 @@ RSpec.describe ReviewsController, type: :controller do
       end
 
       describe 'with a review that has not been submitted' do
+        let(:review) { create(:started_review, subject: me) }
+
         it 'raises a not found exception' do
-          review.update_attributes(status: :started)
           expect {
             get :show, id: review.to_param
           }.to raise_exception(ActiveRecord::RecordNotFound)
@@ -179,12 +179,12 @@ RSpec.describe ReviewsController, type: :controller do
     end
 
     describe 'as the manager of the subject of the review' do
-      let(:review) { create(:review, subject: subject) }
       let(:subject) { create(:user, manager: me) }
 
       describe 'with a review that has been submitted' do
+        let(:review) { create(:submitted_review, subject: subject) }
+
         before do
-          review.update_attributes(status: :submitted)
           get :show, user_id: subject.to_param, id: review.to_param
         end
 
@@ -198,8 +198,9 @@ RSpec.describe ReviewsController, type: :controller do
       end
 
       describe 'with a review that has not been submitted' do
+        let(:review) { create(:started_review, subject: subject) }
+
         it 'raises a not found exception' do
-          review.update_attributes(status: :started)
           expect {
             get :show, id: review.to_param
           }.to raise_exception(ActiveRecord::RecordNotFound)
@@ -208,11 +209,10 @@ RSpec.describe ReviewsController, type: :controller do
     end
 
     describe 'as the author of the review' do
-      let(:review) { create(:review, author_email: me.email) }
-
       describe 'with a review that has been submitted' do
+        let(:review) { create(:submitted_review, author_email: me.email) }
+
         before do
-          review.update_attributes(status: :submitted)
           get :show, id: review.to_param
         end
 

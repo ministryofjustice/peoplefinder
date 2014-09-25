@@ -40,6 +40,18 @@ RSpec.describe Review, type: :model do
       review.status = 'garbage'
       expect(review).not_to be_valid
     end
+
+    it 'is valid if fields are empty and status is not submitted' do
+      review.rating_2 = nil
+      review.status = :started
+      expect(review).to be_valid
+    end
+
+    it 'is invalid if fields are empty and status is submitted' do
+      review.rating_2 = nil
+      review.status = :submitted
+      expect(review).not_to be_valid
+    end
   end
 
   describe 'status' do

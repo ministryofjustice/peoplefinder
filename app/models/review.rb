@@ -10,6 +10,14 @@ class Review < ActiveRecord::Base
   SECTION_2_RATING_FIELDS = (5 .. 11).map { |i| :"rating_#{i}" }
   RATING_FIELDS = SECTION_1_RATING_FIELDS + SECTION_2_RATING_FIELDS
 
+  REQUIRED_FIELDS =
+    SECTION_1_RATING_FIELDS + SECTION_2_RATING_FIELDS +
+    %i[ leadership_comments how_we_work_comments ]
+
+  REQUIRED_FIELDS.each do |field|
+    validates field, presence: true, if: ->(a) { a.status == :submitted }
+  end
+
   belongs_to :subject, -> { where participant: true }, class_name: 'User'
   belongs_to :author, class_name: 'User', foreign_key: 'author_email',
                       primary_key: 'email'
@@ -26,8 +34,14 @@ class Review < ActiveRecord::Base
     inclusion: { in: RELATIONSHIPS },
     if: ->(a) { a.relationship.present? }
   validate :subject_is_participant
+  validates :reason_declined,
+    length: { maximum: 300 },
+    presence: true,
+    if: ->(a) { a.status == :declined }
 
   scope :submitted, -> { where(status: :submitted) }
+  scope :editable, -> { where(status: [:accepted, :started]) }
+  scope :invited, -> { where(status: [:no_response, :declined]) }
 
   after_initialize :prefill_invitation_message
 
@@ -49,6 +63,10 @@ class Review < ActiveRecord::Base
 
   def complete?
     status == :submitted
+  end
+
+  def declined?
+    status == :declined
   end
 
   def author_name

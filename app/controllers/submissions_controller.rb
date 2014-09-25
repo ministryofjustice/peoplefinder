@@ -6,7 +6,7 @@ class SubmissionsController < ApplicationController
   end
 
   def update
-    if @submission.update_attributes(submission_params)
+    if @submission.update(submission_params)
       notice :updated unless autosave?
       redirect_to replies_path
     else
@@ -28,10 +28,10 @@ private
   end
 
   def set_submission
-    @submission = scope.where(id: params[:id]).first
+    @submission = Submission.new(scope.find(params[:id]))
   end
 
   def scope
-    current_user.submissions
+    current_user.replies.editable
   end
 end

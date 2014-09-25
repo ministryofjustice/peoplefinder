@@ -225,7 +225,6 @@ en:
       failed: 'Failed to save progress'
   invitations:
     errors:
-      mandatory_reason: 'If declining, please include a reason'
       invalid_state: '%{state} is not a valid state'
     statuses:
       accepted: 'Accept'
@@ -328,3 +327,5 @@ en:
           attributes:
             author_email:
               taken: 'Email address has already been invited'
+            reason_declined:
+              blank: 'If declining, please include a reason'

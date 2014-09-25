@@ -2,11 +2,10 @@ class InvitationsController < ApplicationController
   before_action :set_invitation, only: [:edit, :update]
 
   def update
-    if @invitation.change_state(invitation_params[:status],
-      invitation_params[:reason_declined])
-      notice(invitation_params[:status].to_sym)
+    if @invitation.update(invitation_params)
+      notice @invitation.status
     else
-      error(:update_error)
+      error :update_error
     end
     redirect_to replies_path
   end
@@ -18,10 +17,10 @@ private
   end
 
   def set_invitation
-    @invitation = scope.find(params[:id])
+    @invitation = Invitation.new(scope.find(params[:id]))
   end
 
   def scope
-    current_user.invitations
+    current_user.replies.invited
   end
 end
