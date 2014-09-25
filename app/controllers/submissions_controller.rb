@@ -6,7 +6,7 @@ class SubmissionsController < ApplicationController
   end
 
   def update
-    if @submission.update_attributes(submission_params)
+    if @submission.update(submission_params)
       notice :updated unless autosave?
       redirect_to replies_path
     else

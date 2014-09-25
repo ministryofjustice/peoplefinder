@@ -114,7 +114,7 @@ feature 'Review maintenance' do
   end
 
   scenario 'As a user who is *not* a participant' do
-    me.update_attributes participant: false
+    me.update participant: false
     visit reviews_path
     access_is_denied
   end

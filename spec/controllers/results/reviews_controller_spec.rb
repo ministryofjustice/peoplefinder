@@ -11,7 +11,7 @@ RSpec.describe Results::ReviewsController, type: :controller do
   describe 'GET index', closed_review_period: true do
     context 'when the current user receives feedback' do
       before do
-        me.update_attributes(manager: create(:user))
+        me.update manager: create(:user)
       end
 
       it 'assigns review_aggregator initialised with reviews' do

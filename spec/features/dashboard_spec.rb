@@ -24,7 +24,7 @@ feature 'Dashboard navigation' do
 
   scenario 'As Bob - manages people and receives feedback' do
     create(:user, manager: me)
-    me.update_attributes(manager: create(:user))
+    me.update manager: create(:user)
     visit token_url(token)
 
     expect(page).not_to have_link(your_feedback)
@@ -38,7 +38,7 @@ feature 'Dashboard navigation' do
 
   scenario 'As Bob - when the review period is closed', closed_review_period: true do
     create(:user, manager: me)
-    me.update_attributes(manager: create(:user))
+    me.update manager: create(:user)
     visit token_url(token)
 
     within('ul#tab_navigation') do
@@ -49,7 +49,7 @@ feature 'Dashboard navigation' do
   end
 
   scenario 'As Charlie - receives feedback but does not manage people', closed_review_period: true do
-    me.update_attributes(manager: create(:user))
+    me.update manager: create(:user)
     create(:review, subject: me)
     visit token_url(token)
 
@@ -57,7 +57,7 @@ feature 'Dashboard navigation' do
   end
 
   scenario 'As Danny - only gives feedback' do
-    me.update_attributes(participant: false)
+    me.update participant: false
     token = create(:review).tokens.create
     visit token_url(token)
 

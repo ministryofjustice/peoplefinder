@@ -68,7 +68,7 @@ feature 'Invitations' do
     let(:review) { create(:declined_review) }
 
     scenario 'Accept a previously declined feedback request' do
-      Review.last.update_attributes(reason_declined: 'Wrong button')
+      Review.last.update reason_declined: 'Wrong button'
 
       click_button 'Accept request'
 

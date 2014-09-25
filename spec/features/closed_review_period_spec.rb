@@ -11,7 +11,7 @@ feature 'Closed review period', closed_review_period: true do
   end
 
   scenario 'As the subject of a review' do
-    me.update_attributes(manager: create(:user))
+    me.update manager: create(:user)
     ReviewPeriod.new.send_closure_notifications
     visit links_in_email(last_email).first
 
@@ -19,7 +19,7 @@ feature 'Closed review period', closed_review_period: true do
   end
 
   scenario 'As a manager with direct reports who has received feedback' do
-    me.update_attributes(manager: create(:user))
+    me.update manager: create(:user)
     charlie = create(:user, name: 'Charlie', manager: me)
     create(:submitted_review,
       subject: charlie,

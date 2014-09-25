@@ -33,7 +33,7 @@ private
       next if row[:manager_email].blank?
       direct_report = lookup_user(row[:email])
       manager = lookup_user(row[:manager_email])
-      direct_report.update_attributes(manager: manager)
+      direct_report.update manager: manager
     end
   end
 

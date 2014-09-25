@@ -18,7 +18,7 @@ RSpec.describe ReviewsController, type: :controller do
 
     describe 'when the current user receives feedback' do
       before do
-        me.update_attributes(manager: create(:user))
+        me.update manager: create(:user)
         get :index
       end
 
