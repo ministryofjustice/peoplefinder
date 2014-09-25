@@ -8,7 +8,7 @@ namespace :peoplefinder do
     inadequate_profiles.select { |person| person.email.present? }
   end
 
-  # list the email addresses of people with inadequate profiles
+  desc 'list the email addresses of people with inadequate profiles'
   task inadequate_profiles: :environment do
 
     inadequate_profiles.each do |person|
@@ -20,7 +20,7 @@ namespace :peoplefinder do
     puts "\n"
   end
 
-  # email people with inadequate profiles
+  desc 'email people with inadequate profiles'
   task inadequate_profile_reminders: :environment do
     recipients = inadequate_profiles_with_email
 
