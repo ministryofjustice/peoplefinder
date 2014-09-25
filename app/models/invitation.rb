@@ -1,27 +1,15 @@
-class Invitation < Review
-  include TranslatedErrors
+class Invitation < SimpleDelegator
+  extend ActiveModel::Naming
 
-  def declined?
-    status == :declined
-  end
-
-  def change_state(state, reason = nil)
-    self.attributes = { status: state, reason_declined: reason }
-    if valid?
-      save.tap do
-        communicate_change
-      end
-    else
-      false
-    end
+  def update(attributes)
+    __getobj__.update(attributes).tap { communicate_change }
   end
 
 protected
 
   def communicate_change
-    if declined?
-      token = subject.tokens.create!
-      ReviewMailer.request_declined(self, token).deliver
-    end
+    return unless declined?
+    token = subject.tokens.create!
+    ReviewMailer.request_declined(self, token).deliver
   end
 end

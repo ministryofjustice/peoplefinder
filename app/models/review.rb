@@ -65,6 +65,10 @@ class Review < ActiveRecord::Base
     status == :submitted
   end
 
+  def declined?
+    status == :declined
+  end
+
   def author_name
     (author && author.name) || super
   end
