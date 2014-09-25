@@ -55,6 +55,11 @@ class Person < ActiveRecord::Base
     group_path(hint_group) + [self]
   end
 
+  def phone
+    return primary_phone_number if primary_phone_number.present?
+    return secondary_phone_number if secondary_phone_number.present?
+  end
+
 private
 
   def group_path(hint_group)
