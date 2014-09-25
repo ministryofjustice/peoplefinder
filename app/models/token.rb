@@ -11,6 +11,10 @@ class Token < ActiveRecord::Base
     value
   end
 
+  def expired?
+    created_at < Time.now - Rails.application.config.token_timeout
+  end
+
 private
 
   def generate_value

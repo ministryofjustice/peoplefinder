@@ -4,7 +4,9 @@ class TokensController < ApplicationController
   def show
     token = Token.where(value: params[:id]).first
 
-    return forbidden unless token
+    if token.nil? || token.expired?
+      return forbidden
+    end
 
     authenticate_with(token)
   end
