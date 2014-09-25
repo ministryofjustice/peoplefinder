@@ -204,6 +204,31 @@ feature "Person maintenance" do
     visit new_person_path
     expect(page).to have_link('Cancel', href: 'javascript:history.back()')
   end
+
+  scenario 'Toggling the phone number fields', js: true do
+    create(:group, name: 'Digital')
+    person = create(:person)
+    javascript_log_in
+
+    visit edit_person_path(person)
+
+    check('No phone number')
+    expect(page).not_to have_field('person_primary_phone_number')
+    expect(page).not_to have_field('person_secondary_phone_number')
+
+    uncheck('No phone number')
+    fill_in('person_primary_phone_number', with: 'my-primary-phone')
+    fill_in('person_secondary_phone_number', with: 'my-secondary-phone')
+
+    check('No phone number')
+    click_button 'Update'
+    expect(Person.last.primary_phone_number).to be_blank
+    expect(Person.last.secondary_phone_number).to be_blank
+
+    visit edit_person_path(person)
+    expect(page).not_to have_field('person_primary_phone_number')
+    expect(page).not_to have_field('person_secondary_phone_number')
+  end
 end
 
 def person_attributes
