@@ -10,9 +10,7 @@ class Review < ActiveRecord::Base
   SECTION_2_RATING_FIELDS = (5..11).map { |i| :"rating_#{i}" }
   RATING_FIELDS = SECTION_1_RATING_FIELDS + SECTION_2_RATING_FIELDS
 
-  REQUIRED_FIELDS =
-    SECTION_1_RATING_FIELDS + SECTION_2_RATING_FIELDS +
-    %i[ leadership_comments how_we_work_comments ]
+  REQUIRED_FIELDS = SECTION_1_RATING_FIELDS + SECTION_2_RATING_FIELDS
 
   REQUIRED_FIELDS.each do |field|
     validates field, presence: true, if: ->(a) { a.status == :submitted }
