@@ -60,4 +60,16 @@ RSpec.describe TokensController, type: :controller do
       expect(response).to be_forbidden
     end
   end
+
+  describe 'with an expired token' do
+    before do
+      token = double(:token)
+      allow(token).to receive(:expired?) { false }
+      get :show, id: token
+    end
+
+    it 'returns 403 forbidden' do
+      expect(response).to be_forbidden
+    end
+  end
 end
