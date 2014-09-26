@@ -12,6 +12,7 @@ feature "Group maintenance" do
     fill_in "Team name", with: name
     fill_in "Team description", with: 'about my team'
     fill_in "Team responsibilities (optional)", with: 'my responsibilities'
+    add_team_email_address
     click_button "Create"
 
     expect(page).to have_content("Created Ministry of Justice")
@@ -32,6 +33,7 @@ feature "Group maintenance" do
 
     name = "CSG"
     fill_in "Team name", with: name
+    add_team_email_address
     click_button "Create"
 
     expect(page).to have_content("Created CSG")
@@ -50,6 +52,7 @@ feature "Group maintenance" do
 
     name = "Digital Services"
     fill_in "Team name", with: name
+    add_team_email_address
     click_button "Create"
 
     expect(page).to have_content("Created Digital Services")
@@ -67,6 +70,7 @@ feature "Group maintenance" do
 
     fill_in "Team name", with: "Digital Services"
     click_in_org_browser "Corporate Services"
+    add_team_email_address
     click_button "Create"
 
     within(".breadcrumbs") do
@@ -149,6 +153,7 @@ feature "Group maintenance" do
     expect(page).to have_text('You are currently editing this page')
 
     fill_in 'Team name', with: 'Digital'
+    add_team_email_address
     click_button 'Create'
     expect(page).to have_selector('.search-box')
     expect(page).not_to have_text('You are currently editing this page')
@@ -174,5 +179,9 @@ feature "Group maintenance" do
 
     visit edit_group_path(dept)
     expect(page).not_to have_selector('.org-browser')
+  end
+
+  def add_team_email_address
+    fill_in 'Team email address', with: 'something@example'
   end
 end

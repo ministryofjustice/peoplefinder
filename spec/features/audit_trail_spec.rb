@@ -74,6 +74,7 @@ feature "Audit trail" do
     with_versioning do
       visit new_group_path
       fill_in 'Team name', with: 'Jon'
+      fill_in 'Team email address', with: 'something@example.com'
       click_button 'Create'
 
       visit '/audit_trail'
