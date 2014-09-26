@@ -21,6 +21,11 @@ RSpec.describe Review, type: :model do
       expect(review).not_to be_valid
     end
 
+    it 'requires an @ in the author_email' do
+      review.author_email = 'bad'
+      expect(review).not_to be_valid
+    end
+
     it 'requires an author_name' do
       review.author_name = nil
       expect(review).not_to be_valid

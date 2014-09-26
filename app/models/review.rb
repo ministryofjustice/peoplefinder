@@ -23,8 +23,10 @@ class Review < ActiveRecord::Base
   has_many :tokens
 
   validates :subject, presence: true
-  validates :author_email, presence: true
-  validates :author_email, uniqueness: { scope: :subject_id }
+  validates :author_email,
+    presence: true,
+    format: /.@./,
+    uniqueness: { scope: :subject_id }
   validates :author_name, presence: true
   validates :status, presence: true, inclusion: { in: STATUSES }
   validates :relationship, presence: true
