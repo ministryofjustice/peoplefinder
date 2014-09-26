@@ -22,6 +22,12 @@ $border-color: #bfc1c3;
   max-width: 100% !important;
 }
 
+#report_link {
+  float: left;
+  top: 75px;
+  position: relative;
+}
+
 #last_update {
   float: right;
   top: 75px;

@@ -15,8 +15,10 @@
             .inner-block= link_to 'Add new profile', new_person_path, class: 'add-new-person'
       .inner-block
         = yield
-      #last_update
-        = last_update
+        #report_link
+          = yield :report_link
+        #last_update
+          = last_update
 
 = render 'layouts/ga'
 = render template: "layouts/moj_internal_template"
