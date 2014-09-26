@@ -96,6 +96,7 @@ en:
       hint_add_person_team_not_found: "If the team cannot be found you will need to add it first before you can assign a<br/>person to it. This can be done from the page the new team would be located within."
       hint_add_person_to_team: "Use this organisation browser to select the team which this person belongs to."
       hint_team_description: "What is the role and purpose of the team?"
+      hint_team_email_address: "Enter an email for people to get in touch with the team"
       hint_team_responsibilities: "What are the team's collective responsibilities?"
       information_request_label: "Enter your message"
       information_request_label_error: "You must enter a message to be sent to the person"

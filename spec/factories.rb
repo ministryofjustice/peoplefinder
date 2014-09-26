@@ -1,14 +1,20 @@
 FactoryGirl.define do
+  sequence :email do |n|
+    "example.user.%d@digital.justice.gov.uk" % n
+  end
+
   factory :department, class: 'Group' do
     initialize_with do
       Group.where(ancestry_depth: 0).first_or_create(name: 'Ministry of Justice')
     end
+    team_email_address { generate(:email) }
   end
 
   factory :group do
     sequence :name do |n|
       "Group-%04d" % n
     end
+    team_email_address { generate(:email) }
     association :parent, factory: :department
   end
 
@@ -24,8 +30,6 @@ FactoryGirl.define do
   end
 
   factory :token do
-    sequence :user_email do |n|
-      "user-%04d@digital.justice.gov.uk" % n
-    end
+    user_email { generate(:email) }
   end
 end
