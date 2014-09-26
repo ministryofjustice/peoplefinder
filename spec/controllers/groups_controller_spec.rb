@@ -41,149 +41,149 @@ RSpec.describe GroupsController, type: :controller do
 
   let(:person) { create(:person) }
 
-  describe "GET index" do
+  describe 'GET index' do
     subject { get :index, {}, valid_session }
 
-    it "without any groups, it redirects to the new group page" do
+    it 'without any groups, it redirects to the new group page' do
       expect(subject).to redirect_to(new_group_path)
     end
 
-    it "with a department, it redirects to the departmental page" do
+    it 'with a department, it redirects to the departmental page' do
       department = create(:department)
       expect(subject).to redirect_to(group_path(department))
     end
 
-    it "with a department and a team, it still redirects to the departmental page" do
+    it 'with a department and a team, it still redirects to the departmental page' do
       department = create(:department)
       create(:group, parent: department)
       expect(subject).to redirect_to(group_path(department))
     end
   end
 
-  describe "GET show" do
-    it "assigns the requested group as @group" do
+  describe 'GET show' do
+    it 'assigns the requested group as @group' do
       group = create(:group, valid_attributes)
       get :show, { id: group.to_param }, valid_session
       expect(assigns(:group)).to eq(group)
     end
   end
 
-  describe "GET new" do
-    it "assigns a new group as @group" do
+  describe 'GET new' do
+    it 'assigns a new group as @group' do
       get :new, {}, valid_session
       expect(assigns(:group)).to be_a_new(Group)
     end
 
-    it "assigns a membership object" do
+    it 'assigns a membership object' do
       get :new, {}, valid_session
       expect(assigns(:group).memberships.length).to eql(1)
     end
   end
 
-  describe "GET edit" do
+  describe 'GET edit' do
     let(:group) { create(:group, valid_attributes) }
 
-    it "assigns the requested group as @group" do
+    it 'assigns the requested group as @group' do
       get :edit, { id: group.to_param }, valid_session
       expect(assigns(:group)).to eql(group)
     end
   end
 
-  describe "POST create" do
-    describe "with valid params" do
-      it "creates a new Group" do
+  describe 'POST create' do
+    describe 'with valid params' do
+      it 'creates a new Group' do
         expect {
           post :create, { group: valid_attributes }, valid_session
         }.to change(Group, :count).by(1)
       end
 
-      it "assigns a newly created group as @group" do
+      it 'assigns a newly created group as @group' do
         post :create, { group: valid_attributes }, valid_session
         expect(assigns(:group)).to be_a(Group)
         expect(assigns(:group)).to be_persisted
       end
 
-      it "redirects to the created group" do
+      it 'redirects to the created group' do
         post :create, { group: valid_attributes }, valid_session
         expect(response).to redirect_to(Group.last)
       end
     end
 
-    describe "with invalid params" do
+    describe 'with invalid params' do
       before do
         post :create, { group: invalid_attributes }, valid_session
       end
 
-      it "assigns a newly created but unsaved group as @group" do
+      it 'assigns a newly created but unsaved group as @group' do
         expect(assigns(:group)).to be_a_new(Group)
       end
 
-      it "re-renders the 'new' template" do
-        expect(response).to render_template("new")
+      it 're-renders the new template' do
+        expect(response).to render_template('new')
       end
 
-      it "shows an error message" do
+      it 'shows an error message' do
         expect(flash[:error]).to match(/created/)
       end
     end
   end
 
-  describe "PUT update" do
-    describe "with valid params" do
+  describe 'PUT update' do
+    describe 'with valid params' do
       let(:new_attributes) {
         attributes_for(:group)
       }
 
-      it "updates the requested group" do
+      it 'updates the requested group' do
         group = create(:group, valid_attributes)
         put :update, { id: group.to_param, group: new_attributes }, valid_session
         group.reload
         expect(group.name).to eql(new_attributes[:name])
       end
 
-      it "assigns the requested group as @group" do
+      it 'assigns the requested group as @group' do
         group = create(:group, valid_attributes)
         put :update, { id: group.to_param, group: valid_attributes }, valid_session
         expect(assigns(:group)).to eq(group)
       end
 
-      it "redirects to the group" do
+      it 'redirects to the group' do
         group = create(:group, valid_attributes)
         put :update, { id: group.to_param, group: valid_attributes }, valid_session
         expect(response).to redirect_to(group)
       end
     end
 
-    describe "with invalid params" do
+    describe 'with invalid params' do
       let(:group) { create(:group, valid_attributes) }
 
       before do
         put :update, { id: group.to_param, group: invalid_attributes }, valid_session
       end
 
-      it "assigns the group as @group" do
+      it 'assigns the group as @group' do
         expect(assigns(:group)).to eq(group)
       end
 
-      it "re-renders the 'edit' template" do
-        expect(response).to render_template("edit")
+      it 're-renders the edit template' do
+        expect(response).to render_template('edit')
       end
 
-      it "shows an error message" do
+      it 'shows an error message' do
         expect(flash[:error]).to match(/updated/)
       end
     end
   end
 
-  describe "DELETE destroy" do
-    it "destroys the requested group" do
+  describe 'DELETE destroy' do
+    it 'destroys the requested group' do
       group = create(:group, valid_attributes)
       expect {
         delete :destroy, { id: group.to_param }, valid_session
       }.to change(Group, :count).by(-1)
     end
 
-    it "redirects to the parent group" do
+    it 'redirects to the parent group' do
       parent = create(:group, parent: nil)
       group = create(:group, parent: parent)
       delete :destroy, { id: group.to_param }, valid_session
