@@ -1,6 +1,6 @@
 FactoryGirl.define do
   sequence :email do |n|
-    "example.user.%d@digital.justice.gov.uk" % n
+    'example.user.%d@digital.justice.gov.uk' % n
   end
 
   factory :department, class: 'Group' do
@@ -12,7 +12,7 @@ FactoryGirl.define do
 
   factory :group do
     sequence :name do |n|
-      "Group-%04d" % n
+      'Group-%04d' % n
     end
     team_email_address { generate(:email) }
     association :parent, factory: :department
@@ -20,7 +20,7 @@ FactoryGirl.define do
 
   factory :person do
     sequence :surname do |n|
-      "Surname-%04d" % n
+      'Surname-%04d' % n
     end
   end
 
