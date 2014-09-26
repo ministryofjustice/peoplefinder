@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140926084409) do
+ActiveRecord::Schema.define(version: 20140926133619) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -32,6 +32,16 @@ ActiveRecord::Schema.define(version: 20140926084409) do
   add_index "groups", ["ancestry"], name: "index_groups_on_ancestry", using: :btree
   add_index "groups", ["slug"], name: "index_groups_on_slug", using: :btree
 
+  create_table "information_requests", force: true do |t|
+    t.integer "recipient_id"
+    t.string  "sender_email"
+    t.text    "message"
+    t.string  "type"
+  end
+
+  add_index "information_requests", ["sender_email"], name: "index_information_requests_on_sender_email", using: :btree
+  add_index "information_requests", ["type"], name: "index_information_requests_on_type", using: :btree
+
   create_table "memberships", force: true do |t|
     t.integer  "group_id"
     t.integer  "person_id"
@@ -43,16 +53,6 @@ ActiveRecord::Schema.define(version: 20140926084409) do
 
   add_index "memberships", ["group_id"], name: "index_memberships_on_group_id", using: :btree
   add_index "memberships", ["person_id"], name: "index_memberships_on_person_id", using: :btree
-
-  create_table "notifications", force: true do |t|
-    t.integer "recipient_id"
-    t.string  "sender_email"
-    t.text    "message"
-    t.string  "type"
-  end
-
-  add_index "notifications", ["sender_email"], name: "index_notifications_on_sender_email", using: :btree
-  add_index "notifications", ["type"], name: "index_notifications_on_type", using: :btree
 
   create_table "people", force: true do |t|
     t.text     "given_name"
