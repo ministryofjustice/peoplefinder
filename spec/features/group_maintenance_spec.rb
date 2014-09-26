@@ -1,21 +1,21 @@
 require 'rails_helper'
 
-feature "Group maintenance" do
+feature 'Group maintenance' do
   before do
     omni_auth_log_in_as 'test.user@digital.justice.gov.uk'
   end
 
-  scenario "Creating a top-level department" do
-    name = "Ministry of Justice"
+  scenario 'Creating a top-level department' do
+    name = 'Ministry of Justice'
 
     visit new_group_path
-    fill_in "Team name", with: name
-    fill_in "Team description", with: 'about my team'
-    fill_in "Team responsibilities (optional)", with: 'my responsibilities'
+    fill_in 'Team name', with: name
+    fill_in 'Team description', with: 'about my team'
+    fill_in 'Team responsibilities (optional)', with: 'my responsibilities'
     add_team_email_address
-    click_button "Create"
+    click_button 'Create'
 
-    expect(page).to have_content("Created Ministry of Justice")
+    expect(page).to have_content('Created Ministry of Justice')
 
     dept = Group.find_by_name(name)
     expect(dept.name).to eql(name)
@@ -24,57 +24,57 @@ feature "Group maintenance" do
     expect(dept.parent).to be_nil
   end
 
-  scenario "Creating a team inside the department", js: true do
+  scenario 'Creating a team inside the department', js: true do
     dept = create(:department)
 
     javascript_log_in
     visit group_path(dept)
-    click_link "Add new sub-team"
+    click_link 'Add new sub-team'
 
-    name = "CSG"
-    fill_in "Team name", with: name
+    name = 'CSG'
+    fill_in 'Team name', with: name
     add_team_email_address
-    click_button "Create"
+    click_button 'Create'
 
-    expect(page).to have_content("Created CSG")
+    expect(page).to have_content('Created CSG')
 
     team = Group.find_by_name(name)
     expect(team.name).to eql(name)
     expect(team.parent).to eql(dept)
   end
 
-  scenario "Creating a subteam inside a team from that team's page" do
+  scenario 'Creating a subteam inside a team from that team\'s page' do
     dept = create(:department)
     team = create(:group, parent: dept, name: 'Corporate Services')
 
     visit group_path(team)
-    click_link "Add new sub-team"
+    click_link 'Add new sub-team'
 
-    name = "Digital Services"
-    fill_in "Team name", with: name
+    name = 'Digital Services'
+    fill_in 'Team name', with: name
     add_team_email_address
-    click_button "Create"
+    click_button 'Create'
 
-    expect(page).to have_content("Created Digital Services")
+    expect(page).to have_content('Created Digital Services')
 
     subteam = Group.find_by_name(name)
     expect(subteam.name).to eql(name)
     expect(subteam.parent).to eql(team)
   end
 
-  scenario "Creating a team and choosing the parent from the org browser", js: true do
+  scenario 'Creating a team and choosing the parent from the org browser', js: true do
     create(:group, name: 'Corporate Services')
 
     javascript_log_in
     visit new_group_path
 
-    fill_in "Team name", with: "Digital Services"
-    click_in_org_browser "Corporate Services"
+    fill_in 'Team name', with: 'Digital Services'
+    click_in_org_browser 'Corporate Services'
     add_team_email_address
-    click_button "Create"
+    click_button 'Create'
 
-    within(".breadcrumbs") do
-      expect(page).to have_content("Corporate Services > Digital Services")
+    within('.breadcrumbs') do
+      expect(page).to have_content('Corporate Services > Digital Services')
     end
   end
 
@@ -96,51 +96,51 @@ feature "Group maintenance" do
     expect(page).to have_text('deletion is only possible if there are no people')
   end
 
-  scenario "Editing a team", js: true do
+  scenario 'Editing a team', js: true do
     dept = create(:department)
-    org = create(:group, name: "CSG", parent: dept)
-    group = create(:group, name: "Digital Services", parent: org)
+    org = create(:group, name: 'CSG', parent: dept)
+    group = create(:group, name: 'Digital Services', parent: org)
 
     javascript_log_in
     visit group_path(group)
-    click_link "Edit"
+    click_link 'Edit'
 
     expect(page).to have_text('You are currently editing this page')
-    new_name = "Cyberdigital Cyberservices"
-    fill_in "Team name", with: new_name
+    new_name = 'Cyberdigital Cyberservices'
+    fill_in 'Team name', with: new_name
 
     within('.group-parent') do
-      click_link "Edit"
+      click_link 'Edit'
     end
 
-    click_in_org_browser "Ministry of Justice"
-    click_button "Update"
+    click_in_org_browser 'Ministry of Justice'
+    click_button 'Update'
 
-    expect(page).to have_content("Updated Cyberdigital Cyberservices")
+    expect(page).to have_content('Updated Cyberdigital Cyberservices')
     expect(page).not_to have_text('You are currently editing this page')
     group.reload
     expect(group.name).to eql(new_name)
     expect(group.parent).to eql(dept)
   end
 
-  scenario "Not responding to the selection of impossible parent nodes", js: true do
+  scenario 'Not responding to the selection of impossible parent nodes', js: true do
     dept = create(:department)
-    org = create(:group, name: "CSG", parent: dept)
-    group = create(:group, name: "Digital Services", parent: org)
+    org = create(:group, name: 'CSG', parent: dept)
+    group = create(:group, name: 'Digital Services', parent: org)
 
     javascript_log_in
     visit group_path(group)
-    click_link "Edit"
+    click_link 'Edit'
 
-    new_name = "Cyberdigital Cyberservices"
-    fill_in "Team name", with: new_name
+    new_name = 'Cyberdigital Cyberservices'
+    fill_in 'Team name', with: new_name
 
     within('.group-parent') do
-      click_link "Edit"
+      click_link 'Edit'
     end
 
-    click_in_org_browser "Digital Services"
-    click_button "Update"
+    click_in_org_browser 'Digital Services'
+    click_button 'Update'
 
     group.reload
     expect(group.name).to eql(new_name)
@@ -174,7 +174,7 @@ feature "Group maintenance" do
     expect(page).to have_link('Cancel', href: 'javascript:history.back()')
   end
 
-  scenario "Not displaying an edit parent field for a department"  do
+  scenario 'Not displaying an edit parent field for a department'  do
     dept = create(:group).parent
 
     visit edit_group_path(dept)

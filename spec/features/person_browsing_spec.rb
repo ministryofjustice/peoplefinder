@@ -1,13 +1,13 @@
 require 'rails_helper'
 
-feature "Person browsing" do
+feature 'Person browsing' do
   before do
     omni_auth_log_in_as 'test.user@digital.justice.gov.uk'
   end
 
-  scenario "Using breadcrumbs on a profile page" do
-    group_a = create_group_hierarchy("Ministry of Justice", "Apple", "Biwa")
-    group_b = create_group_hierarchy("Ministry of Justice", "Cherry", "Durian")
+  scenario 'Using breadcrumbs on a profile page' do
+    group_a = create_group_hierarchy('Ministry of Justice', 'Apple', 'Biwa')
+    group_b = create_group_hierarchy('Ministry of Justice', 'Cherry', 'Durian')
     person = create(:person)
     create(:membership, person: person, group: group_a)
     create(:membership, person: person, group: group_b)
@@ -15,9 +15,9 @@ feature "Person browsing" do
     visit group_path(group_b)
     click_link person.name
 
-    within ".breadcrumbs" do
-      expect(page).to have_selector("a", text: "Durian")
-      expect(page).not_to have_selector("a", text: "Biwa")
+    within '.breadcrumbs' do
+      expect(page).to have_selector('a', text: 'Durian')
+      expect(page).not_to have_selector('a', text: 'Biwa')
     end
   end
 
@@ -27,18 +27,18 @@ feature "Person browsing" do
 
     scenario 'A person who only works weekdays should not see Saturday & Sunday listed' do
       visit person_path(weekday_person)
-      expect(page).to have_xpath('//li[@alt="Monday"]')
-      expect(page).to have_xpath('//li[@alt="Friday"]')
+      expect(page).to have_xpath("//li[@alt='Monday']")
+      expect(page).to have_xpath("//li[@alt='Friday']")
 
-      expect(page).to_not have_xpath('//li[@alt="Sunday"]')
-      expect(page).to_not have_xpath('//li[@alt="Saturday"]')
+      expect(page).to_not have_xpath("//li[@alt='Sunday']")
+      expect(page).to_not have_xpath("//li[@alt='Saturday']")
     end
 
     scenario 'A person who works one or more days on a weekend should have their days listed' do
       visit person_path(weekend_person)
 
-      expect(page).to have_xpath('//li[@alt="Sunday"]')
-      expect(page).to have_xpath('//li[@alt="Saturday"]')
+      expect(page).to have_xpath("//li[@alt='Sunday']")
+      expect(page).to have_xpath("//li[@alt='Saturday']")
     end
 
   end

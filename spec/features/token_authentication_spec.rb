@@ -30,14 +30,14 @@ feature 'Token Authentication' do
   scenario 'following valid link from email' do
     token = create(:token)
     visit token_path(token)
-    expect(page).to have_link("Logged in as")
+    expect(page).to have_link('Logged in as')
   end
 
   scenario 'logging in and displaying a link to my profile' do
     person = create(:person, surname: 'Bob', email: 'test.user@digital.justice.gov.uk')
     token = Token.for_person(person)
     visit token_path(token)
-    expect(page).to have_link("Logged in as Bob", href: person_path(person))
+    expect(page).to have_link('Logged in as Bob', href: person_path(person))
   end
 
   scenario 'following a link from an inadequate profile email' do

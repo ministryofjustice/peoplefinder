@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-feature "Audit trail" do
+feature 'Audit trail' do
   before do
     omni_auth_log_in_as 'test.user@digital.justice.gov.uk'
   end
@@ -45,7 +45,7 @@ feature "Audit trail" do
     with_versioning do
       person = create(:person, surname: 'Dan', given_name: 'Greg')
       visit edit_person_path(person)
-      click_link("Delete this profile")
+      click_link('Delete this profile')
 
       visit '/audit_trail'
       expect(page).to have_text('Deleted Person')
@@ -87,7 +87,7 @@ feature "Audit trail" do
     with_versioning do
       group = create(:group, name: 'original name')
       visit edit_group_path(group)
-      click_link("Delete this team")
+      click_link('Delete this team')
 
       visit '/audit_trail'
       expect(page).to have_text('Deleted Group')
@@ -141,7 +141,7 @@ feature "Audit trail" do
 
       visit edit_person_path(person)
       within('.membership') do
-        click_link("Delete")
+        click_link('Delete')
       end
 
       visit '/audit_trail'

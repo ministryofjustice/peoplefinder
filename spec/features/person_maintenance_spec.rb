@@ -1,24 +1,24 @@
 require 'rails_helper'
 
-feature "Person maintenance" do
+feature 'Person maintenance' do
   before do
     omni_auth_log_in_as 'test.user@digital.justice.gov.uk'
   end
 
-  scenario "Creating a person with a complete profile", js: true do
+  scenario 'Creating a person with a complete profile', js: true do
     create(:group, name: 'Digital')
 
     javascript_log_in
     visit new_person_path
     fill_in_new_profile_details
 
-    click_button "Create"
+    click_button 'Create'
     check_creation_of_profile_details
   end
 
   scenario 'Creating an invalid person' do
     visit new_person_path
-    click_button "Create"
+    click_button 'Create'
     expect(page).to have_text('Please review the problems')
     within('div.person_surname') do
       expect(page).to have_text('can\'t be blank')
@@ -93,7 +93,7 @@ feature "Person maintenance" do
     fill_in 'Surname', with: 'Doe'
     click_button 'Update'
 
-    expect(page).to have_content("Updated Jane Doe’s profile")
+    expect(page).to have_content('Updated Jane Doe’s profile')
     within('h1') do
       expect(page).to have_text('Jane Doe')
     end

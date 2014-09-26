@@ -1,30 +1,30 @@
 require 'rails_helper'
 
-feature "Group browsing" do
+feature 'Group browsing' do
   before do
     omni_auth_log_in_as 'test.user@digital.justice.gov.uk'
   end
 
   let!(:department) { create(:department) }
-  let!(:team) { create(:group, name: "A Team", parent: department) }
-  let!(:subteam) { create(:group, name: "A Subteam", parent: team) }
-  let!(:leaf_node) { create(:group, name: "A Leaf Node", parent: subteam) }
+  let!(:team) { create(:group, name: 'A Team', parent: department) }
+  let!(:subteam) { create(:group, name: 'A Subteam', parent: team) }
+  let!(:leaf_node) { create(:group, name: 'A Leaf Node', parent: subteam) }
 
-  scenario "Drilling down through groups" do
+  scenario 'Drilling down through groups' do
     visit group_path(department)
 
-    expect(page).to have_link("A Team")
-    expect(page).not_to have_link("A Subteam")
+    expect(page).to have_link('A Team')
+    expect(page).not_to have_link('A Subteam')
 
-    click_link "A Team"
-    expect(page).to have_link("A Subteam")
-    expect(page).not_to have_link("A Leaf Node")
+    click_link 'A Team'
+    expect(page).to have_link('A Subteam')
+    expect(page).not_to have_link('A Leaf Node')
 
-    click_link "A Subteam"
-    expect(page).to have_link("A Leaf Node")
+    click_link 'A Subteam'
+    expect(page).to have_link('A Leaf Node')
   end
 
-  scenario "Drilling down through groups in the org browser", js: true do
+  scenario 'Drilling down through groups in the org browser', js: true do
     javascript_log_in
 
     visit '/'
@@ -55,7 +55,7 @@ feature "Group browsing" do
     end
   end
 
-  scenario "A team with subteams" do
+  scenario 'A team with subteams' do
     current_group = team
     add_people_to_group(names, current_group)
     visit group_path(current_group)
@@ -64,7 +64,7 @@ feature "Group browsing" do
     expect(page).to have_link("View all people in #{ current_group.name }")
   end
 
-  scenario "A team with no subteams (leaf_node) and some people" do
+  scenario 'A team with no subteams (leaf_node) and some people' do
     current_group = leaf_node
     add_people_to_group(names, current_group)
     visit group_path(current_group)
@@ -76,7 +76,7 @@ feature "Group browsing" do
     end
   end
 
-  scenario "A team with no subteams (leaf_node) and no people" do
+  scenario 'A team with no subteams (leaf_node) and no people' do
     current_group = leaf_node
     visit group_path(leaf_node)
 
@@ -84,7 +84,7 @@ feature "Group browsing" do
     expect(page).not_to have_link("View all people in #{ current_group.name }")
   end
 
-  scenario "Following the view all people link" do
+  scenario 'Following the view all people link' do
     current_group = team
     add_people_to_group(names, current_group)
     visit group_path(current_group)
@@ -101,7 +101,7 @@ feature "Group browsing" do
     end
   end
 
-  scenario "redirecting from /groups" do
+  scenario 'redirecting from /groups' do
     create(:group, name: 'moj')
 
     visit '/groups/moj'
