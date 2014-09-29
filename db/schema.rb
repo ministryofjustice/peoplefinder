@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140926133619) do
+ActiveRecord::Schema.define(version: 20140926134710) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -25,7 +25,7 @@ ActiveRecord::Schema.define(version: 20140926133619) do
     t.text     "description"
     t.text     "responsibilities"
     t.text     "ancestry"
-    t.integer  "ancestry_depth",   default: 0, null: false
+    t.integer  "ancestry_depth",     default: 0, null: false
     t.text     "team_email_address"
   end
 
@@ -77,6 +77,14 @@ ActiveRecord::Schema.define(version: 20140926133619) do
   end
 
   add_index "people", ["slug"], name: "index_people_on_slug", unique: true, using: :btree
+
+  create_table "reported_profiles", force: true do |t|
+    t.integer "notifier_id"
+    t.integer "subject_id"
+    t.string  "recipient_email"
+    t.text    "reason_for_reporting"
+    t.text    "additional_details"
+  end
 
   create_table "tokens", force: true do |t|
     t.text     "value"
