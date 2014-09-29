@@ -13,4 +13,14 @@ class ReminderMailer < ActionMailer::Base
     mail to: @person.email,
          subject: 'Request to update your People Finder profile'
   end
+
+  def reported_profile(reported_profile)
+    @subject = reported_profile.subject
+    @notifier = reported_profile.notifier
+    @reason_for_reporting = reported_profile.reason_for_reporting
+    @additional_details = reported_profile.additional_details
+
+    mail to: reported_profile.recipient_email,
+         subject: 'A People Finder profile has been reported'
+  end
 end

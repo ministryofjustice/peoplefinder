@@ -1,0 +1,10 @@
+<%= @notifier %> has said that they believe the information on <%= @subject %> to be incorrect.
+
+Reason for reporting: <%= @reason_for_reporting %>
+
+<% if @additional_details.present? -%>
+Additional details: <%= @additional_details %>
+<% end -%>
+
+Please fix or delete this page:
+<%= person_url(@subject) %>

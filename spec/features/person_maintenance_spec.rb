@@ -229,6 +229,25 @@ feature 'Person maintenance' do
     expect(page).not_to have_field('person_primary_phone_number')
     expect(page).not_to have_field('person_secondary_phone_number')
   end
+
+  scenario 'Reporting a profile' do
+    group = create(:group)
+    person = create(:person)
+    person.groups << group
+
+    visit person_path(person)
+    click_link 'Report this profile'
+
+    select 'Duplicate profile', from: 'Reason for reporting'
+    fill_in 'Additional details (optional)', with: 'Some stuff'
+    expect { click_button 'Submit' }.to change { ActionMailer::Base.deliveries.count }.by(1)
+
+    expect(last_email.to).to include(group.team_email_address)
+    expect(last_email.subject).to eql('A People Finder profile has been reported')
+    expect(last_email.body.encoded).to have_text('Reason for reporting: Duplicate profile')
+    expect(last_email.body.encoded).to have_text('Additional details: Some stuff')
+    expect(last_email.body.encoded).to have_text(person_url(person))
+  end
 end
 
 def person_attributes
