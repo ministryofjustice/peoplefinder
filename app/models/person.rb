@@ -60,6 +60,14 @@ class Person < ActiveRecord::Base
     return secondary_phone_number if secondary_phone_number.present?
   end
 
+  def support_email
+    if groups.present?
+      groups.first.team_email_address
+    else
+      Rails.configuration.support_email
+    end
+  end
+
 private
 
   def group_path(hint_group)

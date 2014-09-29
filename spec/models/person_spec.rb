@@ -129,4 +129,25 @@ RSpec.describe Person, type: :model do
       end
     end
   end
+
+  describe '.support_email' do
+    let(:person) { create(:person) }
+    subject { person.support_email }
+
+    context 'when the the person is a member of a group' do
+      before do
+        person.groups << create(:group, team_email_address: '123@example.com')
+      end
+
+      it 'uses the group email address' do
+        expect(subject).to eql('123@example.com')
+      end
+    end
+
+    context 'when the person is not in a group' do
+      it 'sets the application-wide support email' do
+        expect(subject).to eql(Rails.configuration.support_email)
+      end
+    end
+  end
 end
