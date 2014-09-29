@@ -71,4 +71,40 @@ END
       importer.import
     }.not_to change(User, :count)
   end
+
+  it 'updates existing users' do
+    bob = create(:user, email: 'bob@example.com', name: 'Robert')
+    csv = <<END
+Alice,alice@example.com,
+Bob,bob@example.com,alice@example.com
+END
+
+    importer = described_class.new(StringIO.new(csv))
+    importer.import
+
+    alice = User.where(email: 'alice@example.com').first
+
+    expect(User.where(email: 'bob@example.com').count).to eql(1)
+
+    bob.reload
+    expect(bob.name).to eql('Bob')
+    expect(bob.manager).to eql(alice)
+  end
+
+  it 'normalises email case' do
+    csv = <<END
+Alice,ALICE@EXAMPLE.COM,
+Bob,Bob@example.com,Alice@example.com
+END
+
+    importer = described_class.new(StringIO.new(csv))
+    importer.import
+
+    alice = User.where(email: 'alice@example.com').first
+    bob = User.where(email: 'bob@example.com').first
+
+    expect(alice).not_to be_nil
+    expect(bob).not_to be_nil
+    expect(bob.manager).to eql(alice)
+  end
 end
