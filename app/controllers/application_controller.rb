@@ -17,6 +17,8 @@ private
       else
         false
       end
+    rescue ActiveRecord::RecordNotFound
+      session.destroy
   end
   helper_method :current_user
 
