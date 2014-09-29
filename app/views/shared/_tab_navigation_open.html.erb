@@ -1,29 +1,13 @@
 <% if current_user.participant? %>
   <ul id="tab_navigation">
     <% if current_user.managed? %>
-      <% if on_your_feedback_tab? %>
-        <li class="active"><%= t('tab_navigation.your_feedback') %></li>
-      <% else %>
-        <li class="linkable">
-          <%= link_to t('tab_navigation.your_feedback'), reviews_path %>
-        </li>
-      <% end %>
+      <%= render_tab :your_feedback, reviews_path, on_your_feedback_tab? %>
     <% end %>
+
     <% if current_user.manages? %>
-      <% if on_direct_reports_tab? %>
-        <li class="active"><%= t('tab_navigation.your_direct_reports') %></li>
-      <% else %>
-        <li class="linkable">
-          <%= link_to t('tab_navigation.your_direct_reports'), users_path %>
-        </li>
-      <% end %>
+      <%= render_tab :your_direct_reports, users_path, on_direct_reports_tab? %>
     <% end %>
-    <% if on_feedback_requests_tab? %>
-      <li class="active"><%= t('tab_navigation.feedback_requests') %></li>
-    <% else %>
-      <li class="linkable">
-        <%= link_to t('tab_navigation.feedback_requests'), replies_path %>
-      </li>
-    <% end %>
+
+    <%= render_tab :feedback_requests, replies_path, on_feedback_requests_tab? %>
   </ul>
 <% end %>

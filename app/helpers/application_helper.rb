@@ -41,6 +41,17 @@ module ApplicationHelper
     active_tab == :feedback_requests
   end
 
+  def render_tab(key, link, selected)
+    render(
+      partial: 'shared/tab',
+      locals: {
+        text: t(key, scope: 'tab_navigation'),
+        link: link,
+        selected: selected
+      }
+    )
+  end
+
   def govspeak(source)
     options = { header_offset: 2 }
     doc = Govspeak::Document.new(source, options)
