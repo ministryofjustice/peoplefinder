@@ -71,6 +71,13 @@ en:
       group:
         create: "Create"
         update: "Update"
+  reminder_mailer:
+    inadequate_profile:
+      subject: "Reminder: update your profile today"
+    information_request:
+      subject: "Request to update your People Finder profile"
+    reported_profile:
+      subject: "A People Finder profile has been reported"
   user_update_mailer:
     new_profile_email:
       subject: "A new profile on MOJ People Finder has been created for you"
