@@ -1,0 +1,7 @@
+<div class="autosave-status">
+  <% %w[ saving saved failed ].each do |state| %>
+    <span class="<%= state %> indicator">
+      <%= t(state, scope: 'submissions.autosave') %>
+    </span>
+  <% end %>
+</div>

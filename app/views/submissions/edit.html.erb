@@ -3,17 +3,7 @@
 <% end %>
 
 <% content_for :top_right do %>
-  <div class="autosave-status">
-    <span class="saving indicator">
-      <%= t('submissions.autosave.saving') %>
-    </span>
-    <span class="saved indicator">
-      <%= t('submissions.autosave.saved') %>
-    </span>
-    <span class="failed indicator">
-      <%= t('submissions.autosave.failed') %>
-    </span>
-  </div>
+  <%= render partial: 'autosave' %>
 <% end %>
 
 <% content_for :page_title do %>
@@ -60,16 +50,6 @@
     <div>
       <%= link_to t('submissions.return_to_dashboard'), replies_path %>
     </div>
-    <div class="autosave-status">
-      <span class="saving indicator">
-        <%= t('submissions.autosave.saving') %>
-      </span>
-      <span class="saved indicator">
-        <%= t('submissions.autosave.saved') %>
-      </span>
-      <span class="failed indicator">
-        <%= t('submissions.autosave.failed') %>
-      </span>
-    </div>
+    <%= render partial: 'autosave' %>
   </div>
 <% end %>
