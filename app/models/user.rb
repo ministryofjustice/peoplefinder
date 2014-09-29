@@ -1,8 +1,5 @@
 class User < ActiveRecord::Base
   has_many :tokens
-
-  belongs_to :manager, class_name: 'User'
-
   has_many :direct_reports,
     class_name: :User,
     foreign_key: :manager_id
@@ -15,6 +12,9 @@ class User < ActiveRecord::Base
   has_many :invitations,
     primary_key: :email,
     foreign_key: :author_email
+
+  belongs_to :manager, class_name: 'User'
+
   validates :email, format: /.@./, uniqueness: true
 
   default_scope { order(:name) }
