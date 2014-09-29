@@ -21,7 +21,7 @@ class Review < ActiveRecord::Base
   belongs_to :author, class_name: 'User', foreign_key: 'author_email',
                       primary_key: 'email'
 
-  has_many :tokens
+  has_many :tokens, dependent: :destroy
 
   validates :subject, presence: true
   validates :author_email,

@@ -1,12 +1,14 @@
 class User < ActiveRecord::Base
   include EmailNormalization
 
-  has_many :tokens
+  has_many :tokens,
+    dependent: :destroy
   has_many :direct_reports,
     class_name: :User,
     foreign_key: :manager_id
   has_many :reviews,
-    foreign_key: :subject_id
+    foreign_key: :subject_id,
+    dependent: :destroy
   has_many :replies,
     class_name: :Review,
     primary_key: :email,
@@ -22,6 +24,8 @@ class User < ActiveRecord::Base
   default_scope { order(:name) }
 
   scope :participants, -> { where(participant: true) }
+
+  before_destroy :orphan_direct_reports
 
   def email=(e)
     super normalize_email(e)
@@ -41,5 +45,13 @@ class User < ActiveRecord::Base
 
   def review_completion
     ReviewCompletion.new(reviews)
+  end
+
+private
+
+  def orphan_direct_reports
+    direct_reports.each do |dr|
+      dr.update(manager: nil)
+    end
   end
 end
