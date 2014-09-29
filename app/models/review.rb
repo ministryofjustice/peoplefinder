@@ -1,4 +1,5 @@
 class Review < ActiveRecord::Base
+  include EmailNormalization
   include TranslatedErrors
   extend SymbolField
 
@@ -55,6 +56,10 @@ class Review < ActiveRecord::Base
       arel_table[:subject_id].eq(user.id).
       or(arel_table[:author_email].eq(user.email))
     )
+  end
+
+  def author_email=(e)
+    super normalize_email(e)
   end
 
   def remindable?

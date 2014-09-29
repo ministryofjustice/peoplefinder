@@ -1,4 +1,6 @@
 class User < ActiveRecord::Base
+  include EmailNormalization
+
   has_many :tokens
   has_many :direct_reports,
     class_name: :User,
@@ -15,11 +17,15 @@ class User < ActiveRecord::Base
 
   belongs_to :manager, class_name: 'User'
 
-  validates :email, format: /.@./, uniqueness: true
+  validates :email, presence: true, format: /.@./, uniqueness: true
 
   default_scope { order(:name) }
 
   scope :participants, -> { where(participant: true) }
+
+  def email=(e)
+    super normalize_email(e)
+  end
 
   def to_s
     [name, email].reject(&:blank?).first

@@ -107,4 +107,9 @@ RSpec.describe Review, type: :model do
     review = build(:review, author_name: 'bob')
     expect(review.author_name).to eql('bob')
   end
+
+  it 'normalises author_email on assignment' do
+    subject.author_email = 'USER@Example.com'
+    expect(subject.author_email).to eql('user@example.com')
+  end
 end

@@ -15,4 +15,9 @@ RSpec.describe User, type: :model do
       expect(subject.to_s).to eql('user@example.com')
     end
   end
+
+  it 'normalises email on assignment' do
+    subject.email = 'USER@Example.com'
+    expect(subject.email).to eql('user@example.com')
+  end
 end

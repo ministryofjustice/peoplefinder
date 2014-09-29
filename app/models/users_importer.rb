@@ -1,6 +1,8 @@
 require 'csv'
 
 class UsersImporter
+  include EmailNormalization
+
   HEADERS = [:name, :email, :manager_email]
 
   def initialize(io)
@@ -24,14 +26,10 @@ private
   def read_and_normalize_csv(io)
     CSV.new(io, headers: HEADERS).map { |row|
       row.to_hash.merge(
-        email: maybe_downcase(row[:email]),
-        manager_email: maybe_downcase(row[:manager_email])
+        email: normalize_email(row[:email]),
+        manager_email: normalize_email(row[:manager_email])
       )
     }
-  end
-
-  def maybe_downcase(s)
-    s && s.downcase
   end
 
   def create_or_update_users(csv)
