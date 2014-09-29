@@ -8,8 +8,8 @@ class ReportedProfilesController < ApplicationController
   def create
     @reported_profile = ReportedProfile.new(reported_profile_params)
     @reported_profile.subject = @person
-    @reported_profile.recipient = @person.groups.first
-    @reported_profile.sender_email = current_user.email
+    @reported_profile.recipient_email = @person.support_email
+    @reported_profile.notifier = current_user
 
     if @reported_profile.save
       notice :message_sent, person: @person

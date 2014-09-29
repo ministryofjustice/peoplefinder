@@ -5,6 +5,10 @@ module SpecSupport
         create(:person, email: 'test.user@digital.moj.gov.uk').id
     end
 
+    def current_user
+      Person.where(email: 'test.user@digital.moj.gov.uk').first
+    end
+
     def omni_auth_log_in_as(email)
       OmniAuth.config.test_mode = true
 

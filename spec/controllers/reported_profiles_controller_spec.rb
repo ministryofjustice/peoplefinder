@@ -30,7 +30,19 @@ RSpec.describe ReportedProfilesController, type: :controller do
         post :create, person_id: person.id, reported_profile: valid_params
       end
 
-      it 'redirects to the recipient profile page' do
+      it 'sets the notifier' do
+        expect(assigns(:reported_profile).notifier).to eql(current_user)
+      end
+
+      it 'sets the recipient email' do
+        expect(assigns(:reported_profile).recipient_email).to eql(person.support_email)
+      end
+
+      it 'sets the subject' do
+        expect(assigns(:reported_profile).subject).to eql(person)
+      end
+
+      it 'redirects to the person\'s profile page' do
         expect(response).to redirect_to(person_path(person))
       end
 
