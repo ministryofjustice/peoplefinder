@@ -36,7 +36,7 @@ private
 
   def create_or_update_users(csv)
     csv.each do |row|
-      user = User.where(email: row[:email]).first || User.new
+      user = User.find_or_initialize_by(email: row[:email])
       user.update!(name: row[:name], email: row[:email], participant: true)
     end
   end
