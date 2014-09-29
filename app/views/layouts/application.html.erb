@@ -1,0 +1,38 @@
+<% content_for :head do %>
+  <%= javascript_include_tag "application" %>
+  <%= stylesheet_link_tag "application", media: :all %>
+<% end %>
+
+<% content_for :content do %>
+  <div class="class">
+    <main id="content" role="main">
+      <% if Rails.application.config.respond_to?(:phase) %>
+        <%= render partial: 'layouts/partials/phase' %>
+      <% end %>
+
+      <%= flash_messages %>
+
+      <div class="inner-block">
+        <div class="top-left">
+          <%= yield :back_link %>
+        </div>
+
+        <div class="top-right">
+          <%= yield :top_right %>
+        </div>
+
+        <h1>
+          <%= content_for?(:page_title) ? yield(:page_title) : app_name %>
+        </h1>
+
+        <%= render partial: 'shared/tab_navigation' if show_tabs? %>
+
+        <%= yield %>
+      </div>
+    </main>
+  </div>
+<% end %>
+
+<%= render partial: "shared/loginout" %>
+
+<%= render template: "layouts/moj_internal_template" %>

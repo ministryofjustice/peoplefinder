@@ -1,0 +1,73 @@
+<% content_for :back_link do %>
+  <% if scoped_by_subject? %>
+    <%= link_to t('views.reviews.return_to_dashboard'), users_path %>
+    <%= '>' %>
+    <%= link_to t('views.reviews.return_to_user', name: @review.subject), user_reviews_path(@review.subject) %>
+  <% else %>
+    <%= link_to t('submissions.return_to_dashboard'), :back %>
+  <% end %>
+<% end %>
+
+<% content_for :page_title do %>
+  <%= role_translate('views.reviews.show_review_title') %>
+<% end %>
+
+<h2>
+  <% if @review.author == current_user %>
+    <%= t('views.reviews.show_review_subtitle.by_me') %>
+  <% else %>
+    <%= t('views.reviews.show_review_subtitle.by_other', author: @review.author_name) %>
+  <% end %>
+</h2>
+
+<hr/>
+
+<h2>
+  <%= t('submissions.section_1.title') %>
+</h2>
+
+<% Review::SECTION_1_RATING_FIELDS.each do |rating| %>
+  <h4>
+    <%= t(rating, scope: 'helpers.label.submission') %>
+  </h4>
+  <p class="rating-view rating-<%= @review.send(rating) %>">
+    <%= t(@review.send(rating), scope: 'views.reviews.ratings') %>
+  </p>
+<% end %>
+
+<h4>
+  <%= t('views.reviews.leadership_comments') %>
+</h4>
+
+<p>
+  <%= @review.leadership_comments %>
+</p>
+
+<hr/>
+
+<h2>
+  <%= t('submissions.section_2.title') %>
+</h2>
+
+<% Review::SECTION_2_RATING_FIELDS.each do |rating| %>
+  <h4>
+    <%= t(rating, scope: 'helpers.label.submission') %>
+  </h4>
+  <p class="rating-view rating-<%= @review.send(rating) %>">
+    <%= t(@review.send(rating), scope: 'views.reviews.ratings') %>
+  </p>
+<% end %>
+
+<h4>
+  <%= t('views.reviews.how_we_work_comments') %>
+</h4>
+
+<p>
+  <%= @review.how_we_work_comments %>
+</p>
+
+<hr/>
+
+<div class="bottom-left">
+  <%= yield :back_link %>
+</div>

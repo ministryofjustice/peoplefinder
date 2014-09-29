@@ -1,0 +1,5 @@
+<%= form_for reply, as: :invitation, namespace: "invitation_#{reply.id}", url: invitation_path(reply) do |f| %>
+  <%= f.hidden_field :status, value: :accepted %>
+  <%= f.hidden_field :reason_declined, value: '' %>
+  <%= f.button t('invitations.accept') %>
+<% end %>

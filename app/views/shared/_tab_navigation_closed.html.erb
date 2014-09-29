@@ -1,0 +1,18 @@
+<% if current_user.manager && current_user.direct_reports.present? %>
+  <ul id="tab_navigation">
+    <% if your_feedback_tab? %>
+      <li class="active"><%= t('tab_navigation.your_feedback') %></li>
+    <% else %>
+      <li>
+        <%= link_to t('tab_navigation.your_feedback'), results_reviews_path %>
+      </li>
+    <% end %>
+    <% if direct_reports_tab? %>
+      <li class="active"><%= t('tab_navigation.your_direct_reports') %></li>
+    <% else %>
+      <li>
+        <%= link_to t('tab_navigation.your_direct_reports'), results_users_path %>
+      </li>
+    <% end %>
+  </ul>
+<% end %>

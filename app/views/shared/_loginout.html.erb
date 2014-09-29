@@ -1,0 +1,5 @@
+<%= content_for :log_in_out do %>
+  <% if logged_in? %>
+    <%= t('common.logged_in', name: current_user) %>
+  <% end %>
+<% end %>

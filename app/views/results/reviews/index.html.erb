@@ -1,0 +1,92 @@
+<% if scoped_by_subject? %>
+  <% content_for :back_link do %>
+    <%= link_to t('submissions.return_to_dashboard'), :back %>
+  <% end %>
+<% end %>
+
+<% content_for :page_title do %>
+  <%= role_translate('views.results.feedback_title') %>
+<% end %>
+
+<% unless scoped_by_subject? %>
+  <h2>
+    <%= t('views.results.feedback_subtitle.mine') %>
+  </h2>
+<% end %>
+
+<% Review::SECTION_1_RATING_FIELDS.each do |field| %>
+  <h3>
+    <%= t(field, scope: 'helpers.label.submission') %>
+  </h3>
+  <dl class="review-aggregation">
+    <% @review_aggregator.results(field).each do |author_name, rating| %>
+      <dt>
+        <%= author_name %>
+      </dt>
+      <dd class="rating-<%= rating %>">
+        <%= t(rating, scope: 'views.reviews.ratings_without_numbers') %>
+      </dd>
+    <% end %>
+  </dl>
+<% end %>
+
+<hr class="invisible"/>
+
+<h3>
+  <%= t(:leadership_comments, scope: 'views.reviews') %>
+</h3>
+<% @review_aggregator.results(:leadership_comments).each do |author_name, comments| %>
+  <h4>
+    <%= author_name %>
+  </h4>
+  <p>
+    <%= comments %>
+  </p>
+<% end %>
+
+<hr class="invisible"/>
+
+<h2>
+  <%= t('submissions.section_2.title') %>
+</h2>
+
+<% Review::SECTION_2_RATING_FIELDS.each do |field| %>
+  <h3>
+    <%= t(field, scope: 'helpers.label.submission') %>
+  </h3>
+  <dl class="review-aggregation">
+    <% @review_aggregator.results(field).each do |author_name, rating| %>
+      <dt>
+        <%= author_name %>
+      </dt>
+      <dd class="rating-<%= rating %>">
+        <%= t(rating, scope: 'views.reviews.ratings_without_numbers') %>
+      </dd>
+    <% end %>
+  </dl>
+<% end %>
+
+<hr class="invisible"/>
+
+<h3>
+  <%= t(:how_we_work_comments, scope: 'view.reviews') %>
+</h3>
+
+<% @review_aggregator.results(:how_we_work_comments).each do |author_name, comments| %>
+  <h4>
+    <%= author_name %>
+  </h4>
+  <p>
+    <%= comments %>
+  </p>
+<% end %>
+
+<hr/>
+
+<button class="button print-button">
+  Print
+</button>
+
+<div class="bottom-left">
+  <%= yield :back_link %>
+</div>

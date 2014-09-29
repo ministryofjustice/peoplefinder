@@ -1,0 +1,5 @@
+<% if review_period_closed? %>
+  <%= render partial: 'shared/tab_navigation_closed' %>
+<% else %>
+  <%= render partial: 'shared/tab_navigation_open' %>
+<% end %>

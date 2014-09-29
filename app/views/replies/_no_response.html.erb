@@ -1,0 +1,12 @@
+<%= form_for reply, as: :invitation, namespace: "invitation_#{reply.id}", url: invitation_path(reply) do |f| %>
+  <div class="one-row">
+    <%= f.radio_buttons(:status, %i[ accepted declined ], inline: true){ |v| t(v, scope: 'invitations.statuses') } %>
+    <%= f.button %>
+  </div>
+
+  <fieldset>
+    <div class="reason_declined_fields hidden">
+      <%= f.text_area :reason_declined %>
+    </div>
+  </fieldset>
+<% end %>

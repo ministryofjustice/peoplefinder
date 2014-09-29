@@ -1,0 +1,50 @@
+<h2>
+  <%= t('views.reviews.feedback_received_title') %>
+</h2>
+
+<p>
+  <%= role_translate('views.reviews.feedback_received_standfirst', count: @reviews.length) %>
+</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>
+        <%= t('list.name_header', scope: 'views.reviews') %>
+      </th>
+      <th>
+        <%= t('list.relationship_header', scope: 'views.reviews') %>
+      </th>
+      <th>
+        <%= t('list.status_header', scope: 'views.reviews') %>
+      </th>
+      <th>
+        <%= t('list.action_header', scope: 'views.reviews') %>
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @reviews.each do |review| %>
+      <tr class="<%=  cycle('stripe', '')  %>">
+        <td class="name">
+          <%= review.author_name %>
+        </td>
+        <td>
+          <%= t(review.relationship, scope: 'reviews.relationships') %>
+        </td>
+        <td class="review-status-<%=  review.status  %>">
+          <span class="indicator-dot"></span>
+          <%= t(review.status, scope: 'reviews.statuses') %>
+        </td>
+        <td>
+          <% if review.remindable? %>
+            <%= render partial: 'send_reminder', locals: { review: review } %>
+          <% end %>
+          <% if review.complete? %>
+            <%= link_to t('views.reviews.view_feedback'), polymorphic_path([@subject,review].compact) %>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

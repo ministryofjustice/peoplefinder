@@ -85,6 +85,7 @@ en:
         reason_declined: 'Reason for declining'
   common:
     go_back: 'Back'
+    logged_in: 'Logged in as %{name}'
   pages:
     leadership_model:
       title: 'The Leadership Model'

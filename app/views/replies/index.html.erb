@@ -1,0 +1,40 @@
+<h2>
+  <%= t('views.replies.index_title') %>
+</h2>
+
+<p>
+  <%= t('views.replies.index_standfirst', count: @replies.count) %>
+</p>
+
+<table class="feedback-requests">
+  <thead>
+    <tr>
+      <th>
+        <%= t('name', scope: 'views.replies.list.headers') %>
+      </th>
+      <th>
+        <%= t('status', scope: 'views.replies.list.headers') %>
+      </th>
+      <th>
+        <%= t('action', scope: 'views.replies.list.headers') %>
+      </th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @replies.each do |reply| %>
+      <tr class="<%=  cycle('stripe', '')  %>">
+        <td class="name">
+          <%= reply.subject_name %>
+        </td>
+        <td class="review-status review-status-<%=  reply.status  %>">
+          <span class="indicator-dot"></span>
+          <%= t(reply.status, scope: 'reviews.statuses') %>
+        </td>
+        <td class="action">
+          <%= render partial: reply.status.to_s, locals: { reply: reply } %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

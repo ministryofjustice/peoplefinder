@@ -1,0 +1,19 @@
+<% if scoped_by_subject? %>
+  <% content_for :back_link do %>
+    <%= link_to t('submissions.return_to_dashboard'), :back %>
+  <% end %>
+<% end %>
+
+<% content_for :page_title do %>
+  <%= role_translate('views.reviews.index_title') %>
+<% end %>
+
+<% if @reviews.any? %>
+  <%= render partial: 'reviews_received' %>
+<% else %>
+  <h2>
+    <%= t('views.reviews.feedback_not_received_title') %>
+  </h2>
+<% end %>
+
+<%= render partial: 'add_reviewer' %>

@@ -1,0 +1,75 @@
+<% content_for :back_link do %>
+  <%= link_to t('submissions.return_to_dashboard'), replies_path %>
+<% end %>
+
+<% content_for :top_right do %>
+  <div class="autosave-status">
+    <span class="saving indicator">
+      <%= t('submissions.autosave.saving') %>
+    </span>
+    <span class="saved indicator">
+      <%= t('submissions.autosave.saved') %>
+    </span>
+    <span class="failed indicator">
+      <%= t('submissions.autosave.failed') %>
+    </span>
+  </div>
+<% end %>
+
+<% content_for :page_title do %>
+  <%= t('submissions.title', name: @submission.subject_name) %>
+<% end %>
+
+<div class="intro">
+  <%= govspeak(t('submissions.intro', name: @submission.subject_name)) %>
+</div>
+
+<hr/>
+
+<%= form_for @submission, html: { class: 'autosave submission-form' } do |f| %>
+  <h2>
+    <%= t('submissions.section_1.title') %>
+  </h2>
+
+  <%= govspeak(t('submissions.section_1.intro')) %>
+
+  <% Review::SECTION_1_RATING_FIELDS.each do |rating| %>
+    <%= f.radio_buttons(rating, %w[ 1 2 3 4 5 0 ], inline: true){ |v| t(v, scope: 'submissions.ratings') } %>
+  <% end %>
+
+  <%= f.text_area :leadership_comments %>
+
+  <hr class="more-space"/>
+
+  <h2>
+    <%= t('submissions.section_2.title') %>
+  </h2>
+
+  <%= govspeak(t('submissions.section_2.intro')) %>
+
+  <% Review::SECTION_2_RATING_FIELDS.each do |rating| %>
+    <%= f.radio_buttons(rating, %w[ 1 2 3 4 5 0 ], inline: true){ |v| t(v, scope: 'submissions.ratings') } %>
+  <% end %>
+
+  <%= f.text_area :how_we_work_comments %>
+
+  <hr class="more-space"/>
+
+  <div class="action-row">
+    <%= f.button %>
+    <div>
+      <%= link_to t('submissions.return_to_dashboard'), replies_path %>
+    </div>
+    <div class="autosave-status">
+      <span class="saving indicator">
+        <%= t('submissions.autosave.saving') %>
+      </span>
+      <span class="saved indicator">
+        <%= t('submissions.autosave.saved') %>
+      </span>
+      <span class="failed indicator">
+        <%= t('submissions.autosave.failed') %>
+      </span>
+    </div>
+  </div>
+<% end %>
