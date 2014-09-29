@@ -29,15 +29,15 @@ module ApplicationHelper
     end
   end
 
-  def your_feedback_tab?
+  def on_your_feedback_tab?
     active_tab == :your_feedback
   end
 
-  def direct_reports_tab?
+  def on_direct_reports_tab?
     active_tab == :direct_reports
   end
 
-  def feedback_requests_tab?
+  def on_feedback_requests_tab?
     active_tab == :feedback_requests
   end
 

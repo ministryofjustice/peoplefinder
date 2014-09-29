@@ -1,7 +1,7 @@
 <% if current_user.participant? %>
   <ul id="tab_navigation">
     <% if current_user.managed? %>
-      <% if your_feedback_tab? %>
+      <% if on_your_feedback_tab? %>
         <li class="active"><%= t('tab_navigation.your_feedback') %></li>
       <% else %>
         <li class="linkable">
@@ -10,7 +10,7 @@
       <% end %>
     <% end %>
     <% if current_user.manages? %>
-      <% if direct_reports_tab? %>
+      <% if on_direct_reports_tab? %>
         <li class="active"><%= t('tab_navigation.your_direct_reports') %></li>
       <% else %>
         <li class="linkable">
@@ -18,7 +18,7 @@
         </li>
       <% end %>
     <% end %>
-    <% if feedback_requests_tab? %>
+    <% if on_feedback_requests_tab? %>
       <li class="active"><%= t('tab_navigation.feedback_requests') %></li>
     <% else %>
       <li class="linkable">
