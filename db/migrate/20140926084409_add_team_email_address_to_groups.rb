@@ -3,7 +3,7 @@ class AddTeamEmailAddressToGroups < ActiveRecord::Migration
     add_column :groups, :team_email_address, :text
 
     execute "UPDATE groups
-             SET team_email_address = 'people-finder@digital.justice.gov.uk'"
+             SET team_email_address = '#{ Rails.configuration.support_email }'"
   end
 
   def down

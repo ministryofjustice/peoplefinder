@@ -155,3 +155,10 @@ To view a list of people whose profiles are deemed to be 'inadequate' (not havin
 To send emails prompting people to complete their profiles:
 
 `rake peoplefinder:inadequate_profile_reminders`
+
+
+##Environment Variables
+
+###Support
+
+A support email address is set as SUPPORT_EMAIL.

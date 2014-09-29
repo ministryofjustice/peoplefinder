@@ -42,8 +42,11 @@ module Peoplefinder
 
     config.exceptions_app = routes
 
+    config.support_email =
+      ENV['SUPPORT_EMAIL'] || 'people-finder@digital.justice.gov.uk'
+
     config.action_mailer.default_options = {
-      from: 'people-finder@digital.justice.gov.uk'
+      from:  config.support_email
     }
   end
 end
