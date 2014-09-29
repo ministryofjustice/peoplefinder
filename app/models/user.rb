@@ -15,7 +15,7 @@ class User < ActiveRecord::Base
   has_many :invitations,
     primary_key: :email,
     foreign_key: :author_email
-  validates :email, format: /.@./
+  validates :email, format: /.@./, uniqueness: true
 
   default_scope { order(:name) }
 
