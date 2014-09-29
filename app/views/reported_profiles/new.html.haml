@@ -1,0 +1,14 @@
+- @editing_mode = true
+%h1.no-line Report this profile
+
+= simple_form_for @reported_profile, url: person_reported_profiles_path(@person) do |f|
+  .form-group
+    = f.input :reason_for_reporting, collection: ReportedProfile::REASONS, required: false
+
+  .form-group
+    = f.input :additional_details, label: info_text("reported_profile_additional_details_label")
+
+  .form-group
+    = f.button :submit, 'Submit'
+    .cancel
+      = link_to 'Cancel', person_path(@person)
