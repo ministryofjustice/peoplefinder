@@ -32,7 +32,7 @@ feature 'Token Authentication' do
     visit token_path(token)
 
     expect(page).to have_link('Logged in as')
-    expect(page).to have_text('Welcome to the People Finder')
+    expect(page).to have_text('Start building your profile now')
     within('h1') do
       expect(page).to have_text('Edit profile')
     end
