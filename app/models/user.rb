@@ -47,6 +47,10 @@ class User < ActiveRecord::Base
     ReviewCompletion.new(reviews)
   end
 
+  def administrator?
+    administrator
+  end
+
 private
 
   def orphan_direct_reports

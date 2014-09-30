@@ -11,16 +11,29 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140911125448) do
+ActiveRecord::Schema.define(version: 20140930132759) do
+
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
+  create_table "identities", force: true do |t|
+    t.text     "username",        null: false
+    t.text     "password_digest", null: false
+    t.integer  "user_id",         null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "identities", ["username"], name: "index_identities_on_username", unique: true, using: :btree
 
   create_table "reviews", force: true do |t|
     t.integer "subject_id"
     t.text    "author_name"
     t.text    "author_email"
     t.text    "relationship"
-    t.text    "status",       default: "no_response", null: false
+    t.text    "status",               default: "no_response", null: false
     t.text    "reason_declined"
-    t.text    "invitation_message",                         null: false
+    t.text    "invitation_message",                           null: false
     t.integer "rating_1"
     t.integer "rating_2"
     t.integer "rating_3"
@@ -50,11 +63,12 @@ ActiveRecord::Schema.define(version: 20140911125448) do
 
   create_table "users", force: true do |t|
     t.text     "name"
-    t.text     "email",      null: false
+    t.text     "email",                         null: false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "manager_id"
-    t.boolean  "participant", default: false
+    t.boolean  "participant",   default: false
+    t.boolean  "administrator", default: false, null: false
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree

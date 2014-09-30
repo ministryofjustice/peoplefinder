@@ -3,6 +3,12 @@ Rails.application.routes.draw do
 
   get "/go/:id", to: "tokens#show", as: :token
 
+  resource :login, only: [:new, :create, :destroy]
+
+  namespace :admin do
+    get "/", to: "home#index"
+  end
+
   resources :reviews
   resources :replies, only: [:index]
   resources :invitations, only: [:update]

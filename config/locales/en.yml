@@ -33,6 +33,9 @@ en:
     submissions:
       updated: 'Your feedback has been submitted'
       update_error: 'Feedback not submitted. Please check the missing fields below'
+    logins:
+      logged_in: 'Logged in'
+      logged_out: 'Logged out'
   helpers:
     submit:
       invitation:
@@ -41,6 +44,8 @@ en:
         create: 'Send'
       submission:
         update: 'Submit'
+      login:
+        create: 'Log in'
     reviews:
       completion: '%{submitted} of %{total} completed'
     label:
@@ -86,6 +91,7 @@ en:
   common:
     go_back: 'Back'
     logged_in: 'Logged in as %{name}'
+    log_out: 'Log out'
   pages:
     leadership_model:
       title: 'The Leadership Model'

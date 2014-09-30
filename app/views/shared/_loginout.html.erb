@@ -1,5 +1,8 @@
 <%= content_for :log_in_out do %>
   <% if logged_in? %>
     <%= t('common.logged_in', name: current_user) %>
+    <% if administrator? %>
+      <%= button_to(t('common.log_out'), login_path, method: :delete) %>
+    <% end %>
   <% end %>
 <% end %>

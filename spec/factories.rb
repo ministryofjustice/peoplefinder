@@ -22,6 +22,10 @@ FactoryGirl.define do
   factory :user, aliases: [:subject] do
     email { generate(:email) }
     participant true
+
+    factory :admin_user do
+      administrator true
+    end
   end
 
   factory :author, class: User do
@@ -78,5 +82,16 @@ FactoryGirl.define do
     author_name { generate(:name) }
     relationship :peer
     status :no_response
+  end
+
+  factory :identity do
+    sequence :username do |n|
+      "username-%d" % n
+    end
+
+    password { generate(:password) }
+    password_confirmation { password }
+
+    user
   end
 end

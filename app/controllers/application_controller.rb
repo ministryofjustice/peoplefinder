@@ -38,6 +38,11 @@ private
   end
   helper_method :logged_in?
 
+  def administrator?
+    current_user && current_user.administrator?
+  end
+  helper_method :administrator?
+
   def ensure_user
     logged_in? || forbidden
   end
@@ -45,6 +50,12 @@ private
   def forbidden
     render 'shared/forbidden', status: :forbidden, layout: 'error'
     false
+  end
+
+  def redirect_to_goal
+    goal = session[:goal] || root_path
+    session.delete :goal
+    redirect_to goal
   end
 
   def ensure_participant
