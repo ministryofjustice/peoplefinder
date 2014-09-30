@@ -19,7 +19,6 @@ class TokensController < ApplicationController
     person = Person.from_token(token)
     if person
       session['current_user_id'] = person.id
-      flash[:notice] = 'Successfully logged in.'
       redirect_to_desired_path
     else
       render :failed
