@@ -12,7 +12,7 @@ module ApplicationHelper
   end
 
   def app_name
-    'SCS 360&deg; Appraisals'.html_safe
+    Rails.configuration.app_title
   end
 
   def active_tab

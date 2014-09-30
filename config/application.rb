@@ -24,7 +24,7 @@ module SCSAppraisals
     #   Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     # config.i18n.default_locale = :de
     #
-    config.app_title = 'SCS Feedback'
+    config.app_title = 'SCS 360° Appraisals'
 
     config.phase = 'alpha'
     config.feedback_url =
