@@ -1,6 +1,6 @@
 <% if current_user.managed? && current_user.manages? %>
   <ul id="tab_navigation">
-    <%= render_tab :your_feedback, results_reviews_path, on_your_feedback_tab? %>
-    <%= render_tab :your_direct_reports, results_users_path, on_direct_reports_tab? %>
+    <%= render_tab :your_feedback, results_reviews_path %>
+    <%= render_tab :your_direct_reports, results_users_path %>
   </ul>
 <% end %>

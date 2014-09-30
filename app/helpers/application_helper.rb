@@ -18,36 +18,21 @@ module ApplicationHelper
   def active_tab
     case controller_name
     when 'reviews'
-      @subject ? :direct_reports : :your_feedback
-
+      scoped_by_subject? ? :your_direct_reports : :your_feedback
     when 'users'
-      :direct_reports
-
+      :your_direct_reports
     when 'feedback_requests', 'invitations', 'replies', 'submissions', 'pages'
       :feedback_requests
-
     end
   end
 
-  def on_your_feedback_tab?
-    active_tab == :your_feedback
-  end
-
-  def on_direct_reports_tab?
-    active_tab == :direct_reports
-  end
-
-  def on_feedback_requests_tab?
-    active_tab == :feedback_requests
-  end
-
-  def render_tab(key, link, selected)
+  def render_tab(tab_id, link)
     render(
       partial: 'shared/tab',
       locals: {
-        text: t(key, scope: 'tab_navigation'),
+        text: t(tab_id, scope: 'tab_navigation'),
         link: link,
-        selected: selected
+        selected: active_tab == tab_id
       }
     )
   end

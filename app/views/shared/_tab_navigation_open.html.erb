@@ -1,13 +1,13 @@
 <% if current_user.participant? %>
   <ul id="tab_navigation">
     <% if current_user.managed? %>
-      <%= render_tab :your_feedback, reviews_path, on_your_feedback_tab? %>
+      <%= render_tab :your_feedback, reviews_path %>
     <% end %>
 
     <% if current_user.manages? %>
-      <%= render_tab :your_direct_reports, users_path, on_direct_reports_tab? %>
+      <%= render_tab :your_direct_reports, users_path %>
     <% end %>
 
-    <%= render_tab :feedback_requests, replies_path, on_feedback_requests_tab? %>
+    <%= render_tab :feedback_requests, replies_path %>
   </ul>
 <% end %>
