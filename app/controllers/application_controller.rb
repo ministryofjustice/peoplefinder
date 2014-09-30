@@ -36,6 +36,11 @@ private
   def redirect_to_desired_path
     path = session.fetch(:desired_path, '/')
     session.delete :desired_path
+
+    if path == '/' && current_user.incomplete?
+      path = edit_person_path(current_user, prompt: :profile)
+    end
+
     redirect_to path
   end
 

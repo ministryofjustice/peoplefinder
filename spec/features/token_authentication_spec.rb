@@ -27,10 +27,15 @@ feature 'Token Authentication' do
     expect(last_email.body.encoded).to have_text(token_url(Token.last))
   end
 
-  scenario 'following valid link from email' do
+  scenario 'following valid link from email and getting prompted to complete my profile' do
     token = create(:token)
     visit token_path(token)
+
     expect(page).to have_link('Logged in as')
+    expect(page).to have_text('Welcome to the People Finder')
+    within('h1') do
+      expect(page).to have_text('Edit profile')
+    end
   end
 
   scenario 'logging in and displaying a link to my profile' do

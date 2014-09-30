@@ -4,6 +4,7 @@ feature 'Home page' do
   before do
     create(:department)
     omni_auth_log_in_as 'test.user@digital.justice.gov.uk'
+    visit '/'
   end
 
   scenario 'Viewing the page' do
