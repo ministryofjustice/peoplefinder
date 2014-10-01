@@ -15,7 +15,7 @@ RSpec.describe TokensController, type: :controller do
     end
 
     it 'sets the user in the session' do
-      expect(session[:current_user_id]).to eql(user.id)
+      expect(session[:user_id]).to eql(user.id)
     end
   end
 
@@ -35,7 +35,7 @@ RSpec.describe TokensController, type: :controller do
       before { User.where(email: review.subject.email).delete_all }
 
       it 'creates a user and stores the id in the session' do
-        expect(session[:current_user_id]).to eql(User.last.id)
+        expect(session[:user_id]).to eql(User.last.id)
       end
 
       it 'creates a user that is *not* a participant' do
@@ -46,7 +46,7 @@ RSpec.describe TokensController, type: :controller do
     context 'with an existing user' do
       it 'finds the user and stores the id in the session' do
         user = User.where(email: review.author_email).first
-        expect(session[:current_user_id]).to eql(user.id)
+        expect(session[:user_id]).to eql(user.id)
       end
     end
   end

@@ -15,12 +15,12 @@ private
 
   def authenticate_with(token)
     if token.user
-      session[:current_user_id] = token.user_id
+      session[:user_id] = token.user_id
       redirect_to reviews_path
 
     elsif token.review
       user = User.find_or_create_by(email: token.review.author_email)
-      session[:current_user_id] = user.id
+      session[:user_id] = user.id
       redirect_to replies_path
     end
   end
