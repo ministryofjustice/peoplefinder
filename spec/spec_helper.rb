@@ -91,4 +91,5 @@ RSpec.configure do |config|
   config.include SpecSupport::Carrierwave
   config.include SpecSupport::OrgBrowser
   config.include SpecSupport::Email
+  config.include SpecSupport::Profile
 end
