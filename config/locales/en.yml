@@ -36,6 +36,9 @@ en:
     logins:
       logged_in: 'Logged in'
       logged_out: 'Logged out'
+    user_uploads:
+      uploaded: 'Users uploaded successfully'
+      upload_failed: 'An error occurred. No users were uploaded'
   helpers:
     submit:
       invitation:
@@ -46,6 +49,8 @@ en:
         update: 'Submit'
       login:
         create: 'Log in'
+      user_upload:
+        create: 'Upload'
     reviews:
       completion: '%{submitted} of %{total} completed'
     label:

@@ -41,6 +41,12 @@ class GDSFormBuilder < ActionView::Helpers::FormBuilder
     }
   end
 
+  def file_field(method, options = {})
+    with_label(method) {
+      super(method, add_class(options, 'form-control'))
+    }
+  end
+
   def collection_select(method, values, options = {}, &labeler)
     with_label(method) {
       super(

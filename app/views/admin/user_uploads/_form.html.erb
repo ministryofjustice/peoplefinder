@@ -1,0 +1,6 @@
+<%= form_for [:admin, UserUpload.new], multipart: true do |f| %>
+  <%= f.file_field :file %>
+  <fieldset>
+    <%= f.button %>
+  </fieldset>
+<% end %>

@@ -3,7 +3,7 @@ require 'rails_helper'
 feature 'Administration' do
 
   let(:password) { generate(:password) }
-  let(:user) { create(:admin_user, name: "Bob") }
+  let(:user) { create(:admin_user, name: 'Bob') }
   let(:identity) { create(:identity, password: password, user: user) }
 
   scenario 'Logging in' do
@@ -13,7 +13,7 @@ feature 'Administration' do
     log_in identity.username, password
 
     expect(current_path).to eql(admin_path)
-    expect(page).to have_text("Logged in as Bob")
+    expect(page).to have_text('Logged in as Bob')
   end
 
   scenario 'Failing to log in' do
@@ -23,7 +23,7 @@ feature 'Administration' do
     log_in identity.username, 'WRONG'
 
     expect(current_path).to eql(login_path)
-    expect(page).not_to have_text("Logged in as")
+    expect(page).not_to have_text('Logged in as')
   end
 
   scenario 'Logging out' do
@@ -31,7 +31,29 @@ feature 'Administration' do
     log_in identity.username, password
     click_button 'Log out'
     expect(current_path).to eql(root_path)
-    expect(page).not_to have_text("Logged in as")
+    expect(page).not_to have_text('Logged in as')
+  end
+
+  scenario 'Uploading a CSV' do
+    visit admin_path
+    log_in identity.username, password
+
+    expect {
+      attach_file 'File', Rails.root.join('spec', 'data', 'users.csv')
+      click_button 'Upload'
+    }.to change(User, :count).by(3)
+    expect(current_path).to eql(admin_path)
+    expect(page).to have_text('Users uploaded successfully')
+  end
+
+  scenario 'Uploading an empty file' do
+    visit admin_path
+    log_in identity.username, password
+
+    click_button 'Upload'
+
+    expect(current_path).to eql(admin_path)
+    expect(page).to have_text('No users were uploaded')
   end
 
   def log_in(username, password)
