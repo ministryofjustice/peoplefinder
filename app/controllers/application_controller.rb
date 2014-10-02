@@ -19,12 +19,12 @@ private
     true
   end
 
-  def suppress_tabs
-    @suppress_tabs = true
+  def show_tabs
+    @show_tabs = true
   end
 
   def show_tabs?
-    !@suppress_tabs
+    @show_tabs
   end
   helper_method :show_tabs?
 

@@ -50,6 +50,9 @@ Style/MethodLength:
 Style/StringLiterals:
   Enabled: false
 
+Style/TrivialAccessors:
+  AllowPredicates: true
+
 # Rubucop can't enforce Weirich style, so just turn this off.
 Blocks:
   Enabled: false

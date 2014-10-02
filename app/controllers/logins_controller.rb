@@ -1,6 +1,5 @@
 class LoginsController < ApplicationController
   skip_before_action :ensure_user
-  before_action :suppress_tabs
 
   def new
     @login = Login.new

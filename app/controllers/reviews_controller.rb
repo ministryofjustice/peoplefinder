@@ -4,7 +4,8 @@ class ReviewsController < ApplicationController
   before_action :ensure_participant, except: [:show]
 
   def index
-    suppress_tabs if scoped_by_subject?
+    show_tabs unless scoped_by_subject?
+
     @review = scope.new
     load_reviews
   end
@@ -24,7 +25,6 @@ class ReviewsController < ApplicationController
   end
 
   def show
-    suppress_tabs
     @review = Review.submitted.
       for_user(@subject || current_user).find(params[:id])
     @subject = @review.subject

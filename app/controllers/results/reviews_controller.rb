@@ -7,8 +7,9 @@ module Results
     before_action :redirect_unless_user_receives_feedback, only: [:index]
 
     def index
+      show_tabs unless scoped_by_subject?
+
       @review_aggregator = ReviewAggregator.new(scope.reviews)
-      suppress_tabs if scoped_by_subject?
     end
 
   private

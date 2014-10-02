@@ -1,5 +1,6 @@
 class RepliesController < ApplicationController
   def index
+    show_tabs
     @replies = scope.all
   end
 

@@ -2,7 +2,6 @@ module Admin
   class Base < ApplicationController
     skip_before_action :ensure_user
     before_action :ensure_administrator
-    before_action :suppress_tabs
 
   private
 

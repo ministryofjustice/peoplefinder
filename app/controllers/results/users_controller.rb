@@ -5,14 +5,15 @@ module Results
     before_action :ensure_review_period_is_closed
 
     def index
+      show_tabs
       @users = scope.all
     end
+
+  private
 
     def scope
       current_user.direct_reports
     end
-
-  private
 
     def ensure_review_period_is_closed
       forbidden unless review_period_closed?
