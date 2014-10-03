@@ -24,6 +24,11 @@ module SCSAppraisals
     #   Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     # config.i18n.default_locale = :de
     #
+
+    def self.env_integer(key, default)
+      ENV.fetch(key, default).to_i
+    end
+
     config.app_title = 'SCS 360° Appraisals'
 
     config.phase = 'alpha'
@@ -35,15 +40,15 @@ module SCSAppraisals
       digital.cabinet-office.gov.uk
     ]
 
-    config.noreply_email = ENV['EMAIL_NOREPLY_ADDRESS']
+    config.noreply_email = ENV.fetch('EMAIL_NOREPLY_ADDRESS')
 
     config.action_mailer.delivery_method = :smtp
     config.action_mailer.smtp_settings = {
-      address: ENV['SMTP_ADDRESS'],
-      port: ENV['SMTP_PORT'],
-      domain: ENV['SMTP_DOMAIN'],
-      user_name: ENV['SMTP_USERNAME'],
-      password: ENV['SMTP_PASSWORD'],
+      address: ENV.fetch('SMTP_ADDRESS'),
+      port: ENV.fetch('SMTP_PORT'),
+      domain: ENV.fetch('SMTP_DOMAIN'),
+      user_name: ENV.fetch('SMTP_USERNAME'),
+      password: ENV.fetch('SMTP_PASSWORD'),
       authentication: 'plain',
       enable_starttls_auto: true
     }
@@ -54,10 +59,10 @@ module SCSAppraisals
       g.fixture_replacement :factory_girl, dir: "spec/support/factories"
     end
 
-    config.action_mailer.default_url_options = { host: ENV['HOST'] }
+    config.action_mailer.default_url_options = { host: ENV.fetch('HOST') }
 
-    config.rack_timeout = (ENV['RACK_TIMEOUT'] || 14)
+    config.rack_timeout = env_integer('RACK_TIMEOUT', 14)
 
-    config.token_timeout = (ENV['TOKEN_TIMEOUT_IN_MONTHS'] || 6).to_i.months
+    config.token_timeout = env_integer('TOKEN_TIMEOUT_IN_MONTHS', 6).months
   end
 end
