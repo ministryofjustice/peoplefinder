@@ -1,0 +1,14 @@
+<%= form_for([:admin, @user]) do |f| %>
+  <%= f.text_field :name %>
+  <%= f.text_field :email %>
+  <%= f.collection_select(:manager_id, [nil] + @user.available_managers) %>
+  <fieldset>
+    <label for="user_participant">
+      <%= f.check_box :participant %>
+      Participant
+    </label>
+  </fieldset>
+  <fieldset>
+    <%= f.button %>
+  </fieldset>
+<% end %>

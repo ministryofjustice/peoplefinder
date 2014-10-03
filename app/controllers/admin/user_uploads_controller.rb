@@ -1,5 +1,5 @@
 module Admin
-  class UserUploadsController < Base
+  class UserUploadsController < AdminController
     def create
       upload = UserUpload.new(user_upload_params)
       if upload.save

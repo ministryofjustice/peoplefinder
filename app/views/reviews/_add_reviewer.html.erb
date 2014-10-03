@@ -4,7 +4,8 @@
 <%= form_for [@subject, @review].compact do |f| %>
   <%= f.text_field :author_name %>
   <%= f.text_field :author_email %>
-  <%= f.collection_select(:relationship, [nil] + Review::RELATIONSHIPS){ |v| t(v, scope: 'reviews.relationships', default: '') } %>
+  <%= f.collection_select(:relationship, [nil] + Review::RELATIONSHIPS,
+        labeler: ->(v) { t(v, scope: 'reviews.relationships', default: '') }) %>
   <%= f.text_area :invitation_message %>
   <fieldset>
     <%= f.button %>

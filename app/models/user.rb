@@ -16,6 +16,7 @@ class User < ActiveRecord::Base
   has_many :invitations,
     primary_key: :email,
     foreign_key: :author_email
+  has_many :identities
 
   belongs_to :manager, class_name: 'User'
 
@@ -49,6 +50,10 @@ class User < ActiveRecord::Base
 
   def administrator?
     administrator
+  end
+
+  def available_managers
+    self.class.participants.where(self.class.arel_table[:id].not_eq(id))
   end
 
 private

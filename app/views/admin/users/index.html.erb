@@ -1,0 +1,32 @@
+<h2>Users</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Role</th>
+      <th>Admin</th>
+      <th colspan="3">Actions</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @users.each do |user| %>
+      <tr>
+        <td class="name"><%= user %></td>
+        <td><%= user.email %></td>
+        <td><%= user.participant ? 'Participant' : 'Reviewer' %></td>
+        <td><%= user.administrator? ? 'Admin' : '' %></td>
+        <td><%= link_to 'Edit', edit_admin_user_path(user) %></td>
+        <td><%= button_to 'Delete', admin_user_path(user), method: :delete,
+                  data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<hr>
+
+<%= link_to 'New user', new_admin_user_path %> |
+<%= link_to 'Back', admin_path %>

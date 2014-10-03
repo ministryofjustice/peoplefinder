@@ -36,6 +36,10 @@ en:
     logins:
       logged_in: 'Logged in'
       logged_out: 'Logged out'
+    users:
+      created: 'User %{name} created'
+      updated: 'User %{name} updated'
+      destroyed: 'User %{name} deleted'
     user_uploads:
       uploaded: 'Users uploaded successfully'
       upload_failed: 'An error occurred. No users were uploaded'

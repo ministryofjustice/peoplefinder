@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   namespace :admin do
     get "/", to: "home#index"
     resources :user_uploads, only: [:create]
+    resources :users
   end
 
   resources :reviews

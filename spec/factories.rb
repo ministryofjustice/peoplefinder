@@ -25,6 +25,7 @@ FactoryGirl.define do
 
     factory :admin_user do
       administrator true
+      participant false
     end
   end
 

@@ -56,6 +56,30 @@ feature 'Administration' do
     expect(page).to have_text('No users were uploaded')
   end
 
+  scenario 'Editing users' do
+    visit admin_path
+    log_in identity.username, password
+
+    click_link 'Manage users'
+
+    click_link 'New user'
+    fill_in 'Name', with: 'Alice'
+    fill_in 'Email', with: 'alice@example.com'
+    check 'Participant'
+    click_button 'Create User'
+
+    click_link 'New user'
+    fill_in 'Name', with: 'Bob'
+    fill_in 'Email', with: 'bob@example.com'
+    select 'Alice', from: 'Manager'
+    check 'Participant'
+    click_button 'Create User'
+
+    alice = User.where(email: 'alice@example.com').first
+    bob = User.where(email: 'bob@example.com').first
+    expect(bob.manager).to eql(alice)
+  end
+
   def log_in(username, password)
     fill_in 'Username', with: username
     fill_in 'Password', with: password

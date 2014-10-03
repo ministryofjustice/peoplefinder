@@ -1,0 +1,32 @@
+#!/usr/bin/env ruby
+APP_PATH = File.expand_path('../../config/application',  __FILE__)
+require_relative '../config/boot'
+require APP_PATH
+Rails.application.require_environment!
+
+PASSWORD_CHARS = ('!' .. '~').to_a
+
+admin = User.where(administrator: true).first
+unless admin
+  admin = User.create(
+    name: 'admin', email: 'admin@localhost',
+    participant: false, administrator: true
+  )
+end
+
+pw = 12.times.map { PASSWORD_CHARS[rand(PASSWORD_CHARS.length)] }.join
+
+identity = admin.identities.first
+if identity
+  identity.update(password: pw, password_confirmation: pw)
+else
+  identity = admin.identities.create(
+    username: 'admin',
+    password: pw,
+    password_confirmation: pw
+  )
+end
+
+puts "Login created:"
+puts "username: #{identity.username}"
+puts "password: #{pw}"
