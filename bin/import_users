@@ -6,6 +6,6 @@ Rails.application.require_environment!
 
 ARGV.each do |path|
   File.open(path) do |f|
-    UsersImporter.new(f).import
+    UserImporter.new(f).import
   end
 end

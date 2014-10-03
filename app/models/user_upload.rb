@@ -10,7 +10,7 @@ class UserUpload
   end
 
   def save
-    UsersImporter.new(file.read).import
+    UserImporter.new(file.read).import
   rescue
     false
   end

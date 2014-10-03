@@ -1,6 +1,6 @@
 require 'csv'
 
-class UsersImporter
+class UserImporter
   include EmailNormalization
 
   HEADERS = [:name, :email, :manager_email]
