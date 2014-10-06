@@ -16,26 +16,59 @@ example.
 
 ## Initial setup
 
-First, create users and their management relationships. This is achieved by
-importing a CSV file. A short CSV containing the demo users is included as
-`demo.csv`:
+First, create an admin user:
+
+```sh
+./bin/create_admin
+```
+
+The username and password will be echoed to the terminal:
+
+```
+Login created:
+username: admin
+password: l{VO/2=i;6|+
+```
+
+## Setting up users
+
+### Via command line
 
 ```sh
 ./bin/import_users demo.csv
 ```
 
-Sending introduction emails is explained in the next section.
+### Via web
 
-## Opening the review period
+Visit `/admin` and authenticate.
+You can import users en masse via a CSV file or create/edit/delete them via
+the web interface.
 
-Set the review process to open via the settings table. (This is the default
-value.)
+The CSV file should have no header row and three columns: *name*,
+*email address*, and *manager's email address* (if appropriate).
+A sample is included as `demo.csv`.
+
+## Opening and closing the review period
+
+The default is *open*.
+
+### Via command line
 
 ```sh
 rails runner 'Setting[:review_period] = "open"'
+rails runner 'Setting[:review_period] = "closed"'
 ```
 
-Next, start the review process:
+### Via web
+
+Visit `/admin` and authenticate.
+Use the *Close review period* or *Open review period* button.
+
+## Sending introductions
+
+The review period must be open.
+
+### Via command line
 
 ```ruby
 ReviewPeriod.instance.send_introductions
@@ -55,26 +88,17 @@ path = "/go/#{user.tokens.first.value}"
 
 ## Closing the review period
 
-At the end of the feedback process, you can 'close' the review period
-via the settings table:
+At the end of the feedback process, you can close the review period as
+explained above.
+You can then notify the participants that their feedback is ready to be viewed.
 
-```sh
-rails runner 'Setting[:review_period] = "closed"'
-```
-
-When the review period is 'closed', you can notify the participants that
-their feedback is ready to be viewed:
+### Via command-line
 
 ```ruby
 ReviewPeriod.instance.send_closure_notifications
 ```
 
-To check the list of participants:
-
-```ruby
-ReviewPeriod.instance.participants
-```
-
 ## Utilities
 
-CI by [Travis](https://travis-ci.org/ministryofjustice/scs_appraisals).
+* Continuous integration by [Travis](https://travis-ci.org/ministryofjustice/scs_appraisals).
+* Code quality by [Code Climate](https://codeclimate.com/github/ministryofjustice/scs_appraisals).
