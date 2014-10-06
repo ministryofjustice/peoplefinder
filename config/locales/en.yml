@@ -36,6 +36,8 @@ en:
     logins:
       logged_in: 'Logged in'
       logged_out: 'Logged out'
+    settings:
+      updated: 'Updated setting %{key}'
     users:
       created: 'User %{name} created'
       updated: 'User %{name} updated'

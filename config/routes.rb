@@ -9,6 +9,7 @@ Rails.application.routes.draw do
     get "/", to: "home#index"
     resources :user_uploads, only: [:create]
     resources :users
+    resources :settings, only: [:update]
   end
 
   resources :reviews
