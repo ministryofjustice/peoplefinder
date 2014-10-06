@@ -50,6 +50,11 @@ Style/MethodLength:
 Style/StringLiterals:
   Enabled: false
 
+# I'm happy with raise, thanks.
+Style/SignalException:
+  Enabled: false
+
+# Let us use foo? methods
 Style/TrivialAccessors:
   AllowPredicates: true
 

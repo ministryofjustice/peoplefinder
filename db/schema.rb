@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140930132759) do
+ActiveRecord::Schema.define(version: 20141006091213) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -50,6 +50,15 @@ ActiveRecord::Schema.define(version: 20140930132759) do
   end
 
   add_index "reviews", ["author_email"], name: "index_reviews_on_author_email", using: :btree
+
+  create_table "settings", force: true do |t|
+    t.text     "key",        null: false
+    t.text     "value"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "settings", ["key"], name: "index_settings_on_key", unique: true, using: :btree
 
   create_table "tokens", force: true do |t|
     t.text     "value"
