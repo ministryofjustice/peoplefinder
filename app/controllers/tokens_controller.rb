@@ -17,12 +17,8 @@ class TokensController < ApplicationController
     return forbidden unless token
 
     person = Person.from_token(token)
-    if person
-      session['current_user_id'] = person.id
-      redirect_to_desired_path
-    else
-      render :failed
-    end
+    session['current_user_id'] = person.id
+    redirect_to_desired_path
   end
 
 protected
