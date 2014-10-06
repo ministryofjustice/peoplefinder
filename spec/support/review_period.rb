@@ -2,9 +2,9 @@ module SpecSupport
   module ReviewPeriod
     RSpec.configure do |config|
       config.around :each, closed_review_period: true do |example|
-        ENV['REVIEW_PERIOD'] = 'CLOSED'
+        Setting[:review_period] = 'closed'
         example.run
-        ENV['REVIEW_PERIOD'] = nil
+        Setting[:review_period] = 'open'
       end
     end
   end

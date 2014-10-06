@@ -63,7 +63,7 @@ private
   end
 
   def review_period_closed?
-    ENV['REVIEW_PERIOD'] == 'CLOSED'
+    ReviewPeriod.instance.closed?
   end
   helper_method :review_period_closed?
 

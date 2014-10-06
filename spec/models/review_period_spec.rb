@@ -6,9 +6,9 @@ RSpec.describe ReviewPeriod do
   let(:bob) { create(:user, name: 'bob', manager: alice) }
   let(:charlie) { create(:user, name: 'charlie', manager: bob) }
 
-  subject { described_class.new }
+  subject { described_class.instance }
 
-  context 'When the REVIEW_PERIOD is CLOSED', closed_review_period: true do
+  context 'When the review_period is closed', closed_review_period: true do
     let!(:bobs_review)  { create(:review, subject: bob) }
     let!(:charlies_review)  { create(:review, subject: charlie) }
 
@@ -24,7 +24,7 @@ RSpec.describe ReviewPeriod do
     end
   end
 
-  context 'When the REVIEW_PERIOD is *not* CLOSED' do
+  context 'When the review_period is *not* closed' do
 
     it 'sends introduction emails to each user' do
       [alice, bob, charlie].each do |user|

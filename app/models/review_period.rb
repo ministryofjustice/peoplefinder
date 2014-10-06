@@ -1,10 +1,12 @@
 class ReviewPeriod
+  include Singleton
+
   def open?
     !closed?
   end
 
   def closed?
-    ENV['REVIEW_PERIOD'] == 'CLOSED'
+    Setting[:review_period] == 'closed'
   end
 
   def send_introductions

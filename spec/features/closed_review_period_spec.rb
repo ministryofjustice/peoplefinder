@@ -12,7 +12,7 @@ feature 'Closed review period', closed_review_period: true do
 
   scenario 'As the subject of a review' do
     me.update manager: create(:user)
-    ReviewPeriod.new.send_closure_notifications
+    ReviewPeriod.instance.send_closure_notifications
     visit links_in_email(last_email).first
 
     check_my_feedback_from_danny_boy

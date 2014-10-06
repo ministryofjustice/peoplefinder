@@ -28,16 +28,17 @@ Sending introduction emails is explained in the next section.
 
 ## Opening the review period
 
-Set the review process to open via the `REVIEW_PERIOD` environment variable:
+Set the review process to open via the settings table. (This is the default
+value.)
 
 ```sh
-REVIEW_PERIOD=OPEN
+rails runner 'Setting[:review_period] = "open"'
 ```
 
 Next, start the review process:
 
 ```ruby
-ReviewPeriod.new.send_introductions
+ReviewPeriod.instance.send_introductions
 ```
 
 This will send introduction emails containing login links to all the users
@@ -55,23 +56,23 @@ path = "/go/#{user.tokens.first.value}"
 ## Closing the review period
 
 At the end of the feedback process, you can 'close' the review period
-by setting an environment variable:
+via the settings table:
 
 ```sh
-REVIEW_PERIOD=CLOSED
+rails runner 'Setting[:review_period] = "closed"'
 ```
 
 When the review period is 'closed', you can notify the participants that
 their feedback is ready to be viewed:
 
 ```ruby
-ReviewPeriod.new.send_closure_notifications
+ReviewPeriod.instance.send_closure_notifications
 ```
 
 To check the list of participants:
 
 ```ruby
-ReviewPeriod.new.participants
+ReviewPeriod.instance.participants
 ```
 
 ## Utilities
