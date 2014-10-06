@@ -4,5 +4,9 @@ module Admin
 
     def new
     end
+
+    def create
+      redirect_to new_login_path, notice: 'Password reset link sent'
+    end
   end
 end
