@@ -12,6 +12,7 @@ Rails.application.routes.draw do
     resources :settings, only: [:update]
     resources :introductory_mailings, only: [:create]
     resources :closure_mailings, only: [:create]
+    resource :password_reset, only: [:new]
   end
 
   resources :reviews
