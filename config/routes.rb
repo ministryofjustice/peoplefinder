@@ -10,6 +10,8 @@ Rails.application.routes.draw do
     resources :user_uploads, only: [:create]
     resources :users
     resources :settings, only: [:update]
+    resources :introductory_mailings, only: [:create]
+    resources :closure_mailings, only: [:create]
   end
 
   resources :reviews
