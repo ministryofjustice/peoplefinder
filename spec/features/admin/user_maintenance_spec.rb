@@ -7,7 +7,7 @@ feature 'User maintenance' do
     log_in_as user
   end
 
-  scenario 'Creating and editing users' do
+  scenario 'Creating users' do
     visit admin_path
 
     click_link 'Manage users'
@@ -16,14 +16,14 @@ feature 'User maintenance' do
     fill_in 'Name', with: 'Alice'
     fill_in 'Email', with: 'alice@example.com'
     check 'Participant'
-    click_button 'Create User'
+    click_button 'Create'
 
     click_link 'New user'
     fill_in 'Name', with: 'Bob'
     fill_in 'Email', with: 'bob@example.com'
     select 'Alice', from: 'Manager'
     check 'Participant'
-    click_button 'Create User'
+    click_button 'Create'
 
     alice = User.where(email: 'alice@example.com').first
     bob = User.where(email: 'bob@example.com').first

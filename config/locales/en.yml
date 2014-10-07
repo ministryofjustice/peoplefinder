@@ -61,6 +61,9 @@ en:
         create: 'Log in'
       user_upload:
         create: 'Upload'
+      user:
+        update: 'Update'
+        create: 'Create'
     reviews:
       completion: '%{submitted} of %{total} completed'
     label:
