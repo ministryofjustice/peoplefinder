@@ -1,14 +1,14 @@
 require 'rails_helper'
 
 feature 'User maintenance' do
-
-  let(:password) { generate(:password) }
   let(:user) { create(:admin_user, name: 'Bob') }
-  let(:identity) { create(:identity, password: password, user: user) }
+
+  before do
+    log_in_as user
+  end
 
   scenario 'Creating and editing users' do
     visit admin_path
-    log_in identity.username, password
 
     click_link 'Manage users'
 

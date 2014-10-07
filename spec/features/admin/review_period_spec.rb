@@ -1,14 +1,13 @@
 require 'rails_helper'
 
 feature 'Review period' do
-
-  let(:password) { generate(:password) }
   let(:user) { create(:admin_user) }
-  let(:identity) { create(:identity, password: password, user: user) }
 
-  scenario 'Closing the review period' do
-    visit admin_path
-    log_in identity.username, password
+  before do
+    log_in_as user
+  end
+
+  scenario 'Closing and re-opening the review period' do
     visit admin_path
 
     expect(page).to have_text('Review period is currently open')

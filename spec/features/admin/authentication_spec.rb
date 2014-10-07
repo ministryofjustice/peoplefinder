@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 feature 'Administrator authentication' do
-
   let(:password) { generate(:password) }
   let(:user) { create(:admin_user, name: 'Bob') }
   let(:identity) { create(:identity, password: password, user: user) }
@@ -32,5 +31,11 @@ feature 'Administrator authentication' do
     click_button 'Log out'
     expect(current_path).to eql(root_path)
     expect(page).not_to have_text('Logged in as')
+  end
+
+  def log_in(username, password)
+    fill_in 'Username', with: username
+    fill_in 'Password', with: password
+    click_button 'Log in'
   end
 end

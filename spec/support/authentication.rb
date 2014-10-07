@@ -8,8 +8,13 @@ module SpecSupport
       expect(page).to have_text('not authorised')
     end
 
-    def log_in(username, password)
-      fill_in 'Username', with: username
+    def log_in_as(user)
+      password = generate(:password)
+      identity = create(:identity, password: password, user: user)
+
+      visit new_login_path
+
+      fill_in 'Username', with: identity.username
       fill_in 'Password', with: password
       click_button 'Log in'
     end

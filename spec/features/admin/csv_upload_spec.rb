@@ -2,13 +2,14 @@ require 'rails_helper'
 
 feature 'CSV upload' do
 
-  let(:password) { generate(:password) }
   let(:user) { create(:admin_user, name: 'Bob') }
-  let(:identity) { create(:identity, password: password, user: user) }
+
+  before do
+    log_in_as user
+  end
 
   scenario 'Uploading a CSV' do
     visit admin_path
-    log_in identity.username, password
 
     expect {
       attach_file 'File', Rails.root.join('spec', 'data', 'users.csv')
@@ -20,7 +21,6 @@ feature 'CSV upload' do
 
   scenario 'Uploading an empty file' do
     visit admin_path
-    log_in identity.username, password
 
     click_button 'Upload'
 
