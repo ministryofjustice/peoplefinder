@@ -1,9 +1,11 @@
 <% if review_period_closed? %>
   <%= form_tag admin_closure_mailings_path, method: :post do %>
-    <%= button_tag('Send review period closure emails', class: 'button') %>
+    <%= button_tag('Send review period closure emails', class: 'button',
+          data: { confirm: 'Are you sure?' }) %>
   <% end %>
 <% else %>
   <%= form_tag admin_introductory_mailings_path, method: :post do %>
-    <%= button_tag('Send introduction emails', class: 'button') %>
+    <%= button_tag('Send introduction emails', class: 'button',
+          data: { confirm: 'Are you sure?' }) %>
   <% end %>
 <% end %>

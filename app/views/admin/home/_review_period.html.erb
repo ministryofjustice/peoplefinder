@@ -6,5 +6,5 @@
 <%= form_tag admin_setting_path('review_period'), method: :put do %>
   <%= hidden_field_tag('setting[value]', review_period_closed? ? 'open' : 'closed') %>
   <%= button_tag(review_period_closed? ? 'Open review period' : 'Close review period',
-        class: 'button') %>
+        class: 'button', data: { confirm: 'Are you sure?' }) %>
 <% end %>
