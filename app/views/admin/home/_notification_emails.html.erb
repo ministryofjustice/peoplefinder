@@ -1,13 +1,11 @@
 <%=
   if review_period_closed?
     form_tag admin_closure_mailings_path, method: :post do
-      button_tag(t('admin.home.send_closure_emails'), class: 'button',
-        data: { confirm: t('common.confirm_action') })
+      button_tag(t('admin.home.send_closure_emails'), class: 'button')
     end
   else
     form_tag admin_introductory_mailings_path, method: :post do
-      button_tag(t('admin.home.send_introduction_emails'), class: 'button',
-        data: { confirm: t('common.confirm_action') })
+      button_tag(t('admin.home.send_introduction_emails'), class: 'button')
     end
   end
 %>
