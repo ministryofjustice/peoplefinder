@@ -1,13 +1,13 @@
-<h2>Users</h2>
+<h2><%= t('admin.users.list_header') %></h2>
 
 <table>
   <thead>
     <tr>
-      <th>Name</th>
-      <th>Email</th>
-      <th>Role</th>
-      <th>Admin</th>
-      <th colspan="3">Actions</th>
+      <th><%= t('admin.users.list.headers.name') %></th>
+      <th><%= t('admin.users.list.headers.email') %></th>
+      <th><%= t('admin.users.list.headers.participant') %></th>
+      <th><%= t('admin.users.list.headers.administrator') %></th>
+      <th colspan="3"><%= t('admin.users.list.headers.actions') %></th>
     </tr>
   </thead>
 
@@ -16,11 +16,11 @@
       <tr>
         <td class="name"><%= user %></td>
         <td><%= user.email %></td>
-        <td><%= user.participant ? 'Participant' : 'Reviewer' %></td>
-        <td><%= user.administrator? ? 'Admin' : '' %></td>
-        <td><%= link_to 'Edit', edit_admin_user_path(user) %></td>
-        <td><%= button_to 'Delete', admin_user_path(user), method: :delete,
-                  data: { confirm: 'Are you sure?' } %></td>
+        <td><%= t_boolean('admin.users.list.participant', user.participant) %></td>
+        <td><%= t_boolean('admin.users.list.administrator', user.administrator?) %></td>
+        <td><%= link_to t('admin.users.edit_cta'), edit_admin_user_path(user) %></td>
+        <td><%= button_to t('admin.users.delete_cta'), admin_user_path(user), method: :delete,
+                  data: { confirm: t('common.confirm_action') } %></td>
       </tr>
     <% end %>
   </tbody>
@@ -28,5 +28,5 @@
 
 <hr>
 
-<%= link_to 'New user', new_admin_user_path %> |
-<%= link_to 'Back', admin_path %>
+<%= link_to t('admin.users.new_cta'), new_admin_user_path %> |
+<%= link_to t('common.go_back'), admin_path %>

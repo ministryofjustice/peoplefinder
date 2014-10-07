@@ -103,10 +103,51 @@ en:
       invitation:
         status: 'Your response'
         reason_declined: 'Reason for declining'
+      user:
+        participant: 'Participant'
   common:
     go_back: 'Back'
     logged_in: 'Logged in as %{name}'
     log_out: 'Log out'
+    confirm_action: 'Are you sure?'
+    boolean:
+      'true': 'Yes'
+      'false': 'No'
+  admin:
+    home:
+      csv_header: 'Upload CSV'
+      manage_users_header: 'Users'
+      manage_users_cta: 'Manage users'
+      review_period_header: 'Review period'
+      review_period_status:
+        open: 'Review period is currently open.'
+        closed: 'Review period is currently closed.'
+      review_period_change:
+        open: 'Open review period'
+        closed: 'Close review period'
+      notification_emails_header: 'Notification emails'
+      send_closure_emails: 'Send review period closure emails'
+      send_introduction_emails: 'Send introduction emails'
+    users:
+      edit_header: 'Edit %{name}'
+      list_header: 'Users'
+      new_header: 'New user'
+      new_cta: 'New user'
+      edit_cta: 'Edit'
+      delete_cta: 'Delete'
+      list:
+        headers:
+          name: 'Name'
+          email: 'Email'
+          participant: 'Role'
+          administrator: 'Admin'
+          actions: 'Actions'
+        participant:
+          'true': 'Participant'
+          'false': 'Reviewer'
+        administrator:
+          'true': 'Admin'
+          'false': ''
   reviews:
     default_invitation_message: >-
       I'd like you to offer 360 feedback on my performance when I've worked

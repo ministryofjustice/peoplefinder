@@ -1,10 +1,14 @@
+<%
+  current_state = review_period_closed? ? 'closed' : 'open'
+  alternate_state = review_period_closed? ? 'open' : 'closed'
+%>
+
 <p>
-  Review period is currently
-  <strong><%= review_period_closed? ? 'closed' : 'open' %></strong>
+  <%= t(current_state, scope: 'admin.home.review_period_status') %>
 </p>
 
 <%= form_tag admin_setting_path('review_period'), method: :put do %>
-  <%= hidden_field_tag('setting[value]', review_period_closed? ? 'open' : 'closed') %>
-  <%= button_tag(review_period_closed? ? 'Open review period' : 'Close review period',
+  <%= hidden_field_tag('setting[value]', alternate_state) %>
+  <%= button_tag(t(alternate_state, scope: 'admin.home.review_period_change'),
         class: 'button', data: { confirm: 'Are you sure?' }) %>
 <% end %>

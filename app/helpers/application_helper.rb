@@ -47,6 +47,10 @@ module ApplicationHelper
     link_to t('common.go_back'), :back
   end
 
+  def t_boolean(prefix, value)
+    t((value ? 'true' : 'false'), scope: prefix)
+  end
+
 private
 
   def flash_message(type)

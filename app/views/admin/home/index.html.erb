@@ -1,15 +1,15 @@
-<h2>Upload CSV</h2>
+<h2><%= t('admin.home.csv_header') %></h2>
 
 <%= render partial: 'admin/user_uploads/form' %>
 
-<h2>Users</h2>
+<h2><%= t('admin.home.manage_users_header') %></h2>
 
-<%= link_to 'Manage users', admin_users_path %>
+<%= link_to t('admin.home.manage_users_cta'), admin_users_path %>
 
-<h2>Review period</h2>
+<h2><%= t('admin.home.review_period_header') %></h2>
 
 <%= render partial: 'review_period' %>
 
-<h2>Notifications</h2>
+<h2><%= t('admin.home.notification_emails_header') %></h2>
 
 <%= render partial: 'notification_emails' %>
