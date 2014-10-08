@@ -38,7 +38,6 @@ module Peoplefinder
 
     config.assets.paths << Rails.root.join('vendor', 'assets', 'components')
     config.ga_tracking_id = ENV['GA_TRACKING_ID'] || ""
-    config.rack_timeout = (ENV['RACK_TIMEOUT'] || 14)
 
     config.exceptions_app = routes
 

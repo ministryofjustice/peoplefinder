@@ -36,7 +36,6 @@ Gem::Specification.new do |s|
   s.add_dependency 'omniauth-gplus', '~> 2.0.1'
   s.add_dependency 'paper_trail', '~> 3.0.5'
   s.add_dependency 'pg'
-  s.add_dependency 'rack-timeout'
   s.add_dependency 'recipient_interceptor', '~> 0.1.2'
   s.add_dependency 'sass-rails', '~> 4.0.3'
   s.add_dependency 'simple_form', '~> 3.1.0.rc1'
