@@ -119,6 +119,15 @@ en:
   admin:
     home:
       csv_header: 'Upload CSV'
+      csv_instructions: |
+        The CSV file you upload should have no header row and three columns:
+        _name_, _email address_, and _manager's email address_ (if
+        appropriate).
+        The manager email address is used to determine hierarchy.
+
+        Uploading a file multiple times will not create duplicate users.
+        Names of existing users will be updated (using the email address as the
+        identifier), as will management relationships.
       manage_users_header: 'Users'
       manage_users_cta: 'Manage users'
       review_period_header: 'Review period'
