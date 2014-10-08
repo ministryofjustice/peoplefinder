@@ -4,13 +4,19 @@
 
 <%= render partial: 'admin/user_uploads/form' %>
 
+<hr />
+
 <h2><%= t('admin.home.manage_users_header') %></h2>
 
 <%= link_to t('admin.home.manage_users_cta'), admin_users_path %>
 
+<hr />
+
 <h2><%= t('admin.home.review_period_header') %></h2>
 
 <%= render partial: 'review_period' %>
+
+<hr />
 
 <h2><%= t('admin.home.notification_emails_header') %></h2>
 
