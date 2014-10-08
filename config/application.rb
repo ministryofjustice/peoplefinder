@@ -37,7 +37,7 @@ module Peoplefinder
     config.start_secure_session = (ENV['SSL_ON'] =~ /(true|yes|1)$/) == 0
 
     config.assets.paths << Rails.root.join('vendor', 'assets', 'components')
-    config.ga_tracking_id = ENV['GA_TRACKING_ID']
+    config.ga_tracking_id = ENV['GA_TRACKING_ID'] || ""
     config.rack_timeout = (ENV['RACK_TIMEOUT'] || 14)
 
     config.exceptions_app = routes
