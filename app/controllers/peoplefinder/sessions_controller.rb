@@ -1,4 +1,6 @@
-class SessionsController < ApplicationController
+require 'peoplefinder'
+
+class Peoplefinder::SessionsController < ApplicationController
   skip_before_action :ensure_user
 
   def create

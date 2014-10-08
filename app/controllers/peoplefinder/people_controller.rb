@@ -1,4 +1,6 @@
-class PeopleController < ApplicationController
+require 'peoplefinder'
+
+class Peoplefinder::PeopleController < ApplicationController
   before_action :set_person, only: [:show, :edit, :update, :destroy]
   before_action :set_hint_group
   before_action :set_groups,

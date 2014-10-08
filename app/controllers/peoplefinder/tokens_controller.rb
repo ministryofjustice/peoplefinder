@@ -1,4 +1,6 @@
-class TokensController < ApplicationController
+require 'peoplefinder'
+
+class Peoplefinder::TokensController < ApplicationController
   skip_before_action :ensure_user
   before_action :set_desired_path, only: [:show]
 

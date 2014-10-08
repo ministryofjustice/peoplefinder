@@ -1,4 +1,6 @@
-class ReportedProfilesController < ApplicationController
+require 'peoplefinder'
+
+class Peoplefinder::ReportedProfilesController < ApplicationController
   before_action :set_recipient
 
   def new

@@ -1,4 +1,6 @@
-class HomeController < ApplicationController
+require 'peoplefinder'
+
+class Peoplefinder::HomeController < ApplicationController
   def show
     @group = Group.department
     unless @group

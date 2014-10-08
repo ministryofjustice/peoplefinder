@@ -1,4 +1,6 @@
-class InformationRequestsController < ApplicationController
+require 'peoplefinder'
+
+class Peoplefinder::InformationRequestsController < ApplicationController
   before_action :set_recipient
 
   def new

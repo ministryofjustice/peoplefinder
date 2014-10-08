@@ -1,4 +1,6 @@
-class PersonImageController < ApplicationController
+require 'peoplefinder'
+
+class Peoplefinder::PersonImageController < ApplicationController
   before_action :set_person
 
   def edit

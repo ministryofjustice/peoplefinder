@@ -1,4 +1,6 @@
-class ErrorsController < ApplicationController
+require 'peoplefinder'
+
+class Peoplefinder::ErrorsController < ApplicationController
   layout 'home'
   def file_not_found
   end

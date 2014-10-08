@@ -1,4 +1,6 @@
-class MembershipsController < ApplicationController
+require 'peoplefinder'
+
+class Peoplefinder::MembershipsController < ApplicationController
   def destroy
     membership = Membership.find(params[:id])
     membership.destroy
