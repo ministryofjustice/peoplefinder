@@ -6,7 +6,13 @@ module Admin
     end
 
     def create
-      redirect_to new_login_path, notice: 'Password reset link sent'
+      @password_reset = PasswordReset.new(email: params[:email])
+      if @password_reset.save
+        AdminUserMailer.password_reset(@password_reset).deliver
+        redirect_to new_login_path, notice: 'Password reset link sent'
+      else
+        render :new
+      end
     end
   end
 end

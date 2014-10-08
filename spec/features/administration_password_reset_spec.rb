@@ -2,10 +2,10 @@ require 'rails_helper'
 
 feature 'Administration password reset' do
   let(:password) { generate(:password) }
-  let(:user) { create(:admin_user, name: 'Bob') }
-  let(:identity) { create(:identity, password: password, user: user) }
+  let(:identity) { create(:identity, password: password) }
+  let(:user) { create(:admin_user, name: 'Bob', identities: [identity]) }
 
-  scenario 'With valid credentials' do
+  scenario 'with valid credentials' do
     visit admin_path
     click_link 'Forgot password'
 
@@ -14,7 +14,11 @@ feature 'Administration password reset' do
     fill_in 'Email', with: user.email
     click_button 'Send password reset link'
 
-    expect(current_path).to eq new_login_path
+    expect(current_path).to eql new_login_path
     expect(page).to have_text('Password reset link sent')
+
+    expect(last_email.body.raw_source).to include 'Please click on the link below to reset your password:'
+
+    visit(links_in_email(last_email).first)
   end
 end
