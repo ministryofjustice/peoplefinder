@@ -1,6 +1,5 @@
 class Review < ActiveRecord::Base
   include EmailNormalization
-  include TranslatedErrors
   extend SymbolField
 
   STATUSES = %i[ no_response declined accepted started submitted ]
@@ -86,7 +85,7 @@ private
 
   def subject_is_participant
     if subject && !subject.participant
-      add_translated_error :subject, :subject_must_be_participant
+      errors.add :subject, I18n.t('reviews.errors.subject_must_be_participant')
     end
   end
 end
