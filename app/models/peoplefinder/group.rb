@@ -1,4 +1,6 @@
-class Group < ActiveRecord::Base
+require 'peoplefinder'
+
+class Peoplefinder::Group < ActiveRecord::Base
   has_paper_trail ignore: [:updated_at, :created_at, :slug, :id]
 
   extend FriendlyId

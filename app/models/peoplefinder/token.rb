@@ -1,4 +1,6 @@
-class Token < ActiveRecord::Base
+require 'peoplefinder'
+
+class Peoplefinder::Token < ActiveRecord::Base
   after_initialize :generate_value
 
   validate :valid_email_address

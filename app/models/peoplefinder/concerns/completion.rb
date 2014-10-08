@@ -1,4 +1,6 @@
-module Completion
+require 'peoplefinder'
+
+module Peoplefinder::Concerns::Completion
   extend ActiveSupport::Concern
 
   included do

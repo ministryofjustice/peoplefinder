@@ -1,4 +1,6 @@
-class EmailAddress < Mail::Address
+require 'peoplefinder'
+
+class Peoplefinder::EmailAddress < Mail::Address
   VALID_EMAIL_PATTERN = /\A[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]+\z/
 
   def initialize(string)

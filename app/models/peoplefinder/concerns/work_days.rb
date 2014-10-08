@@ -1,4 +1,6 @@
-module WorkDays
+require 'peoplefinder'
+
+module Peoplefinder::Concerns::WorkDays
   extend ActiveSupport::Concern
 
   included do

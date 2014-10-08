@@ -1,4 +1,6 @@
-class GroupHierarchy
+require 'peoplefinder'
+
+class Peoplefinder::GroupHierarchy
   def initialize(root)
     @root = root
   end

@@ -1,6 +1,7 @@
 require 'singleton'
+require 'peoplefinder'
 
-class Home
+class Peoplefinder::Home
   include Singleton
   include ActiveModel::Conversion
   extend ActiveModel::Naming

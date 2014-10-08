@@ -1,10 +1,12 @@
-class Person < ActiveRecord::Base
+require 'peoplefinder'
+
+class Peoplefinder::Person < ActiveRecord::Base
   extend FriendlyId
-  include Searchable
-  include Completion
-  include Notifications
-  include WorkDays
-  include Authentication
+  include Peoplefinder::Concerns::Searchable
+  include Peoplefinder::Concerns::Completion
+  include Peoplefinder::Concerns::Notifications
+  include Peoplefinder::Concerns::WorkDays
+  include Peoplefinder::Concerns::Authentication
 
   has_paper_trail ignore: [:updated_at, :created_at, :id, :slug]
   mount_uploader :image, ImageUploader

@@ -1,4 +1,6 @@
-class Membership < ActiveRecord::Base
+require 'peoplefinder'
+
+class Peoplefinder::Membership < ActiveRecord::Base
   has_paper_trail ignore: [:updated_at, :created_at, :id]
 
   belongs_to :person, touch: true

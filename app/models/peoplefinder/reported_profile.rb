@@ -1,4 +1,6 @@
-class ReportedProfile < ActiveRecord::Base
+require 'peoplefinder'
+
+class Peoplefinder::ReportedProfile < ActiveRecord::Base
   belongs_to :notifier, class_name: 'Person', foreign_key: 'notifier_id'
   belongs_to :subject, class_name: 'Person', foreign_key: 'subject_id'
 

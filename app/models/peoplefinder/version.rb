@@ -1,4 +1,6 @@
-class Version < PaperTrail::Version
+require 'peoplefinder'
+
+class Peoplefinder::Version < PaperTrail::Version
   def creation?
     event == 'create'
   end

@@ -1,4 +1,6 @@
-module Authentication
+require 'peoplefinder'
+
+module Peoplefinder::Concerns::Authentication
   extend ActiveSupport::Concern
 
   included do

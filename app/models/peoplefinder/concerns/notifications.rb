@@ -1,4 +1,6 @@
-module Notifications
+require 'peoplefinder'
+
+module Peoplefinder::Concerns::Notifications
   extend ActiveSupport::Concern
 
   included do
