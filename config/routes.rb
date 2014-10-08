@@ -9,10 +9,10 @@ Rails.application.routes.draw do
     get "/", to: "home#index"
     resources :user_uploads, only: [:create]
     resources :users
+    resource :password_reset, only: [:new, :create, :edit, :update]
     resources :settings, only: [:update]
     resources :introductory_mailings, only: [:create]
     resources :closure_mailings, only: [:create]
-    resource :password_reset, only: [:new, :create]
   end
 
   resources :reviews

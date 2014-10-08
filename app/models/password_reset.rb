@@ -3,7 +3,7 @@ class PasswordReset
 
   validate :admin_user_with_email_must_exist
 
-  attr_accessor :email, :user, :token
+  attr_accessor :email, :user
 
   def initialize(opts = {})
     @email = opts[:email]
@@ -12,6 +12,10 @@ class PasswordReset
 
   def save
     valid? && identity.initiate_password_reset!
+  end
+
+  def token
+    identity.password_reset_token
   end
 
 private

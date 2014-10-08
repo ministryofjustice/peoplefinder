@@ -3,6 +3,7 @@ class AdminUserMailer < ActionMailer::Base
 
   def password_reset(password_reset)
     user = password_reset.user
+    @token = password_reset.token
     mail to: user.email
   end
 end

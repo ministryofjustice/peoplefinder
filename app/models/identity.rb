@@ -38,6 +38,10 @@ class Identity < ActiveRecord::Base
     save
   end
 
+  def can_reset_password?
+    password_reset_expires_at > Time.now
+  end
+
 private
 
   def clear_password

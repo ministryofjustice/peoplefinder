@@ -48,4 +48,20 @@ RSpec.describe PasswordReset do
       end
     end
   end
+
+  describe '#token' do
+    let(:email) { 'hello@example.com' }
+    let(:token) { "This here is the token" }
+    let(:password_reset) { described_class.new(email: email) }
+    let(:identity) { double(:identity, password_reset_token: token) }
+    let(:user) { double(:user, primary_identity: identity) }
+
+    before do
+      allow(User).to receive(:find_admin_by_email).with(email).and_return(user)
+    end
+
+    it 'returns the password reset token of the associated identity' do
+      expect(password_reset.token).to eq token
+    end
+  end
 end

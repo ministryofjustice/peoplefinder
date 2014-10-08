@@ -89,6 +89,21 @@ RSpec.describe Identity, type: :model do
     it 'persists the new token/expiry' do
       expect(identity.changed?).to be_falsy
     end
+  end
 
+  describe '#can_reset_password?' do
+    context 'expired token' do
+      subject { create(:identity, password_reset_expires_at: 2.days.ago) }
+      it 'returns false' do
+        expect(subject.can_reset_password?).to be_falsy
+      end
+    end
+
+    context 'unexpired token' do
+      subject { create(:identity, password_reset_expires_at: 2.days.from_now) }
+      it 'returns true' do
+        expect(subject.can_reset_password?).to be_truthy
+      end
+    end
   end
 end
