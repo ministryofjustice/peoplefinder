@@ -16,11 +16,11 @@ module Admin
     end
 
     def edit
-      @token = params[:token]
+      @identity = Identity.find_by_password_reset_token(params[:token])
     end
 
     def update
-      @identity = Identity.find_by_password_reset_token(params[:token])
+      @identity = Identity.find_by_password_reset_token(params[:identity][:password_reset_token])
       if @identity && @identity.can_reset_password?
         @identity.update_attributes(password_params)
       end
@@ -30,7 +30,7 @@ module Admin
   private
 
     def password_params
-      params.permit(:password, :password_confirmation)
+      params.require(:identity).permit(:password, :password_confirmation)
     end
   end
 end
