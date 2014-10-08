@@ -70,3 +70,5 @@ group :production do
   gem 'appsignal'
   gem 'rails_12factor'
 end
+
+gemspec
