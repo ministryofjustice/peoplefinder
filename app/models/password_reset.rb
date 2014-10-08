@@ -9,12 +9,12 @@ class PasswordReset
     @email = opts[:email]
     @user  = User.find_admin_by_email(@email)
   end
-  
+
   def save
     valid? && identity.initiate_password_reset!
   end
 
-  private
+private
 
   def identity
     @user.primary_identity

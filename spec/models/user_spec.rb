@@ -49,7 +49,7 @@ RSpec.describe User, type: :model do
 
   describe '#find_admin_by_email' do
     let!(:admin_user) { create(:admin_user, identities: [create(:identity)]) }
-    let(:found_user) { User.find_admin_by_email(admin_user.email) }
+    let(:found_user) { described_class.find_admin_by_email(admin_user.email) }
 
     it 'returns an admin user with a matching email' do
       expect(found_user).to eq admin_user
