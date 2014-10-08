@@ -6,8 +6,9 @@ describe AdminUserMailer do
   include Rails.application.routes.url_helpers
 
   describe 'password reset email' do
-    let(:email) { described_class.password_reset(user) }
     let(:user) { create(:admin_user, name: 'Bob') }
+    let(:password_reset) { double(:password_reset, user: user) }
+    let(:email) { described_class.password_reset(password_reset) }
 
     it 'is sent to the given user' do
       expect(email.to.first).to eql user.email
