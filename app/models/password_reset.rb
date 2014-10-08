@@ -1,5 +1,6 @@
 class PasswordReset
   include ActiveModel::Validations
+  include ActiveModel::Conversion
 
   validate :admin_user_with_email_must_exist
 

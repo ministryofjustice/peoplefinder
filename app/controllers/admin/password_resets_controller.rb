@@ -3,10 +3,12 @@ module Admin
     skip_before_action :ensure_administrator
 
     def new
+      @password_reset = PasswordReset.new
     end
 
     def create
-      @password_reset = PasswordReset.new(email: params[:email])
+      email = params[:password_reset][:email]
+      @password_reset = PasswordReset.new(email: email)
       if @password_reset.save
         AdminUserMailer.password_reset(@password_reset).deliver
         redirect_to new_login_path, notice: 'Password reset link sent'
@@ -20,7 +22,8 @@ module Admin
     end
 
     def update
-      @identity = Identity.find_by_password_reset_token(params[:identity][:password_reset_token])
+      token = params[:identity][:password_reset_token]
+      @identity = Identity.find_by_password_reset_token(token)
       if @identity && @identity.can_reset_password?
         @identity.update_attributes(password_params)
       end
