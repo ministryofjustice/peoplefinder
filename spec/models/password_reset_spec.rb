@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe PasswordReset do
   let(:fake_email) { 'hello@example.com' }
-  let(:password_reset) { PasswordReset.new(email: fake_email) }
+  let(:password_reset) { described_class.new(email: fake_email) }
 
   let(:password) { generate(:password) }
   let(:user) { create(:admin_user) }
@@ -16,7 +16,7 @@ RSpec.describe PasswordReset do
 
   describe '#save' do
     context "email doesn't exist" do
-      let(:password_reset) { PasswordReset.new(email: fake_email) }
+      let(:password_reset) { described_class.new(email: fake_email) }
       it 'returns false' do
         expect(password_reset.save).to be_falsy
       end
@@ -29,7 +29,7 @@ RSpec.describe PasswordReset do
 
     context 'email exists' do
       let(:email) { 'hello@example.com' }
-      let(:password_reset) { PasswordReset.new(email: email) }
+      let(:password_reset) { described_class.new(email: email) }
       let(:identity) { double(:identity) }
       let(:user) { double(:user, primary_identity: identity) }
 
@@ -37,7 +37,6 @@ RSpec.describe PasswordReset do
         allow(User).to receive(:find_admin_by_email).with(email).and_return(user)
         allow(identity).to receive(:initiate_password_reset!).and_return(true)
       end
-
 
       it 'returns true' do
         expect(password_reset.save).to be_truthy
