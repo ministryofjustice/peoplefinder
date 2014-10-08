@@ -46,4 +46,31 @@ RSpec.describe User, type: :model do
     create(:user, participant: false)
     expect(a.available_managers.to_a).to eql([b])
   end
+
+  describe '#find_admin_by_email' do
+    let!(:admin_user) { create(:admin_user, identities: [create(:identity)]) }
+    let(:found_user) { User.find_admin_by_email(admin_user.email) }
+
+    it 'returns an admin user with a matching email' do
+      expect(found_user).to eq admin_user
+    end
+  end
+
+  describe '#primary_identity' do
+    context 'user with no identities' do
+      let(:user) { create(:user) }
+      it 'returns nil' do
+        expect(user.primary_identity).to be nil
+      end
+    end
+
+    context 'user with at least one identity' do
+      let(:identity) { create(:identity) }
+      let(:other_identity) { create(:identity) }
+      let(:user) { create(:admin_user, identities: [identity, other_identity]) }
+      it 'returns the first identity' do
+        expect(user.primary_identity).to eq identity
+      end
+    end
+  end
 end

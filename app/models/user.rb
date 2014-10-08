@@ -25,6 +25,8 @@ class User < ActiveRecord::Base
   default_scope { order(:name) }
 
   scope :participants, -> { where(participant: true) }
+  scope :with_identity, -> { joins(:identities) }
+  scope :admin, -> { where(administrator: true) }
 
   before_destroy :orphan_direct_reports
 
@@ -58,6 +60,14 @@ class User < ActiveRecord::Base
 
   def available_managers
     self.class.participants.where(self.class.arel_table[:id].not_eq(id))
+  end
+
+  def self.find_admin_by_email(email)
+    admin.with_identity.where(email: email).first
+  end
+
+  def primary_identity
+    identities.first
   end
 
 private

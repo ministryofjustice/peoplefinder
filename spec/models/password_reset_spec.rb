@@ -20,12 +20,32 @@ RSpec.describe PasswordReset do
       it 'returns false' do
         expect(password_reset.save).to be_falsy
       end
+
+      it 'sets relevant error' do
+        password_reset.save
+        expect(password_reset.errors.full_messages).to include 'No admin user with that email exists'
+      end
     end
 
     context 'email exists' do
-      let(:password_reset) { PasswordReset.new(email: user.email) }
+      let(:email) { 'hello@example.com' }
+      let(:password_reset) { PasswordReset.new(email: email) }
+      let(:identity) { double(:identity) }
+      let(:user) { double(:user, primary_identity: identity) }
+
+      before do
+        allow(User).to receive(:find_admin_by_email).with(email).and_return(user)
+        allow(identity).to receive(:initiate_password_reset!).and_return(true)
+      end
+
+
       it 'returns true' do
         expect(password_reset.save).to be_truthy
+      end
+
+      it 'calls #initiate_password_reset! on identity' do
+        expect(identity).to receive(:initiate_password_reset!)
+        password_reset.save
       end
     end
   end
