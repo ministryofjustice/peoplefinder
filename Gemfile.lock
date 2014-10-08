@@ -40,7 +40,33 @@ PATH
   remote: .
   specs:
     peoplefinder (0.0.1)
+      ancestry
+      carrierwave (~> 0.10.0)
+      elasticsearch-model (~> 0.1.4)
+      elasticsearch-rails (~> 0.1.4)
+      fog (~> 1.20.0)
+      friendly_id (~> 5.0.0)
+      govspeak
+      govuk_frontend_toolkit
+      govuk_template
+      haml-rails
+      jbuilder (~> 2.0)
+      jquery-rails
+      mail
+      mini_magick
+      moj_internal_template
+      omniauth-gplus (~> 2.0.1)
+      paper_trail (~> 3.0.5)
+      pg
+      rack-timeout
       rails (~> 4.1.5)
+      recipient_interceptor (~> 0.1.2)
+      sass-rails (~> 4.0.3)
+      simple_form (~> 3.1.0.rc1)
+      uglifier (>= 1.3.0)
+      unf
+      unicorn (~> 4.8.3)
+      will_paginate (~> 3.0)
 
 GEM
   remote: https://rubygems.org/
@@ -74,10 +100,6 @@ GEM
     addressable (2.3.6)
     ancestry (2.1.0)
       activerecord (>= 3.0.0)
-    appsignal (0.9.5)
-      activesupport (>= 3.0)
-      rack
-      thread_safe
     arel (5.0.1.20140414130214)
     ast (2.0.0)
     astrolabe (1.3.0)
@@ -193,7 +215,6 @@ GEM
     net-scp (1.2.1)
       net-ssh (>= 2.6.5)
     net-ssh (2.9.1)
-    newrelic_rpm (3.9.4.245)
     nokogiri (1.6.3.1)
       mini_portile (= 0.6.0)
     oauth2 (1.0.0)
@@ -244,11 +265,6 @@ GEM
       bundler (>= 1.3.0, < 2.0)
       railties (= 4.1.5)
       sprockets-rails (~> 2.0)
-    rails_12factor (0.0.2)
-      rails_serve_static_assets
-      rails_stdout_logging
-    rails_serve_static_assets (0.0.2)
-    rails_stdout_logging (0.0.3)
     railties (4.1.5)
       actionpack (= 4.1.5)
       activesupport (= 4.1.5)
@@ -358,53 +374,27 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  ancestry
-  appsignal
   brakeman
   capybara
   carrierwave!
   dotenv-rails
-  elasticsearch-model (~> 0.1.4)
-  elasticsearch-rails (~> 0.1.4)
   factory_girl_rails
-  fog (~> 1.20.0)
-  friendly_id (~> 5.0.0)
-  govspeak
-  govuk_frontend_toolkit
-  govuk_template
-  haml-rails
-  jbuilder (~> 2.0)
-  jquery-rails
   jshint!
   launchy
-  mail
-  mini_magick
   minitest
   moj_internal_template!
-  newrelic_rpm
   omniauth-gplus!
-  paper_trail (~> 3.0.5)
   peoplefinder!
-  pg
   poltergeist
   pry
   pry-rails
-  rack-timeout
   rails (~> 4.1.5)
-  rails_12factor
-  recipient_interceptor (~> 0.1.2)
   rspec-mocks
   rspec-rails (~> 3.0.0)
   rubocop
   rubocop-rspec
-  sass-rails (~> 4.0.3)
   shoulda-matchers
-  simple_form (~> 3.1.0.rc1)
   simplecov (~> 0.7.1)
   simplecov-rcov
   spring
   teaspoon
-  uglifier (>= 1.3.0)
-  unf
-  unicorn (~> 4.8.3)
-  will_paginate (~> 3.0)
