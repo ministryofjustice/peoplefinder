@@ -8,6 +8,6 @@ class Invitation < SimpleDelegator
 protected
 
   def communicate_change
-    DeclineNotification.new(self).send if declined?
+    DeclineNotificationJob.perform_later id if declined?
   end
 end

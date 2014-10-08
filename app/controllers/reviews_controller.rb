@@ -14,7 +14,7 @@ class ReviewsController < ApplicationController
     @review = scope.new(review_params)
 
     if @review.save
-      FeedbackRequest.new(@review).send
+      FeedbackRequestJob.perform_later @review.id
       notice :created, name: @review.author_name
       redirect_to action: :index
     else
