@@ -19,15 +19,29 @@ module Admin
 
     def edit
       @identity = Identity.find_by_password_reset_token(params[:token])
+      if @identity.nil? || !@identity.can_reset_password?
+        redirect_to(
+          new_admin_password_reset_path,
+          notice: 'Your password reset token has expired'
+        )
+      end
     end
 
     def update
       token = params[:identity][:password_reset_token]
       @identity = Identity.find_by_password_reset_token(token)
       if @identity && @identity.can_reset_password?
-        @identity.update_attributes(password_params)
+        if @identity.update_attributes(password_params)
+          redirect_to new_login_path
+        else
+          render :edit
+        end
+      else
+        redirect_to(
+          new_admin_password_reset_path,
+          notice: 'Your password reset token has expired'
+        )
       end
-      redirect_to new_login_path
     end
 
   private

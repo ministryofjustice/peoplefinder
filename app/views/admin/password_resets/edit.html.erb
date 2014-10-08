@@ -1,10 +1,8 @@
 <%= form_for @identity, url: admin_password_reset_path, method: 'put' do |f| %>
   <%= f.hidden_field :password_reset_token %>
 
-  <%= f.label :password %>
   <%= f.password_field :password %>
 
-  <%= f.label :password_confirmation %>
   <%= f.password_field :password_confirmation %>
 
   <%= button_tag 'Reset password' %>

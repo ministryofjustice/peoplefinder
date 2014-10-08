@@ -1,5 +1,15 @@
 <%= form_for @password_reset, url: admin_password_reset_path do |f| %>
-  <%= f.label :email %>
+
+  <% if @password_reset.errors.any? %>
+    <ul>
+      <% @password_reset.errors.full_messages.each do |message| %>
+        <li>
+          <%= message %>
+        </li>
+      <% end %>
+    </ul>
+  <% end %>
+
   <%= f.text_field :email %>
 
   <%= f.button 'Send password reset link' %>
