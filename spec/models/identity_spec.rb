@@ -68,4 +68,27 @@ RSpec.describe Identity, type: :model do
       described_class.authenticate(subject.username, 'WRONG')
     ).to be_nil
   end
+
+  describe '#initiate_password_reset!' do
+    let(:identity) { create(:identity) }
+    let(:token) { 'I am a token' }
+
+    before do
+      allow(SecureRandom).to receive(:hex).with(32) { token }
+      identity.initiate_password_reset!
+    end
+
+    it 'sets expiry to < 3 hours in the future' do
+      expect(identity.password_reset_expires_at).to be < 3.hours.from_now
+    end
+
+    it 'sets password_reset_token from SecureRandom' do
+      expect(identity.password_reset_token).to eq token
+    end
+
+    it 'persists the new token/expiry' do
+      expect(identity.changed?).to be_falsy
+    end
+
+  end
 end

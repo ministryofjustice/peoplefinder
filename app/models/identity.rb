@@ -1,3 +1,4 @@
+require 'securerandom'
 class Identity < ActiveRecord::Base
   belongs_to :user
   attr_reader :password
@@ -29,6 +30,12 @@ class Identity < ActiveRecord::Base
 
   def valid_password?(pw)
     SCrypt::Password.new(password_digest) == pw
+  end
+
+  def initiate_password_reset!
+    self.password_reset_expires_at = 2.hours.from_now
+    self.password_reset_token = SecureRandom.hex(32)
+    save
   end
 
 private
