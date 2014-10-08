@@ -1,5 +1,5 @@
 class ApplicationController < ActionController::Base
-  force_ssl if Rails.configuration.start_secure_session
+  force_ssl if Rails.configuration.try(:start_secure_session)
 
   protect_from_forgery with: :exception
   before_action :ensure_user
