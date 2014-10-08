@@ -7,7 +7,7 @@ class EmailAddress < Mail::Address
   end
 
   def valid_domain?
-    Rails.configuration.valid_login_domains.include?(domain)
+    valid_login_domains.include?(domain)
   end
 
   def valid_format?
@@ -32,5 +32,12 @@ class EmailAddress < Mail::Address
 
   def multipart_local?
     local.split('.').length > 1
+  end
+
+private
+  def valid_login_domains
+    Rails.configuration.valid_login_domains
+  rescue
+    []
   end
 end
