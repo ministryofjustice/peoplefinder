@@ -8,8 +8,6 @@ class Invitation < SimpleDelegator
 protected
 
   def communicate_change
-    return unless declined?
-    token = subject.tokens.create!
-    ReviewMailer.request_declined(self, token).deliver
+    DeclineNotification.new(self).send if declined?
   end
 end

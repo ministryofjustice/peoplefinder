@@ -17,11 +17,9 @@ class ReviewPeriod
   end
 
   def send_closure_notifications
-    return if open?
-    User.participants.each do |participant|
-      UserMailer.
-        closure_notification(participant, participant.tokens.create).
-        deliver
+    return unless closed?
+    User.participants.each do |user|
+      ClosureNotification.new(user).send
     end
   end
 end
