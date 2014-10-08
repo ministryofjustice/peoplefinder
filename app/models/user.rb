@@ -44,6 +44,10 @@ class User < ActiveRecord::Base
     manager.present?
   end
 
+  def reviewer?
+    replies.any?
+  end
+
   def review_completion
     ReviewCompletion.new(reviews)
   end
