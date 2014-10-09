@@ -50,7 +50,6 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'pry-rails'
 
   s.add_development_dependency 'dotenv-rails'
-  s.add_development_dependency 'jshint'
   s.add_development_dependency 'pry'
   s.add_development_dependency 'rspec-mocks'
   s.add_development_dependency 'rspec-rails', '~> 3.0.0'
