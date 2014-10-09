@@ -12,7 +12,7 @@ RSpec.describe 'Searchable', elastic: true do # rubocop:disable RSpec/DescribeCl
 
   context 'with some people' do
     before do
-      Person.import
+      Peoplefinder::Person.import
       sleep 1
     end
 
@@ -48,6 +48,6 @@ RSpec.describe 'Searchable', elastic: true do # rubocop:disable RSpec/DescribeCl
   end
 
   def search_for(query)
-    Person.search(query).records
+    Peoplefinder::Person.search(query).records
   end
 end

@@ -4,13 +4,13 @@ RSpec.describe 'Completion' do # rubocop:disable RSpec/DescribeClass
 
   context 'completion score' do
     it 'returns 0 if all fields are empty' do
-      person = Person.new
+      person = Peoplefinder::Person.new
       expect(person.completion_score).to eql(0)
       expect(person).to be_incomplete
     end
 
     it 'returns 44 if the fields are partially filled' do
-      person = Person.new(
+      person = Peoplefinder::Person.new(
         given_name: 'Bobby',
         surname: 'Tables',
         email: 'user.example@digital.justice.gov.uk',
@@ -21,7 +21,7 @@ RSpec.describe 'Completion' do # rubocop:disable RSpec/DescribeClass
     end
 
     context 'when all the fields are completed' do
-      let(:person) { Person.new(completed_attributes) }
+      let(:person) { Peoplefinder::Person.new(completed_attributes) }
       before { person.groups << build(:group)  }
 
       it 'returns 100' do
@@ -41,31 +41,31 @@ RSpec.describe 'Completion' do # rubocop:disable RSpec/DescribeClass
 
   describe '#inadequate_profiles' do
     let!(:person) { create(:person, completed_attributes) }
-    subject { Person.inadequate_profiles }
+    subject { Peoplefinder::Person.inadequate_profiles }
 
     it 'is empty when all attributes are populated' do
       expect(subject).to be_empty
     end
 
     it 'returns the person when there is neither phone nor secondary number' do
-      Person.update_all 'primary_phone_number = \'\', secondary_phone_number = null'
+      Peoplefinder::Person.update_all 'primary_phone_number = \'\', secondary_phone_number = null'
       expect(subject).to include(person)
     end
 
     context 'with no_phone = true' do
       it 'does not return the person even if there is no  primary_phone_number' do
-        Person.update_all 'primary_phone_number = null, no_phone = true'
+        Peoplefinder::Person.update_all 'primary_phone_number = null, no_phone = true'
         expect(subject).not_to include(person)
       end
     end
 
     it 'returns the person when there is no location' do
-      Person.update_all 'location = \'\''
+      Peoplefinder::Person.update_all 'location = \'\''
       expect(subject).to include(person)
     end
 
     it 'returns the person when there is no image' do
-      Person.update_all 'image = null'
+      Peoplefinder::Person.update_all 'image = null'
       expect(subject).to include(person)
     end
   end
