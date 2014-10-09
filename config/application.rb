@@ -33,6 +33,7 @@ module SCSAppraisals
 
     config.phase = 'alpha'
     config.feedback_url = ENV.fetch('FEEDBACK_URL')
+    config.survey_url = ENV.fetch('SURVEY_URL')
 
     config.noreply_email = ENV.fetch('EMAIL_NOREPLY_ADDRESS')
 
