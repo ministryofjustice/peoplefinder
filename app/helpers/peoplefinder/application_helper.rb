@@ -1,5 +1,3 @@
-require 'peoplefinder'
-
 module Peoplefinder::ApplicationHelper
   def last_update
     current_object = @person || @group
