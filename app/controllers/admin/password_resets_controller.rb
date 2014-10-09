@@ -23,7 +23,7 @@ module Admin
     end
 
     def update
-      if @identity.update_attributes(password_params)
+      if @identity.update(password_params)
         redirect_to new_login_path
       else
         render :edit
