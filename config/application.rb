@@ -35,11 +35,6 @@ module SCSAppraisals
     config.feedback_url =
       'mailto:scs-appraisals-feedback@digital.justice.gov.uk'
 
-    config.valid_login_domains = %w[
-      digital.justice.gov.uk
-      digital.cabinet-office.gov.uk
-    ]
-
     config.noreply_email = ENV.fetch('EMAIL_NOREPLY_ADDRESS')
 
     config.action_mailer.delivery_method = :smtp
