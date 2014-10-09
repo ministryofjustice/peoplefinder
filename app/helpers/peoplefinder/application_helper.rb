@@ -13,7 +13,7 @@ module Peoplefinder::ApplicationHelper
   end
 
   def breadcrumbs(items)
-    render partial: 'shared/breadcrumbs', locals: { items: items }
+    render partial: 'peoplefinder/shared/breadcrumbs', locals: { items: items }
   end
 
   FLASH_NOTICE_KEYS = %w[ error notice warning ]
