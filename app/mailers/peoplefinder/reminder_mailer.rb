@@ -1,4 +1,6 @@
-class ReminderMailer < ActionMailer::Base
+require 'peoplefinder'
+
+class Peoplefinder::ReminderMailer < ActionMailer::Base
   def inadequate_profile(person)
     @person = person
     @token = Token.for_person(@person)
@@ -7,7 +9,7 @@ class ReminderMailer < ActionMailer::Base
 
   def information_request(information_request)
     @person = information_request.recipient
-    @token = Token.for_person(@person)
+    @token = Peoplefinder::Token.for_person(@person)
     @message = information_request.message
 
     mail to: @person.email

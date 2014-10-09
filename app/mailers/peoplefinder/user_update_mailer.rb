@@ -1,4 +1,6 @@
-class UserUpdateMailer < ActionMailer::Base
+require 'peoplefinder'
+
+class Peoplefinder::UserUpdateMailer < ActionMailer::Base
   def new_profile_email(person, by_email = nil)
     @person = person
     @by_email = by_email
