@@ -1,6 +1,8 @@
 require 'rails_helper'
 
-RSpec.describe ErrorsController, type: :controller do
+RSpec.describe Peoplefinder::ErrorsController, type: :controller do
+  routes { Peoplefinder::Engine.routes }
+
   before do
     mock_logged_in_user
   end
