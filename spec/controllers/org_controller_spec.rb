@@ -1,6 +1,8 @@
 require 'rails_helper'
 
-RSpec.describe OrgController, type: :controller do
+RSpec.describe Peoplefinder::OrgController, type: :controller do
+  routes { Peoplefinder::Engine.routes }
+
   before do
     mock_logged_in_user
   end

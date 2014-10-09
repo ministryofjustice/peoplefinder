@@ -1,6 +1,8 @@
 require 'rails_helper'
 
-RSpec.describe InformationRequestsController, type: :controller do
+RSpec.describe Peoplefinder::InformationRequestsController, type: :controller do
+  routes { Peoplefinder::Engine.routes }
+
   before do
     mock_logged_in_user
   end

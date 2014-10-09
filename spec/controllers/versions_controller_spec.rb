@@ -1,6 +1,8 @@
 require 'rails_helper'
 
-RSpec.describe VersionsController, type: :controller do
+RSpec.describe Peoplefinder::VersionsController, type: :controller do
+  routes { Peoplefinder::Engine.routes }
+
   before do
     mock_logged_in_user
   end
@@ -12,7 +14,7 @@ RSpec.describe VersionsController, type: :controller do
         version = PaperTrail::Version.last
         put :undo, id: version.id
 
-        expect { Person.find(person) }.
+        expect { Peoplefinder::Person.find(person) }.
           to raise_error(ActiveRecord::RecordNotFound)
       end
     end
@@ -24,7 +26,7 @@ RSpec.describe VersionsController, type: :controller do
         version = PaperTrail::Version.last
         put :undo, id: version.id
 
-        expect(Person.find_by_surname('Necro')).to be_present
+        expect(Peoplefinder::Person.find_by_surname('Necro')).to be_present
       end
     end
 
@@ -34,7 +36,7 @@ RSpec.describe VersionsController, type: :controller do
         version = PaperTrail::Version.last
         put :undo, id: version.id
 
-        expect(Membership.find(membership)).to be_present
+        expect(Peoplefinder::Membership.find(membership)).to be_present
       end
     end
 
@@ -45,7 +47,7 @@ RSpec.describe VersionsController, type: :controller do
         version = PaperTrail::Version.last
         put :undo, id: version.id
 
-        expect { Membership.find(membership) }.
+        expect { Peoplefinder::Membership.find(membership) }.
           to raise_error(ActiveRecord::RecordNotFound)
       end
     end

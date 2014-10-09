@@ -1,6 +1,8 @@
 require 'rails_helper'
 
-RSpec.describe PersonImageController, type: :controller do
+RSpec.describe Peoplefinder::PersonImageController, type: :controller do
+  routes { Peoplefinder::Engine.routes }
+
   before do
     mock_logged_in_user
   end
@@ -28,7 +30,7 @@ RSpec.describe PersonImageController, type: :controller do
 
     it 'recreates image versions' do
       expect(image).to receive(:recreate_versions!).once.and_return(true)
-      allow_any_instance_of(Person).to receive(:image).and_return(image)
+      allow_any_instance_of(Peoplefinder::Person).to receive(:image).and_return(image)
 
       put :update,
         person_id: person.id,
@@ -40,7 +42,7 @@ RSpec.describe PersonImageController, type: :controller do
 
     it 'fails to recreate image versions' do
       expect(image).to receive(:recreate_versions!).once.and_return(false)
-      allow_any_instance_of(Person).to receive(:image).and_return(image)
+      allow_any_instance_of(Peoplefinder::Person).to receive(:image).and_return(image)
 
       put :update,
         person_id: person.id,
