@@ -16,7 +16,7 @@ class Peoplefinder::Version < PaperTrail::Version
   end
 
   def membership?
-    item_type == 'Membership'
+    item_type == 'Peoplefinder::Membership'
   end
 
   def undo
