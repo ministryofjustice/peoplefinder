@@ -29,6 +29,8 @@ module Dummy
       digital.justice.gov.uk
       digital.cabinet-office.gov.uk
     ]
+
+    config.support_email = 'example@digital.justice.gov.uk'
   end
 end
 
