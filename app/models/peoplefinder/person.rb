@@ -1,6 +1,8 @@
 require 'peoplefinder'
 
 class Peoplefinder::Person < ActiveRecord::Base
+  self.table_name = 'people'
+
   extend FriendlyId
   include Peoplefinder::Concerns::Searchable
   include Peoplefinder::Concerns::Completion

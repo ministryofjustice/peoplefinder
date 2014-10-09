@@ -1,6 +1,8 @@
 require 'peoplefinder'
 
 class Peoplefinder::Token < ActiveRecord::Base
+  self.table_name = 'tokens'
+
   after_initialize :generate_value
 
   validate :valid_email_address

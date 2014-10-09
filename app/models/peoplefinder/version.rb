@@ -1,6 +1,8 @@
 require 'peoplefinder'
 
 class Peoplefinder::Version < PaperTrail::Version
+  self.table_name = 'versions'
+
   def creation?
     event == 'create'
   end
