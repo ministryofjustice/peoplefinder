@@ -31,6 +31,20 @@ module Dummy
     ]
 
     config.support_email = 'support@example.com'
+
+    config.action_mailer.default_url_options = {
+        host: 'localhost',
+        port: 3000
+      }
+
+    config.action_mailer.default_url_options = {
+      host: 'localhost',
+      port: 3000
+    }
+
+    config.action_mailer.default_options = {
+      from:  config.support_email
+    }
   end
 end
 
