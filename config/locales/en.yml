@@ -24,10 +24,6 @@ en:
     reviews:
       created: 'Invited %{name}'
       create_error: 'No invitation sent. Please check the errors below'
-    introductory_mailings:
-      created: 'Sent introductory emails'
-    closure_mailings:
-      created: 'Sent closure notifications'
     invitations:
       accepted: "Thank you for accepting the invitation"
       declined: "You have declined the invitation to provide feedback"
@@ -40,15 +36,20 @@ en:
     logins:
       logged_in: 'Logged in'
       logged_out: 'Logged out'
-    settings:
-      updated: 'Updated setting %{key}'
-    users:
-      created: 'User %{name} created'
-      updated: 'User %{name} updated'
-      destroyed: 'User %{name} deleted'
-    user_uploads:
-      uploaded: 'Users uploaded successfully'
-      upload_failed: 'An error occurred. No users were uploaded'
+    admin:
+      introductory_mailings:
+        created: 'Sent introductory emails'
+      closure_mailings:
+        created: 'Sent closure notifications'
+      settings:
+        updated: 'Updated setting %{key}'
+      users:
+        created: 'User %{name} created'
+        updated: 'User %{name} updated'
+        destroyed: 'User %{name} deleted'
+      user_uploads:
+        uploaded: 'Users uploaded successfully'
+        upload_failed: 'An error occurred. No users were uploaded'
   helpers:
     submit:
       invitation:
