@@ -6,7 +6,7 @@ module SpecSupport
     end
 
     def current_user
-      Person.where(email: 'test.user@digital.moj.gov.uk').first
+      Peoplefinder::Person.where(email: 'test.user@digital.moj.gov.uk').first
     end
 
     def omni_auth_log_in_as(email)
