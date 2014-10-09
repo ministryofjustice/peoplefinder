@@ -14,7 +14,7 @@ unless admin
   )
 end
 
-pw = 12.times.map { PASSWORD_CHARS[rand(PASSWORD_CHARS.length)] }.join
+pw = ENV['SCS_ADMIN_PW'] || 12.times.map { PASSWORD_CHARS[rand(PASSWORD_CHARS.length)] }.join
 
 identity = admin.identities.first
 if identity
