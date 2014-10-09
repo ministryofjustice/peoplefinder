@@ -12,7 +12,8 @@ class PasswordReset
   end
 
   def save
-    valid? && identity.initiate_password_reset!
+    return false unless valid?
+    identity.initiate_password_reset!
   end
 
   def token
