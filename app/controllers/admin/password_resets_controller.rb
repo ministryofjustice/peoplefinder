@@ -1,6 +1,8 @@
 module Admin
   class PasswordResetsController < AdminController
     skip_before_action :ensure_administrator
+    before_action :load_identity, only: [:edit, :update]
+    before_action :verify_reset_permitted, only: [:edit, :update]
 
     def new
       @password_reset = PasswordReset.new
@@ -18,24 +20,25 @@ module Admin
     end
 
     def edit
-      @identity = Identity.find_by_password_reset_token(params[:token])
-      unless @identity.can_reset_password?
-        redirect_to(
-          new_admin_password_reset_path,
-          notice: 'Your password reset token has expired'
-        )
-      end
     end
 
     def update
-      token = params[:identity][:password_reset_token]
+      if @identity.update_attributes(password_params)
+        redirect_to new_login_path
+      else
+        render :edit
+      end
+    end
+
+  private
+
+    def load_identity
       @identity = Identity.find_by_password_reset_token(token)
+    end
+
+    def verify_reset_permitted
       if @identity.can_reset_password?
-        if @identity.update_attributes(password_params)
-          redirect_to new_login_path
-        else
-          render :edit
-        end
+        true
       else
         redirect_to(
           new_admin_password_reset_path,
@@ -44,7 +47,9 @@ module Admin
       end
     end
 
-  private
+    def token
+      params[:token] || params[:identity][:password_reset_token]
+    end
 
     def password_params
       params.require(:identity).permit(:password, :password_confirmation)
