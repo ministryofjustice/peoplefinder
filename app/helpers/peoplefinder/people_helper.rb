@@ -1,4 +1,6 @@
-module PeopleHelper
+require 'peoplefinder'
+
+module Peoplefinder::PeopleHelper
   def day_name(symbol)
     I18n.t(symbol, scope: [:people, :day_names])
   end

@@ -1,4 +1,6 @@
-module ApplicationHelper
+require 'peoplefinder'
+
+module Peoplefinder::ApplicationHelper
   def last_update
     current_object = @person || @group
     if current_object && current_object.updated_at.present?
