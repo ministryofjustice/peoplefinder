@@ -14,12 +14,16 @@ class Identity < ActiveRecord::Base
   after_save :clear_password
 
   def self.authenticate(username, password)
-    identity = where(username: username).first
-    if identity && identity.valid_password?(password)
+    identity = find_by(username: username) || NullIdentity.instance
+    if identity.valid_password?(password)
       identity.user
     else
       nil
     end
+  end
+
+  def self.find_by_password_reset_token(token)
+    find_by(password_reset_token: token) || NullIdentity.instance
   end
 
   def password=(pw)
@@ -47,5 +51,17 @@ private
   def clear_password
     @password = nil
     @password_confirmation = nil
+  end
+end
+
+class NullIdentity
+  include Singleton
+
+  def can_reset_password?
+    false
+  end
+
+  def valid_password?(_)
+    false
   end
 end

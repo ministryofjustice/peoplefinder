@@ -69,6 +69,27 @@ RSpec.describe Identity, type: :model do
     ).to be_nil
   end
 
+  describe '.authenticate' do
+    let(:user) { create(:user) }
+    let(:password) { generate(:password) }
+    let(:identity) { create(:identity, user: user, password: password) }
+
+    it 'returns the user when given the correct username and password' do
+      expect(described_class.authenticate(identity.username, password)).
+        to eql(user)
+    end
+
+    it 'returns nil when given an incorrect password' do
+      expect(described_class.authenticate(identity.username, 'WRONG')).
+        to be_nil
+    end
+
+    it 'returns nil when given a nonexistent username' do
+      expect(described_class.authenticate('WRONG', password)).
+        to be_nil
+    end
+  end
+
   describe '#initiate_password_reset!' do
     let(:identity) { create(:identity) }
     let(:token) { 'I am a token' }
