@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe ReportedProfile, type: :model do
+RSpec.describe Peoplefinder::ReportedProfile, type: :model do
   it { should belong_to(:notifier) }
   it { should belong_to(:subject) }
 

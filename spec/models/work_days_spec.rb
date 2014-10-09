@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe WorkDays do
+RSpec.describe Peoplefinder::Concerns::WorkDays do
 
   describe '.works_weekends?' do
     let(:weekday_person) { create(:person) }

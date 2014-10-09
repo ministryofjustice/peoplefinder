@@ -30,7 +30,7 @@ module Dummy
       digital.cabinet-office.gov.uk
     ]
 
-    config.support_email = 'example@digital.justice.gov.uk'
+    config.support_email = 'support@example.com'
   end
 end
 

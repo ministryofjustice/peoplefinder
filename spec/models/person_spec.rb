@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Person, type: :model do
+RSpec.describe Peoplefinder::Person, type: :model do
   let(:person) { build(:person) }
   it { should validate_presence_of(:surname) }
   it { should have_many(:groups) }
@@ -39,7 +39,7 @@ RSpec.describe Person, type: :model do
   context 'search' do
     it 'deletes indexes' do
       expect(described_class.__elasticsearch__).to receive(:delete_index!).
-        with(index: 'test_people')
+        with(index: 'test_peoplefinder-people')
       described_class.delete_indexes
     end
   end
@@ -70,8 +70,8 @@ RSpec.describe Person, type: :model do
 
     context 'when there is one membership' do
       it 'contains the group path' do
-        group_a = Group.new
-        group_b = Group.new
+        group_a = build(:group)
+        group_b = build(:group)
         allow(group_b).to receive(:path) { [group_a, group_b] }
         person.groups << group_b
         expect(person.path).to eql([group_a, group_b, person])
@@ -79,7 +79,7 @@ RSpec.describe Person, type: :model do
     end
 
     context 'when there are multiple group memberships' do
-      let(:groups) { 4.times.map { Group.new } }
+      let(:groups) { 4.times.map { build(:group) } }
 
       before do
         allow(groups[1]).to receive(:path) { [groups[0], groups[1]] }
@@ -97,7 +97,7 @@ RSpec.describe Person, type: :model do
       end
 
       it 'uses the first group path if the hint is unhelpful' do
-        expect(person.path(Group.new)).to eql([groups[0], groups[1], person])
+        expect(person.path(build(:group))).to eql([groups[0], groups[1], person])
       end
     end
   end

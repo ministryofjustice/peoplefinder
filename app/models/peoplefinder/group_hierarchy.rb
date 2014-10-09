@@ -29,12 +29,12 @@ private
   end
 
   def group_path(lg)
-    Rails.application.routes.url_helpers.group_path(id: lg.slug)
+    Peoplefinder::Engine.routes.url_helpers.group_path(id: lg.to_param)
   end
 
   def child_map
     @child_map ||= Hash.new { |h, k| h[k] = [] }.tap { |hash|
-      Group.all.each do |group|
+      Peoplefinder::Group.all.each do |group|
         hash[group.parent_id] << group
       end
     }

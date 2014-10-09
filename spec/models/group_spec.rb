@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Group, type: :model do
+RSpec.describe Peoplefinder::Group, type: :model do
   it { should have_many(:leaders) }
   it { should validate_presence_of(:team_email_address) }
 

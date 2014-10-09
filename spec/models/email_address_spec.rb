@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe EmailAddress do
+RSpec.describe Peoplefinder::EmailAddress do
   describe '.valid_domain' do
     context 'when it is not in the list of valid_login_domains' do
       it 'is not valid' do

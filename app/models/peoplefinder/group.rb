@@ -51,7 +51,7 @@ class Peoplefinder::Group < ActiveRecord::Base
   end
 
   def all_people
-    Person.find_by_sql(
+    Peoplefinder::Person.find_by_sql(
     [
       'select distinct array_agg(role) as role_list, p.*
       from memberships m, people p
@@ -81,7 +81,7 @@ class Peoplefinder::Group < ActiveRecord::Base
 
   def name_and_sequence
     slug = name.to_param
-    sequence = Group.where("slug like '#{slug}-%'").count + 2
+    sequence = Peoplefinder::Group.where("slug like '#{slug}-%'").count + 2
     "#{slug}-#{sequence}"
   end
 

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe GroupHierarchy, type: :model do
+RSpec.describe Peoplefinder::GroupHierarchy, type: :model do
   it "generates a tree of hashes with group information" do
     a, b, c, d, e = create_hierarchy_of_groups
     a.reload
@@ -51,7 +51,7 @@ RSpec.describe GroupHierarchy, type: :model do
 
     it 'includes each of the five groups' do
       %w[ A B C D E ].each do |name|
-        expect(subject).to include(Group.find_by_name(name).id)
+        expect(subject).to include(Peoplefinder::Group.find_by_name(name).id)
       end
     end
   end

@@ -10,7 +10,7 @@ module Peoplefinder::Concerns::Searchable
     index_name [Rails.env, model_name.collection.gsub(/\//, '-')].join('_')
 
     def self.delete_indexes
-      __elasticsearch__.delete_index! index: Person.index_name
+      __elasticsearch__.delete_index! index: Peoplefinder::Person.index_name
     end
 
     def self.fuzzy_search(query)

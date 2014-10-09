@@ -12,15 +12,15 @@ class Peoplefinder::Token < ActiveRecord::Base
   end
 
   def valid_email_address
-    if !EmailAddress.new(user_email).valid_format?
+    if !Peoplefinder::EmailAddress.new(user_email).valid_format?
       errors.add(:base, I18n.t('errors.tokens.invalid_address'))
-    elsif !EmailAddress.new(user_email).valid_domain?
+    elsif !Peoplefinder::EmailAddress.new(user_email).valid_domain?
       errors.add(:base, I18n.t('errors.tokens.invalid_domain'))
     end
   end
 
   def self.for_person(person)
-    Token.create!(user_email: person.email)
+    Peoplefinder::Token.create!(user_email: person.email)
   end
 
 private
