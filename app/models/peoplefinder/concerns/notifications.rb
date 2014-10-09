@@ -48,7 +48,7 @@ module Peoplefinder::Concerns::Notifications
   private
 
     def should_send_email_notification?(email, current_user)
-      EmailAddress.new(email).valid_address? && current_user.email != email
+      Peoplefinder::EmailAddress.new(email).valid_address? && current_user.email != email
     end
   end
 end
