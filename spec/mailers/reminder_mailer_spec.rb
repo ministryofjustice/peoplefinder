@@ -1,7 +1,10 @@
 require 'rails_helper'
 
-RSpec.describe ReminderMailer do
+RSpec.configure do |c|
+  c.include Peoplefinder::Engine.routes.url_helpers
+end
 
+RSpec.describe Peoplefinder::ReminderMailer do
   describe '.inadequate_profile' do
     let(:person) { create(:person, email: 'test.user@digital.justice.gov.uk') }
     let(:mail) { described_class.inadequate_profile(person).deliver }
@@ -23,14 +26,14 @@ RSpec.describe ReminderMailer do
     end
 
     it 'includes the token url with desired path' do
-      expect(mail.body).to have_text(token_url(Token.last, desired_path: "/people/#{ person.to_param }/edit"))
+      expect(mail.body).to have_text(token_url(Peoplefinder::Token.last, desired_path: "/people/#{ person.to_param }/edit"))
     end
   end
 
   describe '.reported_profile' do
     let(:subject) { create(:person, surname: 'subject-person') }
     let(:reported_profile) do
-      ReportedProfile.create(
+      Peoplefinder::ReportedProfile.create(
         subject: subject,
         notifier: create(:person, surname: 'notifier-person'),
         recipient_email: 'recipient@example.com',
