@@ -1,5 +1,5 @@
 /* global $, document, peoplefinderApp */
-//= require peoplefinder_app
+//= require peoplefinder/peoplefinder_app
 
 $(function() {
   $(document).on('click', '#add_membership', function(e) {

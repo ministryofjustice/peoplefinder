@@ -1,7 +1,7 @@
 /* global peoplefinderApp, OrgTree, FormInputMapper */
-//= require peoplefinder_app
-//= require org_tree
-//= require form_input_mapper
+//= require peoplefinder/peoplefinder_app
+//= require peoplefinder/org_tree
+//= require peoplefinder/form_input_mapper
 
 peoplefinderApp.controller('OrgBrowserCtrl', function($scope, $element, $http) {
   var initialize = function() {
