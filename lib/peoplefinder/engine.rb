@@ -15,7 +15,7 @@ require 'carrierwave'
 require 'omniauth-gplus'
 require 'will_paginate'
 
-if %w{rspec-core rspec-mocks}.all? { |gemname| Gem.loaded_specs.has_key?(gemname) }
+if %w[rspec-core rspec-mocks].all? { |gemname| Gem.loaded_specs.key?(gemname) }
   require 'rspec/core'
   require 'rspec/mocks'
 end

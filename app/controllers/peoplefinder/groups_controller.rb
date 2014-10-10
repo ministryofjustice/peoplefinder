@@ -1,6 +1,8 @@
 module Peoplefinder
   class GroupsController < ApplicationController
-    before_action :set_group, only: [:show, :edit, :update, :destroy, :all_people]
+    before_action :set_group, only: [
+      :show, :edit, :update, :destroy, :all_people
+    ]
 
     # GET /groups
     def index

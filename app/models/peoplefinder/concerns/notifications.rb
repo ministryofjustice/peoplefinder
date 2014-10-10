@@ -6,7 +6,9 @@ module Peoplefinder::Concerns::Notifications
   included do
     def send_create_email!(current_user)
       if should_send_email_notification?(email, current_user)
-        Peoplefinder::UserUpdateMailer.new_profile_email(self, current_user.email).deliver
+        Peoplefinder::UserUpdateMailer.new_profile_email(
+          self, current_user.email
+        ).deliver
       end
     end
 
@@ -41,14 +43,17 @@ module Peoplefinder::Concerns::Notifications
 
     def send_destroy_email!(current_user)
       if should_send_email_notification?(email, current_user)
-        Peoplefinder::UserUpdateMailer.deleted_profile_email(self, current_user.email).deliver
+        Peoplefinder::UserUpdateMailer.deleted_profile_email(
+          self, current_user.email
+        ).deliver
       end
     end
 
   private
 
     def should_send_email_notification?(email, current_user)
-      Peoplefinder::EmailAddress.new(email).valid_address? && current_user.email != email
+      Peoplefinder::EmailAddress.new(email).valid_address? &&
+        current_user.email != email
     end
   end
 end

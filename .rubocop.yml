@@ -87,4 +87,7 @@ Style/PercentLiteralDelimiters:
     '%w': '[]'
     '%W': '[]'
 
+ClassAndModuleChildren:
+  Enabled: false
+
 require: rubocop-rspec

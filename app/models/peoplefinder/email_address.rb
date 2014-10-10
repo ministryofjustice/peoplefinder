@@ -37,6 +37,7 @@ class Peoplefinder::EmailAddress < Mail::Address
   end
 
 private
+
   def valid_login_domains
     Rails.configuration.valid_login_domains
   rescue

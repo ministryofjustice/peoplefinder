@@ -45,4 +45,3 @@ module Dummy
     config.app_title = 'Peoplefinder Dummy'
   end
 end
-
