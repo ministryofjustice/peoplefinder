@@ -45,6 +45,8 @@ module Dummy
     config.action_mailer.default_options = {
       from:  config.support_email
     }
+
+    config.ga_tracking_id = ''
   end
 end
 
