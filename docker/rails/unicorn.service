@@ -13,28 +13,11 @@ if [ -z "$APP_MASTER_SERVER" -o "$APPHOST" == "$APP_MASTER_SERVER" ]; then
         ;;
     seed)
         echo "running seed"           >>/rails/log/unicorn.log
-        bundle exec rake db:migrate   >>/rails/log/unicorn.log 2>&1
-        bundle exec rake db:seed      >>/rails/log/unicorn.log 2>&1
-        USER_CREATE=${RAILS_USER:-'admin@admin.com, 123456789, admin'}
-        echo $USER_CREATE
+        bundle exec rake db:schema:load   >>/rails/log/unicorn.log 2>&1
         echo "creating user $USER_CREATE"            >>/rails/log/unicorn.log
-        bundle exec rake "user:create[$USER_CREATE]" >>/rails/log/unicorn.log 2>&1
+        bundle exec bin/create_admin
         ;;
     esac
-    if [ -n "${IMPORT_URL}" ]; then
-        echo "Running import from URL ${IMPORT_URL}"
-        if [ -n "${IMPORT_CREDS}" ]; then
-            IMPORT_PARAMS="--user ${IMPORT_CREDS}"
-        else
-            IMPORT_PARAMS=""
-        fi
-        curl -o /tmp/dbimport ${IMPORT_PARAMS} "${IMPORT_URL}" 2>>/rails/log/unicorn.log
-        bundle exec rake db:import_transform[/tmp/dbimport] >>/rails/log/unicorn.log 2>&1
-    fi
-
-
-    echo "Master server: Running whenever"   >>/rails/log/unicorn.log
-    bundle exec whenever --update-crontab    >>/rails/log/unicorn.log 2>&1
 
 else
     echo "Slave server: skipping DB and cron configuration"   >>/rails/log/unicorn.log
