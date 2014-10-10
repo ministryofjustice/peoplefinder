@@ -37,8 +37,10 @@ module Admin
     end
 
     def destroy
-      @user.delete
-      notice :destroyed, name: @user
+      if @user != current_user
+        @user.delete
+        notice :destroyed, name: @user
+      end
       redirect_to admin_users_path
     end
 

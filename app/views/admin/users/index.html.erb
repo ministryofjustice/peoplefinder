@@ -19,8 +19,12 @@
         <td><%= t_boolean('admin.users.list.participant', user.participant) %></td>
         <td><%= t_boolean('admin.users.list.administrator', user.administrator?) %></td>
         <td><%= link_to t('admin.users.edit_cta'), edit_admin_user_path(user) %></td>
-        <td><%= button_to t('admin.users.delete_cta'), admin_user_path(user), method: :delete,
-                  data: { confirm: t('common.confirm_action') } %></td>
+        <td>
+          <% if user != current_user %>
+            <%= button_to t('admin.users.delete_cta'), admin_user_path(user), method: :delete,
+              data: { confirm: t('common.confirm_action') } %>
+          <% end %>
+        </td>
       </tr>
     <% end %>
   </tbody>

@@ -129,6 +129,12 @@ RSpec.describe Admin::UsersController, type: :controller do
       }.to change(User, :count).by(-1)
     end
 
+    it 'does not destroy the current user' do
+      expect {
+        delete :destroy, id: admin_user.to_param
+      }.not_to change(User, :count)
+    end
+
     it 'redirects to the users list' do
       delete :destroy, id: user.to_param
       expect(response).to redirect_to(admin_users_path)

@@ -29,4 +29,19 @@ feature 'User maintenance' do
     bob = User.where(email: 'bob@example.com').first
     expect(bob.manager).to eql(alice)
   end
+
+  scenario 'Not deleting myself' do
+    visit admin_users_path
+    expect(page).to have_no_button('Delete')
+  end
+
+  scenario 'Deleting a user' do
+    create(:user)
+
+    visit admin_users_path
+
+    expect {
+      click_button 'Delete'
+    }.to change(User, :count).by(-1)
+  end
 end
