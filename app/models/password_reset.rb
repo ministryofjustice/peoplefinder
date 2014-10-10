@@ -27,6 +27,11 @@ private
   end
 
   def admin_user_with_email_must_exist
-    errors.add(:base, 'No admin user with that email exists') if @user.nil?
+    if @user.nil?
+      errors.add(
+        :base,
+        I18n.t('password_resets.errors.no_admin_user_with_email_exists')
+      )
+    end
   end
 end

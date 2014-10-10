@@ -13,7 +13,8 @@ module Admin
       @password_reset = PasswordReset.new(email: email)
       if @password_reset.save
         PasswordResetMailingJob.perform_later email
-        redirect_to new_login_path, notice: 'Password reset link sent'
+        notice :link_sent
+        redirect_to new_login_path
       else
         render :new
       end
@@ -40,10 +41,8 @@ module Admin
       if @identity.can_reset_password?
         true
       else
-        redirect_to(
-          new_admin_password_reset_path,
-          notice: 'Your password reset token has expired'
-        )
+        notice :token_expired
+        redirect_to new_admin_password_reset_path
       end
     end
 

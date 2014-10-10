@@ -41,6 +41,9 @@ en:
         created: 'Sent introductory emails'
       closure_mailings:
         created: 'Sent closure notifications'
+      password_resets:
+        token_expired: 'Your password reset token has expired'
+        link_sent: 'Password reset link sent'
       settings:
         updated: 'Updated setting %{key}'
       users:
@@ -118,6 +121,11 @@ en:
       'true': 'Yes'
       'false': 'No'
   admin:
+    password_resets:
+      new:
+        send_password_reset: 'Send password reset link'
+      edit:
+        reset_password: 'Reset password'
     home:
       csv_header: 'Upload CSV'
       csv_instructions: |
@@ -179,6 +187,9 @@ en:
       customer: 'Customer/stakeholder'
     errors:
       subject_must_be_participant: 'must be a participant'
+  password_resets:
+    errors:
+      no_admin_user_with_email_exists: 'No admin user with that email exists'
   submissions:
     title: 'Feedback for %{name}'
     intro: |
