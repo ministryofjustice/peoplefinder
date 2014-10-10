@@ -15,7 +15,7 @@
 
 %p Enter a valid Ministry of Justice email address below
 
-= simple_form_for (@token ||= Token.new) do |token_form|
+= simple_form_for (@token ||= Peoplefinder::Token.new) do |token_form|
 
   .form-group{ class: ('gov-uk-field-error' if @token.errors.any?)}
     %p= @token.errors[:base].join('')

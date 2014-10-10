@@ -23,7 +23,7 @@
         %p.form-hint Use this to change where in the organisation this team is located.
 
         .editable-fields{ style: ('display:none' unless @group.new_record?) }
-          = render layout: 'shared/org_browser' do
+          = render layout: 'peoplefinder/shared/org_browser' do
             = f.input :parent_id, as: :hidden
 
         -unless @group.new_record?

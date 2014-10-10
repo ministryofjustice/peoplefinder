@@ -43,7 +43,7 @@ private
   def editing_mode
     @editing_mode = true
     content_for :editing_alert do
-      render partial: 'shared/editing_alert'
+      render partial: 'peoplefinder/shared/editing_alert'
     end
   end
 end

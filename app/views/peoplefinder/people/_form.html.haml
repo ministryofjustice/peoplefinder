@@ -41,7 +41,7 @@
     %h3 Working days
 
   .form-checkbox
-    - Person::DAYS_WORKED.each do |day|
+    - Peoplefinder::Person::DAYS_WORKED.each do |day|
       = f.input day, as: :boolean, label: day_name(day)
 
   .form-group

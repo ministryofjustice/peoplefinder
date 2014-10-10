@@ -21,7 +21,7 @@
 
     .form-group
       %label.form-label-bold Team
-      = render layout: 'shared/org_browser' do
+      = render layout: 'peoplefinder/shared/org_browser' do
         = membership_f.input :group_id, as: :hidden
 
       %p.form-hint= info_text('hint_add_person_team_not_found')
