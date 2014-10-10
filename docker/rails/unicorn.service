@@ -12,10 +12,10 @@ if [ -z "$APP_MASTER_SERVER" -o "$APPHOST" == "$APP_MASTER_SERVER" ]; then
         bundle exec rake db:migrate   >>/rails/log/unicorn.log 2>&1
         ;;
     seed)
-        echo "running seed"           >>/rails/log/unicorn.log
-        bundle exec rake db:schema:load   >>/rails/log/unicorn.log 2>&1
+        echo "running db:reset"     >>/rails/log/unicorn.log
+        bundle exec rake db:reset   >>/rails/log/unicorn.log 2>&1
         echo "creating user $USER_CREATE"            >>/rails/log/unicorn.log
-        bundle exec bin/create_admin
+        bundle exec bin/create_admin >>/rails/log/unicorn.log 2>&1
         ;;
     esac
 
