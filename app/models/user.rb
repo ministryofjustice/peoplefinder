@@ -24,11 +24,19 @@ class User < ActiveRecord::Base
 
   default_scope { order(:name) }
 
-  scope :participants, -> { where(participant: true) }
-  scope :with_identity, -> { joins(:identities) }
-  scope :admin, -> { where(administrator: true) }
-
   before_destroy :orphan_direct_reports
+
+  def self.participants
+    where(participant: true)
+  end
+
+  def self.with_identity
+    joins(:identities)
+  end
+
+  def self.admin
+    where(administrator: true)
+  end
 
   def email=(e)
     super normalize_email(e)

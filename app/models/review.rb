@@ -34,10 +34,6 @@ class Review < ActiveRecord::Base
     if: :declined?
   validate :subject_is_participant
 
-  scope :submitted, -> { where(status: :submitted) }
-  scope :editable, -> { where(status: [:accepted, :started]) }
-  scope :invited, -> { where(status: [:no_response, :declined]) }
-
   after_initialize :prefill_invitation_message
 
   symbol_field :status, STATUSES
@@ -50,6 +46,18 @@ class Review < ActiveRecord::Base
       arel_table[:subject_id].eq(user.id).
       or(arel_table[:author_email].eq(user.email))
     )
+  end
+
+  def self.submitted
+    where(status: :submitted)
+  end
+
+  def self.editable
+    where(status: [:accepted, :started])
+  end
+
+  def self.invited
+    where(status: [:no_response, :declined])
   end
 
   def author_email=(e)
