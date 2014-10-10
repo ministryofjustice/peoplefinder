@@ -10,9 +10,7 @@ class Review < ActiveRecord::Base
   SECTION_2_RATING_FIELDS = (5..11).map { |i| :"rating_#{i}" }
   RATING_FIELDS = SECTION_1_RATING_FIELDS + SECTION_2_RATING_FIELDS
 
-  REQUIRED_FIELDS = SECTION_1_RATING_FIELDS + SECTION_2_RATING_FIELDS
-
-  REQUIRED_FIELDS.each do |field|
+  RATING_FIELDS.each do |field|
     validates field, presence: true, if: ->(a) { a.status == :submitted }
   end
 
@@ -29,15 +27,12 @@ class Review < ActiveRecord::Base
     uniqueness: { scope: :subject_id }
   validates :author_name, presence: true
   validates :status, presence: true, inclusion: { in: STATUSES }
-  validates :relationship, presence: true
-  validates :relationship,
-    inclusion: { in: RELATIONSHIPS },
-    if: ->(a) { a.relationship.present? }
-  validate :subject_is_participant
+  validates :relationship, presence: true, inclusion: { in: RELATIONSHIPS }
   validates :reason_declined,
     length: { maximum: 300 },
     presence: true,
-    if: ->(a) { a.status == :declined }
+    if: :declined?
+  validate :subject_is_participant
 
   scope :submitted, -> { where(status: :submitted) }
   scope :editable, -> { where(status: [:accepted, :started]) }
