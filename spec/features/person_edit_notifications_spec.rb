@@ -16,7 +16,7 @@ feature 'Person edit notifications' do
     expect(last_email.subject).to eq('A new profile on MOJ People Finder has been created for you')
 
     check_email_to_and_from
-    check_email_has_token_link_to(Person.last)
+    check_email_has_token_link_to(Peoplefinder::Person.last)
   end
 
   scenario 'Creating a person with same email' do
@@ -175,7 +175,7 @@ feature 'Person edit notifications' do
 
   scenario 'Verifying the link to bob that is render in the emails' do
     bob = create(:person, email: 'bob@digital.justice.gov.uk', surname: 'bob')
-    visit token_url(Token.for_person(bob), desired_path: person_path(bob))
+    visit token_url(Peoplefinder::Token.for_person(bob), desired_path: person_path(bob))
 
     within('h1') do
       expect(page).to have_text('bob')
@@ -188,6 +188,6 @@ feature 'Person edit notifications' do
   end
 
   def check_email_has_token_link_to(person)
-    expect(last_email.body.encoded).to match("http.*tokens\/#{ Token.last.to_param }.*?desired_path=%2Fpeople%2F*#{ person.to_param }")
+    expect(last_email.body.encoded).to match("http.*tokens\/#{ Peoplefinder::Token.last.to_param }.*?desired_path=%2Fpeople%2F*#{ person.to_param }")
   end
 end
