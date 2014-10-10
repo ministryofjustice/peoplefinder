@@ -1,6 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe Peoplefinder::ApplicationHelper, type: :helper do
+  before {
+    helper.extend Peoplefinder::Engine.routes.url_helpers
+  }
 
   let(:stubbed_time) { Time.new(2012, 10, 31, 2, 2, 2, "+01:00") }
 
