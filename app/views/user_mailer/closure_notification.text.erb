@@ -3,3 +3,8 @@ Hello <%= @user %>,
 The SCS Appraisals period has been closed. Follow this link to view the results:
 
 <%= token_url(@token) %>
+
+How was your experience? Please provide us with your views on this
+service by completing a questionnaire:
+
+<%= Rails.configuration.survey_url %>
