@@ -1,6 +1,7 @@
 module Peoplefinder
   class ErrorsController < ApplicationController
-    layout 'peoplefinder/layouts/home'
+    layout 'layouts/peoplefinder/home'
+
     def file_not_found
     end
 

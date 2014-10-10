@@ -6,8 +6,6 @@ module Peoplefinder
     protect_from_forgery with: :exception
     before_action :ensure_user
 
-    layout 'peoplefinder/layouts/application'
-
   private
 
     def user_for_paper_trail

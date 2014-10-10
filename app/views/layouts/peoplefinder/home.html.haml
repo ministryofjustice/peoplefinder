@@ -1,5 +1,5 @@
 - content_for :html_attributes, 'ng-app="peoplefinderApp"'.html_safe
-= render partial: 'layouts/shared'
+= render partial: 'layouts/peoplefinder/shared'
 - content_for :content do
   #wrapper
     %main#content{role: 'main'}
@@ -7,5 +7,5 @@
       .inner-block
         #home-page= yield
 
-= render 'layouts/ga'
+= render 'layouts/peoplefinder/ga'
 = render template: "layouts/moj_internal_template"
