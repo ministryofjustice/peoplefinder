@@ -12,7 +12,7 @@ module Admin
       email = params[:password_reset][:email]
       @password_reset = PasswordReset.new(email: email)
       if @password_reset.save
-        AdminUserMailer.password_reset(@password_reset).deliver
+        PasswordResetMailingJob.perform_later email
         redirect_to new_login_path, notice: 'Password reset link sent'
       else
         render :new
