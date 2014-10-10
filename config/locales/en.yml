@@ -169,6 +169,8 @@ en:
         administrator:
           'true': 'Admin'
           'false': ''
+  login:
+    password_reset_cta: 'Forgot password'
   reviews:
     default_invitation_message: >-
       I'd like you to offer 360 feedback on my performance when I've worked
