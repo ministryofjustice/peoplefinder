@@ -13,9 +13,9 @@ class Peoplefinder::Token < ActiveRecord::Base
 
   def valid_email_address
     if !Peoplefinder::EmailAddress.new(user_email).valid_format?
-      errors.add(:base, I18n.t('errors.tokens.invalid_address'))
+      errors.add(:base, I18n.t('peoplefinder.errors.tokens.invalid_address'))
     elsif !Peoplefinder::EmailAddress.new(user_email).valid_domain?
-      errors.add(:base, I18n.t('errors.tokens.invalid_domain'))
+      errors.add(:base, I18n.t('peoplefinder.errors.tokens.invalid_domain'))
     end
   end
 

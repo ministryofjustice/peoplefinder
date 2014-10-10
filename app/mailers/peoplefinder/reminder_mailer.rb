@@ -3,7 +3,7 @@ require 'peoplefinder'
 class Peoplefinder::ReminderMailer < ActionMailer::Base
   def inadequate_profile(person)
     @person = person
-    @token = Token.for_person(@person)
+    @token = Peoplefinder::Token.for_person(@person)
     mail to: @person.email
   end
 

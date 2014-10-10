@@ -24,7 +24,7 @@ feature 'Token Authentication' do
     expect(page).to have_text('Check your email for a link to log in')
 
     expect(last_email.to).to eql(['james.darling@digital.justice.gov.uk'])
-    expect(last_email.body.encoded).to have_text(token_url(Token.last))
+    expect(last_email.body.encoded).to have_text(token_url(Peoplefinder::Token.last))
   end
 
   scenario 'following valid link from email and getting prompted to complete my profile' do
@@ -40,14 +40,14 @@ feature 'Token Authentication' do
 
   scenario 'logging in and displaying a link to my profile' do
     person = create(:person, surname: 'Bob', email: 'test.user@digital.justice.gov.uk')
-    token = Token.for_person(person)
+    token = Peoplefinder::Token.for_person(person)
     visit token_path(token)
     expect(page).to have_link('Logged in as Bob', href: person_path(person))
   end
 
   scenario 'following a link from an inadequate profile email' do
     person = create(:person, email: 'test.user@digital.justice.gov.uk')
-    ReminderMailer.inadequate_profile(person).deliver
+    Peoplefinder::ReminderMailer.inadequate_profile(person).deliver
 
     visit links_in_email(last_email).last
     within('h1') do

@@ -1,7 +1,7 @@
 module SpecSupport
   module Search
     def clean_up_indexes_and_tables
-      Peoplefinder::Person.__elasticsearch__.create_index! index: Person.index_name, force: true
+      Peoplefinder::Person.__elasticsearch__.create_index! index: Peoplefinder::Person.index_name, force: true
       Peoplefinder::Membership.delete_all
       Peoplefinder::Person.delete_all
       Peoplefinder::Group.delete_all
