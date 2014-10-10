@@ -13,6 +13,7 @@ require 'friendly_id'
 require 'govspeak'
 require 'carrierwave'
 require 'omniauth-gplus'
+require 'will_paginate'
 
 if %w{rspec-core rspec-mocks}.all? { |gemname| Gem.loaded_specs.has_key?(gemname) }
   require 'rspec/core'
