@@ -107,6 +107,9 @@ bundle --quiet \
        --without build
 
 
+set -a 
+. .env.sample
+set +a
 /bin/rm bin/rails bin/rake
 bundle exec rake rails:update:bin
 bundle exec rake assets:precompile RAILS_ENV=production
