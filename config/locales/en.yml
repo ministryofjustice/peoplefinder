@@ -20,111 +20,112 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
-  controllers:
-    groups:
-      group_created: "Created %{group}"
-      group_updated: "Updated %{group}"
-      group_deleted: "Deleted %{group}"
-      create_error: "The record was not created. Please check the errors below"
-      update_error: "The details were not updated. Please check the errors below"
-    home:
-      top_level_group_needed: "To use the People Finder, first create a top-level group (without a parent)"
-    information_requests:
-      default_message: "Hello %{recipient}\n\nI’ve just seen your profile on People Finder and think it’s missing some details.\n\nWhy not help me, colleagues and other co-workers view the latest information on you by completing your profile.\n\nThanks,\n%{sender}"
-      message_sent: "Your message has been sent to %{person}"
-    memberships:
-      member_removed: "Removed %{person} from %{group}"
+  peoplefinder:
+    controllers:
+      groups:
+        group_created: "Created %{group}"
+        group_updated: "Updated %{group}"
+        group_deleted: "Deleted %{group}"
+        create_error: "The record was not created. Please check the errors below"
+        update_error: "The details were not updated. Please check the errors below"
+      home:
+        top_level_group_needed: "To use the People Finder, first create a top-level group (without a parent)"
+      information_requests:
+        default_message: "Hello %{recipient}\n\nI’ve just seen your profile on People Finder and think it’s missing some details.\n\nWhy not help me, colleagues and other co-workers view the latest information on you by completing your profile.\n\nThanks,\n%{sender}"
+        message_sent: "Your message has been sent to %{person}"
+      memberships:
+        member_removed: "Removed %{person} from %{group}"
+      people:
+        profile_created: "Created %{person}’s profile"
+        profile_updated: "Updated %{person}’s profile"
+        profile_deleted: "Deleted %{person}’s profile"
+        create_error: "The profile was not created. Please check the errors below"
+        update_error: "The profile was not updated. Please check the errors below"
+      person_image:
+        no_image_uploaded: "No image has been uploaded for %{person}"
+        image_cropped: "Cropped %{person}’s image"
+        update_error: "There was an error updating the image"
+      reported_profiles:
+        message_sent: "Your message has been sent"
     people:
-      profile_created: "Created %{person}’s profile"
-      profile_updated: "Updated %{person}’s profile"
-      profile_deleted: "Deleted %{person}’s profile"
-      create_error: "The profile was not created. Please check the errors below"
-      update_error: "The profile was not updated. Please check the errors below"
-    person_image:
-      no_image_uploaded: "No image has been uploaded for %{person}"
-      image_cropped: "Cropped %{person}’s image"
-      update_error: "There was an error updating the image"
-    reported_profiles:
-      message_sent: "Your message has been sent"
-  people:
-    day_names:
-      works_monday: "Monday"
-      works_tuesday: "Tuesday"
-      works_wednesday: "Wednesday"
-      works_thursday: "Thursday"
-      works_friday: "Friday"
-      works_saturday: "Saturday"
-      works_sunday: "Sunday"
-    day_symbols:
-      works_monday: "M"
-      works_tuesday: "T"
-      works_wednesday: "W"
-      works_thursday: "T"
-      works_friday: "F"
-      works_saturday: "S"
-      works_sunday: "S"
-  helpers:
-    submit:
-      person:
-        create: "Create"
-        update: "Update"
-      group:
-        create: "Create"
-        update: "Update"
-  reminder_mailer:
-    inadequate_profile:
-      subject: "Reminder: update your profile today"
-    information_request:
-      subject: "Request to update your People Finder profile"
-    reported_profile:
-      subject: "A People Finder profile has been reported"
-  user_update_mailer:
-    new_profile_email:
-      subject: "A new profile on MOJ People Finder has been created for you"
-    updated_profile_email:
-      subject: "Your profile on MOJ People Finder has been edited"
-    deleted_profile_email:
-      subject: "Your profile on MOJ People Finder has been deleted"
-    updated_address_from_email:
-      subject: "This email address has been removed from a profile on MOJ People Finder"
-    updated_address_to_email:
-      subject: "This email address has been added to a profile on MOJ People Finder"
-  errors:
-    groups:
-      memberships_exist: "cannot be deleted until all the memberships have been removed"
-    tokens:
-      invalid_address: "Email address is not formatted correctly"
-      invalid_domain: "Email address is not valid"
-  simple_form:
-    "yes": 'Yes'
-    "no": 'No'
-    required:
-      text: 'required'
-      mark: ''
-    error_notification:
-      default_message: "Please review the problems below:"
-  views:
-    info_text:
-      complete_your_profile_alert: "Start building your profile now so colleagues and co-workers can get the latest information on you.<br/>We’ll send you regular reminders until it’s complete."
-      delete_this_profile: "Delete this profile"
-      delete_this_team: "Delete this team"
-      duplicate_names_hint: "There are existing profiles that have the same name. Check that it's not one of these before continuing."
-      editing_alert: "You are currently editing this page. Click the update button to finish"
-      hint_add_person_as_leader: "Note that more than one person can be assigned<br/>as leader of a particular team."
-      hint_add_person_team_not_found: "If the team cannot be found you will need to add it first before you can assign a<br/>person to it. This can be done from the page the new team would be located within."
-      hint_add_person_to_team: "Use this organisation browser to select the team which this person belongs to."
-      hint_team_description: "What is the role and purpose of the team?"
-      hint_team_email_address: "Enter an email for people to get in touch with the team"
-      hint_team_responsibilities: "What are the team's collective responsibilities?"
-      information_request_label: "Enter your message"
-      information_request_label_error: "You must enter a message to be sent to the person"
-      location_hint: "e.g. 10.30, 102 Petty France or Room 3, Bristol Crown Court"
-      notes_field_hint: "Use this to add any extra information about your role,<br/>e.g. I am based at Bristol County Court on Wednesdays"
-      photo_upload_hint: "Add or replace a photograph by clicking 'Choose file'."
-      photo_size_hint: "Please make sure the photo is no more than 3MB in size."
-      profile_deletable: "Note that deleting a profile cannot be undone"
-      reported_profile_additional_details_label: "Additional details (optional)"
-      request_information: "Is this profile complete?"
-      request_information_link: "Ask the person to update their details"
-      team_deletable: "Note that team deletion cannot be undone."
-      team_not_deletable: "Team deletion is only possible if there are no people associated with it."
+      day_names:
+        works_monday: "Monday"
+        works_tuesday: "Tuesday"
+        works_wednesday: "Wednesday"
+        works_thursday: "Thursday"
+        works_friday: "Friday"
+        works_saturday: "Saturday"
+        works_sunday: "Sunday"
+      day_symbols:
+        works_monday: "M"
+        works_tuesday: "T"
+        works_wednesday: "W"
+        works_thursday: "T"
+        works_friday: "F"
+        works_saturday: "S"
+        works_sunday: "S"
+    helpers:
+      submit:
+        person:
+          create: "Create"
+          update: "Update"
+        group:
+          create: "Create"
+          update: "Update"
+    reminder_mailer:
+      inadequate_profile:
+        subject: "Reminder: update your profile today"
+      information_request:
+        subject: "Request to update your People Finder profile"
+      reported_profile:
+        subject: "A People Finder profile has been reported"
+    user_update_mailer:
+      new_profile_email:
+        subject: "A new profile on MOJ People Finder has been created for you"
+      updated_profile_email:
+        subject: "Your profile on MOJ People Finder has been edited"
+      deleted_profile_email:
+        subject: "Your profile on MOJ People Finder has been deleted"
+      updated_address_from_email:
+        subject: "This email address has been removed from a profile on MOJ People Finder"
+      updated_address_to_email:
+        subject: "This email address has been added to a profile on MOJ People Finder"
+    errors:
+      groups:
+        memberships_exist: "cannot be deleted until all the memberships have been removed"
+      tokens:
+        invalid_address: "Email address is not formatted correctly"
+        invalid_domain: "Email address is not valid"
+    simple_form:
+      "yes": 'Yes'
+      "no": 'No'
+      required:
+        text: 'required'
+        mark: ''
+      error_notification:
+        default_message: "Please review the problems below:"
+    views:
+      info_text:
+        complete_your_profile_alert: "Start building your profile now so colleagues and co-workers can get the latest information on you.<br/>We’ll send you regular reminders until it’s complete."
+        delete_this_profile: "Delete this profile"
+        delete_this_team: "Delete this team"
+        duplicate_names_hint: "There are existing profiles that have the same name. Check that it's not one of these before continuing."
+        editing_alert: "You are currently editing this page. Click the update button to finish"
+        hint_add_person_as_leader: "Note that more than one person can be assigned<br/>as leader of a particular team."
+        hint_add_person_team_not_found: "If the team cannot be found you will need to add it first before you can assign a<br/>person to it. This can be done from the page the new team would be located within."
+        hint_add_person_to_team: "Use this organisation browser to select the team which this person belongs to."
+        hint_team_description: "What is the role and purpose of the team?"
+        hint_team_email_address: "Enter an email for people to get in touch with the team"
+        hint_team_responsibilities: "What are the team's collective responsibilities?"
+        information_request_label: "Enter your message"
+        information_request_label_error: "You must enter a message to be sent to the person"
+        location_hint: "e.g. 10.30, 102 Petty France or Room 3, Bristol Crown Court"
+        notes_field_hint: "Use this to add any extra information about your role,<br/>e.g. I am based at Bristol County Court on Wednesdays"
+        photo_upload_hint: "Add or replace a photograph by clicking 'Choose file'."
+        photo_size_hint: "Please make sure the photo is no more than 3MB in size."
+        profile_deletable: "Note that deleting a profile cannot be undone"
+        reported_profile_additional_details_label: "Additional details (optional)"
+        request_information: "Is this profile complete?"
+        request_information_link: "Ask the person to update their details"
+        team_deletable: "Note that team deletion cannot be undone."
+        team_not_deletable: "Team deletion is only possible if there are no people associated with it."

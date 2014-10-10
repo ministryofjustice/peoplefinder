@@ -2,11 +2,11 @@ require 'peoplefinder'
 
 module Peoplefinder::PeopleHelper
   def day_name(symbol)
-    I18n.t(symbol, scope: [:people, :day_names])
+    I18n.t(symbol, scope: [:peoplefinder, :people, :day_names])
   end
 
   def day_symbol(symbol)
-    I18n.t(symbol, scope: [:people, :day_symbols])
+    I18n.t(symbol, scope: [:peoplefinder, :people, :day_symbols])
   end
 
   def contact_details(person)

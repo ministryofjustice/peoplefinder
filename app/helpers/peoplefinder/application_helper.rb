@@ -29,7 +29,7 @@ module Peoplefinder::ApplicationHelper
   end
 
   def info_text(key)
-    t(key, scope: %w[views info_text].join('.')).html_safe
+    t(key, scope: %w[peoplefinder views info_text].join('.')).html_safe
   end
 
 private
