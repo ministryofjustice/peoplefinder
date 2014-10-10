@@ -89,7 +89,7 @@ private
 
   def check_deletability
     unless deletable?
-      errors[:base] << I18n.t('errors.groups.memberships_exist')
+      errors[:base] << I18n.t('peoplefinder.errors.groups.memberships_exist')
       return false
     end
   end
