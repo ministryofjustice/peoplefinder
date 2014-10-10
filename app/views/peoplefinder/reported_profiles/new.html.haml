@@ -3,7 +3,7 @@
 
 = simple_form_for @reported_profile, url: person_reported_profiles_path(@person) do |f|
   .form-group
-    = f.input :reason_for_reporting, collection: ReportedProfile::REASONS, required: false
+    = f.input :reason_for_reporting, collection: Peoplefinder::ReportedProfile::REASONS, required: false
 
   .form-group
     = f.input :additional_details, label: info_text("reported_profile_additional_details_label")

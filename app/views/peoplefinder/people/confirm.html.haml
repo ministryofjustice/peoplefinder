@@ -23,7 +23,7 @@
     = f.input :email, as: :hidden
     = f.input :description, as: :hidden
 
-    - Person::DAYS_WORKED.each do |day|
+    - Peoplefinder::Person::DAYS_WORKED.each do |day|
       = f.input day, as: :hidden
 
     = f.input :image_cache, as: :hidden
