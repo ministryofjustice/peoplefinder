@@ -47,6 +47,8 @@ module Dummy
     }
 
     config.ga_tracking_id = ''
+
+    config.app_title = 'Peoplefinder Dummy'
   end
 end
 

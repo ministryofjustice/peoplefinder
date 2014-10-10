@@ -1,5 +1,6 @@
 module Peoplefinder
   class ApplicationController < ActionController::Base
+    helper MojHelper
     force_ssl if Rails.configuration.try(:start_secure_session)
 
     protect_from_forgery with: :exception
