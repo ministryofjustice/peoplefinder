@@ -38,3 +38,9 @@
     <% end %>
   </tbody>
 </table>
+
+<% if @replies.any?(&:complete?) %>
+  <p>
+    <%= govspeak(t('views.replies.survey_text', survey_url: Rails.configuration.survey_url)) %>
+  </p>
+<% end %>

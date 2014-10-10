@@ -22,6 +22,8 @@ feature 'Submitting feedback' do
     fill_in 'submission_how_we_work_comments', with: 'Could learn to...'
     click_button 'Submit'
 
+    expect(page).to have_link("a questionnaire", href: Rails.configuration.survey_url)
+
     submission = Review.last
     Review::RATING_FIELDS.each do |rating_field|
       expect(submission.send(rating_field)).to eql(5)
