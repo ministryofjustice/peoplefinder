@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-feature 'Navigation' do
+feature 'Navigating between sections of the site' do
   context 'As a middle-ranking person' do
     let(:me) { create(:user, name: "Bob", manager: create(:user)) }
     let!(:direct_report) { create(:user, name: "Charlie", manager: me) }

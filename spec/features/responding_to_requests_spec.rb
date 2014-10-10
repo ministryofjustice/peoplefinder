@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-feature 'Invitations' do
+feature 'Responding to feedback requests' do
   let(:token) { review.tokens.create }
 
   before do
