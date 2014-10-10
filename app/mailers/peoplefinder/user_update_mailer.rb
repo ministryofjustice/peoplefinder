@@ -39,7 +39,7 @@ private
 
   def set_token_params
     @token_params = {
-      id: Token.for_person(@person).to_param,
+      id: Peoplefinder::Token.for_person(@person).to_param,
       desired_path: "/people/#{ @person.to_param }"
     }
   end

@@ -13,7 +13,7 @@ feature 'Audit trail' do
       click_button 'Update'
 
       visit '/audit_trail'
-      expect(page).to have_text('Person Edited')
+      expect(page).to have_text('Peoplefinder::Person Edited')
       expect(page).to have_text('Surname changed from original surname to something else')
 
       click_button 'undo'
@@ -31,13 +31,14 @@ feature 'Audit trail' do
       click_button 'Create'
 
       visit '/audit_trail'
-      expect(page).to have_text('New Person')
+
+      expect(page).to have_text('New Peoplefinder::Person')
       expect(page).to have_text('Given name set to: Jon')
       expect(page).to have_text('Surname set to: Smith')
 
       expect {
         click_button 'undo'
-      }.to change(Person, :count).by(-1)
+      }.to change(Peoplefinder::Person, :count).by(-1)
     end
   end
 
@@ -48,12 +49,12 @@ feature 'Audit trail' do
       click_link('Delete this profile')
 
       visit '/audit_trail'
-      expect(page).to have_text('Deleted Person')
+      expect(page).to have_text('Deleted Peoplefinder::Person')
       expect(page).to have_text('Name: Greg Dan')
 
       expect {
         click_button 'undo'
-      }.to change(Person, :count).by(1)
+      }.to change(Peoplefinder::Person, :count).by(1)
     end
   end
 
@@ -65,7 +66,7 @@ feature 'Audit trail' do
       click_button 'Update'
 
       visit '/audit_trail'
-      expect(page).to have_text('Group Edited')
+      expect(page).to have_text('Peoplefinder::Group Edited')
       expect(page).to have_text('Name changed from original name to something else')
     end
   end
@@ -78,7 +79,7 @@ feature 'Audit trail' do
       click_button 'Create'
 
       visit '/audit_trail'
-      expect(page).to have_text('New Group')
+      expect(page).to have_text('New Peoplefinder::Group')
       expect(page).to have_text('Name set to: Jon')
     end
   end
@@ -90,7 +91,7 @@ feature 'Audit trail' do
       click_link('Delete this team')
 
       visit '/audit_trail'
-      expect(page).to have_text('Deleted Group')
+      expect(page).to have_text('Deleted Peoplefinder::Group')
       expect(page).to have_text('Name: original name')
     end
   end
@@ -103,7 +104,7 @@ feature 'Audit trail' do
       click_button 'Update'
 
       visit '/audit_trail'
-      expect(page).to have_text('Person Edited')
+      expect(page).to have_text('Peoplefinder::Person Edited')
       expect(page).to have_text(/Image set to.*placeholder/)
     end
   end
@@ -122,7 +123,7 @@ feature 'Audit trail' do
       visit '/audit_trail'
 
       within('tbody tr:first-child') do
-        expect(page).to have_text('New Membership')
+        expect(page).to have_text('New Peoplefinder::Membership')
         expect(page).to have_text('Person set to: Bob')
         expect(page).to have_text('Team set to: Digital Justice')
         expect(page).to have_text('Job title set to: Jefe')
@@ -147,7 +148,7 @@ feature 'Audit trail' do
       visit '/audit_trail'
 
       within('tbody tr:first-child') do
-        expect(page).to have_text('Deleted Membership')
+        expect(page).to have_text('Deleted Peoplefinder::Membership')
         expect(page).to have_text('Person was: Bob')
         expect(page).to have_text('Team was: Digital Justice')
         expect(page).to have_text('Job title was: Jefe')
