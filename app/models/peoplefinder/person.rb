@@ -11,7 +11,7 @@ class Peoplefinder::Person < ActiveRecord::Base
   include Peoplefinder::Concerns::Authentication
 
   has_paper_trail ignore: [:updated_at, :created_at, :id, :slug]
-  mount_uploader :image, ImageUploader
+  mount_uploader :image, Peoplefinder::ImageUploader
 
   attr_accessor :crop_x, :crop_y, :crop_w, :crop_h, :role_names
 
