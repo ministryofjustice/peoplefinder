@@ -46,7 +46,7 @@ feature 'Person browsing' do
   def create_group_hierarchy(*names)
     group = nil
     names.each do |name|
-      group = Group.find_by_name(name) || create(:group, parent: group, name: name)
+      group = Peoplefinder::Group.find_by_name(name) || create(:group, parent: group, name: name)
     end
     group
   end
