@@ -6,7 +6,7 @@ feature 'Regression' do
   end
 
   scenario 'Gracefully handle a session when the logged in person deletes their profile' do
-    visit edit_person_path(Person.last)
+    visit edit_person_path(Peoplefinder::Person.last)
     click_link 'Delete this profile'
     expect(page).to have_text('Log in to the people finder')
   end
