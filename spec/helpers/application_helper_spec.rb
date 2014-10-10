@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Peoplefinder::ApplicationHelper, type: :helper do
 
-   let(:stubbed_time) { Time.new(2012, 10, 31, 2, 2, 2, "+01:00") }
+  let(:stubbed_time) { Time.new(2012, 10, 31, 2, 2, 2, "+01:00") }
 
   context '#last_update' do
     it 'shows last_update for a person' do
