@@ -14,7 +14,7 @@ Gem::Specification.new do |s|
   s.description = "The peoplefinder provides searchable staff profiles for your organisation. Since it's a rails engine, you can re-skin it for your organisation."
   s.license     = "MIT"
 
-  s.files = Dir["{app,config,db,lib}/**/*", "LICENCE.txt", "Rakefile", "README.md"]
+  s.files = Dir["{app,config,db,lib,vendor}/**/*", "LICENCE.txt", "Rakefile", "README.md"]
   s.test_files = Dir["spec/**/*"]
 
   s.add_dependency 'rails', '~> 4.1.5'
