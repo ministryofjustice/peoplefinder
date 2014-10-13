@@ -1,6 +1,44 @@
 # MoJ People Finder
 
-[![Code Climate](https://codeclimate.com/github/ministryofjustice/peoplefinder/badges/gpa.svg)](https://codeclimate.com/github/ministryofjustice/peoplefinder)
+This is a rails engine that can be mounted inside a rails 4 application.
+
+A working example can be seen at https://github.com/alphagov/gds-peoplefinder
+
+## Importing migrations from engine
+
+If the engine has new database migrations, you can import them into this application to apply them to the application database using the following:
+
+`$ bundle exec rake peoplefinder:install:migrations`
+
+This copies the migrations into the application's `db/migrate` directory. You should commit any such imported migration files to this applications repo:
+
+`$ git add db/migrate $ git commit -m 'Imported new migrations from engine'`
+
+You should then run the migrations in the usual way:
+
+` $ bundle exec rake db:migrate`
+
+And commit the `schema.rb`
+
+
+## Configuring the wrapper application
+
+### App Title
+
+These should be defined in the config/application.rb or in the enviroments/__environment__.rb files if the settings need to be
+defined on a per environment basis.
+
+`config.app_title` e.g. 'My New People Finder'
+
+`config.default_url_options` e.g. { host: mail.peoplefinder.example.com }
+
+`config.conga_tracking_id` Google Analytics tracking id [optional]. e.g. 'XXXX-XXX'
+
+`config.support_email` e.g. 'peoplefinder-support@example.com'
+
+`config.valid_login_domains` Restrict login to email addresses from the list of valid domains. e.g. %w[ peoplefinder.example.com ]
+
+
 
 ## Authentication
 
