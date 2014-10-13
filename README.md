@@ -4,6 +4,34 @@ This is a rails engine that can be mounted inside a rails 4 application.
 
 A working example can be seen at https://github.com/alphagov/gds-peoplefinder
 
+## Preparing the Gemfile
+
+In Gemfile:
+
+`gem 'peoplefinder'`
+
+The peoplefinder engine requires some forked / tagged versions gems
+so these need to be included also:
+
+`gem 'carrierwave',
+  git: 'https://github.com/carrierwaveuploader/carrierwave.git',
+  tag: 'cc39842e44edcb6187b2d379a606ec48a6b5e4a8'`
+
+`gem 'omniauth-gplus',
+  git: 'https://github.com/ministryofjustice/omniauth-gplus.git'`
+
+
+Install the gems with bundler:
+
+`bundle install`
+
+
+## Mounting the engine
+
+In config/routes.rb:
+
+`mount Peoplefinder::Engine, at: "/"`
+
 ## Importing migrations from engine
 
 If the engine has new database migrations, you can import them into this application to apply them to the application database using the following:
@@ -21,9 +49,7 @@ You should then run the migrations in the usual way:
 And commit the `schema.rb`
 
 
-## Configuring the wrapper application
-
-### App Title
+##Configurable elements
 
 These should be defined in the config/application.rb or in the enviroments/__environment__.rb files if the settings need to be
 defined on a per environment basis.
@@ -32,7 +58,9 @@ defined on a per environment basis.
 
 `config.default_url_options` e.g. { host: mail.peoplefinder.example.com }
 
-`config.conga_tracking_id` Google Analytics tracking id [optional]. e.g. 'XXXX-XXX'
+`config.elastic_search_url` Required for production (see Search section below)
+
+`config.ga_tracking_id` Google Analytics tracking id [optional]. e.g. 'XXXX-XXX'
 
 `config.support_email` e.g. 'peoplefinder-support@example.com'
 
@@ -58,6 +86,10 @@ example.
 The permitted domains are configured in `config/application.rb`.
 
 ## Search
+
+To run the engine in production mode, `config.elastic_search_url` must be set in, for example, config/application.rb.
+See 'Configurable elements' above.
+
 
 Heroku provides [Bonsai Elasticsearch](https://devcenter.heroku.com/articles/bonsai)
 as an add-on.
