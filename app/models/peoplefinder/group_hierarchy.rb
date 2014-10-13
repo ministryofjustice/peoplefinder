@@ -6,6 +6,7 @@ class Peoplefinder::GroupHierarchy
   end
 
   def to_hash
+    return {} unless @root
     export(@root)
   end
 
