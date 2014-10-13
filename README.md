@@ -10,6 +10,7 @@ For email to work, certain environment variables must be set:
 * SMTP_ADDRESS
 * SMTP_DOMAIN
 * EMAIL_NOREPLY_ADDRESS – Used when sending email
+* HOST – Used to generate web URLs when sending email
 * FEEDBACK_URL – Used for the feedback link in the alpha bar
 * SURVEY_URL – A link to a survey to be completed after using the service
 

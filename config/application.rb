@@ -54,6 +54,8 @@ module SCSAppraisals
       g.fixture_replacement :factory_girl, dir: "spec/support/factories"
     end
 
+    config.action_mailer.default_url_options = { host: ENV.fetch('HOST') }
+
     config.rack_timeout = env_integer('RACK_TIMEOUT', 14)
 
     config.token_timeout = env_integer('TOKEN_TIMEOUT_IN_MONTHS', 6).months
