@@ -1,5 +1,8 @@
 # MoJ People Finder
 
+This branch is the final staging version of the standalone People Finder.
+It has been deployed to http://moj-peoplefinder-staging.herokuapp.com/
+
 [![Code Climate](https://codeclimate.com/github/ministryofjustice/peoplefinder/badges/gpa.svg)](https://codeclimate.com/github/ministryofjustice/peoplefinder)
 
 ## Authentication
