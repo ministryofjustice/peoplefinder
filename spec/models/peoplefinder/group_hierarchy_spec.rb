@@ -59,9 +59,9 @@ RSpec.describe Peoplefinder::GroupHierarchy, type: :model do
   context 'Handling initial state when there are no groups' do
     subject { described_class.new(nil) }
 
-      it 'returns an empty hash' do
-        expect(subject.to_hash).to eql({})
-      end
+    it 'returns an empty hash' do
+      expect(subject.to_hash).to eql({})
+    end
   end
 
   def create_hierarchy_of_groups

@@ -20,7 +20,7 @@ class Peoplefinder::ImageUploader < CarrierWave::Uploader::Base
   end
 
   def default_url
-   [version_name, 'no_photo.png'].compact.join('_')
+    [version_name, 'no_photo.png'].compact.join('_')
   end
 
   version :medium, from_version: :croppable do
