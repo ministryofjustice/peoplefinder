@@ -20,12 +20,10 @@ default: &default
   # For details on connection pooling, see rails configuration guide
   # http://guides.rubyonrails.org/configuring.html#database-pooling
   pool: 5
-  username: peoplefinder
-  password: ~
 
 development:
   <<: *default
-  database: peoplefinder_development
+  database: pf_engine_development
 
   # The specified database role being used to connect to postgres.
   # To create additional roles in postgres see `$ createuser --help`.
@@ -59,7 +57,7 @@ development:
 # Do not set this db to the same as development or production.
 test:
   <<: *default
-  database: peoplefinder_test
+  database: pf_engine_test
 
 # As with config/secrets.yml, you never want to store sensitive information,
 # like your database password, in your source code. If your source code is
@@ -82,6 +80,5 @@ test:
 #
 production:
   <<: *default
-  database: peoplefinder_production
-  username: peoplefinder
+  database: pf_engine_production
   password: <%= ENV['PEOPLEFINDER_DATABASE_PASSWORD'] %>
