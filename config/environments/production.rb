@@ -86,19 +86,25 @@ Rails.application.configure do
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
 
+  config.noreply_email = ENV.fetch('EMAIL_NOREPLY_ADDRESS')
+
   config.action_mailer.default_url_options = {
-    host: ENV['ACTION_MAILER_DEFAULT_URL']
+    host: ENV.fetch('HOST')
   }
 
+  config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-    address: 'smtp.sendgrid.net',
-    port: '587',
-    authentication: :plain,
-    user_name: ENV['SENDGRID_USERNAME'],
-    password: ENV['SENDGRID_PASSWORD'],
-    domain: 'heroku.com',
+    address: ENV.fetch('SMTP_ADDRESS'),
+    port: ENV.fetch('SMTP_PORT', 587),
+    domain: ENV.fetch('SMTP_DOMAIN'),
+    user_name: ENV.fetch('SMTP_USERNAME'),
+    password: ENV.fetch('SMTP_PASSWORD'),
+    authentication: 'plain',
     enable_starttls_auto: true
   }
+
+  config.feedback_url = ENV.fetch('FEEDBACK_URL')
+  config.survey_url = ENV.fetch('SURVEY_URL')
 
   if ENV['INTERCEPTED_EMAIL_RECIPIENT'].present?
     Mail.register_interceptor RecipientInterceptor.new(

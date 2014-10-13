@@ -2,20 +2,18 @@
 
 ## Environment
 
-For email to work, certain environment variables must be set:
+Certain environment variables are required for full operation in the production
+environment:
 
 * SMTP_PASSWORD
 * SMTP_USERNAME
-* SMTP_PORT
+* SMTP_PORT (optional, defaults to 587)
 * SMTP_ADDRESS
 * SMTP_DOMAIN
 * EMAIL_NOREPLY_ADDRESS – Used when sending email
 * HOST – Used to generate web URLs when sending email
 * FEEDBACK_URL – Used for the feedback link in the alpha bar
 * SURVEY_URL – A link to a survey to be completed after using the service
-
-For local development, you can use a `.env` file; see `.env.sample` for an
-example.
 
 ## Initial setup
 

@@ -37,4 +37,9 @@ Rails.application.configure do
   # config.action_view.raise_on_missing_translations = true
 
   config.action_mailer.default_url_options = { host: 'localhost:3000' }
+
+  config.noreply_email = 'test@example.com'
+
+  config.feedback_url = 'https://feedback.example.com/'
+  config.survey_url = 'https://survey.example.com/'
 end

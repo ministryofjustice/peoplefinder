@@ -76,11 +76,6 @@ GEM
     coderay (1.1.0)
     colorize (0.7.3)
     diff-lcs (1.2.5)
-    dotenv (0.11.1)
-      dotenv-deployment (~> 0.0.2)
-    dotenv-deployment (0.0.2)
-    dotenv-rails (0.11.1)
-      dotenv (= 0.11.1)
     email_spec (1.6.0)
       launchy (~> 2.1)
       mail (~> 2.2)
@@ -299,7 +294,6 @@ DEPENDENCIES
   activejob_backport
   brakeman
   capybara
-  dotenv-rails
   email_spec
   factory_girl
   factory_girl_rails

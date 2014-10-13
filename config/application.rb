@@ -29,24 +29,9 @@ module SCSAppraisals
       ENV.fetch(key, default).to_i
     end
 
+    # For the MOJ internal template
     config.app_title = 'SCS 360° Appraisals'
-
     config.phase = 'alpha'
-    config.feedback_url = ENV.fetch('FEEDBACK_URL')
-    config.survey_url = ENV.fetch('SURVEY_URL')
-
-    config.noreply_email = ENV.fetch('EMAIL_NOREPLY_ADDRESS')
-
-    config.action_mailer.delivery_method = :smtp
-    config.action_mailer.smtp_settings = {
-      address: ENV.fetch('SMTP_ADDRESS'),
-      port: ENV.fetch('SMTP_PORT'),
-      domain: ENV.fetch('SMTP_DOMAIN'),
-      user_name: ENV.fetch('SMTP_USERNAME'),
-      password: ENV.fetch('SMTP_PASSWORD'),
-      authentication: 'plain',
-      enable_starttls_auto: true
-    }
 
     config.generators do |g|
       g.test_framework :rspec, fixture: true, views: false
@@ -54,10 +39,7 @@ module SCSAppraisals
       g.fixture_replacement :factory_girl, dir: "spec/support/factories"
     end
 
-    config.action_mailer.default_url_options = { host: ENV.fetch('HOST') }
-
     config.rack_timeout = env_integer('RACK_TIMEOUT', 14)
-
     config.token_timeout = env_integer('TOKEN_TIMEOUT_IN_MONTHS', 6).months
   end
 end
