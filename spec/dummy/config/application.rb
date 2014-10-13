@@ -44,6 +44,6 @@ module Dummy
 
     config.app_title = 'Peoplefinder Dummy'
 
-    config.elastic_search_url = ENV['ELASTIC_SEARCH_URL']
+    config.elastic_search_url = ''
   end
 end
