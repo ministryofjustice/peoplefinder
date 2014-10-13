@@ -12,7 +12,7 @@ module SCSAppraisals
     # Custom Logging
     config.log_level = :info
     config.logstasher.enabled = true
-    config.logstasher.suppress_app_log = true
+    config.logstasher.suppress_app_log = false
     config.logstasher.log_level = Logger::INFO
     config.logstasher.logger_path = "#{Rails.root}/log/logstash_#{Rails.env}.json"
     config.logstasher.source = 'logstasher'
