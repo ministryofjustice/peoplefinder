@@ -11,7 +11,7 @@ gem 'jquery-rails'
 gem 'mail'
 gem 'moj_internal_template',
   git: 'https://github.com/ministryofjustice/moj_internal_template.git',
-  branch: 'master'
+  branch: 'f8e9712834bc46b13ac0e2c0b6763cf15c6c1c94'
 gem 'pg'
 gem 'rack-timeout'
 gem 'recipient_interceptor', '~> 0.1.2'
