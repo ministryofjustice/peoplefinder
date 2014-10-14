@@ -146,10 +146,17 @@ Also, if you'd like test coverage for Javascript you'll need to have Node and Is
 
 The application layout is set by the [moj_internal_template](https://github.com/ministryofjustice/moj_internal_template) that is installed as part of this engine.
 
-To override this layout, add your own file as:
+You can override this layout in wrapper application, create your own file:
 
 `app/views/layouts/peoplefinder/peoplefinder.html.haml`
 
+## Translation file
+
+A lot of the text in the views is configurable in the translations file.
+
+You can override these in wrapper application by creating your own file:
+
+`config/locales/en.yml`
 
 ## Utilities
 
