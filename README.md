@@ -164,6 +164,18 @@ You can override this layout in wrapper application, create your own file:
 
 `app/views/layouts/peoplefinder/peoplefinder.html.haml`
 
+
+## Angular.js notes
+
+The organisational browser uses angular.js. When heroku compiles the assets, the minified js is mangled and does not work.
+
+Asset mangling is prevented in the engine with help of the uglifier gem.
+
+Make sure that this is not overwritten in the wraper by commenting out the js_compressor in config/environments/production.rb:
+
+`# config.assets.js_compressor = :uglifier`
+
+
 ## Translation file
 
 A lot of the text in the views is configurable in the translations file.
