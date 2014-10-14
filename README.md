@@ -102,16 +102,23 @@ Elasticsearch requires [jdk version 7 or greater](http://www.oracle.com/technetw
 
 If you get an IndexMissingException, you will need to index the Person model:
 
-`bundle exec rake environment elasticsearch:import:model CLASS='Person' FORCE=y`
+```
+bundle exec rake environment elasticsearch:import:model CLASS='Peoplefinder::Person' FORCE=y
+```
 
-Or you can build the index from the console:
+Or you can create the index from the console:
 
-`Person.__elasticsearch__.create_index! index: Person.index_name, force: true`
-`Person.import`
+```
+Peoplefinder::Person.__elasticsearch__.create_index! index: Peoplefinder::Person.index_name, force: true`
+```
+
+And populate it:
+
+`Peoplefinder::Person.import`
 
 You can also delete the index:
 
-`Person.delete_indexes`
+`Peoplefinder::Person.delete_indexes`
 
 To run specs without Elasticsearch:
 
