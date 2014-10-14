@@ -1,10 +1,10 @@
 class ReviewCompletion
   def initialize(reviews)
-    @reviews = reviews
+    @reviews = reviews.to_a
   end
 
   def completed
-    @reviews.select(&:complete?).length
+    @reviews.count(&:complete?)
   end
 
   def total
