@@ -10,14 +10,14 @@ class ReviewPeriod
   end
 
   def send_introductions
-    return unless open?
+    return if closed?
     User.participants.each do |user|
       Introduction.new(user).send
     end
   end
 
   def send_closure_notifications
-    return unless closed?
+    return if open?
     User.participants.each do |user|
       ClosureNotification.new(user).send
     end
