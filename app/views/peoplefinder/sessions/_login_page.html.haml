@@ -1,19 +1,17 @@
-%h1.no-line Log in to the people finder
+%h1.no-line= t('.heading')
 .spacer-25
-%h3 Google email accounts
+%h3= t('.heading_google')
+
+%p= t('.body_google')
 
 %p
-  If you have a government Google account you can log in quickly
-  with the official authentication screen.
-
-%p
-  = link_to "Log in", "/auth/gplus", class: 'button login-button'
+  = link_to t('.log_in'), "/auth/gplus", class: 'button login-button'
 
 %hr
 .spacer-5
-%h3 Other email addresses
+%h3= t('.heading_other')
 
-%p Enter a valid Ministry of Justice email address below
+%p= t('.body_other')
 
 = simple_form_for (@token ||= Peoplefinder::Token.new) do |token_form|
 
@@ -22,4 +20,4 @@
     = token_form.input :user_email, as: :string, label: false
   .spacer-20
   .form-group
-    = token_form.button :submit, 'Log in', class: 'login-button'
+    = token_form.button :submit, t('.log_in'), class: 'login-button'

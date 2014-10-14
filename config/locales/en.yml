@@ -21,6 +21,16 @@
 
 en:
   peoplefinder:
+    sessions:
+      login_page:
+        heading: Log in to the people finder
+        heading_google: Google email accounts
+        body_google:
+          If you have a government Google account you can log in quickly
+          with the official authentication screen.
+        heading_other: Other email addresses
+        body_other: Enter a valid Ministry of Justice email address below
+        log_in: Log in
     controllers:
       groups:
         group_created: "Created %{group}"
