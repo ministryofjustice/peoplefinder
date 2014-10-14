@@ -178,82 +178,11 @@ CI by [Travis](https://travis-ci.org/ministryofjustice/peoplefinder).
 
 Software metrics by [Code Climate](https://codeclimate.com/github/ministryofjustice/peoplefinder)
 
-## Releases
-
-Within the bin directory there is a file called release.sh. The purpose of this script is for management of releases i.e tagged versions compatible with Githubs release conventions.
-
-To create a new release:
-
-`bin/release.sh create`
-
-Listing all releases:
-
-`bin/release.sh list`
-
-Deleting a particular release:
-
-`bin/release.sh remove RELEASE_VERSION`
-
-Perform a git show of a release:
-
-`bin/release.sh show RELEASE_VERSION`
-
-List all releases with verbose output:
-
-`bin/release.sh ll`
-
-Last release:
-
-`bin/release.sh last`
-
-##Deployment
-
-For this example we're making the following assumptions:
-
-- You're using Heroku
-- You've setup staging and production environments as git remotes that we'll henceforth refer to as staging and production
-
-First if you don't already have a release, create a new one from the current branch:
-
-`bin/release.sh create`
-
-The name of the tagged released should be echoed back to the console. And will read back like release/ISO_DATE_TIME.
-Copy and past it as an argument together with '^{}:master' appended to the configured git remote of your choosing. For this example we'll use staging.
-
-`git push -f staging release/2014-08-08T08.59.09Z^{}:master`
-
-You should then see the standard git based deployment process for Heroku kick into action.
-
-It should be noted that depending on your circumstances e.g running migrations etc. You may want to run the following sequence of commands:
-
-`heroku maintenance:on` maintenance mode on
-
-`heroku ps:scale worker=0` scale down any background workers
-
-`git push -f staging release/2014-08-08T08.59.09Z^{}:master` push the code to heroku
-
-`heroku run rake db:migrate` run your migrations
-
-`heroku ps:scale worker=1` turn your workers back on
-
-`heroku maintenance:on` unleash the app to the world
-
-
-##SSL
-
-If you look in the .env.example you'll see a setting called SSL_ON which defaults to false. However the application is fully able to take advantage of
-SSL and by setting SSL_ON to true it will force the application to use SSL only which you'll definitely want for production.
-
-To do this on Heroku run:
-
-`heroku config:set SSL_ON=true`
-
-
-##Reminders
+## Reminders
 
 If the Peoplefinder is to be successful, profiles need to be populated and maintained.
 
-###Inadequate profiles
+### Inadequate profiles
 
 To view a list of people whose profiles are deemed to be 'inadequate' (not having a phone number, location and photo):
 
@@ -262,7 +191,6 @@ To view a list of people whose profiles are deemed to be 'inadequate' (not havin
 To send emails prompting people to complete their profiles:
 
 `rake peoplefinder:inadequate_profile_reminders`
-
 
 ##Environment Variables
 
