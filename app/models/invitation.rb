@@ -2,7 +2,7 @@ class Invitation < SimpleDelegator
   extend ActiveModel::Naming
 
   def update(attributes)
-    __getobj__.update(attributes).tap { communicate_change }
+    super.tap { communicate_change }
   end
 
 protected
