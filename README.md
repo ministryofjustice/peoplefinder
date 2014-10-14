@@ -4,27 +4,41 @@ This is a rails engine that can be mounted inside a rails 4 application.
 
 A working example can be seen at https://github.com/alphagov/gds-peoplefinder
 
-## Preparing the Gemfile
+## Creating your own wrapper application
 
-In Gemfile:
+If you want to deploy peoplefinder yourself, you can create your own wrapper
+application quite easiliy.
 
-`gem 'peoplefinder'`
+Start by creating a bare rails application:
 
-The peoplefinder engine requires some forked / tagged versions gems
-so these need to be included also:
+```
+$ rails application new my_peoplfinder
+```
 
-`gem 'carrierwave',
+Then you need to modify the `Gemfile` to include the peoplefinder engine gem:
+
+```
+gem 'peoplefinder'
+```
+
+The peoplefinder engine requires some forked / tagged versions gems. It's not
+possible to specify these forked requirements in the `peoplefinder` gemspec,
+so you need to specify them in the `Gemfile` of the wrapper application:
+
+```
+gem 'carrierwave',
   git: 'https://github.com/carrierwaveuploader/carrierwave.git',
-  tag: 'cc39842e44edcb6187b2d379a606ec48a6b5e4a8'`
+  tag: 'cc39842e44edcb6187b2d379a606ec48a6b5e4a8'
 
-`gem 'omniauth-gplus',
-  git: 'https://github.com/ministryofjustice/omniauth-gplus.git'`
-
+gem 'omniauth-gplus',
+  git: 'https://github.com/ministryofjustice/omniauth-gplus.git'
+```
 
 Install the gems with bundler:
 
-`bundle install`
-
+```
+bundle install
+```
 
 ## Mounting the engine
 
@@ -49,7 +63,7 @@ You should then run the migrations in the usual way:
 And commit the `schema.rb`
 
 
-##Configurable elements
+## Configuration
 
 These should be defined in the config/application.rb or in the enviroments/__environment__.rb files if the settings need to be
 defined on a per environment basis.
