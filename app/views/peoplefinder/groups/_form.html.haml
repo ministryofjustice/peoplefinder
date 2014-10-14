@@ -1,0 +1,46 @@
+= editing_mode
+= simple_form_for @group do |f|
+
+  .form-group
+    = f.input :name, as: :string, required: false, label: 'Team name'
+
+  .form-group
+    %label.form-label-bold{ for: :group_description } Team description
+    %p.form-hint= info_text('hint_team_description')
+    = f.input :description, label: false, input_html: { class: 'wider' }
+
+  .form-group
+    %label.form-label-bold{ for: :group_responsibilities } Team responsibilities (optional)
+    %p.form-hint= info_text('hint_team_responsibilities')
+    = f.input :responsibilities, label: false, input_html: { class: 'wider' }
+
+  - if @group.editable_parent?
+    .form-group.group-parent.editable-container
+      - if params[:group_id]
+        = f.input :parent_id, as: :hidden
+      - else
+        %label.form-label-bold Team parent
+        %p.form-hint Use this to change where in the organisation this team is located.
+
+        .editable-fields{ style: ('display:none' unless @group.new_record?) }
+          = render layout: 'peoplefinder/shared/org_browser' do
+            = f.input :parent_id, as: :hidden
+
+        -unless @group.new_record?
+          .editable-summary.parent-summary
+            - if @group.parent
+              .title= breadcrumbs(@group.parent.path)
+            .cta= link_to 'Edit', '#', class: 'show-editable-fields'
+
+  .form-group
+    %label.form-label-bold{ for: :group_team_email_address } Team email address
+    %p.form-hint= info_text('hint_team_email_address')
+    = f.input :team_email_address, as: :string, required: false, label: false
+
+  .form-group
+    = f.button :submit
+    .cancel
+      - if @group.new_record?
+        = link_to 'Cancel', :back
+      - else
+        = link_to 'Cancel', @group

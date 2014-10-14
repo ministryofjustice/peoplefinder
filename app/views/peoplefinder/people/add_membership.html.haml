@@ -1,0 +1,6 @@
+- @person = Peoplefinder::Person.new
+- @person.memberships.build
+
+= simple_form_for @person, :authenticity_token => false do |f|
+  = f.fields_for :memberships, child_index: @person.object_id do |membership_f|
+    = render partial: 'membership_fields', locals: { membership_f: membership_f }

@@ -5,7 +5,7 @@ feature 'Search for people', elastic: true do
     before do
       create(:department)
       create(:person, given_name: 'Jon', surname: 'Browne', email: 'jon.browne@digital.justice.gov.uk', primary_phone_number: '0711111111')
-      Person.import
+      Peoplefinder::Person.import
       sleep 1
       omni_auth_log_in_as 'test.user@digital.justice.gov.uk'
     end

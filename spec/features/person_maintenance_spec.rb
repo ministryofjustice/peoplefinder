@@ -39,7 +39,7 @@ feature 'Person maintenance' do
     expect(page).to have_text('1 result found')
     click_button 'Continue'
     check_creation_of_profile_details
-    expect(Person.where(surname: person_attributes[:surname]).count).to eql(2)
+    expect(Peoplefinder::Person.where(surname: person_attributes[:surname]).count).to eql(2)
   end
 
   scenario 'Cancelling creation of a person with an identical name' do
@@ -52,7 +52,7 @@ feature 'Person maintenance' do
     click_button 'Create'
 
     click_link 'Return to home page'
-    expect(Person.where(surname: person_attributes[:surname]).count).to eql(1)
+    expect(Peoplefinder::Person.where(surname: person_attributes[:surname]).count).to eql(1)
   end
 
   scenario 'Editing a person and giving them a name that already exists' do
@@ -66,14 +66,14 @@ feature 'Person maintenance' do
     click_button 'Update'
 
     click_button 'Continue'
-    expect(Person.where(surname: person_attributes[:surname]).count).to eql(2)
+    expect(Peoplefinder::Person.where(surname: person_attributes[:surname]).count).to eql(2)
   end
 
   scenario 'Deleting a person' do
     person = create(:person)
     visit edit_person_path(person)
     click_link('Delete this profile')
-    expect { Person.find(person) }.to raise_error(ActiveRecord::RecordNotFound)
+    expect { Peoplefinder::Person.find(person) }.to raise_error(ActiveRecord::RecordNotFound)
   end
 
   scenario 'Allow deletion of a person even when there are memberships' do
@@ -81,8 +81,8 @@ feature 'Person maintenance' do
     person = membership.person
     visit edit_person_path(person)
     click_link('Delete this profile')
-    expect { Membership.find(membership) }.to raise_error(ActiveRecord::RecordNotFound)
-    expect { Person.find(person) }.to raise_error(ActiveRecord::RecordNotFound)
+    expect { Peoplefinder::Membership.find(membership) }.to raise_error(ActiveRecord::RecordNotFound)
+    expect { Peoplefinder::Person.find(person) }.to raise_error(ActiveRecord::RecordNotFound)
   end
 
   scenario 'Editing a person' do
@@ -118,7 +118,7 @@ feature 'Person maintenance' do
     expect(page).not_to have_link('Crop image')
     click_button 'Create'
 
-    person = Person.find_by_surname(person_attributes[:surname])
+    person = Peoplefinder::Person.find_by_surname(person_attributes[:surname])
     visit person_path(person)
     expect(page).to have_css("img[src*='#{person.image.medium}']")
 
@@ -222,8 +222,8 @@ feature 'Person maintenance' do
 
     check('No phone number')
     click_button 'Update'
-    expect(Person.last.primary_phone_number).to be_blank
-    expect(Person.last.secondary_phone_number).to be_blank
+    expect(Peoplefinder::Person.last.primary_phone_number).to be_blank
+    expect(Peoplefinder::Person.last.secondary_phone_number).to be_blank
 
     visit edit_person_path(person)
     expect(page).not_to have_field('person_primary_phone_number')

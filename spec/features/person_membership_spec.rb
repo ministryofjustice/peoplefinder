@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-feature "Person maintenance" do
+feature "Peoplefinder::Person maintenance" do
   before do
     omni_auth_log_in_as 'test.user@digital.justice.gov.uk'
   end
@@ -16,7 +16,7 @@ feature "Person maintenance" do
     check 'leader'
     click_button "Create"
 
-    membership = Person.last.memberships.last
+    membership = Peoplefinder::Person.last.memberships.last
     expect(membership.role).to eql('Head Honcho')
     expect(membership.group).to eql(group)
     expect(membership.leader?).to be true
@@ -32,7 +32,7 @@ feature "Person maintenance" do
     fill_in 'Job title', with: 'Head Honcho'
     click_button 'Update'
 
-    membership = Person.last.memberships.last
+    membership = Peoplefinder::Person.last.memberships.last
     expect(membership.role).to eql('Head Honcho')
   end
 
@@ -52,7 +52,7 @@ feature "Person maintenance" do
     end
 
     click_button 'Update'
-    expect(Person.last.memberships.length).to eql(2)
+    expect(Peoplefinder::Person.last.memberships.length).to eql(2)
   end
 
   scenario 'Clicking the add another role link', js: true do

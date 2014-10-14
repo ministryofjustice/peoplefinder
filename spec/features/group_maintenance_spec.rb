@@ -17,7 +17,7 @@ feature 'Group maintenance' do
 
     expect(page).to have_content('Created Ministry of Justice')
 
-    dept = Group.find_by_name(name)
+    dept = Peoplefinder::Group.find_by_name(name)
     expect(dept.name).to eql(name)
     expect(dept.description).to eql('about my team')
     expect(dept.responsibilities).to eql('my responsibilities')
@@ -38,7 +38,7 @@ feature 'Group maintenance' do
 
     expect(page).to have_content('Created CSG')
 
-    team = Group.find_by_name(name)
+    team = Peoplefinder::Group.find_by_name(name)
     expect(team.name).to eql(name)
     expect(team.parent).to eql(dept)
   end
@@ -57,7 +57,7 @@ feature 'Group maintenance' do
 
     expect(page).to have_content('Created Digital Services')
 
-    subteam = Group.find_by_name(name)
+    subteam = Peoplefinder::Group.find_by_name(name)
     expect(subteam.name).to eql(name)
     expect(subteam.parent).to eql(team)
   end
@@ -85,7 +85,7 @@ feature 'Group maintenance' do
     click_link('Delete this team')
 
     expect(page).to have_content("Deleted #{group.name}")
-    expect { Group.find(group) }.to raise_error(ActiveRecord::RecordNotFound)
+    expect { Peoplefinder::Group.find(group) }.to raise_error(ActiveRecord::RecordNotFound)
   end
 
   scenario 'Prevent deletion of a team that has memberships' do

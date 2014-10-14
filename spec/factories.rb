@@ -3,14 +3,14 @@ FactoryGirl.define do
     'example.user.%d@digital.justice.gov.uk' % n
   end
 
-  factory :department, class: 'Group' do
+  factory :department, class: 'Peoplefinder::Group' do
     initialize_with do
-      Group.where(ancestry_depth: 0).first_or_create(name: 'Ministry of Justice')
+      Peoplefinder::Group.where(ancestry_depth: 0).first_or_create(name: 'Ministry of Justice')
     end
     team_email_address { generate(:email) }
   end
 
-  factory :group do
+  factory :group, class: 'Peoplefinder::Group' do
     sequence :name do |n|
       'Group-%04d' % n
     end
@@ -18,18 +18,18 @@ FactoryGirl.define do
     association :parent, factory: :department
   end
 
-  factory :person do
+  factory :person, class: 'Peoplefinder::Person' do
     sequence :surname do |n|
       'Surname-%04d' % n
     end
   end
 
-  factory :membership do
+  factory :membership, class: 'Peoplefinder::Membership' do
     person
     group
   end
 
-  factory :token do
+  factory :token, class: 'Peoplefinder::Token' do
     user_email { generate(:email) }
   end
 end

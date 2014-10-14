@@ -1,0 +1,23 @@
+%h1.no-line= t('.heading')
+.spacer-25
+%h3= t('.heading_google')
+
+%p= t('.body_google')
+
+%p
+  = link_to t('.log_in'), "/auth/gplus", class: 'button login-button'
+
+%hr
+.spacer-5
+%h3= t('.heading_other')
+
+%p= t('.body_other')
+
+= simple_form_for (@token ||= Peoplefinder::Token.new) do |token_form|
+
+  .form-group{ class: ('gov-uk-field-error' if @token.errors.any?)}
+    %p= @token.errors[:base].join('')
+    = token_form.input :user_email, as: :string, label: false
+  .spacer-20
+  .form-group
+    = token_form.button :submit, t('.log_in'), class: 'login-button'

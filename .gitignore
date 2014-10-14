@@ -1,6 +1,7 @@
 /.bundle
 /db/*.sqlite3
 /db/*.sqlite3-journal
+/Gemfile.lock
 /log/*.log
 /tmp
 /public/uploads/*
@@ -9,3 +10,12 @@
 .idea
 /.env
 .ruby-version
+/pkg/
+/spec/dummy/db/*.sqlite3
+/spec/dummy/db/*.sqlite3-journal
+/spec/dummy/log/*.log
+/spec/dummy/tmp/
+/spec/dummy/public/uploads
+/spec/dummy/.sass-cache
+/spec/dummy/.env
+/spec/dummy/db/schema.rb

@@ -1,4 +1,4 @@
-Rails.application.routes.draw do
+Peoplefinder::Engine.routes.draw do
   root 'home#show', as: :home
 
   resources :groups, path: 'teams' do

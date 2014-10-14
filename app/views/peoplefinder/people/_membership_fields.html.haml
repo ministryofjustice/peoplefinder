@@ -1,0 +1,42 @@
+- membership = membership_f.object
+.membership.editable-container
+  - unless membership.new_record?
+    .form-group.editable-summary
+      .title
+        - if membership.role?
+          %strong= membership.role
+        = breadcrumbs(membership.path)
+      .cta
+        = link_to 'Edit', '#', class: 'show-editable-fields'
+      .cta
+        = link_to 'Delete', membership_path(membership,
+          referer: request.path),
+          method: :delete,
+          data: {confirm: "Are you sure you want to remove #{ membership.person} from #{ membership.group }? " }
+
+
+  .editable-fields{ style: ('display:none' unless membership.new_record?) }
+    .form-group
+      = membership_f.input :role, as: :string, label: 'Job title'
+
+    .form-group
+      %label.form-label-bold Team
+      = render layout: 'peoplefinder/shared/org_browser' do
+        = membership_f.input :group_id, as: :hidden
+
+      %p.form-hint= info_text('hint_add_person_team_not_found')
+
+    .form-checkbox
+      %h3 Team leader?
+      = membership_f.input :leader, label: 'This person is leader of the team above.'
+      %p.form-hint= info_text('hint_add_person_as_leader')
+
+      .remove-link
+        - if membership.new_record?
+          = link_to 'Delete', '#', class: 'remove-new-membership'
+
+        - else
+          = link_to 'Delete', membership_path(membership,
+            referer: request.path),
+            method: :delete,
+            data: {confirm: "Are you sure you want to remove #{ membership.person} from #{ membership.group }? " }

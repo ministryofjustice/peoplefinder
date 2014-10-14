@@ -1,6 +1,0 @@
-- content_for :breadcrumbs do
-  = breadcrumbs(Home.path + @group.path + ['All people'])
-
-%h1 People in #{ @group.name }
-.grid-wrapper
-  = render partial: "people/summary", collection: @group.all_people

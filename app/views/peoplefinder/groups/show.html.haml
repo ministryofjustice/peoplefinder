@@ -1,0 +1,23 @@
+= render partial: 'breadcrumbs'
+
+= render partial: 'detail'
+
+- unless @group.leaf_node?
+  %h2
+    Teams within
+    = @group.name
+
+  .grid-wrapper
+    = render partial: "subgroup", collection: @group.children
+
+.add-new-sub-team= link_to 'Add new sub-team', new_group_group_path(@group)
+
+- if @group.leaf_node?
+  .title_with_edit
+    %h2 People in #{ @group.name }
+  .grid-wrapper
+    = render partial: "peoplefinder/memberships/summary", collection: @group.non_leaderships
+
+- else
+  .view-all-people= link_to "View all people in #{ @group.name }", people_group_path(@group)
+

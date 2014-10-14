@@ -1,4 +1,4 @@
-if %w[development test].include? Rails.env
+if defined?(RuboCop)
   require 'rubocop/rake_task'
   RuboCop::RakeTask.new
 

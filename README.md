@@ -1,6 +1,72 @@
 # MoJ People Finder
 
-[![Code Climate](https://codeclimate.com/github/ministryofjustice/peoplefinder/badges/gpa.svg)](https://codeclimate.com/github/ministryofjustice/peoplefinder)
+This is a rails engine that can be mounted inside a rails 4 application.
+
+A working example can be seen at https://github.com/alphagov/gds-peoplefinder
+
+## Preparing the Gemfile
+
+In Gemfile:
+
+`gem 'peoplefinder'`
+
+The peoplefinder engine requires some forked / tagged versions gems
+so these need to be included also:
+
+`gem 'carrierwave',
+  git: 'https://github.com/carrierwaveuploader/carrierwave.git',
+  tag: 'cc39842e44edcb6187b2d379a606ec48a6b5e4a8'`
+
+`gem 'omniauth-gplus',
+  git: 'https://github.com/ministryofjustice/omniauth-gplus.git'`
+
+
+Install the gems with bundler:
+
+`bundle install`
+
+
+## Mounting the engine
+
+In config/routes.rb:
+
+`mount Peoplefinder::Engine, at: "/"`
+
+## Importing migrations from engine
+
+If the engine has new database migrations, you can import them into this application to apply them to the application database using the following:
+
+`$ bundle exec rake peoplefinder:install:migrations`
+
+This copies the migrations into the application's `db/migrate` directory. You should commit any such imported migration files to this applications repo:
+
+`$ git add db/migrate $ git commit -m 'Imported new migrations from engine'`
+
+You should then run the migrations in the usual way:
+
+` $ bundle exec rake db:migrate`
+
+And commit the `schema.rb`
+
+
+##Configurable elements
+
+These should be defined in the config/application.rb or in the enviroments/__environment__.rb files if the settings need to be
+defined on a per environment basis.
+
+`config.app_title` e.g. 'My New People Finder'
+
+`config.default_url_options` e.g. { host: mail.peoplefinder.example.com }
+
+`config.elastic_search_url` Required for production (see Search section below)
+
+`config.ga_tracking_id` Google Analytics tracking id [optional]. e.g. 'XXXX-XXX'
+
+`config.support_email` e.g. 'peoplefinder-support@example.com'
+
+`config.valid_login_domains` Restrict login to email addresses from the list of valid domains. e.g. %w[ peoplefinder.example.com ]
+
+
 
 ## Authentication
 
@@ -21,6 +87,10 @@ The permitted domains are configured in `config/application.rb`.
 
 ## Search
 
+To run the engine in production mode, `config.elastic_search_url` must be set in, for example, config/application.rb.
+See 'Configurable elements' above.
+
+
 Heroku provides [Bonsai Elasticsearch](https://devcenter.heroku.com/articles/bonsai)
 as an add-on.
 
@@ -32,16 +102,23 @@ Elasticsearch requires [jdk version 7 or greater](http://www.oracle.com/technetw
 
 If you get an IndexMissingException, you will need to index the Person model:
 
-`bundle exec rake environment elasticsearch:import:model CLASS='Person' FORCE=y`
+```
+bundle exec rake environment elasticsearch:import:model CLASS='Peoplefinder::Person' FORCE=y
+```
 
-Or you can build the index from the console:
+Or you can create the index from the console:
 
-`Person.__elasticsearch__.create_index! index: Person.index_name, force: true`
-`Person.import`
+```
+Peoplefinder::Person.__elasticsearch__.create_index! index: Peoplefinder::Person.index_name, force: true`
+```
+
+And populate it:
+
+`Peoplefinder::Person.import`
 
 You can also delete the index:
 
-`Person.delete_indexes`
+`Peoplefinder::Person.delete_indexes`
 
 To run specs without Elasticsearch:
 
@@ -64,6 +141,22 @@ You'll need to install PhantomJS in order to run the headless browser tests.
 Also, if you'd like test coverage for Javascript you'll need to have Node and Istanbul installed. The easiest way to do this is installing Node via nvm and then use npm to install Istanbul like so:
 
 `npm install -g istanbul`
+
+## View templates
+
+The application layout is set by the [moj_internal_template](https://github.com/ministryofjustice/moj_internal_template) that is installed as part of this engine.
+
+You can override this layout in wrapper application, create your own file:
+
+`app/views/layouts/peoplefinder/peoplefinder.html.haml`
+
+## Translation file
+
+A lot of the text in the views is configurable in the translations file.
+
+You can override these in wrapper application by creating your own file:
+
+`config/locales/en.yml`
 
 ## Utilities
 

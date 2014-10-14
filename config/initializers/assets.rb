@@ -1,3 +1,7 @@
+Rails.application.config.assets.paths << Peoplefinder::Engine.root.join(
+  'vendor', 'assets', 'components'
+  )
+
 Rails.application.config.assets.precompile += %w[
   gov-static/gov-goodbrowsers.css
   gov-static/gov-ie6.css
@@ -19,6 +23,6 @@ unless Rails.env.production?
                                                     teaspoon-mocha.js ]
 end
 
-Dir.chdir(Rails.root.join('vendor', 'assets', 'components')) do
+Dir.chdir(Peoplefinder::Engine.root.join('vendor', 'assets', 'components')) do
   Rails.application.config.assets.precompile += Dir['**/*.{js,css}']
 end

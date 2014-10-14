@@ -1,0 +1,11 @@
+- content_for :html_attributes, 'ng-app="peoplefinderApp"'.html_safe
+= render partial: 'layouts/peoplefinder/shared'
+- content_for :content do
+  #wrapper
+    %main#content{role: 'main'}
+      =flash_messages
+      .inner-block
+        #home-page= yield
+
+= render 'layouts/peoplefinder/ga'
+= render template: "layouts/peoplefinder/peoplefinder"
