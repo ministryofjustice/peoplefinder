@@ -140,6 +140,13 @@ RSpec.describe Admin::UsersController, type: :controller do
       expect(response).to redirect_to(admin_users_path)
     end
 
+    it 'destroys any associated tokens' do
+      create(:token, user: user)
+      expect {
+        delete :destroy, id: user.to_param
+      }.to change(Token, :count).by(-1)
+    end
+
     it 'shows a success message' do
       delete :destroy, id: user.to_param
       expect(flash[:notice]).to match(/deleted/)
