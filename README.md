@@ -142,6 +142,15 @@ Also, if you'd like test coverage for Javascript you'll need to have Node and Is
 
 `npm install -g istanbul`
 
+## View templates
+
+The application layout is set by the [moj_internal_template](https://github.com/ministryofjustice/moj_internal_template) that is installed as part of this engine.
+
+To override this layout, add your own file as:
+
+`app/views/layouts/peoplefinder/peoplefinder.html.haml`
+
+
 ## Utilities
 
 CI by [Travis](https://travis-ci.org/ministryofjustice/peoplefinder).
