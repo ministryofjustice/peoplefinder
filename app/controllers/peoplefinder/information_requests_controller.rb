@@ -5,7 +5,7 @@ module Peoplefinder
     def new
       @information_request = InformationRequest.new(
         recipient: @person,
-        message: I18n.t('controllers.information_requests.default_message',
+        message: I18n.t('peoplefinder.controllers.information_requests.default_message',
           recipient: @person,
           sender: current_user)
         )
