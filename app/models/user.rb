@@ -20,7 +20,10 @@ class User < ActiveRecord::Base
 
   belongs_to :manager, class_name: 'User'
 
-  validates :email, presence: true, format: /.@./, uniqueness: true
+  validates :email,
+    presence: true,
+    format: /\A.+@.+\z/,
+    uniqueness: true
 
   default_scope { order(:name) }
 

@@ -23,7 +23,7 @@ class Review < ActiveRecord::Base
   validates :subject, presence: true
   validates :author_email,
     presence: true,
-    format: /.@./,
+    format: /\A.+@.+\z/,
     uniqueness: { scope: :subject_id }
   validates :author_name, presence: true
   validates :status, presence: true, inclusion: { in: STATUSES }
