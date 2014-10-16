@@ -1,5 +1,6 @@
 class LoginsController < ApplicationController
   skip_before_action :ensure_user
+  skip_before_action :check_review_period_is_open
 
   def new
     @login = Login.new
