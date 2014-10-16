@@ -227,12 +227,15 @@ en:
     section_1:
       title: 'Leadership qualities'
       intro: |
-        Please refer to the [Leadership Model](/leadership-model) for help
-        with this section.
+        Please refer to the
+        <a href="/leadership-model" target="_blank">Leadership Model</a>
+        for help with this section.
     section_2:
       title: 'How We Work'
       intro: |
-        Please refer to the [MOJ Story](/moj-story) for help with this section.
+        Please refer to the
+        <a href="/moj-story" target="_blank">MOJ Story</a>
+        for help with this section.
     ratings:
       '1': '1'
       '2': '2'
