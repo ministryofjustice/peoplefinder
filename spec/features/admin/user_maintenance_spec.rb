@@ -1,13 +1,13 @@
 require 'rails_helper'
 
-feature 'User maintenance' do
+feature 'Administrator maintaining users' do
   let(:user) { create(:admin_user, name: 'Bob') }
 
   before do
     log_in_as user
   end
 
-  scenario 'Creating users' do
+  scenario 'Creating users with hierarchy' do
     visit admin_path
 
     click_link 'Manage users'

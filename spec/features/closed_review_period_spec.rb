@@ -10,7 +10,7 @@ feature 'Closed review period', closed_review_period: true do
     )
   end
 
-  scenario 'As the subject of a review' do
+  scenario 'Viewing my feedback' do
     me.update manager: create(:user)
     ReviewPeriod.instance.send_closure_notifications
     visit links_in_email(last_email).first
@@ -18,7 +18,7 @@ feature 'Closed review period', closed_review_period: true do
     check_my_feedback_from_danny_boy
   end
 
-  scenario 'As a manager with direct reports who has received feedback' do
+  scenario 'Viewing the feedback of my direct report' do
     me.update manager: create(:user)
     charlie = create(:user, name: 'Charlie', manager: me)
     create(:submitted_review,
@@ -41,7 +41,7 @@ feature 'Closed review period', closed_review_period: true do
     check_my_feedback_from_danny_boy
   end
 
-  scenario 'As an author using a review token' do
+  scenario 'Visiting as a reviewer' do
     visit token_url(review.tokens.create)
     access_is_denied
   end
