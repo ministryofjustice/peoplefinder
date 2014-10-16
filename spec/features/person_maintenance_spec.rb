@@ -248,4 +248,13 @@ feature 'Person maintenance' do
     expect(last_email.body.encoded).to have_text('Additional details: Some stuff')
     expect(last_email.body.encoded).to have_text(person_url(person))
   end
+
+  scenario 'Adding skills and expertise to a new profile' do
+    visit new_person_path
+    fill_in 'Surname', with: 'Smith'
+    fill_in 'person_tags', with: 'Ruby,Cakes and bakes'
+    click_button 'Create'
+
+    expect(Peoplefinder::Person.last.tags).to eql('Cakes and bakes,Ruby')
+  end
 end
