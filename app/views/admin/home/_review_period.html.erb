@@ -7,8 +7,8 @@
   <%= t(current_state, scope: 'admin.home.review_period_status') %>
 </p>
 
-<%= form_tag admin_setting_path('review_period'), method: :put do %>
-  <%= hidden_field_tag('setting[value]', alternate_state) %>
+<%= form_tag admin_review_period_path, method: :put do %>
+  <%= text_field_tag('setting[closes_at]') %>
   <%= button_tag(t(alternate_state, scope: 'admin.home.review_period_change'),
         class: 'button') %>
 <% end %>

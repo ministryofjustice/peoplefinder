@@ -44,6 +44,8 @@ en:
       password_resets:
         token_expired: 'Your password reset token has expired'
         link_sent: 'Password reset link sent'
+      review_periods:
+        updated: 'Updated review period'
       users:
         created: 'User %{name} created'
         updated: 'User %{name} updated'
