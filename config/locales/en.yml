@@ -44,8 +44,6 @@ en:
       password_resets:
         token_expired: 'Your password reset token has expired'
         link_sent: 'Password reset link sent'
-      settings:
-        updated: 'Updated setting %{key}'
       users:
         created: 'User %{name} created'
         updated: 'User %{name} updated'
