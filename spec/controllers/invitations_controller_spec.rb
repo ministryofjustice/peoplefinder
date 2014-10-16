@@ -1,8 +1,11 @@
 require 'rails_helper'
 RSpec.describe InvitationsController, type: :controller do
-
   let(:author) { create(:user) }
   let!(:invitation) { Invitation.new(create(:review, author: author)) }
+
+  before do
+    open_review_period
+  end
 
   describe 'PUT update' do
     context 'with an authenticated session' do

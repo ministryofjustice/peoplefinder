@@ -7,7 +7,7 @@ RSpec.describe Admin::IntroductoryMailingsController, type: :controller do
 
   describe 'POST create' do
     it 'sends introduction emails' do
-      expect(ReviewPeriod.instance).to receive(:send_introductions)
+      expect(ReviewPeriod).to receive(:send_introductions)
       post :create
     end
 

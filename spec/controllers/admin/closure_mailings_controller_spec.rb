@@ -7,7 +7,7 @@ RSpec.describe Admin::ClosureMailingsController, type: :controller do
 
   describe 'POST create' do
     it 'sends closure emails' do
-      expect(ReviewPeriod.instance).to receive(:send_closure_notifications)
+      expect(ReviewPeriod).to receive(:send_closure_notifications)
       post :create
     end
 

@@ -2,6 +2,10 @@ require 'rails_helper'
 RSpec.describe RemindersController, type: :controller do
   let(:review) { create(:review) }
 
+  before do
+    open_review_period
+  end
+
   describe 'POST create' do
     context 'with the subject as an authenticated user' do
       before do

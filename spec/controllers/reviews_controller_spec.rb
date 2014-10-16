@@ -11,6 +11,10 @@ RSpec.describe ReviewsController, type: :controller do
     }
   }
 
+  before do
+    open_review_period
+  end
+
   describe 'GET index' do
     before do
       authenticate_as me
