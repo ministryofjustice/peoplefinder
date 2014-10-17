@@ -1,5 +1,5 @@
 <% content_for :head do %>
-  <%= stylesheet_link_tag "application" %>
+  <%= stylesheet_link_tag 'application' %>
 <% end %>
 
 <% content_for :content do %>
@@ -12,4 +12,5 @@
   </div>
 <% end %>
 
-<%= render template: "layouts/moj_internal_template" %>
+<%= render partial: 'shared/ga' %>
+<%= render template: 'layouts/moj_internal_template' %>

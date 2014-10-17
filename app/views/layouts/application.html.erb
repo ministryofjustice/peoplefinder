@@ -1,6 +1,6 @@
 <% content_for :head do %>
-  <%= javascript_include_tag "application" %>
-  <%= stylesheet_link_tag "application", media: :all %>
+  <%= javascript_include_tag 'application' %>
+  <%= stylesheet_link_tag 'application', media: :all %>
 <% end %>
 
 <% content_for :content do %>
@@ -33,6 +33,9 @@
   </div>
 <% end %>
 
-<%= render partial: "shared/loginout" %>
 
-<%= render template: "layouts/moj_internal_template" %>
+
+<%= render 'shared/loginout' %>
+<%= render 'shared/ga' %>
+
+<%= render template: 'layouts/moj_internal_template' %>
