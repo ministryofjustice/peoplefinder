@@ -34,36 +34,4 @@ $(function() {
     $('#person_secondary_phone_number').val('');
     $('.phone_numbers').toggle();
   });
-
-  $(window).load(function() {
-    var the_form = $('input[id=person_tags]').parents('form:first')
-
-    // remove the non-js default field
-    $('.person_tags').remove();
-
-    // add a hidden field
-    $('<input>').attr({
-      type: 'hidden',
-      id: 'person_tags',
-      name: 'person[tags]'
-    }).appendTo(the_form);
-
-    $('#person_tag_chooser').select2({
-      tags: [],
-      width: '480',
-      dropdownCssClass: 'form-control',
-      tokenSeparators: [','],
-
-    }).on('select2-blur', function(e) {
-      e.preventDefault();
-      $('#person_tags')[0].value = $(this).select2('val');
-
-    });
-
-    $('#person_tag_chooser').select2('val', [$('#person_tags').attr('value')]);
-
-    $('select2-search-field > input.select2-input').on('keyup', function(e) {
-      if(e.keyCode === 13) addToList($(this).val());
-    });
-  });
 });

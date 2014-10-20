@@ -47,7 +47,10 @@
   .form-group
     %h3.line-above Skills and expertise
     %p.form-hint= info_text('skills_and_expertise_hint')
-    = f.input :tags, label: false
+
+    #person_tag_chooser
+    = f.input :tags, as: :string, label: false
+
 
   .form-group
     %h3.line-above Photograph
