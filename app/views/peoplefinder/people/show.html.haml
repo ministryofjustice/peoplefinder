@@ -32,7 +32,7 @@
         %ul.tags
           %h4 Skills and expertise
           - @person.tags.split(',').each do |tag|
-            %li= tag
+            %li= link_to tag, search_path(query: tag)
 
 
 - if @person.incomplete? && @person.email.present?
