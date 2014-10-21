@@ -49,6 +49,7 @@
     %p.form-hint= info_text('skills_and_expertise_hint')
 
     #person_tag_chooser
+    = hidden_field_tag :tag_list, Peoplefinder::Person.tag_list
     = f.input :tags, as: :string, label: false
 
 
