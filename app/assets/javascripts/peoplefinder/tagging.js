@@ -1,3 +1,4 @@
+/* global $, addToList */
 $(window).load(function() {
 
  if($('#person_tag_chooser').length > 0)
@@ -29,11 +30,11 @@ $(window).load(function() {
 
     // enable adding a tag with the enter key
     $('select2-search-field > input.select2-input').on('keyup', function(e) {
-      if(e.keyCode === 13) addToList($(this).val());
+      if(e.keyCode === 13) { addToList($(this).val()); }
     });
 
     // set the hidden field when the form is submitted
-    the_form.on('submit', function(e) {
+    the_form.on('submit', function() {
       $('#person_tags')[0].value = $('#person_tag_chooser').select2('val');
     });
   }
