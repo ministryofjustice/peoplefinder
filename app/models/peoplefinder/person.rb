@@ -74,6 +74,10 @@ class Peoplefinder::Person < ActiveRecord::Base
     end
   end
 
+  def self.tag_list
+    Peoplefinder::Person.all.pluck(:tags).flatten.compact.sort.uniq.join(',')
+  end
+
 private
 
   def group_path(hint_group)
