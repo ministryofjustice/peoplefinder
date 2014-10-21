@@ -252,9 +252,13 @@ feature 'Person maintenance' do
   scenario 'Adding skills and expertise to a new profile' do
     visit new_person_path
     fill_in 'Surname', with: 'Smith'
-    fill_in 'person_tags', with: 'Ruby,Cakes and bakes'
+    fill_in 'person_tags', with: 'ruby,cakes and bakes'
     click_button 'Create'
 
-    expect(Peoplefinder::Person.last.tags).to eql('Cakes and bakes,Ruby')
+    expect(page).to have_text('Skills and expertise')
+    within '.tags' do
+      expect(page).to have_text('Cakes and bakes')
+      expect(page).to have_text('Ruby')
+    end
   end
 end

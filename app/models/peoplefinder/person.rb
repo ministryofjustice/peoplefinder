@@ -83,8 +83,10 @@ private
   end
 
   def sanitize_tags
-    if self.tags
-      self.tags = self.tags.split(',').map(&:strip).sort.join(',')
+    if tags
+      self.tags = tags.split(',').map { |tag|
+        tag.strip.capitalize
+      }.sort.join(',')
     end
   end
 end
