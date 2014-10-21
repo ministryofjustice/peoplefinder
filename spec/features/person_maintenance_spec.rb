@@ -261,4 +261,35 @@ feature 'Person maintenance' do
       expect(page).to have_text('Ruby')
     end
   end
+
+  scenario 'Editing skills and expertise with javascript', js: true do
+    create(:group, name: 'Digital')
+    person = create(:person, tags: 'Cooking')
+    javascript_log_in
+
+    visit edit_person_path(person)
+
+    within('.select2-container') do
+      expect(page).to have_text('Cooking')
+    end
+
+    # remove Cooking
+    find('.select2-search-choice-close').click
+
+    # add Baking
+    page.execute_script("i = $('.select2-container input').first();")
+    page.execute_script("i.val('baking').trigger('keydown');")
+    find('.select2-results li:first-child').click
+
+    # add Washing dishes
+    page.execute_script("i.val('washing dishes').trigger('keydown');")
+    find('.select2-results li:first-child').click
+
+    click_button 'Update'
+    within '.tags' do
+      expect(page).not_to have_text('Cooking')
+      expect(page).to have_text('Baking')
+      expect(page).to have_text('Washing dishes')
+    end
+  end
 end
