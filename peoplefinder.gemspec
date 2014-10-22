@@ -44,11 +44,8 @@ Gem::Specification.new do |s|
   s.add_dependency 'will_paginate', '~> 3.0'
   s.add_dependency 'unf'
 
-
-  s.add_development_dependency 'spring'
   s.add_development_dependency 'brakeman'
   s.add_development_dependency 'pry-rails'
-
   s.add_development_dependency 'dotenv-rails'
   s.add_development_dependency 'pry'
   s.add_development_dependency 'rspec-mocks'
