@@ -72,6 +72,8 @@ defined on a per environment basis.
 
 `config.default_url_options` e.g. { host: mail.peoplefinder.example.com }
 
+`config.disable_profile_tags` Hide the tagging (Skills and expertise) functionality from the edit profile page
+
 `config.elastic_search_url` Required for production (see Search section below)
 
 `config.ga_tracking_id` Google Analytics tracking id [optional]. e.g. 'XXXX-XXX'

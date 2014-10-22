@@ -292,4 +292,13 @@ feature 'Person maintenance' do
       expect(page).to have_text('Washing dishes')
     end
   end
+
+  scenario 'Tagging is disabled' do
+    Rails.application.config.disable_profile_tags = true
+
+    visit new_person_path
+    expect(page).not_to have_field('person_tags')
+
+    Rails.application.config.disable_profile_tags = false
+  end
 end

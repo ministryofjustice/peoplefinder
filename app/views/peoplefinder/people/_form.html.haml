@@ -44,13 +44,14 @@
     - Peoplefinder::Person::DAYS_WORKED.each do |day|
       = f.input day, as: :boolean, label: day_name(day)
 
-  .form-group
-    %h3.line-above Skills and expertise
-    %p.form-hint= info_text('skills_and_expertise_hint')
+  - unless feature_disabled?(:profile_tags)
+    .form-group
+      %h3.line-above Skills and expertise
+      %p.form-hint= info_text('skills_and_expertise_hint')
 
-    #person_tag_chooser
-    = hidden_field_tag :tag_list, Peoplefinder::Person.tag_list
-    = f.input :tags, as: :string, label: false
+      #person_tag_chooser
+      = hidden_field_tag :tag_list, Peoplefinder::Person.tag_list
+      = f.input :tags, as: :string, label: false
 
 
   .form-group
