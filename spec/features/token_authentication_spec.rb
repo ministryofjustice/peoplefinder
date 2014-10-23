@@ -57,7 +57,7 @@ feature 'Token Authentication' do
 
   scenario 'logging out' do
     token_log_in_as('james.darling@digital.justice.gov.uk')
-    expect(page).to have_text('james darling')
+    expect(page).to have_text('James Darling')
     click_link 'Log out'
     expect(page).not_to have_text('james.darling@digital.justice.gov.uk')
     expect(page).to have_text('Log in to the people finder')

@@ -54,24 +54,33 @@ RSpec.describe Peoplefinder::EmailAddress do
   context 'name inferral' do
     let(:email_john_smith) { described_class.new('john.smith.1@example.com') }
     let(:email_smithy) { described_class.new('smithy@example.com') }
+    let(:email_anne_marie) { described_class.new('anne-marie.boris-smythe@example.com') }
 
     describe '.inferred_given_name' do
       it 'returns john.smith' do
-        expect(email_john_smith.inferred_first_name).to eql('john')
+        expect(email_john_smith.inferred_first_name).to eql('John')
       end
 
       it 'returns nil' do
         expect(email_smithy.inferred_first_name).to be_nil
       end
+
+      it 'returns Anne-Marie' do
+        expect(email_anne_marie.inferred_first_name).to eql('Anne-Marie')
+      end
     end
 
     describe '.inferred_last_name' do
       it 'returns smith' do
-        expect(email_john_smith.inferred_last_name).to eql('smith')
+        expect(email_john_smith.inferred_last_name).to eql('Smith')
       end
 
       it 'returns smithy' do
-        expect(email_smithy.inferred_last_name).to eql('smithy')
+        expect(email_smithy.inferred_last_name).to eql('Smithy')
+      end
+
+      it 'returns Boris-Smythe' do
+        expect(email_anne_marie.inferred_last_name).to eql('Boris-Smythe')
       end
     end
   end
