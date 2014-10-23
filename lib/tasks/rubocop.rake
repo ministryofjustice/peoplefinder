@@ -1,4 +1,4 @@
-if Gem.loaded_specs.has_key?('rubocop')
+if Gem.loaded_specs.key?('rubocop')
   require 'rubocop/rake_task'
   RuboCop::RakeTask.new
 
