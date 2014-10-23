@@ -21,15 +21,11 @@ class Peoplefinder::EmailAddress < Mail::Address
   end
 
   def inferred_last_name
-    if multipart_local?
-      local.split('.')[1]
-    else
-      local.split('.')[0]
-    end
+    capitalise(local.split('.')[(multipart_local? ? 1 : 0)])
   end
 
   def inferred_first_name
-    local.split('.')[0] if multipart_local?
+    capitalise(local.split('.')[0]) if multipart_local?
   end
 
   def multipart_local?
@@ -42,5 +38,11 @@ private
     Rails.configuration.valid_login_domains
   rescue
     []
+  end
+
+  def capitalise(word)
+    word.downcase.to_s.gsub(/\b('?\S)/u) do
+      (Regexp.last_match[1]).upcase
+    end
   end
 end

@@ -29,7 +29,7 @@ RSpec.describe 'Authentication' do # rubocop:disable RSpec/DescribeClass
 
     it 'creates a new person from a valid token' do
       expect(person.email).to eql(token.user_email)
-      expect(person.name).to eql('aled jones')
+      expect(person.name).to eql('Aled Jones')
     end
 
     it 'returns an existing person called aled jones from a valid token' do
