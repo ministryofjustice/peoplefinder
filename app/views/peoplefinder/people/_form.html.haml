@@ -44,7 +44,7 @@
     - Peoplefinder::Person::DAYS_WORKED.each do |day|
       = f.input day, as: :boolean, label: day_name(day)
 
-  - unless feature_disabled?(:profile_tags)
+  - if feature_enabled?(:profile_tags)
     .form-group
       %h3.line-above Skills and expertise
       %p.form-hint= info_text('skills_and_expertise_hint')
