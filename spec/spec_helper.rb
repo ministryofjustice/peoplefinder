@@ -99,4 +99,5 @@ RSpec.configure do |config|
   config.include SpecSupport::OrgBrowser
   config.include SpecSupport::Email
   config.include SpecSupport::Profile
+  config.include SpecSupport::FeatureFlags
 end
