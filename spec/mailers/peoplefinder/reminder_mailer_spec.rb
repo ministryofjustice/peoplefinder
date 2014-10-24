@@ -61,7 +61,7 @@ RSpec.describe Peoplefinder::ReminderMailer do
       expect(mail.body).to have_text(token_url(Peoplefinder::Token.last, desired_path: "/people/#{ person.to_param }/edit"))
     end
 
-    xcontext 'token_auth feature disabled' do
+    context 'token_auth feature disabled' do
       it "includes the person edit url without an auth token" do
         without_feature('token_auth') do
           expect(mail.body).to have_text(edit_person_url(person))

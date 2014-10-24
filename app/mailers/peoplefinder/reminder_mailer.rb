@@ -11,7 +11,7 @@ class Peoplefinder::ReminderMailer < ActionMailer::Base
 
   def information_request(information_request)
     @person = information_request.recipient
-    @token = Peoplefinder::Token.for_person(@person)
+    @edit_url = possibly_tokenized_edit_person_url(@person)
     @message = information_request.message
 
     mail to: @person.email
