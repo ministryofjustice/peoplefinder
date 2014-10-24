@@ -27,12 +27,8 @@
       %p= contact_details(@person)
       %p= @person.description
 
-      - if @person.tags.present?
-        .spacer-45
-        %ul.tags
-          %h4 Skills and expertise
-          - @person.tags.split(',').each do |tag|
-            %li= link_to tag, search_path(query: tag)
+      - if feature_enabled?(:profile_tags)
+        = render partial: "show_tags"
 
 
 - if @person.incomplete? && @person.email.present?

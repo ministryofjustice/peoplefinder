@@ -41,7 +41,7 @@ module Peoplefinder
     end
 
     def feature_enabled?(feature_name)
-      ! feature_disabled?(feature_name)
+      !feature_disabled?(feature_name)
     end
 
   private
