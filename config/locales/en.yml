@@ -137,5 +137,6 @@ en:
         reported_profile_additional_details_label: "Additional details (optional)"
         request_information: "Is this profile complete?"
         request_information_link: "Ask the person to update their details"
+        skills_and_expertise_hint: "You can add tags to your profile to allow people to find you based on<br/>your specific skills or expertise. Add them using the field below and<br/>remove them at any time with the 'X'."
         team_deletable: "Note that team deletion cannot be undone."
         team_not_deletable: "Team deletion is only possible if there are no people associated with it."

@@ -29,6 +29,8 @@ class Peoplefinder::Person < ActiveRecord::Base
 
   friendly_id :slug_source, use: :slugged
 
+  before_save :sanitize_tags
+
   def self.namesakes(person)
     where(surname: person.surname).
     where(given_name: person.given_name).
@@ -72,11 +74,23 @@ class Peoplefinder::Person < ActiveRecord::Base
     end
   end
 
+  def self.tag_list
+    Peoplefinder::Person.all.pluck(:tags).flatten.compact.sort.uniq.join(',')
+  end
+
 private
 
   def group_path(hint_group)
     return [] if groups.empty?
     paths = groups.map(&:path)
     paths.find { |a| a.include?(hint_group) } || paths.first
+  end
+
+  def sanitize_tags
+    if tags
+      self.tags = tags.split(',').map { |tag|
+        tag.strip.capitalize
+      }.sort.join(',')
+    end
   end
 end

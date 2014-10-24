@@ -18,7 +18,7 @@ module Peoplefinder::Concerns::Searchable
         size: 100,
         query: {
           fuzzy_like_this: {
-            fields: [:name, :description, :location, :role_and_group],
+            fields: [:name, :tags, :description, :location, :role_and_group],
             like_text: query, prefix_length: 3, ignore_tf: true
           }
         }
@@ -27,7 +27,7 @@ module Peoplefinder::Concerns::Searchable
 
     def as_indexed_json(_options = {})
       as_json(
-        only: [:description, :location],
+        only: [:tags, :description, :location],
         methods: [:name, :role_and_group]
       )
     end
