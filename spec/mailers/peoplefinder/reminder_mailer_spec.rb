@@ -38,6 +38,38 @@ RSpec.describe Peoplefinder::ReminderMailer do
     end
   end
 
+  describe '.information_request' do
+    let(:person) { create(:person, email: 'test.user@digital.justice.gov.uk') }
+    let(:sender_email) { "test.sender@digital.justice.gov.uk" }
+    let(:message) { "this is the information request message body" }
+    let(:information_request) { create(:information_request, recipient: person, sender_email: sender_email, message: message) }
+    let(:mail) { described_class.information_request(information_request).deliver }
+
+    it 'sets the sender' do
+      expect(mail.from).to include(Rails.configuration.support_email)
+    end
+
+    it 'sets the correct recipient' do
+      expect(mail.to).to include(person.email)
+    end
+
+    it 'sets the subject' do
+      expect(mail.subject).to have_text('Request to update your People Finder profile')
+    end
+
+    it 'includes the token url with desired path' do
+      expect(mail.body).to have_text(token_url(Peoplefinder::Token.last, desired_path: "/people/#{ person.to_param }/edit"))
+    end
+
+    xcontext 'token_auth feature disabled' do
+      it "includes the person edit url without an auth token" do
+        without_feature('token_auth') do
+          expect(mail.body).to have_text(edit_person_url(person))
+        end
+      end
+    end
+  end
+
   describe '.reported_profile' do
     let(:subject) { create(:person, surname: 'subject-person') }
     let(:reported_profile) do
