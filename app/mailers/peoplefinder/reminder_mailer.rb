@@ -1,9 +1,11 @@
 require 'peoplefinder'
 
 class Peoplefinder::ReminderMailer < ActionMailer::Base
+  include Peoplefinder::FeatureHelper
+
   def inadequate_profile(person)
     @person = person
-    @token = Peoplefinder::Token.for_person(@person)
+    @edit_url = possibly_tokenized_edit_person_url(person)
     mail to: @person.email
   end
 
@@ -22,5 +24,15 @@ class Peoplefinder::ReminderMailer < ActionMailer::Base
     @additional_details = reported_profile.additional_details
 
     mail to: reported_profile.recipient_email
+  end
+
+private
+  def tokenized_edit_person_url(person)
+    token = Peoplefinder::Token.for_person(person)
+    token_url(token, desired_path: edit_person_path(person))
+  end
+
+  def possibly_tokenized_edit_person_url(person)
+    feature_enabled?('token_auth') ? tokenized_edit_person_url(person) : edit_person_url(person)
   end
 end
