@@ -27,12 +27,17 @@ class Peoplefinder::ReminderMailer < ActionMailer::Base
   end
 
 private
+
   def tokenized_edit_person_url(person)
     token = Peoplefinder::Token.for_person(person)
     token_url(token, desired_path: edit_person_path(person))
   end
 
   def possibly_tokenized_edit_person_url(person)
-    feature_enabled?('token_auth') ? tokenized_edit_person_url(person) : edit_person_url(person)
+    if feature_enabled?('token_auth')
+      tokenized_edit_person_url(person)
+    else
+      edit_person_url(person)
+    end
   end
 end
