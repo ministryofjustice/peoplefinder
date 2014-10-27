@@ -294,11 +294,9 @@ feature 'Person maintenance' do
   end
 
   scenario 'Tagging is disabled' do
-    Rails.application.config.disable_profile_tags = true
-
-    visit new_person_path
-    expect(page).not_to have_field('person_tags')
-
-    Rails.application.config.disable_profile_tags = false
+    without_feature("profile_tags") do
+      visit new_person_path
+      expect(page).not_to have_field('person_tags')
+    end
   end
 end

@@ -24,6 +24,10 @@ FactoryGirl.define do
     end
   end
 
+  factory :information_request, class: 'Peoplefinder::InformationRequest' do
+    message "This is the information request message body"
+  end
+
   factory :membership, class: 'Peoplefinder::Membership' do
     person
     group

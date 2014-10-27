@@ -1,5 +1,16 @@
 require 'rails_helper'
 
+RSpec.shared_context "token_auth feature disabled" do
+  around(:each) do |example|
+    orig = Rails.application.config.try(:disable_token_auth) || false
+    Rails.application.config.disable_token_auth = true
+
+    example.run
+
+    Rails.application.config.disable_token_auth = orig
+  end
+end
+
 feature 'Token Authentication' do
   before { create(:group) }
 
@@ -61,5 +72,31 @@ feature 'Token Authentication' do
     click_link 'Log out'
     expect(page).not_to have_text('james.darling@digital.justice.gov.uk')
     expect(page).to have_text('Log in to the people finder')
+  end
+
+  context 'token_auth feature disabled' do
+    include_context "token_auth feature disabled"
+    let(:token) { create(:token) }
+
+    scenario 'following a valid link from an email redirects to login' do
+      visit token_path(token)
+
+      expect(page.current_path).to eq(new_sessions_path)
+      expect(page).to have_text('login link is invalid')
+      expect(page).to have_text('Log in to the people finder')
+    end
+
+    scenario 'login page does not have token auth login option' do
+      visit new_sessions_path
+      expect(page).not_to have_css('form.new_token')
+    end
+
+    scenario 'attempting to create an authentication token redirects to login' do
+      visit token_path(token)
+
+      expect(page.current_path).to eq(new_sessions_path)
+      expect(page).to have_text('login link is invalid')
+      expect(page).to have_text('Log in to the people finder')
+    end
   end
 end
