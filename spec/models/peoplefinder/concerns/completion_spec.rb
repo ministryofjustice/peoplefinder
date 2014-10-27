@@ -9,14 +9,14 @@ RSpec.describe 'Completion' do # rubocop:disable RSpec/DescribeClass
       expect(person).to be_incomplete
     end
 
-    it 'returns 44 if the fields are partially filled' do
+    it 'returns 50 if half the fields are completed' do
       person = Peoplefinder::Person.new(
         given_name: 'Bobby',
         surname: 'Tables',
         email: 'user.example@digital.justice.gov.uk',
         primary_phone_number: '020 7946 0123'
       )
-      expect(person.completion_score).to eql(44)
+      expect(person.completion_score).to eql(50)
       expect(person).to be_incomplete
     end
 
@@ -47,13 +47,13 @@ RSpec.describe 'Completion' do # rubocop:disable RSpec/DescribeClass
       expect(subject).to be_empty
     end
 
-    it 'returns the person when there is neither phone nor secondary number' do
-      Peoplefinder::Person.update_all 'primary_phone_number = \'\', secondary_phone_number = null'
+    it 'returns the person when there is no primary phone number' do
+      Peoplefinder::Person.update_all 'primary_phone_number = \'\''
       expect(subject).to include(person)
     end
 
     context 'with no_phone = true' do
-      it 'does not return the person even if there is no  primary_phone_number' do
+      it 'does not return the person even if there is no primary_phone_number' do
         Peoplefinder::Person.update_all 'primary_phone_number = null, no_phone = true'
         expect(subject).not_to include(person)
       end
@@ -76,7 +76,6 @@ RSpec.describe 'Completion' do # rubocop:disable RSpec/DescribeClass
       surname: 'Tables',
       email: 'user.example@digital.justice.gov.uk',
       primary_phone_number: '020 7946 0123',
-      secondary_phone_number: '07700 900123',
       location: 'London',
       description: 'I am a real person',
       image: Rack::Test::UploadedFile.new(sample_image)
