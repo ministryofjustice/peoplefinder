@@ -10,9 +10,11 @@ ul.select2-choices {
 
 li.select2-search-choice {
   margin: 8px 0 8px 8px !important;
-  padding: 8px 15px 8px 18px !important;
+  padding: 8px 22px 8px 8px !important;
 
   .select2-search-choice-close {
-    float: right;
+    left: auto !important;
+    right: 3px;
+    top: 9px !important;
   }
 }
