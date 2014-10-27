@@ -28,11 +28,9 @@ module Peoplefinder::Concerns::Completion
         where("
           COALESCE(image,'') = ''
           OR COALESCE(location,'') = ''
-          OR
-          CASE
-            WHEN no_phone != true
-            THEN COALESCE(primary_phone_number,'') = ''
-          END
+          OR (no_phone != true
+            AND COALESCE(primary_phone_number,'') = ''
+            )
           "
         ).order(:email)
       }
