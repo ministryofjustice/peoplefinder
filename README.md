@@ -74,6 +74,8 @@ defined on a per environment basis.
 
 `config.disable_profile_tags` Hide the tagging (Skills and expertise) functionality from the edit profile page
 
+`config.disable_token_auth` Disable the 'token-based authentication' feature
+
 `config.elastic_search_url` Required for production (see Search section below)
 
 `config.ga_tracking_id` Google Analytics tracking id [optional]. e.g. 'XXXX-XXX'
@@ -81,8 +83,6 @@ defined on a per environment basis.
 `config.support_email` e.g. 'peoplefinder-support@example.com'
 
 `config.valid_login_domains` Restrict login to email addresses from the list of valid domains. e.g. %w[ peoplefinder.example.com ]
-
-
 
 ## Authentication
 
@@ -100,6 +100,17 @@ For local development, you can use a `.env` file; see `.env.sample` for an
 example.
 
 The permitted domains are configured in `config/application.rb`.
+
+## Token-based authentication
+
+An alternative 'token-based' authentication method is also supported. The
+token authentication method relies upon the users access to their email
+account to authenticate them.
+
+Each time the user wishes to start a session, they need to generate an
+authentication token. This can be done by entering their email address on the
+login screen. They will be sent an email message containing a link with a
+unique random token. Clicking on the link will allow them to login.
 
 ## Search
 
