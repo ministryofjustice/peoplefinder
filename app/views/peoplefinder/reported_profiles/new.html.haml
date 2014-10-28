@@ -1,5 +1,5 @@
 - @editing_mode = true
-%h1.no-line Report this profile
+%h1.no-line= @page_title = 'Report this profile'
 
 = simple_form_for @reported_profile, url: person_reported_profiles_path(@person) do |f|
   .form-group

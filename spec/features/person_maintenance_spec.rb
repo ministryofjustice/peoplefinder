@@ -10,6 +10,7 @@ feature 'Person maintenance' do
 
     javascript_log_in
     visit new_person_path
+    expect(page).to have_title('New profile - Peoplefinder Dummy')
     fill_in_complete_profile_details
 
     click_button 'Create'
@@ -65,6 +66,7 @@ feature 'Person maintenance' do
     fill_in 'Surname', with: person_attributes[:surname]
     click_button 'Update'
 
+    expect(page).to have_title('Duplicate names found - Peoplefinder Dummy')
     click_button 'Continue'
     expect(Peoplefinder::Person.where(surname: person_attributes[:surname]).count).to eql(2)
   end
@@ -89,6 +91,7 @@ feature 'Person maintenance' do
     visit person_path(create(:person, person_attributes))
     click_link 'Edit this profile'
 
+    expect(page).to have_title('Edit profile - Peoplefinder Dummy')
     fill_in 'First name', with: 'Jane'
     fill_in 'Surname', with: 'Doe'
     click_button 'Update'
@@ -164,6 +167,7 @@ feature 'Person maintenance' do
       click_link('Ask the person to update their details')
       expect(page).to have_link('Cancel', person_path(person))
 
+      expect(page).to have_title('Request profile update - Peoplefinder Dummy')
       within('h1') do
         expect(page).to have_text('Request profile update')
       end
@@ -238,6 +242,7 @@ feature 'Person maintenance' do
     visit person_path(person)
     click_link 'Report this profile'
 
+    expect(page).to have_title('Report this profile - Peoplefinder Dummy')
     select 'Duplicate profile', from: 'Reason for reporting'
     fill_in 'Additional details (optional)', with: 'Some stuff'
     expect { click_button 'Submit' }.to change { ActionMailer::Base.deliveries.count }.by(1)
