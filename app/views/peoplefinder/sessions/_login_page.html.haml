@@ -1,17 +1,17 @@
 - @page_title = 'Log in'
 %h1.no-line= t('.heading')
 .spacer-25
-%h3= t('.heading_google')
+%h2.h3.no-line= t('.heading_google')
 
 %p= t('.body_google')
 
 %p
-  = link_to t('.log_in'), "/auth/gplus", class: 'button login-button'
+  = link_to t('.log_in_google'), "/auth/gplus", class: 'button login-button'
 
 - if feature_enabled?('token_auth')
   %hr
   .spacer-5
-  %h3= t('.heading_other')
+  %h2.h3.no-line= t('.heading_other')
 
   %p= t('.body_other')
 

@@ -78,7 +78,7 @@ h1, h2 {
   border-bottom: 1px solid $blackish;
 }
 
-h1.no-line {
+h1.no-line, h2.no-line {
   border-bottom: 0;
 }
 
@@ -87,6 +87,11 @@ h2.line-above, h3.line-above {
   padding-top: 20px;
   border-top: 1px solid $blackish;
   border-bottom: 0;
+}
+
+h2.h3 {
+  font-size: 24px;
+  margin: 3px 0 2px 0;
 }
 
 h4 {

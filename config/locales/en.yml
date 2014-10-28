@@ -30,7 +30,8 @@ en:
           with the official authentication screen.
         heading_other: Other email addresses
         body_other: Enter a valid Ministry of Justice email address below
-        log_in: Log in
+        log_in_google: Log in with Google
+        log_in_email: Log in with email
     tokens:
       show:
         token_auth_disabled: "Sorry, that login link is invalid. Please login using your Google account."
