@@ -13,7 +13,7 @@ RSpec.describe 'Searchable', elastic: true do # rubocop:disable RSpec/DescribeCl
   context 'with some people' do
     before do
       Peoplefinder::Person.import
-      sleep 1
+      Peoplefinder::Person.__elasticsearch__.client.indices.refresh
     end
 
     it 'searches by surname' do
