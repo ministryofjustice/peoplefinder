@@ -2,7 +2,7 @@
   = breadcrumbs(Peoplefinder::Home.path + ['Search results'])
 
 #search_results
-  %h1.noborder Search results
+  %h1.noborder= @page_title = 'Search results'
   .search-hint Select a person's name to view more details, or you can view their team if desired.
   .pagination= pluralize(@people.length, "result") + ' found'
 
