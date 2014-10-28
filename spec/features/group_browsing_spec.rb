@@ -13,6 +13,7 @@ feature 'Group browsing' do
   scenario 'Drilling down through groups' do
     visit group_path(department)
 
+    expect(page).to have_title("#{ department.name } - Peoplefinder Dummy")
     expect(page).to have_link('A Team')
     expect(page).not_to have_link('A Subteam')
 
@@ -90,6 +91,7 @@ feature 'Group browsing' do
     visit group_path(current_group)
     click_link("View all people in #{ current_group.name }")
 
+    expect(page).to have_title("People in #{ current_group.name } - Peoplefinder Dummy")
     within('.breadcrumbs') do
       expect(page).to have_link(current_group.name)
       expect(page).to have_text('All people')
