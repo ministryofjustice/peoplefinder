@@ -46,8 +46,11 @@
     %h2.h3.no-line Working days
 
   .form-checkbox
-    - Peoplefinder::Person::DAYS_WORKED.each do |day|
-      = f.input day, as: :boolean, label: day_name(day)
+    %fieldset
+      - Peoplefinder::Person::DAYS_WORKED.each do |day|
+        %legend
+          .visuallyhidden I work on
+          = f.input day, as: :boolean, label: day_name(day)
 
   - if feature_enabled?(:profile_tags)
     .form-group
