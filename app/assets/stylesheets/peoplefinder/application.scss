@@ -36,13 +36,20 @@ $border-color: #bfc1c3;
   position: relative;
 }
 
-.breadcrumbs_and_edit_link {
+nav .breadcrumbs {
   margin-top: 1em;
-  margin-bottom: 1em;
-}
-
-.breadcrumbs {
-  display: inline-block;
+  margin-bottom: -9px;
+  ol {
+    li {
+      display: inline-block;
+    }
+    li::after {
+      content: ' > ';
+    }
+    li:last-child:after {
+      content: '';
+    }
+  }
 }
 
 .image-background {

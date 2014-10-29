@@ -75,8 +75,8 @@ feature 'Group maintenance' do
     add_team_email_address
     click_button 'Create'
 
-    within('.breadcrumbs') do
-      expect(page).to have_content('Corporate Services > Digital Services')
+    within('.breadcrumbs ol') do
+      expect(page).to have_content('Corporate Services Digital Services')
     end
   end
 

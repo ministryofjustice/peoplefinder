@@ -5,8 +5,9 @@
     %main#content{role: 'main'}
       = yield :editing_alert
       = flash_messages
-      .inner-block.breadcrumbs_and_edit_link
-        .breadcrumbs= yield :breadcrumbs
+      .inner-block
+        %nav
+          .breadcrumbs= yield :breadcrumbs
       - if current_user && !@editing_mode
         .grid-wrapper
           .grid.grid-2-3

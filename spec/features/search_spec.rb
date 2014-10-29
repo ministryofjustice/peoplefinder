@@ -29,7 +29,9 @@ feature 'Search for people', elastic: true do
       fill_in 'query', with: 'Browne'
       click_button 'Search'
       expect(page).to have_title('Search results - Peoplefinder Dummy')
-      expect(page).to have_text('> Search results')
+      within('.breadcrumbs ol') do
+        expect(page).to have_text('Search results')
+      end
       expect(page).to have_text('Jon Browne')
       expect(page).to have_text('jon.browne@digital.justice.gov.uk')
       expect(page).to have_text('0711111111')
@@ -40,7 +42,9 @@ feature 'Search for people', elastic: true do
     scenario 'clicking a tag on a profile page' do
       visit person_path(person)
       click_link 'Cooking'
-      expect(page).to have_text('> Search results')
+      within('.breadcrumbs ol') do
+        expect(page).to have_text('Search results')
+      end
       expect(page).to have_text('Jon Browne')
     end
 
