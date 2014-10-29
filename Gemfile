@@ -8,6 +8,10 @@ gem 'carrierwave',
 gem 'omniauth-gplus',
   git: 'https://github.com/ministryofjustice/omniauth-gplus.git'
 
+gem 'moj_internal_template',
+  git: 'https://github.com/ministryofjustice/moj_internal_template.git',
+  tag: 'bf8b13cd6f29aea4b47679538de13d4d2c7a7578'
+
 group :development, :test do
   gem 'jshint',
     git: 'https://github.com/threedaymonk/jshint.git',
