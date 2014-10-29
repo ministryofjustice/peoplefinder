@@ -1,2 +1,3 @@
 %li{class: ('active' if @person.send(day)), alt: day_name(day)}
-  = day_symbol(day)
+  .visuallyhidden= "Works #{ day_name(day) }" if @person.send(day)
+  .span{ aria: { hidden: 'true' } }= day_symbol(day)
