@@ -69,7 +69,7 @@
     %label.visuallyhidden{ for: :person_image } Choose file
     = f.input :image, as: :file, label: false
 
-    = image_tag @person.image.medium, class: 'preview'
+    = profile_image_tag @person, @person.image.medium, class: 'preview'
     %p
       - if @person.image?
         = link_to 'Crop image', edit_person_image_path(@person)
