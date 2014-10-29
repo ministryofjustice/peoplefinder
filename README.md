@@ -76,6 +76,8 @@ defined on a per environment basis.
 
 `config.disable_token_auth` Disable the 'token-based authentication' feature
 
+`config.disable_communities` Disable the 'communities' feature
+
 `config.elastic_search_url` Required for production (see Search section below)
 
 `config.ga_tracking_id` Google Analytics tracking id [optional]. e.g. 'XXXX-XXX'

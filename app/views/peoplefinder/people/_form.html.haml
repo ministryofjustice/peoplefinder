@@ -6,9 +6,10 @@
     = f.input :given_name, as: :string, label: 'First name'
   .form-group
     = f.input :surname, as: :string, required: false
-  .form-group
-    %label.form-label-bold{ for: :person_community_id } Community
-    = f.select(:community_id, Peoplefinder::Community.all.map { |c| [c.name, c.id] }, { include_blank: true} )
+  - if feature_enabled?("communities")
+    .form-group
+      %label.form-label-bold{ for: :person_community_id } Community
+      = f.select(:community_id, Peoplefinder::Community.all.map { |c| [c.name, c.id] }, { include_blank: true} )
 
   .form-group
     #memberships

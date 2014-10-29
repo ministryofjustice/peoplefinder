@@ -14,7 +14,7 @@
                 = "#{ membership.role }, " if membership.role?
                 = link_to membership.group, membership.group
 
-          - if person.community.present?
+          - if feature_enabled?("communities") && person.community.present?
             .meta.community= link_to person.community, search_path(query: person.community.name)
           .meta= person.phone
           .meta= mail_to(person.email)
