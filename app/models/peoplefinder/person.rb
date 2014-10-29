@@ -20,6 +20,7 @@ class Peoplefinder::Person < ActiveRecord::Base
     -> { includes(:group).order('groups.name')  },
     dependent: :destroy
   has_many :groups, through: :memberships
+  belongs_to :community
 
   accepts_nested_attributes_for :memberships,
     allow_destroy: true,

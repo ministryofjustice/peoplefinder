@@ -24,6 +24,12 @@ FactoryGirl.define do
     end
   end
 
+  factory :community, class: 'Peoplefinder::Community' do
+    sequence :name do |n|
+      'Community-%04d' % n
+    end
+  end
+
   factory :information_request, class: 'Peoplefinder::InformationRequest' do
     message "This is the information request message body"
   end
