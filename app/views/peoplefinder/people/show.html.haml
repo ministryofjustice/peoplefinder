@@ -23,6 +23,12 @@
         %h4= membership.role
         = breadcrumbs(membership.path.drop(1))
 
+      %h4= t(".community")
+      - if @person.community.present?
+        = @person.community
+      - else
+        = t(".community_unset")
+
       %p= @person.location
       %p= contact_details(@person)
       %p= @person.description

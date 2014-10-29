@@ -79,6 +79,9 @@ en:
         works_friday: "F"
         works_saturday: "S"
         works_sunday: "S"
+      show:
+        community: Community
+        community_unset: Not specified
     helpers:
       submit:
         person:
