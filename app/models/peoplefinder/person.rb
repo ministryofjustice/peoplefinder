@@ -75,6 +75,10 @@ class Peoplefinder::Person < ActiveRecord::Base
     end
   end
 
+  def community_name
+    community.try(:name)
+  end
+
   def self.tag_list
     Peoplefinder::Person.all.pluck(:tags).flatten.compact.sort.uniq.join(',')
   end
