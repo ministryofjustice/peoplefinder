@@ -6,9 +6,8 @@ feature "Communities" do
   end
 
   scenario 'Creating a person in a community' do
-    group = create(:group, name: 'Digital Justice')
-    group = create(:community, name: 'Advanced cybernetics')
-    # javascript_log_in
+    create(:group, name: 'Digital Justice')
+    create(:community, name: 'Advanced cybernetics')
 
     visit new_person_path
     fill_in 'First name', with: 'Jane'

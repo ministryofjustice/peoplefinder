@@ -30,6 +30,6 @@ RSpec.describe Peoplefinder::Community, type: :model do
 
     community.destroy
 
-    expect(Peoplefinder::Community.count).to eq(0)
+    expect(described_class.count).to eq(0)
   end
 end
