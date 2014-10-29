@@ -45,7 +45,7 @@ module Peoplefinder
   private
 
     def flash_message(type)
-      content_tag(:div, class: "flash-message #{type}") {
+      content_tag(:div, class: "flash-message #{type}", role: 'alert') {
         flash[type]
       }
     end
