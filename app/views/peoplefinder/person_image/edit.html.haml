@@ -6,7 +6,7 @@
 = simple_form_for @person, url: person_image_path(@person), method: :put do |f|
   .form-hint Move and resize the box to crop your profile image.
   .form-group
-    = image_tag @person.image.croppable.url, id: 'croppable'
+    = profile_image_tag @person, @person.image.croppable.url, id: 'croppable'
 
     -  [:crop_x, :crop_y, :crop_w, :crop_h].each do |x|
       = f.hidden_field x

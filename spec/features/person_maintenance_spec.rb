@@ -124,6 +124,7 @@ feature 'Person maintenance' do
     person = Peoplefinder::Person.find_by_surname(person_attributes[:surname])
     visit person_path(person)
     expect(page).to have_css("img[src*='#{person.image.medium}']")
+    expect(page).to have_css("img[alt*='Current photo of #{ person }']")
 
     visit edit_person_path(person)
     expect(page).to have_link('Crop image', edit_person_image_path(person))

@@ -16,4 +16,8 @@ module Peoplefinder::PeopleHelper
       (person.secondary_phone_number if person.secondary_phone_number?)
     ].compact.join('<br/>').html_safe
   end
+
+  def profile_image_tag(person, source, options = {})
+    image_tag(source, options.merge(alt: "Current photo of #{ person }"))
+  end
 end
