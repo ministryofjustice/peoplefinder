@@ -25,7 +25,7 @@
 
       %h4= t(".community")
       - if @person.community.present?
-        = @person.community
+        = link_to @person.community, search_path(query: @person.community.name)
       - else
         = t(".community_unset")
 
