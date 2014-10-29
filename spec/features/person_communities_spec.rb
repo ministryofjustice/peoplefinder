@@ -16,9 +16,7 @@ feature "Communities" do
     select('Advanced cybernetics', from: 'Community')
     click_button "Create"
 
-    save_and_open_page
     expect(page).to have_text("Jane Doe")
     expect(page).to have_text("Advanced cybernetics")
-
   end
 end
