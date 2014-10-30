@@ -42,7 +42,7 @@ module Dummy
 
     config.ga_tracking_id = ''
 
-    config.app_title = 'Peoplefinder Dummy'
+    config.app_title = 'People Finder Dummy'
 
     config.elastic_search_url = ''
   end
