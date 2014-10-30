@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141029113248) do
+ActiveRecord::Schema.define(version: 20141030105624) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -84,6 +84,16 @@ ActiveRecord::Schema.define(version: 20141029113248) do
   end
 
   add_index "people", ["slug"], name: "index_people_on_slug", unique: true, using: :btree
+
+  create_table "peoplefinder_taggings", force: true do |t|
+    t.integer  "tag_id"
+    t.integer  "article_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "peoplefinder_taggings", ["article_id"], name: "index_peoplefinder_taggings_on_article_id", using: :btree
+  add_index "peoplefinder_taggings", ["tag_id"], name: "index_peoplefinder_taggings_on_tag_id", using: :btree
 
   create_table "reported_profiles", force: true do |t|
     t.integer "notifier_id"
