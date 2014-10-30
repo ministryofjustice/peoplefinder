@@ -77,4 +77,4 @@
   .form-group
     = f.button :submit
     .cancel
-      = link_to 'Cancel', @person.new_record? ? :back : @person
+      = link_to 'Cancel and go to profile page', @person.new_record? ? :back : @person
