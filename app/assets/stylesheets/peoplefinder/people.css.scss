@@ -26,6 +26,16 @@ ul.working_days {
     clip: rect(0px, 300px, 300px, 0px);
     max-width: 100%;
   }
+  dt {
+    font-weight: 700;
+  }
+  dd.breadcrumbs {
+    margin: 0;
+    ol {
+      margin: 0;
+      padding: 0;
+    }
+  }
 }
 
 img.preview {
