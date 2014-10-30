@@ -36,7 +36,7 @@ module SpecSupport
       click_button 'Update Image'
       person = Peoplefinder::Person.last
 
-      expect(page).to have_title("#{ person } - Peoplefinder Dummy")
+      expect(page).to have_title("#{ person } - #{ app_title }")
       within('h1') { expect(page).to have_text(person) }
       expect(page).to have_text(person_attributes[:email])
       expect(page).to have_text(person_attributes[:primary_phone_number])
