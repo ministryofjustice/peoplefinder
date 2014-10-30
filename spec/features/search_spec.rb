@@ -28,7 +28,7 @@ feature 'Search for people', elastic: true do
       visit home_path
       fill_in 'query', with: 'Browne'
       click_button 'Submit search'
-      expect(page).to have_title('Search results - Peoplefinder Dummy')
+      expect(page).to have_title("Search results - #{ app_title }")
       within('.breadcrumbs ol') do
         expect(page).to have_text('Search results')
       end
@@ -52,7 +52,7 @@ feature 'Search for people', elastic: true do
       visit home_path
       fill_in 'query', with: community.name
       click_button 'Submit search'
-      expect(page).to have_title('Search results - Peoplefinder Dummy')
+      expect(page).to have_title("Search results - #{ app_title }")
       expect(page).to have_text('Jon Browne')
       expect(page).to have_text(community.name)
     end
