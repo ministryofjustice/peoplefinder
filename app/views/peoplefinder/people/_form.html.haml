@@ -6,6 +6,10 @@
     = f.input :given_name, as: :string, label: 'First name'
   .form-group
     = f.input :surname, as: :string, required: false
+  - if feature_enabled?("communities")
+    .form-group
+      %label.form-label-bold{ for: :person_community_id } Community
+      = f.select(:community_id, Peoplefinder::Community.all.map { |c| [c.name, c.id] }, { include_blank: true} )
 
   .form-group
     #memberships
@@ -14,6 +18,7 @@
         = render partial: 'membership_fields', locals: { membership_f: membership_f }
 
     = link_to 'Add new role', add_membership_people_path(id: @person.to_param), id: 'add_membership'
+
 
   .form-group
     %h2.line-above Contact details

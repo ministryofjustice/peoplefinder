@@ -20,6 +20,7 @@ class Peoplefinder::Person < ActiveRecord::Base
     -> { includes(:group).order('groups.name')  },
     dependent: :destroy
   has_many :groups, through: :memberships
+  belongs_to :community
 
   accepts_nested_attributes_for :memberships,
     allow_destroy: true,
@@ -72,6 +73,10 @@ class Peoplefinder::Person < ActiveRecord::Base
     else
       Rails.configuration.support_email
     end
+  end
+
+  def community_name
+    community.try(:name)
   end
 
   def self.tag_list

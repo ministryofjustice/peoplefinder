@@ -2,13 +2,15 @@ require 'rails_helper'
 
 feature 'Search for people', elastic: true do
   describe 'with elasticsearch' do
+    let(:community) { create(:community, name: 'Design') }
     let!(:person) {
       create(:person,
         given_name: 'Jon',
         surname: 'Browne',
         email: 'jon.browne@digital.justice.gov.uk',
         primary_phone_number: '0711111111',
-        tags: 'Cooking,Eating')
+        tags: 'Cooking,Eating',
+        community: community)
     }
 
     before do
@@ -30,6 +32,7 @@ feature 'Search for people', elastic: true do
       expect(page).to have_text('Jon Browne')
       expect(page).to have_text('jon.browne@digital.justice.gov.uk')
       expect(page).to have_text('0711111111')
+      expect(page).to have_text(community.name)
       expect(page).to have_link('add them', href: new_person_path)
     end
 
@@ -38,6 +41,15 @@ feature 'Search for people', elastic: true do
       click_link 'Cooking'
       expect(page).to have_text('> Search results')
       expect(page).to have_text('Jon Browne')
+    end
+
+    scenario 'searching by community' do
+      visit home_path
+      fill_in 'query', with: community.name
+      click_button 'Search'
+      expect(page).to have_text('> Search results')
+      expect(page).to have_text('Jon Browne')
+      expect(page).to have_text(community.name)
     end
   end
 end
