@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 ruby '2.1.2'
-gem 'rails', '~> 4.1.5'
+gem 'rails', '~> 4.1.7'
 
 gem 'activejob_backport'
 gem 'govspeak'
