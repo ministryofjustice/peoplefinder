@@ -3,9 +3,7 @@ module Peoplefinder
     def last_update
       current_object = @person || @group
       if current_object && current_object.updated_at.present?
-        "Last updated: #{
-          current_object.updated_at.strftime('%d %b %Y %H:%M')
-        }."
+        "#{ updated_at(current_object) }#{ updated_by(current_object) }."
       end
     end
 
@@ -37,6 +35,18 @@ module Peoplefinder
     end
 
   private
+
+    def updated_at(obj)
+      "Last updated: #{
+        obj.updated_at.strftime('%d %b %Y %H:%M')
+      }"
+    end
+
+    def updated_by(obj)
+      unless obj.originator == Peoplefinder::Version.public_user
+        " by #{ obj.originator }"
+      end
+    end
 
     def flash_message(type)
       content_tag(:div, class: "flash-message #{type}") {

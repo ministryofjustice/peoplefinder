@@ -11,7 +11,7 @@ module Peoplefinder
   private
 
     def user_for_paper_trail
-      logged_in? ? current_user.to_s : 'Public user'
+      logged_in? ? current_user.to_s : Peoplefinder::Version.public_user
     end
 
     def current_user
