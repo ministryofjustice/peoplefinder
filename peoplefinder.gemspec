@@ -51,7 +51,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'pry'
   s.add_development_dependency 'rspec-mocks'
   s.add_development_dependency 'rspec-rails', '~> 3.0.0'
-  s.add_development_dependency 'rubocop'
+  s.add_development_dependency 'rubocop', '~> 0.26.1'
   s.add_development_dependency 'rubocop-rspec'
   s.add_development_dependency 'teaspoon'
   s.add_development_dependency 'capybara'
