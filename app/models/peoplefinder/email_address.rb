@@ -9,7 +9,9 @@ class Peoplefinder::EmailAddress < Mail::Address
   end
 
   def valid_domain?
-    valid_login_domains.include?(domain)
+    valid_login_domains.select do |valid_login_domain|
+      domain.match valid_login_domain
+    end.present?
   end
 
   def valid_format?
