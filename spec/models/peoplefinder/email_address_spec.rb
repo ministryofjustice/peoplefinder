@@ -10,7 +10,7 @@ RSpec.describe Peoplefinder::EmailAddress do
 
     context 'when it is in the list of valid_login_domains' do
       it 'is valid' do
-        expect(described_class.new("me@#{ Rails.configuration.valid_login_domains.first }")).to be_valid_domain
+        expect(described_class.new("me@something.gov.uk")).to be_valid_domain
       end
     end
   end
@@ -47,7 +47,7 @@ RSpec.describe Peoplefinder::EmailAddress do
     end
 
     it 'is valid' do
-      expect(described_class.new("me@#{ Rails.configuration.valid_login_domains.first }")).to be_valid_address
+      expect(described_class.new("me@something.gov.uk")).to be_valid_address
     end
   end
 
