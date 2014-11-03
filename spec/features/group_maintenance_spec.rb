@@ -9,6 +9,8 @@ feature 'Group maintenance' do
     name = 'Ministry of Justice'
 
     visit new_group_path
+    expect(page).to have_title("New team - #{ app_title }")
+
     fill_in 'Team name', with: name
     fill_in 'Team description', with: 'about my team'
     fill_in 'Team responsibilities (optional)', with: 'my responsibilities'
@@ -73,8 +75,8 @@ feature 'Group maintenance' do
     add_team_email_address
     click_button 'Create'
 
-    within('.breadcrumbs') do
-      expect(page).to have_content('Corporate Services > Digital Services')
+    within('.breadcrumbs ol') do
+      expect(page).to have_content('Corporate Services Digital Services')
     end
   end
 
@@ -105,6 +107,7 @@ feature 'Group maintenance' do
     visit group_path(group)
     click_link 'Edit'
 
+    expect(page).to have_title("Edit team - #{ app_title }")
     expect(page).to have_text('You are currently editing this page')
     new_name = 'Cyberdigital Cyberservices'
     fill_in 'Team name', with: new_name

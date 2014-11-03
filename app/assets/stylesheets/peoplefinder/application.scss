@@ -36,13 +36,20 @@ $border-color: #bfc1c3;
   position: relative;
 }
 
-.breadcrumbs_and_edit_link {
-  margin-top: 1em;
-  margin-bottom: 1em;
-}
-
 .breadcrumbs {
-  display: inline-block;
+  margin-top: 1em;
+  margin-bottom: -9px;
+  ol {
+    li {
+      display: inline-block;
+    }
+    li::after {
+      content: ' > ';
+    }
+    li:last-child:after {
+      content: '';
+    }
+  }
 }
 
 .image-background {
@@ -78,15 +85,24 @@ h1, h2 {
   border-bottom: 1px solid $blackish;
 }
 
-h1.no-line {
+h1.no-line, h2.no-line {
   border-bottom: 0;
 }
 
-h2.line-above, h3.line-above {
+h2.line-above, h2.h3.line-above, h3.line-above {
   margin-top: 30px;
   padding-top: 20px;
   border-top: 1px solid $blackish;
   border-bottom: 0;
+}
+
+h1.h3, h2.h3 {
+  font-size: 24px;
+  margin: 3px 0 2px 0;
+}
+
+h2.h4 {
+  font-size: 19px;
 }
 
 h4 {

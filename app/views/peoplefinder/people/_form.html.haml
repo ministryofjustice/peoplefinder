@@ -37,21 +37,24 @@
     = f.input :email, as: :string, label: 'Email address'
 
   .form-group
-    %h3.line-above
+    %h2.h3.line-above
       %label{ for: :person_description } Notes
     %p.form-hint= info_text('notes_field_hint')
     = f.input :description, label: false, input_html: { class: 'wider' }
 
   .form-group
-    %h3 Working days
+    %h2.h3.no-line Working days
 
   .form-checkbox
-    - Peoplefinder::Person::DAYS_WORKED.each do |day|
-      = f.input day, as: :boolean, label: day_name(day)
+    %fieldset
+      - Peoplefinder::Person::DAYS_WORKED.each do |day|
+        %legend
+          .visuallyhidden I work on
+          = f.input day, as: :boolean, label: day_name(day)
 
   - if feature_enabled?(:profile_tags)
     .form-group
-      %h3.line-above Skills and expertise
+      %h2.h3.line-above Skills and expertise
       %p.form-hint= info_text('skills_and_expertise_hint')
 
       #person_tag_chooser
@@ -60,12 +63,13 @@
 
 
   .form-group
-    %h3.line-above Photograph
+    %h2.h3.line-above Photograph
     %p.form-hint= info_text('photo_upload_hint')
     %p.form-hint= info_text('photo_size_hint')
+    %label.visuallyhidden{ for: :person_image } Choose file
     = f.input :image, as: :file, label: false
 
-    = image_tag @person.image.medium, class: 'preview'
+    = profile_image_tag @person, @person.image.medium, class: 'preview'
     %p
       - if @person.image?
         = link_to 'Crop image', edit_person_image_path(@person)
@@ -73,4 +77,4 @@
   .form-group
     = f.button :submit
     .cancel
-      = link_to 'Cancel', @person.new_record? ? :back : @person
+      = link_to 'Cancel and go to profile page', @person.new_record? ? :back : @person

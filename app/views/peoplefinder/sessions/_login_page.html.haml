@@ -1,24 +1,32 @@
+- @disable_logo_link  = true
+- @page_title = 'Log in'
 %h1.no-line= t('.heading')
 .spacer-25
-%h3= t('.heading_google')
+%h2.h3.no-line= t('.heading_google')
 
 %p= t('.body_google')
 
 %p
-  = link_to t('.log_in'), "/auth/gplus", class: 'button login-button'
+  = link_to t('.log_in_google'), "/auth/gplus", class: 'button login-button'
 
 - if feature_enabled?('token_auth')
   %hr
   .spacer-5
-  %h3= t('.heading_other')
+  %h2.h3.no-line= t('.heading_other')
 
   %p= t('.body_other')
 
   = simple_form_for (@token ||= Peoplefinder::Token.new) do |token_form|
 
-    .form-group{ class: ('gov-uk-field-error' if @token.errors.any?)}
-      %p= @token.errors[:base].join('')
+    - if @token.errors.any?
+      .form-group{ class: 'gov-uk-field-error', role: 'alert' }
+        %p= @token.errors[:base].join('')
+        = token_form.input :user_email, as: :string, label: false
+    -else
+      .form-group
       = token_form.input :user_email, as: :string, label: false
+
     .spacer-20
     .form-group
-      = token_form.button :submit, t('.log_in'), class: 'login-button'
+      %label.visuallyhidden{ for: :token_user_email } Email address
+      = token_form.button :submit, t('.log_in_email'), class: 'login-button'

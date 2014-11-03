@@ -3,7 +3,7 @@
     .grid.grid-2-3
       .inner-block
         .image-background
-          = image_tag person.image.medium
+          = profile_image_tag person, person.image.medium
         .details
           %h3= link_to person.name, person
           - if person.memberships.empty?

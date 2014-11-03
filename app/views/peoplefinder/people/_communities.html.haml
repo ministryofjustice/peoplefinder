@@ -1,0 +1,5 @@
+%dt= t(".community")
+- if @person.community.present?
+  %dd= link_to @person.community, search_path(query: @person.community.name)
+- else
+  %dd= t(".community_unset")

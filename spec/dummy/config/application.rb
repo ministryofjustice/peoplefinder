@@ -25,10 +25,7 @@ module Dummy
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     # config.i18n.default_locale = :de
 
-    config.valid_login_domains = %w[
-      digital.justice.gov.uk
-      digital.cabinet-office.gov.uk
-    ]
+    config.valid_login_domains = [/(.*)\.gov.uk/]
 
     config.support_email = 'support@example.com'
 
@@ -42,7 +39,7 @@ module Dummy
 
     config.ga_tracking_id = ''
 
-    config.app_title = 'Peoplefinder Dummy'
+    config.app_title = 'People Finder Dummy'
 
     config.elastic_search_url = ''
   end

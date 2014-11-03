@@ -34,10 +34,10 @@ module SpecSupport
 
     def check_creation_of_profile_details
       click_button 'Update Image'
+      person = Peoplefinder::Person.last
 
-      within('h1') do
-        expect(page).to have_text(person_attributes[:given_name] + ' ' + person_attributes[:surname])
-      end
+      expect(page).to have_title("#{ person } - #{ app_title }")
+      within('h1') { expect(page).to have_text(person) }
       expect(page).to have_text(person_attributes[:email])
       expect(page).to have_text(person_attributes[:primary_phone_number])
       expect(page).to have_text(person_attributes[:secondary_phone_number])

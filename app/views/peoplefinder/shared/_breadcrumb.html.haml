@@ -1,4 +1,5 @@
-- if breadcrumb.is_a?(String)
-  = breadcrumb
-- else
-  = link_to_unless_current breadcrumb, breadcrumb
+%li
+  - if breadcrumb.is_a?(String)
+    = breadcrumb
+  - else
+    = link_to_unless_current breadcrumb, breadcrumb

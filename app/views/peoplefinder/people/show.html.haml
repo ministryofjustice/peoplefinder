@@ -4,14 +4,14 @@
 = render partial: 'breadcrumbs'
 
 .title-with-edit
-  %h1= @person
+  %h1= @page_title = @person
   = link_to 'Edit this profile', edit_person_path(@person)
 
-.grid-wrapper
+.grid-wrapper.profile
   .grid.grid-1-3
-    .inner-block.profile
+    .inner-block
       .image-background
-        = image_tag @person.image.medium, class: 'profile-page'
+        = profile_image_tag @person, @person.image.medium, class: 'profile-page'
       .spacer-15
       %h4 Days worked
       %ul.working_days
@@ -19,20 +19,35 @@
 
   .grid.grid-2-3
     .inner-block
+      %dl
       - @person.memberships.each do |membership|
-        %h4= membership.role
-        = breadcrumbs(membership.path.drop(1))
+        %dt= membership.role
+        %dd.breadcrumbs= breadcrumbs(membership.path.drop(1))
 
-      - if feature_enabled?("communities")
-        %h4= t(".community")
-        - if @person.community.present?
-          = link_to @person.community, search_path(query: @person.community.name)
-        - else
-          = t(".community_unset")
+      - if feature_enabled?(:communities)
+        = render partial: "communities"
 
-      %p= @person.location
-      %p= contact_details(@person)
-      %p= @person.description
+      - if @person.location.present?
+        %dt.visuallyhidden Location
+        %dd= @person.location
+
+      .spacer-15
+      - if @person.email.present?
+        %dt.visuallyhidden Email
+        %dd= mail_to(@person.email)
+
+      - if @person.primary_phone_number.present?
+        %dt.visuallyhidden Primary phone number
+        %dd= @person.primary_phone_number
+
+      - if @person.secondary_phone_number.present?
+        %dt.visuallyhidden Other phone number
+        %dd= @person.secondary_phone_number
+
+      - if @person.description.present?
+        .spacer-15
+        %dt.visuallyhidden Notes
+        %dd= @person.description
 
       - if feature_enabled?(:profile_tags)
         = render partial: "show_tags"

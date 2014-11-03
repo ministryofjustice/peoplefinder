@@ -1,12 +1,11 @@
 = render partial: 'breadcrumbs'
 
-%h1 Edit profile
+%h1= @page_title = 'Edit profile'
 
 = render 'form'
-
 
 .form-group.delete-actions
   .deletable
     = link_to info_text('delete_this_profile'), @person, method: :delete,
-      data: { confirm: "Are you sure you want to delete #{ @person }?" }
+      data: { confirm: "Are you sure you want to delete #{ @person }? #{ info_text('profile_deletable') }." }
   %p.form-hint= info_text('profile_deletable')
