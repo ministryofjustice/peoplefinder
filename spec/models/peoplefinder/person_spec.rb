@@ -36,14 +36,6 @@ RSpec.describe Peoplefinder::Person, type: :model do
     end
   end
 
-  context 'search' do
-    it 'deletes indexes' do
-      expect(described_class.__elasticsearch__).to receive(:delete_index!).
-        with(index: 'test_peoplefinder-people')
-      described_class.delete_indexes
-    end
-  end
-
   context 'elasticsearch indexing helpers' do
     before do
       person.save!
