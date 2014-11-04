@@ -80,7 +80,9 @@ class Peoplefinder::Person < ActiveRecord::Base
   end
 
   def self.tag_list
-    Peoplefinder::Person.all.pluck(:tags).flatten.compact.sort.uniq.join(',')
+    Peoplefinder::Person.where('tags is not null').
+      pluck(:tags).flatten.join(',').
+      split(',').uniq.sort.join(',')
   end
 
 private

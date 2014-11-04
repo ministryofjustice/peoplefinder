@@ -154,13 +154,14 @@ RSpec.describe Peoplefinder::Person, type: :model do
   describe '#tag_list' do
     before do
       create(:person, tags: 'Ruby,Perl,Python')
-      create(:person, tags: 'Java,Scala')
+      create(:person, tags: 'Java,Scala,Ruby,Python,Perl')
+      create(:person, tags: '')
     end
 
     subject { described_class.tag_list }
 
     it 'returns a tag_list' do
-      expect(subject).to eql('Java,Scala,Perl,Python,Ruby')
+      expect(subject).to eql('Java,Perl,Python,Ruby,Scala')
     end
   end
 end
