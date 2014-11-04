@@ -11,10 +11,17 @@ DOCKERTAG="${DOCKERTAG:-$DEFAULT_DOCKERTAG}"
 
 tag()
 {
+        # If an application prefix has been passed in via APP_PREFIX use
+        # it during all docker operations
+        if [ -n "${APP_PREFIX}" ]; then
+          IMAGE="${APP_PREFIX}_$1"
+        else
+          IMAGE="$1"
+        fi
 	if [ -n "$2" ]; then
-  		TAG="${DOCKER_PREFIX}${DOCKERREPO}/$1:$2"
+  		TAG="${DOCKER_PREFIX}${DOCKERREPO}/${IMAGE}:$2"
 	else
-		TAG="${DOCKER_PREFIX}${DOCKERREPO}/$1"
+		TAG="${DOCKER_PREFIX}${DOCKERREPO}/${IMAGE}"
 	fi
         echo $TAG
 }
