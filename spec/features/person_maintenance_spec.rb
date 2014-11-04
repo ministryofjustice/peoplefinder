@@ -10,6 +10,7 @@ feature 'Person maintenance' do
 
     javascript_log_in
     visit new_person_path
+    expect(page).to have_title("New profile - #{ app_title }")
     fill_in_complete_profile_details
 
     click_button 'Create'
@@ -65,6 +66,7 @@ feature 'Person maintenance' do
     fill_in 'Surname', with: person_attributes[:surname]
     click_button 'Update'
 
+    expect(page).to have_title("Duplicate names found - #{ app_title }")
     click_button 'Continue'
     expect(Peoplefinder::Person.where(surname: person_attributes[:surname]).count).to eql(2)
   end
@@ -89,6 +91,7 @@ feature 'Person maintenance' do
     visit person_path(create(:person, person_attributes))
     click_link 'Edit this profile'
 
+    expect(page).to have_title("Edit profile - #{ app_title }")
     fill_in 'First name', with: 'Jane'
     fill_in 'Surname', with: 'Doe'
     click_button 'Update'
@@ -121,6 +124,7 @@ feature 'Person maintenance' do
     person = Peoplefinder::Person.find_by_surname(person_attributes[:surname])
     visit person_path(person)
     expect(page).to have_css("img[src*='#{person.image.medium}']")
+    expect(page).to have_css("img[alt*='Current photo of #{ person }']")
 
     visit edit_person_path(person)
     expect(page).to have_link('Crop image', edit_person_image_path(person))
@@ -164,6 +168,7 @@ feature 'Person maintenance' do
       click_link('Ask the person to update their details')
       expect(page).to have_link('Cancel', person_path(person))
 
+      expect(page).to have_title("Request profile update - #{ app_title }")
       within('h1') do
         expect(page).to have_text('Request profile update')
       end
@@ -238,6 +243,7 @@ feature 'Person maintenance' do
     visit person_path(person)
     click_link 'Report this profile'
 
+    expect(page).to have_title("Report this profile - #{ app_title }")
     select 'Duplicate profile', from: 'Reason for reporting'
     fill_in 'Additional details (optional)', with: 'Some stuff'
     expect { click_button 'Submit' }.to change { ActionMailer::Base.deliveries.count }.by(1)

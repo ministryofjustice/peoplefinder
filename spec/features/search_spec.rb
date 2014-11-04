@@ -27,8 +27,11 @@ feature 'Search for people', elastic: true do
     scenario 'in the most basic form' do
       visit home_path
       fill_in 'query', with: 'Browne'
-      click_button 'Search'
-      expect(page).to have_text('> Search results')
+      click_button 'Submit search'
+      expect(page).to have_title("Search results - #{ app_title }")
+      within('.breadcrumbs ol') do
+        expect(page).to have_text('Search results')
+      end
       expect(page).to have_text('Jon Browne')
       expect(page).to have_text('jon.browne@digital.justice.gov.uk')
       expect(page).to have_text('0711111111')
@@ -39,15 +42,17 @@ feature 'Search for people', elastic: true do
     scenario 'clicking a tag on a profile page' do
       visit person_path(person)
       click_link 'Cooking'
-      expect(page).to have_text('> Search results')
+      within('.breadcrumbs ol') do
+        expect(page).to have_text('Search results')
+      end
       expect(page).to have_text('Jon Browne')
     end
 
     scenario 'searching by community' do
       visit home_path
       fill_in 'query', with: community.name
-      click_button 'Search'
-      expect(page).to have_text('> Search results')
+      click_button 'Submit search'
+      expect(page).to have_title("Search results - #{ app_title }")
       expect(page).to have_text('Jon Browne')
       expect(page).to have_text(community.name)
     end

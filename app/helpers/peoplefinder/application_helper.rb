@@ -36,10 +36,16 @@ module Peoplefinder
       t(key, scope: %w[peoplefinder views info_text].join('.')).html_safe
     end
 
+    def page_title
+      (
+        [@page_title] << Rails.configuration.app_title
+      ).compact.join(' - ').html_safe
+    end
+
   private
 
     def flash_message(type)
-      content_tag(:div, class: "flash-message #{type}") {
+      content_tag(:div, class: "flash-message #{type}", role: 'alert') {
         flash[type]
       }
     end

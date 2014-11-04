@@ -15,10 +15,8 @@ feature 'Person browsing' do
     visit group_path(group_b)
     click_link person.name
 
-    within '.breadcrumbs' do
-      expect(page).to have_selector('a', text: 'Durian')
-      expect(page).not_to have_selector('a', text: 'Biwa')
-    end
+    expect(page).to have_selector('dd.breadcrumbs ol li a', text: 'Biwa')
+    expect(page).to have_selector('dd.breadcrumbs ol li a', text: 'Durian')
   end
 
   describe 'Days worked' do
