@@ -1,60 +1,97 @@
 require 'rails_helper'
 
 RSpec.describe Peoplefinder::EmailAddress do
+  let(:valid_login_domains) { ['something.gov.uk'] }
+
+  subject { described_class.new(email, valid_login_domains) }
+
   describe '.valid_domain' do
-    context 'when it is not in the list of valid_login_domains' do
-      it 'is not valid' do
-        expect(described_class.new('me@something.else.com')).not_to be_valid_domain
+    context 'with strings to match login domains' do
+      let(:valid_login_domains) { ['dept.gov.uk'] }
+
+      it "should not match the domain by regexp" do
+        expect(described_class.new('me@dept-gov-uk.com', valid_login_domains)).not_to be_valid_domain
+        expect(described_class.new('me@dept.gov.uk', valid_login_domains)).to be_valid_domain
+      end
+
+      it "should only match the whole domain" do
+        expect(described_class.new('me@dept.gov.uk', valid_login_domains)).to be_valid_domain
+        expect(described_class.new('me@sub.dept.gov.uk', valid_login_domains)).not_to be_valid_domain
+      end
+
+      it "should only match against the domain part of the address" do
+        expect(described_class.new('dept.gov.uk@dept.com', valid_login_domains)).not_to be_valid_domain
       end
     end
 
-    context 'when it is in the list of valid_login_domains' do
-      it 'is valid' do
-        expect(described_class.new("me@something.gov.uk")).to be_valid_domain
+    context 'with regexp to match login domains' do
+      let(:valid_login_domains) { [/depta?\.gov\.uk/] }
+
+      it "should match the domain by regexp" do
+        expect(described_class.new('me@dept-gov-uk.com', valid_login_domains)).not_to be_valid_domain
+        expect(described_class.new('me@dept.gov.uk', valid_login_domains)).to be_valid_domain
+        expect(described_class.new('me@depta.gov.uk', valid_login_domains)).to be_valid_domain
+        expect(described_class.new('me@deptZ.gov.uk', valid_login_domains)).not_to be_valid_domain
       end
+
+      it "should only match the domain part" do
+        expect(described_class.new('depta.gov.uk@dept-gov-uk.com', valid_login_domains)).not_to be_valid_domain
+      end
+    end
+
+    context 'when it is not in the list of valid_login_domains' do
+      let(:email) { 'me@something.else.com' }
+      it { should_not be_valid_domain }
+    end
+
+    context 'when it is in the list of valid_login_domains' do
+      let(:email) { 'me@something.gov.uk' }
+      it { should be_valid_domain }
     end
   end
 
   describe '.valid_format' do
-    it 'is badly formatted' do
-      expect(described_class.new('me-at-example.co.uk')).not_to be_valid_format
+    context 'is badly formatted' do
+      let(:email) { 'me-at-example.co.uk' }
+      it { should_not be_valid_format }
     end
 
-    it 'is valid' do
-      expect(described_class.new('me@example.co.uk')).to be_valid_format
+    context 'is correctly formatted' do
+      let(:email) { 'me@example.co.uk' }
+      it { should be_valid_format }
     end
   end
 
   describe '.valid_address' do
     it 'is nil' do
-      expect(described_class.new(nil)).not_to be_valid_address
+      expect(described_class.new(nil, valid_login_domains)).not_to be_valid_address
     end
 
     it 'is an empty string' do
-      expect(described_class.new('')).not_to be_valid_address
+      expect(described_class.new('', valid_login_domains)).not_to be_valid_address
     end
 
     it 'is badly formatted' do
-      expect(described_class.new('me-at-example.co.uk')).not_to be_valid_address
+      expect(described_class.new('me-at-example.co.uk', valid_login_domains)).not_to be_valid_address
     end
 
     it 'is from an invalid domain' do
-      expect(described_class.new('me-at-example.co.uk')).not_to be_valid_address
+      expect(described_class.new('me-at-example.co.uk', valid_login_domains)).not_to be_valid_address
     end
 
     it 'does not break the mail gem address_list initialiser' do
-      expect(described_class.new('me@')).not_to be_valid_address
+      expect(described_class.new('me@', valid_login_domains)).not_to be_valid_address
     end
 
     it 'is valid' do
-      expect(described_class.new("me@something.gov.uk")).to be_valid_address
+      expect(described_class.new("me@something.gov.uk", valid_login_domains)).to be_valid_address
     end
   end
 
   context 'name inferral' do
-    let(:email_john_smith) { described_class.new('john.smith.1@example.com') }
-    let(:email_smithy) { described_class.new('smithy@example.com') }
-    let(:email_anne_marie) { described_class.new('anne-marie.boris-smythe@example.com') }
+    let(:email_john_smith) { described_class.new('john.smith.1@example.com', valid_login_domains) }
+    let(:email_smithy) { described_class.new('smithy@example.com', valid_login_domains) }
+    let(:email_anne_marie) { described_class.new('anne-marie.boris-smythe@example.com', valid_login_domains) }
 
     describe '.inferred_given_name' do
       it 'returns john.smith' do
