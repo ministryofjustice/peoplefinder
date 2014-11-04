@@ -1,14 +1,18 @@
-<%
-  current_state = review_period_closed? ? 'closed' : 'open'
-  alternate_state = review_period_closed? ? 'open' : 'closed'
-%>
-
 <p>
-  <%= t(current_state, scope: 'admin.home.review_period_status') %>
+  <%= t(review_period_closed? ? 'closed' : 'open', scope: 'admin.home.review_period_status') %>
 </p>
 
 <%= form_tag admin_review_period_path, method: :put do %>
-  <%= text_field_tag('setting[closes_at]') %>
-  <%= button_tag(t(alternate_state, scope: 'admin.home.review_period_change'),
-        class: 'button') %>
+  <% if review_period_closed? %>
+    <fieldset>
+      <label class="form-label-bold" for="review_period_clsoes_at">Closing date</label>
+      <%= text_field_tag('review_period[closes_at]', (Date.today + 30).to_s) %>
+    </fieldset>
+    <fieldset>
+      <%= button_tag(t('admin.home.review_period_change.open'), class: 'button') %>
+    </fieldset>
+  <% else %>
+    <%= hidden_field_tag('review_period[closes_at]', Time.now.to_s) %>
+    <%= button_tag(t('admin.home.review_period_change.closed'), class: 'button') %>
+  <% end %>
 <% end %>

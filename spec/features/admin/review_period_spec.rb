@@ -8,8 +8,7 @@ feature 'Review period' do
   end
 
   scenario 'Closing and re-opening the review period' do
-    pending
-
+    open_review_period
     visit admin_path
 
     expect(page).to have_text('Review period is currently open')
