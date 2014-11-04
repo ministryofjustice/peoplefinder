@@ -20,37 +20,37 @@
   .grid.grid-2-3
     .inner-block
       %dl
-      - @person.memberships.each do |membership|
-        %dt= membership.role
-        %dd.breadcrumbs= breadcrumbs(membership.path.drop(1))
+        - @person.memberships.each do |membership|
+          %dt= membership.role
+          %dd.breadcrumbs= breadcrumbs(membership.path.drop(1))
 
-      - if feature_enabled?(:communities)
-        = render partial: "communities"
+        - if feature_enabled?(:communities)
+          = render partial: "communities"
 
-      - if @person.location.present?
-        %dt.visuallyhidden Location
-        %dd= @person.location
+        - if @person.location.present?
+          %dt.visuallyhidden Location
+          %dd= @person.location
 
-      .spacer-15
-      - if @person.email.present?
-        %dt.visuallyhidden Email
-        %dd= mail_to(@person.email)
-
-      - if @person.primary_phone_number.present?
-        %dt.visuallyhidden Primary phone number
-        %dd= @person.primary_phone_number
-
-      - if @person.secondary_phone_number.present?
-        %dt.visuallyhidden Other phone number
-        %dd= @person.secondary_phone_number
-
-      - if @person.description.present?
         .spacer-15
-        %dt.visuallyhidden Notes
-        %dd= @person.description
+        - if @person.email.present?
+          %dt.visuallyhidden Email
+          %dd= mail_to(@person.email)
 
-      - if feature_enabled?(:profile_tags)
-        = render partial: "show_tags"
+        - if @person.primary_phone_number.present?
+          %dt.visuallyhidden Primary phone number
+          %dd= @person.primary_phone_number
+
+        - if @person.secondary_phone_number.present?
+          %dt.visuallyhidden Other phone number
+          %dd= @person.secondary_phone_number
+
+        - if @person.description.present?
+          .spacer-15
+          %dt.visuallyhidden Notes
+          %dd= @person.description
+
+        - if feature_enabled?(:profile_tags)
+          = render partial: "show_tags"
 
 
 - if @person.incomplete? && @person.email.present?
