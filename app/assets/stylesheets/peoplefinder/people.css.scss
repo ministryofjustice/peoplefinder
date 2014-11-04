@@ -26,6 +26,9 @@ ul.working_days {
     clip: rect(0px, 300px, 300px, 0px);
     max-width: 100%;
   }
+  dl {
+    margin-bottom: 15px;
+  }
   dt {
     font-weight: 700;
   }

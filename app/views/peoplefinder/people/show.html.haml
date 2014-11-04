@@ -31,7 +31,7 @@
           %dt.visuallyhidden Location
           %dd= @person.location
 
-        .spacer-15
+      %dl
         - if @person.email.present?
           %dt.visuallyhidden Email
           %dd= mail_to(@person.email)
@@ -44,13 +44,13 @@
           %dt.visuallyhidden Other phone number
           %dd= @person.secondary_phone_number
 
-        - if @person.description.present?
-          .spacer-15
+      - if @person.description.present?
+        %dl
           %dt.visuallyhidden Notes
           %dd= @person.description
 
-        - if feature_enabled?(:profile_tags)
-          = render partial: "show_tags"
+      - if feature_enabled?(:profile_tags)
+        = render partial: "show_tags"
 
 
 - if @person.incomplete? && @person.email.present?
