@@ -20,6 +20,9 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
+  time:
+    formats:
+      default: "%d %b %Y %H:%M"
   peoplefinder:
     sessions:
       login_page:

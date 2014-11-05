@@ -6,20 +6,26 @@ RSpec.describe Peoplefinder::ApplicationHelper, type: :helper do
   }
 
   let(:stubbed_time) { Time.new(2012, 10, 31, 2, 2, 2, "+01:00") }
+  let(:originator) { Peoplefinder::Version.public_user }
 
   context '#last_update' do
-    it 'shows last_update for a person' do
-      @person = double(:person, updated_at: stubbed_time)
+    it 'shows last_update for a person by a system generated user' do
+      @person = double(:person, updated_at: stubbed_time, originator: originator)
       expect(last_update).to eql('Last updated: 31 Oct 2012 02:02.')
     end
 
+    it 'shows last_update for a person by someone who is not the system user' do
+      @person = double(:person, updated_at: stubbed_time, originator: 'Bob')
+      expect(last_update).to eql('Last updated: 31 Oct 2012 02:02 by Bob.')
+    end
+
     it 'shows last_update for a group' do
-      @group = double(:group, updated_at: stubbed_time)
+      @group = double(:group, updated_at: stubbed_time, originator: originator)
       expect(last_update).to eql('Last updated: 31 Oct 2012 02:02.')
     end
 
     it 'does not show last_update for a new person' do
-      @person = double(:group, updated_at: nil)
+      @person = double(:group, updated_at: nil, originator: originator)
       expect(last_update).to be_blank
     end
   end
