@@ -54,6 +54,11 @@ en:
         uploaded: 'Users uploaded successfully'
         upload_failed: 'An error occurred. No users were uploaded'
   helpers:
+    days:
+      less_than_one: 'less than a day'
+      one_or_more:
+        one: 'one day'
+        other: '%{count} days'
     submit:
       invitation:
         update: 'Update'
