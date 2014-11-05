@@ -9,16 +9,19 @@ RSpec.describe Peoplefinder::EmailAddress do
     context 'with strings to match login domains' do
       let(:valid_login_domains) { ['dept.gov.uk'] }
 
-      it "does not match the domain by regexp" do
+      it "does not match a similar domain" do
         expect(described_class.new('me@dept-gov-uk.com', valid_login_domains)).not_to be_valid_domain
+      end
+
+      it "does not match a subdomain" do
+        expect(described_class.new('me@sub.dept.gov.uk', valid_login_domains)).not_to be_valid_domain
       end
 
       it "only matches the whole domain" do
         expect(described_class.new('me@dept.gov.uk', valid_login_domains)).to be_valid_domain
-        expect(described_class.new('me@sub.dept.gov.uk', valid_login_domains)).not_to be_valid_domain
       end
 
-      it "only matches against the domain part of the address" do
+      it "does not match against the local part of the address" do
         expect(described_class.new('dept.gov.uk@dept.com', valid_login_domains)).not_to be_valid_domain
       end
     end
@@ -26,38 +29,29 @@ RSpec.describe Peoplefinder::EmailAddress do
     context 'with regexp to match login domains' do
       let(:valid_login_domains) { [/depta?\.gov\.uk/] }
 
-      it "matches the domain by regexp" do
-        expect(described_class.new('me@dept-gov-uk.com', valid_login_domains)).not_to be_valid_domain
-        expect(described_class.new('me@dept.gov.uk', valid_login_domains)).to be_valid_domain
-        expect(described_class.new('me@depta.gov.uk', valid_login_domains)).to be_valid_domain
-        expect(described_class.new('me@deptZ.gov.uk', valid_login_domains)).not_to be_valid_domain
+      it "does not match a similar domain" do
+        expect(described_class.new('me@dept-gov.uk.com', valid_login_domains)).not_to be_valid_domain
       end
 
-      it "only matches the domain part" do
+      it "matches a subdomain" do
+        expect(described_class.new('me@dept.gov.uk', valid_login_domains)).to be_valid_domain
+      end
+
+      it "does not match against the local part of the address" do
         expect(described_class.new('depta.gov.uk@dept-gov-uk.com', valid_login_domains)).not_to be_valid_domain
       end
-    end
-
-    context 'when it is not in the list of valid_login_domains' do
-      let(:email) { 'me@something.else.com' }
-      it { should_not be_valid_domain }
-    end
-
-    context 'when it is in the list of valid_login_domains' do
-      let(:email) { 'me@something.gov.uk' }
-      it { should be_valid_domain }
     end
   end
 
   describe '.valid_format' do
     context 'is badly formatted' do
       let(:email) { 'me-at-example.co.uk' }
-      it { should_not be_valid_format }
+      it { is_expected.not_to be_valid_format }
     end
 
     context 'is correctly formatted' do
       let(:email) { 'me@example.co.uk' }
-      it { should be_valid_format }
+      it { is_expected.to be_valid_format }
     end
   end
 
