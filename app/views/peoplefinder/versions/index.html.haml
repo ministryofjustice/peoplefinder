@@ -12,7 +12,7 @@
   %tbody
     - @versions.each do |version|
       %tr
-        %td= version.created_at.to_formatted_s(:long)
+        %td= l(version.created_at)
         %td
           %h4= version.event_description
           %p= link_to_edited_item(version)

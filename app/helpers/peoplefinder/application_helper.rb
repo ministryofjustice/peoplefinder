@@ -37,9 +37,7 @@ module Peoplefinder
   private
 
     def updated_at(obj)
-      "Last updated: #{
-        obj.updated_at.strftime('%d %b %Y %H:%M')
-      }"
+      "Last updated: #{l(obj.updated_at)}"
     end
 
     def updated_by(obj)
