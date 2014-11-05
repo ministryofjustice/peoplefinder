@@ -84,7 +84,7 @@ defined on a per environment basis.
 
 `config.support_email` e.g. 'peoplefinder-support@example.com'
 
-`config.valid_login_domains` Restrict login to email addresses from domains that match the string or regular expresson. e.g. `[/(.*)\.gov\.uk/, 'example.com']`
+`config.valid_login_domains` Restrict login to email addresses from domains that match the string or regular expresson. e.g. `[/(.*)\.gov\.uk\Z/, 'example.com']`
 
 ## Authentication
 
