@@ -11,7 +11,6 @@ RSpec.describe Peoplefinder::EmailAddress do
 
       it "does not match the domain by regexp" do
         expect(described_class.new('me@dept-gov-uk.com', valid_login_domains)).not_to be_valid_domain
-        expect(described_class.new('me@dept.gov.uk', valid_login_domains)).to be_valid_domain
       end
 
       it "only matches the whole domain" do
