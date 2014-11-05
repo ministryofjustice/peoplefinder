@@ -3,13 +3,16 @@ require 'peoplefinder'
 class Peoplefinder::EmailAddress < Mail::Address
   VALID_EMAIL_PATTERN = /\A[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]+\z/
 
-  def initialize(string)
+  def initialize(string, valid_login_domains = nil)
     return false unless string =~ VALID_EMAIL_PATTERN
-    super
+    @valid_login_domains = valid_login_domains || default_valid_login_domains
+    super(string)
   end
 
   def valid_domain?
-    valid_login_domains.include?(domain)
+    valid_login_domains.any? do |pattern|
+      domain_matches_pattern?(pattern, domain)
+    end
   end
 
   def valid_format?
@@ -34,13 +37,24 @@ class Peoplefinder::EmailAddress < Mail::Address
 
 private
 
-  def valid_login_domains
+  attr_reader :valid_login_domains
+
+  def default_valid_login_domains
     Rails.configuration.try(:valid_login_domains) || []
   end
 
   def capitalise(word)
     word.downcase.to_s.gsub(/\b('?\S)/u) do
       (Regexp.last_match[1]).upcase
+    end
+  end
+
+  def domain_matches_pattern?(pattern, domain)
+    case pattern
+    when String
+      domain == pattern
+    when Regexp
+      domain =~ pattern
     end
   end
 end
