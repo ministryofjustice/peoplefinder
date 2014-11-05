@@ -76,5 +76,32 @@ RSpec.describe ReviewPeriod do
         subject.send_closure_notifications
       }.not_to change { ActionMailer::Base.deliveries.count }
     end
+
+  end
+
+  context 'Closing time' do
+    it 'reports the closing time when set' do
+      t = Time.at(1415184252)
+      described_class.closes_at = t
+      expect(described_class.closes_at).to eql(t)
+    end
+
+    it 'reports nil for the closing time when not set' do
+      expect(described_class.closes_at).to be_nil
+    end
+
+    it 'reports the time left when there is time left' do
+      described_class.closes_at = Time.at(1415184252)
+      expect(described_class.seconds_left(Time.at(1415180000))).to eql(4252)
+    end
+
+    it 'reports the time left as zero when not set' do
+      expect(described_class.seconds_left).to eql(0)
+    end
+
+    it 'reports the time left as zero when closed' do
+      described_class.closes_at = Time.at(1415170000)
+      expect(described_class.seconds_left(Time.at(1415180000))).to eql(0)
+    end
   end
 end

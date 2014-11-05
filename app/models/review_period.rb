@@ -2,6 +2,7 @@ class ReviewPeriod < ActiveRecord::Base
   extend SingleForwardable
 
   def_single_delegator :singleton_record, :closed?
+  def_single_delegator :singleton_record, :closes_at
 
   def self.open?
     !closed?
@@ -9,6 +10,10 @@ class ReviewPeriod < ActiveRecord::Base
 
   def self.closes_at=(datetime)
     singleton_record.update(closes_at: datetime)
+  end
+
+  def self.seconds_left(now = Time.now)
+    [(closes_at || now) - now, 0].max.to_i
   end
 
   def self.singleton_record
