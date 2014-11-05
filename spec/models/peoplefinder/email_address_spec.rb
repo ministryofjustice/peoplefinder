@@ -9,17 +9,17 @@ RSpec.describe Peoplefinder::EmailAddress do
     context 'with strings to match login domains' do
       let(:valid_login_domains) { ['dept.gov.uk'] }
 
-      it "should not match the domain by regexp" do
+      it "does not match the domain by regexp" do
         expect(described_class.new('me@dept-gov-uk.com', valid_login_domains)).not_to be_valid_domain
         expect(described_class.new('me@dept.gov.uk', valid_login_domains)).to be_valid_domain
       end
 
-      it "should only match the whole domain" do
+      it "only matches the whole domain" do
         expect(described_class.new('me@dept.gov.uk', valid_login_domains)).to be_valid_domain
         expect(described_class.new('me@sub.dept.gov.uk', valid_login_domains)).not_to be_valid_domain
       end
 
-      it "should only match against the domain part of the address" do
+      it "only matches against the domain part of the address" do
         expect(described_class.new('dept.gov.uk@dept.com', valid_login_domains)).not_to be_valid_domain
       end
     end
@@ -27,14 +27,14 @@ RSpec.describe Peoplefinder::EmailAddress do
     context 'with regexp to match login domains' do
       let(:valid_login_domains) { [/depta?\.gov\.uk/] }
 
-      it "should match the domain by regexp" do
+      it "matches the domain by regexp" do
         expect(described_class.new('me@dept-gov-uk.com', valid_login_domains)).not_to be_valid_domain
         expect(described_class.new('me@dept.gov.uk', valid_login_domains)).to be_valid_domain
         expect(described_class.new('me@depta.gov.uk', valid_login_domains)).to be_valid_domain
         expect(described_class.new('me@deptZ.gov.uk', valid_login_domains)).not_to be_valid_domain
       end
 
-      it "should only match the domain part" do
+      it "only matches the domain part" do
         expect(described_class.new('depta.gov.uk@dept-gov-uk.com', valid_login_domains)).not_to be_valid_domain
       end
     end
