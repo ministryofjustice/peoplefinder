@@ -34,6 +34,11 @@ class ReviewPeriod < ActiveRecord::Base
     end
   end
 
+  def self.default_closing_date(now = Time.now)
+    date = now.utc.to_date + 30
+    Time.new(date.year, date.month, date.day, 23, 59, 59, '+00:00')
+  end
+
   def closed?
     closes_at.nil? || closes_at < Time.now
   end

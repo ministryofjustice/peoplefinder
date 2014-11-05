@@ -6,7 +6,7 @@
   <% if review_period_closed? %>
     <fieldset>
       <label class="form-label-bold" for="review_period_clsoes_at">Closing date</label>
-      <%= text_field_tag('review_period[closes_at]', (Date.today + 30).to_s) %>
+      <%= text_field_tag('review_period[closes_at]', ReviewPeriod.default_closing_date) %>
     </fieldset>
     <fieldset>
       <%= button_tag(t('admin.home.review_period_change.open'), class: 'button') %>

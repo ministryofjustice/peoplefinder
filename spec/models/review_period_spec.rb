@@ -104,4 +104,12 @@ RSpec.describe ReviewPeriod do
       expect(described_class.seconds_left(Time.at(1415180000))).to eql(0)
     end
   end
+
+  context 'Default closing time' do
+    it 'is one second to midnight UTC, 30 days from now' do
+      now = Time.at(1415184252)
+      expected = Time.parse('2014-12-05T23:59:59Z')
+      expect(described_class.default_closing_date(now)).to eql(expected)
+    end
+  end
 end
