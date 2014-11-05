@@ -3,7 +3,8 @@ Hello <%= @user %>,
 360 feedback plays a vital role in developing performance in line with
 our leadership model and the Ministry of Justice story.
 
-You have 30 days to complete your tasks so please visit your
+You have <%= distance_of_time_in_words(ReviewPeriod.seconds_left)
+%> to complete your tasks so please visit your
 personalised 360 feedback dashboard now:
 
 <%= token_url(@token) %>

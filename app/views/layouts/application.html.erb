@@ -21,6 +21,8 @@
           <%= yield :top_right %>
         </div>
 
+        <%= render partial: 'shared/time_left' %>
+
         <h1>
           <%= content_for?(:page_title) ? yield(:page_title) : app_name %>
         </h1>

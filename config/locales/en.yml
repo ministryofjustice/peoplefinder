@@ -189,6 +189,8 @@ en:
       customer: 'Customer/stakeholder'
     errors:
       subject_must_be_participant: 'must be a participant'
+  review_period:
+    time_left: 'The review period closes in %{remaining}'
   password_resets:
     errors:
       no_admin_user_with_email_exists: 'No admin user with that email exists'
