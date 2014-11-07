@@ -96,7 +96,6 @@ RSpec.configure do |config|
 
   config.include FactoryGirl::Syntax::Methods
   config.include SpecSupport::Login
-  config.include SpecSupport::Search
   config.include SpecSupport::Carrierwave
   config.include SpecSupport::OrgBrowser
   config.include SpecSupport::Email
