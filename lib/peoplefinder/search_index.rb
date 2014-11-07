@@ -42,7 +42,35 @@ private
     end
 
     def call
-      # def insert(arel, name = nil, pk = nil, id_value = nil, sequence_name = nil, binds = [])
+      if search_record_exists?
+        do_update
+      else
+        do_insert
+      end
+    end
+
+    def search_record_exists?
+      ActiveRecord::Base.connection.select_one(
+        "select person_id from search_index where person_id=$1",
+        nil,
+        [[nil, person.id]]
+      )
+    end
+
+    def do_update
+      binds = [person.id, person_name] + document_sql.binds
+      ActiveRecord::Base.connection.update(
+        "UPDATE search_index " \
+        "SET " \
+        "name = $2, " \
+        "document = #{document_sql.sql(2)} " \
+        "WHERE person_id = $1",
+        "update search index",
+        binds.map { |b| [nil, b] }
+      )
+    end
+
+    def do_insert
       ActiveRecord::Base.connection.insert(
         "INSERT INTO search_index (person_id, name, document) " \
         "VALUES " \

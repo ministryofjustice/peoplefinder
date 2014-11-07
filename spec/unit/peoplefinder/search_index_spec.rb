@@ -2,6 +2,7 @@ require 'rails_helper'
 require 'peoplefinder/search_index'
 
 RSpec.describe Peoplefinder::SearchIndex do
+
   subject(:search_index) { described_class.new }
 
   let(:digital_services) { create(:group, name: 'Digital Services') }
@@ -24,6 +25,21 @@ RSpec.describe Peoplefinder::SearchIndex do
       bob.memberships.create(group: digital_services, role: 'Cleaner')
     end
   }
+
+  describe "updating a person" do
+    it "indexes the new params" do
+      search_index.index(bob)
+      bob.location = "aviation house"
+      bob.save!
+      search_index.index(bob)
+
+      results = search_index.search("france")
+      expect(results).to_not include(bob)
+
+      results = search_index.search("aviation")
+      expect(results).to include(bob)
+    end
+  end
 
   context 'with some people' do
     before do

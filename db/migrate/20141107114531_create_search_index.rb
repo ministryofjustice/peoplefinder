@@ -5,5 +5,6 @@ class CreateSearchIndex < ActiveRecord::Migration
       t.string :name
       t.column "document", :tsvector
     end
+    add_index :search_index, :person_id, unique: true
   end
 end
