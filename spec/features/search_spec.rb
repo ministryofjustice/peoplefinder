@@ -1,7 +1,7 @@
 require 'rails_helper'
 
-feature 'Search for people', elastic: true do
-  describe 'with elasticsearch' do
+feature 'Search for people' do
+  context "with psql search" do
     let(:community) { create(:community, name: 'Design') }
     let!(:person) {
       create(:person,
@@ -15,13 +15,7 @@ feature 'Search for people', elastic: true do
 
     before do
       create(:department)
-      Peoplefinder::Person.import
-      Peoplefinder::Person.__elasticsearch__.client.indices.refresh
       omni_auth_log_in_as 'test.user@digital.justice.gov.uk'
-    end
-
-    after do
-      clean_up_indexes_and_tables
     end
 
     scenario 'in the most basic form' do
