@@ -6,6 +6,6 @@ module Peoplefinder::Concerns::Searchable
   included do
     after_save ->(person) { SEARCH_INDEX.index(person) }, on: :update
     after_save ->(person) { SEARCH_INDEX.index(person) }, on: :create
-    after_save ->(person) { SEARCH_INDEX.delete(person) },  on: :destroy
+    after_destroy ->(person) { SEARCH_INDEX.delete(person) }
   end
 end

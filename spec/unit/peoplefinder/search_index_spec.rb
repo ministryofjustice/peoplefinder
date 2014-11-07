@@ -41,6 +41,20 @@ RSpec.describe Peoplefinder::SearchIndex do
     end
   end
 
+  describe "destroying a person" do
+    it "removes the person from the index" do
+      search_index.index(bob)
+
+      results = search_index.search(bob.given_name)
+      expect(results).to include(bob)
+
+      search_index.delete(bob)
+
+      results = search_index.search(bob.given_name)
+      expect(results).not_to include(bob)
+    end
+  end
+
   context 'with some people' do
     before do
       search_index.import([alice, bob])

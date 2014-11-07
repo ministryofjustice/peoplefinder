@@ -8,13 +8,15 @@ class Peoplefinder::SearchIndex
   end
 
   def delete(person)
+    ActiveRecord::Base.connection.delete(
+      "DELETE from search_index where person_id=$1",
+      "delete person",
+      [[nil, person.id]]
+    )
   end
 
   def index(person)
     ImportOne.new(person).call
-  end
-
-  def flush
   end
 
   def search(query, limit: 100)
