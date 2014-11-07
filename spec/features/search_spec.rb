@@ -1,54 +1,52 @@
 require 'rails_helper'
 
 feature 'Search for people' do
-  context "with psql search" do
-    let(:community) { create(:community, name: 'Design') }
-    let!(:person) {
-      create(:person,
-        given_name: 'Jon',
-        surname: 'Browne',
-        email: 'jon.browne@digital.justice.gov.uk',
-        primary_phone_number: '0711111111',
-        tags: 'Cooking,Eating',
-        community: community)
-    }
+  let(:community) { create(:community, name: 'Design') }
+  let!(:person) {
+    create(:person,
+      given_name: 'Jon',
+      surname: 'Browne',
+      email: 'jon.browne@digital.justice.gov.uk',
+      primary_phone_number: '0711111111',
+      tags: 'Cooking,Eating',
+      community: community)
+  }
 
-    before do
-      create(:department)
-      omni_auth_log_in_as 'test.user@digital.justice.gov.uk'
-    end
+  before do
+    create(:department)
+    omni_auth_log_in_as 'test.user@digital.justice.gov.uk'
+  end
 
-    scenario 'in the most basic form' do
-      visit home_path
-      fill_in 'query', with: 'Browne'
-      click_button 'Submit search'
-      expect(page).to have_title("Search results - #{ app_title }")
-      within('.breadcrumbs ol') do
-        expect(page).to have_text('Search results')
-      end
-      expect(page).to have_text('Jon Browne')
-      expect(page).to have_text('jon.browne@digital.justice.gov.uk')
-      expect(page).to have_text('0711111111')
-      expect(page).to have_text(community.name)
-      expect(page).to have_link('add them', href: new_person_path)
+  scenario 'in the most basic form' do
+    visit home_path
+    fill_in 'query', with: 'Browne'
+    click_button 'Submit search'
+    expect(page).to have_title("Search results - #{ app_title }")
+    within('.breadcrumbs ol') do
+      expect(page).to have_text('Search results')
     end
+    expect(page).to have_text('Jon Browne')
+    expect(page).to have_text('jon.browne@digital.justice.gov.uk')
+    expect(page).to have_text('0711111111')
+    expect(page).to have_text(community.name)
+    expect(page).to have_link('add them', href: new_person_path)
+  end
 
-    scenario 'clicking a tag on a profile page' do
-      visit person_path(person)
-      click_link 'Cooking'
-      within('.breadcrumbs ol') do
-        expect(page).to have_text('Search results')
-      end
-      expect(page).to have_text('Jon Browne')
+  scenario 'clicking a tag on a profile page' do
+    visit person_path(person)
+    click_link 'Cooking'
+    within('.breadcrumbs ol') do
+      expect(page).to have_text('Search results')
     end
+    expect(page).to have_text('Jon Browne')
+  end
 
-    scenario 'searching by community' do
-      visit home_path
-      fill_in 'query', with: community.name
-      click_button 'Submit search'
-      expect(page).to have_title("Search results - #{ app_title }")
-      expect(page).to have_text('Jon Browne')
-      expect(page).to have_text(community.name)
-    end
+  scenario 'searching by community' do
+    visit home_path
+    fill_in 'query', with: community.name
+    click_button 'Submit search'
+    expect(page).to have_title("Search results - #{ app_title }")
+    expect(page).to have_text('Jon Browne')
+    expect(page).to have_text(community.name)
   end
 end
