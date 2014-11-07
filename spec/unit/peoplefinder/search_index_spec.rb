@@ -82,6 +82,17 @@ RSpec.describe Peoplefinder::SearchIndex do
       expect(results).to_not include(bob)
     end
 
+    it 'searches by tags' do
+      ed = create(:person,
+        given_name: 'Edward',
+        surname: 'Evans',
+        tags: "Cooking,Eating"
+      )
+
+      results = search_index.search("cooking")
+      expect(results).to include(ed)
+    end
+
     context "with ambiguous matches" do
       let(:charlotte) {
         create(:person,

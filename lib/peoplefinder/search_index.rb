@@ -90,7 +90,8 @@ private
         [person.location || ""],
         [person.description || ""],
         [person.role_and_group || ""],
-        [person.community_name || ""]
+        [person.community_name || ""],
+        [person.tags || ""]
       ]
       indexable_data.map do |data, weight|
         BoundSql.new("setweight(to_tsvector($1, $2), $3)", [index_language, data, weight || 'D'])
