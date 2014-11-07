@@ -1,22 +1,33 @@
 require 'rails_helper'
 require 'peoplefinder/search_index'
 
-RSpec.describe Peoplefinder::SearchIndex, elastic: true do # rubocop:disable RSpec/DescribeClass
-  after(:all) do
-    clean_up_indexes_and_tables
-  end
-
+RSpec.describe Peoplefinder::SearchIndex do
   subject(:search_index) { described_class.new }
 
-  let!(:alice) { create(:person, given_name: 'Alice', surname: 'Andrews') }
-  let!(:bob) { create(:person, given_name: 'Bob', surname: 'Browning', location: 'Petty France 10th floor', description: 'weekends only') }
-  let!(:digital_services) { create(:group, name: 'Digital Services') }
-  let!(:membership) { bob.memberships.create(group: digital_services, role: 'Cleaner') }
+  let(:digital_services) { create(:group, name: 'Digital Services') }
+  let(:design_community) { create(:community, name: "Design") }
+
+  let(:alice) {
+    create(:person,
+      given_name: 'Alice',
+      surname: 'Andrews',
+      community: design_community
+    )
+  }
+  let(:bob) {
+    create(:person,
+      given_name: 'Bob',
+      surname: 'Browning',
+      location: 'Petty France 10th floor',
+      description: 'weekends only'
+    ).tap do |bob|
+      bob.memberships.create(group: digital_services, role: 'Cleaner')
+    end
+  }
 
   context 'with some people' do
     before do
-      search_index.import(Peoplefinder::Person.all)
-      search_index.flush
+      search_index.import([alice, bob])
     end
 
     it 'searches by surname' do
@@ -44,9 +55,34 @@ RSpec.describe Peoplefinder::SearchIndex, elastic: true do # rubocop:disable RSp
     end
 
     it 'searches by description and location' do
-      results = search_index.search('weekends at petty france office')
+      results = search_index.search('weekends at petty france')
       expect(results).to_not include(alice)
       expect(results).to include(bob)
+    end
+
+    it 'searches by community' do
+      results = search_index.search(design_community.name)
+      expect(results).to include(alice)
+      expect(results).to_not include(bob)
+    end
+
+    context "with ambiguous matches" do
+      let(:charlotte) {
+        create(:person,
+          given_name: 'Charlotte',
+          surname: 'France',
+          description: "Working on the Andrews report"
+        )
+      }
+
+      before do
+        search_index.index(charlotte)
+      end
+
+      it "ranks name matches above other matches" do
+        results = search_index.search('France')
+        expect(results).to eq([charlotte, bob])
+      end
     end
   end
 end
