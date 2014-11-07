@@ -26,5 +26,6 @@ module Peoplefinder
     isolate_namespace Peoplefinder
 
     config.autoload_paths << File.expand_path("..", File.dirname(__FILE__))
+    config.active_record.schema_format = :sql
   end
 end
