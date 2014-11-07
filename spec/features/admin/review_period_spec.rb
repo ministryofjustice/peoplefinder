@@ -8,19 +8,21 @@ feature 'Review period' do
   end
 
   scenario 'Closing and re-opening the review period' do
+    open_review_period
     visit admin_path
 
     expect(page).to have_text('Review period is currently open')
     click_button 'Close review period'
 
     expect(page).to have_text('Review period is currently closed')
-    expect(ReviewPeriod.instance).to be_closed
+    expect(ReviewPeriod).to be_closed
 
     click_button 'Open review period'
-    expect(ReviewPeriod.instance).to be_open
+    expect(ReviewPeriod).to be_open
   end
 
   scenario 'Sending introduction emails' do
+    open_review_period
     participant = create(:user)
 
     visit admin_path
@@ -33,11 +35,11 @@ feature 'Review period' do
   end
 
   scenario 'Sending review period closure emails' do
+    close_review_period
     participant = create(:user)
 
     visit admin_path
 
-    click_button 'Close review period'
     click_button 'Send review period closure emails'
 
     mail = last_email

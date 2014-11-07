@@ -4,6 +4,7 @@ RSpec.describe UsersController, type: :controller do
 
   before do
     authenticate_as me
+    open_review_period
   end
 
   describe 'GET index' do

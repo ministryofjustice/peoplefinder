@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-feature 'Closed review period', closed_review_period: true do
+feature 'Closed review period' do
   let(:me) { create(:user) }
   let!(:review) do
     create(:submitted_review,
@@ -10,9 +10,13 @@ feature 'Closed review period', closed_review_period: true do
     )
   end
 
+  before do
+    close_review_period
+  end
+
   scenario 'Viewing my feedback' do
     me.update manager: create(:user)
-    ReviewPeriod.instance.send_closure_notifications
+    ReviewPeriod.send_closure_notifications
     visit links_in_email(last_email).first
 
     check_my_feedback_from_danny_boy

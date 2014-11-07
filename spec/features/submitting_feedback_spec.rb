@@ -5,6 +5,10 @@ feature 'Submitting feedback' do
   let(:review) { create(:review, status: :accepted) }
   let(:token) { review.tokens.create }
 
+  before do
+    open_review_period
+  end
+
   scenario 'Submit feedback' do
     visit token_path(token)
 

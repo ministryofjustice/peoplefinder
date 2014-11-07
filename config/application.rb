@@ -34,5 +34,6 @@ module SCSAppraisals
 
     config.rack_timeout = env_integer('RACK_TIMEOUT', 14)
     config.token_timeout = env_integer('TOKEN_TIMEOUT_IN_MONTHS', 6).months
+    config.ga_id = ENV.fetch('GA_ID', '')
   end
 end

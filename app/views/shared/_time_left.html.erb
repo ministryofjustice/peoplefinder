@@ -1,0 +1,6 @@
+<% if ReviewPeriod.open? %>
+  <div class="review-period-time-left">
+    <%= t('review_period.time_left',
+          remaining: DaysHelper.number_of_days_in_words(ReviewPeriod.seconds_left)) %>
+  </div>
+<% end %>

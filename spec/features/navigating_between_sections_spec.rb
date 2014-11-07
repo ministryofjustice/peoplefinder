@@ -6,143 +6,153 @@ feature 'Navigating between sections of the site' do
     let!(:direct_report) { create(:user, name: "Charlie", manager: me) }
     let(:token) { me.tokens.create }
 
-    scenario 'Visiting dashboard with no reviews' do
-      # /reviews
+    context 'During the review period' do
+      before do
+        open_review_period
+      end
 
-      visit token_url(token)
+      scenario 'Visiting dashboard with no reviews' do
+        # /reviews
 
-      expect_no_back_link
-      expect_page_header 'SCS 360° Appraisals'
-      expect_tabs
-      expect_page_subheader 'Feedback participants'
-    end
+        visit token_url(token)
 
-    scenario 'Visiting dashboard with reviews' do
-      # /reviews
+        expect_no_back_link
+        expect_page_header 'SCS 360° Appraisals'
+        expect_tabs
+        expect_page_subheader 'Feedback participants'
+      end
 
-      create :review, subject: me
-      visit token_url(token)
+      scenario 'Visiting dashboard with reviews' do
+        # /reviews
 
-      expect_no_back_link
-      expect_page_header 'SCS 360° Appraisals'
-      expect_tabs
-      expect_page_subheader 'Feedback received'
-    end
+        create :review, subject: me
+        visit token_url(token)
 
-    scenario 'Viewing a review I have received' do
-      # /reviews/[n]
+        expect_no_back_link
+        expect_page_header 'SCS 360° Appraisals'
+        expect_tabs
+        expect_page_subheader 'Feedback received'
+      end
 
-      create :submitted_review, subject: me, author_name: 'Momotaro'
-      visit token_url(token)
-      click_link 'View feedback'
+      scenario 'Viewing a review I have received' do
+        # /reviews/[n]
 
-      expect_back_link '/reviews'
-      expect_page_header 'Feedback for you'
-      expect_no_tabs
-      expect_page_subheader 'Given by Momotaro'
-    end
+        create :submitted_review, subject: me, author_name: 'Momotaro'
+        visit token_url(token)
+        click_link 'View feedback'
 
-    scenario 'Visiting dashboard for direct reports' do
-      # /users
+        expect_back_link '/reviews'
+        expect_page_header 'Feedback for you'
+        expect_no_tabs
+        expect_page_subheader 'Given by Momotaro'
+      end
 
-      visit token_url(token)
-      click_link 'Your direct reports'
+      scenario 'Visiting dashboard for direct reports' do
+        # /users
 
-      expect_no_back_link
-      expect_page_header 'SCS 360° Appraisals'
-      expect_tabs
-      expect_page_subheader 'Your direct reports'
-    end
+        visit token_url(token)
+        click_link 'Your direct reports'
 
-    scenario 'Viewing direct report with no reviews' do
-      # /users/[n]/reviews
+        expect_no_back_link
+        expect_page_header 'SCS 360° Appraisals'
+        expect_tabs
+        expect_page_subheader 'Your direct reports'
+      end
 
-      visit token_url(token)
-      click_link 'Your direct reports'
-      click_link 'Charlie'
+      scenario 'Viewing direct report with no reviews' do
+        # /users/[n]/reviews
 
-      expect_back_link '/users'
-      expect_page_header 'Feedback for Charlie'
-      expect_no_tabs
-      expect_page_subheader 'Feedback participants'
-    end
+        visit token_url(token)
+        click_link 'Your direct reports'
+        click_link 'Charlie'
 
-    scenario 'Viewing direct report with reviews' do
-      # /users/[n]/reviews
+        expect_back_link '/users'
+        expect_page_header 'Feedback for Charlie'
+        expect_no_tabs
+        expect_page_subheader 'Feedback participants'
+      end
 
-      create :submitted_review, subject: direct_report, author_name: 'Momotaro'
-      visit token_url(token)
-      click_link 'Your direct reports'
-      click_link 'Charlie'
+      scenario 'Viewing direct report with reviews' do
+        # /users/[n]/reviews
 
-      expect_back_link '/users'
-      expect_page_header 'Feedback for Charlie'
-      expect_no_tabs
-      expect_page_subheader 'Feedback received'
-    end
+        create :submitted_review, subject: direct_report, author_name: 'Momotaro'
+        visit token_url(token)
+        click_link 'Your direct reports'
+        click_link 'Charlie'
 
-    scenario 'Viewing a review a direct report has received' do
-      # /users/[n]/reviews/[m]
+        expect_back_link '/users'
+        expect_page_header 'Feedback for Charlie'
+        expect_no_tabs
+        expect_page_subheader 'Feedback received'
+      end
 
-      create :submitted_review, subject: direct_report, author_name: 'Momotaro'
-      visit token_url(token)
-      click_link 'Your direct reports'
-      click_link 'Charlie'
-      click_link 'View feedback'
+      scenario 'Viewing a review a direct report has received' do
+        # /users/[n]/reviews/[m]
 
-      expect_back_link '/users'
-      expect_back_link "/users/#{direct_report.to_param}/reviews"
-      expect_page_header 'Feedback for Charlie'
-      expect_no_tabs
-      expect_page_subheader 'Given by Momotaro'
-    end
+        create :submitted_review, subject: direct_report, author_name: 'Momotaro'
+        visit token_url(token)
+        click_link 'Your direct reports'
+        click_link 'Charlie'
+        click_link 'View feedback'
 
-    scenario 'Viewing my feedback requests' do
-      # /replies
+        expect_back_link '/users'
+        expect_back_link "/users/#{direct_report.to_param}/reviews"
+        expect_page_header 'Feedback for Charlie'
+        expect_no_tabs
+        expect_page_subheader 'Given by Momotaro'
+      end
 
-      create :review, author_email: me.email
-      visit token_url(token)
-      click_link 'Feedback requests'
+      scenario 'Viewing my feedback requests' do
+        # /replies
 
-      expect_no_back_link
-      expect_page_header 'SCS 360° Appraisals'
-      expect_tabs
-      expect_page_subheader 'Requests for feedback'
-    end
+        create :review, author_email: me.email
+        visit token_url(token)
+        click_link 'Feedback requests'
 
-    scenario 'Submitting feedback' do
-      # /submissions/[n]/edit
+        expect_no_back_link
+        expect_page_header 'SCS 360° Appraisals'
+        expect_tabs
+        expect_page_subheader 'Requests for feedback'
+      end
 
-      create :accepted_review,
-        author_email: me.email,
-        subject: direct_report
-      visit token_url(token)
-      click_link 'Feedback requests'
-      click_link 'Add feedback'
+      scenario 'Submitting feedback' do
+        # /submissions/[n]/edit
 
-      expect_back_link '/replies'
-      expect_page_header 'Feedback for Charlie'
-      expect_no_tabs
-    end
+        create :accepted_review,
+          author_email: me.email,
+          subject: direct_report
+        visit token_url(token)
+        click_link 'Feedback requests'
+        click_link 'Add feedback'
 
-    scenario 'Viewing feedback I gave' do
-      # /reviews/[n]
+        expect_back_link '/replies'
+        expect_page_header 'Feedback for Charlie'
+        expect_no_tabs
+      end
 
-      create :submitted_review,
-        author_email: me.email,
-        subject: direct_report
-      visit token_url(token)
-      click_link 'Feedback requests'
-      click_link 'View feedback'
+      scenario 'Viewing feedback I gave' do
+        # /reviews/[n]
 
-      expect_back_link '/replies'
-      expect_page_header 'Feedback for Charlie'
-      expect_no_tabs
-      expect_page_subheader 'Given by you'
+        create :submitted_review,
+          author_email: me.email,
+          subject: direct_report
+        visit token_url(token)
+        click_link 'Feedback requests'
+        click_link 'View feedback'
+
+        expect_back_link '/replies'
+        expect_page_header 'Feedback for Charlie'
+        expect_no_tabs
+        expect_page_subheader 'Given by you'
+      end
     end
 
     context 'After the end of the review period' do
-      scenario 'Viewing reviews I have received', closed_review_period: true do
+      before do
+        close_review_period
+      end
+
+      scenario 'Viewing reviews I have received' do
         # /results/reviews
 
         create :submitted_review, subject: me, author_name: 'Momotaro'
@@ -154,7 +164,7 @@ feature 'Navigating between sections of the site' do
         expect_page_subheader 'All your feedback'
       end
 
-      scenario 'Visiting dashboard for direct reports', closed_review_period: true do
+      scenario 'Visiting dashboard for direct reports' do
         # /results/users
 
         visit token_url(token)
@@ -166,7 +176,7 @@ feature 'Navigating between sections of the site' do
         expect_page_subheader 'Feedback for your direct reports'
       end
 
-      scenario 'Viewing reviews for a direct report', closed_review_period: true do
+      scenario 'Viewing reviews for a direct report' do
         # /results/users/[n]/reviews
 
         create :submitted_review, subject: direct_report, author_name: 'Momotaro'

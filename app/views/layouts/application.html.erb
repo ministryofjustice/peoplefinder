@@ -1,6 +1,6 @@
 <% content_for :head do %>
-  <%= javascript_include_tag "application" %>
-  <%= stylesheet_link_tag "application", media: :all %>
+  <%= javascript_include_tag 'application' %>
+  <%= stylesheet_link_tag 'application', media: :all %>
 <% end %>
 
 <% content_for :content do %>
@@ -21,6 +21,8 @@
           <%= yield :top_right %>
         </div>
 
+        <%= render partial: 'shared/time_left' %>
+
         <h1>
           <%= content_for?(:page_title) ? yield(:page_title) : app_name %>
         </h1>
@@ -33,6 +35,9 @@
   </div>
 <% end %>
 
-<%= render partial: "shared/loginout" %>
 
-<%= render template: "layouts/moj_internal_template" %>
+
+<%= render 'shared/loginout' %>
+<%= render 'shared/ga' %>
+
+<%= render template: 'layouts/moj_internal_template' %>

@@ -4,6 +4,7 @@ feature 'Getting feedback' do
   let(:me) { create(:user, manager: create(:user)) }
 
   before do
+    open_review_period
     token = create(:token, user: me)
     visit token_path(token)
   end

@@ -1,11 +1,11 @@
 module SpecSupport
   module ReviewPeriod
-    RSpec.configure do |config|
-      config.around :each, closed_review_period: true do |example|
-        Setting[:review_period] = 'closed'
-        example.run
-        Setting[:review_period] = 'open'
-      end
+    def close_review_period
+      ::ReviewPeriod.closes_at = Time.now - 600
+    end
+
+    def open_review_period
+      ::ReviewPeriod.closes_at = Time.now + 600
     end
   end
 end

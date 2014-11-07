@@ -45,6 +45,10 @@ Style/MethodLength:
   Exclude:
     - 'spec/**/*'
 
+# Groups of three is not always the right thing for numeric literals
+Style/NumericLiterals:
+  Enabled: false
+
 # Percent-formatting and hash interpolation both have their place. Don't
 # enforce any particular one.
 Style/StringLiterals:

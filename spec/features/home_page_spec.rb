@@ -1,6 +1,10 @@
 require 'rails_helper'
 
 feature 'Home page' do
+  before do
+    open_review_period
+  end
+
   context 'When the review period is open' do
     scenario 'An administrator visiting the home page' do
       log_in_as create(:admin_user)

@@ -61,7 +61,7 @@ private
   end
 
   def review_period_closed?
-    ReviewPeriod.instance.closed?
+    ReviewPeriod.closed?
   end
   helper_method :review_period_closed?
 

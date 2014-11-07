@@ -1,9 +1,12 @@
 require 'rails_helper'
 RSpec.describe SubmissionsController, type: :controller do
-
   let(:author) { create(:user) }
   let!(:submission) { create(:started_review, author: author) }
   let(:valid_attributes) { attributes_for(:submitted_review) }
+
+  before do
+    open_review_period
+  end
 
   describe 'GET edit' do
     context 'with an authenticated sesssion' do

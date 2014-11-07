@@ -4,6 +4,7 @@ feature 'Responding to feedback requests' do
   let(:token) { review.tokens.create }
 
   before do
+    open_review_period
     visit token_path(token)
   end
 

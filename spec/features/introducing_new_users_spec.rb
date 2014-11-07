@@ -1,6 +1,9 @@
 require 'rails_helper'
 
 feature 'Introducing new users to the system' do
+  before do
+    open_review_period
+  end
 
   let(:user) { create(:user, manager: create(:user)) }
 
