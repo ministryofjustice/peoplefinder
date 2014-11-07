@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
   root "home#index"
 
+  get 'ping' => 'ping#index'
+
   get "/go/:id", to: "tokens#show", as: :token
 
   resource :login, only: [:new, :create, :destroy]

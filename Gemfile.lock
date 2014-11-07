@@ -138,6 +138,10 @@ GEM
       celluloid (>= 0.15.2)
       rb-fsevent (>= 0.9.3)
       rb-inotify (>= 0.9)
+    logstash-event (1.1.5)
+    logstasher (0.6.1)
+      logstash-event (~> 1.1.0)
+      request_store
     lumberjack (1.0.9)
     mail (2.6.1)
       mime-types (>= 1.16, < 3)
@@ -197,6 +201,7 @@ GEM
     recipient_interceptor (0.1.2)
       mail
     ref (1.0.5)
+    request_store (1.1.0)
     rspec (3.0.0)
       rspec-core (~> 3.0.0)
       rspec-expectations (~> 3.0.0)
@@ -307,6 +312,7 @@ DEPENDENCIES
   jshint!
   konacha
   launchy
+  logstasher
   mail
   minitest
   moj_internal_template!

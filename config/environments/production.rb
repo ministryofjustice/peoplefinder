@@ -31,6 +31,11 @@ Rails.application.configure do
   # Set to :debug to see everything in the log.
   config.log_level = :info
 
+  # Enable serving of images, stylesheets, and JavaScripts from an asset server.
+  if ENV['ASSET_HOST']
+    config.action_controller.asset_host = ENV['ASSET_HOST']
+  end
+
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
   # the I18n.default_locale when a translation cannot be found).
   config.i18n.fallbacks = true
@@ -47,17 +52,17 @@ Rails.application.configure do
   config.noreply_email = ENV.fetch('EMAIL_NOREPLY_ADDRESS')
 
   config.action_mailer.default_url_options = {
-    host: ENV.fetch('HOST')
+    host: ENV['SENDING_HOST'] || ENV['ACTION_MAILER_DEFAULT_URL']
   }
 
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-    address: ENV.fetch('SMTP_ADDRESS'),
-    port: ENV.fetch('SMTP_PORT', 587),
-    domain: ENV.fetch('SMTP_DOMAIN'),
-    user_name: ENV.fetch('SMTP_USERNAME'),
-    password: ENV.fetch('SMTP_PASSWORD'),
-    authentication: 'plain',
+    address: ENV['SMTP_HOSTNAME'] || 'smtp.sendgrid.net',
+    port: ENV['SMTP_PORT'] || '587',
+    authentication: :login,
+    user_name: ENV['SMTP_USERNAME'] || ENV['SENDGRID_USERNAME'],
+    password: ENV['SMTP_PASSWORD'] || ENV['SENDGRID_PASSWORD'],
+    domain: ENV['SENDING_HOST'] || 'heroku.com',
     enable_starttls_auto: true
   }
 

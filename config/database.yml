@@ -80,6 +80,10 @@ test:
 #
 production:
   <<: *default
-  database: scs_appraisals_production
-  username: scs_appraisals
-  password: <%= ENV['SCS_APPRAISALS_DATABASE_PASSWORD'] %>
+  host: <%= ENV['DB_HOST'] || 'localhost' %>
+  encoding: unicode
+  username: <%= ENV['DB_USERNAME'] || 'scs_appraisals' %>
+  password: <%= ENV['DB_PASSWORD'] || ENV['SCS_APPRAISALS_DATABASE_PASSWORD'] %>
+  database: <%= ENV['DB_NAME'] || 'scs_appraisals_production' %>
+  pool: 15
+

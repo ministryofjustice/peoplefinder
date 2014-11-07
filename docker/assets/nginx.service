@@ -1,0 +1,6 @@
+#!/bin/sh
+
+# Increment restart metric
+echo "restart.assets:1|s" | nc.traditional -w 1 -u 127.0.0.1 8125
+
+exec /usr/sbin/nginx -c /etc/nginx/nginx.conf

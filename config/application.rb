@@ -1,6 +1,7 @@
 require File.expand_path('../boot', __FILE__)
 
 require 'rails/all'
+require 'action_mailer/log_subscriber'
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
@@ -8,6 +9,15 @@ Bundler.require(*Rails.groups)
 
 module SCSAppraisals
   class Application < Rails::Application
+    # Custom Logging
+    config.log_level = :info
+    config.logstasher.enabled = true
+    config.logstasher.suppress_app_log = true
+    config.logstasher.log_level = Logger::INFO
+    config.logstasher.logger_path =
+        "#{Rails.root}/log/logstash_#{Rails.env}.json"
+    config.logstasher.source = 'logstasher'
+
     def self.env_integer(key, default)
       ENV.fetch(key, default).to_i
     end
