@@ -28,7 +28,7 @@ class Peoplefinder::SearchIndex
       [[nil, query]]
     )
 
-    people_by_id = Peoplefinder::Person.find(rows.map(&:first)).map {|p| [p.id, p]}
+    people_by_id = Peoplefinder::Person.find(rows.map(&:first)).map { |p| [p.id, p] }
     people_by_id = Hash[people_by_id]
 
     rows.map { |row| people_by_id[row.first.to_i] }
