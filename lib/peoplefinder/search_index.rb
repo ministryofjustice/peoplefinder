@@ -86,18 +86,19 @@ private
       "#{person.given_name} #{person.surname}"
     end
 
-    def document_sql
-      indexable_data = [
+    def indexable_data
+      [
         [person_name, 'A'],
-        [person.location || ''],
-        [person.description || ''],
-        [person.role_and_group || ''],
-        [person.community_name || ''],
-        [person.tags || '']
-      ]
-      indexable_data.map do |data, weight|
-        BoundSql.new('setweight(to_tsvector($1, $2), $3)', [index_language, data, weight || 'D'])
-      end.inject { |memo, elem| memo.join(elem) }
+        [person.location],
+        [person.description],
+        [person.role_and_group],
+        [person.community_name],
+        [person.tags]
+      ].map { |data, weight| BoundSql.for_data(index_language, data, weight) }
+    end
+
+    def document_sql
+      BoundSql.concatenate(indexable_data)
     end
 
     class BoundSql
@@ -106,6 +107,17 @@ private
       def initialize(sql, binds)
         @sql = sql
         @binds = binds
+      end
+
+      def self.for_data(index_language, data, weight = 'D')
+        BoundSql.new(
+          'setweight(to_tsvector($1, $2), $3)',
+          [index_language, data || '', weight || 'D']
+        )
+      end
+
+      def self.concatenate(bound_sql_list, join_sql = '||')
+        bound_sql_list.inject { |memo, elem| memo.join(elem, join_sql) }
       end
 
       def sql(bind_number_offset = 0)
@@ -122,6 +134,4 @@ private
       end
     end
   end
-
-
 end
