@@ -40,6 +40,10 @@ Style/DotPosition:
 Style/FormatString:
   Enabled: false
 
+# Can be useful for long string literals, not only those containing quotes
+Style/UnneededPercentQ:
+  Enabled: false
+
 # It's not really clearer to replace every if with a return if.
 Style/GuardClause:
   Enabled: false
@@ -52,7 +56,7 @@ Metrics/LineLength:
 
 # Don't worry about long methods in specs.
 Metrics/MethodLength:
-  Max: 12
+  Max: 20
   Exclude:
     - 'spec/**/*'
 

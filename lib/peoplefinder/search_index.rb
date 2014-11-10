@@ -20,12 +20,18 @@ class Peoplefinder::SearchIndex
   end
 
   def search(query, limit: 100)
-    rows = ActiveRecord::Base.connection.select_rows(
-      "SELECT person_id, name, ts_rank(document, plainto_tsquery('english', $1)) from search_index " \
-      "WHERE document @@ plainto_tsquery('english', $1) " \
-      "ORDER BY ts_rank(document, plainto_tsquery('english', $1)) DESC",
+    rows = ActiveRecord::Base.connection.select_rows(%q{
+      SELECT
+        person_id,
+        name,
+        ts_rank(document, plainto_tsquery('english', $1))
+      FROM search_index
+      WHERE document @@ plainto_tsquery('english', $1)
+      ORDER BY ts_rank(document, plainto_tsquery('english', $1)) DESC
+      LIMIT $2
+      },
       'text search',
-      [[nil, query]]
+      [[nil, query], [nil, limit]]
     )
 
     people_by_id = Peoplefinder::Person.find(rows.map(&:first)).map { |p| [p.id, p] }
@@ -34,7 +40,6 @@ class Peoplefinder::SearchIndex
     rows.map { |row| people_by_id[row.first.to_i] }
   end
 
-private
   class ImportOne
     attr_reader :person, :index_language
 
