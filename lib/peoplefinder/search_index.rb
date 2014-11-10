@@ -21,10 +21,7 @@ class Peoplefinder::SearchIndex
 
   def search(query, limit: 100)
     rows = ActiveRecord::Base.connection.select_rows(%q{
-      SELECT
-        person_id,
-        name,
-        ts_rank(document, plainto_tsquery('english', $1))
+      SELECT person_id
       FROM search_index
       WHERE document @@ plainto_tsquery('english', $1)
       ORDER BY ts_rank(document, plainto_tsquery('english', $1)) DESC
@@ -34,10 +31,14 @@ class Peoplefinder::SearchIndex
       [[nil, query], [nil, limit]]
     )
 
-    people_by_id = Peoplefinder::Person.find(rows.map(&:first)).map { |p| [p.id, p] }
-    people_by_id = Hash[people_by_id]
+    people_ids = rows.map { |row| row.first.to_i }
+    load_people_in_order(people_ids)
+  end
 
-    rows.map { |row| people_by_id[row.first.to_i] }
+  def load_people_in_order(people_ids)
+    people = Peoplefinder::Person.find(people_ids)
+    people_by_id = Hash[people.map { |p| [p.id, p] }]
+    people_ids.map { |id| people_by_id[id] }
   end
 
   class ImportOne
