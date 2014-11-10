@@ -25,7 +25,7 @@ module Peoplefinder
   class Engine < ::Rails::Engine
     isolate_namespace Peoplefinder
 
-    config.autoload_paths << File.expand_path("..", File.dirname(__FILE__))
+    config.autoload_paths << File.expand_path('..', File.dirname(__FILE__))
     config.active_record.schema_format = :sql
   end
 end

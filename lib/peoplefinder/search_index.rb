@@ -9,8 +9,8 @@ class Peoplefinder::SearchIndex
 
   def delete(person)
     ActiveRecord::Base.connection.delete(
-      "DELETE from search_index where person_id=$1",
-      "delete person",
+      'DELETE from search_index where person_id=$1',
+      'delete person',
       [[nil, person.id]]
     )
   end
@@ -53,7 +53,7 @@ private
 
     def search_record_exists?
       ActiveRecord::Base.connection.select_one(
-        "select person_id from search_index where person_id=$1",
+        'select person_id from search_index where person_id=$1',
         nil,
         [[nil, person.id]]
       )
@@ -62,20 +62,20 @@ private
     def do_update
       binds = [person.id, person_name] + document_sql.binds
       ActiveRecord::Base.connection.update(
-        "UPDATE search_index " \
-        "SET " \
-        "name = $2, " \
+        'UPDATE search_index ' \
+        'SET ' \
+        'name = $2, ' \
         "document = #{document_sql.sql(2)} " \
-        "WHERE person_id = $1",
-        "update search index",
+        'WHERE person_id = $1',
+        'update search index',
         binds.map { |b| [nil, b] }
       )
     end
 
     def do_insert
       ActiveRecord::Base.connection.insert(
-        "INSERT INTO search_index (person_id, name, document) " \
-        "VALUES " \
+        'INSERT INTO search_index (person_id, name, document) ' \
+        'VALUES ' \
         "($1, $2, #{document_sql.sql(2)})",
         nil, nil, nil, nil,
         ([person.id, person_name] + document_sql.binds).map { |b| [nil, b] }
@@ -89,14 +89,14 @@ private
     def document_sql
       indexable_data = [
         [person_name, 'A'],
-        [person.location || ""],
-        [person.description || ""],
-        [person.role_and_group || ""],
-        [person.community_name || ""],
-        [person.tags || ""]
+        [person.location || ''],
+        [person.description || ''],
+        [person.role_and_group || ''],
+        [person.community_name || ''],
+        [person.tags || '']
       ]
       indexable_data.map do |data, weight|
-        BoundSql.new("setweight(to_tsvector($1, $2), $3)", [index_language, data, weight || 'D'])
+        BoundSql.new('setweight(to_tsvector($1, $2), $3)', [index_language, data, weight || 'D'])
       end.inject { |memo, elem| memo.join(elem) }
     end
 
@@ -110,11 +110,11 @@ private
 
       def sql(bind_number_offset = 0)
         @sql.gsub(/\$([0-9]+)/) do |_|
-          "$" + ($1.to_i + bind_number_offset).to_s
+          '$' + ($1.to_i + bind_number_offset).to_s
         end
       end
 
-      def join(other, join_sql = "||")
+      def join(other, join_sql = '||')
         BoundSql.new(
           self.sql + join_sql + other.sql(self.binds.size),
           self.binds + other.binds
