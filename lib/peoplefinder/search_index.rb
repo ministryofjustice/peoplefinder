@@ -127,7 +127,7 @@ class Peoplefinder::SearchIndex
 
       def sql(bind_number_offset = 0)
         @sql.gsub(/\$([0-9]+)/) do |_|
-          '$' + ($1.to_i + bind_number_offset).to_s
+          '$' + (Regexp.last_match[1].to_i + bind_number_offset).to_s
         end
       end
 
