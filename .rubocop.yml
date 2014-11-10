@@ -48,6 +48,10 @@ Style/UnneededPercentQ:
 Style/GuardClause:
   Enabled: false
 
+# Really? no.
+Style/SingleLineBlockParams:
+  Enabled: false
+
 # Allow long lines in specs, as it's almost impossible to fit RSpec's
 # expectations into 80 characters.
 Metrics/LineLength:
