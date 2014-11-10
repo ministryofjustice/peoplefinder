@@ -52,6 +52,11 @@ Style/GuardClause:
 Style/SingleLineBlockParams:
   Enabled: false
 
+# I think sometimes explicitly mentioning self, even when redundant, makes
+# the code clearer
+Style/RedundantSelf:
+  Enabled: false
+
 # Allow long lines in specs, as it's almost impossible to fit RSpec's
 # expectations into 80 characters.
 Metrics/LineLength:
