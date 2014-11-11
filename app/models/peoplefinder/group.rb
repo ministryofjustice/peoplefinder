@@ -81,7 +81,7 @@ class Peoplefinder::Group < ActiveRecord::Base
 
   def name_and_sequence
     slug = name.to_param
-    sequence = Peoplefinder::Group.where("slug like '#{slug}-%'").count + 2
+    sequence = Peoplefinder::Group.where('slug like ?', "#{slug}-%").count + 2
     "#{slug}-#{sequence}"
   end
 
