@@ -10,7 +10,7 @@ module Peoplefinder
     def govspeak(source)
       options = { header_offset: 2 }
       doc = Govspeak::Document.new(source, options)
-      doc.to_html.html_safe
+      doc.to_sanitized_html.html_safe
     end
 
     def breadcrumbs(items)
@@ -37,7 +37,7 @@ module Peoplefinder
     def page_title
       (
         [@page_title] << Rails.configuration.app_title
-      ).compact.join(' - ').html_safe
+      ).compact.join(' - ')
     end
 
   private
