@@ -37,7 +37,7 @@ module Peoplefinder
     def page_title
       (
         [@page_title] << Rails.configuration.app_title
-      ).compact.join(' - ').html_safe
+      ).compact.join(' - ')
     end
 
   private
