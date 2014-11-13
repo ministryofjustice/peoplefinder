@@ -2,8 +2,21 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   before_action :ensure_user
   before_action :check_review_period_is_open
+  before_action :tell_browser_not_to_cache
 
 private
+
+  def tell_browser_not_to_cache
+    response.headers["Last-Modified"] = Time.now.httpdate
+    response.headers["Expires"] = '0'
+    # HTTP 1.0
+    response.headers["Pragma"] = "no-cache"
+    # HTTP 1.1 'pre-check=0, post-check=0' (IE specific)
+    response.headers["Cache-Control"] = %w[
+      no-store no-cache must-revalidate max-age=0
+      pre-check=0 post-check=0
+    ].join(', ')
+  end
 
   def scoped_by_subject?
     params[:user_id].present?
