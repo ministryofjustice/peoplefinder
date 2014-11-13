@@ -340,4 +340,35 @@ h4 {
   }
 }
 
+.review-period-time-left {
+  height: 45px;
+  margin-top: 30px;
+}
+
+.review-period-time-left .inner {
+  background-color: rgba(40, 161, 151, 0.15);
+  background-image: image-url('clock_icon.png');
+  background-repeat: no-repeat;
+  background-position: 10px 10px;
+  border-left: 4px solid rgba(40, 161, 151, 1);
+  font-size: 19px;
+  padding: 10px 10px 10px 46px;
+  float: right;
+
+  strong {
+    font-weight: bold
+  }
+}
+
+@media only screen and (-webkit-min-device-pixel-ratio: 2) {
+  .review-period-time-left .inner {
+    background-image: image-url('clock_icon_2x.png');
+  }
+}
+
+.review-period-time-left.last-few-days .inner {
+  background-color: rgba(223, 48, 52, 0.15);
+  border-left: 4px solid rgba(223, 48, 52, 1);
+}
+
 @import 'print';
