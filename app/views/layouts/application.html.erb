@@ -35,7 +35,9 @@
   </div>
 <% end %>
 
-
+<% content_for :footer_support_links do %>
+  <%= render partial: 'shared/footer' %>
+<% end %>
 
 <%= render 'shared/loginout' %>
 <%= render 'shared/ga' %>

@@ -125,6 +125,9 @@ en:
     boolean:
       'true': 'Yes'
       'false': 'No'
+    footer: |
+      * [Terms and conditions](/terms)
+      * Built by [MOJ Digital Services](https://mojdigital.blog.gov.uk/)
   admin:
     password_resets:
       new:

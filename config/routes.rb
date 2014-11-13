@@ -34,7 +34,7 @@ Rails.application.routes.draw do
     end
   end
 
-  %i[ leadership_model moj_story ].each do |page|
+  %i[ leadership_model moj_story terms ].each do |page|
     get page.to_s.gsub(/_/, '-'), to: 'pages#show', id: page, as: page
   end
 end

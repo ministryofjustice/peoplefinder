@@ -102,4 +102,16 @@ feature 'Submitting feedback' do
     click_link 'Back'
     expect(page).to have_link('MOJ Story', href: moj_story_path)
   end
+
+  scenario 'View the terms and conditions' do
+    visit token_path(token)
+
+    within('footer') do
+      expect(page).to have_text('Terms and conditions')
+    end
+
+    click_link 'Terms and conditions'
+    expect(page).to have_text('Terms and conditions and privacy policy')
+  end
+
 end
