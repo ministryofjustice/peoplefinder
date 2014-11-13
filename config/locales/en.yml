@@ -86,14 +86,6 @@ en:
       show:
         community: Community
         community_unset: Not specified
-    helpers:
-      submit:
-        person:
-          create: "Create"
-          update: "Update"
-        group:
-          create: "Create"
-          update: "Update"
     reminder_mailer:
       inadequate_profile:
         subject: "Reminder: update your profile today"
@@ -152,3 +144,12 @@ en:
         skills_and_expertise_hint: "You can add tags to your profile to allow people to find you based on<br/>your specific skills or expertise. Add them using the field below and<br/>remove them at any time with the 'X'."
         team_deletable: "Note that team deletion cannot be undone."
         team_not_deletable: "Team deletion is only possible if there are no people associated with it."
+
+  helpers:
+    submit:
+      person:
+        create: "Save"
+        update: "Save"
+      group:
+        create: "Save"
+        update: "Save"

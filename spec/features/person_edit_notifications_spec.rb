@@ -11,7 +11,7 @@ feature 'Person edit notifications' do
     fill_in 'First name', with: 'Bob'
     fill_in 'Surname', with: 'Smith'
     fill_in 'Email', with: 'bob.smith@digital.justice.gov.uk'
-    expect { click_button 'Create' }.to change { ActionMailer::Base.deliveries.count }.by(1)
+    expect { click_button 'Save' }.to change { ActionMailer::Base.deliveries.count }.by(1)
 
     expect(last_email.subject).to eq('A new profile on MOJ People Finder has been created for you')
 
@@ -25,7 +25,7 @@ feature 'Person edit notifications' do
     fill_in 'First name', with: 'Bob'
     fill_in 'Surname', with: 'Smith'
     fill_in 'Email', with: 'test.user@digital.justice.gov.uk'
-    expect { click_button 'Create' }.not_to change { ActionMailer::Base.deliveries.count }
+    expect { click_button 'Save' }.not_to change { ActionMailer::Base.deliveries.count }
   end
 
   scenario 'Creating a person with email from invalid domain' do
@@ -33,7 +33,7 @@ feature 'Person edit notifications' do
 
     fill_in 'Surname', with: 'Smith'
     fill_in 'Email', with: 'test.user@something-else.example.com'
-    expect { click_button 'Create' }.not_to change { ActionMailer::Base.deliveries.count }
+    expect { click_button 'Save' }.not_to change { ActionMailer::Base.deliveries.count }
   end
 
   scenario 'Creating a person with invalid email' do
@@ -42,7 +42,7 @@ feature 'Person edit notifications' do
     fill_in 'First name', with: 'Bob'
     fill_in 'Surname', with: 'Smith'
     fill_in 'Email', with: 'test.user'
-    expect { click_button 'Create' }.not_to change { ActionMailer::Base.deliveries.count }
+    expect { click_button 'Save' }.not_to change { ActionMailer::Base.deliveries.count }
   end
 
   scenario 'Creating a person with nil email' do
@@ -50,7 +50,7 @@ feature 'Person edit notifications' do
 
     fill_in 'First name', with: 'Bob'
     fill_in 'Surname', with: 'Smith'
-    expect { click_button 'Create' }.not_to change { ActionMailer::Base.deliveries.count }
+    expect { click_button 'Save' }.not_to change { ActionMailer::Base.deliveries.count }
   end
 
   scenario 'Deleting a person with different email' do
@@ -91,7 +91,7 @@ feature 'Person edit notifications' do
     visit person_path(person)
     click_link 'Edit this profile'
     fill_in 'Surname', with: 'Smelly Pants'
-    expect { click_button 'Update' }.to change { ActionMailer::Base.deliveries.count }.by(1)
+    expect { click_button 'Save' }.to change { ActionMailer::Base.deliveries.count }.by(1)
 
     expect(last_email.subject).to eq('Your profile on MOJ People Finder has been edited')
 
@@ -104,7 +104,7 @@ feature 'Person edit notifications' do
     visit person_path(person)
     click_link 'Edit this profile'
     fill_in 'Surname', with: 'Smelly Pants'
-    expect { click_button 'Update' }.not_to change { ActionMailer::Base.deliveries.count }
+    expect { click_button 'Save' }.not_to change { ActionMailer::Base.deliveries.count }
   end
 
   scenario 'Editing a person with same email' do
@@ -112,7 +112,7 @@ feature 'Person edit notifications' do
     visit person_path(person)
     click_link 'Edit this profile'
     fill_in 'Surname', with: 'Smelly Pants'
-    expect { click_button 'Update' }.not_to change { ActionMailer::Base.deliveries.count }
+    expect { click_button 'Save' }.not_to change { ActionMailer::Base.deliveries.count }
   end
 
   scenario 'Editing a person with nil email' do
@@ -120,7 +120,7 @@ feature 'Person edit notifications' do
     visit person_path(person)
     click_link 'Edit this profile'
     fill_in 'Surname', with: 'Smelly Pants'
-    expect { click_button 'Update' }.not_to change { ActionMailer::Base.deliveries.count }
+    expect { click_button 'Save' }.not_to change { ActionMailer::Base.deliveries.count }
   end
 
   scenario 'Editing a person with invalid email' do
@@ -128,7 +128,7 @@ feature 'Person edit notifications' do
     visit person_path(person)
     click_link 'Edit this profile'
     fill_in 'Surname', with: 'Smelly Pants'
-    expect { click_button 'Update' }.not_to change { ActionMailer::Base.deliveries.count }
+    expect { click_button 'Save' }.not_to change { ActionMailer::Base.deliveries.count }
   end
 
   scenario 'Editing a person from same email to different email' do
@@ -136,7 +136,7 @@ feature 'Person edit notifications' do
     visit person_path(person)
     click_link 'Edit this profile'
     fill_in 'Email', with: 'bob.smith@digital.justice.gov.uk'
-    expect { click_button 'Update' }.to change { ActionMailer::Base.deliveries.count }.by(1)
+    expect { click_button 'Save' }.to change { ActionMailer::Base.deliveries.count }.by(1)
 
     expect(last_email.subject).to eq('This email address has been added to a profile on MOJ People Finder')
 
@@ -149,7 +149,7 @@ feature 'Person edit notifications' do
     visit person_path(person)
     click_link 'Edit this profile'
     fill_in 'Email', with: 'test.user@digital.justice.gov.uk'
-    expect { click_button 'Update' }.to change { ActionMailer::Base.deliveries.count }.by(1)
+    expect { click_button 'Save' }.to change { ActionMailer::Base.deliveries.count }.by(1)
 
     expect(last_email.subject).to eq('This email address has been removed from a profile on MOJ People Finder')
 
@@ -162,7 +162,7 @@ feature 'Person edit notifications' do
     visit person_path(person)
     click_link 'Edit this profile'
     fill_in 'Email', with: 'bob.smithe@digital.justice.gov.uk'
-    expect { click_button 'Update' }.to change { ActionMailer::Base.deliveries.count }.by(2)
+    expect { click_button 'Save' }.to change { ActionMailer::Base.deliveries.count }.by(2)
   end
 
   scenario 'Editing a person from invalid email to invalid email' do
@@ -170,7 +170,7 @@ feature 'Person edit notifications' do
     visit person_path(person)
     click_link 'Edit this profile'
     fill_in 'Email', with: 'test.user'
-    expect { click_button 'Update' }.not_to change { ActionMailer::Base.deliveries.count }
+    expect { click_button 'Save' }.not_to change { ActionMailer::Base.deliveries.count }
   end
 
   scenario 'Verifying the link to bob that is render in the emails' do

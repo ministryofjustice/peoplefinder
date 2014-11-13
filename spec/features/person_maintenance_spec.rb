@@ -13,13 +13,13 @@ feature 'Person maintenance' do
     expect(page).to have_title("New profile - #{ app_title }")
     fill_in_complete_profile_details
 
-    click_button 'Create'
+    click_button 'Save'
     check_creation_of_profile_details
   end
 
   scenario 'Creating an invalid person' do
     visit new_person_path
-    click_button 'Create'
+    click_button 'Save'
     expect(page).to have_text('Please review the problems')
     within('div.person_surname') do
       expect(page).to have_text('can\'t be blank')
@@ -35,7 +35,7 @@ feature 'Person maintenance' do
     visit new_person_path
     fill_in_complete_profile_details
 
-    click_button 'Create'
+    click_button 'Save'
 
     expect(page).to have_text('1 result found')
     click_button 'Continue'
@@ -50,7 +50,7 @@ feature 'Person maintenance' do
 
     fill_in 'First name', with: person_attributes[:given_name]
     fill_in 'Surname', with: person_attributes[:surname]
-    click_button 'Create'
+    click_button 'Save'
 
     click_link 'Return to home page'
     expect(Peoplefinder::Person.where(surname: person_attributes[:surname]).count).to eql(1)
@@ -64,7 +64,7 @@ feature 'Person maintenance' do
 
     fill_in 'First name', with: person_attributes[:given_name]
     fill_in 'Surname', with: person_attributes[:surname]
-    click_button 'Update'
+    click_button 'Save'
 
     expect(page).to have_title("Duplicate names found - #{ app_title }")
     click_button 'Continue'
@@ -94,7 +94,7 @@ feature 'Person maintenance' do
     expect(page).to have_title("Edit profile - #{ app_title }")
     fill_in 'First name', with: 'Jane'
     fill_in 'Surname', with: 'Doe'
-    click_button 'Update'
+    click_button 'Save'
 
     expect(page).to have_content('Updated Jane Doe’s profile')
     within('h1') do
@@ -106,7 +106,7 @@ feature 'Person maintenance' do
     visit person_path(create(:person, person_attributes))
     click_link 'Edit this profile'
     fill_in 'Surname', with: ''
-    click_button 'Update'
+    click_button 'Save'
 
     expect(page).to have_text('Please review the problems')
     within('div.person_surname') do
@@ -119,7 +119,7 @@ feature 'Person maintenance' do
     fill_in 'Surname', with: person_attributes[:surname]
     attach_file 'person[image]', sample_image
     expect(page).not_to have_link('Crop image')
-    click_button 'Create'
+    click_button 'Save'
 
     person = Peoplefinder::Person.find_by_surname(person_attributes[:surname])
     visit person_path(person)
@@ -190,7 +190,7 @@ feature 'Person maintenance' do
     expect(page).to have_text('You are currently editing this page')
 
     fill_in 'Surname', with: person_attributes[:surname]
-    click_button 'Create'
+    click_button 'Save'
     expect(page).to have_selector('.search-box')
     expect(page).not_to have_text('You are currently editing this page')
 
@@ -226,7 +226,7 @@ feature 'Person maintenance' do
     fill_in('person_secondary_phone_number', with: 'my-secondary-phone')
 
     check('No phone number')
-    click_button 'Update'
+    click_button 'Save'
     expect(Peoplefinder::Person.last.primary_phone_number).to be_blank
     expect(Peoplefinder::Person.last.secondary_phone_number).to be_blank
 
@@ -259,7 +259,7 @@ feature 'Person maintenance' do
     visit new_person_path
     fill_in 'Surname', with: 'Smith'
     fill_in 'person_tags', with: 'ruby,cakes and bakes'
-    click_button 'Create'
+    click_button 'Save'
 
     expect(page).to have_text('Skills and expertise')
     within '.tags' do
@@ -291,7 +291,7 @@ feature 'Person maintenance' do
     page.execute_script("i.val('washing dishes').trigger('keydown');")
     find('.select2-results li:first-child').click
 
-    click_button 'Update'
+    click_button 'Save'
     within '.tags' do
       expect(page).not_to have_text('Cooking')
       expect(page).to have_text('Baking')

@@ -10,7 +10,7 @@ feature 'Audit trail' do
       person = create(:person, surname: 'original surname')
       visit edit_person_path(person)
       fill_in 'Surname', with: 'something else'
-      click_button 'Update'
+      click_button 'Save'
 
       visit '/audit_trail'
       expect(page).to have_text('Peoplefinder::Person Edited')
@@ -28,7 +28,7 @@ feature 'Audit trail' do
       visit new_person_path
       fill_in 'First name', with: 'Jon'
       fill_in 'Surname', with: 'Smith'
-      click_button 'Create'
+      click_button 'Save'
 
       visit '/audit_trail'
 
@@ -63,7 +63,7 @@ feature 'Audit trail' do
       group = create(:group, name: 'original name')
       visit edit_group_path(group)
       fill_in 'Team name', with: 'something else'
-      click_button 'Update'
+      click_button 'Save'
 
       visit '/audit_trail'
       expect(page).to have_text('Peoplefinder::Group Edited')
@@ -76,7 +76,7 @@ feature 'Audit trail' do
       visit new_group_path
       fill_in 'Team name', with: 'Jon'
       fill_in 'Team email address', with: 'something@example.com'
-      click_button 'Create'
+      click_button 'Save'
 
       visit '/audit_trail'
       expect(page).to have_text('New Peoplefinder::Group')
@@ -101,7 +101,7 @@ feature 'Audit trail' do
       person = create(:person)
       visit edit_person_path(person)
       attach_file('person[image]', sample_image)
-      click_button 'Update'
+      click_button 'Save'
 
       visit '/audit_trail'
       expect(page).to have_text('Peoplefinder::Person Edited')
@@ -118,7 +118,7 @@ feature 'Audit trail' do
       visit edit_person_path(person)
       click_in_org_browser 'Digital Justice'
       fill_in('Job title', with: 'Jefe')
-      click_button 'Update'
+      click_button 'Save'
 
       visit '/audit_trail'
 

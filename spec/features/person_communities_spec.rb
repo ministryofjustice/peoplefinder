@@ -13,7 +13,7 @@ feature "Communities" do
     fill_in 'First name', with: 'Jane'
     fill_in 'Surname', with: 'Doe'
     select('Advanced cybernetics', from: 'Community')
-    click_button "Create"
+    click_button 'Save'
 
     expect(page).to have_text("Jane Doe")
     expect(page).to have_text("Advanced cybernetics")

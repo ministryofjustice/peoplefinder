@@ -14,7 +14,7 @@ feature "Peoplefinder::Person maintenance" do
     fill_in 'Job title', with: 'Head Honcho'
     click_in_org_browser 'Digital Justice'
     check 'leader'
-    click_button "Create"
+    click_button 'Save'
 
     membership = Peoplefinder::Person.last.memberships.last
     expect(membership.role).to eql('Head Honcho')
@@ -30,7 +30,7 @@ feature "Peoplefinder::Person maintenance" do
     click_link 'Edit'
 
     fill_in 'Job title', with: 'Head Honcho'
-    click_button 'Update'
+    click_button 'Save'
 
     membership = Peoplefinder::Person.last.memberships.last
     expect(membership.role).to eql('Head Honcho')
@@ -51,7 +51,7 @@ feature "Peoplefinder::Person maintenance" do
       fill_in 'Job title', with: 'Talker'
     end
 
-    click_button 'Update'
+    click_button 'Save'
     expect(Peoplefinder::Person.last.memberships.length).to eql(2)
   end
 

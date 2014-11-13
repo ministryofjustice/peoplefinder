@@ -15,7 +15,7 @@ feature 'Group maintenance' do
     fill_in 'Team description', with: 'about my team'
     fill_in 'Team responsibilities (optional)', with: 'my responsibilities'
     add_team_email_address
-    click_button 'Create'
+    click_button 'Save'
 
     expect(page).to have_content('Created Ministry of Justice')
 
@@ -36,7 +36,7 @@ feature 'Group maintenance' do
     name = 'CSG'
     fill_in 'Team name', with: name
     add_team_email_address
-    click_button 'Create'
+    click_button 'Save'
 
     expect(page).to have_content('Created CSG')
 
@@ -55,7 +55,7 @@ feature 'Group maintenance' do
     name = 'Digital Services'
     fill_in 'Team name', with: name
     add_team_email_address
-    click_button 'Create'
+    click_button 'Save'
 
     expect(page).to have_content('Created Digital Services')
 
@@ -73,7 +73,7 @@ feature 'Group maintenance' do
     fill_in 'Team name', with: 'Digital Services'
     click_in_org_browser 'Corporate Services'
     add_team_email_address
-    click_button 'Create'
+    click_button 'Save'
 
     within('.breadcrumbs ol') do
       expect(page).to have_content('Corporate Services Digital Services')
@@ -117,7 +117,7 @@ feature 'Group maintenance' do
     end
 
     click_in_org_browser 'Ministry of Justice'
-    click_button 'Update'
+    click_button 'Save'
 
     expect(page).to have_content('Updated Cyberdigital Cyberservices')
     expect(page).not_to have_text('You are currently editing this page')
@@ -143,7 +143,7 @@ feature 'Group maintenance' do
     end
 
     click_in_org_browser 'Digital Services'
-    click_button 'Update'
+    click_button 'Save'
 
     group.reload
     expect(group.name).to eql(new_name)
@@ -157,7 +157,7 @@ feature 'Group maintenance' do
 
     fill_in 'Team name', with: 'Digital'
     add_team_email_address
-    click_button 'Create'
+    click_button 'Save'
     expect(page).to have_selector('.search-box')
     expect(page).not_to have_text('You are currently editing this page')
 
