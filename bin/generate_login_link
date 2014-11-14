@@ -1,0 +1,30 @@
+#!/usr/bin/env ruby
+APP_PATH = File.expand_path('../../config/application',  __FILE__)
+require_relative '../config/boot'
+require APP_PATH
+Rails.application.require_environment!
+
+USAGE = <<END
+Usage: #$0 identifer [identifer [...]]
+
+Generate login links for supplied user identifers.
+An identifier can be either a user ID or an email address.
+END
+
+host = Rails.configuration.action_mailer.default_url_options[:host]
+
+ARGV.each do |identifier|
+  case identifier
+  when /\A\d+\z/
+    constraint = { id: identifier }
+  when /@/
+    constraint = { email: identifier }
+  else
+    puts USAGE
+    exit 1
+  end
+  user = User.where(constraint).first
+  raise "Can't find user with identifier '#{identifier}'" unless user
+  token = Token.find_or_create_by(user_id: user.id)
+  puts "http://#{host}/go/#{token.value}"
+end
