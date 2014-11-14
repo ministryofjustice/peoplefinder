@@ -1,18 +1,42 @@
 $grey-background: rgba(#DEE0E2, 0.5);
 $grey-border: #BFC1C3;
 
+@-moz-keyframes fade-in-out {
+  0%  { opacity: 0; } 30%  { opacity: 1; }
+  70% { opacity: 1; } 100% { opacity: 0; }
+}
+@-webkit-keyframes fade-in-out {
+  0%  { opacity: 0; } 30%  { opacity: 1; }
+  70% { opacity: 1; } 100% { opacity: 0; }
+}
+@keyframes fade-in-out {
+  0%  { opacity: 0; } 30%  { opacity: 1; }
+  70% { opacity: 1; } 100% { opacity: 0; }
+}
+
 #flash-messages {
   .flash-message {
-    border: 1px solid black;
-    margin: 15px 0;
-    padding: 15px;
+    margin: 0 0 15px 0;
+    padding: 16px;
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
   }
   .notice {
-    background-color: #ffd;
+    background-color: #94d0cb;
   }
   .error {
     background-color: #fdd;
   }
+
+  opacity: 0;
+  height: 0;
+  position: relative;
+  top: -43px;
+
+  -moz-animation: fade-in-out 6s;
+  -webkit-animation: fade-in-out 6s;
+  animation: fade-in-out 6s;
 }
 
 input[type="radio"] {
