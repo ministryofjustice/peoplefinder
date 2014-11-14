@@ -11,20 +11,41 @@ Generate login links for supplied user identifers.
 An identifier can be either a user ID or an email address.
 END
 
-host = Rails.configuration.action_mailer.default_url_options[:host]
+def generate_link(token)
+  host = Rails.configuration.action_mailer.default_url_options[:host]
+  puts "http://#{host}/go/#{token.value}"
+end
+
+def generate_link_for_user(user)
+  generate_link Token.find_or_create_by(user_id: user.id)
+end
+
+def generate_link_for_review(review)
+  generate_link Token.find_or_create_by(review_id: review.id)
+end
+
+def fail_to_find(identifier)
+  raise "Can't find user or review with identifier '#{identifier}'"
+end
 
 ARGV.each do |identifier|
   case identifier
   when /\A\d+\z/
-    constraint = { id: identifier }
+    if (user = User.where(id: identifier).first)
+      generate_link_for_user user
+    else
+      fail_to_find identifier
+    end
   when /@/
-    constraint = { email: identifier }
+    if (user = User.where(email: identifier).first)
+      generate_link_for_user user
+    elsif (review = Review.where(author_email: identifier).first)
+      generate_link_for_review review
+    else
+      fail_to_find identifier
+    end
   else
     puts USAGE
     exit 1
   end
-  user = User.where(constraint).first
-  raise "Can't find user with identifier '#{identifier}'" unless user
-  token = Token.find_or_create_by(user_id: user.id)
-  puts "http://#{host}/go/#{token.value}"
 end
