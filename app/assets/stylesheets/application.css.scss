@@ -291,10 +291,17 @@ hr.more-space {
 }
 
 .autosave-status .saved {
-  background-image: image-url('saved_tick.gif');
+  font-weight: bold;
+  background-image: image-url('saved_tick.png');
   background-repeat: no-repeat;
   background-position: 0px 2px;
-  padding-left: 31px;
+  padding: 6px 0px 6px 41px;
+}
+
+@media only screen and (-webkit-min-device-pixel-ratio: 2) {
+  .autosave-status .saved {
+    background-image: image-url('saved_tick_2x.png');
+  }
 }
 
 ol {
