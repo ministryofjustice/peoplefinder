@@ -5,14 +5,6 @@ module Peoplefinder
     it 'returns the matching person' do
       is_expected.to eql(person)
     end
-    describe 'the person' do
-      it 'has increased login count' do
-        expect(subject.login_count).to eql(11)
-      end
-      it 'has updated time of last login' do
-        expect(subject.last_login_at).to eql(current_time)
-      end
-    end
   end
   shared_examples 'new person created' do
     it 'returns a person model' do
@@ -25,12 +17,6 @@ module Peoplefinder
       end
       it 'has correct name' do
         expect(subject.name).to eql(expected_name)
-      end
-      it 'has login count 1' do
-        expect(subject.login_count).to eql(1)
-      end
-      it 'has updated time of last login' do
-        expect(subject.last_login_at).to eql(current_time)
       end
     end
   end
@@ -51,10 +37,6 @@ module Peoplefinder
           'info' => { 'email' => 'rogue.user@example.com' }
       )
     end
-    let(:current_time) { Time.now }
-
-    before { Timecop.freeze(current_time) }
-    after { Timecop.return }
 
     describe '.from_auth_hash' do
       subject { described_class.from_auth_hash(auth_hash) }

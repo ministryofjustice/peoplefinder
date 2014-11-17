@@ -19,8 +19,7 @@ module Peoplefinder
       return forbidden unless token
 
       person = FindCreatePerson.from_token(token)
-      session['current_user_id'] = person.id
-      redirect_to_desired_path
+      login_person(person)
     end
 
   protected

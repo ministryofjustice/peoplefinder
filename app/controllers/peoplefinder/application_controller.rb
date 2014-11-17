@@ -37,6 +37,16 @@ module Peoplefinder
       redirect_to new_sessions_path
     end
 
+
+    def login_person(person)
+      person.login_count += 1
+      person.last_login_at = Time.now
+      person.save
+
+      session['current_user_id'] = person.id
+      redirect_to_desired_path
+    end
+
     def redirect_to_desired_path
       path = session.fetch(:desired_path, '/')
       session.delete :desired_path

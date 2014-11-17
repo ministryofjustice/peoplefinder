@@ -4,9 +4,9 @@ module Peoplefinder
 
     def create
       person = FindCreatePerson.from_auth_hash(auth_hash)
+
       if person
-        session['current_user_id'] = person.id
-        redirect_to_desired_path
+        login_person(person)
       else
         render :failed
       end

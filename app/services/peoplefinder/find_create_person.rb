@@ -28,11 +28,8 @@ module Peoplefinder
 
       if person.new_record?
         on_create.call(person)
+        person.save!
       end
-      person.login_count += 1
-      person.last_login_at = Time.now
-
-      person.save!
 
       person
     end
