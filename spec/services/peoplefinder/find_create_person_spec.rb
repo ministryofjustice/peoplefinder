@@ -24,12 +24,12 @@ module Peoplefinder
   RSpec.describe FindCreatePerson, type: :service do
     let(:valid_auth_hash) do
       {
-          'info' => {
-              'email' => 'example.user@digital.justice.gov.uk',
-              'first_name' => 'John',
-              'last_name' => 'Doe',
-              'name' => 'John Doe'
-          }
+        'info' => {
+          'email' => 'example.user@digital.justice.gov.uk',
+          'first_name' => 'John',
+          'last_name' => 'Doe',
+          'name' => 'John Doe'
+        }
       }
     end
     let(:rogue_auth_hash) do
@@ -43,7 +43,7 @@ module Peoplefinder
 
       context 'for an existing person' do
         let(:auth_hash) { valid_auth_hash }
-        let!(:person) { create(:person_with_multiple_logins, email: valid_auth_hash['info']['email'], surname: 'Bob')}
+        let!(:person) { create(:person_with_multiple_logins, email: valid_auth_hash['info']['email'], surname: 'Bob') }
 
         it_behaves_like 'existing person returned'
       end
@@ -65,7 +65,7 @@ module Peoplefinder
 
     describe '.from_token' do
       let(:token) { Token.create(user_email: 'aled.jones@digitial.justice.gov.uk') }
-      subject { described_class.from_token(token)}
+      subject { described_class.from_token(token) }
 
       context 'for a new person' do
         it_behaves_like 'new person created' do
@@ -75,7 +75,7 @@ module Peoplefinder
       end
 
       context 'for an existing person' do
-        let!(:person) { create(:person_with_multiple_logins, given_name: 'aled', surname: 'jones', email: 'aled.jones@digitial.justice.gov.uk')}
+        let!(:person) { create(:person_with_multiple_logins, given_name: 'aled', surname: 'jones', email: 'aled.jones@digitial.justice.gov.uk') }
 
         it_behaves_like 'existing person returned'
       end

@@ -37,7 +37,6 @@ module Peoplefinder
       redirect_to new_sessions_path
     end
 
-
     def login_person(person)
       person.login_count += 1
       person.last_login_at = Time.now
