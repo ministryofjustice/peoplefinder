@@ -22,6 +22,11 @@ FactoryGirl.define do
     sequence :surname do |n|
       'Surname-%04d' % n
     end
+
+    factory :person_with_multiple_logins do
+      login_count 10
+      last_login_at { 1.day.ago }
+    end
   end
 
   factory :community, class: 'Peoplefinder::Community' do

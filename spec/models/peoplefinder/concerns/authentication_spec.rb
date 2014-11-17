@@ -1,63 +1,103 @@
 require 'rails_helper'
 
-RSpec.describe 'Authentication' do # rubocop:disable RSpec/DescribeClass
-  context 'via auth hash' do
-    it 'creates a new person from a valid auth_hash' do
-      person = person_from_auth_hash(valid_auth_hash)
-      expect(person).not_to be_nil
-      expect(person.email).to eql('example.user@digital.justice.gov.uk')
-      expect(person.name).to eql('John Doe')
+module Peoplefinder
+  shared_examples 'existing person returned' do
+    it 'returns the matching person' do
+      is_expected.to eql(person)
+    end
+    describe 'the person' do
+      it 'has increased login count' do
+        expect(subject.login_count).to eql(11)
+      end
+      it 'has updated time of last login' do
+        expect(subject.last_login_at).to eql(current_time)
+      end
+    end
+  end
+  shared_examples 'new person created' do
+    it 'returns a person model' do
+      is_expected.to be_a(Person)
     end
 
-    it 'returns an existing person called Bob from a valid auth_hash' do
-      Peoplefinder::Person.create(email: valid_auth_hash['info']['email'], surname: 'Bob')
-
-      person = person_from_auth_hash(valid_auth_hash)
-      expect(person.email).to eql('example.user@digital.justice.gov.uk')
-      expect(person.name).to eql('Bob')
-    end
-
-    it 'returns nil from an auth_hash with the wrong domain' do
-      person = person_from_auth_hash(rogue_auth_hash)
-      expect(person).to be_nil
+    describe 'the person' do
+      it 'has correct e-mail address'  do
+        expect(subject.email).to eql(expected_email)
+      end
+      it 'has correct name' do
+        expect(subject.name).to eql(expected_name)
+      end
+      it 'has login count 1' do
+        expect(subject.login_count).to eql(1)
+      end
+      it 'has updated time of last login' do
+        expect(subject.last_login_at).to eql(current_time)
+      end
     end
   end
 
-  context 'via token' do
-    let(:token) { Peoplefinder::Token.create(user_email: 'aled.jones@digitial.justice.gov.uk') }
-    let(:person) { Peoplefinder::Person.from_token(token) }
+  describe 'Authentication' do # rubocop:disable RSpec/DescribeClass
 
-    it 'creates a new person from a valid token' do
-      expect(person.email).to eql(token.user_email)
-      expect(person.name).to eql('Aled Jones')
-    end
-
-    it 'returns an existing person called aled jones from a valid token' do
-      aled_jones = create(:person,
-        given_name: 'aled', surname: 'jones', email: 'aled.jones@digitial.justice.gov.uk')
-
-      expect(person).to eql(aled_jones)
-    end
-  end
-
-  def valid_auth_hash
-    {
-      'info' => {
-        'email' => 'example.user@digital.justice.gov.uk',
-        'first_name' => 'John',
-        'last_name' => 'Doe',
-        'name' => 'John Doe'
+    let(:valid_auth_hash) do
+      {
+          'info' => {
+              'email' => 'example.user@digital.justice.gov.uk',
+              'first_name' => 'John',
+              'last_name' => 'Doe',
+              'name' => 'John Doe'
+          }
       }
-    }
-  end
+    end
+    let(:rogue_auth_hash) do
+      valid_auth_hash.deep_merge(
+          'info' => { 'email' => 'rogue.user@example.com' }
+      )
+    end
+    let(:current_time) { Time.now }
 
-  def rogue_auth_hash
-    valid_auth_hash.deep_merge(
-      'info' => { 'email' => 'rogue.user@example.com' }
-    )
-  end
+    before { Timecop.freeze(current_time) }
+    after { Timecop.return }
 
-  def person_from_auth_hash(auth_hash)
-    Peoplefinder::Person.from_auth_hash(auth_hash)
+    describe '#from_auth_hash' do
+      subject { Person.from_auth_hash(auth_hash) }
+
+      context 'for an existing person' do
+        let(:auth_hash) { valid_auth_hash }
+        let!(:person) { create(:person_with_multiple_logins, email: valid_auth_hash['info']['email'], surname: 'Bob')}
+
+        it_behaves_like 'existing person returned'
+      end
+
+      context 'for a new person' do
+        let(:auth_hash) { valid_auth_hash }
+
+        it_behaves_like 'new person created' do
+          let(:expected_email) { 'example.user@digital.justice.gov.uk' }
+          let(:expected_name) { 'John Doe' }
+        end
+      end
+
+      context 'for invalid email' do
+        let(:auth_hash) { rogue_auth_hash }
+        it { is_expected.to be_nil }
+      end
+    end
+
+    describe '#from_token' do
+      let(:token) { Token.create(user_email: 'aled.jones@digitial.justice.gov.uk') }
+      subject { Person.from_token(token)}
+
+      context 'for a new person' do
+        it_behaves_like 'new person created' do
+          let(:expected_email) { token.user_email }
+          let(:expected_name) { 'Aled Jones' }
+        end
+      end
+
+      context 'for an existing person' do
+        let!(:person) { create(:person_with_multiple_logins, given_name: 'aled', surname: 'jones', email: 'aled.jones@digitial.justice.gov.uk')}
+
+        it_behaves_like 'existing person returned'
+      end
+    end
   end
 end

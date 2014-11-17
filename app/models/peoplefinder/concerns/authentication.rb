@@ -1,36 +1,45 @@
 require 'peoplefinder'
 
-module Peoplefinder::Concerns::Authentication
-  extend ActiveSupport::Concern
+module Peoplefinder
+  # Todo this is not really a model concern, it should be a service or factory or alike
+  module Concerns::Authentication
+    extend ActiveSupport::Concern
 
-  included do
-    def self.from_auth_hash(auth_hash)
-      email = Peoplefinder::EmailAddress.new(auth_hash['info']['email'])
-      return unless email.valid_domain?
+    module ClassMethods
+      def from_auth_hash(auth_hash)
+        email = EmailAddress.new(auth_hash['info']['email'])
+        return unless email.valid_domain?
 
-      person = Peoplefinder::Person.from_email(email)
-      if person.new_record?
-        person.given_name = auth_hash['info']['first_name']
-        person.surname = auth_hash['info']['last_name']
-        person.save!
+        find_or_create(email) do |person|
+          person.given_name = auth_hash['info']['first_name']
+          person.surname = auth_hash['info']['last_name']
+        end
       end
-      person
-    end
 
-    def self.from_token(token)
-      email = Peoplefinder::EmailAddress.new(token.user_email)
+      def from_token(token)
+        email = EmailAddress.new(token.user_email)
 
-      person = Peoplefinder::Person.from_email(email)
-      if person.new_record?
-        person.given_name = email.inferred_first_name
-        person.surname = email.inferred_last_name
-        person.save!
+        find_or_create(email) do |person|
+          person.given_name = email.inferred_first_name
+          person.surname = email.inferred_last_name
+        end
       end
-      person
-    end
 
-    def self.from_email(email)
-      Peoplefinder::Person.where(email: email.to_s).first_or_initialize
+      private
+
+      def find_or_create(email, &on_create)
+        person = Person.where(email: email.to_s).first_or_initialize
+
+        if person.new_record?
+          on_create.call(person)
+        end
+        person.login_count += 1
+        person.last_login_at = Time.now
+
+        person.save!
+
+        person
+      end
     end
   end
 end
