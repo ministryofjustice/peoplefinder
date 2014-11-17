@@ -43,16 +43,20 @@ module Peoplefinder
       person.save
 
       session['current_user_id'] = person.id
-      redirect_to_desired_path
+      redirect_to_desired_path(person)
     end
 
-    def redirect_to_desired_path
-      path = session.fetch(:desired_path, '/')
-      session.delete :desired_path
+    def redirect_to_desired_path(person)
+      path = session.delete(:desired_path) || '/'
 
-      if path == '/' && (current_user.login_count == 1)
-        path = edit_person_path(current_user, prompt: :profile)
+      # first time or every 5 logins until incomplete
+      show_profile = (path == '/') &&
+          person.incomplete? &&
+          ((person.login_count == 1) || (person.login_count % 5 == 0))
+      if show_profile
+        path = edit_person_path(person, prompt: :profile)
       end
+
       redirect_to path
     end
 

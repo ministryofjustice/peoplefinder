@@ -5,23 +5,31 @@ feature 'Login flow' do
   let!(:department) { create(:department) }
   let(:current_time) { Time.now }
 
-  before { Timecop.freeze(current_time) }
-  after { Timecop.return }
+  let(:edit_profile_page) { Pages::EditProfile.new }
+  let(:search_page) { Pages::Search.new }
 
   scenario 'When user logs in for the first time, they are prompted to fill in their profile' do
     omni_auth_log_in_as(email)
 
-    page = Pages::EditProfile.new
-    expect(page).to be_displayed
+    expect(edit_profile_page).to be_displayed
   end
 
-  scenario 'When user logs in again, the search page is displayed' do
-    create(:person_with_multiple_logins, email: email)
+  scenario 'User is prompted to update their profile every 5 logins it their profile is incomplete' do
+    login_count = (rand(1..10) * 5) - 1
+    create(:person_with_multiple_logins, email: email, login_count: login_count)
 
     omni_auth_log_in_as(email)
 
-    page = Pages::Search.new
-    expect(page).to be_displayed
+    expect(edit_profile_page).to be_displayed
+  end
+
+  scenario 'When user logs in other than 1st or every 5th time, the search page is displayed' do
+    login_count = (rand(0..10) * 5 + rand(1..4)) - 1
+    create(:person_with_multiple_logins, email: email, login_count: login_count)
+
+    omni_auth_log_in_as(email)
+
+    expect(search_page).to be_displayed
   end
 
   scenario 'Login counter is updated every time user logs in' do
@@ -37,7 +45,9 @@ feature 'Login flow' do
   scenario 'Last login date is updated every time user logs in' do
     person = create(:person_with_multiple_logins, email: email, last_login_at: 5.days.ago)
 
-    omni_auth_log_in_as(email)
+    Timecop.freeze(current_time) do
+      omni_auth_log_in_as(email)
+    end
 
     person.reload
     expect(person.last_login_at).to eql(current_time)
