@@ -35,8 +35,7 @@ module Peoplefinder
     end
   end
 
-  describe 'Authentication' do # rubocop:disable RSpec/DescribeClass
-
+  RSpec.describe FindCreatePerson, type: :service do
     let(:valid_auth_hash) do
       {
           'info' => {
@@ -57,8 +56,8 @@ module Peoplefinder
     before { Timecop.freeze(current_time) }
     after { Timecop.return }
 
-    describe '#from_auth_hash' do
-      subject { Person.from_auth_hash(auth_hash) }
+    describe '.from_auth_hash' do
+      subject { described_class.from_auth_hash(auth_hash) }
 
       context 'for an existing person' do
         let(:auth_hash) { valid_auth_hash }
@@ -82,9 +81,9 @@ module Peoplefinder
       end
     end
 
-    describe '#from_token' do
+    describe '.from_token' do
       let(:token) { Token.create(user_email: 'aled.jones@digitial.justice.gov.uk') }
-      subject { Person.from_token(token)}
+      subject { described_class.from_token(token)}
 
       context 'for a new person' do
         it_behaves_like 'new person created' do
@@ -99,5 +98,6 @@ module Peoplefinder
         it_behaves_like 'existing person returned'
       end
     end
+
   end
 end
