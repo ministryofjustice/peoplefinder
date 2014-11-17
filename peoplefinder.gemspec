@@ -62,5 +62,6 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'shoulda-matchers'
   s.add_development_dependency 'simplecov', '~> 0.7.1'
   s.add_development_dependency 'simplecov-rcov'
+  s.add_development_dependency 'site_prism'
   s.add_development_dependency 'timecop'
 end

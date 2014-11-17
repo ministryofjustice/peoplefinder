@@ -41,10 +41,9 @@ module Peoplefinder
       path = session.fetch(:desired_path, '/')
       session.delete :desired_path
 
-      if path == '/' && current_user.incomplete?
+      if path == '/' && (current_user.login_count == 1)
         path = edit_person_path(current_user, prompt: :profile)
       end
-
       redirect_to path
     end
 
