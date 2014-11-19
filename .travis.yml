@@ -9,3 +9,5 @@ before_script:
   - bundle exec rake db:test:prepare
 notifications:
   email: false
+env:
+  - SECURE_COOKIES=false

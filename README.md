@@ -14,6 +14,8 @@ environment:
 * HOST – Used to generate web URLs when sending email
 * FEEDBACK_URL – Used for the feedback link in the alpha bar
 * SURVEY_URL – A link to a survey to be completed after using the service
+* SECURE_COOKIES - (true/false) whether to set secure cookies or not, set this
+                   to false in development/test.
 
 ## Initial setup
 
