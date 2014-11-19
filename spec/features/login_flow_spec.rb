@@ -50,6 +50,6 @@ feature 'Login flow' do
     end
 
     person.reload
-    expect(person.last_login_at).to eql(current_time)
+    expect(person.last_login_at.utc.to_i).to eql(current_time.utc.to_i)
   end
 end
