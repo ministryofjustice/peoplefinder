@@ -55,6 +55,7 @@ group :development, :test do
   gem 'rubocop', require: false
   gem 'rubocop-rspec', require: false
   gem 'brakeman', require: false
+  gem 'dotenv-rails'
 end
 
 group :production do
