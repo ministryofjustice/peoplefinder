@@ -33,7 +33,12 @@ private
   def create_or_update_users(csv)
     csv.each do |row|
       user = User.find_or_initialize_by(email: row['email'])
-      user.update!(name: row['name'], email: row['email'], participant: true)
+      user.update!(
+        name: row['name'],
+        email: row['email'],
+        job_title: row['job_title'],
+        participant: true
+      )
     end
   end
 

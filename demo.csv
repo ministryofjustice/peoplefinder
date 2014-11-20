@@ -1,5 +1,5 @@
-name,email,manager_email
-Alice,alice@example.com,
-Bob,bob@example.com,alice@example.com
-Charlie,charlie@example.com,bob@example.com
-Daniela,daniela@example.com,alice@example.com
+name,email,manager_email,job_title
+Alice,alice@example.com,,Permanent Secretary
+Bob,bob@example.com,alice@example.com,Director General
+Charlie,charlie@example.com,bob@example.com,Director
+Daniela,daniela@example.com,charlie@example.com,Deputy Director

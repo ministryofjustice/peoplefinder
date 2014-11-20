@@ -48,6 +48,7 @@ The CSV file should have a header row with these columns:
 
 * `name`
 * `email`
+* `job_title`
 * `manager_email`
 
 The manager email address, where supplied, is used to determine hierarchy.

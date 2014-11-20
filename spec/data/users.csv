@@ -1,4 +1,4 @@
-name,email,manager_email
+name,email,manager_email,job_title
 Alice,alice@example.com,
 Bob,bob@example.com,alice@example.com
 Charlie,charlie@example.com,bob@example.com
