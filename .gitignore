@@ -19,3 +19,4 @@
 /spec/dummy/.sass-cache
 /spec/dummy/.env
 /spec/dummy/db/schema.rb
+*.DS_Store
