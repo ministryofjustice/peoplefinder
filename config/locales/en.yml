@@ -172,6 +172,7 @@ en:
         headers:
           name: 'Name'
           email: 'Email'
+          job_title: 'Job title'
           participant: 'Role'
           administrator: 'Admin'
           actions: 'Actions'

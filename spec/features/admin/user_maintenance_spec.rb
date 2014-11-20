@@ -14,12 +14,14 @@ feature 'Administrator maintaining users' do
 
     click_link 'New user'
     fill_in 'Name', with: 'Alice'
+    fill_in 'Job title', with: 'Permanent Secretary'
     fill_in 'Email', with: 'alice@example.com'
     check 'Participant'
     click_button 'Create'
 
     click_link 'New user'
     fill_in 'Name', with: 'Bob'
+    fill_in 'Job title', with: 'Director General'
     fill_in 'Email', with: 'bob@example.com'
     select 'Alice', from: 'Manager'
     check 'Participant'
