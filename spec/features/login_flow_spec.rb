@@ -15,7 +15,7 @@ feature 'Login flow' do
   end
 
   scenario 'User is prompted to update their profile every 5 logins it their profile is incomplete' do
-    login_count = (rand(1..10) * 5) - 1
+    login_count = 4
     create(:person_with_multiple_logins, email: email, login_count: login_count)
 
     omni_auth_log_in_as(email)
@@ -24,7 +24,7 @@ feature 'Login flow' do
   end
 
   scenario 'When user logs in other than 1st or every 5th time, the search page is displayed' do
-    login_count = (rand(0..10) * 5 + rand(1..4)) - 1
+    login_count = 5
     create(:person_with_multiple_logins, email: email, login_count: login_count)
 
     omni_auth_log_in_as(email)
