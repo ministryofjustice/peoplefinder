@@ -22,3 +22,6 @@
 .env
 
 .idea
+
+# Mac thumbnail thingy
+.DS_Store
