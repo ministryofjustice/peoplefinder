@@ -41,15 +41,4 @@ feature 'Login flow' do
     person.reload
     expect(person.login_count).to eql(4)
   end
-
-  scenario 'Last login date is updated every time user logs in' do
-    person = create(:person_with_multiple_logins, email: email, last_login_at: 5.days.ago)
-
-    Timecop.freeze(current_time) do
-      omni_auth_log_in_as(email)
-    end
-
-    person.reload
-    expect(person.last_login_at.utc.to_i).to eql(current_time.utc.to_i)
-  end
 end

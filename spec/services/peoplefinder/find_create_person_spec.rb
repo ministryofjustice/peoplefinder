@@ -79,5 +79,4 @@ RSpec.describe Peoplefinder::FindCreatePerson, type: :service do
       it_behaves_like 'existing person returned'
     end
   end
-
 end

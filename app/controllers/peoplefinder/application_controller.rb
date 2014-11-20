@@ -15,14 +15,9 @@ module Peoplefinder
     end
 
     def current_user
-      @current_user ||=
-        if session['current_user_id'].present?
-          Person.find(session['current_user_id'])
-        else
-          false
-        end
-      rescue ActiveRecord::RecordNotFound
-        session.destroy
+      @current_user ||= Peoplefinder::Login.current_user(session)
+    rescue ActiveRecord::RecordNotFound
+      session.destroy
     end
     helper_method :current_user
 
@@ -38,25 +33,13 @@ module Peoplefinder
     end
 
     def login_person(person)
-      person.login_count += 1
-      person.last_login_at = Time.now
-      person.save
+      login_service = Peoplefinder::Login.new(session, person)
+      login_service.login
 
-      session['current_user_id'] = person.id
-      redirect_to_desired_path(person)
-    end
-
-    def redirect_to_desired_path(person)
       path = session.delete(:desired_path) || '/'
-
-      # first time or every 5 logins until incomplete
-      show_profile = (path == '/') &&
-          person.incomplete? &&
-          ((person.login_count == 1) || (person.login_count % 5 == 0))
-      if show_profile
+      if path == '/' && login_service.edit_profile?
         path = edit_person_path(person, prompt: :profile)
       end
-
       redirect_to path
     end
 

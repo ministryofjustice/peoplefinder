@@ -1,7 +1,7 @@
 module SpecSupport
   module Login
     def mock_logged_in_user
-      controller.session[:current_user_id] =
+      controller.session[Peoplefinder::Login::SESSION_KEY] =
         create(:person, email: 'test.user@digital.moj.gov.uk').id
     end
 

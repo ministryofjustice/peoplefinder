@@ -16,7 +16,8 @@ module Peoplefinder
     end
 
     def destroy
-      session['current_user_id'] = nil
+      Peoplefinder::Login.new(session, @current_user).logout
+
       redirect_to '/'
     end
 
