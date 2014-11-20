@@ -3,8 +3,6 @@ require 'csv'
 class UserImporter
   include EmailNormalization
 
-  HEADERS = [:name, :email, :manager_email]
-
   def initialize(io)
     @io = io
   end
@@ -24,26 +22,26 @@ class UserImporter
 private
 
   def read_and_normalize_csv(io)
-    CSV.new(io, headers: HEADERS).map { |row|
+    CSV.new(io, headers: true).map { |row|
       row.to_hash.merge(
-        email: normalize_email(row[:email]),
-        manager_email: normalize_email(row[:manager_email])
+        'email' => normalize_email(row['email']),
+        'manager_email' => normalize_email(row['manager_email'])
       )
     }
   end
 
   def create_or_update_users(csv)
     csv.each do |row|
-      user = User.find_or_initialize_by(email: row[:email])
-      user.update!(name: row[:name], email: row[:email], participant: true)
+      user = User.find_or_initialize_by(email: row['email'])
+      user.update!(name: row['name'], email: row['email'], participant: true)
     end
   end
 
   def create_or_update_management_relationships(csv)
     csv.each do |row|
-      next if row[:manager_email].blank?
-      direct_report = lookup_user(row[:email])
-      manager = lookup_user(row[:manager_email])
+      next if row['manager_email'].blank?
+      direct_report = lookup_user(row['email'])
+      manager = lookup_user(row['manager_email'])
       direct_report.update manager: manager
     end
   end

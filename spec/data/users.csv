@@ -1,3 +1,4 @@
+name,email,manager_email
 Alice,alice@example.com,
 Bob,bob@example.com,alice@example.com
 Charlie,charlie@example.com,bob@example.com

@@ -44,9 +44,13 @@ setup_ above) if necessary.
 You can import users en masse via a CSV file or create/edit/delete them via
 the web interface.
 
-The CSV file should have no header row and three columns: _name_,
-_email address_, and _manager's email address_ (if appropriate).
-The manager email address is used to determine hierarchy.
+The CSV file should have a header row with these columns:
+
+* `name`
+* `email`
+* `manager_email`
+
+The manager email address, where supplied, is used to determine hierarchy.
 
 Uploading a file multiple times will not create duplicate users.
 Names of existing users will be updated (using the email address as the
