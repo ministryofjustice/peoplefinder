@@ -26,13 +26,19 @@ en:
   peoplefinder:
     sessions:
       login_page:
-        heading: Log in to the people finder
-        heading_google: Google email accounts
+        heading: Use the people finder
+        intro: |
+          People finder connects you with your colleagues and co-workers.
+          You need to create a profile to use the tool.
+          To build a full profile, add your contact details and information about your job, eg your numbers, location or expertise. We’ll email a reminder to complete your profile if there’s more details you could add.
+        intro_instructions: |
+          Use your government email address to log-in to and build or edit your profile, or find colleagues.
+        heading_google: Log in with a government Google account
         body_google:
           If you have a government Google account you can log in quickly
           with the official authentication screen.
-        heading_other: Other email addresses
-        body_other: Enter a valid Ministry of Justice email address below
+        heading_other: Log in with a government email address
+        body_other: Enter a valid government email address below
         log_in_google: Log in with Google
         log_in_email: Log in with email
     tokens:
