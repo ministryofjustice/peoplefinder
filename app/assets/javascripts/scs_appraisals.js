@@ -56,4 +56,6 @@ $(function() {
   refreshRadioStyles();
 
   $('.print-button').on('click', function() { window.print(); });
+
+  $('.submission-form a.external').attr('target', '_blank');
 });

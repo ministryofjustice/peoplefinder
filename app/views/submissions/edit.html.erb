@@ -21,7 +21,7 @@
     <%= t('submissions.section_1.title') %>
   </h2>
 
-  <%= govspeak(t('submissions.section_1.intro')) %>
+  <%= govspeak(t('submissions.section_1.intro', external_link_image: asset_url('external_link_icon.png'))) %>
 
   <% Review::SECTION_1_RATING_FIELDS.each do |rating| %>
     <%= f.radio_buttons(rating, %w[ 1 2 3 4 5 0 ], inline: true,
@@ -36,7 +36,7 @@
     <%= t('submissions.section_2.title') %>
   </h2>
 
-  <%= govspeak(t('submissions.section_2.intro')) %>
+  <%= govspeak(t('submissions.section_2.intro', external_link_image: asset_url('external_link_icon.png'))) %>
 
   <% Review::SECTION_2_RATING_FIELDS.each do |rating| %>
     <%= f.radio_buttons(rating, %w[ 1 2 3 4 5 0 ], inline: true,

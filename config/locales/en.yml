@@ -243,13 +243,13 @@ en:
       title: 'Leadership qualities'
       intro: |
         Please refer to the
-        <a href="/leadership-model" target="_blank">Leadership Model</a>
+        <a class='external' href="/leadership-model">Leadership Model <img alt="Opens in new tab" src="%{external_link_image}" /></a>
         for help with this section.
     section_2:
       title: 'How We Work'
       intro: |
         Please refer to the
-        <a href="/moj-story" target="_blank">MOJ Story</a>
+        <a class='external' href="/moj-story">MOJ Story <img alt="Opens in new tab" src="%{external_link_image}" /></a>
         for help with this section.
     ratings:
       '1': '1'
