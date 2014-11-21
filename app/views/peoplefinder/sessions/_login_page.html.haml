@@ -1,17 +1,14 @@
 - @disable_logo_link  = true
 - @page_title = 'Log in'
 %h1.no-line= t('.heading')
+
+-t('.intro').each_line do |line|
+  %p= line
+%p= t('.intro_instructions')
+
 .spacer-25
-%h2.h3.no-line= t('.heading_google')
-
-%p= t('.body_google')
-
-%p
-  = link_to t('.log_in_google'), "/auth/gplus", class: 'button login-button'
 
 - if feature_enabled?('token_auth')
-  %hr
-  .spacer-5
   %h2.h3.no-line= t('.heading_other')
 
   %p= t('.body_other')
@@ -24,9 +21,19 @@
         = token_form.input :user_email, as: :string, label: false
     -else
       .form-group
-      = token_form.input :user_email, as: :string, label: false
+        = token_form.input :user_email, as: :string, label: false
 
     .spacer-20
     .form-group
       %label.visuallyhidden{ for: :token_user_email } Email address
       = token_form.button :submit, t('.log_in_email'), class: 'login-button'
+
+  %hr
+  .spacer-5
+
+%h2.h3.no-line= t('.heading_google')
+
+%p= t('.body_google')
+
+%p
+  = link_to t('.log_in_google'), "/auth/gplus", class: 'button login-button'
