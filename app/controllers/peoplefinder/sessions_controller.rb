@@ -3,10 +3,10 @@ module Peoplefinder
     skip_before_action :ensure_user
 
     def create
-      person = Person.from_auth_hash(auth_hash)
+      person = FindCreatePerson.from_auth_hash(auth_hash)
+
       if person
-        session['current_user_id'] = person.id
-        redirect_to_desired_path
+        login_person(person)
       else
         render :failed
       end
@@ -16,7 +16,8 @@ module Peoplefinder
     end
 
     def destroy
-      session['current_user_id'] = nil
+      Peoplefinder::Login.new(session, @current_user).logout
+
       redirect_to '/'
     end
 

@@ -18,9 +18,8 @@ module Peoplefinder
       token = Token.where(value: params[:id]).first
       return forbidden unless token
 
-      person = Person.from_token(token)
-      session['current_user_id'] = person.id
-      redirect_to_desired_path
+      person = FindCreatePerson.from_token(token)
+      login_person(person)
     end
 
   protected

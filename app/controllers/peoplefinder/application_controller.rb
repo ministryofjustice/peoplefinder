@@ -15,14 +15,9 @@ module Peoplefinder
     end
 
     def current_user
-      @current_user ||=
-        if session['current_user_id'].present?
-          Person.find(session['current_user_id'])
-        else
-          false
-        end
-      rescue ActiveRecord::RecordNotFound
-        session.destroy
+      @current_user ||= Peoplefinder::Login.current_user(session)
+    rescue ActiveRecord::RecordNotFound
+      session.destroy
     end
     helper_method :current_user
 
@@ -37,14 +32,14 @@ module Peoplefinder
       redirect_to new_sessions_path
     end
 
-    def redirect_to_desired_path
-      path = session.fetch(:desired_path, '/')
-      session.delete :desired_path
+    def login_person(person)
+      login_service = Peoplefinder::Login.new(session, person)
+      login_service.login
 
-      if path == '/' && current_user.incomplete?
-        path = edit_person_path(current_user, prompt: :profile)
+      path = session.delete(:desired_path) || '/'
+      if path == '/' && login_service.edit_profile?
+        path = edit_person_path(person, prompt: :profile)
       end
-
       redirect_to path
     end
 

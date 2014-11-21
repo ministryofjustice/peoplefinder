@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141030105624) do
+ActiveRecord::Schema.define(version: 20141112170526) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -81,6 +81,8 @@ ActiveRecord::Schema.define(version: 20141030105624) do
     t.boolean  "no_phone",               default: false
     t.text     "tags"
     t.integer  "community_id"
+    t.integer  "login_count",            default: 0,     null: false
+    t.datetime "last_login_at"
   end
 
   add_index "people", ["slug"], name: "index_people_on_slug", unique: true, using: :btree

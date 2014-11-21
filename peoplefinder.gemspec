@@ -49,8 +49,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'pry-rails'
   s.add_development_dependency 'dotenv-rails'
   s.add_development_dependency 'pry'
-  s.add_development_dependency 'rspec-mocks'
-  s.add_development_dependency 'rspec-rails', '~> 3.0.0'
+  s.add_development_dependency 'rspec-rails', '~> 3.1.0'
   s.add_development_dependency 'rubocop', '~> 0.26.1'
   s.add_development_dependency 'rubocop-rspec'
   s.add_development_dependency 'teaspoon'
@@ -62,4 +61,6 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'shoulda-matchers'
   s.add_development_dependency 'simplecov', '~> 0.7.1'
   s.add_development_dependency 'simplecov-rcov'
+  s.add_development_dependency 'site_prism'
+  s.add_development_dependency 'timecop'
 end
