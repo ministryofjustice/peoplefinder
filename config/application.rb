@@ -9,15 +9,6 @@ Bundler.require(*Rails.groups)
 
 module SCSAppraisals
   class Application < Rails::Application
-    # Custom Logging
-    config.log_level = :info
-    config.logstasher.enabled = true
-    config.logstasher.suppress_app_log = true
-    config.logstasher.log_level = Logger::INFO
-    config.logstasher.logger_path =
-        "#{Rails.root}/log/logstash_#{Rails.env}.json"
-    config.logstasher.source = 'logstasher'
-
     def self.env_integer(key, default)
       ENV.fetch(key, default).to_i
     end

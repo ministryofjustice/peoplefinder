@@ -20,9 +20,6 @@ gem 'scrypt'
 gem 'uglifier', '>= 1.3.0'
 gem 'unicorn', '~> 4.8.3'
 
-# Logstasher for easier integration with logstash
-gem 'logstasher'
-
 group :development do
   gem 'spring'
 end
@@ -60,4 +57,5 @@ end
 
 group :production do
   gem 'rails_12factor'
+  gem 'logstasher' # for easier integration with logstash
 end

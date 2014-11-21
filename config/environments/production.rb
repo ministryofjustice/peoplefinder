@@ -31,6 +31,14 @@ Rails.application.configure do
   # Set to :debug to see everything in the log.
   config.log_level = :info
 
+  # Custom Logging
+  config.logstasher.enabled = true
+  config.logstasher.suppress_app_log = true
+  config.logstasher.log_level = Logger::INFO
+  config.logstasher.logger_path =
+    "#{Rails.root}/log/logstash_#{Rails.env}.json"
+  config.logstasher.source = 'logstasher'
+
   # Enable serving of images, stylesheets, and JavaScripts from an asset server.
   if ENV['ASSET_HOST']
     config.action_controller.asset_host = ENV['ASSET_HOST']
