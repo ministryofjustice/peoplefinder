@@ -12,6 +12,8 @@ RSpec.shared_context "token_auth feature disabled" do
 end
 
 feature 'Token Authentication' do
+  let(:login_page) { Pages::Login.new }
+
   before { create(:group) }
 
   scenario 'trying to log in with an invalid email address' do
@@ -71,7 +73,7 @@ feature 'Token Authentication' do
     expect(page).to have_text('James Darling')
     click_link 'Log out'
     expect(page).not_to have_text('james.darling@digital.justice.gov.uk')
-    expect(page).to have_text('Log in to the people finder')
+    expect(login_page).to be_displayed
   end
 
   context 'token_auth feature disabled' do
@@ -83,7 +85,7 @@ feature 'Token Authentication' do
 
       expect(page.current_path).to eq(new_sessions_path)
       expect(page).to have_text('login link is invalid')
-      expect(page).to have_text('Log in to the people finder')
+      expect(login_page).to be_displayed
     end
 
     scenario 'login page does not have token auth login option' do
@@ -96,7 +98,7 @@ feature 'Token Authentication' do
 
       expect(page.current_path).to eq(new_sessions_path)
       expect(page).to have_text('login link is invalid')
-      expect(page).to have_text('Log in to the people finder')
+      expect(login_page).to be_displayed
     end
   end
 end
