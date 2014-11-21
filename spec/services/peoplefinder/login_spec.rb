@@ -58,10 +58,12 @@ RSpec.describe Peoplefinder::Login, type: :service do
         it { is_expected.to be true }
       end
 
-      context 'every fifth login' do
-        let(:login_count) { 5 }
+      [5, 45].each do |count|
+        context "every #{count}th login" do
+          let(:login_count) { count }
 
-        it { is_expected.to be true }
+          it { is_expected.to be true }
+        end
       end
 
       context 'for not first or every fifth login' do
