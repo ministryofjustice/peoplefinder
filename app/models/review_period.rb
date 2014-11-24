@@ -23,7 +23,7 @@ class ReviewPeriod < ActiveRecord::Base
   def self.send_introductions
     return if closed?
     User.participants.each do |user|
-      Introduction.new(user).send
+      IntroductionNotification.new(user).send
     end
   end
 

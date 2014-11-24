@@ -1,4 +1,4 @@
-class FeedbackRequest
+class FeedbackRequestNotification
   def initialize(review)
     @review = review
   end

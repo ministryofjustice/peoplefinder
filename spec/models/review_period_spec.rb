@@ -46,7 +46,7 @@ RSpec.describe ReviewPeriod do
     let!(:charlies_review)  { create(:review, subject: charlie) }
 
     it 'does not send introduction emails' do
-      expect(Introduction).not_to receive(:new)
+      expect(IntroductionNotification).not_to receive(:new)
       subject.send_introductions
     end
 
@@ -64,8 +64,8 @@ RSpec.describe ReviewPeriod do
 
     it 'sends introduction emails to each user' do
       [alice, bob, charlie].each do |user|
-        intro = double(Introduction)
-        expect(Introduction).to receive(:new).with(user) { intro }
+        intro = double(IntroductionNotification)
+        expect(IntroductionNotification).to receive(:new).with(user) { intro }
         expect(intro).to receive(:send)
       end
       subject.send_introductions

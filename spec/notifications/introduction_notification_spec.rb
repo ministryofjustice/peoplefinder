@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Introduction, type: :model do
+RSpec.describe IntroductionNotification do
   it 'creates a token and emails it to the user' do
     user = create(:user)
     token = double(:token)

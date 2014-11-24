@@ -1,4 +1,4 @@
-class Introduction
+class IntroductionNotification
   def initialize(user)
     @user = user
   end
