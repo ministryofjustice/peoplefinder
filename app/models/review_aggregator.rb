@@ -6,6 +6,12 @@ class ReviewAggregator
   def results(question)
     @reviews.
       map { |r| [r.author_name, r.send(question)] }.
-      reject { |_, v| v == 0 || v.to_s.strip.empty? }
+      reject { |_, a| unanswered?(a) }
+  end
+
+private
+
+  def unanswered?(answer)
+    answer == 0 || answer.blank?
   end
 end
