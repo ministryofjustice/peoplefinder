@@ -58,10 +58,14 @@ module Peoplefinder
       }
     end
 
-    def editing_mode
+    def editing_mode(building = false)
       @editing_mode = true
       content_for :editing_alert do
-        render partial: 'peoplefinder/shared/editing_alert'
+        if building
+          render partial: 'peoplefinder/shared/building_alert'
+        else
+          render partial: 'peoplefinder/shared/editing_alert'
+        end
       end
     end
   end

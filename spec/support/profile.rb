@@ -23,10 +23,10 @@ module SpecSupport
       fill_in 'Surname', with: person_attributes[:surname]
       click_in_org_browser 'Digital'
       fill_in 'Email', with: person_attributes[:email]
-      fill_in 'Primary phone number', with: person_attributes[:primary_phone_number]
+      fill_in 'Main phone number', with: person_attributes[:primary_phone_number]
       fill_in 'Any other phone number', with: person_attributes[:secondary_phone_number]
       fill_in 'Location', with: person_attributes[:location]
-      fill_in 'Notes', with: person_attributes[:description]
+      fill_in 'Extra information', with: person_attributes[:description]
       uncheck('Monday')
       uncheck('Friday')
       attach_file 'person[image]', sample_image
