@@ -12,22 +12,24 @@
       = f.select(:community_id, Peoplefinder::Community.all.map { |c| [c.name, c.id] }, { include_blank: true} )
 
   .form-group
-    %h2.line-above Contact details
+    #contact-details
+      %h2.line-above Contact details
 
-  .phone_numbers{ style: ('display:none' if @person.no_phone)}
-    .form-group
-      = f.input :primary_phone_number, as: :string, label: 'Main phone number'
-    .form-group
-      = f.input :secondary_phone_number, as: :string, label: 'Any other phone number'
-  .form-checkbox
-    = f.input :no_phone, as: :boolean, label: 'No phone number'
-  .form-group
-    = f.input :email, as: :string, label: 'Email'
+      .phone_numbers{ style: ('display:none' if @person.no_phone)}
+        .form-group
+          = f.input :primary_phone_number, as: :string, label: 'Main phone number'
+        .form-group
+          = f.input :secondary_phone_number, as: :string, label: 'Any other phone number'
+      .form-checkbox
+        = f.input :no_phone, as: :boolean, label: 'No phone number'
+      .emails
+        .form-group
+          = f.input :email, as: :string, label: 'Email'
 
-  .form-group
-    %label.form-label-bold{ for: :person_location } Location
-    %p.form-hint= info_text('location_hint')
-    = f.input :location, as: :string, label: false
+      .form-group
+        %label.form-label-bold{ for: :person_location } Location
+        %p.form-hint= info_text('location_hint')
+        = f.input :location, as: :string, label: false
 
 
   .form-group
