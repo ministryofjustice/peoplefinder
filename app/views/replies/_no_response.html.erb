@@ -2,7 +2,7 @@
   <div class="one-row">
     <%= f.radio_buttons(:status, %i[ accepted declined ], inline: true,
           labeler: ->(v){ t(v, scope: 'invitations.statuses') }) %>
-    <%= f.button %>
+    <%= f.button nil, {id: 'invitation-status-update-btn'}%>
   </div>
 
   <fieldset>

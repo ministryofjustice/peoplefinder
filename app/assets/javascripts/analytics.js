@@ -5,5 +5,8 @@ var Track = {
 		$('#'+btnID).click(function() {
 			ga('send', 'event', category, action);
 		});
-	}
+	},
+    event: function(category, action){
+        ga('send', 'event', category, action);
+    }
 };
