@@ -10,7 +10,8 @@ $(function(){
 
         if( typeof(selectedRadioBtn) !== 'undefined'){
             var selectedVal = selectedRadioBtn.value;
-            var reason = $("textarea[name='invitation[reason_declined]']")[0].value;
+            var reason =
+                $("textarea[name='invitation[reason_declined]']")[0].value;
 
             if(selectedVal !== 'declined') {
                 Track.event('invitations', selectedVal);
