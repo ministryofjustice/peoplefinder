@@ -8,6 +8,6 @@
         labeler: ->(v) { t(v, scope: 'reviews.relationships', default: '') }) %>
   <%= f.text_area :invitation_message %>
   <fieldset>
-    <%= f.button %>
+    <%= f.button nil, { id: 'add-reviewer-btn' }  %>
   </fieldset>
 <% end %>
