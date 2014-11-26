@@ -77,7 +77,7 @@
       - if @person.image?
         = link_to 'Crop image', edit_person_image_path(@person)
 
-  .form-group
+  .form-group.save-cancel-actions
     = f.button :submit
     .cancel
       = link_to 'Cancel and go to profile page', @person.new_record? ? :back : @person
