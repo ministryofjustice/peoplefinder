@@ -1,8 +1,7 @@
 ---
 :concurrency: 5
-:pidfile: tmp/pids/sidekiq.pid
 :logfile: ./log/sidekiq.log
-:redis:  <%= ENV["REDIS_URL"] %>
+:redis:  <%= ENV["REDIS_PROVIDER"] %>
 development:
   :concurrency: 2
 production:
