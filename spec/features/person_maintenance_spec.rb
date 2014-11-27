@@ -187,7 +187,7 @@ feature 'Person maintenance' do
   scenario 'UI elements on the new/edit pages' do
     visit new_person_path
     expect(page).not_to have_selector('.search-box')
-    expect(page).to have_text('You are building a profile')
+    expect(page).to have_text('You are creating a profile')
 
     fill_in 'Surname', with: person_attributes[:surname]
     click_button 'Save'

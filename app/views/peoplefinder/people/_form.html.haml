@@ -38,7 +38,7 @@
       = f.fields_for :memberships do |membership_f|
         = render partial: 'membership_fields', locals: { membership_f: membership_f }
 
-    = link_to 'Add new role', add_membership_people_path(id: @person.to_param), id: 'add_membership'
+    = link_to 'Add another role', add_membership_people_path(id: @person.to_param), id: 'add_membership'
 
   .form-group
     %h2.h3.line-above Working days
@@ -68,7 +68,6 @@
   .form-group
     %h2.h3.line-above Photo
     %p.form-hint= info_text('photo_upload_hint')
-    %p.form-hint= info_text('photo_size_hint')
     %label.visuallyhidden{ for: :person_image } Choose or replace file
     = f.input :image, as: :file, label: false
 
