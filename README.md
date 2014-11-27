@@ -1,5 +1,7 @@
 # MoJ People Finder
 
+[![Build Status](https://travis-ci.org/ministryofjustice/peoplefinder.svg?branch=master)](https://travis-ci.org/ministryofjustice/peoplefinder)
+
 This is a rails engine that can be mounted inside a rails 4 application.
 
 A working example can be seen at https://github.com/alphagov/gds-peoplefinder
