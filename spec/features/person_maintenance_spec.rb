@@ -187,16 +187,16 @@ feature 'Person maintenance' do
   scenario 'UI elements on the new/edit pages' do
     visit new_person_path
     expect(page).not_to have_selector('.search-box')
-    expect(page).to have_text('You are currently editing this page')
+    expect(page).to have_text('You are creating a profile')
 
     fill_in 'Surname', with: person_attributes[:surname]
     click_button 'Save'
     expect(page).to have_selector('.search-box')
-    expect(page).not_to have_text('You are currently editing this page')
+    expect(page).not_to have_text('You are currently editing this profile')
 
     click_link 'Edit this profile'
     expect(page).not_to have_selector('.search-box')
-    expect(page).to have_text('You are currently editing this page')
+    expect(page).to have_text('You are currently editing this profile')
   end
 
   scenario 'Cancelling an edit' do

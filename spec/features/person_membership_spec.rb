@@ -43,7 +43,7 @@ feature "Peoplefinder::Person maintenance" do
     javascript_log_in
     visit edit_person_path(person)
 
-    click_link('Add new role')
+    click_link('Add another role')
     sleep 1
 
     within all('#memberships .membership').last do
@@ -61,7 +61,7 @@ feature "Peoplefinder::Person maintenance" do
     javascript_log_in
     visit new_person_path
 
-    click_link('Add new role')
+    click_link('Add another role')
     expect(page).to have_selector('#memberships .membership', count: 2)
 
     click_link('Delete', match: :first)

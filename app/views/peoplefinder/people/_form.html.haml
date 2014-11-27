@@ -1,4 +1,4 @@
-= editing_mode
+= editing_mode(building)
 = simple_form_for @person, :html => {:multipart => true} do |f|
 
   = f.error_notification
@@ -12,44 +12,48 @@
       = f.select(:community_id, Peoplefinder::Community.all.map { |c| [c.name, c.id] }, { include_blank: true} )
 
   .form-group
+    #contact-details
+      %h2.line-above Contact details
+
+      .phone_numbers{ style: ('display:none' if @person.no_phone)}
+        .form-group
+          = f.input :primary_phone_number, as: :string, label: 'Main phone number'
+        .form-group
+          = f.input :secondary_phone_number, as: :string, label: 'Any other phone number'
+      .form-checkbox
+        = f.input :no_phone, as: :boolean, label: 'No phone number'
+      .emails
+        .form-group
+          = f.input :email, as: :string, label: 'Email'
+
+      .form-group
+        %label.form-label-bold{ for: :person_location } Location
+        %p.form-hint= info_text('location_hint')
+        = f.input :location, as: :string, label: false
+
+
+  .form-group
     #memberships
-      %h2.line-above Roles
+      %h2.line-above Role
       = f.fields_for :memberships do |membership_f|
         = render partial: 'membership_fields', locals: { membership_f: membership_f }
 
-    = link_to 'Add new role', add_membership_people_path(id: @person.to_param), id: 'add_membership'
-
-
-  .form-group
-    %h2.line-above Contact details
-    %label.form-label-bold{ for: :person_location } Location of work
-    %p.form-hint= info_text('location_hint')
-    = f.input :location, as: :string, label: false
-
-  .phone_numbers{ style: ('display:none' if @person.no_phone)}
-    .form-group
-      = f.input :primary_phone_number, as: :string
-    .form-group
-      = f.input :secondary_phone_number, as: :string, label: 'Any other phone number'
-  .form-checkbox
-    = f.input :no_phone, as: :boolean, label: 'No phone number'
-  .form-group
-    = f.input :email, as: :string, label: 'Email address'
+    = link_to 'Add another role', add_membership_people_path(id: @person.to_param), id: 'add_membership'
 
   .form-group
-    %h2.h3.line-above
-      %label{ for: :person_description } Notes
-    %p.form-hint= info_text('notes_field_hint')
-    = f.input :description, label: false, input_html: { class: 'wider' }
-
-  .form-group
-    %h2.h3.no-line Working days
+    %h2.h3.line-above Working days
 
   .form-checkbox
     %fieldset
       %legend
         - Peoplefinder::Person::DAYS_WORKED.each do |day|
           = f.input day, as: :boolean, label: day_name(day)
+
+  .form-group
+    %h2.h3.no-line
+      %label{ for: :person_description } Extra information
+    %p.form-hint= info_text('notes_field_hint')
+    = f.input :description, label: false, input_html: { class: 'wider' }
 
   - if feature_enabled?(:profile_tags)
     .form-group
@@ -62,10 +66,9 @@
 
 
   .form-group
-    %h2.h3.line-above Photograph
+    %h2.h3.line-above Photo
     %p.form-hint= info_text('photo_upload_hint')
-    %p.form-hint= info_text('photo_size_hint')
-    %label.visuallyhidden{ for: :person_image } Choose file
+    %label.visuallyhidden{ for: :person_image } Choose or replace file
     = f.input :image, as: :file, label: false
 
     = profile_image_tag @person, @person.image.medium, class: 'preview'
@@ -73,7 +76,7 @@
       - if @person.image?
         = link_to 'Crop image', edit_person_image_path(@person)
 
-  .form-group
+  .form-group.save-cancel-actions
     = f.button :submit
     .cancel
       = link_to 'Cancel and go to profile page', @person.new_record? ? :back : @person
