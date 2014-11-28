@@ -13,7 +13,7 @@ RSpec.describe Results::ReviewsController, type: :controller do
       close_review_period
     end
 
-    describe 'GET index', closed_review_period: true do
+    describe 'GET index' do
       context 'when the current user receives feedback' do
         before do
           me.update manager: create(:user)
