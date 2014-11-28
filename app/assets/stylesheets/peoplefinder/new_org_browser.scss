@@ -1,0 +1,47 @@
+.org-browser {
+  max-width: 1020px;
+  overflow-x: auto;
+  border: 1px solid $border-colour;
+  margin: 29px 0 30px;
+
+
+  .org-list {
+    margin: 0;
+    float: left;
+  }
+  .org-list-item {
+    width: 300px;
+    background: $panel-colour;
+    border-right: 1px solid $border-colour;
+    border-bottom: 1px solid $border-colour;
+    margin: 0;
+    &:last-child {
+      border-bottom: 0;
+    }
+  }
+  .org-list-link {
+    display: block;
+    padding-left: 44px;
+    &.org-list-group {
+      color: $text-colour;
+    }
+    &.org-list-group-title {
+      padding-left: 22px;
+    }
+  }
+  .org-list-group-title {
+    h4 {
+      margin: 0;
+    }
+  }
+  .org-list-group {
+    background:
+    url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABcAAAAXCAYAAADgKtSgAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAaJJREFUeNpiZMAD8surBYBUABDrA7EBmvRBIN4wsbP1Ai79jHgMLQAxgViAAT94AMSFQEs2EDQcaDDIhfOxuJQQABmeCLTkA1bDoQbvJ8K1uAAoiBxhFrCgBQVWg3PSkhlUlBRRxKbMmstw5959dKUgx60HWQDiMCFJzKfAxcjAAejQArjhQI4DNFVQC9QjuzyegbpAAOjgBJjhAQzUB/6MQBsUgIz7xKj2cHECRyKWiMSa/kGpRQGbjJmxEYOQIGr8glKMkKAgRsrBYaECEy5rzYwNwQYRAiCL0C2DARZ8Gk+dPYfiImzBAhLDWbZAM897ZJeAMg2yl3fs2YciBgIFFTUMEzpaMMSQwAEmaFa9QIPUcgEW5htpYPhCmOETgPgDFQ0+ACrnGZEKLlB50M/JycEgLSkJV/X9xw+Gd+/fo4jB4gJbkoQCQxTDoRaACq8ECl0NKtMXgBjMyKInjx7eaGFjp0BGRYFhMIbhSBaAfORAgqEPoAavIFiHQoNIAVp0BuAp50GGTgTiBcjVG0HDsVR/yMF1AGQw0MAH+PQBBBgA9nyR5x7/z3IAAAAASUVORK5CYII=)
+    no-repeat
+    10px 10px;
+    background-size: 23px 23px;
+  }
+  p {
+    margin: 0;
+  }
+}

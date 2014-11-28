@@ -18,4 +18,8 @@ only screen and (min-device-pixel-ratio: 1.5) {
     background-image: image-url('icon_delete_retina.png') !important;
     background-size: 31px 31px !important;
   }
+
+  .org-list-group {
+    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAC0AAAAtCAYAAAA6GuKaAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAArlJREFUeNrUmb9OG0EQxmcdF9C5RRQxKH1MR4HAQRQpzRPYFlIqJDtVIiUSIIGUVGCJCinCPAFOlyLCthCFLQFXUkTB6UgT/AiZgTk4n+/P7t3Z3v2k0el86/PPs9/u3s0KSECVD59yeMhjvMTI+TRrY/QwWrWve704vydigBJkEaOAkVH8OkGfYNSj/AEREXaLM5uE6hg7KvBCATaLh+MEYd06YPh+ItAIXMLDfgQbQATbrCO4FQsagSm7JRivyghe97v4QkNgUmFxaflP5+LcUoKeIHAouPAB3uYZQn4UfdkNbfPr9y0cHn1ThV9wezwVMKXpoiYyZXyh+eIx6KUMz1y+ma5iZEE/ldgBg9Cc5Qroqy2vTFfHsHjEUZ4fzAagi6C/Kk/Q/A+yBkAXnJkugBnK0IBM88lK3Lv9+Hk2cP52bRX+3fehe3n19BmdJ+FtGzo/Guj7oc8T0OuUe7UxwSLpgHe6IU1PT8HszAyotH81PyfVlp5LVO0hJQLefLcxkvbVj5+l75uO0j/dy+sHvwbJayB6iXpCtjdiQl+FdqfsQKR2qtApME/9FD5gtwyDtgQv47d+yzh1H0XQ/ExBXRw06JxvLdQuyBLULsB+ddselkGZbtvQbYOgWzZ0wxQ/U/nsAZrraCYMyBP3lFfTfaqDx2LlMzRmmyzS0xi6Zhcn3YtLWeMsH9gnwqNYc6rhm8xAQdJrGS9rZpOGu4I6BM2+WecumfgU52VZz6pp5+L8bnFp+e+EbUJJe4NJvJOCZnCLSq38/jg1gQzTjsCN10WZnQB6HWvC+KpPFmfY156yey4EfAqj2ySyRRtF22GNlLbkEJ48vg/JV6PoEeJ92AZRJGgHfAkeq5hx4Ru80ik994g4v8h+L7JtcgpZ/c7zb6T1QCTZx47Cd84xcHscfdnuD9N/AQYAdg36+vMN+EQAAAAASUVORK5CYII=) !important;
+  }
 }
