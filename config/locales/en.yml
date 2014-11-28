@@ -82,6 +82,8 @@ en:
         relationship: 'Working relationship'
         invitation_message: 'Message text'
       submission:
+        name: 'Name'
+        question: 'Question'
         rating: 'General performance rating.'
         rating_1: >-
           1) Sets Future Direction
