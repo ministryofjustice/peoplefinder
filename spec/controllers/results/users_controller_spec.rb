@@ -6,7 +6,7 @@ RSpec.describe Results::UsersController, type: :controller do
     authenticate_as me
   end
 
-  describe 'GET index', closed_review_period: true  do
+  describe 'GET index' do
     it 'lists all my direct reports in alphabetical order' do
       user_a = create(:user, manager: me, name: 'Zelda')
       user_b = create(:user, manager: me, name: 'Ada')
