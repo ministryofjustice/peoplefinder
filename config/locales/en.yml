@@ -204,6 +204,7 @@ en:
       customer: 'Customer/stakeholder'
     errors:
       subject_must_be_participant: 'must be a participant'
+    download_as_csv: 'Download as CSV'
   review_period:
     time_left: '<strong>%{remaining}</strong> remaining this period'
   password_resets:

@@ -1,7 +1,7 @@
 require 'csv'
 
 class UserCSVRenderer
-  def initialize(user, aggregator)
+  def initialize(user, aggregator = TabularReviewAggregator.new(user.reviews))
     @user = user
     @aggregator = aggregator
   end

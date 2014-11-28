@@ -22,6 +22,17 @@ feature 'Closed review period' do
     check_my_feedback_from_danny_boy
   end
 
+  scenario 'Downloading my feedback' do
+    me.update manager: create(:user)
+    ReviewPeriod.send_closure_notifications
+    visit links_in_email(last_email).first
+
+    click_link 'Download as CSV'
+
+    expect(page.response_headers['Content-Disposition']).to match('attachment')
+    expect(page.body).to match(/\AName,#{me.name}/)
+  end
+
   scenario 'Viewing the feedback of my direct report' do
     me.update manager: create(:user)
     charlie = create(:user, name: 'Charlie', manager: me)

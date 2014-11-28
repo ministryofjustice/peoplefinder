@@ -7,18 +7,32 @@ module Results
     before_action :redirect_unless_user_receives_feedback, only: [:index]
 
     def index
-      show_tabs unless scoped_by_subject?
-
-      @review_aggregator = ReviewAggregator.new(scope.reviews)
+      respond_to do |format|
+        format.html { render_index_html }
+        format.csv { render_index_csv }
+      end
     end
 
   private
+
+    def render_index_html
+      show_tabs unless scoped_by_subject?
+      @params_for_csv = params.slice(:controller, :action, :id)
+      @review_aggregator = ReviewAggregator.new(user.reviews)
+    end
+
+    def render_index_csv
+      renderer = UserCSVRenderer.new(user)
+      send_data renderer.to_csv,
+        filename: "reviews-#{user.id}.csv",
+        disposition: 'attachment'
+    end
 
     def ensure_review_period_is_closed
       forbidden unless review_period_closed?
     end
 
-    def scope
+    def user
       @subject || current_user
     end
 
