@@ -5,13 +5,25 @@ module Results
     before_action :ensure_review_period_is_closed
 
     def index
-      show_tabs
-      @users = scope.all
+      respond_to do |format|
+        format.html { render_index_html }
+        format.csv { render_index_csv }
+      end
     end
 
   private
 
-    def scope
+    def render_index_html
+      show_tabs
+      @users = users.all
+    end
+
+    def render_index_csv
+      csv = MultiUserCSVRenderer.new(users.all).to_csv
+      send_data csv, filename: "reviews.csv", disposition: 'attachment'
+    end
+
+    def users
       current_user.direct_reports
     end
 

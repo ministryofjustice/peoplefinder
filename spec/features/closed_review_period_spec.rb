@@ -56,6 +56,23 @@ feature 'Closed review period' do
     check_my_feedback_from_danny_boy
   end
 
+  scenario 'Downloading the feedback of all my direct reports' do
+    me.update manager: create(:user)
+    charlie = create(:user, name: 'Charlie', manager: me)
+    create :submitted_review, subject: charlie
+    daniela = create(:user, name: 'Daniela', manager: me)
+    create :submitted_review, subject: daniela
+
+    visit token_path(me.tokens.create)
+    click_link('Your direct reports')
+
+    click_link 'Download as CSV'
+
+    expect(page.response_headers['Content-Disposition']).to match('attachment')
+    expect(page.body).to match(/^Name,Charlie$/)
+    expect(page.body).to match(/^Name,Daniela$/)
+  end
+
   scenario 'Visiting as a reviewer' do
     visit token_url(review.tokens.create)
     access_is_denied
