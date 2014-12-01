@@ -16,6 +16,7 @@ environment:
 * SURVEY_URL – A link to a survey to be completed after using the service
 * SECURE_COOKIES - (true/false) whether to set secure cookies or not, set this
                    to false in development/test.
+* REDIS_PROVIDER - This is the url for Redis and can include auth information
 
 ## Initial setup
 
@@ -32,6 +33,14 @@ Login created:
 username: admin
 password: l{VO/2=i;6|+
 ```
+
+In order to run the application and the job queues for email workflow, the easiest option would be to use [foreman](https://github.com/ddollar/foreman).
+
+```sh
+foreman start
+```
+
+This will use the configuration from the projects Procfile to run the appropriate processes.
 
 ## Administration
 
