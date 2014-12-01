@@ -18,6 +18,7 @@ environment:
                    to false in development/test.
 * REDIS_PROVIDER - This is the url for Redis and can include auth information
 
+
 ## Initial setup
 
 First, create an admin user via the shell:
