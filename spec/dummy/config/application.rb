@@ -42,5 +42,7 @@ module Dummy
     config.app_title = 'People Finder Dummy'
 
     config.elastic_search_url = ''
+
+    config.active_record.raise_in_transactional_callbacks = true
   end
 end
