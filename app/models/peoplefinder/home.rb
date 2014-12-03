@@ -13,4 +13,8 @@ class Peoplefinder::Home
   def self.path
     [instance]
   end
+
+  def persisted?
+    true
+  end
 end
