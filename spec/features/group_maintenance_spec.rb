@@ -87,7 +87,7 @@ feature 'Group maintenance' do
     click_link('Delete this team')
 
     expect(page).to have_content("Deleted #{group.name}")
-    expect { Peoplefinder::Group.find(group) }.to raise_error(ActiveRecord::RecordNotFound)
+    expect { Peoplefinder::Group.find(group.id) }.to raise_error(ActiveRecord::RecordNotFound)
   end
 
   scenario 'Prevent deletion of a team that has memberships' do

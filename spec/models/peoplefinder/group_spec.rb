@@ -82,7 +82,7 @@ RSpec.describe Peoplefinder::Group, type: :model do
     it 'deletes the record when it is deletable' do
       allow(group).to receive(:deletable?).once.and_return(true)
       group.destroy
-      expect { described_class.find(group) }.to raise_error(ActiveRecord::RecordNotFound)
+      expect { described_class.find(group.id) }.to raise_error(ActiveRecord::RecordNotFound)
     end
   end
 
