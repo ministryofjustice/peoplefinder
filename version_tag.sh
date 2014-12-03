@@ -99,6 +99,7 @@ else
   cat <<EOT
 Usage: $0 [command]
 
+
 Commands:
    last               - list the highest semver tag (default if no command specified)
    list               - list all semver tags
