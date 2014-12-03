@@ -10,7 +10,7 @@
   }
 
   .org-list {
-    width: 300px;
+    width: 270px;
     margin: 0 0 0 -5px;
     display:inline-block;
     vertical-align: top;
@@ -60,9 +60,10 @@
     .org-list-link {
       padding-left: 44px;
       text-decoration: none;
+      // need to re-export images with whitespace on the right, for fluid positioning with pseudo right margin
       background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAUCAYAAAC58NwRAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAMNJREFUeNpiYACChsaWBiAWYCACMAIVKgDp+0B8AYgdG+prPuDTwATECVC2ARDvJ2QTSIM8Ep+gJpCGQiB+QKwmRqinQYrOo8lh9RMTWEN9zQWoTQyEbGJE5gAl1wOpAHw2MaFJJgLxB3w2MaJ7CijhAFKAxb9gm5gYiAcXQM5C94MANNbRg3QBUHEiNj+sx6cYRQMoAQIpB3yKkSMOm0cxFMNSKzZ3Y1UMc9J8YhXDNFwkVjFMwwJiFSOHfwCxsQcQYABohVFejwj8OwAAAABJRU5ErkJggg==);
       background-repeat: no-repeat;
-      background-position: 280px 12px;
+      background-position: right 12px;
       background-size: 12px 20px;
     }
   }
