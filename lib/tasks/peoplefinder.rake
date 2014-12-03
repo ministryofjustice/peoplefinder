@@ -31,7 +31,7 @@ namespace :peoplefinder do
       recipients.each do |recipient|
 
         if Peoplefinder::EmailAddress.new(recipient.email).valid_address?
-          Peoplefinder::ReminderMailer.inadequate_profile(recipient).deliver
+          Peoplefinder::ReminderMailer.inadequate_profile(recipient).deliver_later
           puts "Email sent to: #{ recipient.email }"
 
         else

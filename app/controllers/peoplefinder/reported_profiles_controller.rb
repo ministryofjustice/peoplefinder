@@ -10,7 +10,7 @@ module Peoplefinder
       init_reported_profile
 
       if @reported_profile.save
-        ReminderMailer.reported_profile(@reported_profile).deliver
+        ReminderMailer.reported_profile(@reported_profile).deliver_later
         notice :message_sent, person: @person
         redirect_to person_path(@person)
       else

@@ -7,7 +7,7 @@ end
 RSpec.describe Peoplefinder::ReminderMailer do
   describe '.inadequate_profile' do
     let(:person) { create(:person, email: 'test.user@digital.justice.gov.uk') }
-    let(:mail) { described_class.inadequate_profile(person).deliver }
+    let(:mail) { described_class.inadequate_profile(person).deliver_now }
 
     it 'sets the sender' do
       expect(mail.from).to include(Rails.configuration.support_email)
@@ -43,7 +43,7 @@ RSpec.describe Peoplefinder::ReminderMailer do
     let(:sender_email) { "test.sender@digital.justice.gov.uk" }
     let(:message) { "this is the information request message body" }
     let(:information_request) { create(:information_request, recipient: person, sender_email: sender_email, message: message) }
-    let(:mail) { described_class.information_request(information_request).deliver }
+    let(:mail) { described_class.information_request(information_request).deliver_now }
 
     it 'sets the sender' do
       expect(mail.from).to include(Rails.configuration.support_email)
@@ -81,7 +81,7 @@ RSpec.describe Peoplefinder::ReminderMailer do
         additional_details: 'more info')
     end
 
-    let(:mail) { described_class.reported_profile(reported_profile).deliver }
+    let(:mail) { described_class.reported_profile(reported_profile).deliver_now }
 
     it 'sets the recipient' do
       expect(mail.to).to include('recipient@example.com')
