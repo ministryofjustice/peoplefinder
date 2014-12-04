@@ -18,7 +18,6 @@ class Peoplefinder::Person < ActiveRecord::Base
   validates :surname, presence: true
   validates :email, presence: true
 
-
   has_many :memberships,
     -> { includes(:group).order('groups.name')  },
     dependent: :destroy
