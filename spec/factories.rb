@@ -22,6 +22,7 @@ FactoryGirl.define do
     sequence :surname do |n|
       'Surname-%04d' % n
     end
+    email { generate(:email) }
 
     factory :person_with_multiple_logins do
       login_count 10

@@ -11,6 +11,7 @@ feature "Peoplefinder::Person maintenance" do
 
     visit new_person_path
     fill_in 'Surname', with: 'Taylor'
+    fill_in 'Email', with: person_attributes[:email]
     fill_in 'Job title', with: 'Head Honcho'
     click_in_org_browser 'Digital Justice'
     check 'leader'

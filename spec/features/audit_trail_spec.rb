@@ -28,6 +28,7 @@ feature 'Audit trail' do
       visit new_person_path
       fill_in 'First name', with: 'Jon'
       fill_in 'Surname', with: 'Smith'
+      fill_in 'Email', with: person_attributes[:email]
       click_button 'Save'
 
       visit '/audit_trail'

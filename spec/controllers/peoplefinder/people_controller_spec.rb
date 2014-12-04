@@ -138,7 +138,7 @@ RSpec.describe Peoplefinder::PeopleController, type: :controller do
     describe 'with duplicate name' do
       it 'renders the confirm template' do
         create(:person, given_name: 'Bo', surname: 'Diddley')
-        post :create, person: { given_name: 'Bo', surname: 'Diddley' }
+        post :create, person: { given_name: 'Bo', surname: 'Diddley', email: person_attributes[:email] }
         expect(response).to render_template('confirm')
       end
     end
