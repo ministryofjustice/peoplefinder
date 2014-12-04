@@ -30,6 +30,10 @@ module Peoplefinder
       }
     end
 
+    def error_text(key)
+      t(key, scope: 'peoplefinder.errors')
+    end
+
     def info_text(key)
       t(key, scope: %w[peoplefinder views info_text].join('.')).html_safe
     end
