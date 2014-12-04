@@ -20,4 +20,14 @@ $(function(){
             }
         }
     });
+
+    //Feedback form timings
+    var feedbackForm = $('.submission-form')[0];
+    if(typeof(feedbackForm) !== 'undefined'){
+        Track.startTimer();
+        $('button').click(function(){
+           Track.timerEvent('Feedback', 'Form completion', 'User input');
+        });
+    }
+
 });
