@@ -65,7 +65,6 @@ en:
         profile_updated: "Updated %{person}’s profile"
         profile_deleted: "Deleted %{person}’s profile"
         create_error: "The profile was not created. Please check the errors below"
-        update_error: "The profile was not updated. Please check the errors below"
       person_image:
         no_image_uploaded: "No image has been uploaded for %{person}"
         image_cropped: "Cropped %{person}’s image"

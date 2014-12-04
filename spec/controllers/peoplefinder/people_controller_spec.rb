@@ -203,10 +203,6 @@ RSpec.describe Peoplefinder::PeopleController, type: :controller do
       it 'assigns the @groups collection' do
         expect(assigns(:groups)).to include(group)
       end
-
-      it 'shows an error message' do
-        expect(flash[:error]).to match(/update/)
-      end
     end
 
     describe 'with duplicate name' do

@@ -3,10 +3,10 @@ $darkblue: #005EA5;
 $turqoise: rgba(#28A197, 0.5);
 $opaqueblue: rgba(#2B8CC4, 0.25);
 $paleblue: rgba(#9BB7CE, 0.5);
-$error-fg: #df3034;
-$error-bg: rgba($error-fg, 0.5);
+$error-text: #DF3034;
+$error-border: $error-text;
+$error-bg: #FBE1E1;
 $notice-bg: #c9d8bd;
-$red-error: #DF3034;
 $pink-bg: #FEF7F7;
 $grey-bg: #DEE0E2;
 $green: #006435;
@@ -127,6 +127,10 @@ strong {
   }
 }
 
+hr {
+  clear: both;
+}
+
 .spacer-5 {
   height: 5px;
 }
@@ -224,24 +228,39 @@ form .text .wider   {
 
 .field_with_errors {
   input {
-    outline: solid 4px $error-fg;
+    outline: solid 4px $error-border;
   }
   .error {
     margin-left: 1em;
-    color: $error-fg;
+    color: $error-text;
   }
 }
 
+@mixin shared-error {
+  border: 0 solid $error-border;
+  background: $error-bg;
+  padding: 15px;
+  width: 60%;
+}
+
+.alert-error {
+  @include shared-error;
+
+  border-width: 4px;
+  margin-bottom: 30px;
+}
+
 .gov-uk-field-error {
-  color: $red-error;
-  background-color: $pink-bg;
-  padding: 30px 0 40px 35px;
-  border-left: 5px $red-error solid;
-  .form-control {
-    width: 366px !important;
-  }
-  label {
+  @include shared-error;
+
+  border-left-width: 4px;
+
+  input {
     width: 90%;
+  }
+
+  .error {
+    color: $error-text;
   }
 }
 
