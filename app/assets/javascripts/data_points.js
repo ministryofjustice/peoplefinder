@@ -34,9 +34,17 @@ var formTimings = function() {
     }
 };
 
+var trackReminders = function(){
+    $('.edit_review button').click(function(){
+        Track.btnEvent('send-reminder-btn', 'reminders', 'send reminder');
+    });
+
+};
+
 
 $(function(){
     reviewerInvites();
     invitationsAcceptedOrRejected();
     formTimings();
+    trackReminders();
 });
