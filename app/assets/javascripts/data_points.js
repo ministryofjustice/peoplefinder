@@ -1,10 +1,12 @@
 /* global Track, $ */
 /* jshint -W110 */
-$(function(){
-    //Reviewer invites
-    Track.btnEvent('add-reviewer-btn', 'reviewers', 'increment');
 
-    //Invitations accepted/rejected
+
+var reviewerInvites = function(){
+    Track.btnEvent('add-reviewer-btn', 'reviewers', 'increment');
+};
+
+var invitationsAcceptedOrRejected = function(){
     $('#invitation-status-update-btn').click(function(){
         var selectedRadioBtn = $("input[name='invitation[status]']:checked")[0];
 
@@ -20,14 +22,21 @@ $(function(){
             }
         }
     });
+};
 
-    //Feedback form timings
+var formTimings = function() {
     var feedbackForm = $('.submission-form')[0];
-    if(typeof(feedbackForm) !== 'undefined'){
+    if (typeof(feedbackForm) !== 'undefined') {
         Track.startTimer();
-        $('button').click(function(){
-           Track.timerEvent('Feedback', 'Form completion', 'User input');
+        $('button').click(function () {
+            Track.timerEvent('Feedback', 'Form completion', 'User input');
         });
     }
+};
 
+
+$(function(){
+    reviewerInvites();
+    invitationsAcceptedOrRejected();
+    formTimings();
 });
