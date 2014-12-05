@@ -27,9 +27,14 @@ var invitationsAcceptedOrRejected = function(){
 var formTimings = function() {
     var feedbackForm = $('.submission-form')[0];
     if (typeof(feedbackForm) !== 'undefined') {
+        var actionPathArray = feedbackForm.action.split('/');
+        var feedbackId = actionPathArray[actionPathArray.length - 1];
+        Track.eventDimensions('Feedback', 'Start', {feedbackSlot: feedbackId} );
         Track.startTimer();
         $('button').click(function () {
             Track.timerEvent('Feedback', 'Form completion', 'User input');
+            Track.eventDimensions('Feedback', 'Complete',
+                {feedbackSlot: feedbackId} );
         });
     }
 };

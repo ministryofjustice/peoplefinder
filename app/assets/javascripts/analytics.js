@@ -10,6 +10,9 @@ var Track = {
     event: function(category, action){
         ga('send', 'event', category, action);
     },
+    eventDimensions: function(category, action, dimensions){
+        ga('send', 'event', category, action, dimensions);
+    },
     startTimer: function(){
         this.timer = new Date().getTime();
     },
