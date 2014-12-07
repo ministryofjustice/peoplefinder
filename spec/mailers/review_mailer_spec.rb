@@ -76,8 +76,8 @@ describe ReviewMailer do
       expect(email).to have_body_text review.author_name
     end
 
-    it 'contains the URL for viewing the feedback' do
-      expect(email).to have_body_text review_url(review.id)
+    it 'contains a login link with the provided token' do
+      expect(email).to have_body_text token_url(token)
     end
   end
 

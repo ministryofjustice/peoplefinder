@@ -2,6 +2,6 @@ Hello <%= @recipient_name %>,
 
 <%= @submitter_name %> has left feedback for you.
 
-Visit the following URL to view the feedback:
+View your feedback by clicking on the login link below:
 
-<%= review_url(@review.id) %>
+<%= token_url(@token) %>

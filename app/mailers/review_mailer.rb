@@ -20,7 +20,6 @@ class ReviewMailer < ActionMailer::Base
   def feedback_submission(review, token)
     @recipient_name = review.subject.name
     @submitter_name = review.author_name
-    @review = review
     @token = token
     mail to: review.subject.email
   end
