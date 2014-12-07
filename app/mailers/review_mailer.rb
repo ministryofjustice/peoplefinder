@@ -16,4 +16,12 @@ class ReviewMailer < ActionMailer::Base
     @reason = review.reason_declined
     mail to: review.subject.email
   end
+
+  def feedback_submission(review, token)
+    @recipient_name = review.subject.name
+    @submitter_name = review.author_name
+    @review = review
+    @token = token
+    mail to: review.subject.email
+  end
 end

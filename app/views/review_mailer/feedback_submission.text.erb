@@ -1,0 +1,7 @@
+Hello <%= @recipient_name %>,
+
+<%= @submitter_name %> has left feedback for you.
+
+Visit the following URL to view the feedback:
+
+<%= review_url(@review.id) %>

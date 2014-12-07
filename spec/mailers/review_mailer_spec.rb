@@ -58,7 +58,27 @@ describe ReviewMailer do
     it 'contains a login link with the provided token' do
       expect(email).to have_body_text token_url(token)
     end
+  end
 
+  describe 'feedback submission email' do
+    let(:review) { double(id: 27, author_name: author_name, subject: subject) }
+    let(:email) { described_class.feedback_submission(review, token) }
+
+    it 'is sent to the feedback subject' do
+      expect(email.to.first).to eql review.subject.email
+    end
+
+    it 'contains the recipients name' do
+      expect(email).to have_body_text review.subject.name
+    end
+
+    it 'contains the authors name' do
+      expect(email).to have_body_text review.author_name
+    end
+
+    it 'contains the URL for viewing the feedback' do
+      expect(email).to have_body_text review_url(review.id)
+    end
   end
 
 end
