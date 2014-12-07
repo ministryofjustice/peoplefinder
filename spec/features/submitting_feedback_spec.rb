@@ -36,6 +36,9 @@ feature 'Submitting feedback' do
     expect(submission.how_we_work_comments).to eql('Could learn to...')
     expect(submission.status).to eql(:submitted)
 
+    expect(last_email.subject).to eql 'You have received new feedback'
+    expect(last_email.to.first).to eql(Review.last.subject.email)
+
     click_link 'View feedback'
     expect(page).to have_text("Given by #{me.name}")
   end
