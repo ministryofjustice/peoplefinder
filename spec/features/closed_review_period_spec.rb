@@ -66,7 +66,7 @@ feature 'Closed review period' do
     visit token_path(me.tokens.create)
     click_link('Your direct reports')
 
-    click_link 'Download as CSV'
+    click_link 'Download all as CSV'
 
     expect(page.response_headers['Content-Disposition']).to match('attachment')
     expect(page.body).to match(/^Name,Charlie$/)
