@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.describe Peoplefinder::Person, type: :model do
   let(:person) { build(:person) }
   it { should validate_presence_of(:surname) }
+  it { should validate_presence_of(:email) }
   it { should have_many(:groups) }
 
   describe '.name' do
@@ -27,12 +28,6 @@ RSpec.describe Peoplefinder::Person, type: :model do
       person = create(:person, email: 'user.example@digital.justice.gov.uk')
       person.reload
       expect(person.slug).to eql('user-example')
-    end
-
-    it 'generates from the name if there is no email' do
-      person = create(:person, given_name: 'Bobby', surname: 'Tables')
-      person.reload
-      expect(person.slug).to eql('bobby-tables')
     end
   end
 

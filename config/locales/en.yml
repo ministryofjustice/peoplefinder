@@ -65,7 +65,6 @@ en:
         profile_updated: "Updated %{person}’s profile"
         profile_deleted: "Deleted %{person}’s profile"
         create_error: "The profile was not created. Please check the errors below"
-        update_error: "The profile was not updated. Please check the errors below"
       person_image:
         no_image_uploaded: "No image has been uploaded for %{person}"
         image_cropped: "Cropped %{person}’s image"
@@ -111,6 +110,8 @@ en:
       updated_address_to_email:
         subject: "This email address has been added to a profile on MOJ People Finder"
     errors:
+      person:
+        general_message: "You need to add more information to complete your profile - see below."
       groups:
         memberships_exist: "cannot be deleted until all the memberships have been removed"
       tokens:
@@ -149,6 +150,11 @@ en:
         skills_and_expertise_hint: "You can add tags to your profile to allow people to find you based on<br/>your specific skills or expertise. Add them using the field below and<br/>remove them at any time with the 'X'."
         team_deletable: "Note that team deletion cannot be undone."
         team_not_deletable: "Team deletion is only possible if there are no people associated with it."
+  activerecord:
+    errors:
+      models:
+        peoplefinder/person:
+          blank: "Required"
 
   helpers:
     submit:

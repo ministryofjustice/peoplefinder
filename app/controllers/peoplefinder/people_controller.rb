@@ -45,7 +45,6 @@ module Peoplefinder
       if @person.valid?
         confirm_or_update
       else
-        error :update_error
         render :edit
       end
     end

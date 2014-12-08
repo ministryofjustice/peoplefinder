@@ -5,6 +5,9 @@ feature 'Person maintenance' do
     omni_auth_log_in_as 'test.user@digital.justice.gov.uk'
   end
 
+  let(:edit_profile_page) { Pages::EditProfile.new }
+  let(:new_profile_page) { Pages::NewProfile.new }
+
   scenario 'Creating a person with a complete profile', js: true do
     create(:group, name: 'Digital')
 
@@ -18,12 +21,12 @@ feature 'Person maintenance' do
   end
 
   scenario 'Creating an invalid person' do
-    visit new_person_path
-    click_button 'Save'
-    expect(page).to have_text('Please review the problems')
-    within('div.person_surname') do
-      expect(page).to have_text('can\'t be blank')
-    end
+    new_profile_page.load
+    new_profile_page.form.save.click
+
+    expect(new_profile_page.form).to have_global_error
+    expect(new_profile_page.form).to have_surname_error
+    expect(new_profile_page.form).to have_email_error
   end
 
   scenario 'Creating a person with an identical name', js: true do
@@ -50,6 +53,7 @@ feature 'Person maintenance' do
 
     fill_in 'First name', with: person_attributes[:given_name]
     fill_in 'Surname', with: person_attributes[:surname]
+    fill_in 'Email', with: person_attributes[:email]
     click_button 'Save'
 
     click_link 'Return to home page'
@@ -103,20 +107,23 @@ feature 'Person maintenance' do
   end
 
   scenario 'Editing an invalid person' do
-    visit person_path(create(:person, person_attributes))
-    click_link 'Edit this profile'
-    fill_in 'Surname', with: ''
-    click_button 'Save'
+    person = create(:person, person_attributes)
 
-    expect(page).to have_text('Please review the problems')
-    within('div.person_surname') do
-      expect(page).to have_text('can\'t be blank')
-    end
+    edit_profile_page.load(slug: person.slug)
+
+    edit_profile_page.form.surname.set ''
+    edit_profile_page.form.email.set ''
+    edit_profile_page.form.save.click
+
+    expect(edit_profile_page.form).to have_global_error
+    expect(edit_profile_page.form).to have_surname_error
+    expect(edit_profile_page.form).to have_email_error
   end
 
   scenario 'Adding a profile image' do
     visit new_person_path
     fill_in 'Surname', with: person_attributes[:surname]
+    fill_in 'Email', with: person_attributes[:email]
     attach_file 'person[image]', sample_image
     expect(page).not_to have_link('Crop image')
     click_button 'Save'
@@ -154,13 +161,6 @@ feature 'Person maintenance' do
       expect(page).not_to have_text('Profile completeness')
     end
 
-    scenario 'when it is incomplete and there is no email address' do
-      person.update_attributes email: nil
-      visit person_path(person)
-      expect(page).not_to have_text('Profile completeness')
-      expect(page).not_to have_link('Ask the person to update their details')
-    end
-
     scenario 'when it is incomplete, I request more information' do
       visit person_path(person)
       expect(page).not_to have_text('Profile completeness')
@@ -190,6 +190,7 @@ feature 'Person maintenance' do
     expect(page).to have_text('You are creating a profile')
 
     fill_in 'Surname', with: person_attributes[:surname]
+    fill_in 'Email', with: person_attributes[:email]
     click_button 'Save'
     expect(page).to have_selector('.search-box')
     expect(page).not_to have_text('You are currently editing this profile')
@@ -258,6 +259,7 @@ feature 'Person maintenance' do
   scenario 'Adding skills and expertise to a new profile' do
     visit new_person_path
     fill_in 'Surname', with: 'Smith'
+    fill_in 'Email', with: person_attributes[:email]
     fill_in 'person_tags', with: 'ruby,cakes and bakes'
     click_button 'Save'
 

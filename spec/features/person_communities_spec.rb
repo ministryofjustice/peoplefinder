@@ -12,6 +12,7 @@ feature "Communities" do
     visit new_person_path
     fill_in 'First name', with: 'Jane'
     fill_in 'Surname', with: 'Doe'
+    fill_in 'Email', with: person_attributes[:email]
     select('Advanced cybernetics', from: 'Community')
     click_button 'Save'
 

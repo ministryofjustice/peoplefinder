@@ -51,6 +51,35 @@ SimpleForm.setup do |config|
     # b.use :full_error, wrap_with: { tag: :span, class: :error }
   end
 
+  config.wrappers :with_errors, class: :input,
+                  hint_class: :field_with_hint, error_class: 'gov-uk-field-error' do |b|
+    # Determines whether to use HTML5 (:email, :url, ...)
+    # and required attributes
+    b.use :html5
+
+    # Calculates placeholders automatically from I18n
+    # You can also pass a string as f.input placeholder: "Placeholder"
+    b.use :placeholder
+
+    # Calculates maxlength from length validations for string inputs
+    b.optional :maxlength
+
+    # Calculates pattern from format validations for string inputs
+    b.optional :pattern
+
+    # Calculates min and max from length validations for numeric inputs
+    b.optional :min_max
+
+    # Calculates readonly automatically from readonly attributes
+    b.optional :readonly
+
+    ## Inputs
+    b.use :label
+    b.use :hint,  wrap_with: { tag: :span, class: :hint }
+    b.use :error, wrap_with: { div: :span, class: :error }
+    b.use :input
+  end
+
   # The default wrapper to be used by the FormBuilder.
   config.default_wrapper = :default
 

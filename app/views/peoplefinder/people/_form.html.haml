@@ -1,11 +1,16 @@
 = editing_mode(building)
-= simple_form_for @person, :html => {:multipart => true} do |f|
+= simple_form_for @person, wrapper: :with_errors, html: {:multipart => true}, defaults: { required: false } do |f|
 
-  = f.error_notification
+  - if @person.errors.any?
+    .alert.alert-error
+      %p= error_text('person.general_message')
+
+
   .form-group
     = f.input :given_name, as: :string, label: 'First name'
   .form-group
-    = f.input :surname, as: :string, required: false
+    = f.input :surname, as: :string
+
   - if feature_enabled?("communities")
     .form-group
       %label.form-label-bold{ for: :person_community_id } Community

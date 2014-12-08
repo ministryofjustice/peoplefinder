@@ -80,12 +80,6 @@ feature 'Person edit notifications' do
     expect { click_link('Delete this profile') }.not_to change { ActionMailer::Base.deliveries.count }
   end
 
-  scenario 'Deleting a person with nil email' do
-    person = create(:person, email: nil)
-    visit edit_person_path(person)
-    expect { click_link('Delete this profile') }.not_to change { ActionMailer::Base.deliveries.count }
-  end
-
   scenario 'Editing a person with different email' do
     person = create(:person, given_name: 'Bob', surname: 'Smith', email: 'bob.smith@digital.justice.gov.uk')
     visit person_path(person)
@@ -109,14 +103,6 @@ feature 'Person edit notifications' do
 
   scenario 'Editing a person with same email' do
     person = create(:person, given_name: 'Bob', surname: 'Smith', email: 'test.user@digital.justice.gov.uk')
-    visit person_path(person)
-    click_link 'Edit this profile'
-    fill_in 'Surname', with: 'Smelly Pants'
-    expect { click_button 'Save' }.not_to change { ActionMailer::Base.deliveries.count }
-  end
-
-  scenario 'Editing a person with nil email' do
-    person = create(:person, given_name: 'Bob', surname: 'Smith', email: nil)
     visit person_path(person)
     click_link 'Edit this profile'
     fill_in 'Surname', with: 'Smelly Pants'
