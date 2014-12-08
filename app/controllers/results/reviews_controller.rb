@@ -17,7 +17,6 @@ module Results
 
     def render_index_html
       show_tabs unless scoped_by_subject?
-      @params_for_csv = params.slice(:controller, :action, :id)
       @review_aggregator = ReviewAggregator.new(user.reviews)
     end
 
