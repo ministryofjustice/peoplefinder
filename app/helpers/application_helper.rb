@@ -15,11 +15,6 @@ module ApplicationHelper
     Rails.configuration.app_title
   end
 
-  def link_to_alternative_format(text, format)
-    filtered_params = params.slice(:controller, :action, :id)
-    link_to(text, filtered_params.merge(format: format))
-  end
-
   def active_tab
     case controller_name
     when 'reviews'
