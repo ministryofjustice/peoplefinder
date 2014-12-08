@@ -124,6 +124,11 @@ img.preview {
 }
 
 form {
+  .form-error-list {
+    padding-left: 20px;
+    list-style-type: decimal;
+  }
+
   .file {
     margin-top: 15px;
     border: 0;

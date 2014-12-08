@@ -4,6 +4,10 @@
   - if @person.errors.any?
     .alert.alert-error
       %p= error_text('person.general_message')
+      %ol.form-error-list
+        - @person.errors.each do |field, error|
+          %li
+            = link_to "#{field.capitalize} #{error.downcase}", "#person_#{field}"
 
 
   .form-group
