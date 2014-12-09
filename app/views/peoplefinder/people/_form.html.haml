@@ -1,5 +1,5 @@
 = editing_mode(building)
-= simple_form_for @person, wrapper: :with_errors, html: {:multipart => true}, defaults: { required: false } do |f|
+= form_for @person, html: {:multipart => true} do |f|
 
   - if @person.errors.any?
     .alert.alert-error
@@ -11,9 +11,15 @@
 
 
   .form-group
-    = f.input :given_name, as: :string, label: 'First name'
-  .form-group
-    = f.input :surname, as: :string
+    = f.label :given_name, 'First name', class: 'form-label-bold'
+    = f.text_field :given_name, class: 'form-control'
+
+  .form-group{ :class => ('gov-uk-field-error' if @person.errors.include?(:surname)) }
+    = f.label :surname, class: 'form-label-bold' do
+      Surname
+      %span.error= @person.errors[:surname].first if @person.errors.include?(:surname)
+    = f.text_field :surname, class: 'form-control'
+
 
   - if feature_enabled?("communities")
     .form-group
@@ -26,19 +32,27 @@
 
       .phone_numbers{ style: ('display:none' if @person.no_phone)}
         .form-group
-          = f.input :primary_phone_number, as: :string, label: 'Main phone number'
+          = f.label :primary_phone_number, 'Main phone number', class: 'form-label-bold'
+          = f.text_field :primary_phone_number, class: 'form-control'
         .form-group
-          = f.input :secondary_phone_number, as: :string, label: 'Any other phone number'
+          = f.label :secondary_phone_number, 'Any other phone number', class: 'form-label-bold'
+          = f.text_field :secondary_phone_number, class: 'form-control'
       .form-checkbox
-        = f.input :no_phone, as: :boolean, label: 'No phone number'
+        = f.check_box :no_phone
+        = f.label :no_phone, 'No phone number'
+
       .emails
-        .form-group
-          = f.input :email, as: :string, label: 'Email'
+        .form-group{ :class => ('gov-uk-field-error' if @person.errors.include?(:email)) }
+          = f.label :email, class: 'form-label-bold' do
+            Email
+            %span.error= @person.errors[:surname].first if @person.errors.include?(:email)
+          = f.text_field :email, class: 'form-control'
 
       .form-group
-        %label.form-label-bold{ for: :person_location } Location
-        %p.form-hint= info_text('location_hint')
-        = f.input :location, as: :string, label: false
+        = f.label :location, class: 'form-label-bold' do
+          Location
+          %p.form-hint= info_text('location_hint')
+        = f.text_field :location, class: 'form-control'
 
 
   .form-group
@@ -49,36 +63,35 @@
 
     = link_to 'Add another role', add_membership_people_path(id: @person.to_param), id: 'add_membership'
 
-  .form-group
-    %h2.h3.line-above Working days
-
-  .form-checkbox
-    %fieldset
-      %legend
-        - Peoplefinder::Person::DAYS_WORKED.each do |day|
-          = f.input day, as: :boolean, label: day_name(day)
+  .form-group.line-above
+    %fieldset#working-days
+      %legend.form-label-bold Working days
+      - Peoplefinder::Person::DAYS_WORKED.each do |day|
+        = f.check_box day
+        = f.label day, day_name(day)
 
   .form-group
-    %h2.h3.no-line
-      %label{ for: :person_description } Extra information
-    %p.form-hint= info_text('notes_field_hint')
-    = f.input :description, label: false, input_html: { class: 'wider' }
+    = f.label :description, class: 'form-label-bold' do
+      Extra information
+      %p.form-hint= info_text('notes_field_hint')
+    = f.text_area :description, class: 'form-control'
 
   - if feature_enabled?(:profile_tags)
-    .form-group
-      %h2.h3.line-above Skills and expertise
-      %p.form-hint= info_text('skills_and_expertise_hint')
+    .form-group.line-above
+      = f.label :tags, class: 'form-label-bold' do
+        Skills and expertise
+        %p.form-hint= info_text('skills_and_expertise_hint')
 
       #person_tag_chooser
       = hidden_field_tag :tag_list, Peoplefinder::Person.tag_list
-      = f.input :tags, as: :string, label: false
+      = f.text_field :tags, class: 'person_tags'
 
 
-  .form-group
-    %h2.h3.line-above Photo
-    %p.form-hint= info_text('photo_upload_hint')
-    %label.visuallyhidden{ for: :person_image } Choose or replace file
-    = f.input :image, as: :file, label: false
+  .form-group.line-above
+    = f.label :image, class: 'form-label-bold' do
+      Photo
+      %p.form-hint= info_text('photo_upload_hint')
+    = f.file_field :image, class: 'form-control file'
 
     = profile_image_tag @person, @person.image.medium, class: 'preview'
     %p
@@ -86,6 +99,6 @@
         = link_to 'Crop image', edit_person_image_path(@person)
 
   .form-group.save-cancel-actions
-    = f.button :submit
+    = f.submit class: 'button'
     .cancel
       = link_to 'Cancel and go to profile page', @person.new_record? ? :back : @person
