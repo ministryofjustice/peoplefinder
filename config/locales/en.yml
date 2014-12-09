@@ -154,7 +154,7 @@ en:
     errors:
       models:
         peoplefinder/person:
-          blank: "Required"
+          blank: "is required"
 
   helpers:
     submit:
