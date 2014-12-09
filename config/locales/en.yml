@@ -188,8 +188,8 @@ en:
     password_reset_cta: 'Forgot password'
   reviews:
     default_invitation_message: >-
-      I'd like you to offer 360 feedback on my performance when I've worked
-      with you.
+      Please can you use this online service - 360° Appraisals - to give
+      feedback about my work.
     statuses:
       no_response: 'Pending'
       declined: 'Declined'
