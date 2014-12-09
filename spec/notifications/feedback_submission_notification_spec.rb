@@ -6,7 +6,7 @@ RSpec.describe FeedbackSubmissionNotification do
     token = double(:token)
     mail = double(:mail)
 
-    expect(review.tokens).to receive(:create!).and_return(token)
+    expect(review.subject.tokens).to receive(:create!).and_return(token)
     expect(ReviewMailer).to receive(:feedback_submission).with(review, token).
       and_return(mail)
     expect(mail).to receive(:deliver)
