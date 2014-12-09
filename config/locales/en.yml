@@ -319,9 +319,7 @@ en:
         mine:
           one: 'You’ve asked one person to give you feedback'
           other: 'You’ve asked %{count} people to give you feedback'
-        theirs:
-          one: 'One person has been asked for feedback'
-          other: '%{count} people have been asked for feedback'
+        theirs: 'Feedback responses: %{count}'
       add_reviewer_title:
         none:
           mine: 'Invite people to give you feedback'
