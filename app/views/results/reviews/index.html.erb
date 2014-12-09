@@ -4,8 +4,10 @@
   <% end %>
 <% end %>
 
-<% content_for :page_title do %>
-  <%= role_translate('views.results.feedback_title') %>
+<% if third_party? %>
+  <% content_for :page_title do %>
+    <%= role_translate('views.results.feedback_title') %>
+  <% end %>
 <% end %>
 
 <% unless scoped_by_subject? %>

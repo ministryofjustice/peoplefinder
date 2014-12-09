@@ -305,7 +305,6 @@ en:
           action: 'Action'
     results:
       feedback_title:
-        mine: 'SCS 360° Appraisals'
         theirs: 'All feedback for %{name}'
       feedback_subtitle:
         mine: 'All your feedback'
@@ -326,7 +325,6 @@ en:
           mine: 'Ask another person to provide feedback about you'
           theirs: 'Ask another person to provide feedback about %{name}'
       index_title:
-        mine: 'SCS 360° Appraisals'
         theirs: 'Feedback for %{name}'
       show_review_title:
         mine: 'Feedback for you'

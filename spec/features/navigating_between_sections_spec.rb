@@ -17,7 +17,7 @@ feature 'Navigating between sections of the site' do
         visit token_url(token)
 
         expect_no_back_link
-        expect_page_header 'SCS 360° Appraisals'
+        expect_no_page_header
         expect_tabs
         expect_page_subheader 'Feedback participants'
       end
@@ -29,7 +29,7 @@ feature 'Navigating between sections of the site' do
         visit token_url(token)
 
         expect_no_back_link
-        expect_page_header 'SCS 360° Appraisals'
+        expect_no_page_header
         expect_tabs
         expect_page_subheader 'Feedback received'
       end
@@ -54,7 +54,7 @@ feature 'Navigating between sections of the site' do
         click_link 'Your direct reports'
 
         expect_no_back_link
-        expect_page_header 'SCS 360° Appraisals'
+        expect_no_page_header
         expect_tabs
         expect_page_subheader 'Your direct reports'
       end
@@ -110,7 +110,7 @@ feature 'Navigating between sections of the site' do
         click_link 'Feedback requests'
 
         expect_no_back_link
-        expect_page_header 'SCS 360° Appraisals'
+        expect_no_page_header
         expect_tabs
         expect_page_subheader 'Requests for feedback'
       end
@@ -159,7 +159,7 @@ feature 'Navigating between sections of the site' do
         visit token_url(token)
 
         expect_no_back_link
-        expect_page_header 'SCS 360° Appraisals'
+        expect_no_page_header
         expect_tabs
         expect_page_subheader 'All your feedback'
       end
@@ -171,7 +171,7 @@ feature 'Navigating between sections of the site' do
         click_link 'Your direct reports'
 
         expect_no_back_link
-        expect_page_header 'SCS 360° Appraisals'
+        expect_no_page_header
         expect_tabs
         expect_page_subheader 'Feedback for your direct reports'
       end
@@ -197,6 +197,10 @@ feature 'Navigating between sections of the site' do
 
   def expect_no_back_link
     expect(page).not_to have_css(".top-left a")
+  end
+
+  def expect_no_page_header
+    expect(page).not_to have_selector('h1')
   end
 
   def expect_page_header(text)
