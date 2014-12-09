@@ -74,6 +74,10 @@ class Review < ActiveRecord::Base
     status == :submitted
   end
 
+  def accepted?
+    status == :accepted
+  end
+
   def declined?
     status == :declined
   end

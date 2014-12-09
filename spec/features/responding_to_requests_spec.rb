@@ -16,8 +16,9 @@ feature 'Responding to feedback requests' do
       choose 'Accept'
       click_button 'Update'
 
-      expect(Review.last.status).to eql(:accepted)
-      expect(page).to have_text('Thank you for accepting the invitation')
+      review.reload
+      expect(review.status).to eq(:accepted)
+      expect(current_path).to eq(edit_submission_path(review))
     end
 
     scenario 'Decline a feedback request with a reason' do
@@ -25,8 +26,9 @@ feature 'Responding to feedback requests' do
       fill_in 'Reason for declining', with: 'Some stuff'
       click_button 'Update'
 
-      expect(Review.last.reason_declined).to eql('Some stuff')
-      expect(Review.last.status).to eql(:declined)
+      review.reload
+      expect(review.reason_declined).to eq('Some stuff')
+      expect(review.status).to eq(:declined)
     end
 
     scenario 'Decline a feedback request and email subject of declined status with reason' do

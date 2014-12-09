@@ -13,27 +13,62 @@ RSpec.describe InvitationsController, type: :controller do
         authenticate_as(author)
       end
 
-      it 'redirects to the replies list' do
-        put :update, id: invitation.id, invitation: { status: :accepted }
-        expect(response).to redirect_to(replies_path)
+      context 'when accepted' do
+        before do
+          put :update, id: invitation.id, invitation: { status: :accepted }
+        end
+
+        it 'changes the invitation to accepted' do
+          expect(invitation.reload.status).to eq(:accepted)
+        end
+
+        it 'redirects to edit the review' do
+          expect(response).to redirect_to(edit_submission_path(invitation.id))
+        end
       end
 
-      it 'changes the invitation to accepted' do
-        put :update, id: invitation.id, invitation: { status: :accepted }
-        expect(invitation.reload.status).to eql(:accepted)
+      context 'when declined with a message' do
+        before do
+          put :update,
+            id: invitation.id,
+            invitation: { status: :declined, reason_declined: 'Because' }
+        end
+
+        it 'changes the invitation to declined' do
+          expect(invitation.reload.status).to eq(:declined)
+        end
+
+        it 'redirects to the replies list' do
+          expect(response).to redirect_to(replies_path)
+        end
       end
 
-      it 'changes the invitation to declined, but only when a reason is given' do
-        put :update, id: invitation.id, invitation: { status: :declined }
-        expect(invitation.reload.status).to eql(:no_response)
+      context 'when declined without a message' do
+        before do
+          put :update, id: invitation.id, invitation: { status: :declined }
+        end
 
-        put :update, id: invitation.id, invitation: { status: :declined, reason_declined: 'Busy pondering the meaning of life' }
-        expect(invitation.reload.status).to eql(:declined)
+        it 'does not change the invitation to declined' do
+          expect(invitation.reload.status).to eq(:no_response)
+        end
+
+        it 'redirects to the replies list' do
+          expect(response).to redirect_to(replies_path)
+        end
       end
 
-      it 'returns an error message is the status was invalid' do
-        put :update, id: invitation.id, invitation: { status: :cheese_sandwich }
-        expect(request.flash[:error]).to_not be_empty
+      context 'when status is invalid' do
+        before do
+          put :update, id: invitation.id, invitation: { status: :cheese_sandwich }
+        end
+
+        it 'returns an error message' do
+          expect(request.flash[:error]).to_not be_empty
+        end
+
+        it 'redirects to the replies list' do
+          expect(response).to redirect_to(replies_path)
+        end
       end
     end
 
