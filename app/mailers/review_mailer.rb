@@ -1,4 +1,6 @@
 class ReviewMailer < ActionMailer::Base
+  helper :application
+
   default from: Rails.configuration.noreply_email
 
   def feedback_request(review, token)

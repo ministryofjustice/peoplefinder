@@ -5,6 +5,7 @@ feature 'Getting feedback' do
 
   before do
     open_review_period
+    ReviewPeriod.closes_at = Time.new(2020, 12, 9, 16, 30)
     token = create(:token, user: me)
     visit token_path(token)
   end
@@ -171,6 +172,7 @@ feature 'Getting feedback' do
   def check_mail_attributes(mail, review)
     expect(mail.subject).to eq('360 feedback request from you')
     expect(mail.body.encoded).to match(review.invitation_message)
+    expect(mail.body.encoded).to match('9 December 2020')
     link = links_in_email(mail).first
     expect(link).to eql(token_url(review.tokens.last))
   end
