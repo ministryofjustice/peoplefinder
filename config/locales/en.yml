@@ -316,9 +316,7 @@ en:
       feedback_not_received_title: 'Feedback participants'
       feedback_received_title: 'Feedback received'
       feedback_received_standfirst:
-        mine:
-          one: 'You’ve asked one person to give you feedback'
-          other: 'You’ve asked %{count} people to give you feedback'
+        mine: 'Feedback responses: %{count}'
         theirs: 'Feedback responses: %{count}'
       add_reviewer_title:
         none:
