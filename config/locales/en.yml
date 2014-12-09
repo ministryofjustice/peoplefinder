@@ -112,6 +112,8 @@ en:
     errors:
       person:
         general_message: "You need to add more information to complete your profile - see below."
+      group:
+        general_message: "You need to add more information - see below."
       groups:
         memberships_exist: "cannot be deleted until all the memberships have been removed"
       tokens:
@@ -154,6 +156,8 @@ en:
     errors:
       models:
         peoplefinder/person:
+          blank: "is required"
+        peoplefinder/group:
           blank: "is required"
 
   helpers:
