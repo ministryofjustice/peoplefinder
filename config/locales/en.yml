@@ -110,6 +110,8 @@ en:
       updated_address_to_email:
         subject: "This email address has been added to a profile on MOJ People Finder"
     errors:
+      information_request:
+        message_required: "You must enter a message to be sent to the person"
       person:
         general_message: "You need to add more information to complete your profile - see below."
       group:
@@ -141,7 +143,6 @@ en:
         hint_team_email_address: "Enter an email for people to get in touch with the team"
         hint_team_responsibilities: "What are the team's collective responsibilities?"
         information_request_label: "Enter your message"
-        information_request_label_error: "You must enter a message to be sent to the person"
         location_hint: "(eg 10.30, 102 Petty France)"
         notes_field_hint: "(eg I'm based at Bristol Crown Court on Mondays)"
         photo_upload_hint: "Add or replace an image. (Please, no files over 3MB.)"
@@ -168,3 +169,6 @@ en:
       group:
         create: "Save"
         update: "Save"
+      information_request:
+        create: "Submit"
+        create: "Submit"

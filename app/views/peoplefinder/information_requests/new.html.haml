@@ -1,13 +1,20 @@
 - @editing_mode = true
 %h1.no-line= @page_title = 'Request profile update'
 
-= simple_form_for @information_request, url: person_information_requests_path(@person) do |f|
+= form_for @information_request, url: person_information_requests_path(@person) do |f|
 
-  .form-group{ class: ('gov-uk-field-error' if @errors = @information_request.errors.any?) }
-    = f.input :message, label: info_text("information_request_label#{ '_error' if @errors }"),
-                        error: false, required: false
+  -#.form-group{ class: ('gov-uk-field-error' if @errors = @information_request.errors.any?) }
+  -#  = f.input :message, label: info_text("information_request_label#{ '_error' if @errors }"),
+  -#                      error: false, required: false
+
+  .form-group{ :class => ('gov-uk-field-error' if @information_request.errors.include?(:message)) }
+    = f.label :message, class: 'form-label-bold' do
+      = info_text('information_request_label')
+      %span.error= error_text('information_request.message_required') if @information_request.errors.include?(:message)
+      = f.text_area :message, class: 'form-control'
+
 
   .form-group
-    = f.button :submit, 'Submit'
+    = f.submit class: 'button'
     .cancel
       = link_to 'Cancel and return to profile page', person_path(@person)
