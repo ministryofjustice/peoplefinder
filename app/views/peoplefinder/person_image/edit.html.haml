@@ -3,7 +3,7 @@
 
 %h1= @person.name
 
-= simple_form_for @person, url: person_image_path(@person), method: :put do |f|
+= form_for @person, url: person_image_path(@person), method: :put do |f|
   .form-hint Move and resize the box to crop your profile image.
   .form-group
     = profile_image_tag @person, @person.image.croppable.url, id: 'croppable'
@@ -12,7 +12,7 @@
       = f.hidden_field x
 
   .form-group
-    = f.button :submit, 'Update Image'
+    = f.submit 'Update Image', class: 'button'
 
   .form-group
     %p= link_to 'Back', edit_person_path(@person)
