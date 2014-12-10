@@ -303,7 +303,8 @@ en:
       your_direct_reports: 'Manage feedback'
   views:
     replies:
-      index_title: 'Requests for feedback'
+      introductory_text: |
+        * When giving feedback, focus on ‘what’ and ‘how’, giving real examples.
       numerical_summary:
         one: 'One person has asked you for feedback'
         other: '%{count} people have asked you for feedback'
@@ -325,8 +326,14 @@ en:
       return_to_dashboard: 'Dashboard'
       return_to_user: 'Feedback for %{name}'
       feedback_not_received_title: 'Feedback participants'
-      feedback_received_title: 'Feedback received'
       numerical_summary: 'Feedback responses: %{count}'
+      introductory_text: |
+        * When asking for feedback, agree with your line manager who you will
+          ask to feedback about you.
+        * Include at least 1 colleague from each of these categories: 1) line
+          manager; 2) direct reports; 3) peers; 4) people outside your area (eg
+          stakeholders).
+        * We recommend you include all direct reports.
       add_reviewer_title:
         none:
           mine: 'Invite people to give you feedback'
@@ -365,7 +372,9 @@ en:
         action_header: 'Action'
       view_feedback: 'View feedback'
     users:
-      index_title: 'Your direct reports'
+      introductory_text: |
+        * Use this service to request and review feedback on behalf of your
+          direct reports
       list:
         name_header: 'Name'
         status_header: 'Feedback status'

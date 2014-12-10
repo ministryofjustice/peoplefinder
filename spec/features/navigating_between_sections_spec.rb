@@ -33,7 +33,6 @@ feature 'Navigating between sections of the site' do
         expect_no_page_header
         expect_introductory_text
         expect_tabs
-        expect_page_subheader 'Feedback received'
       end
 
       scenario 'Viewing a review I have received' do
@@ -59,7 +58,6 @@ feature 'Navigating between sections of the site' do
         expect_no_page_header
         expect_introductory_text
         expect_tabs
-        expect_page_subheader 'Your direct reports'
       end
 
       scenario 'Viewing direct report with no reviews' do
@@ -86,7 +84,6 @@ feature 'Navigating between sections of the site' do
         expect_back_link '/users'
         expect_page_header 'Feedback for Charlie'
         expect_no_tabs
-        expect_page_subheader 'Feedback received'
       end
 
       scenario 'Viewing a review a direct report has received' do
@@ -116,7 +113,6 @@ feature 'Navigating between sections of the site' do
         expect_no_page_header
         expect_introductory_text
         expect_tabs
-        expect_page_subheader 'Requests for feedback'
       end
 
       scenario 'Submitting feedback' do
