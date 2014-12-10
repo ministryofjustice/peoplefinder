@@ -118,14 +118,6 @@ en:
         general_message: "You need to add more information - see below."
       groups:
         memberships_exist: "cannot be deleted until all the memberships have been removed"
-    simple_form:
-      "yes": 'Yes'
-      "no": 'No'
-      required:
-        text: 'required'
-        mark: ''
-      error_notification:
-        default_message: "Please review the problems below:"
     views:
       info_text:
         building_alert: "You are creating a profile - click the Save button to finish"
