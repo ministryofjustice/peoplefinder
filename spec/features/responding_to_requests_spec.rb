@@ -12,7 +12,7 @@ feature 'Responding to feedback requests' do
     let(:review) { create(:no_response_review) }
 
     scenario 'Accept a feedback request' do
-      expect(page).to have_text 'One person has asked you for feedback'
+      expect(page).to have_text 'Feedback responses: 1'
       choose 'Accept'
       click_button 'Update'
 

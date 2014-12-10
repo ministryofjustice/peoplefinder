@@ -305,9 +305,7 @@ en:
     replies:
       introductory_text: |
         * When giving feedback, focus on ‘what’ and ‘how’, giving real examples.
-      numerical_summary:
-        one: 'One person has asked you for feedback'
-        other: '%{count} people have asked you for feedback'
+      numerical_summary: 'Feedback responses: %{count}'
       survey_text: |
         How was your experience? Please provide us with your views on this
         service by completing [a questionnaire](%{survey_url}).
