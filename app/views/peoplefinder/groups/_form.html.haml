@@ -30,14 +30,14 @@
   - if @group.editable_parent?
     .form-group.group-parent.editable-container
       - if params[:group_id]
-        = f.input :parent_id, as: :hidden
+        = f.hidden_field :parent_id
       - else
         %label.form-label-bold Team parent
         %p.form-hint Use this to change where in the organisation this team is located.
 
         .editable-fields{ style: ('display:none' unless @group.new_record?) }
           = render layout: 'peoplefinder/shared/org_browser' do
-            = f.input :parent_id, as: :hidden
+            = f.hidden_field :parent_id
 
         -unless @group.new_record?
           .editable-summary.parent-summary
