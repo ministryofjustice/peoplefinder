@@ -304,7 +304,7 @@ en:
   views:
     replies:
       index_title: 'Requests for feedback'
-      index_standfirst:
+      numerical_summary:
         one: 'One person has asked you for feedback'
         other: '%{count} people have asked you for feedback'
       survey_text: |
@@ -326,9 +326,7 @@ en:
       return_to_user: 'Feedback for %{name}'
       feedback_not_received_title: 'Feedback participants'
       feedback_received_title: 'Feedback received'
-      feedback_received_standfirst:
-        mine: 'Feedback responses: %{count}'
-        theirs: 'Feedback responses: %{count}'
+      numerical_summary: 'Feedback responses: %{count}'
       add_reviewer_title:
         none:
           mine: 'Invite people to give you feedback'
