@@ -368,9 +368,6 @@ en:
       view_feedback: 'View feedback'
     users:
       index_title: 'Your direct reports'
-      index_standfirst:
-        one: 'You have one direct report who requires feedback'
-        other: 'You have %{count} direct reports who require feedback'
       list:
         name_header: 'Name'
         status_header: 'Feedback status'

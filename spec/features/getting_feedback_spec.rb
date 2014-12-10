@@ -141,7 +141,6 @@ feature 'Getting feedback' do
 
     visit users_path
 
-    expect(page).to have_text('You have one direct report who requires feedback')
     within('#users') do
       expect(page).to have_link('Marvin Managee', href: user_reviews_path(direct_report))
       expect(page).to have_text('1 of 2 complete')
