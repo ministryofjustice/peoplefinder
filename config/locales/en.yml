@@ -155,11 +155,8 @@ en:
         team_not_deletable: "Team deletion is only possible if there are no people associated with it."
   activerecord:
     errors:
-      models:
-        peoplefinder/person:
-          blank: "is required"
-        peoplefinder/group:
-          blank: "is required"
+      messages:
+        blank: "is required"
 
   helpers:
     submit:
