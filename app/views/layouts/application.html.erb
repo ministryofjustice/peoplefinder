@@ -23,10 +23,10 @@
 
         <%= render partial: 'shared/time_left' %>
 
-        <% if content_for?(:page_title) %>
-          <h1>
-            <%= yield(:page_title) %>
-          </h1>
+        <% if content_for?(:page_header) %>
+          <%= yield(:page_header) %>
+        <% else %>
+          <%= govspeak(t('common.introductory_text')) %>
         <% end %>
 
         <%= render partial: 'shared/tab_navigation' if show_tabs? %>

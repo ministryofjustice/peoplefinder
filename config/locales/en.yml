@@ -127,6 +127,18 @@ en:
     boolean:
       'true': 'Yes'
       'false': 'No'
+    introductory_text: |
+      Welcome to the SCS 360° Appraisals. This online service supports the SCS
+      performance management system.
+
+      This tool makes it easier for you to:
+
+      * request feedback on your direct reports
+      * monitor progress of feedback requests
+      * ask for feedback on your performance
+      * view feedback on yourself
+
+      Feedback is _not_ anonymous.
     footer: |
       * [Terms and conditions](/terms)
       * Built by [MOJ Digital Services](https://mojdigital.blog.gov.uk/)

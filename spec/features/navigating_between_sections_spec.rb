@@ -18,6 +18,7 @@ feature 'Navigating between sections of the site' do
 
         expect_no_back_link
         expect_no_page_header
+        expect_introductory_text
         expect_tabs
         expect_page_subheader 'Feedback participants'
       end
@@ -30,6 +31,7 @@ feature 'Navigating between sections of the site' do
 
         expect_no_back_link
         expect_no_page_header
+        expect_introductory_text
         expect_tabs
         expect_page_subheader 'Feedback received'
       end
@@ -55,6 +57,7 @@ feature 'Navigating between sections of the site' do
 
         expect_no_back_link
         expect_no_page_header
+        expect_introductory_text
         expect_tabs
         expect_page_subheader 'Your direct reports'
       end
@@ -111,6 +114,7 @@ feature 'Navigating between sections of the site' do
 
         expect_no_back_link
         expect_no_page_header
+        expect_introductory_text
         expect_tabs
         expect_page_subheader 'Requests for feedback'
       end
@@ -160,6 +164,7 @@ feature 'Navigating between sections of the site' do
 
         expect_no_back_link
         expect_no_page_header
+        expect_introductory_text
         expect_tabs
         expect_page_subheader 'All your feedback'
       end
@@ -172,6 +177,7 @@ feature 'Navigating between sections of the site' do
 
         expect_no_back_link
         expect_no_page_header
+        expect_introductory_text
         expect_tabs
         expect_page_subheader 'Feedback for your direct reports'
       end
@@ -201,6 +207,10 @@ feature 'Navigating between sections of the site' do
 
   def expect_no_page_header
     expect(page).not_to have_selector('h1')
+  end
+
+  def expect_introductory_text
+    expect(page).to have_selector('p', 'Welcome to the SCS 360° Appraisals')
   end
 
   def expect_page_header(text)

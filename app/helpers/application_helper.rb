@@ -11,10 +11,6 @@ module ApplicationHelper
     }
   end
 
-  def app_name
-    Rails.configuration.app_title
-  end
-
   def active_tab
     case controller_name
     when 'reviews'
