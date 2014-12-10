@@ -53,7 +53,7 @@ feature 'Navigating between sections of the site' do
         # /users
 
         visit token_url(token)
-        click_link 'Your direct reports'
+        click_link 'Manage feedback'
 
         expect_no_back_link
         expect_no_page_header
@@ -66,7 +66,7 @@ feature 'Navigating between sections of the site' do
         # /users/[n]/reviews
 
         visit token_url(token)
-        click_link 'Your direct reports'
+        click_link 'Manage feedback'
         click_link 'Charlie'
 
         expect_back_link '/users'
@@ -80,7 +80,7 @@ feature 'Navigating between sections of the site' do
 
         create :submitted_review, subject: direct_report, author_name: 'Momotaro'
         visit token_url(token)
-        click_link 'Your direct reports'
+        click_link 'Manage feedback'
         click_link 'Charlie'
 
         expect_back_link '/users'
@@ -94,7 +94,7 @@ feature 'Navigating between sections of the site' do
 
         create :submitted_review, subject: direct_report, author_name: 'Momotaro'
         visit token_url(token)
-        click_link 'Your direct reports'
+        click_link 'Manage feedback'
         click_link 'Charlie'
         click_link 'View feedback'
 
@@ -110,7 +110,7 @@ feature 'Navigating between sections of the site' do
 
         create :review, author_email: me.email
         visit token_url(token)
-        click_link 'Feedback requests'
+        click_link 'Give feedback'
 
         expect_no_back_link
         expect_no_page_header
@@ -126,7 +126,7 @@ feature 'Navigating between sections of the site' do
           author_email: me.email,
           subject: direct_report
         visit token_url(token)
-        click_link 'Feedback requests'
+        click_link 'Give feedback'
         click_link 'Add feedback'
 
         expect_back_link '/replies'
@@ -141,7 +141,7 @@ feature 'Navigating between sections of the site' do
           author_email: me.email,
           subject: direct_report
         visit token_url(token)
-        click_link 'Feedback requests'
+        click_link 'Give feedback'
         click_link 'View feedback'
 
         expect_back_link '/replies'
@@ -173,7 +173,7 @@ feature 'Navigating between sections of the site' do
         # /results/users
 
         visit token_url(token)
-        click_link 'Your direct reports'
+        click_link 'Manage feedback'
 
         expect_no_back_link
         expect_no_page_header
@@ -187,7 +187,7 @@ feature 'Navigating between sections of the site' do
 
         create :submitted_review, subject: direct_report, author_name: 'Momotaro'
         visit token_url(token)
-        click_link 'Your direct reports'
+        click_link 'Manage feedback'
         click_link 'Charlie'
 
         expect_back_link '/results/users'

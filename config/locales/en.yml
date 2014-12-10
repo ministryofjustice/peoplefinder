@@ -298,9 +298,9 @@ en:
     request_declined:
       subject: 'Request for feedback has been declined'
   tab_navigation:
-      your_feedback: 'Your feedback'
-      your_direct_reports: 'Your direct reports'
-      feedback_requests: 'Feedback requests'
+      your_feedback: 'Ask for feedback'
+      feedback_requests: 'Give feedback'
+      your_direct_reports: 'Manage feedback'
   views:
     replies:
       index_title: 'Requests for feedback'

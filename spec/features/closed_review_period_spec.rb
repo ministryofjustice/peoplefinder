@@ -46,13 +46,13 @@ feature 'Closed review period' do
 
     check_my_feedback_from_danny_boy
 
-    click_link('Your direct reports')
-    click_link('Charlie')
+    click_link 'Manage feedback'
+    click_link 'Charlie'
     expect(page).to have_text('All feedback for Charlie')
     expect(page).to have_text('Elena WE WORK')
 
-    click_first_link('Return to dashboard')
-    click_first_link('Your feedback')
+    click_first_link 'Return to dashboard'
+    click_first_link 'Ask for feedback'
     check_my_feedback_from_danny_boy
   end
 
@@ -66,7 +66,7 @@ feature 'Closed review period' do
     )
 
     visit token_path(me.tokens.create)
-    click_link 'Your direct reports'
+    click_link 'Manage feedback'
     click_link 'Charlie'
     click_link 'Download as CSV'
 
@@ -82,7 +82,7 @@ feature 'Closed review period' do
     create :submitted_review, subject: daniela
 
     visit token_path(me.tokens.create)
-    click_link('Your direct reports')
+    click_link 'Manage feedback'
 
     click_link 'Download all as CSV'
 
