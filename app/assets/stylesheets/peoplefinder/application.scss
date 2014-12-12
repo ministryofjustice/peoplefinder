@@ -251,6 +251,9 @@ form .text .wider   {
 
   .error {
     color: $error-text;
+    font-size: 0.7em;
+    line-height: 2.2em;
+    margin-left: 4px;
   }
 }
 
@@ -279,9 +282,6 @@ form .text .wider   {
 }
 
 label.form-label-bold {
-  .error {
-    display: block;
-  }
   .form-hint {
     font-size: 17px;
   }

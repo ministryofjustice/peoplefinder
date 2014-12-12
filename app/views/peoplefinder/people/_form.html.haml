@@ -66,9 +66,13 @@
   .form-group.line-above
     %fieldset#working-days
       %legend.form-label-bold Working days
-      - Peoplefinder::Person::DAYS_WORKED.each do |day|
-        = f.check_box day
-        = f.label day, day_name(day)
+      %ul
+        - Peoplefinder::Person::DAYS_WORKED.each do |day|
+          %li
+            = f.label day do
+              = f.check_box day
+              = day_name(day)
+
 
   .form-group
     = f.label :description, class: 'form-label-bold' do

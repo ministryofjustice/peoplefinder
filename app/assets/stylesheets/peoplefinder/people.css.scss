@@ -2,11 +2,12 @@ ul.working_days {
   clear: both;
   list-style: none;
   padding: 0;
+
   li {
     display:inline-block;
     text-align: center;
     background-color: gray;
-    width:25px;
+    width: 25px;
     padding:3px 0;
     color: white;
 
@@ -152,6 +153,15 @@ form {
   .form-checkbox input {
     width: 14px;
     margin-right: 15px;
+  }
+
+  #working-days ul {
+    li {
+      display: inline-block;
+      background-color: $grey-bg;
+      padding: 0.4em 0.8em 0.5em 0.4em;
+      margin: 0.4em 0.4em 0 0;
+    }
   }
 }
 
