@@ -3,7 +3,7 @@ class ClosureNotification
     @user = user
   end
 
-  def send
+  def notify
     token = @user.tokens.create!
     UserMailer.closure_notification(@user, token).deliver
   end

@@ -11,6 +11,6 @@ RSpec.describe FeedbackRequestNotification do
       and_return(mail)
     expect(mail).to receive(:deliver)
 
-    described_class.new(review).send
+    described_class.new(review).notify
   end
 end

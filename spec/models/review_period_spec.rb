@@ -66,7 +66,7 @@ RSpec.describe ReviewPeriod do
       [alice, bob, charlie].each do |user|
         intro = double(IntroductionNotification)
         expect(IntroductionNotification).to receive(:new).with(user) { intro }
-        expect(intro).to receive(:send)
+        expect(intro).to receive(:notify)
       end
       subject.send_introductions
     end

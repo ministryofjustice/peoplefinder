@@ -3,7 +3,7 @@ class IntroductionNotification
     @user = user
   end
 
-  def send
+  def notify
     token = @user.tokens.create!
     UserMailer.introduction(@user, token).deliver
   end

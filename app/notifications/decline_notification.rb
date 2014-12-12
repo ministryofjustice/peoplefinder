@@ -3,7 +3,7 @@ class DeclineNotification
     @invitation = invitation
   end
 
-  def send
+  def notify
     token = @invitation.subject.tokens.create!
     ReviewMailer.request_declined(@invitation, token).deliver
   end

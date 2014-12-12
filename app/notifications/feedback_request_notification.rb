@@ -3,7 +3,7 @@ class FeedbackRequestNotification
     @review = review
   end
 
-  def send
+  def notify
     token = @review.tokens.create!
     ReviewMailer.feedback_request(@review, token).deliver
   end

@@ -11,6 +11,6 @@ RSpec.describe IntroductionNotification do
       and_return(mail)
     expect(mail).to receive(:deliver)
 
-    described_class.new(user).send
+    described_class.new(user).notify
   end
 end

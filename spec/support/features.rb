@@ -4,7 +4,7 @@ module SpecSupport
   #
   module Features
     def send_introduction(user)
-      IntroductionNotification.new(user).send
+      IntroductionNotification.new(user).notify
     end
 
     def last_email

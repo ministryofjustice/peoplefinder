@@ -23,14 +23,14 @@ class ReviewPeriod < ActiveRecord::Base
   def self.send_introductions
     return if closed?
     User.participants.each do |user|
-      IntroductionNotification.new(user).send
+      IntroductionNotification.new(user).notify
     end
   end
 
   def self.send_closure_notifications
     return if open?
     User.participants.each do |user|
-      ClosureNotification.new(user).send
+      ClosureNotification.new(user).notify
     end
   end
 
