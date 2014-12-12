@@ -11,4 +11,8 @@ module DaysHelper
       I18n.t('one_or_more', count: days, scope: scope)
     end
   end
+
+  def review_period_time_left(scope: 'helpers.days')
+    number_of_days_in_words(ReviewPeriod.seconds_left, scope: scope)
+  end
 end
