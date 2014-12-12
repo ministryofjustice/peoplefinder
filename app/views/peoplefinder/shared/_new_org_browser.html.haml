@@ -1,4 +1,8 @@
 %nav.org-browser
+  = render 'peoplefinder/shared/new_org_browser_level', group: @group
+
+
+%nav.org-browser
 
   %div.team
     %h3 Ministry of Justice
@@ -66,10 +70,9 @@
           %span.subteam-name Legal Aid Agency
           %span.subteam-count 4 sub-teams
 
-      %li.has-subteams
+      %li
         %p
           %span.subteam-name NOMS
-          %span.subteam-count 4 sub-teams
 
 
 
