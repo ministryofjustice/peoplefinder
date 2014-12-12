@@ -219,7 +219,7 @@ en:
     download_as_csv: 'Download as CSV'
     download_all_as_csv: 'Download all as CSV'
   review_period:
-    time_left: '<strong>%{remaining}</strong> remaining this period'
+    time_left_html: '<strong>%{remaining}</strong> remaining this period'
   password_resets:
     errors:
       no_admin_user_with_email_exists: 'No admin user with that email exists'
