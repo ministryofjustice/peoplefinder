@@ -110,21 +110,14 @@ en:
       updated_address_to_email:
         subject: "This email address has been added to a profile on MOJ People Finder"
     errors:
+      information_request:
+        message_required: "You must enter a message to be sent to the person"
       person:
         general_message: "You need to add more information to complete your profile - see below."
+      group:
+        general_message: "You need to add more information - see below."
       groups:
         memberships_exist: "cannot be deleted until all the memberships have been removed"
-      tokens:
-        invalid_address: "Email address is not formatted correctly"
-        invalid_domain: "Email address is not valid"
-    simple_form:
-      "yes": 'Yes'
-      "no": 'No'
-      required:
-        text: 'required'
-        mark: ''
-      error_notification:
-        default_message: "Please review the problems below:"
     views:
       info_text:
         building_alert: "You are creating a profile - click the Save button to finish"
@@ -139,7 +132,6 @@ en:
         hint_team_email_address: "Enter an email for people to get in touch with the team"
         hint_team_responsibilities: "What are the team's collective responsibilities?"
         information_request_label: "Enter your message"
-        information_request_label_error: "You must enter a message to be sent to the person"
         location_hint: "(eg 10.30, 102 Petty France)"
         notes_field_hint: "(eg I'm based at Bristol Crown Court on Mondays)"
         photo_upload_hint: "Add or replace an image. (Please, no files over 3MB.)"
@@ -152,9 +144,15 @@ en:
         team_not_deletable: "Team deletion is only possible if there are no people associated with it."
   activerecord:
     errors:
+      messages:
+        blank: "is required"
       models:
-        peoplefinder/person:
-          blank: "Required"
+        peoplefinder/token:
+          invalid_address: "Email address is not formatted correctly"
+          invalid_domain: "Email address is not valid"
+    attributes:
+      peoplefinder/token:
+        user_email: "Email address"
 
   helpers:
     submit:
@@ -164,3 +162,6 @@ en:
       group:
         create: "Save"
         update: "Save"
+      information_request:
+        create: "Submit"
+        create: "Submit"

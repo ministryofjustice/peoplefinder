@@ -1,30 +1,43 @@
 = editing_mode
-= simple_form_for @group do |f|
+= form_for @group do |f|
+
+  - if @group.errors.any?
+    .alert.alert-error
+      %p= error_text('group.general_message')
+      %ol.form-error-list
+        - @group.errors.each do |field, error|
+          %li
+            = link_to "#{Peoplefinder::Group.human_attribute_name(field)} #{error.downcase}", "#group_#{field}"
+
+  .form-group{ :class => ('gov-uk-field-error' if @group.errors.include?(:name)) }
+    = f.label :name, class: 'form-label-bold' do
+      Team name
+      %span.error= @group.errors[:name].first if @group.errors.include?(:name)
+    = f.text_field :name, class: 'form-control'
 
   .form-group
-    = f.input :name, as: :string, required: false, label: 'Team name'
+    = f.label :description, class: 'form-label-bold' do
+      Team description
+      %p.form-hint= info_text('hint_team_description')
+    = f.text_area :description, class: 'form-control'
 
   .form-group
-    %label.form-label-bold{ for: :group_description } Team description
-    %p.form-hint= info_text('hint_team_description')
-    = f.input :description, label: false, input_html: { class: 'wider' }
-
-  .form-group
-    %label.form-label-bold{ for: :group_responsibilities } Team responsibilities (optional)
-    %p.form-hint= info_text('hint_team_responsibilities')
-    = f.input :responsibilities, label: false, input_html: { class: 'wider' }
+    = f.label :responsibilities, class: 'form-label-bold' do
+      Team responsibilities
+      %p.form-hint= info_text('hint_team_responsibilities')
+    = f.text_area :responsibilities, class: 'form-control'
 
   - if @group.editable_parent?
     .form-group.group-parent.editable-container
       - if params[:group_id]
-        = f.input :parent_id, as: :hidden
+        = f.hidden_field :parent_id
       - else
         %label.form-label-bold Team parent
         %p.form-hint Use this to change where in the organisation this team is located.
 
         .editable-fields{ style: ('display:none' unless @group.new_record?) }
           = render layout: 'peoplefinder/shared/org_browser' do
-            = f.input :parent_id, as: :hidden
+            = f.hidden_field :parent_id
 
         -unless @group.new_record?
           .editable-summary.parent-summary
@@ -32,13 +45,14 @@
               .title= breadcrumbs(@group.parent.path)
             .cta= link_to 'Edit', '#', class: 'show-editable-fields'
 
-  .form-group
-    %label.form-label-bold{ for: :group_team_email_address } Team email address
-    %p.form-hint= info_text('hint_team_email_address')
-    = f.input :team_email_address, as: :string, required: false, label: false
+  .form-group{ :class => ('gov-uk-field-error' if @group.errors.include?(:team_email_address)) }
+    = f.label :team_email_address, class: 'form-label-bold' do
+      Team email address
+      %span.error= @group.errors[:team_email_address].first if @group.errors.include?(:team_email_address)
+    = f.text_field :team_email_address, class: 'form-control'
 
   .form-group
-    = f.button :submit
+    = f.submit class: 'button'
     .cancel
       - if @group.new_record?
         = link_to 'Cancel', :back

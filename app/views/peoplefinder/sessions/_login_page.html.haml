@@ -13,20 +13,17 @@
 
   %p= t('.body_other')
 
-  = simple_form_for (@token ||= Peoplefinder::Token.new) do |token_form|
+  = form_for (@token ||= Peoplefinder::Token.new) do |f|
 
-    - if @token.errors.any?
-      .form-group{ class: 'gov-uk-field-error', role: 'alert' }
-        %p= @token.errors[:base].join('')
-        = token_form.input :user_email, as: :string, label: false
-    -else
-      .form-group
-        = token_form.input :user_email, as: :string, label: false
+    .form-group{ :class => ('gov-uk-field-error' if @token.errors.include?(:user_email)) }
+      = f.label :user_email, class: 'visuallyhidden'
+      - if @token.errors.include?(:user_email)
+        %span.error= @token.errors[:user_email].first
+      = f.text_field :user_email, class: 'form-control'
 
     .spacer-20
     .form-group
-      %label.visuallyhidden{ for: :token_user_email } Email address
-      = token_form.button :submit, t('.log_in_email'), class: 'login-button'
+      = f.submit t('.log_in_email'), class: 'button'
 
   %hr
   .spacer-5

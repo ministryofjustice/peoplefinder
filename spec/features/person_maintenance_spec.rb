@@ -246,7 +246,7 @@ feature 'Person maintenance' do
 
     expect(page).to have_title("Report this profile - #{ app_title }")
     select 'Duplicate profile', from: 'Reason for reporting'
-    fill_in 'Additional details (optional)', with: 'Some stuff'
+    fill_in 'Additional details', with: 'Some stuff'
     expect { click_button 'Submit' }.to change { ActionMailer::Base.deliveries.count }.by(1)
 
     expect(last_email.to).to include(group.team_email_address)

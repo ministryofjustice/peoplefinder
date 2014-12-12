@@ -17,19 +17,21 @@
 
   .editable-fields{ style: ('display:none' unless membership.new_record?) }
     .form-group
-      = membership_f.input :role, as: :string, label: 'Job title'
+      = membership_f.label :role, 'Job title', class: 'form-label-bold'
+      = membership_f.text_field :role, class: 'form-control'
 
     .form-group
       %label.form-label-bold Team
       %p.form-hint= info_text('hint_add_person_to_team')
       = render layout: 'peoplefinder/shared/org_browser' do
-        = membership_f.input :group_id, as: :hidden
+        = membership_f.hidden_field :group_id
 
       %p.form-hint= info_text('hint_add_person_team_not_found')
 
-    .form-checkbox
-      %h3 Team leader?
-      = membership_f.input :leader, label: 'This person leads the team above. (More than one person can be selected as team leader.)'
+    .form-group
+      = membership_f.label :leader, 'Team leader?', class: 'form-label-bold'
+      = membership_f.check_box :leader
+      %span.hint This person leads the team above. (More than one person can be selected as team leader.)
 
       .remove-link
         - if membership.new_record?

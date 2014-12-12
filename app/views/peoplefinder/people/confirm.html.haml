@@ -8,28 +8,28 @@
 
   = render partial: 'person', collection: @people, locals: { edit_link: true }
 
-  = simple_form_for @person, :html => {:multipart => true} do |f|
+  = form_for @person, :html => {:multipart => true} do |f|
 
-    = f.input :given_name, as: :hidden
-    = f.input :surname, as: :hidden
+    = f.hidden_field :given_name
+    = f.hidden_field :surname
 
     = f.fields_for :memberships do |membership_f|
-      = membership_f.input :role, as: :hidden
-      = membership_f.input :group_id, as: :hidden
+      = membership_f.hidden_field :role
+      = membership_f.hidden_field :group_id
 
-    = f.input :location, as: :hidden
-    = f.input :primary_phone_number, as: :hidden
-    = f.input :secondary_phone_number, as: :hidden
-    = f.input :email, as: :hidden
-    = f.input :description, as: :hidden
+    = f.hidden_field :location
+    = f.hidden_field :primary_phone_number
+    = f.hidden_field :secondary_phone_number
+    = f.hidden_field :email
+    = f.hidden_field :description
 
     - Peoplefinder::Person::DAYS_WORKED.each do |day|
-      = f.input day, as: :hidden
+      = f.hidden_field day
 
-    = f.input :image_cache, as: :hidden
+    = f.hidden_field :image_cache
 
     .spacer-45
     .form-group
-      = f.button :submit, 'Continue'
+      = f.submit 'Continue', class: 'button'
       .cancel
         = link_to 'Return to home page', home_path

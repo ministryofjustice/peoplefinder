@@ -89,7 +89,7 @@ h1.no-line, h2.no-line {
   border-bottom: 0;
 }
 
-h2.line-above, h2.h3.line-above, h3.line-above {
+h2.line-above, h2.h3.line-above, h3.line-above, .line-above {
   margin-top: 30px;
   padding-top: 20px;
   border-top: 1px solid $blackish;
@@ -226,16 +226,6 @@ form .text .wider   {
   }
 }
 
-.field_with_errors {
-  input {
-    outline: solid 4px $error-border;
-  }
-  .error {
-    margin-left: 1em;
-    color: $error-text;
-  }
-}
-
 @mixin shared-error {
   border: 0 solid $error-border;
   background: $error-bg;
@@ -261,6 +251,9 @@ form .text .wider   {
 
   .error {
     color: $error-text;
+    font-size: 0.7em;
+    line-height: 2.2em;
+    margin-left: 4px;
   }
 }
 
@@ -286,6 +279,22 @@ form .text .wider   {
   .form-control {
     width: 55%;
   }
+}
+
+label.form-label-bold {
+  .form-hint {
+    font-size: 17px;
+  }
+}
+fieldset {
+  legend.form-label-bold {
+    display: block;
+    margin: 3px 0 9px 0;
+  }
+}
+textarea.form-control {
+  width: 95%;
+  height: 205px;
 }
 
 @import 'retinal_images';

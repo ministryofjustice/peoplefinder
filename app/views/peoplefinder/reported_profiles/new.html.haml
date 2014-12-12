@@ -1,14 +1,19 @@
 - @editing_mode = true
 %h1.no-line= @page_title = 'Report this profile'
 
-= simple_form_for @reported_profile, url: person_reported_profiles_path(@person) do |f|
-  .form-group
-    = f.input :reason_for_reporting, collection: Peoplefinder::ReportedProfile::REASONS, required: false
+= form_for @reported_profile, url: person_reported_profiles_path(@person) do |f|
+
+  .form-group{ :class => ('gov-uk-field-error' if @reported_profile.errors.include?(:reason_for_reporting)) }
+    = f.label :reason_for_reporting, class: 'form-label-bold' do
+      Reason for reporting
+      %span.error= @reported_profile.errors[:reason_for_reporting].first if @reported_profile.errors.include?(:reason_for_reporting)
+    = f.select(:reason_for_reporting, Peoplefinder::ReportedProfile::REASONS, { include_blank: true}, class: 'form-control' )
 
   .form-group
-    = f.input :additional_details, label: info_text("reported_profile_additional_details_label")
+    = f.label :additional_details, class: 'form-label-bold'
+    = f.text_area :additional_details, class: 'form-control'
 
   .form-group
-    = f.button :submit, 'Submit'
+    = f.submit 'Submit', class: 'button'
     .cancel
       = link_to 'Cancel and return to profile page', person_path(@person)

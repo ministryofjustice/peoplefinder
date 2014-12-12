@@ -13,7 +13,7 @@ feature 'Group maintenance' do
 
     fill_in 'Team name', with: name
     fill_in 'Team description', with: 'about my team'
-    fill_in 'Team responsibilities (optional)', with: 'my responsibilities'
+    fill_in 'Team responsibilities', with: 'my responsibilities'
     add_team_email_address
     click_button 'Save'
 
