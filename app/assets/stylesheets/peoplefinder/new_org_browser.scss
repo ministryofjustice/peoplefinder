@@ -2,14 +2,18 @@ $leaf-node-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADUAAAA1CAY
 $org-node-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABcAAAAXCAYAAADgKtSgAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAaJJREFUeNpiZMAD8surBYBUABDrA7EBmvRBIN4wsbP1Ai79jHgMLQAxgViAAT94AMSFQEs2EDQcaDDIhfOxuJQQABmeCLTkA1bDoQbvJ8K1uAAoiBxhFrCgBQVWg3PSkhlUlBRRxKbMmstw5959dKUgx60HWQDiMCFJzKfAxcjAAejQArjhQI4DNFVQC9QjuzyegbpAAOjgBJjhAQzUB/6MQBsUgIz7xKj2cHECRyKWiMSa/kGpRQGbjJmxEYOQIGr8glKMkKAgRsrBYaECEy5rzYwNwQYRAiCL0C2DARZ8Gk+dPYfiImzBAhLDWbZAM897ZJeAMg2yl3fs2YciBgIFFTUMEzpaMMSQwAEmaFa9QIPUcgEW5htpYPhCmOETgPgDFQ0+ACrnGZEKLlB50M/JycEgLSkJV/X9xw+Gd+/fo4jB4gJbkoQCQxTDoRaACq8ECl0NKtMXgBjMyKInjx7eaGFjp0BGRYFhMIbhSBaAfORAgqEPoAavIFiHQoNIAVp0BuAp50GGTgTiBcjVG0HDsVR/yMF1AGQw0MAH+PQBBBgA9nyR5x7/z3IAAAAASUVORK5CYII=);
 $arrow-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAUCAYAAAC58NwRAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAMNJREFUeNpiYACChsaWBiAWYCACMAIVKgDp+0B8AYgdG+prPuDTwATECVC2ARDvJ2QTSIM8Ep+gJpCGQiB+QKwmRqinQYrOo8lh9RMTWEN9zQWoTQyEbGJE5gAl1wOpAHw2MaFJJgLxB3w2MaJ7CijhAFKAxb9gm5gYiAcXQM5C94MANNbRg3QBUHEiNj+sx6cYRQMoAQIpB3yKkSMOm0cxFMNSKzZ3Y1UMc9J8YhXDNFwkVjFMwwJiFSOHfwCxsQcQYABohVFejwj8OwAAAABJRU5ErkJggg==);
 
+$org-browser-width: 330px;
+
 .org-browser {
+  overflow: auto;
 
   .team {
-    width: 330px;
+    width: $org-browser-width;
     border-right: 2px solid $border-colour;
+    position: relative;
 
     display: none;
-    &.visible {
+    &.visible, &.root-node {
       display: block;
     }
 
@@ -20,7 +24,8 @@ $arrow-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAUCAYAAAC5
 
     h3 {
       background-color: #d6d8d9;
-      line-height: 1.7em;
+      font-size: 1.1em;
+      line-height: 2.1em;
       padding-left: 0.9em;
     }
 
@@ -42,11 +47,11 @@ $arrow-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAUCAYAAAC5
 
       }
 
-      a {
-        padding-left: 44px;
+      .subteam-link {
         display: block;
         overflow: hidden;
         height: 45px;
+        padding-left: 44px;
       }
 
       .subteam-name, .subteam-count {
@@ -79,6 +84,12 @@ $arrow-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAUCAYAAAC5
         .subteam-name {
           line-height: 1.6em;
         }
+      }
+
+      > .team {
+        margin-left: $org-browser-width + 2;
+        position: absolute;
+        top: 0;
       }
     }
   }

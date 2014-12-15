@@ -1,12 +1,17 @@
 $(function (){
-  $('.org-browser').on('click', 'a', function(e){
+  "use strict";
+
+  $('.org-browser').children('.team').first().addClass('root-node');
+
+  $('.org-browser').on('click', '.subteam-link', function(e){
     e.preventDefault();
     e.stopPropagation();
 
-    $target = $(e.target);
-    window.falan = $target;
-    $subteam = $target.closest('li').siblings('.team');
-    console.log($subteam);
+    var $target = $(e.target);
+    var $subteam = $target.closest('p').siblings('.team');
+
+    $target.addClass('expanded');
+    $subteam.addClass('visible');
   });
 });
 

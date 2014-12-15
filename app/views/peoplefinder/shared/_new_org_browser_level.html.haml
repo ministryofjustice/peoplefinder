@@ -1,11 +1,13 @@
-%div.team.visible
-  %h3= group.name
+%div.team
+  %h3
+    %a{href: , :class => 'team-link'}
+      = group.name
   - if group.has_children?
     %ul
       - group.children.each do |child|
         %li{:class => ('has-subteams' if child.has_children?)}
           %p
-            %a
+            %a{href: '#falan', :class => 'subteam-link'}
               %span.subteam-name= child.name
               - if child.has_children?
                 %span.subteam-count= "#{pluralize(child.children.count, ' sub-team')}"
