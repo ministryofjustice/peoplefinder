@@ -16,6 +16,10 @@ class ReviewPeriod < ActiveRecord::Base
     [(closes_at || now) - now, 0].max.to_i
   end
 
+  def self.days_left(now = Time.now)
+    seconds_left(now) / 1.day
+  end
+
   def self.singleton_record
     first || new
   end

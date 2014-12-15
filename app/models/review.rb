@@ -50,6 +50,10 @@ class Review < ActiveRecord::Base
     )
   end
 
+  def self.open
+    where(status: [:no_response, :accepted, :started])
+  end
+
   def self.submitted
     where(status: :submitted)
   end

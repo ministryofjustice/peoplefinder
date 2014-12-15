@@ -33,6 +33,10 @@ class User < ActiveRecord::Base
     where(participant: true)
   end
 
+  def self.with_feedback_not_received
+    joins(:reviews).merge(Review.open)
+  end
+
   def self.with_identity
     joins(:identities)
   end

@@ -11,6 +11,10 @@ module SpecSupport
       ActionMailer::Base.deliveries.last
     end
 
+    def emails_for(email_address)
+      ActionMailer::Base.deliveries.select { |d| d.to.include?(email_address) }
+    end
+
     def links_in_email(delivery)
       email_contains(delivery, /https?:\S+/)
     end
@@ -21,6 +25,10 @@ module SpecSupport
 
     def click_first_link(*args)
       first(:link, *args).click
+    end
+
+    def expect_logged_in_as(email)
+      expect(page).to have_text("Logged in as #{email}")
     end
   end
 end
