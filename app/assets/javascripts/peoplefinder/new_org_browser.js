@@ -25,7 +25,10 @@ $(function (){
   });
 
   var animateScroll = function (){
-    $orgBrowser.animate({ scrollLeft: $orgBrowser.width() + 100 }, 400);
+    var visibles = $orgBrowser.find('.visible');
+    var offset = visibles.length * visibles.width();
+
+    $orgBrowser.animate({ scrollLeft: offset }, 400);
   }
 });
 
