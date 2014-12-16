@@ -4,6 +4,10 @@ class InvitationsController < ApplicationController
   def update
     if @invitation.update(invitation_params)
       notice @invitation.status
+      if @invitation.accepted?
+        redirect_to edit_submission_path(@invitation)
+        return
+      end
     else
       error :update_error
     end

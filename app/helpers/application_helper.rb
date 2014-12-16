@@ -11,10 +11,6 @@ module ApplicationHelper
     }
   end
 
-  def app_name
-    Rails.configuration.app_title
-  end
-
   def active_tab
     case controller_name
     when 'reviews'
@@ -49,6 +45,10 @@ module ApplicationHelper
 
   def t_boolean(prefix, value)
     t((value ? 'true' : 'false'), scope: prefix)
+  end
+
+  def date(d)
+    d.to_date.to_formatted_s(:default)
   end
 
 private

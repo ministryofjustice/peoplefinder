@@ -6,8 +6,8 @@
   <%= render partial: 'autosave' %>
 <% end %>
 
-<% content_for :page_title do %>
-  <%= t('submissions.title', name: @submission.subject_name) %>
+<% content_for :page_header do %>
+  <h1><%= t('submissions.title', name: @submission.subject_name) %></h1>
 <% end %>
 
 <div class="intro">

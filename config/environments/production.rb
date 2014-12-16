@@ -1,3 +1,5 @@
+require 'sidekiq/logging/json'
+
 Rails.application.configure do
   # Settings specified here will take precedence over those in
   # config/application.rb.
@@ -83,4 +85,6 @@ Rails.application.configure do
       subject_prefix: '[STAGING]'
     )
   end
+
+  Sidekiq.logger.formatter = Sidekiq::Logging::Json::Logger.new
 end

@@ -1,13 +1,50 @@
 Hello <%= @recipient_name %>,
 
-<%= @subject_name %> has asked you to provide feedback on them.
+360° feedback is vital to developing performance in line with our
+leadership model and the Ministry of Justice story.
+
+Your colleague <%= @subject_name %> has sent you this message, asking
+for feedback:
 
 <%= @invitation_message %>
 
-Your assessments play an important part in helping improve performance
-and we’ll help you through our online feedback process.
+You can respond using the SCS 360° Appraisals online service.
 
-To confirm what you want to do with this request and to check any
-others, please manage your feedback requests now.
+Your feedback should cover any interactions with them at work over the
+course of the performance year.
+
+To use the service you need to click on this link:
 
 <%= token_url(@token) %>
+
+The link replaces the password system and you’ll always need to use it
+to log in. We recommend you save this email to access the link in
+future.
+
+If you feel unable to give feedback you can decline the request, giving
+a clear and reasonable explanation why.
+
+Your response should be submitted by <%= date(ReviewPeriod.closes_at) %>.
+
+Feedback will be in your name, not anonymous.
+
+What to expect
+
+Once you’re logged in to the system, you need to answer a series of
+questions about work. You will use a scale of 1 to 5 (1 = poor; 5 =
+good) to give your feedback answers.
+
+You will also see some optional questions asking you to give more
+detailed comments and observations about the person and their work.
+
+When giving examples please focus on ‘what’ they did and ‘how’.
+
+Further guidance
+
+Find out more about giving feedback on page 6 of ‘How to obtain and
+share constructive feedback’.
+
+http://intranet.justice.gsi.gov.uk/guidance-support/my-services/downloads/How-to-obtain-and-share-constructive-feedback.pdf
+
+If you want to see guidance on types of behaviours considered ‘good’ and
+‘poor’, refer to the Civil Service Competency Framework.

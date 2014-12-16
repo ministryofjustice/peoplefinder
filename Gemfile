@@ -59,4 +59,5 @@ end
 group :production do
   gem 'rails_12factor'
   gem 'logstasher' # for easier integration with logstash
+  gem 'sidekiq-logging-json'
 end

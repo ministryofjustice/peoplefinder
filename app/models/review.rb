@@ -9,6 +9,8 @@ class Review < ActiveRecord::Base
   SECTION_1_RATING_FIELDS = (1..4).map { |i| :"rating_#{i}" }
   SECTION_2_RATING_FIELDS = (5..11).map { |i| :"rating_#{i}" }
   RATING_FIELDS = SECTION_1_RATING_FIELDS + SECTION_2_RATING_FIELDS
+  ALL_FIELDS = SECTION_1_RATING_FIELDS + [:leadership_comments] +
+    SECTION_2_RATING_FIELDS + [:how_we_work_comments]
 
   RATING_FIELDS.each do |field|
     validates field, presence: true, if: ->(a) { a.status == :submitted }
@@ -70,6 +72,10 @@ class Review < ActiveRecord::Base
 
   def complete?
     status == :submitted
+  end
+
+  def accepted?
+    status == :accepted
   end
 
   def declined?

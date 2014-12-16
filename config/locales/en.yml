@@ -82,6 +82,8 @@ en:
         relationship: 'Working relationship'
         invitation_message: 'Message text'
       submission:
+        name: 'Name'
+        question: 'Question'
         rating: 'General performance rating.'
         rating_1: >-
           1) Sets Future Direction
@@ -125,6 +127,18 @@ en:
     boolean:
       'true': 'Yes'
       'false': 'No'
+    introductory_text: |
+      Welcome to the SCS 360° Appraisals. This online service supports the SCS
+      performance management system.
+
+      This tool makes it easier for you to:
+
+      * request feedback on your direct reports
+      * monitor progress of feedback requests
+      * ask for feedback on your performance
+      * view feedback on yourself
+
+      Feedback is **not** anonymous.
     footer: |
       * [Terms and conditions](/terms)
       * Built by [MOJ Digital Services](https://mojdigital.blog.gov.uk/)
@@ -186,8 +200,8 @@ en:
     password_reset_cta: 'Forgot password'
   reviews:
     default_invitation_message: >-
-      I'd like you to offer 360 feedback on my performance when I've worked
-      with you.
+      Please can you use this online service - 360° Appraisals - to give
+      feedback about my work.
     statuses:
       no_response: 'Pending'
       declined: 'Declined'
@@ -202,8 +216,10 @@ en:
       customer: 'Customer/stakeholder'
     errors:
       subject_must_be_participant: 'must be a participant'
+    download_as_csv: 'Download as CSV'
+    download_all_as_csv: 'Download all as CSV'
   review_period:
-    time_left: '<strong>%{remaining}</strong> remaining this period'
+    time_left_html: '<strong>%{remaining}</strong> remaining this period'
   password_resets:
     errors:
       no_admin_user_with_email_exists: 'No admin user with that email exists'
@@ -282,15 +298,14 @@ en:
     request_declined:
       subject: 'Request for feedback has been declined'
   tab_navigation:
-      your_feedback: 'Your feedback'
-      your_direct_reports: 'Your direct reports'
-      feedback_requests: 'Feedback requests'
+      your_feedback: 'Ask for feedback'
+      feedback_requests: 'Give feedback'
+      your_direct_reports: 'Manage feedback'
   views:
     replies:
-      index_title: 'Requests for feedback'
-      index_standfirst:
-        one: 'One person has asked you for feedback'
-        other: '%{count} people have asked you for feedback'
+      introductory_text: |
+        * When giving feedback, focus on ‘what’ and ‘how’, giving real examples.
+      numerical_summary: 'Feedback responses: %{count}'
       survey_text: |
         How was your experience? Please provide us with your views on this
         service by completing [a questionnaire](%{survey_url}).
@@ -301,7 +316,6 @@ en:
           action: 'Action'
     results:
       feedback_title:
-        mine: 'SCS 360° Appraisals'
         theirs: 'All feedback for %{name}'
       feedback_subtitle:
         mine: 'All your feedback'
@@ -310,14 +324,14 @@ en:
       return_to_dashboard: 'Dashboard'
       return_to_user: 'Feedback for %{name}'
       feedback_not_received_title: 'Feedback participants'
-      feedback_received_title: 'Feedback received'
-      feedback_received_standfirst:
-        mine:
-          one: 'You’ve asked one person to give you feedback'
-          other: 'You’ve asked %{count} people to give you feedback'
-        theirs:
-          one: 'One person has been asked for feedback'
-          other: '%{count} people have been asked for feedback'
+      numerical_summary: 'Feedback responses: %{count}'
+      introductory_text: |
+        * When asking for feedback, agree with your line manager who you will
+          ask to feedback about you.
+        * Include at least 1 colleague from each of these categories: 1) line
+          manager; 2) direct reports; 3) peers; 4) people outside your area (eg
+          stakeholders).
+        * We recommend you include all direct reports.
       add_reviewer_title:
         none:
           mine: 'Invite people to give you feedback'
@@ -326,7 +340,6 @@ en:
           mine: 'Ask another person to provide feedback about you'
           theirs: 'Ask another person to provide feedback about %{name}'
       index_title:
-        mine: 'SCS 360° Appraisals'
         theirs: 'Feedback for %{name}'
       show_review_title:
         mine: 'Feedback for you'
@@ -357,10 +370,9 @@ en:
         action_header: 'Action'
       view_feedback: 'View feedback'
     users:
-      index_title: 'Your direct reports'
-      index_standfirst:
-        one: 'You have one direct report who requires feedback'
-        other: 'You have %{count} direct reports who require feedback'
+      introductory_text: |
+        * Use this service to request and review feedback on behalf of your
+          direct reports
       list:
         name_header: 'Name'
         status_header: 'Feedback status'

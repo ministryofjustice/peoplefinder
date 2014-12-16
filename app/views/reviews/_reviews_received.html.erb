@@ -1,9 +1,7 @@
-<h2>
-  <%= t('views.reviews.feedback_received_title') %>
-</h2>
+<%= govspeak(t('views.reviews.introductory_text')) %>
 
 <p>
-  <%= role_translate('views.reviews.feedback_received_standfirst', count: @reviews.length) %>
+  <%= t('views.reviews.numerical_summary', count: @reviews.length) %>
 </p>
 
 <table>

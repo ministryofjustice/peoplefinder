@@ -17,7 +17,8 @@ feature 'Navigating between sections of the site' do
         visit token_url(token)
 
         expect_no_back_link
-        expect_page_header 'SCS 360° Appraisals'
+        expect_no_page_header
+        expect_introductory_text
         expect_tabs
         expect_page_subheader 'Feedback participants'
       end
@@ -29,9 +30,9 @@ feature 'Navigating between sections of the site' do
         visit token_url(token)
 
         expect_no_back_link
-        expect_page_header 'SCS 360° Appraisals'
+        expect_no_page_header
+        expect_introductory_text
         expect_tabs
-        expect_page_subheader 'Feedback received'
       end
 
       scenario 'Viewing a review I have received' do
@@ -51,19 +52,19 @@ feature 'Navigating between sections of the site' do
         # /users
 
         visit token_url(token)
-        click_link 'Your direct reports'
+        click_link 'Manage feedback'
 
         expect_no_back_link
-        expect_page_header 'SCS 360° Appraisals'
+        expect_no_page_header
+        expect_introductory_text
         expect_tabs
-        expect_page_subheader 'Your direct reports'
       end
 
       scenario 'Viewing direct report with no reviews' do
         # /users/[n]/reviews
 
         visit token_url(token)
-        click_link 'Your direct reports'
+        click_link 'Manage feedback'
         click_link 'Charlie'
 
         expect_back_link '/users'
@@ -77,13 +78,12 @@ feature 'Navigating between sections of the site' do
 
         create :submitted_review, subject: direct_report, author_name: 'Momotaro'
         visit token_url(token)
-        click_link 'Your direct reports'
+        click_link 'Manage feedback'
         click_link 'Charlie'
 
         expect_back_link '/users'
         expect_page_header 'Feedback for Charlie'
         expect_no_tabs
-        expect_page_subheader 'Feedback received'
       end
 
       scenario 'Viewing a review a direct report has received' do
@@ -91,7 +91,7 @@ feature 'Navigating between sections of the site' do
 
         create :submitted_review, subject: direct_report, author_name: 'Momotaro'
         visit token_url(token)
-        click_link 'Your direct reports'
+        click_link 'Manage feedback'
         click_link 'Charlie'
         click_link 'View feedback'
 
@@ -107,12 +107,12 @@ feature 'Navigating between sections of the site' do
 
         create :review, author_email: me.email
         visit token_url(token)
-        click_link 'Feedback requests'
+        click_link 'Give feedback'
 
         expect_no_back_link
-        expect_page_header 'SCS 360° Appraisals'
+        expect_no_page_header
+        expect_introductory_text
         expect_tabs
-        expect_page_subheader 'Requests for feedback'
       end
 
       scenario 'Submitting feedback' do
@@ -122,7 +122,7 @@ feature 'Navigating between sections of the site' do
           author_email: me.email,
           subject: direct_report
         visit token_url(token)
-        click_link 'Feedback requests'
+        click_link 'Give feedback'
         click_link 'Add feedback'
 
         expect_back_link '/replies'
@@ -137,7 +137,7 @@ feature 'Navigating between sections of the site' do
           author_email: me.email,
           subject: direct_report
         visit token_url(token)
-        click_link 'Feedback requests'
+        click_link 'Give feedback'
         click_link 'View feedback'
 
         expect_back_link '/replies'
@@ -159,7 +159,8 @@ feature 'Navigating between sections of the site' do
         visit token_url(token)
 
         expect_no_back_link
-        expect_page_header 'SCS 360° Appraisals'
+        expect_no_page_header
+        expect_introductory_text
         expect_tabs
         expect_page_subheader 'All your feedback'
       end
@@ -168,10 +169,11 @@ feature 'Navigating between sections of the site' do
         # /results/users
 
         visit token_url(token)
-        click_link 'Your direct reports'
+        click_link 'Manage feedback'
 
         expect_no_back_link
-        expect_page_header 'SCS 360° Appraisals'
+        expect_no_page_header
+        expect_introductory_text
         expect_tabs
         expect_page_subheader 'Feedback for your direct reports'
       end
@@ -181,7 +183,7 @@ feature 'Navigating between sections of the site' do
 
         create :submitted_review, subject: direct_report, author_name: 'Momotaro'
         visit token_url(token)
-        click_link 'Your direct reports'
+        click_link 'Manage feedback'
         click_link 'Charlie'
 
         expect_back_link '/results/users'
@@ -197,6 +199,14 @@ feature 'Navigating between sections of the site' do
 
   def expect_no_back_link
     expect(page).not_to have_css(".top-left a")
+  end
+
+  def expect_no_page_header
+    expect(page).not_to have_selector('h1')
+  end
+
+  def expect_introductory_text
+    expect(page).to have_selector('p', 'Welcome to the SCS 360° Appraisals')
   end
 
   def expect_page_header(text)

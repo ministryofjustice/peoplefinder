@@ -1,6 +1,10 @@
 module ReviewsHelper
+  def third_party?
+    @subject && @subject != current_user
+  end
+
   def role_translate(key, options = {})
-    if @subject && @subject != current_user
+    if third_party?
       subkey = 'theirs'
       user = @subject
     else

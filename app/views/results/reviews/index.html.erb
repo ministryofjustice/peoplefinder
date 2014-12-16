@@ -4,8 +4,10 @@
   <% end %>
 <% end %>
 
-<% content_for :page_title do %>
-  <%= role_translate('views.results.feedback_title') %>
+<% content_for :page_header do %>
+  <% if third_party? %>
+    <h1><%= role_translate('views.results.feedback_title') %></h1>
+  <% end %>
 <% end %>
 
 <% unless scoped_by_subject? %>
@@ -81,7 +83,11 @@
   </p>
 <% end %>
 
-<hr/>
+<hr />
+
+<%= link_to(t('reviews.download_as_csv'), format: :csv) %>
+
+<hr />
 
 <button class="button print-button">
   Print
