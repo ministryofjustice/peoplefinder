@@ -48,6 +48,13 @@ $row-height: 45px;
       font-size: 1.1em;
       line-height: 2.1em;
       padding-left: 0.9em;
+
+      a {
+        white-space: nowrap;
+        display: block;
+        margin-right: 0.5em;
+        overflow: hidden;
+      }
     }
 
     > ul > li {
@@ -82,6 +89,9 @@ $row-height: 45px;
 
       .subteam-name {
         font-size: 0.9em;
+        white-space: nowrap;
+        overflow: hidden;
+        margin-right: 1.6em;
       }
 
       .subteam-count {
@@ -123,8 +133,13 @@ form .new-org-browser {
   .team h3 {
     padding-left: 0.45em;
 
+    input {
+      float: left;
+      margin-top: 0.65em;
+    }
+
     a {
-      padding-left: 0.29em;
+      padding-left: 0.45em;
     }
   }
 
