@@ -5,6 +5,10 @@ describe ReviewMailer do
   include EmailSpec::Matchers
   include Rails.application.routes.url_helpers
 
+  before do
+    open_review_period
+  end
+
   let(:token) { '123456789' }
   let(:subject_name) { 'Subject' }
   let(:subject_email) { 'pineapple@tropicalfruits.com' }
