@@ -9,7 +9,7 @@
   - if group.has_children?
     %ul
       - group.children.each do |child|
-        %li{:class => ('has-subteams' if child.has_children?)}
+        %li{:class => (child.has_children? ? 'has-subteams' : 'leaf-node')}
           %p
             - if form
               = form.radio_button(:group_id, child.id)
