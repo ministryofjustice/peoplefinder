@@ -36,8 +36,21 @@ feature 'Submitting feedback' do
     expect(submission.how_we_work_comments).to eql('Could learn to...')
     expect(submission.status).to eql(:submitted)
 
+    expect(last_email.subject).to eql 'Feedback submission'
+    expect(last_email.to.first).to eql(Review.last.subject.email)
+
     click_link 'View feedback'
     expect(page).to have_text("Given by #{me.name}")
+  end
+
+  scenario 'Get a notification with functioning login link' do
+    subject = review.subject
+    subject.update(name: 'Doris Smith')
+    FeedbackSubmissionNotification.new(review).notify
+
+    link = links_in_email(last_email).last
+    visit link
+    expect(page).to have_text subject.name
   end
 
   scenario 'Attempting to submit incomplete feedback' do

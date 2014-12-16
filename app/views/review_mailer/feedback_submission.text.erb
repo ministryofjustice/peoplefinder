@@ -1,0 +1,7 @@
+Hello <%= @recipient_name %>,
+
+<%= @submitter_name %> has left feedback for you.
+
+View your feedback by clicking on the login link below:
+
+<%= token_url(@token) %>

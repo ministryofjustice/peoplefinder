@@ -7,6 +7,9 @@ class SubmissionsController < ApplicationController
   def update
     if @submission.update(submission_params)
       notice :updated unless autosave?
+      if @submission.complete?
+        FeedbackSubmissionNotification.new(@submission).notify
+      end
       redirect_to replies_path
     else
       error :update_error
