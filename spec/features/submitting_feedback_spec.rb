@@ -43,6 +43,16 @@ feature 'Submitting feedback' do
     expect(page).to have_text("Given by #{me.name}")
   end
 
+  scenario 'Get a notification with functioning login link' do
+    subject = review.subject
+    subject.update(name: 'Doris Smith')
+    FeedbackSubmissionNotification.new(review).send
+
+    link = links_in_email(last_email).last
+    visit link
+    expect(page).to have_text subject.name
+  end
+
   scenario 'Attempting to submit incomplete feedback' do
     visit token_path(token)
     click_link 'Add feedback'
