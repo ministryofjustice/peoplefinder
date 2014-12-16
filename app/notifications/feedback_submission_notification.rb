@@ -3,7 +3,7 @@ class FeedbackSubmissionNotification
     @review = review
   end
 
-  def send
+  def notify
     token = @review.subject.tokens.create!
     ReviewMailer.feedback_submission(@review, token).deliver
   end

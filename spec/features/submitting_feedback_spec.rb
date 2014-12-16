@@ -46,7 +46,7 @@ feature 'Submitting feedback' do
   scenario 'Get a notification with functioning login link' do
     subject = review.subject
     subject.update(name: 'Doris Smith')
-    FeedbackSubmissionNotification.new(review).send
+    FeedbackSubmissionNotification.new(review).notify
 
     link = links_in_email(last_email).last
     visit link

@@ -8,7 +8,7 @@ class SubmissionsController < ApplicationController
     if @submission.update(submission_params)
       notice :updated unless autosave?
       if @submission.complete?
-        FeedbackSubmissionNotification.new(@submission).send
+        FeedbackSubmissionNotification.new(@submission).notify
       end
       redirect_to replies_path
     else
