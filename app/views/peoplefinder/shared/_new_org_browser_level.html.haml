@@ -1,9 +1,10 @@
 - form = local_assigns.has_key?(:form) ? form : nil
+- field_name = local_assigns.has_key?(:field_name) ? field_name : :group_id
 
 %div.team
   %h3
     - if form
-      = form.radio_button(:group_id, group.id)
+      = form.radio_button(field_name, group.id)
     %a{href: url_for(group), :class => 'team-link'}
       = group.name
   - if group.has_children?
@@ -12,10 +13,10 @@
         %li{:class => (child.has_children? ? 'has-subteams' : 'leaf-node')}
           %p
             - if form
-              = form.radio_button(:group_id, child.id)
+              = form.radio_button(field_name, child.id)
             %a{href: url_for(child), :class => 'subteam-link'}
               %span.subteam-name= child.name
               - if child.has_children?
                 %span.subteam-count= "#{pluralize(child.children.count, ' sub-team')}"
           - if child.has_children?
-            = render 'peoplefinder/shared/new_org_browser_level', group: child, form: form
+            = render 'peoplefinder/shared/new_org_browser_level', group: child, form: form, field_name: field_name

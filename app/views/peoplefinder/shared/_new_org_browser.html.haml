@@ -1,2 +1,5 @@
+- form = local_assigns.has_key?(:form) ? form : nil
+- field_name = local_assigns.has_key?(:field_name) ? field_name : :group_id
+
 %nav.new-org-browser{:class => ('has-form' if local_assigns.has_key?(:form))}
-  = render 'peoplefinder/shared/new_org_browser_level', group: group, form: local_assigns.has_key?(:form) ? form : nil
+  = render 'peoplefinder/shared/new_org_browser_level', group: group, form: form, field_name: field_name

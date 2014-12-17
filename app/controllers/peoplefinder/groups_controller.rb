@@ -3,6 +3,7 @@ module Peoplefinder
     before_action :set_group, only: [
       :show, :edit, :update, :destroy, :all_people
     ]
+    before_action :set_department, only: [:new, :edit, :create, :uprate]
 
     # GET /groups
     def index
@@ -70,6 +71,10 @@ module Peoplefinder
     # Use callbacks to share common setup or constraints between actions.
     def set_group
       @group = collection.friendly.includes(:people).find(params[:id])
+    end
+
+    def set_department
+      @department = Group.where(ancestry_depth: 0).first
     end
 
     # Never trust parameters from the scary internet, only allow the white list
