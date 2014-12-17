@@ -13,7 +13,7 @@ feature "Peoplefinder::Person maintenance" do
     fill_in 'Surname', with: 'Taylor'
     fill_in 'Email', with: person_attributes[:email]
     fill_in 'Job title', with: 'Head Honcho'
-    click_in_org_browser 'Digital Justice'
+    click_on_subteam_in_org_browser 'Digital Justice'
     check 'leader'
     click_button 'Save'
 
@@ -48,7 +48,7 @@ feature "Peoplefinder::Person maintenance" do
     sleep 1
 
     within all('#memberships .membership').last do
-      click_in_org_browser 'Communications'
+      click_on_subteam_in_org_browser 'Communications'
       fill_in 'Job title', with: 'Talker'
     end
 
