@@ -12,7 +12,7 @@ environment:
 * SMTP_DOMAIN
 * EMAIL_NOREPLY_ADDRESS – Used when sending email
 * HOST – Used to generate web URLs when sending email
-* FEEDBACK_URL – Used for the feedback link in the alpha bar
+* FEEDBACK_URL – Used for the feedback link in the beta bar
 * SURVEY_URL – A link to a survey to be completed after using the service
 * SECURE_COOKIES - (true/false) whether to set secure cookies or not, set this
                    to false in development/test.
