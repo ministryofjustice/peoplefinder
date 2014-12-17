@@ -15,7 +15,7 @@ module SCSAppraisals
 
     # For the MOJ internal template
     config.app_title = 'SCS 360° Appraisals'
-    config.phase = 'alpha'
+    config.phase = 'beta'
 
     config.generators do |g|
       g.test_framework :rspec, fixture: true, views: false
