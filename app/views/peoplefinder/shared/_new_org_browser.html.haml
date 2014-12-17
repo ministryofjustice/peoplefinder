@@ -1,2 +1,2 @@
-%nav.new-org-browser
+%nav.new-org-browser{:class => ('has-form' if local_assigns.has_key?(:form))}
   = render 'peoplefinder/shared/new_org_browser_level', group: group, form: local_assigns.has_key?(:form) ? form : nil

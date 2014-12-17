@@ -8,11 +8,11 @@ $(function (){
   // title link
   $orgBrowser.on('click', '.team-link', function (e){
     // if it's a form
-    if( $orgBrowser.find('input').length > 0 ){
+    if( $orgBrowser.hasClass('has-form') ){
         e.preventDefault();
         e.stopPropagation();
 
-        $(e.target).closest('h3').children('input').attr('checked', 'checked');
+        $(e.target).closest('h3').children('input').prop('checked', 'checked');
     }
   });
 
@@ -20,12 +20,12 @@ $(function (){
     var $target = $(e.target);
 
     if( $target.closest('li').hasClass('has-subteams') == false ){
-      if( $target.closest('li').find('input').length > 0 ){
+      if( $orgBrowser.hasClass('has-form') ){
         // if we're in a form, the link click should select it's radio button
         e.preventDefault();
         e.stopPropagation();
 
-        $target.closest('p').children('input').attr('checked', 'checked');
+        $target.closest('p').children('input').prop('checked', 'checked');
       }
 
       // if this is a leaf-node, we let the link work as it normally would
