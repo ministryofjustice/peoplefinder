@@ -4,7 +4,7 @@ RSpec.describe Token, type: :model do
 
   it 'generates a token' do
     token = described_class.new
-    expect(token.value).to match(/\A[a-z0-9\-]{36}\z/)
+    expect(token.value).to match(/\A[A-Za-z0-9\-_]{20,}\z/)
   end
 
   it 'preserves the same token after persisting' do
