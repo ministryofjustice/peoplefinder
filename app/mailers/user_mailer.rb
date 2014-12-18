@@ -19,4 +19,10 @@ class UserMailer < ActionMailer::Base
     @token = token
     mail to: @user.email
   end
+
+  def feedback_not_given(review, token)
+    @review = review
+    @token = token
+    mail to: @review.author_email
+  end
 end
