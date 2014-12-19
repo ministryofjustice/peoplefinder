@@ -22,7 +22,7 @@ RSpec.describe Peoplefinder::PeopleController, type: :controller do
     attributes_for(:person).merge(image: File.open(sample_image))
   }
 
-  let(:group) { create(:group) }
+  let!(:group) { create(:group) }
 
   describe 'GET index' do
     it 'redirects to the root' do
@@ -49,11 +49,6 @@ RSpec.describe Peoplefinder::PeopleController, type: :controller do
       get :new, {}
       expect(assigns(:person).memberships.length).to eql(1)
     end
-
-    it 'sets groups' do
-      get :new, {}
-      expect(assigns(:groups)).to include(group)
-    end
   end
 
   describe 'GET edit' do
@@ -62,11 +57,6 @@ RSpec.describe Peoplefinder::PeopleController, type: :controller do
     it 'assigns the requested person as @person' do
       get :edit, id: person.to_param
       expect(assigns(:person)).to eq(person)
-    end
-
-    it 'sets groups' do
-      get :edit, id: person.to_param
-      expect(assigns(:groups)).to include(group)
     end
 
     context 'building memberships' do
@@ -124,10 +114,6 @@ RSpec.describe Peoplefinder::PeopleController, type: :controller do
 
       it 're-renders the new template' do
         expect(response).to render_template('new')
-      end
-
-      it 'assigns the @groups collection' do
-        expect(assigns(:groups)).to include(group)
       end
 
       it 'shows an error message' do
@@ -199,10 +185,6 @@ RSpec.describe Peoplefinder::PeopleController, type: :controller do
       it 're-renders the edit template' do
         expect(response).to render_template('edit')
       end
-
-      it 'assigns the @groups collection' do
-        expect(assigns(:groups)).to include(group)
-      end
     end
 
     describe 'with duplicate name' do
@@ -242,11 +224,6 @@ RSpec.describe Peoplefinder::PeopleController, type: :controller do
         get :add_membership
         expect(response).to render_template('add_membership')
       end
-
-      it 'sets groups' do
-        get :add_membership
-        expect(assigns(:groups)).to include(group)
-      end
     end
 
     context 'with an existing person' do
@@ -255,11 +232,6 @@ RSpec.describe Peoplefinder::PeopleController, type: :controller do
       it 'renders add_membership template' do
         get :add_membership, id: person
         expect(response).to render_template('add_membership')
-      end
-
-      it 'sets groups' do
-        get :add_membership, id: person
-        expect(assigns(:groups)).to include(group)
       end
     end
   end

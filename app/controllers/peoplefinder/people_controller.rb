@@ -2,7 +2,7 @@ module Peoplefinder
   class PeopleController < ApplicationController
     before_action :set_person, only: [:show, :edit, :update, :destroy]
     before_action :set_hint_group
-    before_action :set_groups,
+    before_action :set_org_structure,
       only: [:new, :edit, :create, :update, :add_membership]
 
     # GET /people
@@ -90,8 +90,8 @@ module Peoplefinder
       end
     end
 
-    def set_groups
-      @groups = Group.all
+    def set_org_structure
+      @org_structure = Group.arrange.to_h
     end
 
     def group_from_group_id

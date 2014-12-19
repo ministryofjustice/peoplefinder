@@ -36,8 +36,8 @@
         %p.form-hint Use this to change where in the organisation this team is located.
 
         .editable-fields{ style: ('display:none' unless @group.new_record?) }
-          - if @department
-            = render 'peoplefinder/shared/new_org_browser', group: @department, form: f, field_name: :parent_id
+          - if @org_structure
+            = render 'peoplefinder/shared/new_org_browser', org_structure: @org_structure, form: f, field_name: :parent_id
 
         -unless @group.new_record?
           .editable-summary.parent-summary

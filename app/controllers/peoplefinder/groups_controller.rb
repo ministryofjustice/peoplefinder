@@ -3,7 +3,7 @@ module Peoplefinder
     before_action :set_group, only: [
       :show, :edit, :update, :destroy, :all_people
     ]
-    before_action :set_department, only: [:new, :edit, :create, :uprate]
+    before_action :set_org_structure, only: [:new, :edit, :create, :uprate]
 
     # GET /groups
     def index
@@ -73,8 +73,8 @@ module Peoplefinder
       @group = collection.friendly.includes(:people).find(params[:id])
     end
 
-    def set_department
-      @department = Group.where(ancestry_depth: 0).first
+    def set_org_structure
+      @org_structure = Group.arrange.to_h
     end
 
     # Never trust parameters from the scary internet, only allow the white list
