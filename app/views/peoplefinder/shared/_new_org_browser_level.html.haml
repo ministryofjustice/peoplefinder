@@ -3,17 +3,20 @@
 
 - org_structure.each do |group, subgroups|
   %div.team{:class => ('root-node' if level == 0)}
-    %h3
-      - if form
+    - group_disabled = (@group && @group.id == group.id)
+    %h3{class: (group_disabled ? 'disabled' : '')}
+      - if form && !group_disabled
         = form.radio_button(field_name, group.id)
-      %a{href: group_path(group['id']), :class => 'team-link'}
+      %a{href: group_path(group['id']), :class => 'team-link' }
         = group['name']
+
     - if subgroups.size > 0
       %ul
         - subgroups.each do |subgroup, subsubgroups|
-          %li{:class => (subsubgroups.size > 0 ? 'has-subteams' : 'leaf-node')}
+          - subgroup_disabled = (@group && @group.id == subgroup.id)
+          %li{:class => (subsubgroups.size > 0 ? 'has-subteams' : 'leaf-node') + (subgroup_disabled ? ' disabled' : '')}
             %p
-              - if form
+              - if form && !subgroup_disabled
                 = form.radio_button(field_name, subgroup.id)
               %a{href: url_for(subgroup), :class => 'subteam-link'}
                 %span.subteam-name= subgroup.name

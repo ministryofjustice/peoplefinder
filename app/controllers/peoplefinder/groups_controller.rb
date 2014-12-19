@@ -3,7 +3,7 @@ module Peoplefinder
     before_action :set_group, only: [
       :show, :edit, :update, :destroy, :all_people
     ]
-    before_action :set_org_structure, only: [:new, :edit, :create, :uprate]
+    before_action :set_org_structure, only: [:new, :edit, :create, :update]
 
     # GET /groups
     def index
