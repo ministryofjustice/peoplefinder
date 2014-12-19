@@ -2,11 +2,19 @@ $(function (){
   "use strict";
 
   var $orgBrowser = $('.new-org-browser');
+  var $content = $('#content');
 
-  $orgBrowser.children('.team').first().addClass('root-node');
+  // $orgBrowser.children('.team').first().addClass('root-node');
+
+  if( $orgBrowser.hasClass('has-form') ){
+    var $checked = $orgBrowser.find('input:checked');
+    if( $checked.length > 0 ){
+      $checked.parents('.team').addClass('visible');
+    }
+  }
 
   // title link
-  $orgBrowser.on('click', '.team-link', function (e){
+  $content.on('click', '.new-org-browser .team-link', function (e){
     // if it's a form
     if( $orgBrowser.hasClass('has-form') ){
         e.preventDefault();
@@ -16,7 +24,7 @@ $(function (){
     }
   });
 
-  $orgBrowser.on('click', '.subteam-link', function(e){
+  $content.on('click', '.new-org-browser .subteam-link', function(e){
     var $target = $(e.target);
 
     if( $target.closest('li').hasClass('has-subteams') == false ){
