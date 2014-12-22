@@ -165,16 +165,23 @@ form .new-org-browser {
     display: none;
   }
 
-  h3.disabled, li.disabled {
-    a {
+  .team {
+    h3.disabled > a, li.disabled.leaf-node > p > a {
       cursor: default;
-      color: #a2a2a2; // nicked from gov.uk colour palette, TODO: replace with a variable
-      text-decoration: none;
+    }
+
+    h3.disabled, li.disabled.leaf-node {
+      > a, > p > a {
+        color: #a2a2a2; // nicked from gov.uk colour palette, TODO: replace with a variable
+        text-decoration: none;
+      }
+    }
+
+
+    ul li.disabled > p > a {
+      padding-left: 44px;
     }
   }
 
-  li.disabled p {
-    padding-left: 44px;
-  }
 }
 
