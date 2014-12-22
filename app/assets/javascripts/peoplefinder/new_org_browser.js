@@ -4,7 +4,19 @@ $(function (){
   var $orgBrowser = $('.new-org-browser');
   var $content = $('#content');
 
-  // $orgBrowser.children('.team').first().addClass('root-node');
+  var animateScroll = function (){
+    var visibles = $orgBrowser.find('.visible');
+    var offset = visibles.length * visibles.width();
+
+    $orgBrowser.animate({ scrollLeft: offset }, 400);
+  }
+
+  var revealSubteam = function ( $target, $subteam ){
+    $target.parents('li').addClass('expanded');
+    $orgBrowser.find('.team').removeClass('visible');
+    $subteam.children().parents('.team').addClass('visible');
+  }
+
 
   if( $orgBrowser.hasClass('has-form') ){
     var $checked = $orgBrowser.find('input:checked');
@@ -12,6 +24,10 @@ $(function (){
       $checked.parents('.team').addClass('visible');
     }
   }
+
+  $content.on('click', '.show-editable-fields', function (e){
+    setTimeout(animateScroll, 0);
+  });
 
   // title link
   $content.on('click', '.new-org-browser .team-link', function (e){
@@ -48,18 +64,5 @@ $(function (){
 
     animateScroll();
   });
-
-  var revealSubteam = function ( $target, $subteam ){
-    $target.parents('li').addClass('expanded');
-    $orgBrowser.find('.team').removeClass('visible');
-    $subteam.children().parents('.team').addClass('visible');
-  }
-
-  var animateScroll = function (){
-    var visibles = $orgBrowser.find('.visible');
-    var offset = visibles.length * visibles.width();
-
-    $orgBrowser.animate({ scrollLeft: offset }, 400);
-  }
 });
 
