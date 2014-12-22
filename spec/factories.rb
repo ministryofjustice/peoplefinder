@@ -27,6 +27,10 @@ FactoryGirl.define do
       administrator true
       participant false
     end
+
+    factory :recipient do
+      manager { create(:user) }
+    end
   end
 
   factory :author, class: User do

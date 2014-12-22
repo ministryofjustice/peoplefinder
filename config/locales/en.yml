@@ -292,6 +292,12 @@ en:
       subject: '360 feedback process has begun'
     closure_notification:
       subject: '360 feedback process has closed'
+    feedback_not_received:
+      subject: '360 feedback process closes soon'
+    feedback_not_given:
+      subject: '360 feedback process closes soon'
+    closing_soon:
+      subject: '360 feedback process closes soon'
   review_mailer:
     feedback_request:
       subject: '360 feedback request from you'

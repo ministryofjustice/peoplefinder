@@ -103,6 +103,12 @@ RSpec.describe ReviewPeriod do
       described_class.closes_at = Time.at(1415170000)
       expect(described_class.seconds_left(Time.at(1415180000))).to eql(0)
     end
+
+    it 'reports the time left in days' do
+      described_class.closes_at = Time.new(2014, 12, 24, 23, 59, 0, 0)
+      now = Time.new(2014, 12, 20, 12, 0, 0, 0)
+      expect(described_class.days_left(now)).to eql(4)
+    end
   end
 
   context 'Default closing time' do
