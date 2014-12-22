@@ -41,7 +41,7 @@ class Review < ActiveRecord::Base
   symbol_field :status, STATUSES
   symbol_field :relationship, RELATIONSHIPS
 
-  delegate :name, to: :subject, prefix: true
+  delegate :name, :email, to: :subject, prefix: true
 
   def self.for_user(user)
     where(
