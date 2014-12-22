@@ -164,5 +164,17 @@ form .new-org-browser {
   .has-subteams > p > input {
     display: none;
   }
+
+  h3.disabled, li.disabled {
+    a {
+      cursor: default;
+      color: #a2a2a2; // nicked from gov.uk colour palette, TODO: replace with a variable
+      text-decoration: none;
+    }
+  }
+
+  li.disabled p {
+    padding-left: 44px;
+  }
 }
 
