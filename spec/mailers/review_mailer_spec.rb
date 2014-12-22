@@ -37,6 +37,7 @@ describe ReviewMailer do
 
     it 'comes from the person requesting feedback' do
       expect(email.from.first).to eql(subject_email)
+      expect(email.to_s[/^From.*/]).to match(subject_name)
     end
 
     it 'contains provided invitation message' do
@@ -70,6 +71,7 @@ describe ReviewMailer do
 
     it 'comes from the person declining feedback' do
       expect(email.from.first).to eql(review.author_email)
+      expect(email.to_s[/^From.*/]).to match(review.author_name)
     end
 
     it 'contains the recipients name' do
@@ -97,6 +99,7 @@ describe ReviewMailer do
 
     it 'comes from the person submitting feedback' do
       expect(email.from.first).to eql(review.author_email)
+      expect(email.to_s[/^From.*/]).to match(review.author_name)
     end
 
     it 'contains the recipients name' do
