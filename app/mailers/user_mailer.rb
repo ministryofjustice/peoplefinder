@@ -25,4 +25,10 @@ class UserMailer < ActionMailer::Base
     @token = token
     mail to: @review.author_email
   end
+
+  def closing_soon(user, token)
+    @user = user
+    @token = token
+    mail to: @user.email
+  end
 end

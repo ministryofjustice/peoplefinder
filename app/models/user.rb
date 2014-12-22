@@ -29,8 +29,14 @@ class User < ActiveRecord::Base
 
   before_destroy :orphan_direct_reports
 
+  # Members of SCS
   def self.participants
     where(participant: true)
+  end
+
+  # Members of SCS who receive feedback (excludes the person at the very top)
+  def self.recipients
+    participants.where.not(manager: nil)
   end
 
   def self.with_feedback_not_received
