@@ -1,3 +1,5 @@
+- content_for :body_classes, 'new-profile-page'
+
 %h1= @page_title = 'New profile'
 
 = render partial: 'form', locals: { building: true }

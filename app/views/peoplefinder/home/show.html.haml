@@ -1,3 +1,5 @@
+- content_for :body_classes, 'home-page'
+
 %h1 #{ @group.name } people finder
 = link_to 'Add new profile', new_person_path, class: 'add-new-person'
 
