@@ -130,6 +130,20 @@ feature 'Navigating between sections of the site' do
         expect_no_tabs
       end
 
+      scenario "Viewing an info page in a new window" do
+        create :accepted_review,
+          author_email: me.email,
+          subject: direct_report
+        visit token_url(token)
+        click_link 'Give feedback'
+        click_link 'Add feedback'
+        click_link 'Leadership Model'
+
+        expect_page_header 'The Leadership Model'
+        expect_no_tabs
+        expect_no_back_link
+      end
+
       scenario 'Viewing feedback I gave' do
         # /reviews/[n]
 
@@ -199,6 +213,7 @@ feature 'Navigating between sections of the site' do
 
   def expect_no_back_link
     expect(page).not_to have_css(".top-left a")
+    expect(page).not_to have_selector('a', text: 'Back')
   end
 
   def expect_no_page_header

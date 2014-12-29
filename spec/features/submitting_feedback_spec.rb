@@ -97,9 +97,6 @@ feature 'Submitting feedback' do
     within('h1') do
       expect(page).to have_text('Leadership Model')
     end
-
-    click_link 'Back'
-    expect(page).to have_link('Leadership Model', href: leadership_model_path)
   end
 
   scenario 'View the MOJ story' do
@@ -111,9 +108,6 @@ feature 'Submitting feedback' do
     within('h1') do
       expect(page).to have_text('MOJ Story')
     end
-
-    click_link 'Back'
-    expect(page).to have_link('MOJ Story', href: moj_story_path)
   end
 
   scenario 'View the terms and conditions' do
