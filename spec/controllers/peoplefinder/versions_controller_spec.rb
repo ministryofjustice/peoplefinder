@@ -14,7 +14,7 @@ RSpec.describe Peoplefinder::VersionsController, type: :controller do
         version = PaperTrail::Version.last
         put :undo, id: version.id
 
-        expect { Peoplefinder::Person.find(person) }.
+        expect { Peoplefinder::Person.find(person.id) }.
           to raise_error(ActiveRecord::RecordNotFound)
       end
     end
@@ -36,7 +36,7 @@ RSpec.describe Peoplefinder::VersionsController, type: :controller do
         version = PaperTrail::Version.last
         put :undo, id: version.id
 
-        expect(Peoplefinder::Membership.find(membership)).to be_present
+        expect(Peoplefinder::Membership.find(membership.id)).to be_present
       end
     end
 
@@ -47,7 +47,7 @@ RSpec.describe Peoplefinder::VersionsController, type: :controller do
         version = PaperTrail::Version.last
         put :undo, id: version.id
 
-        expect { Peoplefinder::Membership.find(membership) }.
+        expect { Peoplefinder::Membership.find(membership.id) }.
           to raise_error(ActiveRecord::RecordNotFound)
       end
     end

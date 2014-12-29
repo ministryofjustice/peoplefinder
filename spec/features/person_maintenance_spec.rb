@@ -79,7 +79,7 @@ feature 'Person maintenance' do
     person = create(:person)
     visit edit_person_path(person)
     click_link('Delete this profile')
-    expect { Peoplefinder::Person.find(person) }.to raise_error(ActiveRecord::RecordNotFound)
+    expect { Peoplefinder::Person.find(person.id) }.to raise_error(ActiveRecord::RecordNotFound)
   end
 
   scenario 'Allow deletion of a person even when there are memberships' do
@@ -87,8 +87,8 @@ feature 'Person maintenance' do
     person = membership.person
     visit edit_person_path(person)
     click_link('Delete this profile')
-    expect { Peoplefinder::Membership.find(membership) }.to raise_error(ActiveRecord::RecordNotFound)
-    expect { Peoplefinder::Person.find(person) }.to raise_error(ActiveRecord::RecordNotFound)
+    expect { Peoplefinder::Membership.find(membership.id) }.to raise_error(ActiveRecord::RecordNotFound)
+    expect { Peoplefinder::Person.find(person.id) }.to raise_error(ActiveRecord::RecordNotFound)
   end
 
   scenario 'Editing a person' do
