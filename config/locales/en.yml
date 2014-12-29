@@ -307,6 +307,10 @@ en:
       your_feedback: 'Ask for feedback'
       feedback_requests: 'Give feedback'
       your_direct_reports: 'Manage feedback'
+  forbidden:
+    body: |
+      You’re not logged in.
+      Please use the link in your email to access the 360° Appraisals Service.
   views:
     replies:
       introductory_text: |
