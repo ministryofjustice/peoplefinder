@@ -18,6 +18,6 @@ class Token < ActiveRecord::Base
 private
 
   def generate_value
-    self.value ||= SecureRandom.uuid
+    self.value ||= SecureRandom.urlsafe_base64(16)
   end
 end
