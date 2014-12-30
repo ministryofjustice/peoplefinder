@@ -1,6 +1,9 @@
 <% content_for :head do %>
   <%= javascript_include_tag 'application' %>
   <%= stylesheet_link_tag 'application', media: :all %>
+  <!--[if IE]>
+  <%= stylesheet_link_tag 'ie', media: :all %>
+  <![endif]-->
 <% end %>
 
 <% content_for :content do %>

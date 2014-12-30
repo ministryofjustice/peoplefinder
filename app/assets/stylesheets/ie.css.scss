@@ -1,0 +1,16 @@
+ul#tab_navigation {
+  border-bottom: 1px solid black;
+
+  li {
+    float: left;
+    height: 34px;
+    width: 30%;
+    padding: 18px 0;
+    margin-bottom: -1px;
+    border-bottom: none;
+  }
+
+  li.active {
+    border-bottom: 1px solid white;
+  }
+}
