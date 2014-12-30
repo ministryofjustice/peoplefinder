@@ -1,0 +1,34 @@
+ul#tab_navigation {
+  border-bottom: 1px solid black;
+
+  li {
+    float: left;
+    height: 34px;
+    width: 30%;
+    padding: 18px 0;
+    margin-bottom: -1px;
+    border-bottom: none;
+  }
+
+  li.active {
+    border-bottom: 1px solid white;
+  }
+}
+
+button.button {
+  border: none;
+}
+
+.review-aggregation {
+  dt, dd {
+    float: none;
+    margin: 0 0 -15px 0;
+  }
+  dt {
+  }
+  dd {
+    position: relative;
+    left: 275px;
+    top: -30px;
+  }
+}

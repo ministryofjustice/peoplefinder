@@ -23,6 +23,7 @@ gem 'sidekiq'
 
 group :development do
   gem 'spring'
+  gem 'ffaker'
 end
 
 group :test do

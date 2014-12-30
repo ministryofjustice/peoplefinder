@@ -225,36 +225,37 @@ en:
       no_admin_user_with_email_exists: 'No admin user with that email exists'
   submissions:
     title: 'Feedback for %{name}'
-    intro: |
-      Please rate %{name}’s leadership and people management skills according to
-      the scores below.
+    intro_html: |
+      <p>
+        Please rate %{name}’s leadership and people management skills according
+        to the scores below.
+      </p>
 
-      Your input plays an important part in helping to assess their
-      performance.
-      We suggest you set aside around 20 minutes for this task although your
-      work is automatically saved so you can return to it at any time.
-      You also have the option to provide additional details or mark any areas
-      as not applicable.
+      <p>
+        Your input plays an important part in helping to assess their
+        performance.
+        We suggest you set aside around 20 minutes for this task although your
+        work is automatically saved so you can return to it at any time.  You
+        also have the option to provide additional details or mark any areas as
+        not applicable.
+      </p>
 
-      # Scores
+      <h3>Scores</h3>
 
-      1
-      : Very rarely
-
-      2
-      : Rarely
-
-      3
-      : Occasionally
-
-      4
-      : Frequently
-
-      5
-      : Very frequently
-
-      N/A
-      : Not applicable (did not observe this behaviour)
+      <dl>
+        <dt class="rating-1">1</dt>
+          <dd>Very rarely</dd>
+        <dt class="rating-2">2</dt>
+          <dd>Rarely</dd>
+        <dt class="rating-3">3</dt>
+          <dd>Occasionally</dd>
+        <dt class="rating-4">4</dt>
+          <dd>Frequently</dd>
+        <dt class="rating-5">5</dt>
+          <dd>Very frequently</dd>
+        <dt>N/A</dt>
+          <dd>Not applicable (did not observe this behaviour)</dd>
+      </dl>
     section_1:
       title: 'Leadership qualities'
       intro: |

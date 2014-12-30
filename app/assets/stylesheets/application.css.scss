@@ -1,4 +1,4 @@
-$grey-background: rgba(#DEE0E2, 0.5);
+$grey-background: rgb(239, 240, 241);
 $grey-border: #BFC1C3;
 
 @-moz-keyframes fade-in-out {
@@ -157,11 +157,11 @@ table {
 }
 
 $rating-grey: #dee0e2;
-$rating-1-color: rgba(255, 191, 71, 0.2);
-$rating-2-color: rgba(255, 191, 71, 0.4);
-$rating-3-color: rgba(255, 191, 71, 0.6);
-$rating-4-color: rgba(255, 191, 71, 0.8);
-$rating-5-color: rgba(255, 191, 71, 1.0);
+$rating-1-color: rgb(255, 242, 218);
+$rating-2-color: rgb(255, 229, 181);
+$rating-3-color: rgb(255, 217, 145);
+$rating-4-color: rgb(255, 204, 108);
+$rating-5-color: rgb(255, 191, 71);
 
 .review-aggregation {
   margin: 20px 0;
@@ -215,11 +215,11 @@ $rating-5-color: rgba(255, 191, 71, 1.0);
   dd {
     margin: 10px 0;
   }
-  dt:nth-child(1) { background-color: $rating-1-color }
-  dt:nth-child(3) { background-color: $rating-2-color }
-  dt:nth-child(5) { background-color: $rating-3-color }
-  dt:nth-child(7) { background-color: $rating-4-color }
-  dt:nth-child(9) { background-color: $rating-5-color }
+  dt.rating-1 { background-color: $rating-1-color }
+  dt.rating-2 { background-color: $rating-2-color }
+  dt.rating-3 { background-color: $rating-3-color }
+  dt.rating-4 { background-color: $rating-4-color }
+  dt.rating-5 { background-color: $rating-5-color }
 }
 
 fieldset.inline {
@@ -239,24 +239,24 @@ fieldset.inline {
 }
 
 .submission-form {
-  .block-label:nth-child(2),
-  .field_with_errors:nth-child(2) .block-label {
+  .block-label.index-0,
+  .field_with_errors .block-label.index-0 {
     background-color: $rating-1-color;
   }
-  .block-label:nth-child(3),
-  .field_with_errors:nth-child(3) .block-label {
+  .block-label.index-1,
+  .field_with_errors .block-label.index-1 {
     background-color: $rating-2-color;
   }
-  .block-label:nth-child(4),
-  .field_with_errors:nth-child(4) .block-label {
+  .block-label.index-2,
+  .field_with_errors .block-label.index-2 {
     background-color: $rating-3-color;
   }
-  .block-label:nth-child(5),
-  .field_with_errors:nth-child(5) .block-label {
+  .block-label.index-3,
+  .field_with_errors .block-label.index-3 {
     background-color: $rating-4-color;
   }
-  .block-label:nth-child(6),
-  .field_with_errors:nth-child(6) .block-label {
+  .block-label.index-4,
+  .field_with_errors .block-label.index-4 {
     background-color: $rating-5-color;
   }
   .field_with_errors .block-label.selected,
@@ -290,13 +290,16 @@ hr.more-space {
   margin-top: 60px;
 }
 
-.action-row button {
-  float: left;
-}
+.action-row {
+  height: 70px;
+  button {
+    float: left;
+  }
 
-.action-row div {
-  float: left;
-  padding: 8px 0;
+  div {
+    float: left;
+    padding: 8px 0;
+  }
 }
 
 .autosave-status {
@@ -382,11 +385,11 @@ strong {
 }
 
 .review-period-time-left .inner {
-  background-color: rgba(40, 161, 151, 0.15);
+  background-color: rgb(223, 241, 239);
   background-image: image-url('clock_icon.png');
   background-repeat: no-repeat;
   background-position: 10px 10px;
-  border-left: 4px solid rgba(40, 161, 151, 1);
+  border-left: 4px solid rgb(40, 161, 151);
   font-size: 19px;
   padding: 10px 10px 10px 46px;
   float: right;
@@ -403,8 +406,8 @@ strong {
 }
 
 .review-period-time-left.last-few-days .inner {
-  background-color: rgba(223, 48, 52, 0.15);
-  border-left: 4px solid rgba(223, 48, 52, 1);
+  background-color: rgb(250, 224, 225);
+  border-left: 4px solid rgb(223, 48, 52);
 }
 
 footer {
