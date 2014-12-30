@@ -18,3 +18,17 @@ ul#tab_navigation {
 button.button {
   border: none;
 }
+
+.review-aggregation {
+  dt, dd {
+    float: none;
+    margin: 0 0 -15px 0;
+  }
+  dt {
+  }
+  dd {
+    position: relative;
+    left: 275px;
+    top: -30px;
+  }
+}
