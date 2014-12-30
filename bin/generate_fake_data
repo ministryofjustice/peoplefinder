@@ -1,0 +1,103 @@
+#!/usr/bin/env ruby
+APP_PATH = File.expand_path('../../config/application',  __FILE__)
+require_relative '../config/boot'
+require APP_PATH
+Rails.application.require_environment!
+
+require 'ffaker'
+
+def create_user(**options)
+  defaults = {
+    name: Faker::Name.name,
+    email: Faker::Internet.email,
+    participant: true
+  }
+  User.create!(defaults.merge(options))
+end
+
+def create_users
+  top = create_user
+
+  11.times do
+    middle = create_user(manager: top)
+
+    11.times do
+      create_user(manager: middle)
+    end
+  end
+end
+
+def invite(subject, reviewer, relationship)
+  Review.create!(
+    subject: subject,
+    author: reviewer,
+    author_name: reviewer.name,
+    author_email: reviewer.email,
+    status: :no_response,
+    relationship: relationship
+  )
+end
+
+def create_manager_report_invitations
+  User.recipients.each do |user|
+    invite user, user.manager, :line_manager
+    if user.manager.participant?
+      invite user.manager, user, :direct_report
+    end
+  end
+end
+
+def create_scs_invitations
+  User.recipients.each do |user|
+    candidates = User.all - [user.manager].compact - user.direct_reports
+    candidates.shuffle.take(rand(10)).each do |reviewer|
+      invite user, reviewer, [:peer, :customer][rand(2)]
+    end
+  end
+end
+
+def create_supplier_invitations
+  User.recipients.each do |user|
+    rand(3).times do
+      reviewer = create_user(participant: false)
+      invite user, reviewer, :supplier
+    end
+  end
+end
+
+def fill_reviews
+  Review.all.each do |review|
+    status = Review::STATUSES.shuffle.first
+    options = { status: status }
+    case status
+    when :declined
+      options.merge! reason_declined: Faker::Company.bs
+    when :started
+      options.merge! leadership_comments: Faker::Company.bs
+    when :submitted
+      options.merge!(
+        status: status,
+        rating_1: rand(6),
+        rating_2: rand(6),
+        rating_3: rand(6),
+        rating_4: rand(6),
+        rating_5: rand(6),
+        rating_6: rand(6),
+        rating_7: rand(6),
+        rating_8: rand(6),
+        rating_9: rand(6),
+        rating_10: rand(6),
+        rating_11: rand(6),
+        leadership_comments: Faker::Company.bs,
+        how_we_work_comments: Faker::Company.bs
+      )
+    end
+    review.update! options
+  end
+end
+
+create_users
+create_manager_report_invitations
+create_scs_invitations
+create_supplier_invitations
+fill_reviews
