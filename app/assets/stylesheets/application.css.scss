@@ -290,13 +290,16 @@ hr.more-space {
   margin-top: 60px;
 }
 
-.action-row button {
-  float: left;
-}
+.action-row {
+  height: 70px;
+  button {
+    float: left;
+  }
 
-.action-row div {
-  float: left;
-  padding: 8px 0;
+  div {
+    float: left;
+    padding: 8px 0;
+  }
 }
 
 .autosave-status {
