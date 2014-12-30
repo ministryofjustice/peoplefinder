@@ -14,11 +14,11 @@ class GDSFormBuilder < ActionView::Helpers::FormBuilder
   def radio_buttons(method, values, labeler: labeler, **options)
     radio_button_fieldset(method, options) {
       with_label(method) {
-        values.map { |value|
-          label(method, value: value, class: 'block-label') {
+        values.inject(ActiveSupport::SafeBuffer.new) { |html, value|
+          html << label(method, value: value, class: 'block-label') {
             radio_button(method, value) + labeler.call(value)
           }
-        }.join.html_safe
+        }
       }
     }
   end
