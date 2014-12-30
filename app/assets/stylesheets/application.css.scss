@@ -215,11 +215,11 @@ $rating-5-color: rgb(255, 191, 71);
   dd {
     margin: 10px 0;
   }
-  dt:nth-child(1) { background-color: $rating-1-color }
-  dt:nth-child(3) { background-color: $rating-2-color }
-  dt:nth-child(5) { background-color: $rating-3-color }
-  dt:nth-child(7) { background-color: $rating-4-color }
-  dt:nth-child(9) { background-color: $rating-5-color }
+  dt.rating-1 { background-color: $rating-1-color }
+  dt.rating-2 { background-color: $rating-2-color }
+  dt.rating-3 { background-color: $rating-3-color }
+  dt.rating-4 { background-color: $rating-4-color }
+  dt.rating-5 { background-color: $rating-5-color }
 }
 
 fieldset.inline {
@@ -239,24 +239,24 @@ fieldset.inline {
 }
 
 .submission-form {
-  .block-label:nth-child(2),
-  .field_with_errors:nth-child(2) .block-label {
+  .block-label.index-0,
+  .field_with_errors .block-label.index-0 {
     background-color: $rating-1-color;
   }
-  .block-label:nth-child(3),
-  .field_with_errors:nth-child(3) .block-label {
+  .block-label.index-1,
+  .field_with_errors .block-label.index-1 {
     background-color: $rating-2-color;
   }
-  .block-label:nth-child(4),
-  .field_with_errors:nth-child(4) .block-label {
+  .block-label.index-2,
+  .field_with_errors .block-label.index-2 {
     background-color: $rating-3-color;
   }
-  .block-label:nth-child(5),
-  .field_with_errors:nth-child(5) .block-label {
+  .block-label.index-3,
+  .field_with_errors .block-label.index-3 {
     background-color: $rating-4-color;
   }
-  .block-label:nth-child(6),
-  .field_with_errors:nth-child(6) .block-label {
+  .block-label.index-4,
+  .field_with_errors .block-label.index-4 {
     background-color: $rating-5-color;
   }
   .field_with_errors .block-label.selected,
