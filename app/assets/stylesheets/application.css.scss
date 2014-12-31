@@ -49,6 +49,10 @@ select.form-control {
   -webkit-appearance: menulist;
 }
 
+fieldset {
+  margin-top: 19px;
+}
+
 #content .inner-block {
   position: relative;
 }
@@ -369,6 +373,9 @@ strong {
       width: auto;
       float: left;
       clear: none;
+    }
+    fieldset {
+      margin-top: 0;
     }
     button {
       margin-top: 11px;
