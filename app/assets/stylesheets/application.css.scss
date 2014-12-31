@@ -1,3 +1,6 @@
+@import "font-awesome-sprockets";
+@import "font-awesome";
+
 $grey-background: rgb(239, 240, 241);
 $grey-border: #BFC1C3;
 
@@ -416,4 +419,5 @@ footer {
   }
 }
 
+@import 'select';
 @import 'print';

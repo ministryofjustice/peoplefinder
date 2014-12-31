@@ -45,10 +45,12 @@ class GDSFormBuilder < ActionView::Helpers::FormBuilder
     valuer ||= ->(a) { a.respond_to?(:to_param) ? a.to_param : a }
     labeler ||= ->(a) { a }
     with_label(method) {
-      super(
-        method, values, valuer, labeler, options,
-        class: 'select form-control'
-      )
+      template.content_tag(:div, class: 'custom-select fa-caret-down') {
+        super(
+          method, values, valuer, labeler, options,
+          class: 'select form-control'
+        )
+      }
     }
   end
 

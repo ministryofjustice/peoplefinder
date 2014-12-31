@@ -3,6 +3,7 @@ ruby '2.1.2'
 gem 'rails', '~> 4.1.8'
 
 gem 'activejob_backport'
+gem 'font-awesome-sass'
 gem 'govspeak'
 gem 'govuk_frontend_toolkit'
 gem 'govuk_template'
