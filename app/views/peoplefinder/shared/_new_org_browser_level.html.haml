@@ -7,7 +7,7 @@
     %h3{class: (group_disabled ? 'disabled' : '')}
       - if form && !group_disabled
         = form.radio_button(field_name, group.id)
-      %a{href: group_path(group['id']), :class => 'team-link' }
+      %a{href: group_path(group['id']), :class => 'team-link', title: group.name }
         = group['name']
 
     - if subgroups.size > 0
@@ -18,7 +18,7 @@
             %p
               - if form && !subgroup_disabled
                 = form.radio_button(field_name, subgroup.id)
-              %a{href: url_for(subgroup), :class => 'subteam-link'}
+              %a{href: url_for(subgroup), :class => 'subteam-link', title: subgroup.name}
                 %span.subteam-name= subgroup.name
                 - if subsubgroups.size > 0
                   %span.subteam-count= "#{pluralize(subsubgroups.size, ' sub-team')}"
