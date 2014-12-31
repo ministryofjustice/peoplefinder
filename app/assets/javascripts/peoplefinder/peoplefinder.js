@@ -1,4 +1,4 @@
-/* global $, document, peoplefinderApp */
+/* global $, document */
 
 $(function() {
   $(document).on('click', '#add_membership', function(e) {
