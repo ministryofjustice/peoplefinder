@@ -3,24 +3,6 @@
 
 - org_structure.each do |group, subgroups|
   %div.team{:class => ('root-node' if level == 0)}
-    - group_disabled = (@group && @group.id == group.id)
-    %h3{class: (group_disabled ? 'disabled' : '')}
-      - if form && !group_disabled
-        = form.radio_button(field_name, group.id)
-      %a{href: group_path(group['id']), :class => 'team-link', title: group.name }
-        = group['name']
+    = render 'peoplefinder/shared/org_browser_level_heading', group: group, form: form, field_name: field_name, level: level
 
-    - if subgroups.size > 0
-      %ul
-        - subgroups.each do |subgroup, subsubgroups|
-          - subgroup_disabled = (@group && @group.id == subgroup.id)
-          %li{:class => (subsubgroups.size > 0 ? 'has-subteams' : 'leaf-node') + (subgroup_disabled ? ' disabled' : '')}
-            %p
-              - if form && !subgroup_disabled
-                = form.radio_button(field_name, subgroup.id)
-              %a{href: url_for(subgroup), :class => 'subteam-link', title: subgroup.name}
-                %span.subteam-name= subgroup.name
-                - if subsubgroups.size > 0
-                  %span.subteam-count= "#{pluralize(subsubgroups.size, ' sub-team')}"
-            - if subsubgroups.size > 0
-              = render 'peoplefinder/shared/org_browser_level', org_structure: { subgroup => subsubgroups }, form: form, field_name: field_name, level: level+1
+    = render 'peoplefinder/shared/org_browser_level_subgroups', subgroups: subgroups, form: form, field_name: field_name, level: level
