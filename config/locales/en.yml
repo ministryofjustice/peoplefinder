@@ -310,8 +310,9 @@ en:
       your_direct_reports: 'Manage feedback'
   forbidden:
     body: |
-      You’re not logged in.
-      Please use the link in your email to access the 360° Appraisals Service.
+      You have to be logged in to see this page and use the 360° Appraisals Service.
+
+      To log in, use the link sent to you in an email.
   views:
     replies:
       introductory_text: |

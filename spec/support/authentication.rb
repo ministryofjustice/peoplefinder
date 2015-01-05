@@ -5,7 +5,7 @@ module SpecSupport
     end
 
     def access_is_denied
-      expect(page).to have_text('not logged in')
+      expect(page).to have_text('You have to be logged in')
     end
 
     def log_in_as(user)
