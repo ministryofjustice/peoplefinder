@@ -18,8 +18,8 @@ $(function (){
     $subteam.children().parents('.team').addClass('visible');
   };
 
-  if( $('.new-org-browser.has-form').length > 0 ){
-    var $checked = $('.new-org-browser.has-form').find('input:checked');
+  if( $('.org-browser.has-form').length > 0 ){
+    var $checked = $('.org-browser.has-form').find('input:checked');
     if( $checked.length > 0 ){
       $checked.parents('.team').addClass('visible');
     }
@@ -29,14 +29,14 @@ $(function (){
     var $orgBrowser = $(e.target)
                         .closest('.editable-summary')
                         .siblings('.editable-fields')
-                        .find('.new-org-browser');
+                        .find('.org-browser');
     setTimeout(function (){ animateScroll($orgBrowser); }, 0);
   });
 
   // title link
-  $content.on('click', '.new-org-browser .team-link', function (e){
+  $content.on('click', '.org-browser .team-link', function (e){
     var $target = $(e.target);
-    var $orgBrowser = $(e.target).closest('.new-org-browser');
+    var $orgBrowser = $(e.target).closest('.org-browser');
 
     // if it's a form
     if( $orgBrowser.hasClass('has-form') ){
@@ -47,9 +47,9 @@ $(function (){
     }
   });
 
-  $content.on('click', '.new-org-browser .subteam-link', function(e){
+  $content.on('click', '.org-browser .subteam-link', function(e){
     var $target = $(e.target);
-    var $orgBrowser = $(e.target).closest('.new-org-browser');
+    var $orgBrowser = $(e.target).closest('.org-browser');
 
 
     if( $target.closest('li').hasClass('has-subteams') === false ){
