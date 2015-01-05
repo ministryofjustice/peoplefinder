@@ -26,7 +26,7 @@
       -#= render layout: 'peoplefinder/shared/org_browser' do
       -#  = membership_f.hidden_field :group_id
       - if org_structure
-        = render 'peoplefinder/shared/new_org_browser', org_structure: org_structure, form: membership_f
+        = render 'peoplefinder/shared/org_browser', org_structure: org_structure, form: membership_f
 
       %p.form-hint= info_text('hint_add_person_team_not_found')
 
