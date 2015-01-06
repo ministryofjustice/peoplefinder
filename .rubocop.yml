@@ -40,8 +40,21 @@ Style/DotPosition:
 Style/FormatString:
   Enabled: false
 
+# Can be useful for long string literals, not only those containing quotes
+Style/UnneededPercentQ:
+  Enabled: false
+
 # It's not really clearer to replace every if with a return if.
 Style/GuardClause:
+  Enabled: false
+
+# Really? no.
+Style/SingleLineBlockParams:
+  Enabled: false
+
+# I think sometimes explicitly mentioning self, even when redundant, makes
+# the code clearer
+Style/RedundantSelf:
   Enabled: false
 
 # Allow long lines in specs, as it's almost impossible to fit RSpec's
@@ -52,7 +65,7 @@ Metrics/LineLength:
 
 # Don't worry about long methods in specs.
 Metrics/MethodLength:
-  Max: 12
+  Max: 20
   Exclude:
     - 'spec/**/*'
 
