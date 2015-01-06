@@ -34,6 +34,10 @@ Rails.application.routes.draw do
     end
   end
 
+  namespace :api do
+    resources :daily_jobs, only: [:create]
+  end
+
   %i[ leadership_model moj_story terms ].each do |page|
     get page.to_s.gsub(/_/, '-'), to: 'pages#show', id: page, as: page
   end

@@ -14,10 +14,11 @@ environment:
 * HOST – Used to generate web URLs when sending email
 * FEEDBACK_URL – Used for the feedback link in the beta bar
 * SURVEY_URL – A link to a survey to be completed after using the service
-* SECURE_COOKIES - (true/false) whether to set secure cookies or not, set this
-                   to false in development/test.
-* REDIS_PROVIDER - This is the url for Redis and can include auth information
-
+* SECURE_COOKIES – (true/false) whether to set secure cookies or not, set this
+  to false in development/test.
+* REDIS_PROVIDER – This is the url for Redis and can include auth information
+* API_KEY – An API key that will be used to authorise API requests, e.g. to
+  run the daily email job.
 
 ## Initial setup
 
