@@ -1,8 +1,15 @@
 #!/bin/bash
-SORTCMD=${SORT:-gsort}
+
+if [ ! "$SORT" ]; then
+  if hash gsort 2>/dev/null; then
+    SORT=gsort
+  else
+    SORT=sort
+  fi
+fi
 
 PREFIX="release/"
-TAGS=$(git ls-remote -t 2>/dev/null | grep -o 'release/[0-9]\+\.[0-9]\+\.[0-9]\+$' | cut -d'/' -f 2 | $SORTCMD -V)
+TAGS=$(git ls-remote -t 2>/dev/null | grep -o 'release/[0-9]\+\.[0-9]\+\.[0-9]\+$' | cut -d'/' -f 2 | $SORT -V)
 LAST_TAG=$(echo "$TAGS" | tail -1)
 
 
