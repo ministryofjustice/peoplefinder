@@ -4,6 +4,7 @@
 - content_for :content do
   #wrapper
     %main#content{role: 'main'}
+      = render partial: 'layouts/partials/phase'
       =flash_messages
       .inner-block
         #home-page= yield
