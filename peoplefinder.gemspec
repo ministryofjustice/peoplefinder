@@ -32,7 +32,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'jquery-rails'
   s.add_dependency 'mail'
   s.add_dependency 'mini_magick'
-  s.add_dependency 'moj_internal_template', '~> 0.1.2'
+  s.add_dependency 'moj_internal_template', '~> 0.1.4'
   s.add_dependency 'omniauth-gplus', '~> 2.0.1'
   s.add_dependency 'paper_trail', '~> 3.0.5'
   s.add_dependency 'pg'
