@@ -66,12 +66,26 @@ img.preview {
     border-top: 1px solid $grey-bg;
     .grid-wrapper {
       margin-top: 15px;
+
+      .image-background {
+        @media screen and (max-width: 320px) {
+          width: 125px;
+          height: 125px;
+        }
+      }
+
       img {
         width: 125px;
         clip: rect(0px, 125px, 125px, 0px);
         float: left;
       }
       .details {
+        @media screen and (max-width: 320px) {
+          float: none;
+          display: block;
+          margin: 0;
+        }
+
         float: left;
         margin: -5px 0 0 140px;
         .meta  {
@@ -89,6 +103,11 @@ img.preview {
   }
   .add-new-person {
     margin-top: 60px;
+
+    @media screen and (max-width: 320px) {
+      float: none;
+      display: block;
+    }
   }
 }
 
@@ -175,5 +194,15 @@ ul.tags {
     margin: 15px 15px 0 0;
     padding: 6px 15px 9px 15px;
     border-radius: 5px;
+  }
+}
+
+.title-with-edit {
+  .edit-this-link, .edit-this-link a {
+    @media screen and (max-width: 320px) {
+      display: block;
+      float: none!important;
+      margin: 0.3em 0 0.5em 0;
+    }
   }
 }
