@@ -118,4 +118,28 @@ END
     expect(bob).not_to be_nil
     expect(bob.manager).to eql(alice)
   end
+
+  it 'creates non-participant administrators' do
+    csv = <<END
+name,email,admin
+Alice,alice@example.com,1
+Bob,bob@example.com,0
+Charlie,charlie@example.com,
+END
+
+    importer = described_class.new(StringIO.new(csv))
+    importer.import
+
+    alice = User.where(email: 'alice@example.com').first
+    bob = User.where(email: 'bob@example.com').first
+    charlie = User.where(email: 'charlie@example.com').first
+
+    expect(alice).not_to be_participant
+    expect(bob).to be_participant
+    expect(charlie).to be_participant
+
+    expect(alice).to be_administrator
+    expect(bob).not_to be_administrator
+    expect(charlie).not_to be_administrator
+  end
 end
