@@ -64,6 +64,9 @@ The CSV file should have a header row with these columns:
 
 The manager email address, where supplied, is used to determine hierarchy.
 
+You can also add administrators by adding an `admin` column and setting the
+value to `1`.
+
 Uploading a file multiple times will not create duplicate users.
 Names of existing users will be updated (using the email address as the
 identifier), as will management relationships.

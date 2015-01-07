@@ -8,18 +8,28 @@ class UserImporter
   end
 
   def import
-    User.connection.transaction do
-      begin
-        rows = read_and_normalize_csv(@io)
-        create_or_update_users rows
-        create_or_update_management_relationships rows
-      rescue ActiveRecord::RecordInvalid
-        raise ActiveRecord::Rollback
+    with_rollback do
+      rows = read_and_normalize_csv(@io)
+      rows.each do |row|
+        create_or_update_user row
+      end
+      rows.each do |row|
+        create_or_update_management_relationship row
       end
     end
   end
 
 private
+
+  def with_rollback
+    User.connection.transaction do
+      begin
+        yield
+      rescue ActiveRecord::RecordInvalid
+        raise ActiveRecord::Rollback
+      end
+    end
+  end
 
   def read_and_normalize_csv(io)
     CSV.new(io, headers: true).map { |row|
@@ -30,25 +40,23 @@ private
     }
   end
 
-  def create_or_update_users(csv)
-    csv.each do |row|
-      user = User.find_or_initialize_by(email: row['email'])
-      user.update!(
-        name: row['name'],
-        email: row['email'],
-        job_title: row['job_title'],
-        participant: true
-      )
-    end
+  def create_or_update_user(row)
+    user = User.find_or_initialize_by(email: row['email'])
+    admin = row['admin'] == '1'
+    user.update!(
+      name: row['name'],
+      email: row['email'],
+      job_title: row['job_title'],
+      participant: !admin,
+      administrator: admin
+    )
   end
 
-  def create_or_update_management_relationships(csv)
-    csv.each do |row|
-      next if row['manager_email'].blank?
-      direct_report = lookup_user(row['email'])
-      manager = lookup_user(row['manager_email'])
-      direct_report.update manager: manager
-    end
+  def create_or_update_management_relationship(row)
+    return if row['manager_email'].blank?
+    direct_report = lookup_user(row['email'])
+    manager = lookup_user(row['manager_email'])
+    direct_report.update manager: manager
   end
 
   def lookup_user(email)
