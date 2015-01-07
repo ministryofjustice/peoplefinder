@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe TabularReviewAggregator, type: :model do
+RSpec.describe TabularReviewAggregator do
   it 'has a header row listing all reviewer names' do
     review_1 = build(:review, author_name: 'Alice')
     review_2 = build(:review, author_name: 'Bob')

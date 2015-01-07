@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe ReviewAggregator, type: :model do
+RSpec.describe ReviewAggregator do
   it 'enumerates over each reviewer and rating for each question' do
     review_1 = build(:review, author_name: 'Alice', rating_1: 4)
     review_2 = build(:review, author_name: 'Bob', rating_1: 2)

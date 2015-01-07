@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe PasswordReset do
+RSpec.describe PasswordReset, type: :model do
   let(:fake_email) { 'hello@example.com' }
   let(:password_reset) { described_class.new(email: fake_email) }
 

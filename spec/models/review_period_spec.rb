@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe ReviewPeriod do
+RSpec.describe ReviewPeriod, type: :model do
 
   let(:alice) { create(:user, name: 'alice') }
   let(:bob) { create(:user, name: 'bob', manager: alice) }

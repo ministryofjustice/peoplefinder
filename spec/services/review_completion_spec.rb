@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe ReviewCompletion, type: :model do
+RSpec.describe ReviewCompletion do
   it 'calculates the total number of reviews' do
     rc = described_class.new([double(Review), double(Review)])
     expect(rc.total).to eql(2)

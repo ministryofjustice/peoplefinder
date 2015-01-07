@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Invitation do
+RSpec.describe Invitation, type: :model do
   subject { described_class.new(create(:review)) }
   let(:reason) { "I don't know you" }
 

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe UserImporter, type: :model do
+RSpec.describe UserImporter do
 
   it 'creates a user for each name and email address' do
     csv = <<END
