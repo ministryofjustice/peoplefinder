@@ -100,7 +100,7 @@ feature 'Person maintenance' do
     fill_in 'Surname', with: 'Doe'
     click_button 'Save'
 
-    expect(page).to have_content('Updated Jane Doe’s profile')
+    expect(page).to have_content('We have let Jane Doe know that you’ve made changes')
     within('h1') do
       expect(page).to have_text('Jane Doe')
     end

@@ -62,7 +62,11 @@ en:
         member_removed: "Removed %{person} from %{group}"
       people:
         profile_created: "Created %{person}’s profile"
-        profile_updated: "Updated %{person}’s profile"
+        profile_updated:
+          mine: "Updated your profile"
+          other: |
+            Thank you for helping to improve People Finder.
+            We have let %{person} know that you’ve made changes
         profile_deleted: "Deleted %{person}’s profile"
         create_error: "The profile was not created. Please check the errors below"
       person_image:
