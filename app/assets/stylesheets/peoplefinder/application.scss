@@ -29,6 +29,10 @@ $border-color: #bfc1c3;
   float: left;
   top: 75px;
   position: relative;
+
+  @media screen and (max-width: 320px) {
+    margin-bottom: 1em;
+  }
 }
 
 #last_update {
@@ -172,6 +176,11 @@ a.add-new-person {
   color: $darkblue;
   padding: 10px 15px 11px 58px;
   background: $opaqueblue image-url('icon_plus.png') no-repeat 14px;
+
+  @media screen and (max-width: 320px) {
+    float: none;
+    display: block;
+  }
 }
 
 .editing-alert {

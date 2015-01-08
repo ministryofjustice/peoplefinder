@@ -6,7 +6,8 @@
 
 .title-with-edit
   %h1= @page_title = @person
-  = link_to 'Edit this profile', edit_person_path(@person)
+  %span.edit-this-link
+    = link_to 'Edit this profile', edit_person_path(@person)
 
 .grid-wrapper.profile
   .grid.grid-1-3
