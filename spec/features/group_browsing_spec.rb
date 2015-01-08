@@ -1,14 +1,14 @@
 require 'rails_helper'
 
 feature 'Group browsing' do
-  before do
-    omni_auth_log_in_as 'test.user@digital.justice.gov.uk'
-  end
-
   let!(:department) { create(:department) }
   let!(:team) { create(:group, name: 'A Team', parent: department) }
   let!(:subteam) { create(:group, name: 'A Subteam', parent: team) }
   let!(:leaf_node) { create(:group, name: 'A Leaf Node', parent: subteam) }
+
+  before do
+    omni_auth_log_in_as 'test.user@digital.justice.gov.uk'
+  end
 
   scenario 'Drilling down through groups' do
     visit group_path(department)
@@ -32,12 +32,12 @@ feature 'Group browsing' do
 
     expect(page).not_to have_text 'A Leaf Node'
 
-    click_in_org_browser 'A Team'
-    click_in_org_browser 'A Subteam'
+    click_on_subteam_in_org_browser 'A Team'
+    click_on_subteam_in_org_browser 'A Subteam'
 
     expect(page).to have_text 'A Leaf Node'
 
-    click_in_org_browser 'Ministry of Justice'
+    click_on_team_in_org_browser 'Ministry of Justice'
 
     expect(page).not_to have_text 'A Leaf Node'
   end
@@ -47,8 +47,8 @@ feature 'Group browsing' do
 
     visit '/'
 
-    click_in_org_browser 'A Team'
-    click_in_org_browser 'A Subteam'
+    click_on_subteam_in_org_browser 'A Team'
+    click_on_subteam_in_org_browser 'A Subteam'
     click_link 'A Leaf Node'
 
     within('h1') do

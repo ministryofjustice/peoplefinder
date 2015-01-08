@@ -1,5 +1,4 @@
-/* global $, document, peoplefinderApp */
-//= require peoplefinder/peoplefinder_app
+/* global $, document */
 
 $(function() {
   $(document).on('click', '#add_membership', function(e) {
@@ -9,11 +8,6 @@ $(function() {
       success: function(data) {
         var el_to_add = $(data).html();
         $('#memberships').append(el_to_add);
-        // HACK: Rather than looking up the last element, we should be able to
-        // use the content we're dynamically appending.
-        var browsers = $('.org-browser');
-        var container = browsers[browsers.length - 1];
-        peoplefinderApp.injectNewContainer(container);
       }
     });
   });

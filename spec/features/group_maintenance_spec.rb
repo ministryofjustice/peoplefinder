@@ -71,7 +71,7 @@ feature 'Group maintenance' do
     visit new_group_path
 
     fill_in 'Team name', with: 'Digital Services'
-    click_in_org_browser 'Corporate Services'
+    click_on_subteam_in_org_browser 'Corporate Services'
     add_team_email_address
     click_button 'Save'
 
@@ -116,7 +116,7 @@ feature 'Group maintenance' do
       click_link 'Edit'
     end
 
-    click_in_org_browser 'Ministry of Justice'
+    click_on_team_in_org_browser 'Ministry of Justice'
     click_button 'Save'
 
     expect(page).to have_content('Updated Cyberdigital Cyberservices')
@@ -142,7 +142,7 @@ feature 'Group maintenance' do
       click_link 'Edit'
     end
 
-    click_in_org_browser 'Digital Services'
+    click_on_subteam_in_org_browser 'Digital Services'
     click_button 'Save'
 
     group.reload

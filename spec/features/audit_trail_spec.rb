@@ -117,7 +117,7 @@ feature 'Audit trail' do
       javascript_log_in
 
       visit edit_person_path(person)
-      click_in_org_browser 'Digital Justice'
+      click_on_subteam_in_org_browser 'Digital Justice'
       fill_in('Job title', with: 'Jefe')
       click_button 'Save'
 

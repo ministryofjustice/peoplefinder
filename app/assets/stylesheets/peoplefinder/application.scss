@@ -12,6 +12,7 @@ $grey-bg: #DEE0E2;
 $green: #006435;
 $border-color: #bfc1c3;
 
+@import '_colours'; // GDS colour mixins
 @import "people";
 @import "groups";
 @import "home";
