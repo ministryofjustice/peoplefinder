@@ -130,7 +130,26 @@ RSpec.describe Peoplefinder::PeopleController, type: :controller do
     end
   end
 
-  describe 'PUT update' do
+  describe 'PUT update myself' do
+    let(:person) { current_user }
+
+    describe 'with valid params' do
+      let(:new_attributes) {
+        attributes_for(:person).merge(works_monday: true, works_tuesday: false)
+      }
+
+      before do
+        put :update, id: person.to_param, person: new_attributes
+      end
+
+      it 'shows no notice about informing the person' do
+        expect(flash[:notice]).not_to match(/We have let/)
+        expect(flash[:notice]).to match(/Updated your profile/)
+      end
+    end
+  end
+
+  describe 'PUT update a third party' do
     let(:person) { create(:person, valid_attributes) }
 
     describe 'with valid params' do
@@ -160,6 +179,10 @@ RSpec.describe Peoplefinder::PeopleController, type: :controller do
 
       it 'redirects to the person' do
         expect(response).to redirect_to(person)
+      end
+
+      it 'shows a notice about informing the person' do
+        expect(flash[:notice]).to match(/We have let/)
       end
     end
 

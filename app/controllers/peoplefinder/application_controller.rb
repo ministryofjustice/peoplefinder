@@ -49,18 +49,18 @@ module Peoplefinder
       end
     end
 
-    def i18n_flash(type, partial_key, options = {})
+    def i18n_flash(type, *partial_key, **options)
       full_key = [
-        :peoplefinder, :controllers, controller_name, partial_key
+        :peoplefinder, :controllers, controller_name, *partial_key
       ].join('.')
       flash[type] = I18n.t(full_key, options)
     end
 
-    def notice(partial_key, options = {})
+    def notice(*partial_key, **options)
       i18n_flash :notice, partial_key, options
     end
 
-    def error(partial_key, options = {})
+    def error(*partial_key, **options)
       i18n_flash :error, partial_key, options
     end
   end

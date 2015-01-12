@@ -122,7 +122,9 @@ module Peoplefinder
       else
         @person.save
         @person.send_update_email!(current_user, @old_email)
-        notice :profile_updated, person: @person
+
+        type = @person == current_user ? :mine : :other
+        notice :profile_updated, type, person: @person
         redirect_to successful_redirect_path
       end
     end
