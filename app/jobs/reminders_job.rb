@@ -6,35 +6,47 @@ class RemindersJob < ActiveJob::Base
   CLOSING_SOON_DAYS = 9
 
   def perform
+    logger.info "Running RemindersJob with #{days_left} days left"
+
     # Note: we don't use case here because the constants are not required to
     # be unique.
-    if ReviewPeriod.days_left == FEEDBACK_TO_GIVE_DAYS
+    if days_left == FEEDBACK_TO_GIVE_DAYS
       notify_people_with_feedback_to_give
     end
-    if ReviewPeriod.days_left == FEEDBACK_TO_RECEIVE_DAYS
+    if days_left == FEEDBACK_TO_RECEIVE_DAYS
       notify_people_with_feedback_to_receive
     end
-    if ReviewPeriod.days_left == CLOSING_SOON_DAYS
+    if days_left == CLOSING_SOON_DAYS
       notify_recipients
     end
   end
 
 private
 
+  def days_left
+    @days_left ||= ReviewPeriod.days_left
+  end
+
   def notify_people_with_feedback_to_give
-    Review.open.to_a.uniq(&:author_email).each do |review|
+    reviews = Review.open.to_a.uniq(&:author_email)
+    logger.info "Sending #{reviews.count} Feedback Not Given notification(s)"
+    reviews.each do |review|
       FeedbackNotGivenNotification.new(review).notify
     end
   end
 
   def notify_people_with_feedback_to_receive
-    User.with_feedback_not_received.uniq.each do |user|
+    users = User.with_feedback_not_received.uniq
+    logger.info "Sending #{users.count} Feedback Not Received notification(s)"
+    users.each do |user|
       FeedbackNotReceivedNotification.new(user).notify
     end
   end
 
   def notify_recipients
-    User.recipients.each do |user|
+    users = User.recipients
+    logger.info "Sending #{users.count} Closing Soon notification(s)"
+    users.each do |user|
       ClosingSoonNotification.new(user).notify
     end
   end
