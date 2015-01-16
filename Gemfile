@@ -21,6 +21,7 @@ gem 'scrypt'
 gem 'uglifier', '>= 1.3.0'
 gem 'unicorn', '~> 4.8.3'
 gem 'sidekiq'
+gem 'newrelic_rpm'
 
 group :development do
   gem 'spring'
