@@ -128,23 +128,50 @@ RSpec.describe Peoplefinder::PeopleController, type: :controller do
         expect(response).to render_template('confirm')
       end
     end
+
+    describe 'when trying to create a super admin' do
+      subject { assigns(:person) }
+      before do
+        post :create, person: attributes_for(:super_admin)
+      end
+
+      it 'creates the person' do
+        is_expected.to be_persisted
+      end
+
+      it 'creates person, but not as super admin' do
+        is_expected.not_to be_super_admin
+      end
+    end
   end
 
   describe 'PUT update myself' do
     let(:person) { current_user }
+
+    before do
+      put :update, id: person.to_param, person: new_attributes
+    end
 
     describe 'with valid params' do
       let(:new_attributes) {
         attributes_for(:person).merge(works_monday: true, works_tuesday: false)
       }
 
-      before do
-        put :update, id: person.to_param, person: new_attributes
-      end
-
       it 'shows no notice about informing the person' do
         expect(flash[:notice]).not_to match(/We have let/)
         expect(flash[:notice]).to match(/Updated your profile/)
+      end
+    end
+
+    describe 'when trying to grant super admin' do
+      let(:new_attributes) do
+        attributes_for(:person).merge(super_admin: true)
+      end
+
+      it 'does not grant super admin privileges' do
+        person.reload
+
+        expect(person).not_to be_super_admin
       end
     end
   end
@@ -216,6 +243,22 @@ RSpec.describe Peoplefinder::PeopleController, type: :controller do
         person = create(:person, given_name: 'Bobbie', surname: 'Browne')
         put :update, id: person.to_param, person: { given_name: 'Bo', surname: 'Diddley' }
         expect(response).to render_template('confirm')
+      end
+    end
+
+    describe 'when trying to grant super admin privileges' do
+      let(:attributes_with_super_admin) do
+        attributes_for(:super_admin)
+      end
+
+      before do
+        put :update, id: person.to_param, person: attributes_with_super_admin
+      end
+
+      it 'does not grant super admin privileges' do
+        person.reload
+
+        expect(person).not_to be_super_admin
       end
     end
   end
