@@ -193,11 +193,19 @@ RSpec.describe Peoplefinder::PeopleController, type: :controller do
         put :update, id: person.to_param, person: new_attributes
       end
 
-      it 'updates the requested person' do
+      it 'updates the requested person apart from e-mail' do
         person.reload
         new_attributes.each do |attr, value|
-          expect(person.send(attr)).to eql(value)
+          if attr != :email
+            expect(person.send(attr)).to eql(value)
+          end
         end
+      end
+
+      it 'does not update e-mail' do
+        person.reload
+
+        expect(person.email).not_to eql(new_attributes[:email])
       end
 
       it 'assigns the requested person as @person' do

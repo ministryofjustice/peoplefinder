@@ -27,7 +27,7 @@ module Peoplefinder
 
     # POST /people
     def create
-      @person = Person.new(person_params)
+      @person = Person.new(person_create_params)
 
       if @person.valid?
         confirm_or_create
@@ -40,7 +40,7 @@ module Peoplefinder
     # PATCH/PUT /people/1
     def update
       @old_email = @person.email
-      @person.assign_attributes(person_params)
+      @person.assign_attributes(person_update_params)
 
       if @person.valid?
         confirm_or_update
@@ -72,18 +72,31 @@ module Peoplefinder
 
     # Never trust parameters from the scary internet, only allow the white list
     # through.
-    def person_params
-      params.require(:person).permit(
+    def person_create_params
+      params.require(:person).permit(*person_shared_params_list)
+    end
+
+    def person_update_params
+      params.require(:person).permit(*(person_shared_params_list - [:email]))
+    end
+
+    def person_image_params
+      params.require(:person).permit(:image, :image_cache)
+    end
+
+    def person_shared_params_list
+      [
         :given_name, :surname, :location, :primary_phone_number,
         :secondary_phone_number, :email, :image, :image_cache,
         :description, :no_phone, :tags,
         :community_id,
         *Person::DAYS_WORKED,
-        memberships_attributes: [:id, :role, :group_id, :leader])
+        memberships_attributes: [:id, :role, :group_id, :leader]
+      ]
     end
 
     def successful_redirect_path
-      if person_params[:image].present? || person_params[:image_cache].present?
+      if person_image_params[:image].present? || person_image_params[:image_cache].present?
         edit_person_image_path(@person)
       else
         @person
