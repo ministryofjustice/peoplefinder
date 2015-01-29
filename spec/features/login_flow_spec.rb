@@ -7,6 +7,7 @@ feature 'Login flow' do
 
   let(:edit_profile_page) { Pages::EditProfile.new }
   let(:search_page) { Pages::Search.new }
+  let(:base_page) { Pages::Base.new }
 
   scenario 'When user logs in for the first time, they are prompted to fill in their profile' do
     omni_auth_log_in_as(email)
@@ -40,5 +41,21 @@ feature 'Login flow' do
 
     person.reload
     expect(person.login_count).to eql(4)
+  end
+
+  scenario 'When super user logs in they see the super admin badge in their name' do
+    create(:super_admin, email: email)
+
+    omni_auth_log_in_as(email)
+
+    expect(base_page).to have_super_admin_badge
+  end
+
+  scenario 'When a normal user logs in they do not see the super admin badge in their name' do
+    create(:person, email: email)
+
+    omni_auth_log_in_as(email)
+
+    expect(base_page).to have_no_super_admin_badge
   end
 end

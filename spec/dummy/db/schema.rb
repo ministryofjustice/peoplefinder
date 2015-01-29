@@ -11,13 +11,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141112170526) do
+ActiveRecord::Schema.define(version: 20150129121619) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "communities", force: true do |t|
-    t.string   "name"
+    t.string   "name",       limit: nil
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -26,11 +26,11 @@ ActiveRecord::Schema.define(version: 20141112170526) do
     t.text     "name"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "slug"
+    t.string   "slug",               limit: nil
     t.text     "description"
     t.text     "responsibilities"
     t.text     "ancestry"
-    t.integer  "ancestry_depth",     default: 0, null: false
+    t.integer  "ancestry_depth",                 default: 0, null: false
     t.text     "team_email_address"
   end
 
@@ -39,9 +39,9 @@ ActiveRecord::Schema.define(version: 20141112170526) do
 
   create_table "information_requests", force: true do |t|
     t.integer "recipient_id"
-    t.string  "sender_email"
+    t.string  "sender_email", limit: nil
     t.text    "message"
-    t.string  "type"
+    t.string  "type",         limit: nil
   end
 
   add_index "information_requests", ["sender_email"], name: "index_information_requests_on_sender_email", using: :btree
@@ -69,20 +69,21 @@ ActiveRecord::Schema.define(version: 20141112170526) do
     t.text     "description"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "works_monday",           default: true
-    t.boolean  "works_tuesday",          default: true
-    t.boolean  "works_wednesday",        default: true
-    t.boolean  "works_thursday",         default: true
-    t.boolean  "works_friday",           default: true
-    t.string   "image"
-    t.string   "slug"
-    t.boolean  "works_saturday",         default: false
-    t.boolean  "works_sunday",           default: false
-    t.boolean  "no_phone",               default: false
+    t.boolean  "works_monday",                       default: true
+    t.boolean  "works_tuesday",                      default: true
+    t.boolean  "works_wednesday",                    default: true
+    t.boolean  "works_thursday",                     default: true
+    t.boolean  "works_friday",                       default: true
+    t.string   "image",                  limit: nil
+    t.string   "slug",                   limit: nil
+    t.boolean  "works_saturday",                     default: false
+    t.boolean  "works_sunday",                       default: false
+    t.boolean  "no_phone",                           default: false
     t.text     "tags"
     t.integer  "community_id"
-    t.integer  "login_count",            default: 0,     null: false
+    t.integer  "login_count",                        default: 0,     null: false
     t.datetime "last_login_at"
+    t.boolean  "super_admin",                        default: false
   end
 
   add_index "people", ["slug"], name: "index_people_on_slug", unique: true, using: :btree
@@ -100,7 +101,7 @@ ActiveRecord::Schema.define(version: 20141112170526) do
   create_table "reported_profiles", force: true do |t|
     t.integer "notifier_id"
     t.integer "subject_id"
-    t.string  "recipient_email"
+    t.string  "recipient_email",      limit: nil
     t.text    "reason_for_reporting"
     t.text    "additional_details"
   end

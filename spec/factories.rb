@@ -28,6 +28,10 @@ FactoryGirl.define do
       login_count 10
       last_login_at { 1.day.ago }
     end
+
+    factory :super_admin do
+      super_admin true
+    end
   end
 
   factory :community, class: 'Peoplefinder::Community' do
