@@ -45,7 +45,6 @@ feature 'Person edit notifications' do
     expect { click_button 'Save' }.not_to change { ActionMailer::Base.deliveries.count }
   end
 
-  # ToDo should be probably removed - person has to have an e-mail
   scenario 'Creating a person with nil email' do
     visit new_person_path
 
@@ -69,14 +68,12 @@ feature 'Person edit notifications' do
     expect { click_link('Delete this profile') }.not_to change { ActionMailer::Base.deliveries.count }
   end
 
-  # ToDo there shouldn't be any e-mails with invalid domain
   scenario 'Deleting a person with email from invalid domain' do
     person = create(:person, email: 'test.user@something-else.example.com')
     visit edit_person_path(person)
     expect { click_link('Delete this profile') }.not_to change { ActionMailer::Base.deliveries.count }
   end
 
-  # ToDo there shouldn't be any invalid e-mails
   scenario 'Deleting a person with invalid email' do
     person = create(:person, email: 'test.user')
     visit edit_person_path(person)

@@ -15,7 +15,7 @@ module Peoplefinder::Concerns::Notifications
     def send_update_email!(current_user)
       if should_send_email_notification?(email, current_user)
         Peoplefinder::UserUpdateMailer.updated_profile_email(
-            self, current_user.email
+          self, current_user.email
         ).deliver
       end
     end

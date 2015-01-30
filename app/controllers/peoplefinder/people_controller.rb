@@ -1,4 +1,6 @@
 module Peoplefinder
+  # FIXME: Refactor this controller - it's too long and mailing shouldn't be done in models
+  # rubocop:disable ClassLength
   class PeopleController < ApplicationController
     before_action :set_person, only: [:show, :edit, :update, :destroy]
     before_action :set_hint_group
