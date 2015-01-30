@@ -33,23 +33,4 @@ RSpec.describe Peoplefinder::UserUpdateMailer do
     include_examples "observe token_auth feature flag"
   end
 
-  describe ".updated_address_from_email" do
-    subject(:mail) {
-      described_class.updated_address_from_email(
-        person, 'updater@example.com', 'test.user@digital.justice.gov.uk'
-      ).deliver
-    }
-
-    include_examples "observe token_auth feature flag"
-  end
-
-  describe ".updated_address_to_email" do
-    subject(:mail) {
-      described_class.updated_address_to_email(
-        person, 'updater@example.com', 'test.user@digital.justice.gov.uk'
-      ).deliver
-    }
-
-    include_examples "observe token_auth feature flag"
-  end
 end

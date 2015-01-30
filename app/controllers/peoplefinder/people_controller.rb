@@ -39,7 +39,6 @@ module Peoplefinder
 
     # PATCH/PUT /people/1
     def update
-      @old_email = @person.email
       @person.assign_attributes(person_update_params)
 
       if @person.valid?
@@ -134,7 +133,7 @@ module Peoplefinder
         render(:confirm)
       else
         @person.save
-        @person.send_update_email!(current_user, @old_email)
+        @person.send_update_email!(current_user)
 
         type = @person == current_user ? :mine : :other
         notice :profile_updated, type, person: @person
