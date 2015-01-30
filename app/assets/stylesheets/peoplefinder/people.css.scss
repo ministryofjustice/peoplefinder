@@ -11,7 +11,10 @@ ul.working_days {
     padding:3px 0;
     color: white;
 
+    background: image-url('bg_not_working_day.png') no-repeat scroll 0 0;
+
     &.active {
+      background-image: none;
       background-color: rgb(98,152,187);
     }
   }
