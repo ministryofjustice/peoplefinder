@@ -1,4 +1,7 @@
 %li{class: ('active' if @person.send(day)), alt: day_name(day)}
-  .visuallyhidden= "Works on #{ day_name(day) }s" if @person.send(day)
-  .visuallyhidden= "Doesn't work on #{ day_name(day) }s" if not @person.send(day)
+  .visuallyhidden<>
+    - if @person.send(day)
+      = "Works on #{ day_name(day) }s"
+    - else
+      = "Doesn't work on #{ day_name(day) }s"
   .span{ aria: { hidden: 'true' } }= day_symbol(day)
