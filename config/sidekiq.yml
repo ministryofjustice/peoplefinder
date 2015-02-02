@@ -12,5 +12,4 @@ production:
   - decline_notifications
   - feedback_requests
   - feedback_notifications
-  - introductory_mailings
   - password_reset
