@@ -117,48 +117,6 @@ feature 'Person edit notifications' do
     expect { click_button 'Save' }.not_to change { ActionMailer::Base.deliveries.count }
   end
 
-  scenario 'Editing a person from same email to different email' do
-    person = create(:person, given_name: 'Bob', surname: 'Smith', email: 'test.user@digital.justice.gov.uk')
-    visit person_path(person)
-    click_link 'Edit this profile'
-    fill_in 'Email', with: 'bob.smith@digital.justice.gov.uk'
-    expect { click_button 'Save' }.to change { ActionMailer::Base.deliveries.count }.by(1)
-
-    expect(last_email.subject).to eq('This email address has been added to a profile on MOJ People Finder')
-
-    check_email_to_and_from
-    check_email_has_token_link_to(person)
-  end
-
-  scenario 'Editing a person from different email to same email' do
-    person = create(:person, given_name: 'Bob', surname: 'Smith', email: 'bob.smith@digital.justice.gov.uk')
-    visit person_path(person)
-    click_link 'Edit this profile'
-    fill_in 'Email', with: 'test.user@digital.justice.gov.uk'
-    expect { click_button 'Save' }.to change { ActionMailer::Base.deliveries.count }.by(1)
-
-    expect(last_email.subject).to eq('This email address has been removed from a profile on MOJ People Finder')
-
-    check_email_to_and_from
-    check_email_has_token_link_to(person)
-  end
-
-  scenario 'Editing a person from different email to different email' do
-    person = create(:person, given_name: 'Bob', surname: 'Smith', email: 'bob.smith@digital.justice.gov.uk')
-    visit person_path(person)
-    click_link 'Edit this profile'
-    fill_in 'Email', with: 'bob.smithe@digital.justice.gov.uk'
-    expect { click_button 'Save' }.to change { ActionMailer::Base.deliveries.count }.by(2)
-  end
-
-  scenario 'Editing a person from invalid email to invalid email' do
-    person = create(:person, given_name: 'Bob', surname: 'Smith', email: 'bob.smith')
-    visit person_path(person)
-    click_link 'Edit this profile'
-    fill_in 'Email', with: 'test.user'
-    expect { click_button 'Save' }.not_to change { ActionMailer::Base.deliveries.count }
-  end
-
   scenario 'Verifying the link to bob that is render in the emails' do
     bob = create(:person, email: 'bob@digital.justice.gov.uk', surname: 'bob')
     visit token_url(Peoplefinder::Token.for_person(bob), desired_path: person_path(bob))

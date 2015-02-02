@@ -23,20 +23,6 @@ class Peoplefinder::UserUpdateMailer < ActionMailer::Base
     mail to: @person.email
   end
 
-  def updated_address_from_email(person, by_email, old_email)
-    @person = person
-    @by_email = by_email
-    @profile_url = profile_url(person)
-    mail to: old_email
-  end
-
-  def updated_address_to_email(person, by_email, _old_email)
-    @person = person
-    @by_email = by_email
-    @profile_url = profile_url(person)
-    mail to: @person.email
-  end
-
 private
 
   def profile_url(person)

@@ -112,12 +112,10 @@ feature 'Person maintenance' do
     edit_profile_page.load(slug: person.slug)
 
     edit_profile_page.form.surname.set ''
-    edit_profile_page.form.email.set ''
     edit_profile_page.form.save.click
 
     expect(edit_profile_page.form).to have_global_error
     expect(edit_profile_page.form).to have_surname_error
-    expect(edit_profile_page.form).to have_email_error
   end
 
   scenario 'Adding a profile image' do
