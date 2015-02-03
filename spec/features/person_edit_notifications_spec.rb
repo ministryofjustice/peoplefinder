@@ -1,8 +1,9 @@
 require 'rails_helper'
 
 feature 'Person edit notifications' do
+  let(:person) { create(:person, email: 'test.user@digital.justice.gov.uk') }
   before do
-    omni_auth_log_in_as 'test.user@digital.justice.gov.uk'
+    omni_auth_log_in_as(person.email)
   end
 
   scenario 'Creating a person with different email' do
@@ -16,16 +17,7 @@ feature 'Person edit notifications' do
     expect(last_email.subject).to eq('A new profile on MOJ People Finder has been created for you')
 
     check_email_to_and_from
-    check_email_has_token_link_to(Peoplefinder::Person.last)
-  end
-
-  scenario 'Creating a person with same email' do
-    visit new_person_path
-
-    fill_in 'First name', with: 'Bob'
-    fill_in 'Surname', with: 'Smith'
-    fill_in 'Email', with: 'test.user@digital.justice.gov.uk'
-    expect { click_button 'Save' }.not_to change { ActionMailer::Base.deliveries.count }
+    check_email_has_token_link_to(Peoplefinder::Person.where(email: 'bob.smith@digital.justice.gov.uk').first)
   end
 
   scenario 'Creating a person with email from invalid domain' do
@@ -45,14 +37,6 @@ feature 'Person edit notifications' do
     expect { click_button 'Save' }.not_to change { ActionMailer::Base.deliveries.count }
   end
 
-  scenario 'Creating a person with nil email' do
-    visit new_person_path
-
-    fill_in 'First name', with: 'Bob'
-    fill_in 'Surname', with: 'Smith'
-    expect { click_button 'Save' }.not_to change { ActionMailer::Base.deliveries.count }
-  end
-
   scenario 'Deleting a person with different email' do
     person = create(:person, email: 'bob.smith@digital.justice.gov.uk')
     visit edit_person_path(person)
@@ -63,7 +47,6 @@ feature 'Person edit notifications' do
   end
 
   scenario 'Deleting a person with same email' do
-    person = create(:person, email: 'test.user@digital.justice.gov.uk')
     visit edit_person_path(person)
     expect { click_link('Delete this profile') }.not_to change { ActionMailer::Base.deliveries.count }
   end
@@ -102,7 +85,6 @@ feature 'Person edit notifications' do
   end
 
   scenario 'Editing a person with same email' do
-    person = create(:person, given_name: 'Bob', surname: 'Smith', email: 'test.user@digital.justice.gov.uk')
     visit person_path(person)
     click_link 'Edit this profile'
     fill_in 'Surname', with: 'Smelly Pants'

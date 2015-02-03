@@ -1,143 +1,167 @@
 require 'rails_helper'
 
 feature 'Person maintenance' do
+
+  let(:person) { create(:person, email: 'test.user@digital.justice.gov.uk') }
   before do
-    omni_auth_log_in_as 'test.user@digital.justice.gov.uk'
+    omni_auth_log_in_as person.email
   end
 
   let(:edit_profile_page) { Pages::EditProfile.new }
   let(:new_profile_page) { Pages::NewProfile.new }
 
-  scenario 'Creating a person with a complete profile', js: true do
-    create(:group, name: 'Digital')
+  context 'Creating a person' do
+    scenario 'Creating a person with a complete profile', js: true do
+      create(:group, name: 'Digital')
 
-    javascript_log_in
-    visit new_person_path
-    expect(page).to have_title("New profile - #{ app_title }")
-    fill_in_complete_profile_details
+      javascript_log_in
+      visit new_person_path
+      expect(page).to have_title("New profile - #{ app_title }")
+      fill_in_complete_profile_details
 
-    click_button 'Save'
-    check_creation_of_profile_details
-  end
+      click_button 'Save'
+      check_creation_of_profile_details
+    end
 
-  scenario 'Creating an invalid person' do
-    new_profile_page.load
-    new_profile_page.form.save.click
+    scenario 'Creating an invalid person' do
+      new_profile_page.load
+      new_profile_page.form.save.click
 
-    expect(new_profile_page.form).to have_global_error
-    expect(new_profile_page.form).to have_surname_error
-    expect(new_profile_page.form).to have_email_error
-  end
+      expect(new_profile_page.form).to have_global_error
+      expect(new_profile_page.form).to have_surname_error
+      expect(new_profile_page.form).to have_email_error
+    end
 
-  scenario 'Creating a person with an identical name', js: true do
-    create(:group, name: 'Digital')
-    create(:person, given_name: person_attributes[:given_name],
-                    surname: person_attributes[:surname])
+    scenario 'Creating a person with existing e-mail raises an error' do
+      existing_person = create(:person)
 
-    javascript_log_in
-    visit new_person_path
-    fill_in_complete_profile_details
+      new_profile_page.load
+      new_profile_page.form.email.set existing_person.email
+      new_profile_page.form.save.click
 
-    click_button 'Save'
+      expect(new_profile_page.form).to have_email_error
+    end
 
-    expect(page).to have_text('1 result found')
-    click_button 'Continue'
-    check_creation_of_profile_details
-    expect(Peoplefinder::Person.where(surname: person_attributes[:surname]).count).to eql(2)
-  end
+    scenario 'Creating a person with an identical name', js: true do
+      create(:group, name: 'Digital')
+      create(:person, given_name: person_attributes[:given_name], surname: person_attributes[:surname])
 
-  scenario 'Cancelling creation of a person with an identical name' do
-    create(:person, given_name: person_attributes[:given_name],
-                    surname: person_attributes[:surname])
-    visit new_person_path
+      javascript_log_in
+      visit new_person_path
+      fill_in_complete_profile_details
 
-    fill_in 'First name', with: person_attributes[:given_name]
-    fill_in 'Surname', with: person_attributes[:surname]
-    fill_in 'Email', with: person_attributes[:email]
-    click_button 'Save'
+      click_button 'Save'
 
-    click_link 'Return to home page'
-    expect(Peoplefinder::Person.where(surname: person_attributes[:surname]).count).to eql(1)
-  end
+      expect(page).to have_text('1 result found')
+      click_button 'Continue'
+      check_creation_of_profile_details
+      expect(Peoplefinder::Person.where(surname: person_attributes[:surname]).count).to eql(2)
+    end
 
-  scenario 'Editing a person and giving them a name that already exists' do
-    create(:person, given_name: person_attributes[:given_name],
-                    surname: person_attributes[:surname])
-    person = create(:person, given_name: 'Bobbie', surname: 'Browne')
-    visit edit_person_path(person)
+    scenario 'Cancelling creation of a person with an identical name' do
+      create(:person, given_name: person_attributes[:given_name], surname: person_attributes[:surname])
+      visit new_person_path
 
-    fill_in 'First name', with: person_attributes[:given_name]
-    fill_in 'Surname', with: person_attributes[:surname]
-    click_button 'Save'
+      fill_in 'First name', with: person_attributes[:given_name]
+      fill_in 'Surname', with: person_attributes[:surname]
+      fill_in 'Email', with: person_attributes[:email]
+      click_button 'Save'
 
-    expect(page).to have_title("Duplicate names found - #{ app_title }")
-    click_button 'Continue'
-    expect(Peoplefinder::Person.where(surname: person_attributes[:surname]).count).to eql(2)
-  end
+      click_link 'Return to home page'
+      expect(Peoplefinder::Person.where(surname: person_attributes[:surname]).count).to eql(1)
+    end
 
-  scenario 'Deleting a person' do
-    person = create(:person)
-    visit edit_person_path(person)
-    click_link('Delete this profile')
-    expect { Peoplefinder::Person.find(person) }.to raise_error(ActiveRecord::RecordNotFound)
-  end
+    scenario 'Adding a profile image' do
+      visit new_person_path
+      fill_in 'Surname', with: person_attributes[:surname]
+      fill_in 'Email', with: person_attributes[:email]
+      attach_file 'person[image]', sample_image
+      expect(page).not_to have_link('Crop image')
+      click_button 'Save'
 
-  scenario 'Allow deletion of a person even when there are memberships' do
-    membership = create(:membership)
-    person = membership.person
-    visit edit_person_path(person)
-    click_link('Delete this profile')
-    expect { Peoplefinder::Membership.find(membership) }.to raise_error(ActiveRecord::RecordNotFound)
-    expect { Peoplefinder::Person.find(person) }.to raise_error(ActiveRecord::RecordNotFound)
-  end
+      person = Peoplefinder::Person.find_by_surname(person_attributes[:surname])
+      visit person_path(person)
+      expect(page).to have_css("img[src*='#{person.image.medium}']")
+      expect(page).to have_css("img[alt*='Current photo of #{ person }']")
 
-  scenario 'Editing a person' do
-    visit person_path(create(:person, person_attributes))
-    click_link 'Edit this profile'
+      visit edit_person_path(person)
+      expect(page).to have_link('Crop image', edit_person_image_path(person))
+    end
 
-    expect(page).to have_title("Edit profile - #{ app_title }")
-    fill_in 'First name', with: 'Jane'
-    fill_in 'Surname', with: 'Doe'
-    click_button 'Save'
-
-    expect(page).to have_content('We have let Jane Doe know that you’ve made changes')
-    within('h1') do
-      expect(page).to have_text('Jane Doe')
+    scenario 'Cancelling a new form' do
+      visit new_person_path
+      expect(page).to have_link('Cancel', href: 'javascript:history.back()')
     end
   end
 
-  scenario 'Editing an invalid person' do
-    person = create(:person, person_attributes)
+  context 'Editing a person' do
+    scenario 'Editing a person' do
+      visit person_path(create(:person, person_attributes))
+      click_link 'Edit this profile'
 
-    edit_profile_page.load(slug: person.slug)
+      expect(page).to have_title("Edit profile - #{ app_title }")
+      fill_in 'First name', with: 'Jane'
+      fill_in 'Surname', with: 'Doe'
+      click_button 'Save'
 
-    edit_profile_page.form.surname.set ''
-    edit_profile_page.form.save.click
+      expect(page).to have_content('We have let Jane Doe know that you’ve made changes')
+      within('h1') do
+        expect(page).to have_text('Jane Doe')
+      end
+    end
 
-    expect(edit_profile_page.form).to have_global_error
-    expect(edit_profile_page.form).to have_surname_error
+    scenario 'Editing a person and giving them a name that already exists' do
+      create(:person, given_name: person_attributes[:given_name], surname: person_attributes[:surname])
+      person = create(:person, given_name: 'Bobbie', surname: 'Browne')
+      visit edit_person_path(person)
+
+      fill_in 'First name', with: person_attributes[:given_name]
+      fill_in 'Surname', with: person_attributes[:surname]
+      click_button 'Save'
+
+      expect(page).to have_title("Duplicate names found - #{ app_title }")
+      click_button 'Continue'
+      expect(Peoplefinder::Person.where(surname: person_attributes[:surname]).count).to eql(2)
+    end
+
+    scenario 'Editing an invalid person' do
+      person = create(:person, person_attributes)
+
+      edit_profile_page.load(slug: person.slug)
+
+      edit_profile_page.form.surname.set ''
+      edit_profile_page.form.save.click
+
+      expect(edit_profile_page.form).to have_global_error
+      expect(edit_profile_page.form).to have_surname_error
+    end
+
+    scenario 'Cancelling an edit' do
+      person = create(:person)
+      visit edit_person_path(person)
+      expect(page).to have_link('Cancel', href: person_path(person))
+    end
   end
 
-  scenario 'Adding a profile image' do
-    visit new_person_path
-    fill_in 'Surname', with: person_attributes[:surname]
-    fill_in 'Email', with: person_attributes[:email]
-    attach_file 'person[image]', sample_image
-    expect(page).not_to have_link('Crop image')
-    click_button 'Save'
+  context 'Deleting a person' do
+    scenario 'Deleting a person' do
+      person = create(:person)
+      visit edit_person_path(person)
+      click_link('Delete this profile')
+      expect { Peoplefinder::Person.find(person) }.to raise_error(ActiveRecord::RecordNotFound)
+    end
 
-    person = Peoplefinder::Person.find_by_surname(person_attributes[:surname])
-    visit person_path(person)
-    expect(page).to have_css("img[src*='#{person.image.medium}']")
-    expect(page).to have_css("img[alt*='Current photo of #{ person }']")
-
-    visit edit_person_path(person)
-    expect(page).to have_link('Crop image', edit_person_image_path(person))
+    scenario 'Allow deletion of a person even when there are memberships' do
+      membership = create(:membership)
+      person = membership.person
+      visit edit_person_path(person)
+      click_link('Delete this profile')
+      expect { Peoplefinder::Membership.find(membership) }.to raise_error(ActiveRecord::RecordNotFound)
+      expect { Peoplefinder::Person.find(person) }.to raise_error(ActiveRecord::RecordNotFound)
+    end
   end
 
   context 'Viewing my own profile' do
-    let(:person) { create(:person, email: 'test.user@digital.justice.gov.uk') }
-
     scenario 'when it is complete' do
       complete_profile!(person)
       visit person_path(person)
@@ -151,20 +175,20 @@ feature 'Person maintenance' do
   end
 
   context 'Viewing another person\'s profile' do
-    let(:person) { create(:person, email: 'someone.else@digital.justice.gov.uk') }
+    let(:another_person) { create(:person, email: 'someone.else@digital.justice.gov.uk') }
 
     scenario 'when it is complete' do
-      complete_profile!(person)
-      visit person_path(person)
+      complete_profile!(another_person)
+      visit person_path(another_person)
       expect(page).not_to have_text('Profile completeness')
     end
 
     scenario 'when it is incomplete, I request more information' do
-      visit person_path(person)
+      visit person_path(another_person)
       expect(page).not_to have_text('Profile completeness')
 
       click_link('Ask the person to update their details')
-      expect(page).to have_link('Cancel', person_path(person))
+      expect(page).to have_link('Cancel', person_path(another_person))
 
       expect(page).to have_title("Request profile update - #{ app_title }")
       within('h1') do
@@ -175,10 +199,10 @@ feature 'Person maintenance' do
       expect { click_button 'Submit' }.to change { ActionMailer::Base.deliveries.count }.by(1)
 
       expect(last_email).to have_text('Hello Bob')
-      expect(last_email.to).to include(person.email)
+      expect(last_email.to).to include(another_person.email)
       expect(last_email.subject).to eql('Request to update your People Finder profile')
-      check_email_has_token_link_to(person)
-      expect(page).to have_text("Your message has been sent to #{ person.name }")
+      check_email_has_token_link_to(another_person)
+      expect(page).to have_text("Your message has been sent to #{ another_person.name }")
     end
   end
 
@@ -196,17 +220,6 @@ feature 'Person maintenance' do
     click_link 'Edit this profile'
     expect(page).not_to have_selector('.search-box')
     expect(page).to have_text('You are currently editing this profile')
-  end
-
-  scenario 'Cancelling an edit' do
-    person = create(:person)
-    visit edit_person_path(person)
-    expect(page).to have_link('Cancel', href: person_path(person))
-  end
-
-  scenario 'Cancelling a new form' do
-    visit new_person_path
-    expect(page).to have_link('Cancel', href: 'javascript:history.back()')
   end
 
   scenario 'Toggling the phone number fields', js: true do

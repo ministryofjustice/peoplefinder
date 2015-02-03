@@ -16,7 +16,7 @@ class Peoplefinder::Person < ActiveRecord::Base
   attr_accessor :crop_x, :crop_y, :crop_w, :crop_h, :role_names
 
   validates :surname, presence: true
-  validates :email, presence: true
+  validates :email, presence: true, uniqueness: true
 
   has_many :memberships,
     -> { includes(:group).order('groups.name')  },
