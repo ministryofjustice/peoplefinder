@@ -17,7 +17,8 @@
   .form-group{ :class => ('gov-uk-field-error' if @person.errors.include?(:surname)) }
     = f.label :surname, class: 'form-label-bold' do
       Surname
-      %span.error= @person.errors[:surname].first if @person.errors.include?(:surname)
+      - if @person.errors.include?(:surname)
+        %span.error= @person.errors[:surname].first
     = f.text_field :surname, class: 'form-control'
 
 
@@ -45,7 +46,8 @@
         .form-group{ :class => ('gov-uk-field-error' if @person.errors.include?(:email)) }
           = f.label :email, class: 'form-label-bold' do
             Email
-            %span.error= @person.errors[:email].first if @person.errors.include?(:email)
+            - if @person.errors.include?(:email)
+              %span.error= @person.errors[:email].first
           = f.text_field :email, class: 'form-control', readonly: @person.persisted?
 
       .form-group

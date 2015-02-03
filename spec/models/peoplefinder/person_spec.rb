@@ -4,6 +4,7 @@ RSpec.describe Peoplefinder::Person, type: :model do
   let(:person) { build(:person) }
   it { should validate_presence_of(:surname) }
   it { should validate_presence_of(:email) }
+  it { should validate_uniqueness_of(:email) }
   it { should have_many(:groups) }
 
   describe '.name' do
