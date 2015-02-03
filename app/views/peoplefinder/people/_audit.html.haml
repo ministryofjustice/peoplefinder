@@ -1,0 +1,19 @@
+%table.audit
+  %thead
+    %tr
+      %th Event
+      %th By
+      %th At
+      %th Change
+  %tbody
+    -person.versions.reverse.each do |v|
+      %tr
+        %td= v.event
+        %td= v.whodunnit || 'Programmatic'
+        %td= v.created_at
+        %td
+          %ul
+            - YAML.load(v.object_changes).map {|k,v| "#{k.to_s} => #{v[1]}" }.each do |change|
+              %li=change
+
+
