@@ -10,8 +10,8 @@ feature 'View person audit' do
 
   before do
     with_versioning do
-      person.update description: 'The best person'
-      person.update primary_phone_number: '55555555555'
+      person.update description: description
+      person.update primary_phone_number: phone_number
     end
   end
 
