@@ -11,7 +11,7 @@ module Peoplefinder::Concerns::Sanitisable
   end
 
   def sanitise!
-    self.fields_to_sanitise.each do |field_name|
+    fields_to_sanitise.each do |field_name|
       field = send(field_name)
       field.strip! if field && field.respond_to?(:strip!)
     end
