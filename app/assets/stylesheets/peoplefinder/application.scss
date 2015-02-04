@@ -217,6 +217,10 @@ form .text .wider   {
 
 form input[readonly] {
   background-color: $grey-3;
+
+  &:focus {
+    outline: none;
+  }
 }
 
 .form-hint{
