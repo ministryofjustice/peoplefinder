@@ -215,6 +215,9 @@ form .text .wider   {
   }
 }
 
+form input[readonly] {
+  background-color: $grey-3;
+}
 
 .form-hint{
   word-wrap: break-word;
