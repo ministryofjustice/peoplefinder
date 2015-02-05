@@ -7,12 +7,10 @@ module Peoplefinder
 
       if email_address.valid_format?
         unless email_address.valid_domain?
-          record.errors[attribute] <<
-              (options[:message_domain] || 'does not have a supported domain')
+          record.errors.add(attribute, :invalid_domain, options)
         end
       else
-        record.errors[attribute] <<
-            (options[:message_format] || 'is not a valid email')
+        record.errors.add(attribute, :invalid_format, options)
       end
     end
   end
