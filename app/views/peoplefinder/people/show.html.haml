@@ -21,9 +21,9 @@
 
   .grid.grid-2-3
     .inner-block
-      %dl
+      %dl.inline-labels
         - @person.memberships.each do |membership|
-          %dt= membership.role
+          %dt.visuallyhidden= membership.role
           %dd.breadcrumbs= breadcrumbs(membership.path.drop(1))
 
         - if feature_enabled?(:communities)
@@ -33,7 +33,7 @@
           %dt Location
           %dd= @person.location
 
-      %dl
+      %dl.inline-labels
         - if @person.email.present?
           %dt Email
           %dd= mail_to(@person.email)
@@ -48,7 +48,8 @@
 
       - if @person.description.present?
         %dl
-          %dt Additional information
+          %dt
+            %h4 Additional information
           %dd= @person.description
 
       - if feature_enabled?(:profile_tags)
