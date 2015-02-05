@@ -42,6 +42,22 @@ feature 'Person maintenance' do
       expect(new_profile_page.form).to have_email_error
     end
 
+    scenario 'Creating a person with invalid e-mail raises an error' do
+      new_profile_page.load
+      new_profile_page.form.email.set 'invalid email@digital.justice.gov.uk'
+      new_profile_page.form.save.click
+
+      expect(new_profile_page.form).to have_email_error
+    end
+
+    scenario 'Creating a person with e-mail from an unsupported domain raises an error' do
+      new_profile_page.load
+      new_profile_page.form.email.set 'name.surname@example.com'
+      new_profile_page.form.save.click
+
+      expect(new_profile_page.form).to have_email_error
+    end
+
     scenario 'Creating a person with an identical name', js: true do
       create(:group, name: 'Digital')
       create(:person, given_name: person_attributes[:given_name], surname: person_attributes[:surname])
