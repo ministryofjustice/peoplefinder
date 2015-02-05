@@ -30,25 +30,25 @@
           = render partial: "communities"
 
         - if @person.location.present?
-          %dt.visuallyhidden Location
+          %dt Location
           %dd= @person.location
 
       %dl
         - if @person.email.present?
-          %dt.visuallyhidden Email
+          %dt Email
           %dd= mail_to(@person.email)
 
         - if @person.primary_phone_number.present?
-          %dt.visuallyhidden Primary phone number
+          %dt Primary phone number
           %dd= call_to(@person.primary_phone_number)
 
         - if @person.secondary_phone_number.present?
-          %dt.visuallyhidden Other phone number
+          %dt Other phone number
           %dd= call_to(@person.secondary_phone_number)
 
       - if @person.description.present?
         %dl
-          %dt.visuallyhidden Notes
+          %dt Additional information
           %dd= @person.description
 
       - if feature_enabled?(:profile_tags)
