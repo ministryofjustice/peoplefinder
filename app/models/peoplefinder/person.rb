@@ -8,6 +8,7 @@ class Peoplefinder::Person < ActiveRecord::Base
   include Peoplefinder::Concerns::Completion
   include Peoplefinder::Concerns::Notifications
   include Peoplefinder::Concerns::WorkDays
+  include Peoplefinder::Concerns::Sanitisable
 
   has_paper_trail ignore: [:updated_at, :created_at, :id, :slug,
                            :login_count, :last_login_at]
@@ -17,6 +18,8 @@ class Peoplefinder::Person < ActiveRecord::Base
 
   validates :surname, presence: true
   validates :email, presence: true, uniqueness: true
+
+  sanitise_fields :given_name, :surname, :email
 
   has_many :memberships,
     -> { includes(:group).order('groups.name')  },
