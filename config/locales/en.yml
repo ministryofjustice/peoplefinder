@@ -301,7 +301,7 @@ en:
       subject: '360 feedback process closes soon'
   review_mailer:
     feedback_request:
-      subject: '360 feedback request from you'
+      subject: 'Please provide 360 feedback'
     request_declined:
       subject: 'Request for feedback has been declined'
   tab_navigation:
