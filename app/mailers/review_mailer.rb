@@ -9,7 +9,7 @@ class ReviewMailer < ActionMailer::Base
     @invitation_message = review.invitation_message
     @token = token
     sender = formatted_address(review.subject_name, review.subject_email)
-    mail to: review.author_email, from: sender
+    mail to: review.author_email
   end
 
   def request_declined(review, token)
@@ -18,7 +18,7 @@ class ReviewMailer < ActionMailer::Base
     @token = token
     @reason = review.reason_declined
     sender = formatted_address(review.author_name, review.author_email)
-    mail to: review.subject_email, from: sender
+    mail to: review.subject_email
   end
 
   def feedback_submission(review, token)
@@ -26,7 +26,7 @@ class ReviewMailer < ActionMailer::Base
     @submitter_name = review.author_name
     @token = token
     sender = formatted_address(review.author_name, review.author_email)
-    mail to: review.subject_email, from: sender
+    mail to: review.subject_email
   end
 
 private
