@@ -30,7 +30,7 @@ feature 'View person audit' do
 
   scenario 'Hide audit as regular user' do
     omni_auth_log_in_as(person.email)
-    visit person_path(person)
-    expect(page).to_not have_selector 'table.audit'
+    profile_page.load(slug: person.slug)
+    expect(profile_page).to_not have_audit
   end
 end
