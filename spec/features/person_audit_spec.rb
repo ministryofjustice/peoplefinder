@@ -7,6 +7,7 @@ feature 'View person audit' do
   let(:description)  { 'The best person' }
   let(:phone_number) { '55555555555' }
   let!(:person)      { with_versioning { create(:person) } }
+  let(:profile_page) { Pages::Profile.new }
 
   before do
     with_versioning do
@@ -17,13 +18,13 @@ feature 'View person audit' do
 
   scenario 'View audit as an admin user' do
     omni_auth_log_in_as(super_admin.email)
-    visit person_path(person)
+    profile_page.load(slug: person.slug)
 
-    expect(page).to have_selector 'table.audit tbody tr', count: 3
-    within 'table.audit tbody' do
-      expect(find('tr:nth-child(1)')).to have_text "primary_phone_number => #{phone_number}"
-      expect(find('tr:nth-child(2)')).to have_text "description => #{description}"
-      expect(find('tr:nth-child(3)')).to have_text "email => #{person.email}"
+    expect(profile_page).to have_audit
+    profile_page.audit.versions.tap do |v|
+      expect(v[0]).to have_text "primary_phone_number => #{phone_number}"
+      expect(v[1]).to have_text "description => #{description}"
+      expect(v[2]).to have_text "email => #{person.email}"
     end
   end
 
