@@ -6,12 +6,14 @@
       %th At
       %th Change
   %tbody
-    -person.versions.reverse.each do |v|
+    -versions.reverse.each do |v|
       %tr
         %td= v.event
         %td= v.whodunnit
         %td= v.created_at
         %td
           %ul
-            - YAML.load(v.object_changes).map {|k,v| "#{k.to_s} => #{v[1]}" }.each do |change|
+            - v.changes.each do |change|
               %li=change
+
+
