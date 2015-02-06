@@ -14,7 +14,9 @@ module Peoplefinder
 
     # GET /people/1
     def show
-      @versions = AuditVersionPresenter.wrap(@person.versions)
+      if current_user.admin?
+        @versions = AuditVersionPresenter.wrap(@person.versions)
+      end
     end
 
     # GET /people/new
