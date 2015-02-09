@@ -20,23 +20,6 @@ feature 'Person edit notifications' do
     check_email_has_token_link_to(Peoplefinder::Person.where(email: 'bob.smith@digital.justice.gov.uk').first)
   end
 
-  scenario 'Creating a person with email from invalid domain' do
-    visit new_person_path
-
-    fill_in 'Surname', with: 'Smith'
-    fill_in 'Email', with: 'test.user@something-else.example.com'
-    expect { click_button 'Save' }.not_to change { ActionMailer::Base.deliveries.count }
-  end
-
-  scenario 'Creating a person with invalid email' do
-    visit new_person_path
-
-    fill_in 'First name', with: 'Bob'
-    fill_in 'Surname', with: 'Smith'
-    fill_in 'Email', with: 'test.user'
-    expect { click_button 'Save' }.not_to change { ActionMailer::Base.deliveries.count }
-  end
-
   scenario 'Deleting a person with different email' do
     person = create(:person, email: 'bob.smith@digital.justice.gov.uk')
     visit edit_person_path(person)
@@ -47,18 +30,6 @@ feature 'Person edit notifications' do
   end
 
   scenario 'Deleting a person with same email' do
-    visit edit_person_path(person)
-    expect { click_link('Delete this profile') }.not_to change { ActionMailer::Base.deliveries.count }
-  end
-
-  scenario 'Deleting a person with email from invalid domain' do
-    person = create(:person, email: 'test.user@something-else.example.com')
-    visit edit_person_path(person)
-    expect { click_link('Delete this profile') }.not_to change { ActionMailer::Base.deliveries.count }
-  end
-
-  scenario 'Deleting a person with invalid email' do
-    person = create(:person, email: 'test.user')
     visit edit_person_path(person)
     expect { click_link('Delete this profile') }.not_to change { ActionMailer::Base.deliveries.count }
   end
@@ -76,23 +47,7 @@ feature 'Person edit notifications' do
     check_email_has_token_link_to(person)
   end
 
-  scenario 'Editing a person with an email from invalid domain' do
-    person = create(:person, given_name: 'Bob', surname: 'Smith', email: 'bob.smith@something-else.example.com')
-    visit person_path(person)
-    click_link 'Edit this profile'
-    fill_in 'Surname', with: 'Smelly Pants'
-    expect { click_button 'Save' }.not_to change { ActionMailer::Base.deliveries.count }
-  end
-
   scenario 'Editing a person with same email' do
-    visit person_path(person)
-    click_link 'Edit this profile'
-    fill_in 'Surname', with: 'Smelly Pants'
-    expect { click_button 'Save' }.not_to change { ActionMailer::Base.deliveries.count }
-  end
-
-  scenario 'Editing a person with invalid email' do
-    person = create(:person, given_name: 'Bob', surname: 'Smith', email: 'test.user')
     visit person_path(person)
     click_link 'Edit this profile'
     fill_in 'Surname', with: 'Smelly Pants'

@@ -150,6 +150,8 @@ en:
     errors:
       messages:
         blank: "is required"
+        invalid_format: "isn't valid"
+        invalid_domain: "you have entered can't be used to access People Finder"
       models:
         peoplefinder/token:
           invalid_address: "Email address is not formatted correctly"
