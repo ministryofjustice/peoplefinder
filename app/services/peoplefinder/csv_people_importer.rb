@@ -7,15 +7,14 @@ module Peoplefinder
     attr_reader :errors
 
     def initialize(csv)
-      @csv = CSV.new(csv, headers: true, return_headers: true)
-      @header_row = @csv.first
+      @rows, @header_row = process_csv(csv)
     end
 
     def valid?
       @errors = []
 
       if missing_columns.empty?
-        @csv.each do |row|
+        @rows.each do |row|
           person = Person.new(row.to_h.slice(*COLUMNS))
           unless person.valid?
             @errors << %(row "#{row.to_csv.strip}": #{person.errors.full_messages.join(', ')})
@@ -29,6 +28,13 @@ module Peoplefinder
     end
 
   private
+
+    def process_csv(csv)
+      rows = CSV.new(csv, headers: true, return_headers: true).to_a
+      header_row = rows.shift
+
+      [rows, header_row]
+    end
 
     def missing_columns
       COLUMNS.reject { |column| @header_row.include?(column) }
