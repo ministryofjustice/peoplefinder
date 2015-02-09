@@ -45,8 +45,8 @@ CSV
         # These errors come from translation file, so may be different when the engine is used
         it 'errors contain missing columns' do
           expect(importer.errors).to match_array([
-            %q(row "jon.o. carey@valid.gov.uk,Jon,O'Carey": Email isn't valid),
-            %q(row "jack@invalid.gov.uk,Jack,": Surname is required, Email you have entered can't be used to access People Finder)
+            %q(row "jon.o. carey@valid.gov.uk,Jon,O'Carey": Email isn’t valid),
+            'row "jack@invalid.gov.uk,Jack,": Surname is required, Email you have entered can’t be used to access People Finder'
           ])
         end
       end
