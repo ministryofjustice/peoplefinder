@@ -19,6 +19,22 @@ module Peoplefinder
       @valid = @errors.empty?
     end
 
+    def import
+      result = nil
+
+      if valid?
+        result = 0
+
+        @rows.each do |row|
+          if Person.create(row.to_h.slice(*COLUMNS))
+            result += 1
+          end
+        end
+      end
+
+      result
+    end
+
   private
 
     def process_csv(csv)
