@@ -74,3 +74,7 @@
       = info_text('request_information')
       <br/>
       = link_to info_text('request_information_link'), new_person_information_request_path(@person)
+
+- unless @versions.nil?
+  %h1 Audit Log
+  =render 'audit', versions: @versions

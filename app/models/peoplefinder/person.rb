@@ -90,6 +90,16 @@ class Peoplefinder::Person < ActiveRecord::Base
       split(',').uniq.sort.join(',')
   end
 
+  def changes_for_paper_trail
+    super.tap { |changes|
+      if changes.key?('image')
+        changes['image'].map! do |value|
+          value.url && File.basename(value.url)
+        end
+      end
+    }
+  end
+
 private
 
   def group_path(hint_group)

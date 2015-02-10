@@ -1,0 +1,19 @@
+%table.audit
+  %thead
+    %tr
+      %th Event
+      %th By
+      %th At
+      %th Change
+  %tbody
+    -versions.reverse.each do |v|
+      %tr
+        %td= v.event
+        %td= v.whodunnit
+        %td= v.created_at
+        %td
+          %ul
+            - v.changes.each do |change|
+              %li=change
+
+
