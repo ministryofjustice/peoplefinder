@@ -21,17 +21,19 @@
 
   .grid.grid-2-3
     .inner-block
-      %dl.inline-labels
-        - @person.memberships.each do |membership|
-          %dt.visuallyhidden= membership.role
+      - @person.memberships.each do |membership|
+        %h3= membership.role
+        %dl.inline-labels.role-and-location
+          %dt Team
           %dd.breadcrumbs= breadcrumbs(membership.path.drop(1))
 
-        - if feature_enabled?(:communities)
-          = render partial: "communities"
+      - if feature_enabled?(:communities)
+        = render partial: "communities"
 
-        - if @person.location.present?
-          %dt Location
-          %dd= @person.location
+      %dl.inline-labels
+      - if @person.location.present?
+        %dt Location
+        %dd= @person.location
 
       %dl.inline-labels
         - if @person.email.present?
