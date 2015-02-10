@@ -106,7 +106,7 @@ feature 'Audit trail' do
 
       visit '/audit_trail'
       expect(page).to have_text('Peoplefinder::Person Edited')
-      expect(page).to have_text(/Image set to.*placeholder/)
+      expect(page).to have_text('Image changed from no_photo.png to placeholder.png')
     end
   end
 
