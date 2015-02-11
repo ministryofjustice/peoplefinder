@@ -10,7 +10,8 @@ class Peoplefinder::Person < ActiveRecord::Base
   include Peoplefinder::Concerns::WorkDays
   include Peoplefinder::Concerns::Sanitisable
 
-  has_paper_trail ignore: [:updated_at, :created_at, :id, :slug,
+  has_paper_trail class_name: 'Peoplefinder::Version',
+                  ignore: [:updated_at, :created_at, :id, :slug,
                            :login_count, :last_login_at]
   mount_uploader :image, Peoplefinder::ImageUploader
 

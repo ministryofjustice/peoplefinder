@@ -39,4 +39,14 @@ class Peoplefinder::Version < PaperTrail::Version
       "#{ item_type } Edited"
     end
   end
+
+  def whodunnit
+    stored = super
+    case stored
+    when /\A\d+\z/
+      Peoplefinder::Person.find_by(id: stored.to_i)
+    else
+      stored
+    end
+  end
 end

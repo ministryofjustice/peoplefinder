@@ -3,7 +3,8 @@ require 'peoplefinder'
 class Peoplefinder::Group < ActiveRecord::Base
   self.table_name = 'groups'
 
-  has_paper_trail ignore: [:updated_at, :created_at, :slug, :id]
+  has_paper_trail class_name: 'Peoplefinder::Version',
+                  ignore: [:updated_at, :created_at, :slug, :id]
 
   extend FriendlyId
   friendly_id :slug_candidates, use: :slugged
