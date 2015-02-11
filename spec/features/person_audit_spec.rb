@@ -58,6 +58,15 @@ feature 'View person audit' do
           expect(v[0]).to have_text '1.2.3.4'
         end
       end
+
+      scenario 'show browser used by author of a change' do
+        Peoplefinder::Version.last.update user_agent: 'NCSA Mosaic/3.0 (Windows 95)'
+        profile_page.load(slug: person.slug)
+
+        profile_page.audit.versions.tap do |v|
+          expect(v[0]).to have_text 'NCSA Mosaic/3.0 (Windows 95)'
+        end
+      end
     end
 
     context 'as a regular user' do

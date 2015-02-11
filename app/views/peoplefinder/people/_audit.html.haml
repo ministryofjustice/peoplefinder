@@ -4,6 +4,7 @@
       %th Event
       %th By
       %th IP address
+      %th Browser
       %th At
       %th Change
   %tbody
@@ -15,6 +16,7 @@
         - else
           %td= v.whodunnit
         %td= v.ip_address
+        %td= v.user_agent
         %td= v.created_at
         %td
           %ul

@@ -129,6 +129,8 @@ feature 'Person maintenance' do
     scenario 'Recording audit details' do
       allow_any_instance_of(ActionDispatch::Request).
         to receive(:remote_ip).and_return('1.2.3.4')
+      allow_any_instance_of(ActionDispatch::Request).
+        to receive(:user_agent).and_return('NCSA Mosaic/3.0 (Windows 95)')
 
       with_versioning do
         person = create(:person, person_attributes)
@@ -140,6 +142,7 @@ feature 'Person maintenance' do
 
       version = Peoplefinder::Version.last
       expect(version.ip_address).to eq('1.2.3.4')
+      expect(version.user_agent).to eq('NCSA Mosaic/3.0 (Windows 95)')
       expect(version.whodunnit).to eq(person)
     end
 

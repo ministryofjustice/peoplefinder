@@ -15,7 +15,7 @@ module Peoplefinder
     end
 
     def info_for_paper_trail
-      { ip_address: request.remote_ip }
+      { ip_address: request.remote_ip, user_agent: request.user_agent }
     end
 
     def current_user
