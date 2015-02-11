@@ -14,6 +14,10 @@ module Peoplefinder
       logged_in? ? current_user.id : nil
     end
 
+    def info_for_paper_trail
+      { ip_address: request.remote_ip }
+    end
+
     def current_user
       @current_user ||= Peoplefinder::Login.current_user(session)
     rescue ActiveRecord::RecordNotFound

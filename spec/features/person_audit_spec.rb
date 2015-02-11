@@ -49,6 +49,15 @@ feature 'View person audit' do
           expect(v[0]).to have_link author.to_s, href: "/people/#{author.slug}"
         end
       end
+
+      scenario 'show IP address of author of a change' do
+        Peoplefinder::Version.last.update ip_address: '1.2.3.4'
+        profile_page.load(slug: person.slug)
+
+        profile_page.audit.versions.tap do |v|
+          expect(v[0]).to have_text '1.2.3.4'
+        end
+      end
     end
 
     context 'as a regular user' do

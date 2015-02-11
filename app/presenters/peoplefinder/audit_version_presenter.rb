@@ -3,7 +3,7 @@ require 'yaml'
 module Peoplefinder
   class AuditVersionPresenter
     extend Forwardable
-    def_delegators :@version, :event, :whodunnit, :created_at
+    def_delegators :@version, :event, :whodunnit, :created_at, :ip_address
 
     def initialize(version)
       @version = version

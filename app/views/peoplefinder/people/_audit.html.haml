@@ -3,6 +3,7 @@
     %tr
       %th Event
       %th By
+      %th IP address
       %th At
       %th Change
   %tbody
@@ -13,6 +14,7 @@
           %td= link_to v.whodunnit.to_s, v.whodunnit
         - else
           %td= v.whodunnit
+        %td= v.ip_address
         %td= v.created_at
         %td
           %ul
