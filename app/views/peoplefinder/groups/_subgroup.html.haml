@@ -1,5 +1,5 @@
 %div.grid.grid-1-3.subgroup
-  %div.inner-block
-    %h3
-      = link_to subgroup, subgroup
-    = govspeak(truncate(subgroup.description, length: 200, omission: "... [read more](#{url_for(subgroup)})"))
+  %a.subgroup-link-block.inner-block{ href: url_for(subgroup) }
+    %h3= subgroup
+    %div.about-subgroup
+      = govspeak(subgroup.description)
