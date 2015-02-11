@@ -16,7 +16,7 @@
         - else
           %td= v.whodunnit
         %td= v.ip_address
-        %td= v.user_agent
+        %td{title: v.user_agent}=v.user_agent_summary
         %td= v.created_at
         %td
           %ul

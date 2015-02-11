@@ -1,5 +1,7 @@
 require 'forwardable'
 require 'yaml'
+require 'user_agent'
+
 module Peoplefinder
   class AuditVersionPresenter
     extend Forwardable
@@ -14,6 +16,12 @@ module Peoplefinder
       YAML.load(@version.object_changes).map do |field, (_, new)|
         "#{field} => #{new}"
       end
+    end
+
+    def user_agent_summary
+      return nil if user_agent.blank?
+      ua = UserAgent.parse(user_agent)
+      '%s %s' % [ua.browser, ua.version]
     end
 
     def self.wrap(versions)

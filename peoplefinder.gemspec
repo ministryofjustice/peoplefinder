@@ -43,6 +43,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'unicorn', '~> 4.8.3'
   s.add_dependency 'will_paginate', '~> 3.0'
   s.add_dependency 'unf'
+  s.add_dependency 'useragent', '~> 0.10.0'
 
   s.add_development_dependency 'brakeman'
   s.add_development_dependency 'pry-rails'
