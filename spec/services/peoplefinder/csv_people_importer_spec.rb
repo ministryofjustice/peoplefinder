@@ -70,4 +70,50 @@ CSV
       end
     end
   end
+
+  describe '#import' do
+    subject { importer.import }
+
+    context 'for a valid csv' do
+      let(:csv) do
+        <<CSV
+email,given_name,surname
+peter.bly@valid.gov.uk,Peter,Bly
+jon.con@valid.gov.uk,Jon,Con
+CSV
+      end
+
+      before do
+        subject
+      end
+
+      it 'creates new records' do
+        new = Peoplefinder::Person.where(email: 'peter.bly@valid.gov.uk')
+
+        expect(new.size).to be 1
+      end
+
+      it 'returns number of imported  records' do
+        is_expected.to eql 2
+      end
+    end
+
+    context 'for an invalid csv (including duplicates)' do
+      before do
+        create(:person, email: 'jon.o.carey@valid.gov.uk')
+
+        subject
+      end
+
+      let(:csv) do
+        <<CSV
+email,given_name,surname
+peter.bly@valid.gov.uk,,Bly
+jon.o.carey@valid.gov.uk,Jon,O'Carey
+CSV
+      end
+
+      it { is_expected.to be nil }
+    end
+  end
 end

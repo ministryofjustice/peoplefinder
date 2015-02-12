@@ -16,5 +16,21 @@ namespace :peoplefinder do
         puts 'The given file doesn\'t exist'
       end
     end
+
+    desc 'Import valid CSV file'
+    task :csv_import, [:path] => :environment do |_, args|
+      if File.exist?(args[:path])
+        importer = Peoplefinder::CsvPeopleImporter.new(File.new(args[:path]))
+        result = importer.import
+
+        if result.nil?
+          puts 'The given file is not valid, please run the csv check task'
+        else
+          puts "#{result} people imported"
+        end
+      else
+        puts 'The given file doesn\'t exist'
+      end
+    end
   end
 end
