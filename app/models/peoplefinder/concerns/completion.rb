@@ -16,23 +16,16 @@ module Peoplefinder::Concerns::Completion
     ]
 
     def completion_score_fields
-      fields = COMPLETION_SCORE_FIELDS
-      if no_phone
-        fields -= [:primary_phone_number]
-      end
-      fields
+      COMPLETION_SCORE_FIELDS
     end
 
     scope :inadequate_profiles,
       lambda {
-        where("
+        where(%{
           COALESCE(image,'') = ''
           OR COALESCE(location,'') = ''
-          OR (no_phone != true
-            AND COALESCE(primary_phone_number,'') = ''
-            )
-          "
-        ).order(:email)
+          OR COALESCE(primary_phone_number,'') = ''
+        }).order(:email)
       }
 
     def completion_score

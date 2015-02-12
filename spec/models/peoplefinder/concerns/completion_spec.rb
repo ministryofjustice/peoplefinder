@@ -28,14 +28,6 @@ RSpec.describe 'Completion' do # rubocop:disable RSpec/DescribeClass
         expect(person.completion_score).to eql(100)
         expect(person).not_to be_incomplete
       end
-
-      context 'and no_phone = true' do
-        it 'returns 100 even if the primary_phone_number is blank' do
-          person.no_phone = true
-          person.primary_phone_number = nil
-          expect(person.completion_score).to eql(100)
-        end
-      end
     end
   end
 
@@ -50,13 +42,6 @@ RSpec.describe 'Completion' do # rubocop:disable RSpec/DescribeClass
     it 'returns the person when there is no primary phone number' do
       Peoplefinder::Person.update_all 'primary_phone_number = \'\''
       expect(subject).to include(person)
-    end
-
-    context 'with no_phone = true' do
-      it 'does not return the person even if there is no primary_phone_number' do
-        Peoplefinder::Person.update_all 'primary_phone_number = null, no_phone = true'
-        expect(subject).not_to include(person)
-      end
     end
 
     it 'returns the person when there is no location' do
