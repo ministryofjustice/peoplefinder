@@ -113,7 +113,7 @@ feature 'Audit trail' do
   scenario 'Auditing the creation of a membership', js: true do
     with_versioning do
       create(:group, name: 'Digital Justice')
-      person = create(:person, surname: 'Bob')
+      person = create(:person, given_name: 'Bob', surname: 'Smith')
       javascript_log_in
 
       visit edit_person_path(person)
@@ -125,7 +125,7 @@ feature 'Audit trail' do
 
       within('tbody tr:first-child') do
         expect(page).to have_text('New Peoplefinder::Membership')
-        expect(page).to have_text('Person set to: Bob')
+        expect(page).to have_text('Person set to: Bob Smith')
         expect(page).to have_text('Team set to: Digital Justice')
         expect(page).to have_text('Job title set to: Jefe')
         expect(page).to have_text('Leader set to: No')
@@ -138,7 +138,7 @@ feature 'Audit trail' do
   scenario 'Auditing the deletion of a membership' do
     with_versioning do
       group = create(:group, name: 'Digital Justice')
-      person = create(:person, surname: 'Bob')
+      person = create(:person, given_name: 'Joe', surname: 'Bob')
       person.memberships.create(group: group, role: 'Jefe', leader: true)
 
       visit edit_person_path(person)
@@ -150,7 +150,7 @@ feature 'Audit trail' do
 
       within('tbody tr:first-child') do
         expect(page).to have_text('Deleted Peoplefinder::Membership')
-        expect(page).to have_text('Person was: Bob')
+        expect(page).to have_text('Person was: Joe Bob')
         expect(page).to have_text('Team was: Digital Justice')
         expect(page).to have_text('Job title was: Jefe')
         expect(page).to have_text('Leader was: Yes')

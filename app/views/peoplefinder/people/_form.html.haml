@@ -7,11 +7,14 @@
       %ol.form-error-list
         - @person.errors.each do |field, error|
           %li
-            = link_to "#{field.capitalize} #{error.downcase}", "#person_#{field}"
+            = link_to "#{Peoplefinder::Person.human_attribute_name(field)} #{error.downcase}", "#person_#{field}"
 
 
-  .form-group
-    = f.label :given_name, 'First name', class: 'form-label-bold'
+  .form-group{ :class => ('gov-uk-field-error' if @person.errors.include?(:given_name)) }
+    = f.label :given_name, class: 'form-label-bold' do
+      First name
+      - if @person.errors.include?(:given_name)
+        %span.error= @person.errors[:given_name].first
     = f.text_field :given_name, class: 'form-control'
 
   .form-group{ :class => ('gov-uk-field-error' if @person.errors.include?(:surname)) }

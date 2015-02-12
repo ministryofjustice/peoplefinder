@@ -2,22 +2,24 @@ require 'rails_helper'
 
 RSpec.describe Peoplefinder::Person, type: :model do
   let(:person) { build(:person) }
+  it { should validate_presence_of(:given_name).on(:update) }
   it { should validate_presence_of(:surname) }
   it { should validate_presence_of(:email) }
   it { should validate_uniqueness_of(:email) }
   it { should have_many(:groups) }
 
   describe '.name' do
-    before { person.surname = 'von Brown' }
-
     context 'with a given_name and surname' do
+      let(:person) { build(:person, given_name: 'Jon', surname: 'von Brown') }
+
       it 'concatenates given_name and surname' do
-        person.given_name = 'Jon'
         expect(person.name).to eql('Jon von Brown')
       end
     end
 
     context 'with a surname only' do
+      let(:person) { build(:person, given_name: '', surname: 'von Brown') }
+
       it 'uses the surname' do
         expect(person.name).to eql('von Brown')
       end

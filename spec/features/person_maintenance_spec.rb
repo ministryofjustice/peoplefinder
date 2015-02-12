@@ -28,6 +28,7 @@ feature 'Person maintenance' do
       new_profile_page.form.save.click
 
       expect(new_profile_page.form).to have_global_error
+      expect(new_profile_page.form).to have_no_given_name_error
       expect(new_profile_page.form).to have_surname_error
       expect(new_profile_page.form).to have_email_error
     end
@@ -124,6 +125,19 @@ feature 'Person maintenance' do
       within('h1') do
         expect(page).to have_text('Jane Doe')
       end
+    end
+
+    scenario 'Validates required fields' do
+      person = create(:person, person_attributes)
+      edit_profile_page.load(slug: person.slug)
+
+      edit_profile_page.form.given_name.set ''
+      edit_profile_page.form.surname.set ''
+      edit_profile_page.form.save.click
+
+      expect(edit_profile_page.form).to have_global_error
+      expect(edit_profile_page.form).to have_given_name_error
+      expect(edit_profile_page.form).to have_surname_error
     end
 
     scenario 'Recording audit details' do

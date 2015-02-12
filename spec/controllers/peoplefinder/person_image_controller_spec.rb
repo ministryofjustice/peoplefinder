@@ -26,7 +26,7 @@ RSpec.describe Peoplefinder::PersonImageController, type: :controller do
 
   describe 'PUT update' do
     let(:image) { double(:image) }
-    let(:person) { create(:person, surname: 'Doe', image: image) }
+    let(:person) { create(:person, given_name: 'John', surname: 'Doe', image: image) }
 
     it 'recreates image versions' do
       expect(image).to receive(:recreate_versions!).once.and_return(true)
@@ -37,7 +37,7 @@ RSpec.describe Peoplefinder::PersonImageController, type: :controller do
         person: { crop_x: 10, crop_y: 20, crop_w: 200, crop_h: 200 }
 
       expect(response.header['Location']).to include(person_path(person, cache_bust: ''))
-      expect(flash[:notice]).to have_text('Cropped Doe’s image')
+      expect(flash[:notice]).to have_text('Cropped John Doe’s image')
     end
 
     it 'fails to recreate image versions' do

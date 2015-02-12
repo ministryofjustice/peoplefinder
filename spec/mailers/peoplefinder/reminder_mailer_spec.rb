@@ -71,7 +71,7 @@ RSpec.describe Peoplefinder::ReminderMailer do
   end
 
   describe '.reported_profile' do
-    let(:subject) { create(:person, surname: 'subject-person') }
+    let(:subject) { create(:person, given_name: 'given_name', surname: 'subject-person') }
     let(:reported_profile) do
       Peoplefinder::ReportedProfile.create(
         subject: subject,
@@ -96,7 +96,7 @@ RSpec.describe Peoplefinder::ReminderMailer do
     end
 
     it 'includes the subject' do
-      expect(mail.body).to have_text('the information on subject-person')
+      expect(mail.body).to have_text('the information on given_name subject-person')
     end
 
     it 'includes the subject url' do

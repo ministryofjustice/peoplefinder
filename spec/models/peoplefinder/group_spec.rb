@@ -90,8 +90,8 @@ RSpec.describe Peoplefinder::Group, type: :model do
     let(:team) { create(:group) }
     let(:subteam) { create(:group, parent: team) }
 
-    let(:alice) { create(:person, surname: 'alice') }
-    let(:bob) { create(:person, surname: 'bob') }
+    let(:alice) { create(:person, given_name: 'alice', surname: 'smith') }
+    let(:bob) { create(:person, given_name: 'bob', surname: 'smith') }
 
     subject { team.all_people }
 
@@ -117,7 +117,7 @@ RSpec.describe Peoplefinder::Group, type: :model do
           end
 
           it 'returns alice and bob in alphabetical order' do
-            expect(subject.map(&:name)).to eql(%w[ alice bob ])
+            expect(subject.map(&:name)).to eql(['alice smith', 'bob smith'])
           end
         end
       end

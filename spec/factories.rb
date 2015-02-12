@@ -19,6 +19,9 @@ FactoryGirl.define do
   end
 
   factory :person, class: 'Peoplefinder::Person' do
+    sequence :given_name do |n|
+      'First name-%04d' % n
+    end
     sequence :surname do |n|
       'Surname-%04d' % n
     end

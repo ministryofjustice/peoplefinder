@@ -158,6 +158,8 @@ en:
     attributes:
       peoplefinder/token:
         user_email: "Email address"
+      peoplefinder/person:
+        given_name: "First name"
 
   helpers:
     submit:

@@ -17,6 +17,7 @@ class Peoplefinder::Person < ActiveRecord::Base
 
   attr_accessor :crop_x, :crop_y, :crop_w, :crop_h, :role_names
 
+  validates :given_name, presence: true, on: :update
   validates :surname, presence: true
   validates :email, presence: true, uniqueness: true, 'peoplefinder/email' => true
 
