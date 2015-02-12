@@ -134,7 +134,6 @@ en:
         hint_add_person_to_team: "Find the team from this organisation browser."
         hint_team_description: "What is the role and purpose of the team?"
         hint_team_email_address: "Enter an email for people to get in touch with the team"
-        hint_team_responsibilities: "What are the team’s collective responsibilities?"
         information_request_label: "Enter your message"
         location_hint: "(eg 10.30, 102 Petty France)"
         notes_field_hint: "(eg I’m based at Bristol Crown Court on Mondays)"
