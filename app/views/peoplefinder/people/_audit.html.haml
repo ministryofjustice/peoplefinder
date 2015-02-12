@@ -3,13 +3,20 @@
     %tr
       %th Event
       %th By
+      %th IP address
+      %th Browser
       %th At
       %th Change
   %tbody
     -versions.reverse.each do |v|
       %tr
         %td= v.event
-        %td= v.whodunnit
+        -if v.whodunnit.is_a?(Peoplefinder::Person)
+          %td= link_to v.whodunnit.to_s, v.whodunnit
+        - else
+          %td= v.whodunnit
+        %td= v.ip_address
+        %td{title: v.user_agent}=v.user_agent_summary
         %td= v.created_at
         %td
           %ul

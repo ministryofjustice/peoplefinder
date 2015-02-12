@@ -3,7 +3,8 @@ require 'peoplefinder'
 class Peoplefinder::Membership < ActiveRecord::Base
   self.table_name = 'memberships'
 
-  has_paper_trail ignore: [:updated_at, :created_at, :id]
+  has_paper_trail class_name: 'Peoplefinder::Version',
+                  ignore: [:updated_at, :created_at, :id]
 
   belongs_to :person, touch: true
   belongs_to :group, touch: true

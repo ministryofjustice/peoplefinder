@@ -126,6 +126,26 @@ feature 'Person maintenance' do
       end
     end
 
+    scenario 'Recording audit details' do
+      allow_any_instance_of(ActionDispatch::Request).
+        to receive(:remote_ip).and_return('1.2.3.4')
+      allow_any_instance_of(ActionDispatch::Request).
+        to receive(:user_agent).and_return('NCSA Mosaic/3.0 (Windows 95)')
+
+      with_versioning do
+        person = create(:person, person_attributes)
+        visit edit_person_path(person)
+
+        fill_in 'First name', with: 'Jane'
+        click_button 'Save'
+      end
+
+      version = Peoplefinder::Version.last
+      expect(version.ip_address).to eq('1.2.3.4')
+      expect(version.user_agent).to eq('NCSA Mosaic/3.0 (Windows 95)')
+      expect(version.whodunnit).to eq(person)
+    end
+
     scenario 'Editing a person and giving them a name that already exists' do
       create(:person, given_name: person_attributes[:given_name], surname: person_attributes[:surname])
       person = create(:person, given_name: 'Bobbie', surname: 'Browne')

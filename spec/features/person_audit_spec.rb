@@ -13,30 +13,92 @@ feature 'View person audit' do
     File.open(File.join(Peoplefinder::Engine.root, 'spec', 'fixtures', 'placeholder.png'))
   }
 
-  before do
-    with_versioning do
-      person.update description: description
-      person.update primary_phone_number: phone_number
-      person.update image: sample_image
+  let(:author) { create(:person) }
+
+  context 'modern versioning' do
+    before do
+      with_versioning do
+        PaperTrail.whodunnit = author.id
+        person.update description: description
+        person.update primary_phone_number: phone_number
+        person.update image: sample_image
+      end
+    end
+
+    context 'as an admin user' do
+      before do
+        omni_auth_log_in_as(super_admin.email)
+      end
+
+      scenario 'view audit' do
+        profile_page.load(slug: person.slug)
+
+        expect(profile_page).to have_audit
+        profile_page.audit.versions.tap do |v|
+          expect(v[0]).to have_text "image => placeholder.png"
+          expect(v[1]).to have_text "primary_phone_number => #{phone_number}"
+          expect(v[2]).to have_text "description => #{description}"
+          expect(v[3]).to have_text "email => #{person.email}"
+        end
+      end
+
+      scenario 'link to author of a change' do
+        profile_page.load(slug: person.slug)
+
+        profile_page.audit.versions.tap do |v|
+          expect(v[0]).to have_link author.to_s, href: "/people/#{author.slug}"
+        end
+      end
+
+      scenario 'show IP address of author of a change' do
+        Peoplefinder::Version.last.update ip_address: '1.2.3.4'
+        profile_page.load(slug: person.slug)
+
+        profile_page.audit.versions.tap do |v|
+          expect(v[0]).to have_text '1.2.3.4'
+        end
+      end
+
+      scenario 'show browser used by author of a change' do
+        ua = 'Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)'
+        Peoplefinder::Version.last.update user_agent: ua
+        profile_page.load(slug: person.slug)
+
+        profile_page.audit.versions.tap do |v|
+          expect(v[0]).to have_text 'Internet Explorer 6.0'
+        end
+      end
+    end
+
+    context 'as a regular user' do
+      before do
+        omni_auth_log_in_as(person.email)
+      end
+
+      scenario 'hide audit' do
+        profile_page.load(slug: person.slug)
+        expect(profile_page).not_to have_audit
+      end
     end
   end
 
-  scenario 'View audit as an admin user' do
-    omni_auth_log_in_as(super_admin.email)
-    profile_page.load(slug: person.slug)
+  context 'legacy versioning as an admin' do
+    before do
+      with_versioning do
+        PaperTrail.whodunnit = 'Michael Mouse'
+        person.update description: description
+      end
 
-    expect(profile_page).to have_audit
-    profile_page.audit.versions.tap do |v|
-      expect(v[0]).to have_text "image => placeholder.png"
-      expect(v[1]).to have_text "primary_phone_number => #{phone_number}"
-      expect(v[2]).to have_text "description => #{description}"
-      expect(v[3]).to have_text "email => #{person.email}"
+      omni_auth_log_in_as(super_admin.email)
     end
-  end
 
-  scenario 'Hide audit as regular user' do
-    omni_auth_log_in_as(person.email)
-    profile_page.load(slug: person.slug)
-    expect(profile_page).to_not have_audit
+    scenario 'show text for change author' do
+      profile_page.load(slug: person.slug)
+
+      expect(profile_page).to have_audit
+      profile_page.audit.versions.tap do |v|
+        expect(v[0]).to have_text 'Michael Mouse'
+      end
+    end
   end
 end
