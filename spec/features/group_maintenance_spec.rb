@@ -13,7 +13,6 @@ feature 'Group maintenance' do
 
     fill_in 'Team name', with: name
     fill_in 'Team description', with: 'about my team'
-    fill_in 'Team responsibilities', with: 'my responsibilities'
     add_team_email_address
     click_button 'Save'
 
@@ -22,7 +21,6 @@ feature 'Group maintenance' do
     dept = Peoplefinder::Group.find_by_name(name)
     expect(dept.name).to eql(name)
     expect(dept.description).to eql('about my team')
-    expect(dept.responsibilities).to eql('my responsibilities')
     expect(dept.parent).to be_nil
   end
 
