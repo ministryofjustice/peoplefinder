@@ -34,16 +34,13 @@
     #contact-details
       %h2.line-above Contact details
 
-      .phone_numbers{ style: ('display:none' if @person.no_phone)}
+      .phone_numbers
         .form-group
           = f.label :primary_phone_number, 'Main phone number', class: 'form-label-bold'
           = f.text_field :primary_phone_number, class: 'form-control'
         .form-group
           = f.label :secondary_phone_number, 'Any other phone number', class: 'form-label-bold'
           = f.text_field :secondary_phone_number, class: 'form-control'
-      .form-checkbox
-        = f.check_box :no_phone
-        = f.label :no_phone, 'No phone number'
 
       .emails
         .form-group{ :class => ('gov-uk-field-error' if @person.errors.include?(:email)) }

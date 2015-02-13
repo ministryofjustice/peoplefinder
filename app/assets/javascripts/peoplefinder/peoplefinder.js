@@ -22,10 +22,4 @@ $(function() {
     $(this).closest('.editable-summary').hide();
     $(this).closest('.editable-container').children('.editable-fields').show();
   });
-
-  $(document).on('click', '#person_no_phone', function() {
-    $('#person_primary_phone_number').val('');
-    $('#person_secondary_phone_number').val('');
-    $('.phone_numbers').toggle();
-  });
 });

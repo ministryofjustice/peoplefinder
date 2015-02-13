@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150212132353) do
+ActiveRecord::Schema.define(version: 20150212153220) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -77,7 +77,6 @@ ActiveRecord::Schema.define(version: 20150212132353) do
     t.string   "slug",                   limit: nil
     t.boolean  "works_saturday",                     default: false
     t.boolean  "works_sunday",                       default: false
-    t.boolean  "no_phone",                           default: false
     t.text     "tags"
     t.integer  "community_id"
     t.integer  "login_count",                        default: 0,     null: false
