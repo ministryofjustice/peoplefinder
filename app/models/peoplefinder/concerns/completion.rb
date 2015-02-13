@@ -4,19 +4,17 @@ module Peoplefinder::Concerns::Completion
   extend ActiveSupport::Concern
 
   included do
-    COMPLETION_SCORE_FIELDS = [
-      :given_name,
-      :surname,
-      :email,
-      :primary_phone_number,
-      :location,
-      :description,
-      :groups,
-      :image
-    ]
-
     def completion_score_fields
-      COMPLETION_SCORE_FIELDS
+      [
+        :given_name,
+        :surname,
+        :email,
+        :primary_phone_number,
+        :location,
+        :description,
+        :groups,
+        :image
+      ]
     end
 
     scope :inadequate_profiles,
