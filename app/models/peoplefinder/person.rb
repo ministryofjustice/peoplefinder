@@ -19,7 +19,8 @@ class Peoplefinder::Person < ActiveRecord::Base
 
   validates :given_name, presence: true, on: :update
   validates :surname, presence: true
-  validates :email, presence: true, uniqueness: true, 'peoplefinder/email' => true
+  validates :email,
+    presence: true, uniqueness: { case_sensitive: false }, 'peoplefinder/email' => true
 
   sanitise_fields :given_name, :surname, :email
 
