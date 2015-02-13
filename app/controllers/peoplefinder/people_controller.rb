@@ -6,6 +6,7 @@ module Peoplefinder
     before_action :set_hint_group
     before_action :set_org_structure,
       only: [:new, :edit, :create, :update, :add_membership]
+    before_action :load_versions, only: [:show]
 
     # GET /people
     def index
@@ -14,9 +15,6 @@ module Peoplefinder
 
     # GET /people/1
     def show
-      if current_user.super_admin?
-        @versions = AuditVersionPresenter.wrap(@person.versions)
-      end
     end
 
     # GET /people/new
@@ -142,6 +140,12 @@ module Peoplefinder
         type = @person == current_user ? :mine : :other
         notice :profile_updated, type, person: @person
         redirect_to successful_redirect_path
+      end
+    end
+
+    def load_versions
+      if super_admin?
+        @versions = AuditVersionPresenter.wrap(@person.versions)
       end
     end
   end

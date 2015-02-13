@@ -4,6 +4,7 @@ module Peoplefinder
       :show, :edit, :update, :destroy, :all_people
     ]
     before_action :set_org_structure, only: [:new, :edit, :create, :update]
+    before_action :load_versions, only: [:show]
 
     # GET /groups
     def index
@@ -94,6 +95,12 @@ module Peoplefinder
 
     def person_from_person_id
       params[:person_id] ? Person.friendly.find(params[:person_id]) : nil
+    end
+
+    def load_versions
+      if super_admin?
+        @versions = AuditVersionPresenter.wrap(@group.versions)
+      end
     end
   end
 end
