@@ -9,9 +9,7 @@ gem 'omniauth-gplus',
   git: 'https://github.com/ministryofjustice/omniauth-gplus.git'
 
 group :development, :test do
-  gem 'jshint',
-    git: 'https://github.com/threedaymonk/jshint.git',
-    branch: 'master'
+  gem 'jshint', '~> 1.3.1'
 end
 
 gemspec
