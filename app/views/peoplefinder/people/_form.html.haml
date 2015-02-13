@@ -51,11 +51,22 @@
           = f.text_field :email, class: 'form-control', readonly: @person.persisted?
 
       .form-group
-        = f.label :location, class: 'form-label-bold' do
-          Location
-          %p.form-hint= info_text('location_hint')
-        = f.text_field :location, class: 'form-control'
+        = f.label :location_in_building, class: 'form-label-bold' do
+          Location in building
+          %p.form-hint= info_text('location_in_building_hint')
+        = f.text_field :location_in_building, class: 'form-control'
 
+      .form-group
+        = f.label :building, class: 'form-label-bold' do
+          Building
+          %p.form-hint= info_text('building_hint')
+        = f.text_field :building, class: 'form-control'
+
+      .form-group
+        = f.label :city, class: 'form-label-bold' do
+          City
+          %p.form-hint= info_text('city_hint')
+        = f.text_field :city, class: 'form-control'
 
   .form-group
     #memberships

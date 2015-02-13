@@ -103,6 +103,10 @@ class Peoplefinder::Person < ActiveRecord::Base
     }
   end
 
+  def location
+    [location_in_building, building, city].select(&:present?).join(', ')
+  end
+
 private
 
   def group_path(hint_group)

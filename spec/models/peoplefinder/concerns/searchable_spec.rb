@@ -5,8 +5,14 @@ RSpec.describe 'Searchable', elastic: true do # rubocop:disable RSpec/DescribeCl
     clean_up_indexes_and_tables
   end
 
-  let!(:alice) { create(:person, given_name: 'Alice', surname: 'Andrews', community: community) }
-  let!(:bob) { create(:person, given_name: 'Bob', surname: 'Browning', location: 'Petty France 10th floor', description: 'weekends only') }
+  let!(:alice) {
+    create(:person, given_name: 'Alice', surname: 'Andrews', community: community)
+  }
+  let!(:bob) {
+    create(:person, given_name: 'Bob', surname: 'Browning',
+           location_in_building: '10th floor', building: '102 Petty France',
+           city: 'London', description: 'weekends only')
+  }
   let!(:digital_services) { create(:group, name: 'Digital Services') }
   let!(:membership) { bob.memberships.create(group: digital_services, role: 'Cleaner') }
   let(:community) { create(:community, name: "Poetry") }

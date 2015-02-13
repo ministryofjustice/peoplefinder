@@ -6,14 +6,8 @@ module Peoplefinder::Concerns::Completion
   included do
     def completion_score_fields
       [
-        :given_name,
-        :surname,
-        :email,
-        :primary_phone_number,
-        :location,
-        :description,
-        :groups,
-        :image
+        :given_name, :surname, :email, :location_in_building, :building, :city,
+        :primary_phone_number, :description, :groups, :image
       ]
     end
 
@@ -21,7 +15,7 @@ module Peoplefinder::Concerns::Completion
       lambda {
         where(%{
           COALESCE(image,'') = ''
-          OR COALESCE(location,'') = ''
+          OR COALESCE(location_in_building,'') = ''
           OR COALESCE(primary_phone_number,'') = ''
         }).order(:email)
       }
