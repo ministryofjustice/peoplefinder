@@ -79,6 +79,10 @@ RSpec.describe Peoplefinder::EmailAddress do
     it 'is valid' do
       expect(described_class.new("me@something.gov.uk", valid_login_domains)).to be_valid_address
     end
+
+    it "contains an apostrophe" do
+      expect(described_class.new("michael.o'postrophe@something.gov.uk", valid_login_domains)).to be_valid_address
+    end
   end
 
   context 'name inferral' do

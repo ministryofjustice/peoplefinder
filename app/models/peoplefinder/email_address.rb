@@ -4,7 +4,7 @@ class Peoplefinder::EmailAddress < Mail::Address
   VALID_EMAIL_PATTERN = /\A[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]+\z/
 
   def initialize(string, valid_login_domains = nil)
-    return false unless string =~ VALID_EMAIL_PATTERN
+    return false unless valid_email_address?(string)
     @valid_login_domains = valid_login_domains || default_valid_login_domains
     super(string)
   end
@@ -16,7 +16,7 @@ class Peoplefinder::EmailAddress < Mail::Address
   end
 
   def valid_format?
-    address && address.match(VALID_EMAIL_PATTERN)
+    address && valid_email_address?(address)
   end
 
   def valid_address?
@@ -38,6 +38,22 @@ class Peoplefinder::EmailAddress < Mail::Address
 private
 
   attr_reader :valid_login_domains
+
+  def valid_email_address?(address)
+    begin
+      mail = Mail::Address.new(address)
+    rescue Mail::Field::ParseError
+      return false
+    end
+
+    return false unless mail.domain && mail.address == address
+
+    return false unless mail.domain.match(/^\S+$/)
+    domain_dot_elements = mail.domain.split(/\./)
+    return false unless domain_dot_elements.size > 1 && domain_dot_elements.all?(&:present?)
+
+    true
+  end
 
   def default_valid_login_domains
     Rails.configuration.try(:valid_login_domains) || []
