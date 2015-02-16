@@ -50,6 +50,16 @@ RSpec.describe 'Completion' do # rubocop:disable RSpec/DescribeClass
       expect(subject).to include(person)
     end
 
+    it 'returns the person when there is no building' do
+      Peoplefinder::Person.update_all 'building = \'\''
+      expect(subject).to include(person)
+    end
+
+    it 'returns the person when there is no city' do
+      Peoplefinder::Person.update_all 'city = \'\''
+      expect(subject).to include(person)
+    end
+
     it 'returns the person when there is no image' do
       Peoplefinder::Person.update_all 'image = null'
       expect(subject).to include(person)

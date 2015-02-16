@@ -11,14 +11,13 @@ module Peoplefinder::Concerns::Completion
       ]
     end
 
-    scope :inadequate_profiles,
-      lambda {
-        where(%{
-          COALESCE(image,'') = ''
-          OR COALESCE(location_in_building,'') = ''
-          OR COALESCE(primary_phone_number,'') = ''
-        }).order(:email)
-      }
+    def self.inadequate_profiles
+      fields = [:image, :location_in_building, :building, :city,
+                :primary_phone_number]
+      criteria = fields.map { |f| "COALESCE(#{f}, '') = ''" }.join(' OR ')
+
+      where(criteria).order(:email)
+    end
 
     def completion_score
       completed = completion_score_fields.map { |f| send(f).present? }
