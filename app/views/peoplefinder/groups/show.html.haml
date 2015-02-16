@@ -23,3 +23,6 @@
 - else
   .view-all-people= link_to "View all people in #{ @group.name }", people_group_path(@group)
 
+- unless @versions.nil?
+  %h1 Audit Log
+  =render 'peoplefinder/shared/audit', versions: @versions
