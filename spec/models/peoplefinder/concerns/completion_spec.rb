@@ -14,6 +14,7 @@ RSpec.describe 'Completion' do # rubocop:disable RSpec/DescribeClass
         given_name: 'Bobby',
         surname: 'Tables',
         email: 'user.example@digital.justice.gov.uk',
+        city: 'Lunar City',
         primary_phone_number: '020 7946 0123'
       )
       expect(person.completion_score).to eql(50)
@@ -44,8 +45,18 @@ RSpec.describe 'Completion' do # rubocop:disable RSpec/DescribeClass
       expect(subject).to include(person)
     end
 
-    it 'returns the person when there is no location' do
-      Peoplefinder::Person.update_all 'location = \'\''
+    it 'returns the person when there is no location in building' do
+      Peoplefinder::Person.update_all 'location_in_building = \'\''
+      expect(subject).to include(person)
+    end
+
+    it 'returns the person when there is no building' do
+      Peoplefinder::Person.update_all 'building = \'\''
+      expect(subject).to include(person)
+    end
+
+    it 'returns the person when there is no city' do
+      Peoplefinder::Person.update_all 'city = \'\''
       expect(subject).to include(person)
     end
 
@@ -61,7 +72,9 @@ RSpec.describe 'Completion' do # rubocop:disable RSpec/DescribeClass
       surname: 'Tables',
       email: 'user.example@digital.justice.gov.uk',
       primary_phone_number: '020 7946 0123',
-      location: 'London',
+      location_in_building: '13.13',
+      building: '102 Petty France',
+      city: 'London',
       description: 'I am a real person',
       image: Rack::Test::UploadedFile.new(sample_image)
     }

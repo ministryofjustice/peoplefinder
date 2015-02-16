@@ -162,4 +162,20 @@ RSpec.describe Peoplefinder::Person, type: :model do
       expect(subject).to eql('Java,Perl,Python,Ruby,Scala')
     end
   end
+
+  describe '#location' do
+    it 'concatenates location_in_building, location, and city' do
+      person.location_in_building = '99.99'
+      person.building = '102 Petty France'
+      person.city = 'London'
+      expect(person.location).to eq('99.99, 102 Petty France, London')
+    end
+
+    it 'skips blank fields' do
+      person.location_in_building = 'At home'
+      person.building = ''
+      person.city = nil
+      expect(person.location).to eq('At home')
+    end
+  end
 end
