@@ -22,11 +22,8 @@ class Peoplefinder::EmailAddress
 
   def valid_format?
     return false unless @parsed_ok
-    return false unless domain && address == @raw_address
-    return false unless domain.match(/\A\S+\z/)
-    domain_dot_elements = domain.split(/\./)
-    return false unless domain_dot_elements.size > 1 && domain_dot_elements.all?(&:present?)
-
+    return false unless address == @raw_address
+    return false unless globally_addressable_domain?
     true
   end
 
@@ -49,6 +46,14 @@ class Peoplefinder::EmailAddress
 private
 
   attr_reader :valid_login_domains
+
+  def globally_addressable_domain?
+    return false unless domain
+    return false unless domain.match(/\A\S+\z/)
+    domain_dot_elements = domain.split(/\./)
+    return false unless domain_dot_elements.size > 1 && domain_dot_elements.all?(&:present?)
+    true
+  end
 
   def default_valid_login_domains
     Rails.configuration.try(:valid_login_domains) || []
