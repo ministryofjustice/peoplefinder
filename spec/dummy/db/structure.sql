@@ -536,6 +536,13 @@ CREATE INDEX index_memberships_on_person_id ON memberships USING btree (person_i
 
 
 --
+-- Name: index_people_on_lowercase_email; Type: INDEX; Schema: public; Owner: -; Tablespace:
+--
+
+CREATE UNIQUE INDEX index_people_on_lowercase_email ON people USING btree (lower(email));
+
+
+--
 -- Name: index_people_on_slug; Type: INDEX; Schema: public; Owner: -; Tablespace:
 --
 
@@ -599,3 +606,5 @@ INSERT INTO schema_migrations (version) VALUES ('20150212132353');
 INSERT INTO schema_migrations (version) VALUES ('20150212153220');
 
 INSERT INTO schema_migrations (version) VALUES ('20150213103214');
+
+INSERT INTO schema_migrations (version) VALUES ('20150217105036');
