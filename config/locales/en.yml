@@ -125,7 +125,7 @@ en:
     views:
       info_text:
         building_alert: "You are creating a profile - click the Save button to finish"
-        complete_your_profile_alert: "Start building your profile now so colleagues and co-workers can get the latest information on you.<br/>We’ll send you regular reminders until it’s complete."
+        complete_your_profile_alert_html: "Start building your profile now so colleagues and co-workers can get the latest information on you.<br/>We’ll send you regular reminders until it’s complete."
         delete_this_profile: "Delete this profile"
         delete_this_team: "Delete this team"
         duplicate_names_hint: "There are existing profiles that have the same name. Check that it’s not one of these before continuing."
@@ -144,7 +144,7 @@ en:
         reported_profile_additional_details_label: "Additional details (optional)"
         request_information: "Is this profile complete?"
         request_information_link: "Ask the person to update their details"
-        skills_and_expertise_hint: "You can add tags to your profile to allow people to find you based on<br/>your specific skills or expertise. Add them using the field below and<br/>remove them at any time with the ‘X’."
+        skills_and_expertise_hint_html: "You can add tags to your profile to allow people to find you based on<br/>your specific skills or expertise. Add them using the field below and<br/>remove them at any time with the ‘X’."
         team_deletable: "Note that team deletion cannot be undone."
         team_not_deletable: "Team deletion is only possible if there are no people associated with it."
   activerecord:
