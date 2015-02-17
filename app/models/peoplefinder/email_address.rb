@@ -22,7 +22,7 @@ class Peoplefinder::EmailAddress
 
   def valid_format?
     return false unless @parsed_ok
-    return false unless address == @raw_address
+    return false unless canonical_address?
     return false unless globally_addressable_domain?
     true
   end
@@ -46,6 +46,10 @@ class Peoplefinder::EmailAddress
 private
 
   attr_reader :valid_login_domains
+
+  def canonical_address?
+    address == @raw_address
+  end
 
   def globally_addressable_domain?
     domain && domain.match(/
