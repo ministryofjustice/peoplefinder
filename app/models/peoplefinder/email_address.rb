@@ -9,8 +9,9 @@ class Peoplefinder::EmailAddress
     @raw_address = string
     @valid_login_domains = valid_login_domains || default_valid_login_domains
     @mail_address = Mail::Address.new(string)
+    @parsed_ok = true
   rescue Mail::Field::ParseError
-    @parse_error = true
+    @parsed_ok = false
   end
 
   def valid_domain?
@@ -20,7 +21,7 @@ class Peoplefinder::EmailAddress
   end
 
   def valid_format?
-    return false if @parse_error
+    return false unless @parsed_ok
     return false unless domain && address == @raw_address
     return false unless domain.match(/^\S+$/)
     domain_dot_elements = domain.split(/\./)
