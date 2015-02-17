@@ -50,14 +50,14 @@ private
 
   def globally_addressable_domain?
     domain && domain.match(/
-      \A         # beginning of string
-      [^\s\.]+   # domain part (anything except whitespace or dot)
-      (?:        # one or more of:
-        \.       #   dot
-        [^\s\.]+ #   domain part
-      )+         #
-      \z         # end of string
-    /x)
+      \A           # beginning of string
+      (?:          # one or more of:
+        [0-9a-z-]+ #   domain part (can include digits and hyphens)
+        \.         #   dot
+      )+           #
+      [a-z]+       # top-level domain (no digits or hyphens)
+      \z           # end of string
+    /xi)
   end
 
   def default_valid_login_domains
