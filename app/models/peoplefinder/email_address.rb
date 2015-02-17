@@ -1,11 +1,15 @@
 require 'peoplefinder'
+require 'forwardable'
 
 class Peoplefinder::EmailAddress
+  extend Forwardable
+  def_delegators :@mail_address, :domain, :address, :local, :to_s
+
   def initialize(string, valid_login_domains = nil)
-    @raw_address = string.to_s
+    @raw_address = string
     @valid_login_domains = valid_login_domains || default_valid_login_domains
     begin
-      @mail_address = Mail::Address.new(string.to_s)
+      @mail_address = Mail::Address.new(string)
     rescue Mail::Field::ParseError
       @parse_error = true
     end
@@ -13,15 +17,15 @@ class Peoplefinder::EmailAddress
 
   def valid_domain?
     valid_login_domains.any? do |pattern|
-      domain_matches_pattern?(pattern, @mail_address.domain)
+      domain_matches_pattern?(pattern, domain)
     end
   end
 
   def valid_format?
     return false if @parse_error
-    return false unless @mail_address.domain && @mail_address.address == @raw_address
-    return false unless @mail_address.domain.match(/^\S+$/)
-    domain_dot_elements = @mail_address.domain.split(/\./)
+    return false unless domain && address == @raw_address
+    return false unless domain.match(/^\S+$/)
+    domain_dot_elements = domain.split(/\./)
     return false unless domain_dot_elements.size > 1 && domain_dot_elements.all?(&:present?)
 
     true
@@ -32,19 +36,15 @@ class Peoplefinder::EmailAddress
   end
 
   def inferred_last_name
-    capitalise(@mail_address.local.split('.')[(multipart_local? ? 1 : 0)])
+    capitalise(local.split('.')[(multipart_local? ? 1 : 0)])
   end
 
   def inferred_first_name
-    capitalise(@mail_address.local.split('.')[0]) if multipart_local?
+    capitalise(local.split('.')[0]) if multipart_local?
   end
 
   def multipart_local?
-    @mail_address.local.split('.').length > 1
-  end
-
-  def to_s
-    @raw_address
+    local.split('.').length > 1
   end
 
 private
