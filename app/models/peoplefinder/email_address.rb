@@ -23,7 +23,7 @@ class Peoplefinder::EmailAddress
   def valid_format?
     return false unless @parsed_ok
     return false unless domain && address == @raw_address
-    return false unless domain.match(/^\S+$/)
+    return false unless domain.match(/\A\S+\z/)
     domain_dot_elements = domain.split(/\./)
     return false unless domain_dot_elements.size > 1 && domain_dot_elements.all?(&:present?)
 
