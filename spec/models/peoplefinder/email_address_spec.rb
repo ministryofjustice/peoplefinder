@@ -5,6 +5,14 @@ RSpec.describe Peoplefinder::EmailAddress do
 
   subject { described_class.new(email, valid_login_domains) }
 
+  describe '.to_s' do
+    let(:email_string) { 'valid@something.gov.uk' }
+    let(:email_address) { described_class.new(email_string) }
+    it 'returns string passed to initializer' do
+      expect(email_address.to_s).to eq email_string
+    end
+  end
+
   describe '.valid_domain' do
     context 'with strings to match login domains' do
       let(:valid_login_domains) { ['dept.gov.uk'] }
@@ -78,6 +86,14 @@ RSpec.describe Peoplefinder::EmailAddress do
 
     it 'is valid' do
       expect(described_class.new("me@something.gov.uk", valid_login_domains)).to be_valid_address
+    end
+
+    it "contains an apostrophe" do
+      expect(described_class.new("michael.o'postrophe@something.gov.uk", valid_login_domains)).to be_valid_address
+    end
+
+    it "contains capital letters in the mailbox part" do
+      expect(described_class.new("Important.Person@something.gov.uk", valid_login_domains)).to be_valid_address
     end
   end
 

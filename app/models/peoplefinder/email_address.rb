@@ -1,12 +1,17 @@
 require 'peoplefinder'
+require 'forwardable'
 
-class Peoplefinder::EmailAddress < Mail::Address
-  VALID_EMAIL_PATTERN = /\A[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]+\z/
+class Peoplefinder::EmailAddress
+  extend Forwardable
+  def_delegators :@mail_address, :domain, :address, :local, :to_s
 
   def initialize(string, valid_login_domains = nil)
-    return false unless string =~ VALID_EMAIL_PATTERN
+    @raw_address = string
     @valid_login_domains = valid_login_domains || default_valid_login_domains
-    super(string)
+    @mail_address = Mail::Address.new(string)
+    @parsed_ok = true
+  rescue Mail::Field::ParseError
+    @parsed_ok = false
   end
 
   def valid_domain?
@@ -16,11 +21,11 @@ class Peoplefinder::EmailAddress < Mail::Address
   end
 
   def valid_format?
-    address && address.match(VALID_EMAIL_PATTERN)
+    @parsed_ok && canonical_address? && globally_addressable_domain?
   end
 
   def valid_address?
-    address ? (valid_format? && valid_domain?) : false
+    valid_format? && valid_domain?
   end
 
   def inferred_last_name
@@ -38,6 +43,22 @@ class Peoplefinder::EmailAddress < Mail::Address
 private
 
   attr_reader :valid_login_domains
+
+  def canonical_address?
+    address == @raw_address
+  end
+
+  def globally_addressable_domain?
+    domain && domain.match(/
+      \A           # beginning of string
+      (?:          # one or more of:
+        [0-9a-z-]+ #   domain part (can include digits and hyphens)
+        \.         #   dot
+      )+           #
+      [a-z]+       # top-level domain (no digits or hyphens)
+      \z           # end of string
+    /xi)
+  end
 
   def default_valid_login_domains
     Rails.configuration.try(:valid_login_domains) || []
