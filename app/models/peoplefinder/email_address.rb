@@ -8,11 +8,9 @@ class Peoplefinder::EmailAddress
   def initialize(string, valid_login_domains = nil)
     @raw_address = string
     @valid_login_domains = valid_login_domains || default_valid_login_domains
-    begin
-      @mail_address = Mail::Address.new(string)
-    rescue Mail::Field::ParseError
-      @parse_error = true
-    end
+    @mail_address = Mail::Address.new(string)
+  rescue Mail::Field::ParseError
+    @parse_error = true
   end
 
   def valid_domain?
