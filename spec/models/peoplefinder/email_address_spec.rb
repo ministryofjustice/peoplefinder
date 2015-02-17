@@ -5,6 +5,14 @@ RSpec.describe Peoplefinder::EmailAddress do
 
   subject { described_class.new(email, valid_login_domains) }
 
+  describe '.to_s' do
+    let(:email_string) { 'valid@something.gov.uk' }
+    let(:email_address) { described_class.new(email_string) }
+    it 'returns string passed to initializer' do
+      expect(email_address.to_s).to eq email_string
+    end
+  end
+
   describe '.valid_domain' do
     context 'with strings to match login domains' do
       let(:valid_login_domains) { ['dept.gov.uk'] }
