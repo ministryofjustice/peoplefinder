@@ -48,11 +48,15 @@ private
   attr_reader :valid_login_domains
 
   def globally_addressable_domain?
-    return false unless domain
-    return false unless domain.match(/\A\S+\z/)
-    domain_dot_elements = domain.split(/\./)
-    return false unless domain_dot_elements.size > 1 && domain_dot_elements.all?(&:present?)
-    true
+    domain && domain.match(/
+      \A         # beginning of string
+      [^\s\.]+   # domain part (anything except whitespace or dot)
+      (?:        # one or more of:
+        \.       #   dot
+        [^\s\.]+ #   domain part
+      )+         #
+      \z         # end of string
+    /x)
   end
 
   def default_valid_login_domains
