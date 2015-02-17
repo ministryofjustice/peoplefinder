@@ -21,10 +21,7 @@ class Peoplefinder::EmailAddress
   end
 
   def valid_format?
-    return false unless @parsed_ok
-    return false unless canonical_address?
-    return false unless globally_addressable_domain?
-    true
+    @parsed_ok && canonical_address? && globally_addressable_domain?
   end
 
   def valid_address?
