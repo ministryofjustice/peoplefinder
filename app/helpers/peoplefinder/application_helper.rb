@@ -25,7 +25,9 @@ module Peoplefinder
       return if messages.empty?
       content_tag(:div, class: 'inner-block') {
         content_tag(:div, id: 'flash-messages') {
-          messages.map { |type| flash_message(type) }.join.html_safe
+          messages.inject(ActiveSupport::SafeBuffer.new) { |html, type|
+            html << flash_message(type)
+          }
         }
       }
     end
@@ -35,7 +37,7 @@ module Peoplefinder
     end
 
     def info_text(key)
-      t(key, scope: %w[peoplefinder views info_text].join('.')).html_safe
+      t(key, scope: 'peoplefinder.views.info_text')
     end
 
     def page_title
