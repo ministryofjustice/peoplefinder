@@ -54,7 +54,7 @@ class DetoxifyYaml < ActiveRecord::Migration
         error_count += 1
         puts "There was a problem #{e} for version #{version.id}"
       end
-      puts "There were #{error_count} errors"
     end
+    puts "There were #{error_count} errors"
   end
 end
