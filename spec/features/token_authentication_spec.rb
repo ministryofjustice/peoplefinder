@@ -34,7 +34,7 @@ feature 'Token Authentication' do
     visit '/'
     fill_in 'token_user_email', with: 'james.darling@digital.justice.gov.uk'
     expect { click_button 'Use email' }.to change { ActionMailer::Base.deliveries.count }.by(1)
-    expect(page).to have_text('Check your email for a link to log in')
+    expect(page).to have_text('We are sending you a link to log in')
 
     expect(last_email.to).to eql(['james.darling@digital.justice.gov.uk'])
     expect(last_email.body.encoded).to have_text(token_url(Peoplefinder::Token.last))

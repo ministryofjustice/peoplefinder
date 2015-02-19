@@ -41,6 +41,8 @@ en:
       show:
         token_auth_disabled: "Sorry, that login link is invalid. Please login using your Google account."
       create:
+        title: Please check your emails
+        body: We are sending you a link to log in to People Finder.
         token_auth_disabled: "Sorry, the alternate login method is not availabe. Please login using your Google account."
     controllers:
       groups:
