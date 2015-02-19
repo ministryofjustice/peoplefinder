@@ -19,21 +19,21 @@ feature 'Token Authentication' do
   scenario 'trying to log in with an invalid email address' do
     visit '/'
     fill_in 'token_user_email', with: 'Bob'
-    expect { click_button 'Log in' }.not_to change { ActionMailer::Base.deliveries.count }
+    expect { click_button 'Use email' }.not_to change { ActionMailer::Base.deliveries.count }
     expect(page).to have_text('Email address is not formatted correctly')
   end
 
   scenario 'trying to log in with a non-whitelisted email address domain' do
     visit '/'
     fill_in 'token_user_email', with: 'james@abscond.org'
-    expect { click_button 'Log in' }.not_to change { ActionMailer::Base.deliveries.count }
+    expect { click_button 'Use email' }.not_to change { ActionMailer::Base.deliveries.count }
     expect(page).to have_text('Email address is not valid')
   end
 
   scenario 'accurate email' do
     visit '/'
     fill_in 'token_user_email', with: 'james.darling@digital.justice.gov.uk'
-    expect { click_button 'Log in' }.to change { ActionMailer::Base.deliveries.count }.by(1)
+    expect { click_button 'Use email' }.to change { ActionMailer::Base.deliveries.count }.by(1)
     expect(page).to have_text('Check your email for a link to log in')
 
     expect(last_email.to).to eql(['james.darling@digital.justice.gov.uk'])
