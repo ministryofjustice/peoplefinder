@@ -41,6 +41,12 @@ RSpec.describe 'Searchable', elastic: true do # rubocop:disable RSpec/DescribeCl
       expect(results).to include(bob)
     end
 
+    it 'searches using common name abbreviations' do
+      results = search_for('Robert')
+      expect(results).to_not include(alice)
+      expect(results).to include(bob)
+    end
+
     it 'searches by group name and membership role' do
       results = search_for('Cleaner at digiTAL Services')
       expect(results).to_not include(alice)
