@@ -1,5 +1,7 @@
 - content_for :html_attributes, 'ng-app="peoplefinderApp"'.html_safe
 = render partial: 'layouts/peoplefinder/shared'
+- content_for :header_app_name do
+  =link_to app_title, home_path
 - content_for :content do
   #wrapper
     %main#content{role: 'main'}
