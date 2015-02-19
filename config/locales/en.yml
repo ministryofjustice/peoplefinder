@@ -26,21 +26,17 @@ en:
   peoplefinder:
     sessions:
       login_page:
-        heading: Use the people finder
+        heading: Get an email link to log in to People Finder
         intro: |
-          People finder connects you with your colleagues and co-workers.
-          You need to create a profile to use the tool.
-          To build a full profile, add your contact details and information about your job, eg your numbers, location or expertise. We’ll email a reminder to complete your profile if there’s more details you could add.
-        intro_instructions: |
-          Use your government email address to log-in to and build or edit your profile, or find colleagues.
-        heading_google: Log in with a government Google account
+          Instead of creating a password to use People Finder, the service will send you an email with a link to automatically log in. Please give your email address then check your inbox to start using People Finder.
+        heading_google: Use a government Google account
         body_google:
           If you have a government Google account you can log in quickly
           with the official authentication screen.
-        heading_other: Log in with a government email address
+        heading_other: Use a government email address
         body_other: Enter a valid government email address below
-        log_in_google: Log in with Google
-        log_in_email: Log in with email
+        log_in_google: Use Google
+        log_in_email: Use email
     tokens:
       show:
         token_auth_disabled: "Sorry, that login link is invalid. Please login using your Google account."
