@@ -49,6 +49,9 @@
             - if @person.errors.include?(:email)
               %span.error= @person.errors[:email].first
           = f.text_field :email, class: 'form-control', readonly: @person.persisted?
+          - if @person.persisted?
+            %p.form-hint
+              =t('.notes.email')
 
       .form-group
         = f.label :location_in_building, class: 'form-label-bold' do
