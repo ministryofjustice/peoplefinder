@@ -40,6 +40,10 @@ module Peoplefinder
       t(key, scope: 'peoplefinder.views.info_text')
     end
 
+    def app_title
+      Rails.configuration.app_title
+    end
+
     def page_title
       (
         [@page_title] << Rails.configuration.app_title

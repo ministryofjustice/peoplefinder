@@ -315,4 +315,13 @@ textarea.form-control {
   height: 205px;
 }
 
+.header-app-name {
+  a {
+    color: $white;
+    &:hover {
+      text-decoration: none;
+    }
+  }
+}
+
 @import 'retinal_images';
