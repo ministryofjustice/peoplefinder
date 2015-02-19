@@ -77,7 +77,7 @@ en:
         message_sent: "Your message has been sent"
     people:
       form:
-        explanations:
+        notes:
           email: "You can't change this email address. If it's changed, you must delete this profile and create a new one."
       day_names:
         works_monday: "Monday"
