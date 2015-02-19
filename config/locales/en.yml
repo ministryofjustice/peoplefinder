@@ -78,7 +78,7 @@ en:
     people:
       form:
         notes:
-          email: "You can't change this email address. If it's changed, you must delete this profile and create a new one."
+          email: "Note: You can't change this email address. If it's changed, you must delete this profile and create a new one."
       day_names:
         works_monday: "Monday"
         works_tuesday: "Tuesday"
