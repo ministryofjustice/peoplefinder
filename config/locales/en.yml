@@ -121,6 +121,10 @@ en:
         general_message: "You need to add more information - see below."
       groups:
         memberships_exist: "cannot be deleted until all the memberships have been removed"
+    shared:
+      search:
+        label: Enter the name of a person or role
+        placeholder: Search by name or job title
     home:
       heading: "%{group_name} people finder"
       add_new_person: Add new profile

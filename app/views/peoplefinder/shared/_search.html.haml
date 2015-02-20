@@ -1,4 +1,4 @@
 = form_tag '/search', method: :get, class: 'search-box' do
-  %label.visuallyhidden{ for: :query } Enter the name of a person or role
-  = text_field_tag :query, params[:query], placeholder: 'Search by name or job title', class: 'form-control'
+  %label.visuallyhidden{ for: :query }= t('peoplefinder.shared.search.label')
+  = text_field_tag :query, params[:query], placeholder: t('peoplefinder.shared.search.placeholder'), class: 'form-control'
   = submit_tag 'Submit search', class: 'submit-button'
