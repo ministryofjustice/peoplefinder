@@ -2,14 +2,18 @@
 
 %h1= t('peoplefinder.home.heading', group_name: @group.name)
 = link_to t('peoplefinder.home.add_new_person'), new_person_path, class: 'add-new-person'
+%p= t('peoplefinder.home.explanation')
 
 %h3= t('peoplefinder.home.search_heading')
-.hint-text{ aria: { hidden: 'true' } }= t('peoplefinder.home.search_hint')
+%p.hint-text{ aria: { hidden: 'true' } }= t('peoplefinder.home.search_hint')
+
 = render 'peoplefinder/shared/search'
 
-.hint-text.text= t('peoplefinder.home.hint_text')
+%p.hint-text.text= t('peoplefinder.home.usage_1')
+%p.hint-text.text= t('peoplefinder.home.usage_2')
 
 %h3.org-structure= t('peoplefinder.home.org_heading')
-.hint-text= t('peoplefinder.home.org_hint_html', link: link_to(@group.name, groups_path))
+%h4.hint-text= t('peoplefinder.home.org_sub_heading')
+%p.hint-text= t('peoplefinder.home.org_hint_html', link: link_to(@group.name, groups_path))
 
 = render 'peoplefinder/shared/org_browser', org_structure: @org_structure

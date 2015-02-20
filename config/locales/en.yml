@@ -124,16 +124,25 @@ en:
     shared:
       search:
         label: Enter the name of a person or role
-        placeholder: Search by name or job title
+        placeholder: Enter your text here
     home:
-      heading: "%{group_name} people finder"
+      heading: Welcome to People Finder
+      explanation: |
+        Find out how to contact people, what team they’re in, where and when
+        they work.
       add_new_person: Add new profile
-      search_heading: Search the people finder
-      search_hint: Enter the name of a person or role
-      hint_text: |
-        Find out how to contact people, what team they’re in and the hours
-        they work. You can also ‘add a new person’ to your team.
-      org_heading: Our organisational structure
+      search_heading: Search People Finder
+      search_hint: |
+        You can search by key skills, job title, location, or phone number,
+        as well as by name.
+      usage_1: |
+        Help keep People Finder up to date – edit your profile to make sure
+        your information is current and accurate.
+      usage_2: |
+        You can also make changes to other people’s profiles. They will receive
+        an email notifying them of changes.
+      org_heading: Browse the organisation
+      org_sub_heading: Browse by team
       org_hint_html: |
         Click on departments and teams, or see the whole of the %{link}.
     views:
