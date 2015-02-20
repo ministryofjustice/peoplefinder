@@ -82,7 +82,7 @@ module Peoplefinder
     # through.
     def group_params
       params.require(:group).
-        permit(:parent_id, :name, :description, :team_email_address)
+        permit(:parent_id, :name, :description)
     end
 
     def collection

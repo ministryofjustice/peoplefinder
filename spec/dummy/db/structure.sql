@@ -72,8 +72,7 @@ CREATE TABLE groups (
     slug character varying(255),
     description text,
     ancestry text,
-    ancestry_depth integer DEFAULT 0 NOT NULL,
-    team_email_address text
+    ancestry_depth integer DEFAULT 0 NOT NULL
 );
 
 
