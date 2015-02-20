@@ -39,12 +39,6 @@
               .title= breadcrumbs(@group.parent.path)
             .cta= link_to 'Edit', '#', class: 'show-editable-fields'
 
-  .form-group{ :class => ('gov-uk-field-error' if @group.errors.include?(:team_email_address)) }
-    = f.label :team_email_address, class: 'form-label-bold' do
-      Team email address
-      %span.error= @group.errors[:team_email_address].first if @group.errors.include?(:team_email_address)
-    = f.text_field :team_email_address, class: 'form-control'
-
   .form-group
     = f.submit class: 'button'
     .cancel

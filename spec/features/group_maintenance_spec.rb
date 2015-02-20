@@ -13,7 +13,6 @@ feature 'Group maintenance' do
 
     fill_in 'Team name', with: name
     fill_in 'Team description', with: 'about my team'
-    add_team_email_address
     click_button 'Save'
 
     expect(page).to have_content('Created Ministry of Justice')
@@ -33,7 +32,6 @@ feature 'Group maintenance' do
 
     name = 'CSG'
     fill_in 'Team name', with: name
-    add_team_email_address
     click_button 'Save'
 
     expect(page).to have_content('Created CSG')
@@ -52,7 +50,6 @@ feature 'Group maintenance' do
 
     name = 'Digital Services'
     fill_in 'Team name', with: name
-    add_team_email_address
     click_button 'Save'
 
     expect(page).to have_content('Created Digital Services')
@@ -70,7 +67,6 @@ feature 'Group maintenance' do
 
     fill_in 'Team name', with: 'Digital Services'
     click_on_subteam_in_org_browser 'Corporate Services'
-    add_team_email_address
     click_button 'Save'
 
     within('.breadcrumbs ol') do
@@ -154,7 +150,6 @@ feature 'Group maintenance' do
     expect(page).to have_text('You are currently editing this profile')
 
     fill_in 'Team name', with: 'Digital'
-    add_team_email_address
     click_button 'Save'
     expect(page).to have_selector('.search-box')
     expect(page).not_to have_text('You are currently editing this profile')
@@ -180,9 +175,5 @@ feature 'Group maintenance' do
 
     visit edit_group_path(dept)
     expect(page).not_to have_selector('.org-browser')
-  end
-
-  def add_team_email_address
-    fill_in 'Team email address', with: 'something@example'
   end
 end
