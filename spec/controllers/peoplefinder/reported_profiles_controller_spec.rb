@@ -37,7 +37,7 @@ RSpec.describe Peoplefinder::ReportedProfilesController, type: :controller do
       end
 
       it 'sets the recipient email' do
-        expect(assigns(:reported_profile).recipient_email).to eql(person.support_email)
+        expect(assigns(:reported_profile).recipient_email).to eql(Rails.configuration.support_email)
       end
 
       it 'sets the subject' do
