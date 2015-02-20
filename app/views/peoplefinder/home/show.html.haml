@@ -1,16 +1,14 @@
 - content_for :body_classes, 'home-page'
 
 %h1= t('peoplefinder.home.heading', group_name: @group.name)
-= link_to t('peoplefinder.home.add_new_person'), new_person_path, class: 'add-new-person'
 %p= t('peoplefinder.home.explanation')
+
+%p= t('peoplefinder.home.usage')
 
 %h2= t('peoplefinder.home.search_heading')
 %p.hint-text{ aria: { hidden: 'true' } }= t('peoplefinder.home.search_hint')
 
 = render 'peoplefinder/shared/search'
-
-%p.hint-text.text= t('peoplefinder.home.usage_1')
-%p.hint-text.text= t('peoplefinder.home.usage_2')
 
 %h2.org-structure= t('peoplefinder.home.org_heading')
 %h3.hint-text= t('peoplefinder.home.org_sub_heading')
