@@ -4,7 +4,6 @@
   }
   .search-box {
     padding-bottom: 56px;
-    border-bottom: 1px solid $darkblue;
   }
   a.add-new-person {
     margin-top: 2px;
@@ -16,6 +15,9 @@
       margin-bottom: 0.4em;
     }
 
+  }
+  h2 {
+    border-bottom: none;
   }
   h3.org-structure {
     margin: 29px 0 30px 0;
