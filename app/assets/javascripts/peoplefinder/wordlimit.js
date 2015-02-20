@@ -1,3 +1,4 @@
+/* global jQuery */
 jQuery(function ($){
   'use strict';
 
@@ -7,10 +8,10 @@ jQuery(function ($){
       var $textarea = $(o);
       var limit = $textarea.data('limit');
       var $counterBox = $(
-        '<p class="textarea-word-count form-hint">'
-        + 'Maximum ' + limit + ' characters, including spaces. '
-        + '<span class="chars-remaining">(' + limit + ' remaining)</span>'
-        + '<p/>'
+        '<p class="textarea-word-count form-hint">' +
+        'Maximum ' + limit + ' characters, including spaces. ' +
+        '<span class="chars-remaining">(' + limit + ' remaining)</span>' +
+        '<p/>'
       );
 
       var $counter = $counterBox.find('.chars-remaining');
@@ -20,7 +21,7 @@ jQuery(function ($){
         var charsLeft = limit - $textarea.val().length;
 
         if( charsLeft > 0 ){
-          $counterBox.removeClass('error')
+          $counterBox.removeClass('error');
           $counter.html( '(' + charsLeft + ' remaining)');
         }else {
           $counterBox.addClass('error');
