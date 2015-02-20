@@ -285,7 +285,7 @@ feature 'Person maintenance' do
     fill_in 'Additional details', with: 'Some stuff'
     expect { click_button 'Submit' }.to change { ActionMailer::Base.deliveries.count }.by(1)
 
-    expect(last_email.to).to include(group.team_email_address)
+    expect(last_email.to).to include(Rails.configuration.support_email)
     expect(last_email.subject).to eql('A People Finder profile has been reported')
     expect(last_email.body.encoded).to have_text('Reason for reporting: Duplicate profile')
     expect(last_email.body.encoded).to have_text('Additional details: Some stuff')

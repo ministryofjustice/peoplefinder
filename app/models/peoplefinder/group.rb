@@ -25,7 +25,6 @@ class Peoplefinder::Group < ActiveRecord::Base
 
   validates :name, presence: true
   validates :slug, uniqueness: true
-  validates :team_email_address, presence: true
 
   default_scope { order(name: :asc) }
 
