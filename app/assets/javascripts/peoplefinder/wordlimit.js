@@ -5,6 +5,18 @@ jQuery(function ($){
   var $limitedTextAreas = $('textarea[data-limit]');
   if( $limitedTextAreas.length > 0 ){
     $limitedTextAreas.each(function (i, o){
+      var updateCounter = function (){
+        var charsLeft = limit - $textarea.val().length;
+
+        if( charsLeft > 0 ){
+          $counterBox.removeClass('error');
+          $counter.html( '(' + charsLeft + ' remaining)');
+        }else {
+          $counterBox.addClass('error');
+          $counter.html('(' + (charsLeft * -1) + ' extra)');
+        }
+      };
+
       var $textarea = $(o);
       var limit = $textarea.data('limit');
       var $counterBox = $(
@@ -17,17 +29,8 @@ jQuery(function ($){
       var $counter = $counterBox.find('.chars-remaining');
       $textarea.after($counterBox);
 
-      $textarea.keyup(function (){
-        var charsLeft = limit - $textarea.val().length;
-
-        if( charsLeft > 0 ){
-          $counterBox.removeClass('error');
-          $counter.html( '(' + charsLeft + ' remaining)');
-        }else {
-          $counterBox.addClass('error');
-          $counter.html('(' + (charsLeft * -1) + ' extra)');
-        }
-      });
+      updateCounter();
+      $textarea.keyup(updateCounter);
     });
   }
 });
