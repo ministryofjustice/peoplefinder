@@ -71,8 +71,7 @@ class Peoplefinder::Person < ActiveRecord::Base
   end
 
   def phone
-    return primary_phone_number if primary_phone_number.present?
-    return secondary_phone_number if secondary_phone_number.present?
+    [primary_phone_number, secondary_phone_number].find(&:present?)
   end
 
   def community_name
