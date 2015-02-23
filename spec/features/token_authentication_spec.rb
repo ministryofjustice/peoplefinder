@@ -60,7 +60,7 @@ feature 'Token Authentication' do
 
   scenario 'following a link from an inadequate profile email' do
     person = create(:person, email: 'test.user@digital.justice.gov.uk')
-    Peoplefinder::ReminderMailer.inadequate_profile(person).deliver
+    Peoplefinder::ReminderMailer.inadequate_profile(person).deliver_now
 
     visit links_in_email(last_email).last
     within('h1') do
