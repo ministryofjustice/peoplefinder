@@ -251,7 +251,7 @@ feature 'Person maintenance' do
       expect(last_email).to have_text('Hello Bob')
       expect(last_email.to).to include(another_person.email)
       expect(last_email.subject).to eql('Request to update your People Finder profile')
-      check_email_has_token_link_to(another_person)
+      check_email_has_profile_link(another_person)
       expect(page).to have_text("Your message has been sent to #{ another_person.name }")
     end
   end
