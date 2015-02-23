@@ -58,16 +58,6 @@ feature 'Token Authentication' do
     expect(page).to have_link('Logged in as Bob Smith', href: person_path(person))
   end
 
-  scenario 'following a link from an inadequate profile email' do
-    person = create(:person, email: 'test.user@digital.justice.gov.uk')
-    Peoplefinder::ReminderMailer.inadequate_profile(person).deliver_now
-
-    visit links_in_email(last_email).last
-    within('h1') do
-      expect(page).to have_text('Edit profile')
-    end
-  end
-
   scenario 'logging out' do
     token_log_in_as('james.darling@digital.justice.gov.uk')
     expect(page).to have_text('James Darling')

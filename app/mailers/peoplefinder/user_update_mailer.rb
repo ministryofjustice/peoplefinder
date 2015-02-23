@@ -26,13 +26,6 @@ class Peoplefinder::UserUpdateMailer < ActionMailer::Base
 private
 
   def profile_url(person)
-    if feature_enabled?('token_auth')
-      token_url(
-        id: Peoplefinder::Token.for_person(person).to_param,
-        desired_path: person_path(person)
-      )
-    else
-      person_url(person)
-    end
+    person_url(person)
   end
 end
