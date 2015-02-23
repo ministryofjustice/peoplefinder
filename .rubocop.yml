@@ -17,6 +17,12 @@ AllCops:
     - 'spec/dummy/db/**/*'
   RunRailsCops: true
 
+# You can't use let in a before block, which we need to give Elasticsearch
+# time to index.
+RSpec/InstanceVariable:
+  Exclude:
+    - 'spec/models/peoplefinder/concerns/searchable_spec.rb'
+
 # private/protected/public
 Style/AccessModifierIndentation:
   EnforcedStyle: outdent

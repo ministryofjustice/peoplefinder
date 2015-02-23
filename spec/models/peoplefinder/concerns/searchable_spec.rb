@@ -5,22 +5,30 @@ RSpec.describe 'Searchable', elastic: true do # rubocop:disable RSpec/DescribeCl
     clean_up_indexes_and_tables
   end
 
-  let!(:alice) {
-    create(:person, given_name: 'Alice', surname: 'Andrews', community: community)
-  }
-  let!(:bob) {
-    create(:person, given_name: 'Bob', surname: 'Browning',
-           location_in_building: '10th floor', building: '102 Petty France',
-           city: 'London', description: 'weekends only')
-  }
-  let!(:digital_services) { create(:group, name: 'Digital Services') }
-  let!(:membership) { bob.memberships.create(group: digital_services, role: 'Cleaner') }
-  let(:community) { create(:community, name: "Poetry") }
-
   context 'with some people' do
-    before do
+    let(:alice) { @alice }
+    let(:bob) { @bob }
+    let(:community) { @community }
+
+    before(:all) do
+      @community = create(:community, name: "Poetry")
+      @alice = create(:person,
+        given_name: 'Alice', surname: 'Andrews', community: @community
+      )
+      @bob = create(:person,
+        given_name: 'Bob', surname: 'Browning',
+        location_in_building: '10th floor', building: '102 Petty France',
+        city: 'London', description: 'weekends only'
+      )
+      digital_services = create(:group, name: 'Digital Services')
+      @bob.memberships.create(group: digital_services, role: 'Cleaner')
       Peoplefinder::Person.import
       Peoplefinder::Person.__elasticsearch__.client.indices.refresh
+      sleep 2
+    end
+
+    after(:all) do
+      DatabaseCleaner.clean
     end
 
     it 'searches by surname' do
