@@ -24,7 +24,7 @@ RSpec.describe 'Searchable', elastic: true do # rubocop:disable RSpec/DescribeCl
       @bob.memberships.create(group: digital_services, role: 'Cleaner')
       Peoplefinder::Person.import
       Peoplefinder::Person.__elasticsearch__.client.indices.refresh
-      sleep 1
+      sleep 2
     end
 
     after(:all) do
