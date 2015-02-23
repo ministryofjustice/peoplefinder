@@ -22,13 +22,13 @@ RSpec.describe Peoplefinder::UserUpdateMailer do
   let(:person) { create(:person, email: 'test.user@digital.justice.gov.uk') }
 
   describe ".new_profile_email" do
-    subject(:mail) { described_class.new_profile_email(person).deliver }
+    subject(:mail) { described_class.new_profile_email(person).deliver_now }
 
     include_examples "observe token_auth feature flag"
   end
 
   describe ".updated_profile_email" do
-    subject(:mail) { described_class.updated_profile_email(person).deliver }
+    subject(:mail) { described_class.updated_profile_email(person).deliver_now }
 
     include_examples "observe token_auth feature flag"
   end
