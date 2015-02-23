@@ -72,8 +72,7 @@ CREATE TABLE groups (
     slug character varying(255),
     description text,
     ancestry text,
-    ancestry_depth integer DEFAULT 0 NOT NULL,
-    team_email_address text
+    ancestry_depth integer DEFAULT 0 NOT NULL
 );
 
 
@@ -608,3 +607,5 @@ INSERT INTO schema_migrations (version) VALUES ('20150212153220');
 INSERT INTO schema_migrations (version) VALUES ('20150213103214');
 
 INSERT INTO schema_migrations (version) VALUES ('20150217105036');
+
+INSERT INTO schema_migrations (version) VALUES ('20150219154520');

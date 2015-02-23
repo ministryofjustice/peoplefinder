@@ -1,19 +1,17 @@
 - content_for :body_classes, 'home-page'
 
-%h1 #{ @group.name } people finder
-= link_to 'Add new profile', new_person_path, class: 'add-new-person'
+%h1= t('peoplefinder.home.heading', group_name: @group.name)
+%p= t('peoplefinder.home.explanation')
 
-%h3 Search the people finder
-.hint-text{ aria: { hidden: 'true' } } Enter the name of a person or role
+%p= t('peoplefinder.home.usage')
+
+%h2= t('peoplefinder.home.search_heading')
+%p.hint-text{ aria: { hidden: 'true' } }= t('peoplefinder.home.search_hint')
+
 = render 'peoplefinder/shared/search'
 
-.hint-text.text Find out how to contact people, what team they’re in and the hours they work. You can also 'add a new person' to your team.
-
-%h3.org-structure Our organisational structure
-.hint-text
-  Click on departments and teams, or see the whole of the
-  = link_to  @group.name, groups_path
+%h2.org-structure= t('peoplefinder.home.org_heading')
+%h3.hint-text= t('peoplefinder.home.org_sub_heading')
+%p.hint-text= t('peoplefinder.home.org_hint_html', link: link_to(@group.name, groups_path))
 
 = render 'peoplefinder/shared/org_browser', org_structure: @org_structure
-
-/ = render 'peoplefinder/shared/org_browser'

@@ -315,6 +315,12 @@ textarea.form-control {
   height: 205px;
 }
 
+.textarea-word-count {
+  &.error {
+    color: $error-colour;
+  }
+}
+
 .header-app-name {
   a {
     color: $white;

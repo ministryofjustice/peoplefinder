@@ -7,14 +7,12 @@ FactoryGirl.define do
     initialize_with do
       Peoplefinder::Group.where(ancestry_depth: 0).first_or_create(name: 'Ministry of Justice')
     end
-    team_email_address { generate(:email) }
   end
 
   factory :group, class: 'Peoplefinder::Group' do
     sequence :name do |n|
       'Group-%04d' % n
     end
-    team_email_address { generate(:email) }
     association :parent, factory: :department
   end
 

@@ -121,6 +121,28 @@ en:
         general_message: "You need to add more information - see below."
       groups:
         memberships_exist: "cannot be deleted until all the memberships have been removed"
+    shared:
+      search:
+        label: Enter the name of a person or role
+        placeholder: Enter your text here
+    home:
+      heading: Welcome to People Finder
+      explanation: |
+        Find out how to contact people, what team they’re in, where and when
+        they work.
+      search_heading: Search People Finder
+      search_hint: |
+        You can search by skills, job title, location, phone number,
+        or by name.
+      usage: |
+        Help keep People Finder up to date. Edit your profile to make sure
+        your information is current and accurate.
+        You can also make changes to other people’s profiles. They will receive
+        an email notifying them of changes.
+      org_heading: Browse the organisation
+      org_sub_heading: Browse by team
+      org_hint_html: |
+        Click on departments and teams, or see the whole of the %{link}.
     views:
       info_text:
         building_alert: "You are creating a profile - click the Save button to finish"
