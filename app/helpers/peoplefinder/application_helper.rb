@@ -50,6 +50,12 @@ module Peoplefinder
       ).compact.join(' - ')
     end
 
+    def call_to(telno)
+      return nil unless telno
+      digits = telno.gsub(/[^0-9+#*,]+/, '')
+      content_tag(:a, href: "tel:#{digits}") { telno }
+    end
+
   private
 
     def updated_at(obj)
