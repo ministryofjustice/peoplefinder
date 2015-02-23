@@ -26,6 +26,7 @@ module Dummy
     # config.i18n.default_locale = :de
 
     config.active_record.schema_format = :sql
+    config.active_record.raise_in_transactional_callbacks = true
 
     config.valid_login_domains = [/(.*)\.gov.uk/]
 

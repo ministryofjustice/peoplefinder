@@ -6,6 +6,10 @@ class Peoplefinder::Home
   include ActiveModel::Conversion
   extend ActiveModel::Naming
 
+  def persisted?
+    true
+  end
+
   def to_s
     'Home'
   end
