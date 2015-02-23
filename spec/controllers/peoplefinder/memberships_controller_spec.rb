@@ -13,7 +13,7 @@ RSpec.describe Peoplefinder::MembershipsController, type: :controller do
     it 'deletes the record' do
       delete :destroy, id: membership.to_param, referer: people_path
       expect {
-        Peoplefinder::Membership.find(membership)
+        Peoplefinder::Membership.find(membership.id)
       }.to raise_error(ActiveRecord::RecordNotFound)
     end
 
