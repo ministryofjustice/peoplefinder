@@ -59,6 +59,7 @@
      color: $link-hover-colour;
     }
 
+    // fadeout at the bottom
     &:before {
       position: absolute;
       bottom: 0;
@@ -75,6 +76,10 @@
       filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00ffffff', endColorstr='#ffffff',GradientType=0 ); /* IE6-8 */
     }
 
+    // removes the fadeout when tabbing along
+    &:focus:before {
+      display: none;
+    }
   }
 
   h3 {
