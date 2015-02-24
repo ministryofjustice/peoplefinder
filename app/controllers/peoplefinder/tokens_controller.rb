@@ -7,7 +7,7 @@ module Peoplefinder
     def create
       @token = Token.new(token_params)
       if @token.save
-        TokenMailer.new_token_email(@token).deliver
+        TokenMailer.new_token_email(@token).deliver_later
         render
       else
         render action: :new

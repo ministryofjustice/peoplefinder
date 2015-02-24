@@ -8,7 +8,7 @@ module Peoplefinder::Concerns::Notifications
       if should_send_email_notification?(email, current_user)
         Peoplefinder::UserUpdateMailer.new_profile_email(
           self, current_user.email
-        ).deliver
+        ).deliver_later
       end
     end
 
@@ -16,7 +16,7 @@ module Peoplefinder::Concerns::Notifications
       if should_send_email_notification?(email, current_user)
         Peoplefinder::UserUpdateMailer.updated_profile_email(
           self, current_user.email
-        ).deliver
+        ).deliver_later
       end
     end
 
@@ -24,7 +24,7 @@ module Peoplefinder::Concerns::Notifications
       if should_send_email_notification?(email, current_user)
         Peoplefinder::UserUpdateMailer.deleted_profile_email(
           self, current_user.email
-        ).deliver
+        ).deliver_later
       end
     end
 

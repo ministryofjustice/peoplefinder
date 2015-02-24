@@ -18,7 +18,7 @@ module Peoplefinder
       @information_request.sender_email = current_user.email
 
       if @information_request.save
-        ReminderMailer.information_request(@information_request).deliver
+        ReminderMailer.information_request(@information_request).deliver_later
         notice :message_sent, person: @person
         redirect_to person_path(@person)
       else

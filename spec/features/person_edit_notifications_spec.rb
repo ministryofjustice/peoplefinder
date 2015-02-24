@@ -17,7 +17,7 @@ feature 'Person edit notifications' do
     expect(last_email.subject).to eq('A new profile on MOJ People Finder has been created for you')
 
     check_email_to_and_from
-    check_email_has_token_link_to(Peoplefinder::Person.where(email: 'bob.smith@digital.justice.gov.uk').first)
+    check_email_has_profile_link(Peoplefinder::Person.where(email: 'bob.smith@digital.justice.gov.uk').first)
   end
 
   scenario 'Deleting a person with different email' do
@@ -44,7 +44,7 @@ feature 'Person edit notifications' do
     expect(last_email.subject).to eq('Your profile on MOJ People Finder has been edited')
 
     check_email_to_and_from
-    check_email_has_token_link_to(person)
+    check_email_has_profile_link(person)
   end
 
   scenario 'Editing a person with same email' do
@@ -66,9 +66,5 @@ feature 'Person edit notifications' do
   def check_email_to_and_from
     expect(last_email.to).to eql(['bob.smith@digital.justice.gov.uk'])
     expect(last_email.body.encoded).to match('test.user@digital.justice.gov.uk')
-  end
-
-  def check_email_has_token_link_to(person)
-    expect(last_email.body.encoded).to match("http.*tokens\/#{ Peoplefinder::Token.last.to_param }.*?desired_path=%2Fpeople%2F*#{ person.to_param }")
   end
 end
