@@ -30,4 +30,8 @@ Peoplefinder::Engine.routes.draw do
   get '/groups/:id', to: redirect('/teams/%{id}')
   get '/groups/:id/edit', to: redirect('/teams/%{id}/edit')
   get '/groups/:id/people', to: redirect('/teams/%{id}/people')
+
+  namespace :metrics do
+    resources :completions, only: [:index]
+  end
 end
