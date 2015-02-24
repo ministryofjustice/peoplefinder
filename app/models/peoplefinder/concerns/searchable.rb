@@ -13,27 +13,6 @@ module Peoplefinder::Concerns::Searchable
 
     index_name [Rails.env, model_name.collection.gsub(/\//, '-')].join('_')
 
-    settings analysis: {
-      analyzer: {
-        name: {
-          tokenizer: 'whitespace',
-          filter: ['name_synonym']
-        }
-      },
-      filter: {
-        name_synonym: {
-          type: 'synonym',
-          ignore_case: true,
-          expand: true,
-          synonyms_path: Peoplefinder::Engine.root.join('config/names.txt').to_s
-        }
-      }
-    } do
-      mappings dynamic: 'true' do
-        indexes :name, analyzer: 'name'
-      end
-    end
-
     def self.delete_indexes
       __elasticsearch__.delete_index! index: Peoplefinder::Person.index_name
     end
