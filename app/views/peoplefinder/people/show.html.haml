@@ -51,9 +51,8 @@
           %dd= call_to(@person.secondary_phone_number)
 
       - if @person.description.present?
-        %h5 Additional information
-        %dl
-          %dd= @person.description
+        %h5 Extra information:
+        %p= @person.description
 
       - if feature_enabled?(:profile_tags)
         = render partial: "show_tags"
