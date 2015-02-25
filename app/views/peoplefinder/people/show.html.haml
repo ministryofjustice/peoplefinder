@@ -40,11 +40,11 @@
 
         - if @person.primary_phone_number.present?
           %dt.visuallyhidden Primary phone number
-          %dd= @person.primary_phone_number
+          %dd= call_to(@person.primary_phone_number)
 
         - if @person.secondary_phone_number.present?
           %dt.visuallyhidden Other phone number
-          %dd= @person.secondary_phone_number
+          %dd= call_to(@person.secondary_phone_number)
 
       - if @person.description.present?
         %dl

@@ -49,4 +49,28 @@ RSpec.describe Peoplefinder::ApplicationHelper, type: :helper do
       expect(fragment).to have_selector('a[href="/teams/digital-services"]', text: 'Digital Services')
     end
   end
+
+  context '#call_to' do
+    it 'returns an a with a tel: href' do
+      generated = call_to('07700900123')
+      fragment = Capybara::Node::Simple.new(generated)
+      expect(fragment).to have_selector('a[href="tel:07700900123"]', text: '07700900123')
+    end
+
+    it 'strips extraneous characters from href' do
+      generated = call_to('07700 900 123')
+      fragment = Capybara::Node::Simple.new(generated)
+      expect(fragment).to have_selector('a[href="tel:07700900123"]')
+    end
+
+    it 'preserves significant non-numeric characters in href' do
+      generated = call_to('+447700900123,,1234#*')
+      fragment = Capybara::Node::Simple.new(generated)
+      expect(fragment).to have_selector('a[href="tel:+447700900123,,1234#*"]')
+    end
+
+    it 'returns nil if telephone number is nil' do
+      expect(call_to(nil)).to be_nil
+    end
+  end
 end
