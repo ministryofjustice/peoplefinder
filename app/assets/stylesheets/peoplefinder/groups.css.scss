@@ -1,3 +1,5 @@
+$focus-color: #FFBF47;
+
 .group-leader {
   .image-background {
     height: 300px;
@@ -80,9 +82,9 @@
       @include vertical-gradient(rgba($white, 0), $white);
     }
 
-    // removes the fadeout when tabbing along
+    // change colour of fadeout when tabbing along
     &:focus:before {
-      display: none;
+      @include vertical-gradient(rgba($focus-color, 0), $focus-color);
     }
   }
 
