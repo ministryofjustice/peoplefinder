@@ -40,6 +40,15 @@ feature 'Token Authentication' do
     expect(last_email.body.encoded).to have_text(token_url(Peoplefinder::Token.last))
   end
 
+  scenario 'copy-pasting an email with extraneous spaces' do
+    visit '/'
+    fill_in 'token_user_email', with: ' correct@digital.justice.gov.uk '
+    click_button 'Use email'
+    expect(page).to have_text('We are sending you a link to log in')
+
+    expect(last_email.to).to include('correct@digital.justice.gov.uk')
+  end
+
   scenario 'following valid link from email and getting prompted to complete my profile' do
     token = create(:token)
     visit token_path(token)

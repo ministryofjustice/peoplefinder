@@ -7,6 +7,10 @@ class Peoplefinder::Token < ActiveRecord::Base
 
   validate :valid_email_address
 
+  def user_email=(s)
+    super(s && s.strip)
+  end
+
   def to_param
     value
   end
