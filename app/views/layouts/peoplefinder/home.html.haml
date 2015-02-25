@@ -6,6 +6,7 @@
     %main#content{role: 'main'}
       = render partial: 'layouts/partials/phase'
       =flash_messages
+      = render "peoplefinder/shared/loginout"
       .inner-block
         #home-page= yield
 
