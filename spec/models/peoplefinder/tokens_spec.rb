@@ -29,11 +29,6 @@ RSpec.describe Peoplefinder::Token, type: :model do
     expect(token).not_to be_valid
   end
 
-  it 'removes whitespace around the email address' do
-    token = build(:token, user_email: '  text.user@digital.justice.gov.uk  ')
-    expect(token.user_email).to eq('text.user@digital.justice.gov.uk')
-  end
-
   describe '#for_person' do
     let(:person) { create(:person, email: 'text.user@digital.justice.gov.uk') }
     let(:token) { described_class.for_person(person) }
