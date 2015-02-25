@@ -2,20 +2,25 @@ require 'rails_helper'
 
 RSpec.describe 'Completion' do # rubocop:disable RSpec/DescribeClass
 
-  context 'completion score' do
+  context '#completion score' do
     it 'returns 0 if all fields are empty' do
       person = Peoplefinder::Person.new
       expect(person.completion_score).to eql(0)
       expect(person).to be_incomplete
     end
 
+    it 'returns non-0 if a group is assigned' do
+      person = Peoplefinder::Person.new(groups: [Peoplefinder::Group.new])
+      expect(person.completion_score).not_to eql(0)
+    end
+
     it 'returns 50 if half the fields are completed' do
       person = Peoplefinder::Person.new(
-        given_name: 'Bobby',
-        surname: 'Tables',
-        email: 'user.example@digital.justice.gov.uk',
-        city: 'Lunar City',
-        primary_phone_number: '020 7946 0123'
+        given_name: generate(:given_name),
+        surname: generate(:surname),
+        email: generate(:email),
+        city: generate(:city),
+        primary_phone_number: generate(:phone_number)
       )
       expect(person.completion_score).to eql(50)
       expect(person).to be_incomplete
@@ -29,6 +34,45 @@ RSpec.describe 'Completion' do # rubocop:disable RSpec/DescribeClass
         expect(person.completion_score).to eql(100)
         expect(person).not_to be_incomplete
       end
+    end
+  end
+
+  context '.overall_completion' do
+    it 'returns 100 if one person is 100% complete' do
+      person = create(:person, completed_attributes)
+      create(:membership, person: person)
+      expect(Peoplefinder::Person.overall_completion).to eq(100)
+    end
+
+    it 'returns 50 if two profiles are 50% complete' do
+      2.times do
+        create(:person,
+          given_name: generate(:given_name),
+          surname: generate(:surname),
+          email: generate(:email),
+          city: generate(:city),
+          primary_phone_number: generate(:phone_number)
+        )
+      end
+      expect(Peoplefinder::Person.overall_completion).to eq(50)
+    end
+
+    it 'includes membership in calculation' do
+      people = 2.times.map {
+        create(:person,
+          given_name: generate(:given_name),
+          surname: generate(:surname),
+          email: generate(:email),
+          city: generate(:city),
+          primary_phone_number: generate(:phone_number)
+        )
+      }
+      2.times do
+        create(:membership, person: people[0])
+      end
+      expect(people[0].completion_score).to eq(60)
+      expect(people[1].completion_score).to eq(50)
+      expect(Peoplefinder::Person.overall_completion).to eq(55)
     end
   end
 
