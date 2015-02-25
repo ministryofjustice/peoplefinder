@@ -33,14 +33,26 @@ ul.working_days {
   dl {
     margin-bottom: 15px;
   }
-  dt {
-    font-weight: 700;
+  .inline-labels dt {
+    float: left;
+    margin-right: 0.4em;
+
+    &:after {
+      content: ':';
+    }
   }
+
   dd.breadcrumbs {
     margin: 0;
     ol {
       margin: 0;
       padding: 0;
+    }
+  }
+
+  .role-and-location {
+    dd, dt {
+      margin-bottom: 0.4em;
     }
   }
 }

@@ -21,35 +21,38 @@
 
   .grid.grid-2-3
     .inner-block
-      %dl
-        - @person.memberships.each do |membership|
-          %dt= membership.role
+      - @person.memberships.each do |membership|
+        %h3= membership.role
+        %dl.inline-labels.role-and-location
+          %dt Team
           %dd.breadcrumbs= breadcrumbs(membership.path.drop(1))
 
+      %dl.inline-labels
         - if feature_enabled?(:communities)
           = render partial: "communities"
 
+      %dl.inline-labels
         - if @person.location.present?
-          %dt.visuallyhidden Location
+          %dt Location
           %dd= @person.location
 
-      %dl
+      %dl.inline-labels
         - if @person.email.present?
-          %dt.visuallyhidden Email
+          %dt Email
           %dd= mail_to(@person.email)
 
+      %dl.inline-labels
         - if @person.primary_phone_number.present?
-          %dt.visuallyhidden Primary phone number
+          %dt Primary phone number
           %dd= call_to(@person.primary_phone_number)
 
         - if @person.secondary_phone_number.present?
-          %dt.visuallyhidden Other phone number
+          %dt Other phone number
           %dd= call_to(@person.secondary_phone_number)
 
       - if @person.description.present?
-        %dl
-          %dt.visuallyhidden Notes
-          %dd= @person.description
+        %h5 Extra information:
+        %p= @person.description
 
       - if feature_enabled?(:profile_tags)
         = render partial: "show_tags"
