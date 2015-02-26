@@ -54,15 +54,7 @@ class Peoplefinder::Group < ActiveRecord::Base
   end
 
   def all_people
-    Peoplefinder::Person.find_by_sql(
-    [
-      'select distinct array_agg(role) as role_list, p.*
-      from memberships m, people p
-      where m.person_id = p.id AND group_id in (?)
-      group by p.id;', subtree_ids
-    ]).
-    sort_by(&:name).
-    each { |p| p.role_names = p.role_list.compact.join(', ') }
+    Peoplefinder::Person.all_in_groups(subtree_ids)
   end
 
   def editable_parent?

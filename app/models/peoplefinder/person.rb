@@ -15,7 +15,7 @@ class Peoplefinder::Person < ActiveRecord::Base
                            :login_count, :last_login_at]
   mount_uploader :image, Peoplefinder::ImageUploader
 
-  attr_accessor :crop_x, :crop_y, :crop_w, :crop_h, :role_names
+  attr_accessor :crop_x, :crop_y, :crop_w, :crop_h
 
   validates :given_name, presence: true, on: :update
   validates :surname, presence: true
@@ -44,6 +44,18 @@ class Peoplefinder::Person < ActiveRecord::Base
     where(surname: person.surname).
     where(given_name: person.given_name).
     where.not(id: person.id)
+  end
+
+  def self.all_in_groups(group_ids)
+    query = <<-SQL
+      SELECT DISTINCT p.*,
+        string_agg(CASE role WHEN '' THEN NULL ELSE role END, ', ' ORDER BY role) AS role_names
+      FROM memberships m, people p
+      WHERE m.person_id = p.id AND group_id in (?)
+      GROUP BY p.id
+      ORDER BY surname ASC, given_name ASC;
+    SQL
+    find_by_sql([query, group_ids])
   end
 
   def name
