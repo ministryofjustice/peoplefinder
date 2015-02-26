@@ -78,6 +78,5 @@ private
     errors.add :base, :memberships_exist unless deletable?
   end
 
-  delegate :image, to: :leader, prefix: true
-  delegate :name, to: :leader, prefix: true
+  delegate :image, :name, to: :leader, prefix: true
 end
