@@ -56,8 +56,8 @@ class Peoplefinder::Group < ActiveRecord::Base
   def slug_candidates
     candidates = [name]
     if parent.present?
-      candidates <<  [parent.name, name]
-      candidates <<  [parent.name, name_and_sequence]
+      candidates << [parent.name, name]
+      candidates << [parent.name, name_and_sequence]
     end
     candidates
   end
