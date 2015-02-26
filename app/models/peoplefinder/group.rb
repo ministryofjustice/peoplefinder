@@ -75,10 +75,7 @@ class Peoplefinder::Group < ActiveRecord::Base
 private
 
   def check_deletability
-    unless deletable?
-      errors[:base] << I18n.t('peoplefinder.errors.groups.memberships_exist')
-      return false
-    end
+    errors.add :base, :memberships_exist unless deletable?
   end
 
   delegate :image, to: :leader, prefix: true
