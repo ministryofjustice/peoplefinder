@@ -1,6 +1,8 @@
 require 'peoplefinder'
 
 class Peoplefinder::Group < ActiveRecord::Base
+  include Peoplefinder::Concerns::Hierarchical
+
   MAX_DESCRIPTION = 1000
 
   self.table_name = 'groups'
@@ -23,8 +25,6 @@ class Peoplefinder::Group < ActiveRecord::Base
   has_many :leaders, through: :leaderships, source: :person
   has_many :non_leaders, through: :non_leaderships, source: :person
 
-  has_ancestry cache_depth: true
-
   validates :name, presence: true
   validates :slug, uniqueness: true
   validates :description, length: { maximum: MAX_DESCRIPTION }
@@ -43,10 +43,6 @@ class Peoplefinder::Group < ActiveRecord::Base
 
   def deletable?
     leaf_node? && memberships.reject(&:new_record?).empty?
-  end
-
-  def leaf_node?
-    children.blank?
   end
 
   def all_people
