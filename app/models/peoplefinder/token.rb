@@ -1,6 +1,9 @@
 require 'peoplefinder'
 
 class Peoplefinder::Token < ActiveRecord::Base
+  include Peoplefinder::Concerns::Sanitisable
+  sanitise_fields :user_email
+
   self.table_name = 'tokens'
 
   after_initialize :generate_value
