@@ -27,8 +27,8 @@ RSpec.describe Peoplefinder::Person, type: :model do
   end
 
   describe '.all_in_groups' do
-    let(:groups) { 3.times.map { create(:group) } }
-    let(:people) { 3.times.map { create(:person) } }
+    let(:groups) { create_list(:group, 3) }
+    let(:people) { create_list(:person, 3) }
 
     it 'returns all people in any listed groups' do
       people.zip(groups).each do |person, group|
