@@ -26,6 +26,10 @@ Style/AccessModifierIndentation:
 Style/AlignParameters:
   EnforcedStyle: with_fixed_indentation
 
+# Allow ===. It's useful.
+Style/CaseEquality:
+  Enabled: false
+
 Style/CollectionMethods:
   PreferredMethods:
     inject: 'inject'

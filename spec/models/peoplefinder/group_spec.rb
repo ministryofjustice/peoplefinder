@@ -124,14 +124,6 @@ RSpec.describe Peoplefinder::Group, type: :model do
     end
   end
 
-  describe '.leadership' do
-    it 'gets the first leader' do
-      group = create(:group)
-      leaderships = [create(:membership, group: group, leader: true)]
-      expect(group.leadership).to eql(leaderships.first)
-    end
-  end
-
   describe '.editable_parent?' do
     let(:department) { create(:department) }
 
