@@ -15,4 +15,7 @@ class Peoplefinder::Membership < ActiveRecord::Base
   delegate :image, to: :person, prefix: true
   delegate :name, to: :group, prefix: true
   delegate :path, to: :group
+
+  include Peoplefinder::Concerns::ConcatenatedFields
+  concatenated_field :to_s, :group_name, :role, join_with: ', '
 end

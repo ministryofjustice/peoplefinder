@@ -94,7 +94,7 @@ class Peoplefinder::Person < ActiveRecord::Base
   end
 
   def role_and_group
-    memberships.map { |m| [m.group_name, m.role].join(', ') }.join('; ')
+    memberships.join('; ')
   end
 
   def path(hint_group = nil)
