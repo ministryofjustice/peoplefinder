@@ -58,6 +58,28 @@ class Peoplefinder::Person < ActiveRecord::Base
     find_by_sql([query, group_ids])
   end
 
+  def as_indexed_json(_options = {})
+    as_json(
+      only: [:tags, :description, :location_in_building, :building, :city],
+      methods: [:name, :role_and_group, :community_name]
+    )
+  end
+
+  def self.fuzzy_search(query)
+    search(
+      size: 100,
+      query: {
+        fuzzy_like_this: {
+          fields: [
+            :name, :tags, :description, :location_in_building, :building,
+            :city, :role_and_group, :community_name
+          ],
+          like_text: query, prefix_length: 3, ignore_tf: true
+        }
+      }
+    )
+  end
+
   def name
     [given_name, surname].compact.join(' ').strip
   end

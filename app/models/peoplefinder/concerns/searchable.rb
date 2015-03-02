@@ -14,29 +14,7 @@ module Peoplefinder::Concerns::Searchable
     index_name [Rails.env, model_name.collection.gsub(/\//, '-')].join('_')
 
     def self.delete_indexes
-      __elasticsearch__.delete_index! index: Peoplefinder::Person.index_name
-    end
-
-    def self.fuzzy_search(query)
-      search(
-        size: 100,
-        query: {
-          fuzzy_like_this: {
-            fields: [
-              :name, :tags, :description, :location_in_building, :building,
-              :city, :role_and_group, :community_name
-            ],
-            like_text: query, prefix_length: 3, ignore_tf: true
-          }
-        }
-      )
-    end
-
-    def as_indexed_json(_options = {})
-      as_json(
-        only: [:tags, :description, :location_in_building, :building, :city],
-        methods: [:name, :role_and_group, :community_name]
-      )
+      __elasticsearch__.delete_index! index: index_name
     end
   end
 end

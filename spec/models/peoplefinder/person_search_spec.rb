@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'Searchable', elastic: true do # rubocop:disable RSpec/DescribeClass
+RSpec.describe Peoplefinder::Person, elastic: true do
   after(:all) do
     clean_up_indexes_and_tables
   end
@@ -19,8 +19,8 @@ RSpec.describe 'Searchable', elastic: true do # rubocop:disable RSpec/DescribeCl
 
   context 'with some people' do
     before do
-      Peoplefinder::Person.import
-      Peoplefinder::Person.__elasticsearch__.client.indices.refresh
+      described_class.import
+      described_class.__elasticsearch__.client.indices.refresh
     end
 
     it 'searches by surname' do
@@ -61,6 +61,6 @@ RSpec.describe 'Searchable', elastic: true do # rubocop:disable RSpec/DescribeCl
   end
 
   def search_for(query)
-    Peoplefinder::Person.fuzzy_search(query).records
+    described_class.fuzzy_search(query).records
   end
 end
