@@ -3,59 +3,18 @@ require 'peoplefinder'
 class Peoplefinder::Person < ActiveRecord::Base
   self.table_name = 'people'
 
-  extend FriendlyId
-  include Peoplefinder::Concerns::Searchable
   include Peoplefinder::Concerns::Completion
   include Peoplefinder::Concerns::Notifications
   include Peoplefinder::Concerns::WorkDays
-  include Peoplefinder::Concerns::Sanitisable
 
-  has_paper_trail class_name: 'Peoplefinder::Version',
-                  ignore: [:updated_at, :created_at, :id, :slug, :login_count, :last_login_at]
-  mount_uploader :image, Peoplefinder::ImageUploader
-
-  attr_accessor :crop_x, :crop_y, :crop_w, :crop_h
-
-  validates :given_name, presence: true, on: :update
-  validates :surname, presence: true
-  validates :email,
-    presence: true, uniqueness: { case_sensitive: false }, 'peoplefinder/email' => true
-
-  sanitise_fields :given_name, :surname, :email
-
-  has_many :memberships, -> { includes(:group).order('groups.name') }, dependent: :destroy
-  has_many :groups, through: :memberships
-  belongs_to :community
-
-  accepts_nested_attributes_for :memberships,
-    allow_destroy: true,
-    reject_if: proc { |membership| membership['group_id'].blank? }
-
-  default_scope { order(surname: :asc, given_name: :asc) }
-
+  extend FriendlyId
   friendly_id :slug_source, use: :slugged
 
-  before_save :sanitize_tags
-
-  def self.namesakes(person)
-    where(surname: person.surname, given_name: person.given_name).where.not(id: person.id)
+  def slug_source
+    email.present? ? email.split(/@/).first : name
   end
 
-  def self.tag_list
-    where('tags is not null').pluck(:tags).flatten.join(',').split(',').uniq.sort.join(',')
-  end
-
-  def self.all_in_groups(group_ids)
-    query = <<-SQL
-      SELECT DISTINCT p.*,
-        string_agg(CASE role WHEN '' THEN NULL ELSE role END, ', ' ORDER BY role) AS role_names
-      FROM memberships m, people p
-      WHERE m.person_id = p.id AND group_id in (?)
-      GROUP BY p.id
-      ORDER BY surname ASC, given_name ASC;
-    SQL
-    find_by_sql([query, group_ids])
-  end
+  include Peoplefinder::Concerns::Searchable
 
   def as_indexed_json(_options = {})
     as_json(
@@ -79,16 +38,63 @@ class Peoplefinder::Person < ActiveRecord::Base
     )
   end
 
+  has_paper_trail class_name: 'Peoplefinder::Version',
+                  ignore: [:updated_at, :created_at, :id, :slug, :login_count, :last_login_at]
+
+  def changes_for_paper_trail
+    super.tap { |changes|
+      changes['image'].map! { |img| img.url && File.basename(img.url) } if changes.key?('image')
+    }
+  end
+
+  include Peoplefinder::Concerns::Sanitisable
+  sanitise_fields :given_name, :surname, :email
+  before_save :sanitize_tags
+
+  mount_uploader :image, Peoplefinder::ImageUploader
+  attr_accessor :crop_x, :crop_y, :crop_w, :crop_h
+
+  validates :given_name, presence: true, on: :update
+  validates :surname, presence: true
+  validates :email,
+    presence: true, uniqueness: { case_sensitive: false }, 'peoplefinder/email' => true
+
+  has_many :memberships, -> { includes(:group).order('groups.name') }, dependent: :destroy
+  has_many :groups, through: :memberships
+  belongs_to :community
+
+  accepts_nested_attributes_for :memberships,
+    allow_destroy: true,
+    reject_if: proc { |membership| membership['group_id'].blank? }
+
+  default_scope { order(surname: :asc, given_name: :asc) }
+
+  def self.namesakes(person)
+    where(surname: person.surname, given_name: person.given_name).where.not(id: person.id)
+  end
+
+  def self.tag_list
+    where('tags is not null').pluck(:tags).flatten.join(',').split(',').uniq.sort.join(',')
+  end
+
+  def self.all_in_groups(group_ids)
+    query = <<-SQL
+      SELECT DISTINCT p.*,
+        string_agg(CASE role WHEN '' THEN NULL ELSE role END, ', ' ORDER BY role) AS role_names
+      FROM memberships m, people p
+      WHERE m.person_id = p.id AND group_id in (?)
+      GROUP BY p.id
+      ORDER BY surname ASC, given_name ASC;
+    SQL
+    find_by_sql([query, group_ids])
+  end
+
   def name
     [given_name, surname].compact.join(' ').strip
   end
 
   def to_s
     name
-  end
-
-  def slug_source
-    email.present? ? email.split(/@/).first : name
   end
 
   def role_and_group
@@ -105,12 +111,6 @@ class Peoplefinder::Person < ActiveRecord::Base
 
   def community_name
     community.try(:name)
-  end
-
-  def changes_for_paper_trail
-    super.tap { |changes|
-      changes['image'].map! { |img| img.url && File.basename(img.url) } if changes.key?('image')
-    }
   end
 
   def location
