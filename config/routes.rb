@@ -33,5 +33,6 @@ Peoplefinder::Engine.routes.draw do
 
   namespace :metrics do
     resources :completions, only: [:index]
+    resources :profiles, only: [:index]
   end
 end
