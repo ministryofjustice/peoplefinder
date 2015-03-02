@@ -14,12 +14,8 @@ class Peoplefinder::Group < ActiveRecord::Base
   friendly_id :slug_candidates, use: :slugged
 
   def slug_candidates
-    candidates = [name]
-    if parent.present?
-      candidates << [parent.name, name]
-      candidates << [parent.name, name_and_sequence]
-    end
-    candidates
+    return [name] unless parent
+    [name, [parent.name, name], [parent.name, name_and_sequence]]
   end
 
   def should_generate_new_friendly_id?
