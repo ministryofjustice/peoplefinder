@@ -11,8 +11,7 @@ class Peoplefinder::Person < ActiveRecord::Base
   include Peoplefinder::Concerns::Sanitisable
 
   has_paper_trail class_name: 'Peoplefinder::Version',
-                  ignore: [:updated_at, :created_at, :id, :slug,
-                           :login_count, :last_login_at]
+                  ignore: [:updated_at, :created_at, :id, :slug, :login_count, :last_login_at]
   mount_uploader :image, Peoplefinder::ImageUploader
 
   attr_accessor :crop_x, :crop_y, :crop_w, :crop_h
@@ -24,9 +23,7 @@ class Peoplefinder::Person < ActiveRecord::Base
 
   sanitise_fields :given_name, :surname, :email
 
-  has_many :memberships,
-    -> { includes(:group).order('groups.name')  },
-    dependent: :destroy
+  has_many :memberships, -> { includes(:group).order('groups.name') }, dependent: :destroy
   has_many :groups, through: :memberships
   belongs_to :community
 
@@ -41,9 +38,11 @@ class Peoplefinder::Person < ActiveRecord::Base
   before_save :sanitize_tags
 
   def self.namesakes(person)
-    where(surname: person.surname).
-    where(given_name: person.given_name).
-    where.not(id: person.id)
+    where(surname: person.surname, given_name: person.given_name).where.not(id: person.id)
+  end
+
+  def self.tag_list
+    where('tags is not null').pluck(:tags).flatten.join(',').split(',').uniq.sort.join(',')
   end
 
   def self.all_in_groups(group_ids)
@@ -89,11 +88,7 @@ class Peoplefinder::Person < ActiveRecord::Base
   end
 
   def slug_source
-    if email.present?
-      email.split(/@/).first
-    else
-      name
-    end
+    email.present? ? email.split(/@/).first : name
   end
 
   def role_and_group
@@ -112,19 +107,9 @@ class Peoplefinder::Person < ActiveRecord::Base
     community.try(:name)
   end
 
-  def self.tag_list
-    Peoplefinder::Person.where('tags is not null').
-      pluck(:tags).flatten.join(',').
-      split(',').uniq.sort.join(',')
-  end
-
   def changes_for_paper_trail
     super.tap { |changes|
-      if changes.key?('image')
-        changes['image'].map! do |value|
-          value.url && File.basename(value.url)
-        end
-      end
+      changes['image'].map! { |img| img.url && File.basename(img.url) } if changes.key?('image')
     }
   end
 
@@ -141,10 +126,7 @@ private
   end
 
   def sanitize_tags
-    if tags
-      self.tags = tags.split(',').map { |tag|
-        tag.strip.capitalize
-      }.sort.join(',')
-    end
+    return unless tags
+    self.tags = tags.split(',').map { |t| t.strip.capitalize }.sort.join(',')
   end
 end
