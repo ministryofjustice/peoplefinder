@@ -105,9 +105,7 @@ class Peoplefinder::Person < ActiveRecord::Base
     [primary_phone_number, secondary_phone_number].find(&:present?)
   end
 
-  def community_name
-    community.try(:name)
-  end
+  delegate :name, to: :community, prefix: true, allow_nil: true
 
   include Peoplefinder::Concerns::ConcatenatedFields
   concatenated_field :location, :location_in_building, :building, :city, join_with: ', '
