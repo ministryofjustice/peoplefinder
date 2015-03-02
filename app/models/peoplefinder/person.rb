@@ -89,10 +89,6 @@ class Peoplefinder::Person < ActiveRecord::Base
     find_by_sql([query, group_ids])
   end
 
-  def name
-    [given_name, surname].compact.join(' ').strip
-  end
-
   def to_s
     name
   end
@@ -113,9 +109,9 @@ class Peoplefinder::Person < ActiveRecord::Base
     community.try(:name)
   end
 
-  def location
-    [location_in_building, building, city].select(&:present?).join(', ')
-  end
+  include Peoplefinder::Concerns::ConcatenatedFields
+  concatenated_field :location, :location_in_building, :building, :city, join_with: ', '
+  concatenated_field :name, :given_name, :surname, join_with: ' '
 
 private
 
