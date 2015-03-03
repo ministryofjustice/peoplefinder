@@ -4,10 +4,8 @@
 
 = render partial: 'breadcrumbs'
 
-.title-with-edit
+.title
   %h1= @page_title = @person
-  %span.edit-this-link
-    = link_to 'Edit this profile', edit_person_path(@person)
 
 .grid-wrapper.profile
   .grid.grid-1-3
