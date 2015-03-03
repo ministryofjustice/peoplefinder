@@ -253,28 +253,6 @@ feature 'Person maintenance' do
       visit person_path(another_person)
       expect(page).not_to have_text('Profile completeness')
     end
-
-    scenario 'when it is incomplete, I request more information' do
-      visit person_path(another_person)
-      expect(page).not_to have_text('Profile completeness')
-
-      click_link('Ask the person to update their details')
-      expect(page).to have_link('Cancel', person_path(another_person))
-
-      expect(page).to have_title("Request profile update - #{ app_title }")
-      within('h1') do
-        expect(page).to have_text('Request profile update')
-      end
-
-      fill_in 'information_request_message', with: 'Hello Bob'
-      expect { click_button 'Submit' }.to change { ActionMailer::Base.deliveries.count }.by(1)
-
-      expect(last_email).to have_text('Hello Bob')
-      expect(last_email.to).to include(another_person.email)
-      expect(last_email.subject).to eql('Request to update your People Finder profile')
-      check_email_has_profile_link(another_person)
-      expect(page).to have_text("Your message has been sent to #{ another_person.name }")
-    end
   end
 
   scenario 'UI elements on the new/edit pages' do
@@ -291,26 +269,6 @@ feature 'Person maintenance' do
     click_link 'Edit this profile'
     expect(page).not_to have_selector('.search-box')
     expect(page).to have_text('You are currently editing this profile')
-  end
-
-  scenario 'Reporting a profile' do
-    group = create(:group)
-    person = create(:person)
-    person.groups << group
-
-    visit person_path(person)
-    click_link 'Report this profile'
-
-    expect(page).to have_title("Report this profile - #{ app_title }")
-    select 'Duplicate profile', from: 'Reason for reporting'
-    fill_in 'Additional details', with: 'Some stuff'
-    expect { click_button 'Submit' }.to change { ActionMailer::Base.deliveries.count }.by(1)
-
-    expect(last_email.to).to include(Rails.configuration.support_email)
-    expect(last_email.subject).to eql('A People Finder profile has been reported')
-    expect(last_email.body.encoded).to have_text('Reason for reporting: Duplicate profile')
-    expect(last_email.body.encoded).to have_text('Additional details: Some stuff')
-    expect(last_email.body.encoded).to have_text(person_url(person))
   end
 
   scenario 'Tagging is disabled' do
