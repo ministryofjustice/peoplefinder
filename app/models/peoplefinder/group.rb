@@ -1,17 +1,26 @@
 require 'peoplefinder'
 
 class Peoplefinder::Group < ActiveRecord::Base
+  self.table_name = 'groups'
+
   include Peoplefinder::Concerns::Hierarchical
 
   MAX_DESCRIPTION = 1000
-
-  self.table_name = 'groups'
 
   has_paper_trail class_name: 'Peoplefinder::Version',
                   ignore: [:updated_at, :created_at, :slug, :id]
 
   extend FriendlyId
   friendly_id :slug_candidates, use: :slugged
+
+  def slug_candidates
+    return [name] unless parent
+    [name, [parent.name, name], [parent.name, name_and_sequence]]
+  end
+
+  def should_generate_new_friendly_id?
+    name_changed?
+  end
 
   has_many :memberships, -> { includes(:person).order('people.surname')  }
   has_many :people, through: :memberships
@@ -29,9 +38,9 @@ class Peoplefinder::Group < ActiveRecord::Base
   validates :slug, uniqueness: true
   validates :description, length: { maximum: MAX_DESCRIPTION }
 
-  default_scope { order(name: :asc) }
-
   before_destroy :check_deletability
+
+  default_scope { order(name: :asc) }
 
   def self.department
     roots.first
@@ -53,18 +62,7 @@ class Peoplefinder::Group < ActiveRecord::Base
     new_record? || parent.present? || children.empty?
   end
 
-  def slug_candidates
-    candidates = [name]
-    if parent.present?
-      candidates << [parent.name, name]
-      candidates << [parent.name, name_and_sequence]
-    end
-    candidates
-  end
-
-  def should_generate_new_friendly_id?
-    name_changed?
-  end
+private
 
   def name_and_sequence
     slug = name.to_param
@@ -72,11 +70,7 @@ class Peoplefinder::Group < ActiveRecord::Base
     "#{slug}-#{sequence}"
   end
 
-private
-
   def check_deletability
     errors.add :base, :memberships_exist unless deletable?
   end
-
-  delegate :image, :name, to: :leader, prefix: true
 end
