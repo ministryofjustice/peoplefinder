@@ -92,7 +92,7 @@ module Peoplefinder
         :primary_phone_number, :secondary_phone_number, :email, :image,
         :image_cache, :description, :tags, :community_id,
         *Person::DAYS_WORKED,
-        memberships_attributes: [:id, :role, :group_id, :leader]
+        memberships_attributes: [:id, :role, :group_id, :leader, :subscribed]
       ]
     end
 

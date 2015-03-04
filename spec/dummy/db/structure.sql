@@ -138,7 +138,8 @@ CREATE TABLE memberships (
     role text,
     created_at timestamp without time zone,
     updated_at timestamp without time zone,
-    leader boolean DEFAULT false
+    leader boolean DEFAULT false,
+    subscribed boolean DEFAULT true NOT NULL
 );
 
 
@@ -609,3 +610,5 @@ INSERT INTO schema_migrations (version) VALUES ('20150213103214');
 INSERT INTO schema_migrations (version) VALUES ('20150217105036');
 
 INSERT INTO schema_migrations (version) VALUES ('20150219154520');
+
+INSERT INTO schema_migrations (version) VALUES ('20150304110649');

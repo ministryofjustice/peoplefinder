@@ -35,6 +35,10 @@
       = membership_f.check_box :leader
       %span.hint This person leads the team above. (More than one person can be selected as team leader.)
 
+      = membership_f.label :subscribed, 'Team updates', class: 'form-label-bold'
+      = membership_f.check_box :subscribed
+      %span.hint Tick this box to alert this person by email whenever anyone edits team details.
+
       .remove-link
         - if membership.new_record?
           = link_to 'Delete', '#', class: 'remove-new-membership'
