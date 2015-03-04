@@ -18,4 +18,6 @@ class Peoplefinder::Membership < ActiveRecord::Base
 
   include Peoplefinder::Concerns::ConcatenatedFields
   concatenated_field :to_s, :group_name, :role, join_with: ', '
+
+  scope :subscribing, -> { where(subscribed: true) }
 end
