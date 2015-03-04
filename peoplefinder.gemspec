@@ -28,6 +28,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'govuk_frontend_toolkit'
   s.add_dependency 'govuk_template'
   s.add_dependency 'haml-rails'
+  s.add_dependency 'faker'
   s.add_dependency 'jbuilder', '~> 2.0'
   s.add_dependency 'jquery-rails'
   s.add_dependency 'mail'
