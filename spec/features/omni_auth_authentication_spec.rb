@@ -15,9 +15,9 @@ feature 'OmniAuth Authentication' do
     expect(page).to have_title("Log in - #{ app_title }")
 
     click_link 'Use Google'
-    expect(page).to have_text('Logged in as John Doe')
+    expect(page).to have_text('Signed in as John Doe')
 
-    click_link 'Log out'
+    click_link 'Sign out'
     expect(login_page).to be_displayed
   end
 

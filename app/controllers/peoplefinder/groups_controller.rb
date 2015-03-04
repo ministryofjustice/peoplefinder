@@ -102,5 +102,9 @@ module Peoplefinder
         @versions = AuditVersionPresenter.wrap(@group.versions)
       end
     end
+
+    def can_add_person_here?
+      @group && @group.ancestry_depth > 1
+    end
   end
 end
