@@ -1,12 +1,10 @@
 %div.edit-links
+  - if can_add_person_here?
+    = link_to 'Add new person', new_person_path, class: 'add-new-person'
+
   - if @group
-    - if @group.ancestry_depth > 1
-      = link_to 'Add new person', new_person_path, class: 'add-new-person'
     = link_to 'Edit this team', edit_group_path(@group), class: 'edit-this-team'
     = link_to 'Add new sub-team', new_group_group_path(@group), class: 'add-new-sub-team'
 
   - if @person
     = link_to 'Edit this profile', edit_person_path(@person), class: 'edit-this-person'
-
-  - if @search
-    = link_to 'Add a new person', new_person_path, class: 'add-new-person'

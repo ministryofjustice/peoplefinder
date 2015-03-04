@@ -18,6 +18,11 @@ module Peoplefinder
       { ip_address: request.remote_ip, user_agent: request.user_agent }
     end
 
+    def can_add_person_here?
+      false
+    end
+    helper_method :can_add_person_here?
+
     def current_user
       @current_user ||= Peoplefinder::Login.current_user(session)
     rescue ActiveRecord::RecordNotFound
