@@ -50,7 +50,10 @@ module Peoplefinder
 
     # PATCH/PUT /groups/1
     def update
-      if @group.update(group_params)
+      group_update_service = Peoplefinder::GroupUpdateService.new(
+        group: @group, person_responsible: current_user
+      )
+      if group_update_service.update(group_params)
         notice :group_updated, group: @group
         redirect_to @group
       else
