@@ -96,6 +96,8 @@ feature 'Group maintenance' do
     dept = create(:department)
     org = create(:group, name: 'CSG', parent: dept)
     group = create(:group, name: 'Digital Services', parent: org)
+    subscriber = create(:person)
+    create :membership, person: subscriber, group: group, subscribed: true
 
     javascript_log_in
     visit group_path(group)
@@ -118,6 +120,11 @@ feature 'Group maintenance' do
     group.reload
     expect(group.name).to eql(new_name)
     expect(group.parent).to eql(dept)
+
+    expect(last_email.to).to include(subscriber.email)
+    expect(last_email.subject).to eq('People Finder team updated')
+    expect(page).to have_text(new_name)
+    expect(last_email.body.encoded).to match(group_url(group))
   end
 
   scenario 'Not responding to the selection of impossible parent nodes', js: true do

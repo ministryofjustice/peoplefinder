@@ -114,6 +114,9 @@ en:
         subject: "This email address has been removed from a profile on MOJ People Finder"
       updated_address_to_email:
         subject: "This email address has been added to a profile on MOJ People Finder"
+    group_update_mailer:
+      inform_subscriber:
+        subject: "People Finder team updated"
     errors:
       information_request:
         message_required: "You must enter a message to be sent to the person"
