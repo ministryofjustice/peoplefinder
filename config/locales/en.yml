@@ -73,6 +73,21 @@ en:
         update_error: "There was an error updating the image"
       reported_profiles:
         message_sent: "Your message has been sent"
+    memberships:
+      leader:
+        mine: |
+          Tick this box if you lead the team above.
+          (More than one person can be selected as team leader.)
+        other: |
+          This person leads the team above.
+          (More than one person can be selected as team leader.)
+      subscribed:
+        mine: |
+          Tick this box if you want to be alerted by email whenever anyone
+          edits team details.
+        other: |
+          Tick this box to alert this person by email whenever anyone edits
+          team details.
     people:
       form:
         notes:
