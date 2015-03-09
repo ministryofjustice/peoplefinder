@@ -186,4 +186,19 @@ RSpec.describe Peoplefinder::Group, type: :model do
       end
     end
   end
+
+  describe '#subscribers' do
+    it 'returns all members with the subscribed flag set' do
+      group = create(:group)
+      subscriber_a = create(:person)
+      subscriber_b = create(:person)
+      non_subscriber = create(:person)
+      _non_member = create(:person)
+      create :membership, person: subscriber_a, group: group, subscribed: true
+      create :membership, person: subscriber_b, group: group, subscribed: true
+      create :membership, person: non_subscriber, group: group, subscribed: false
+
+      expect(group.subscribers).to match_array([subscriber_a, subscriber_b])
+    end
+  end
 end

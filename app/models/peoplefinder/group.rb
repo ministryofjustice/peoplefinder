@@ -62,6 +62,10 @@ class Peoplefinder::Group < ActiveRecord::Base
     new_record? || parent.present? || children.empty?
   end
 
+  def subscribers
+    memberships.subscribing.joins(:person).map(&:person)
+  end
+
 private
 
   def name_and_sequence

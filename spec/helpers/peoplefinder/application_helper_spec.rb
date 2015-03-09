@@ -73,4 +73,22 @@ RSpec.describe Peoplefinder::ApplicationHelper, type: :helper do
       expect(call_to(nil)).to be_nil
     end
   end
+
+  context '#role_translate' do
+    let(:current_user) { build(:person) }
+
+    it 'uses the "mine" translation when the user is the current user' do
+      expect(I18n).to receive(:t).
+        with('foo.bar.mine', hash_including(name: current_user)).
+        and_return('translation')
+      expect(role_translate(current_user, 'foo.bar')).to eq('translation')
+    end
+
+    it 'uses the "other" translation when the user is not the current user' do
+      expect(I18n).to receive(:t).
+        with('foo.bar.other', hash_including(name: current_user)).
+        and_return('translation')
+      expect(role_translate(build(:person), 'foo.bar')).to eq('translation')
+    end
+  end
 end

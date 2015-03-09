@@ -56,6 +56,17 @@ module Peoplefinder
       content_tag(:a, href: "tel:#{digits}") { telno }
     end
 
+    def role_translate(subject, key, options = {})
+      if subject == current_user
+        subkey = 'mine'
+        user = subject
+      else
+        subkey = 'other'
+        user = current_user
+      end
+      I18n.t([key, subkey].join('.'), options.merge(name: user))
+    end
+
   private
 
     def updated_at(obj)
