@@ -2,4 +2,4 @@
   %a.subgroup-link-block.inner-block{ href: url_for(subgroup) }
     %h3= subgroup
     %div.about-subgroup
-      = govspeak(truncate(subgroup.description, length: 350))
+      = govspeak(truncate(subgroup.with_placeholder_default(:description), length: 350))

@@ -4,6 +4,7 @@ class Peoplefinder::Group < ActiveRecord::Base
   self.table_name = 'groups'
 
   include Peoplefinder::Concerns::Hierarchical
+  include Peoplefinder::Concerns::Placeholder
 
   MAX_DESCRIPTION = 1000
 

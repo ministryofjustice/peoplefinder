@@ -186,6 +186,10 @@ en:
         skills_and_expertise_hint_html: "You can add tags to your profile to allow people to find you based on<br/>your specific skills or expertise. Add them using the field below and<br/>remove them at any time with the ‘X’."
         team_deletable: "Note that team deletion cannot be undone."
         team_not_deletable: "Team deletion is only possible if there are no people associated with it."
+  placeholders:
+    peoplefinder/group:
+      description: |
+        Discover what this team is responsible for, who is in it and how you can get in touch with them.
   activerecord:
     errors:
       messages:
