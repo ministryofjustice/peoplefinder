@@ -97,17 +97,6 @@
       %p.form-hint= info_text('notes_field_hint')
     = f.text_area :description, class: 'form-control'
 
-  - if feature_enabled?(:profile_tags)
-    .form-group.line-above
-      = f.label :tags, class: 'form-label-bold' do
-        Skills and expertise
-        %p.form-hint= info_text('skills_and_expertise_hint_html')
-
-      #person_tag_chooser
-      = hidden_field_tag :tag_list, Peoplefinder::Person.tag_list
-      = f.text_field :tags, class: 'person_tags'
-
-
   .form-group.line-above
     = f.label :image, class: 'form-label-bold' do
       Photo
