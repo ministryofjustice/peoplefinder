@@ -129,9 +129,8 @@ img.preview {
 .complete-your-profile {
   background-color: $grey-bg;
   width: 285px;
-  height: 100px;
   margin-top: 5px;
-  padding: 15px 0 0 15px;
+  padding: 15px 0 1px 15px;
   font-weight: bold;
   .bar {
     line-height: 15px;
@@ -156,6 +155,9 @@ img.preview {
   a {
     font-weight: normal;
   }
+}
+.complete-your-profile.complete {
+  background-color: $palegreen;
 }
 
 form {

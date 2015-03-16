@@ -215,12 +215,14 @@ feature 'Person maintenance' do
     scenario 'when it is complete' do
       complete_profile!(person)
       visit person_path(person)
-      expect(page).not_to have_text('Profile completeness')
+      expect(page).to have_text('Profile completeness')
+      expect(page).to have_text('Thanks for improving People Finder for everyone!')
     end
 
     scenario 'when it is incomplete' do
       visit person_path(person)
       expect(page).to have_text('Profile completeness')
+      expect(page).to have_text('complete your profile')
     end
   end
 

@@ -56,26 +56,11 @@
       - if feature_enabled?(:profile_tags)
         = render partial: "show_tags"
 
-
-- if @person.incomplete? && @person.email.present?
-
+- if @person.email.present?
   - if current_user.email == @person.email
-    .complete-your-profile
-      Profile completeness
-      .bar
-        .on{ style: "width: #{ @person.completion_score }%" } &nbsp;
-        .off{ style: "width: #{ 100 - @person.completion_score }%" } &nbsp;
-      .score #{@person.completion_score}%
-      %p= link_to 'complete your profile', edit_person_path(@person)
-
-  - else
-    .spacer-55
-    %hr
-    .spacer-10
-    %p
-      = info_text('request_information')
-      <br/>
-      = link_to info_text('request_information_link'), new_person_information_request_path(@person)
+    = render partial: "completeness", locals: { person: @person }
+  - elsif @person.incomplete?
+    = render partial: "request_information", locals: { person: @person }
 
 - unless @versions.nil?
   %h1 Audit Log

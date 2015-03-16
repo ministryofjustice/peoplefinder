@@ -56,5 +56,9 @@ module Peoplefinder::Concerns::Completion
     def incomplete?
       completion_score < 100
     end
+
+    def complete?
+      !incomplete?
+    end
   end
 end
