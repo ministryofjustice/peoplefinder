@@ -15,5 +15,9 @@ module SpecSupport
     def check_email_has_token_link_to(person)
       expect(last_email.body.encoded).to match("http.*tokens\/#{ Peoplefinder::Token.last.to_param }.*?desired_path=%2Fpeople%2F*#{ person.to_param }")
     end
+
+    def get_message_part (mail, content_type)
+      mail.body.parts.find { |p| p.content_type.match content_type }.body.raw_source
+    end
   end
 end

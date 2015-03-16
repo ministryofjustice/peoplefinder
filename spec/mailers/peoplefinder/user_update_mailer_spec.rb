@@ -9,6 +9,11 @@ RSpec.shared_examples "observe token_auth feature flag" do
     expect(mail.body).to have_text(token_url(Peoplefinder::Token.last, desired_path: person_path(person)))
   end
 
+  it "generates a multipart message (plain text and html)" do
+    expect(mail.body.parts.length).to equal 2
+    expect(mail.body.parts.collect(&:content_type)).to equal ["text/plain; charset=UTF-8", "text/html; charset=UTF-8"]
+  end
+
   context 'token_auth feature disabled' do
     it "includes the person show url without an auth token" do
       without_feature('token_auth') do
@@ -20,6 +25,8 @@ end
 
 RSpec.describe Peoplefinder::UserUpdateMailer do
   let(:person) { create(:person, email: 'test.user@digital.justice.gov.uk') }
+
+
 
   describe ".new_profile_email" do
     subject(:mail) { described_class.new_profile_email(person).deliver }
