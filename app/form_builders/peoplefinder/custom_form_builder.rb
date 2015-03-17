@@ -16,9 +16,8 @@ module Peoplefinder
   private
 
     def presence_validated?(method)
-      return false unless object.class.respond_to?(:validators_on)
-      object.class.validators_on(method).map(&:class).
-        include?(ActiveRecord::Validations::PresenceValidator)
+      object.respond_to?(:mandates_presence_of?) &&
+        object.mandates_presence_of?(method)
     end
   end
 end
