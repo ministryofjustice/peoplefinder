@@ -21,6 +21,7 @@ feature "Peoplefinder::Person maintenance" do
     expect(membership.role).to eql('Head Honcho')
     expect(membership.group).to eql(group)
     expect(membership.leader?).to be true
+    expect(membership).to be_subscribed
   end
 
   scenario 'Editing a job title', js: true do
@@ -54,6 +55,21 @@ feature "Peoplefinder::Person maintenance" do
 
     click_button 'Save'
     expect(Peoplefinder::Person.last.memberships.length).to eql(2)
+  end
+
+  scenario 'Unsubscribing from notifications', js: true do
+    person = create_person_in_digital_justice
+
+    javascript_log_in
+    visit edit_person_path(person)
+    click_link 'Edit'
+
+    fill_in 'Job title', with: 'Head Honcho'
+    uncheck 'Team updates'
+    click_button 'Save'
+
+    membership = Peoplefinder::Person.last.memberships.last
+    expect(membership).not_to be_subscribed
   end
 
   scenario 'Clicking the add another role link', js: true do

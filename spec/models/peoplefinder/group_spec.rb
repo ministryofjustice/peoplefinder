@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Peoplefinder::Group, type: :model do
   it { should have_many(:leaders) }
-  it { should validate_presence_of(:team_email_address) }
+  it { should validate_length_of(:description).is_at_most(1000) }
 
   it "gives first orphaned groups as department" do
     parent = create(:department)
@@ -82,7 +82,7 @@ RSpec.describe Peoplefinder::Group, type: :model do
     it 'deletes the record when it is deletable' do
       allow(group).to receive(:deletable?).once.and_return(true)
       group.destroy
-      expect { described_class.find(group) }.to raise_error(ActiveRecord::RecordNotFound)
+      expect { described_class.find(group.id) }.to raise_error(ActiveRecord::RecordNotFound)
     end
   end
 
@@ -121,14 +121,6 @@ RSpec.describe Peoplefinder::Group, type: :model do
           end
         end
       end
-    end
-  end
-
-  describe '.leadership' do
-    it 'gets the first leader' do
-      group = create(:group)
-      leaderships = [create(:membership, group: group, leader: true)]
-      expect(group.leadership).to eql(leaderships.first)
     end
   end
 
@@ -192,6 +184,21 @@ RSpec.describe Peoplefinder::Group, type: :model do
           expect(second_duplicate.slug).to eql('ministry-of-justice-digital-services-2')
         end
       end
+    end
+  end
+
+  describe '#subscribers' do
+    it 'returns all members with the subscribed flag set' do
+      group = create(:group)
+      subscriber_a = create(:person)
+      subscriber_b = create(:person)
+      non_subscriber = create(:person)
+      _non_member = create(:person)
+      create :membership, person: subscriber_a, group: group, subscribed: true
+      create :membership, person: subscriber_b, group: group, subscribed: true
+      create :membership, person: non_subscriber, group: group, subscribed: false
+
+      expect(group.subscribers).to match_array([subscriber_a, subscriber_b])
     end
   end
 end

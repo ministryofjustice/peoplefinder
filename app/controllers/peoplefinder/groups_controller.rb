@@ -50,7 +50,10 @@ module Peoplefinder
 
     # PATCH/PUT /groups/1
     def update
-      if @group.update(group_params)
+      group_update_service = Peoplefinder::GroupUpdateService.new(
+        group: @group, person_responsible: current_user
+      )
+      if group_update_service.update(group_params)
         notice :group_updated, group: @group
         redirect_to @group
       else
@@ -82,7 +85,7 @@ module Peoplefinder
     # through.
     def group_params
       params.require(:group).
-        permit(:parent_id, :name, :description, :team_email_address)
+        permit(:parent_id, :name, :description)
     end
 
     def collection
@@ -101,6 +104,10 @@ module Peoplefinder
       if super_admin?
         @versions = AuditVersionPresenter.wrap(@group.versions)
       end
+    end
+
+    def can_add_person_here?
+      @group && @group.ancestry_depth > 1
     end
   end
 end

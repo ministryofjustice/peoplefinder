@@ -16,10 +16,6 @@
 
           - if feature_enabled?("communities") && person.community.present?
             .meta.community= link_to person.community, search_path(query: person.community.name)
-          .meta= person.phone
+          .meta= call_to(person.phone)
           .meta= mail_to(person.email)
 
-    - if edit_link
-      .grid.grid-1-3
-        .inner-block.edit-link
-          = link_to 'Edit this profile', edit_person_path(person)

@@ -13,7 +13,6 @@ feature 'Group maintenance' do
 
     fill_in 'Team name', with: name
     fill_in 'Team description', with: 'about my team'
-    add_team_email_address
     click_button 'Save'
 
     expect(page).to have_content('Created Ministry of Justice')
@@ -33,7 +32,6 @@ feature 'Group maintenance' do
 
     name = 'CSG'
     fill_in 'Team name', with: name
-    add_team_email_address
     click_button 'Save'
 
     expect(page).to have_content('Created CSG')
@@ -52,7 +50,6 @@ feature 'Group maintenance' do
 
     name = 'Digital Services'
     fill_in 'Team name', with: name
-    add_team_email_address
     click_button 'Save'
 
     expect(page).to have_content('Created Digital Services')
@@ -70,7 +67,6 @@ feature 'Group maintenance' do
 
     fill_in 'Team name', with: 'Digital Services'
     click_on_subteam_in_org_browser 'Corporate Services'
-    add_team_email_address
     click_button 'Save'
 
     within('.breadcrumbs ol') do
@@ -85,7 +81,7 @@ feature 'Group maintenance' do
     click_link('Delete this team')
 
     expect(page).to have_content("Deleted #{group.name}")
-    expect { Peoplefinder::Group.find(group) }.to raise_error(ActiveRecord::RecordNotFound)
+    expect { Peoplefinder::Group.find(group.id) }.to raise_error(ActiveRecord::RecordNotFound)
   end
 
   scenario 'Prevent deletion of a team that has memberships' do
@@ -100,6 +96,8 @@ feature 'Group maintenance' do
     dept = create(:department)
     org = create(:group, name: 'CSG', parent: dept)
     group = create(:group, name: 'Digital Services', parent: org)
+    subscriber = create(:person)
+    create :membership, person: subscriber, group: group, subscribed: true
 
     javascript_log_in
     visit group_path(group)
@@ -122,6 +120,11 @@ feature 'Group maintenance' do
     group.reload
     expect(group.name).to eql(new_name)
     expect(group.parent).to eql(dept)
+
+    expect(last_email.to).to include(subscriber.email)
+    expect(last_email.subject).to eq('People Finder team updated')
+    expect(page).to have_text(new_name)
+    expect(last_email.body.encoded).to match(group_url(group))
   end
 
   scenario 'Not responding to the selection of impossible parent nodes', js: true do
@@ -154,7 +157,6 @@ feature 'Group maintenance' do
     expect(page).to have_text('You are currently editing this profile')
 
     fill_in 'Team name', with: 'Digital'
-    add_team_email_address
     click_button 'Save'
     expect(page).to have_selector('.search-box')
     expect(page).not_to have_text('You are currently editing this profile')
@@ -180,9 +182,5 @@ feature 'Group maintenance' do
 
     visit edit_group_path(dept)
     expect(page).not_to have_selector('.org-browser')
-  end
-
-  def add_team_email_address
-    fill_in 'Team email address', with: 'something@example'
   end
 end

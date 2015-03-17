@@ -6,7 +6,8 @@ $paleblue: rgba(#9BB7CE, 0.5);
 $error-text: #DF3034;
 $error-border: $error-text;
 $error-bg: #FBE1E1;
-$notice-bg: #c9d8bd;
+$palegreen: #c9d8bd;
+$notice-bg: $palegreen;
 $pink-bg: #FEF7F7;
 $grey-bg: #DEE0E2;
 $green: #006435;
@@ -119,17 +120,13 @@ strong {
   font-weight: bold;
 }
 
-.title-with-edit {
-  border-bottom: 1px solid $blackish;
+.group-title {
   margin-bottom: 30px;
+
   h1 {
     border: 0 !important;
     margin: 30px 0 0 0;
     max-width: 50%;
-  }
-  a {
-    float: right;
-    margin:-39px 89px 0 0;
   }
 }
 
@@ -167,19 +164,6 @@ hr {
 
 select.form-control {
   -webkit-appearance: menulist;
-}
-
-a.add-new-person {
-  margin-top: 16px;
-  float: right;
-  color: $darkblue;
-  padding: 10px 15px 11px 58px;
-  background: $opaqueblue image-url('icon_plus.png') no-repeat 14px;
-
-  @media screen and (max-width: 320px) {
-    float: none;
-    display: block;
-  }
 }
 
 .editing-alert {
@@ -313,6 +297,70 @@ fieldset {
 textarea.form-control {
   width: 95%;
   height: 205px;
+}
+
+.textarea-word-count {
+  &.error {
+    color: $error-colour;
+  }
+}
+
+.header-app-name {
+  a {
+    color: $white;
+    &:hover {
+      text-decoration: none;
+    }
+  }
+}
+
+.login-bar {
+  text-align: right;
+  padding: 0.5em 1em;
+  background: $grey-3;
+
+  span {
+    margin: 0.4em;
+  }
+
+  .logout-link {
+    border-left: 1px solid $black;
+    padding-left: 0.4em;
+    margin-left: 0;
+  }
+}
+
+.edit-links {
+  background: $grey-3;
+  padding: 0.5em;
+  padding-bottom: 0.3em;
+  position: relative;
+  top: 15px;
+  width: 60%;
+  float: right;
+
+  @media screen and (max-width: 640px) {
+    width: 97%;
+  }
+
+  a {
+    display: block;
+    padding-left: 30px;
+    margin: 0.4em;
+    line-height: 1.8em;
+
+    &.add-new-person {
+      background: image-url('icon_add_person.png') scroll no-repeat 0 0;
+    }
+
+    &.edit-this-team, &.edit-this-person {
+      background: image-url('icon_edit_team.png') scroll no-repeat 0 0;
+    }
+
+    &.add-new-sub-team {
+      background: image-url('icon_add_subteam.png') scroll no-repeat 0 0;
+    }
+  }
 }
 
 @import 'retinal_images';

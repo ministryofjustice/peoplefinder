@@ -26,25 +26,23 @@ en:
   peoplefinder:
     sessions:
       login_page:
-        heading: Use the people finder
+        heading: Get an email link to log in to People Finder
         intro: |
-          People finder connects you with your colleagues and co-workers.
-          You need to create a profile to use the tool.
-          To build a full profile, add your contact details and information about your job, eg your numbers, location or expertise. We’ll email a reminder to complete your profile if there’s more details you could add.
-        intro_instructions: |
-          Use your government email address to log-in to and build or edit your profile, or find colleagues.
-        heading_google: Log in with a government Google account
+          Instead of creating a password to use People Finder, the service will send you an email with a link to automatically log in. Please give your email address then check your inbox to start using People Finder.
+        heading_google: Use a government Google account
         body_google:
           If you have a government Google account you can log in quickly
           with the official authentication screen.
-        heading_other: Log in with a government email address
+        heading_other: Use a government email address
         body_other: Enter a valid government email address below
-        log_in_google: Log in with Google
-        log_in_email: Log in with email
+        log_in_google: Use Google
+        log_in_email: Use email
     tokens:
       show:
         token_auth_disabled: "Sorry, that login link is invalid. Please login using your Google account."
       create:
+        title: Please check your emails
+        body: We are sending you a link to log in to People Finder.
         token_auth_disabled: "Sorry, the alternate login method is not availabe. Please login using your Google account."
     controllers:
       groups:
@@ -75,7 +73,25 @@ en:
         update_error: "There was an error updating the image"
       reported_profiles:
         message_sent: "Your message has been sent"
+    memberships:
+      leader:
+        mine: |
+          Tick this box if you lead the team above.
+          (More than one person can be selected as team leader.)
+        other: |
+          This person leads the team above.
+          (More than one person can be selected as team leader.)
+      subscribed:
+        mine: |
+          Tick this box if you want to be alerted by email whenever anyone
+          edits team details.
+        other: |
+          Tick this box to alert this person by email whenever anyone edits
+          team details.
     people:
+      form:
+        notes:
+          email: "Note: You can't change this email address. If it's changed, you must delete this profile and create a new one."
       day_names:
         works_monday: "Monday"
         works_tuesday: "Tuesday"
@@ -113,6 +129,9 @@ en:
         subject: "This email address has been removed from a profile on MOJ People Finder"
       updated_address_to_email:
         subject: "This email address has been added to a profile on MOJ People Finder"
+    group_update_mailer:
+      inform_subscriber:
+        subject: "People Finder team updated"
     errors:
       information_request:
         message_required: "You must enter a message to be sent to the person"
@@ -120,12 +139,32 @@ en:
         general_message: "You need to add more information to complete your profile - see below."
       group:
         general_message: "You need to add more information - see below."
-      groups:
-        memberships_exist: "cannot be deleted until all the memberships have been removed"
+    shared:
+      search:
+        label: Enter the name of a person or role
+        placeholder: Enter your text here
+    home:
+      heading: Welcome to People Finder
+      explanation: |
+        Find out how to contact people, what team they’re in, where and when
+        they work.
+      search_heading: Search People Finder
+      search_hint: |
+        You can search by skills, job title, location, phone number,
+        or by name.
+      usage: |
+        Help keep People Finder up to date. Edit your profile to make sure
+        your information is current and accurate.
+        You can also make changes to other people’s profiles. They will receive
+        an email notifying them of changes.
+      org_heading: Browse the organisation
+      org_sub_heading: Browse by team
+      org_hint_html: |
+        Click on departments and teams, or see the whole of the %{link}.
     views:
       info_text:
         building_alert: "You are creating a profile - click the Save button to finish"
-        complete_your_profile_alert: "Start building your profile now so colleagues and co-workers can get the latest information on you.<br/>We’ll send you regular reminders until it’s complete."
+        complete_your_profile_alert_html: "Start building your profile now so colleagues and co-workers can get the latest information on you.<br/>We’ll send you regular reminders until it’s complete."
         delete_this_profile: "Delete this profile"
         delete_this_team: "Delete this team"
         duplicate_names_hint: "There are existing profiles that have the same name. Check that it’s not one of these before continuing."
@@ -144,9 +183,13 @@ en:
         reported_profile_additional_details_label: "Additional details (optional)"
         request_information: "Is this profile complete?"
         request_information_link: "Ask the person to update their details"
-        skills_and_expertise_hint: "You can add tags to your profile to allow people to find you based on<br/>your specific skills or expertise. Add them using the field below and<br/>remove them at any time with the ‘X’."
+        skills_and_expertise_hint_html: "You can add tags to your profile to allow people to find you based on<br/>your specific skills or expertise. Add them using the field below and<br/>remove them at any time with the ‘X’."
         team_deletable: "Note that team deletion cannot be undone."
         team_not_deletable: "Team deletion is only possible if there are no people associated with it."
+  placeholders:
+    peoplefinder/group:
+      description: |
+        Discover what this team is responsible for, who is in it and how you can get in touch with them.
   activerecord:
     errors:
       messages:
@@ -157,6 +200,10 @@ en:
         peoplefinder/token:
           invalid_address: "Email address is not formatted correctly"
           invalid_domain: "Email address is not valid"
+        peoplefinder/group:
+          attributes:
+            base:
+              memberships_exist: "cannot be deleted until all the memberships have been removed"
     attributes:
       peoplefinder/token:
         user_email: "Email address"

@@ -13,3 +13,5 @@ load "jshint/tasks/jshint.rake"
 Peoplefinder::Engine.load_tasks
 
 Bundler::GemHelper.install_tasks
+
+task 'db:structure:load' => [:load_app, 'app:db:structure:load']

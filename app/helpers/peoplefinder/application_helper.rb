@@ -25,7 +25,9 @@ module Peoplefinder
       return if messages.empty?
       content_tag(:div, class: 'inner-block') {
         content_tag(:div, id: 'flash-messages') {
-          messages.map { |type| flash_message(type) }.join.html_safe
+          messages.inject(ActiveSupport::SafeBuffer.new) { |html, type|
+            html << flash_message(type)
+          }
         }
       }
     end
@@ -35,13 +37,34 @@ module Peoplefinder
     end
 
     def info_text(key)
-      t(key, scope: %w[peoplefinder views info_text].join('.')).html_safe
+      t(key, scope: 'peoplefinder.views.info_text')
+    end
+
+    def app_title
+      Rails.configuration.app_title
     end
 
     def page_title
       (
         [@page_title] << Rails.configuration.app_title
       ).compact.join(' - ')
+    end
+
+    def call_to(telno)
+      return nil unless telno
+      digits = telno.gsub(/[^0-9+#*,]+/, '')
+      content_tag(:a, href: "tel:#{digits}") { telno }
+    end
+
+    def role_translate(subject, key, options = {})
+      if subject == current_user
+        subkey = 'mine'
+        user = subject
+      else
+        subkey = 'other'
+        user = current_user
+      end
+      I18n.t([key, subkey].join('.'), options.merge(name: user))
     end
 
   private

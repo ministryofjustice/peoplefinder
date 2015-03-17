@@ -198,7 +198,7 @@ feature 'Person maintenance' do
       person = create(:person)
       visit edit_person_path(person)
       click_link('Delete this profile')
-      expect { Peoplefinder::Person.find(person) }.to raise_error(ActiveRecord::RecordNotFound)
+      expect { Peoplefinder::Person.find(person.id) }.to raise_error(ActiveRecord::RecordNotFound)
     end
 
     scenario 'Allow deletion of a person even when there are memberships' do
@@ -206,8 +206,8 @@ feature 'Person maintenance' do
       person = membership.person
       visit edit_person_path(person)
       click_link('Delete this profile')
-      expect { Peoplefinder::Membership.find(membership) }.to raise_error(ActiveRecord::RecordNotFound)
-      expect { Peoplefinder::Person.find(person) }.to raise_error(ActiveRecord::RecordNotFound)
+      expect { Peoplefinder::Membership.find(membership.id) }.to raise_error(ActiveRecord::RecordNotFound)
+      expect { Peoplefinder::Person.find(person.id) }.to raise_error(ActiveRecord::RecordNotFound)
     end
   end
 
@@ -215,12 +215,14 @@ feature 'Person maintenance' do
     scenario 'when it is complete' do
       complete_profile!(person)
       visit person_path(person)
-      expect(page).not_to have_text('Profile completeness')
+      expect(page).to have_text('Profile completeness')
+      expect(page).to have_text('Thanks for improving People Finder for everyone!')
     end
 
     scenario 'when it is incomplete' do
       visit person_path(person)
       expect(page).to have_text('Profile completeness')
+      expect(page).to have_text('complete your profile')
     end
   end
 
@@ -251,7 +253,7 @@ feature 'Person maintenance' do
       expect(last_email).to have_text('Hello Bob')
       expect(last_email.to).to include(another_person.email)
       expect(last_email.subject).to eql('Request to update your People Finder profile')
-      check_email_has_token_link_to(another_person)
+      check_email_has_profile_link(another_person)
       expect(page).to have_text("Your message has been sent to #{ another_person.name }")
     end
   end
@@ -285,7 +287,7 @@ feature 'Person maintenance' do
     fill_in 'Additional details', with: 'Some stuff'
     expect { click_button 'Submit' }.to change { ActionMailer::Base.deliveries.count }.by(1)
 
-    expect(last_email.to).to include(group.team_email_address)
+    expect(last_email.to).to include(Rails.configuration.support_email)
     expect(last_email.subject).to eql('A People Finder profile has been reported')
     expect(last_email.body.encoded).to have_text('Reason for reporting: Duplicate profile')
     expect(last_email.body.encoded).to have_text('Additional details: Some stuff')

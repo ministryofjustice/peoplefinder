@@ -15,9 +15,7 @@ class Peoplefinder::EmailAddress
   end
 
   def valid_domain?
-    valid_login_domains.any? do |pattern|
-      domain_matches_pattern?(pattern, domain)
-    end
+    valid_login_domains.any? { |pattern| pattern === domain }
   end
 
   def valid_format?
@@ -67,15 +65,6 @@ private
   def capitalise(word)
     word.downcase.to_s.gsub(/\b('?\S)/u) do
       (Regexp.last_match[1]).upcase
-    end
-  end
-
-  def domain_matches_pattern?(pattern, domain)
-    case pattern
-    when String
-      domain == pattern
-    when Regexp
-      domain =~ pattern
     end
   end
 end

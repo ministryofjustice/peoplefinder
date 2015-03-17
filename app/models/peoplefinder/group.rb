@@ -3,11 +3,25 @@ require 'peoplefinder'
 class Peoplefinder::Group < ActiveRecord::Base
   self.table_name = 'groups'
 
+  include Peoplefinder::Concerns::Hierarchical
+  include Peoplefinder::Concerns::Placeholder
+
+  MAX_DESCRIPTION = 1000
+
   has_paper_trail class_name: 'Peoplefinder::Version',
                   ignore: [:updated_at, :created_at, :slug, :id]
 
   extend FriendlyId
   friendly_id :slug_candidates, use: :slugged
+
+  def slug_candidates
+    return [name] unless parent
+    [name, [parent.name, name], [parent.name, name_and_sequence]]
+  end
+
+  def should_generate_new_friendly_id?
+    name_changed?
+  end
 
   has_many :memberships, -> { includes(:person).order('people.surname')  }
   has_many :people, through: :memberships
@@ -21,15 +35,13 @@ class Peoplefinder::Group < ActiveRecord::Base
   has_many :leaders, through: :leaderships, source: :person
   has_many :non_leaders, through: :non_leaderships, source: :person
 
-  has_ancestry cache_depth: true
-
   validates :name, presence: true
   validates :slug, uniqueness: true
-  validates :team_email_address, presence: true
-
-  default_scope { order(name: :asc) }
+  validates :description, length: { maximum: MAX_DESCRIPTION }
 
   before_destroy :check_deletability
+
+  default_scope { order(name: :asc) }
 
   def self.department
     roots.first
@@ -39,46 +51,23 @@ class Peoplefinder::Group < ActiveRecord::Base
     name
   end
 
-  def leadership
-    leaderships.first
-  end
-
   def deletable?
     leaf_node? && memberships.reject(&:new_record?).empty?
   end
 
-  def leaf_node?
-    children.blank?
-  end
-
   def all_people
-    Peoplefinder::Person.find_by_sql(
-    [
-      'select distinct array_agg(role) as role_list, p.*
-      from memberships m, people p
-      where m.person_id = p.id AND group_id in (?)
-      group by p.id;', subtree_ids
-    ]).
-    sort_by(&:name).
-    each { |p| p.role_names = p.role_list.compact.join(', ') }
+    Peoplefinder::Person.all_in_groups(subtree_ids)
   end
 
   def editable_parent?
     new_record? || parent.present? || children.empty?
   end
 
-  def slug_candidates
-    candidates = [name]
-    if parent.present?
-      candidates <<  [parent.name, name]
-      candidates <<  [parent.name, name_and_sequence]
-    end
-    candidates
+  def subscribers
+    memberships.subscribing.joins(:person).map(&:person)
   end
 
-  def should_generate_new_friendly_id?
-    name_changed?
-  end
+private
 
   def name_and_sequence
     slug = name.to_param
@@ -86,15 +75,7 @@ class Peoplefinder::Group < ActiveRecord::Base
     "#{slug}-#{sequence}"
   end
 
-private
-
   def check_deletability
-    unless deletable?
-      errors[:base] << I18n.t('peoplefinder.errors.groups.memberships_exist')
-      return false
-    end
+    errors.add :base, :memberships_exist unless deletable?
   end
-
-  delegate :image, to: :leader, prefix: true
-  delegate :name, to: :leader, prefix: true
 end

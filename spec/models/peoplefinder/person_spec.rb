@@ -26,6 +26,42 @@ RSpec.describe Peoplefinder::Person, type: :model do
     end
   end
 
+  describe '.all_in_groups' do
+    let(:groups) { create_list(:group, 3) }
+    let(:people) { create_list(:person, 3) }
+
+    it 'returns all people in any listed groups' do
+      people.zip(groups).each do |person, group|
+        create :membership, person: person, group: group
+      end
+      result = described_class.all_in_groups(groups.take(2))
+      expect(result).to include(people[0])
+      expect(result).to include(people[1])
+      expect(result).not_to include(people[2])
+    end
+
+    it 'concatenates all roles alphabetically with commas' do
+      create :membership, person: people[0], group: groups[0], role: 'Prison chaplain'
+      create :membership, person: people[0], group: groups[1], role: 'Head of crime'
+      result = described_class.all_in_groups(groups.take(2))
+      expect(result[0].role_names).to eq('Head of crime, Prison chaplain')
+    end
+
+    it 'omits blank roles' do
+      create :membership, person: people[0], group: groups[0], role: 'Prison chaplain'
+      create :membership, person: people[0], group: groups[1], role: ''
+      result = described_class.all_in_groups(groups.take(2))
+      expect(result[0].role_names).to eq('Prison chaplain')
+    end
+
+    it 'includes each person only once' do
+      create :membership, person: people[0], group: groups[0], role: 'Prison chaplain'
+      create :membership, person: people[0], group: groups[1], role: 'Head of crime'
+      result = described_class.all_in_groups(groups.take(2))
+      expect(result.length).to eq(1)
+    end
+  end
+
   context 'slug' do
     it 'generates from the first part of the email address if present' do
       person = create(:person, email: 'user.example@digital.justice.gov.uk')
@@ -124,27 +160,6 @@ RSpec.describe Peoplefinder::Person, type: :model do
 
       it 'uses the secondary phone number' do
         expect(person.phone).to eql(secondary_phone_number)
-      end
-    end
-  end
-
-  describe '.support_email' do
-    let(:person) { create(:person) }
-    subject { person.support_email }
-
-    context 'when the the person is a member of a group' do
-      before do
-        person.groups << create(:group, team_email_address: '123@example.com')
-      end
-
-      it 'uses the group email address' do
-        expect(subject).to eql('123@example.com')
-      end
-    end
-
-    context 'when the person is not in a group' do
-      it 'sets the application-wide support email' do
-        expect(subject).to eql(Rails.configuration.support_email)
       end
     end
   end

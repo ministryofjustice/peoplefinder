@@ -3,30 +3,63 @@ require 'peoplefinder'
 class Peoplefinder::Person < ActiveRecord::Base
   self.table_name = 'people'
 
-  extend FriendlyId
-  include Peoplefinder::Concerns::Searchable
   include Peoplefinder::Concerns::Completion
   include Peoplefinder::Concerns::Notifications
   include Peoplefinder::Concerns::WorkDays
-  include Peoplefinder::Concerns::Sanitisable
+
+  extend FriendlyId
+  friendly_id :slug_source, use: :slugged
+
+  def slug_source
+    email.present? ? email.split(/@/).first : name
+  end
+
+  include Peoplefinder::Concerns::Searchable
+
+  def as_indexed_json(_options = {})
+    as_json(
+      only: [:tags, :description, :location_in_building, :building, :city],
+      methods: [:name, :role_and_group, :community_name]
+    )
+  end
+
+  def self.fuzzy_search(query)
+    search(
+      size: 100,
+      query: {
+        fuzzy_like_this: {
+          fields: [
+            :name, :tags, :description, :location_in_building, :building,
+            :city, :role_and_group, :community_name
+          ],
+          like_text: query, prefix_length: 3, ignore_tf: true
+        }
+      }
+    )
+  end
 
   has_paper_trail class_name: 'Peoplefinder::Version',
-                  ignore: [:updated_at, :created_at, :id, :slug,
-                           :login_count, :last_login_at]
-  mount_uploader :image, Peoplefinder::ImageUploader
+                  ignore: [:updated_at, :created_at, :id, :slug, :login_count, :last_login_at]
 
-  attr_accessor :crop_x, :crop_y, :crop_w, :crop_h, :role_names
+  def changes_for_paper_trail
+    super.tap { |changes|
+      changes['image'].map! { |img| img.url && File.basename(img.url) } if changes.key?('image')
+    }
+  end
+
+  include Peoplefinder::Concerns::Sanitisable
+  sanitise_fields :given_name, :surname, :email
+  before_save :sanitize_tags
+
+  mount_uploader :image, Peoplefinder::ImageUploader
+  attr_accessor :crop_x, :crop_y, :crop_w, :crop_h
 
   validates :given_name, presence: true, on: :update
   validates :surname, presence: true
   validates :email,
     presence: true, uniqueness: { case_sensitive: false }, 'peoplefinder/email' => true
 
-  sanitise_fields :given_name, :surname, :email
-
-  has_many :memberships,
-    -> { includes(:group).order('groups.name')  },
-    dependent: :destroy
+  has_many :memberships, -> { includes(:group).order('groups.name') }, dependent: :destroy
   has_many :groups, through: :memberships
   belongs_to :community
 
@@ -36,34 +69,32 @@ class Peoplefinder::Person < ActiveRecord::Base
 
   default_scope { order(surname: :asc, given_name: :asc) }
 
-  friendly_id :slug_source, use: :slugged
-
-  before_save :sanitize_tags
-
   def self.namesakes(person)
-    where(surname: person.surname).
-    where(given_name: person.given_name).
-    where.not(id: person.id)
+    where(surname: person.surname, given_name: person.given_name).where.not(id: person.id)
   end
 
-  def name
-    [given_name, surname].compact.join(' ').strip
+  def self.tag_list
+    where('tags is not null').pluck(:tags).flatten.join(',').split(',').uniq.sort.join(',')
+  end
+
+  def self.all_in_groups(group_ids)
+    query = <<-SQL
+      SELECT DISTINCT p.*,
+        string_agg(CASE role WHEN '' THEN NULL ELSE role END, ', ' ORDER BY role) AS role_names
+      FROM memberships m, people p
+      WHERE m.person_id = p.id AND group_id in (?)
+      GROUP BY p.id
+      ORDER BY surname ASC, given_name ASC;
+    SQL
+    find_by_sql([query, group_ids])
   end
 
   def to_s
     name
   end
 
-  def slug_source
-    if email.present?
-      email.split(/@/).first
-    else
-      name
-    end
-  end
-
   def role_and_group
-    memberships.map { |m| [m.group_name, m.role].join(', ') }.join('; ')
+    memberships.join('; ')
   end
 
   def path(hint_group = nil)
@@ -71,41 +102,14 @@ class Peoplefinder::Person < ActiveRecord::Base
   end
 
   def phone
-    return primary_phone_number if primary_phone_number.present?
-    return secondary_phone_number if secondary_phone_number.present?
+    [primary_phone_number, secondary_phone_number].find(&:present?)
   end
 
-  def support_email
-    if groups.present?
-      groups.first.team_email_address
-    else
-      Rails.configuration.support_email
-    end
-  end
+  delegate :name, to: :community, prefix: true, allow_nil: true
 
-  def community_name
-    community.try(:name)
-  end
-
-  def self.tag_list
-    Peoplefinder::Person.where('tags is not null').
-      pluck(:tags).flatten.join(',').
-      split(',').uniq.sort.join(',')
-  end
-
-  def changes_for_paper_trail
-    super.tap { |changes|
-      if changes.key?('image')
-        changes['image'].map! do |value|
-          value.url && File.basename(value.url)
-        end
-      end
-    }
-  end
-
-  def location
-    [location_in_building, building, city].select(&:present?).join(', ')
-  end
+  include Peoplefinder::Concerns::ConcatenatedFields
+  concatenated_field :location, :location_in_building, :building, :city, join_with: ', '
+  concatenated_field :name, :given_name, :surname, join_with: ' '
 
 private
 
@@ -116,10 +120,7 @@ private
   end
 
   def sanitize_tags
-    if tags
-      self.tags = tags.split(',').map { |tag|
-        tag.strip.capitalize
-      }.sort.join(',')
-    end
+    return unless tags
+    self.tags = tags.split(',').map { |t| t.strip.capitalize }.sort.join(',')
   end
 end

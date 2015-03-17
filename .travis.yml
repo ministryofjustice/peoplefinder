@@ -1,14 +1,14 @@
 language: ruby
 rvm:
-  - '2.1.4'
+  - '2.2.1'
 services:
   - elasticsearch
 before_install:
   - sudo apt-get install -qq phantomjs
 before_script:
   - psql -c 'create database pf_engine_test;' -U postgres
+  - psql -U postgres pf_engine_test < spec/dummy/db/structure.sql
 script:
-  - RAILS_ENV=test bundle exec rake db:migrate --trace
   - bundle exec rake
 notifications:
   email: false

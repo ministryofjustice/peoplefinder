@@ -203,6 +203,32 @@ You can override these in wrapper application by creating your own file:
 
 ## Utilities
 
+### Random data generator for testing
+
+The `Peoplefinder::RandomGenerator` is able to generate several layers of teams and people with randomly generated details in those teams.
+
+Usage:
+
+```Ruby
+
+  group = Peoplefinder::Group.find(...)
+
+  # initialise the generator with a parent group
+  generator = Peoplefinder::RandomGenerator.new(group)
+
+  # clean all subgroups and people within the provided parent group
+  generator.clear
+
+  # generate team structure and people with the given parameters
+  groups_levels = 2 # number of levels to generate
+  groups_per_level = 3 # how many teams per each level
+  people_per_group = 5 # how many people should be in the bottom most teams
+  domain = 'fake.gov.uk' # which e-mail address should be used for e-mails (has to be whitelisted)
+  generator.generate(groups_levels, groups_per_level, people_per_group, domain)
+```
+
+### Development tools
+
 CI by [Travis](https://travis-ci.org/ministryofjustice/peoplefinder).
 
 Software metrics by [Code Climate](https://codeclimate.com/github/ministryofjustice/peoplefinder)
