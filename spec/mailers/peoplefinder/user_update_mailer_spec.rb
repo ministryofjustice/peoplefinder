@@ -20,14 +20,6 @@ RSpec.shared_examples "observe token_auth feature flag" do
 end
 
 
-RSpec.shared_examples "multipart emails" do
-  it "generates a multipart message (plain text and html)" do
-    expect(mail.body.parts.length).to equal 2
-    expect(mail.body.parts.collect(&:content_type)).to equal ["text/plain; charset=UTF-8", "text/html; charset=UTF-8"]
-  end
-end
-
-
 RSpec.describe Peoplefinder::UserUpdateMailer do
   let(:person) { create(:person, email: 'test.user@digital.justice.gov.uk') }
 
