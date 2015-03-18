@@ -1,5 +1,7 @@
 require 'peoplefinder'
 
+# Why is this a Concern? It really isn't.
+#
 module Peoplefinder::Concerns::Completion
   extend ActiveSupport::Concern
 
@@ -59,6 +61,10 @@ module Peoplefinder::Concerns::Completion
 
     def complete?
       !incomplete?
+    end
+
+    def needed_for_completion?(field)
+      COMPLETION_FIELDS.include?(field) && send(field).blank?
     end
   end
 end
