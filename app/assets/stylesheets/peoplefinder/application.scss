@@ -257,6 +257,19 @@ form input[readonly] {
   }
 }
 
+.incomplete {
+  border: 0 solid $green;
+  background: $palegreen;
+  padding: 15px;
+  width: 60%;
+
+  border-left-width: 4px;
+
+  input {
+    width: 90%;
+  }
+}
+
 .login-button {
   text-align: center;
   margin: 5px 0 10px 0;
