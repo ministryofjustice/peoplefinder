@@ -35,7 +35,7 @@ SET default_with_oids = false;
 
 CREATE TABLE communities (
     id integer NOT NULL,
-    name character varying(255),
+    name character varying,
     created_at timestamp without time zone,
     updated_at timestamp without time zone
 );
@@ -69,7 +69,7 @@ CREATE TABLE groups (
     name text,
     created_at timestamp without time zone,
     updated_at timestamp without time zone,
-    slug character varying(255),
+    slug character varying,
     description text,
     ancestry text,
     ancestry_depth integer DEFAULT 0 NOT NULL
@@ -102,9 +102,9 @@ ALTER SEQUENCE groups_id_seq OWNED BY groups.id;
 CREATE TABLE information_requests (
     id integer NOT NULL,
     recipient_id integer,
-    sender_email character varying(255),
+    sender_email character varying,
     message text,
-    type character varying(255)
+    type character varying
 );
 
 
@@ -182,8 +182,8 @@ CREATE TABLE people (
     works_wednesday boolean DEFAULT true,
     works_thursday boolean DEFAULT true,
     works_friday boolean DEFAULT true,
-    image character varying(255),
-    slug character varying(255),
+    image character varying,
+    slug character varying,
     works_saturday boolean DEFAULT false,
     works_sunday boolean DEFAULT false,
     tags text,
@@ -216,38 +216,6 @@ ALTER SEQUENCE people_id_seq OWNED BY people.id;
 
 
 --
--- Name: peoplefinder_taggings; Type: TABLE; Schema: public; Owner: -; Tablespace:
---
-
-CREATE TABLE peoplefinder_taggings (
-    id integer NOT NULL,
-    tag_id integer,
-    article_id integer,
-    created_at timestamp without time zone,
-    updated_at timestamp without time zone
-);
-
-
---
--- Name: peoplefinder_taggings_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE peoplefinder_taggings_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: peoplefinder_taggings_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE peoplefinder_taggings_id_seq OWNED BY peoplefinder_taggings.id;
-
-
---
 -- Name: reported_profiles; Type: TABLE; Schema: public; Owner: -; Tablespace:
 --
 
@@ -255,7 +223,7 @@ CREATE TABLE reported_profiles (
     id integer NOT NULL,
     notifier_id integer,
     subject_id integer,
-    recipient_email character varying(255),
+    recipient_email character varying,
     reason_for_reporting text,
     additional_details text
 );
@@ -285,7 +253,7 @@ ALTER SEQUENCE reported_profiles_id_seq OWNED BY reported_profiles.id;
 --
 
 CREATE TABLE schema_migrations (
-    version character varying(255) NOT NULL
+    version character varying NOT NULL
 );
 
 
@@ -334,8 +302,8 @@ CREATE TABLE versions (
     object text,
     created_at timestamp without time zone,
     object_changes text,
-    ip_address character varying(255),
-    user_agent character varying(255)
+    ip_address character varying,
+    user_agent character varying
 );
 
 
@@ -397,13 +365,6 @@ ALTER TABLE ONLY people ALTER COLUMN id SET DEFAULT nextval('people_id_seq'::reg
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY peoplefinder_taggings ALTER COLUMN id SET DEFAULT nextval('peoplefinder_taggings_id_seq'::regclass);
-
-
---
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
---
-
 ALTER TABLE ONLY reported_profiles ALTER COLUMN id SET DEFAULT nextval('reported_profiles_id_seq'::regclass);
 
 
@@ -459,14 +420,6 @@ ALTER TABLE ONLY memberships
 
 ALTER TABLE ONLY people
     ADD CONSTRAINT people_pkey PRIMARY KEY (id);
-
-
---
--- Name: peoplefinder_taggings_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
---
-
-ALTER TABLE ONLY peoplefinder_taggings
-    ADD CONSTRAINT peoplefinder_taggings_pkey PRIMARY KEY (id);
 
 
 --
@@ -547,20 +500,6 @@ CREATE UNIQUE INDEX index_people_on_lowercase_email ON people USING btree (lower
 --
 
 CREATE UNIQUE INDEX index_people_on_slug ON people USING btree (slug);
-
-
---
--- Name: index_peoplefinder_taggings_on_article_id; Type: INDEX; Schema: public; Owner: -; Tablespace:
---
-
-CREATE INDEX index_peoplefinder_taggings_on_article_id ON peoplefinder_taggings USING btree (article_id);
-
-
---
--- Name: index_peoplefinder_taggings_on_tag_id; Type: INDEX; Schema: public; Owner: -; Tablespace:
---
-
-CREATE INDEX index_peoplefinder_taggings_on_tag_id ON peoplefinder_taggings USING btree (tag_id);
 
 
 --

@@ -1,5 +1,10 @@
 module SpecSupport
   module OrgBrowser
+    def select_in_team_select(text)
+      page.execute_script("$('select.team-select-enhanced').css({display: 'inherit'})")
+      select text
+    end
+
     def click_on_team_in_org_browser(text)
       find('.org-browser .team-link', text: text).trigger(:click)
     end

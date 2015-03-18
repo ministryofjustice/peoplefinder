@@ -112,3 +112,15 @@ form {
     padding: 12px 0 69px 0;
   }
 }
+
+
+.team-select {
+  width: 80%;
+}
+
+.select2-results {
+  .team-path {
+    float: right;
+    color: $grey-1;
+  }
+}

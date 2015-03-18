@@ -1,4 +1,4 @@
-/* global $, document */
+/* global $, document, TeamAutocomplete */
 
 $(function() {
   $(document).on('click', '#add_membership', function(e) {
@@ -8,6 +8,9 @@ $(function() {
       success: function(data) {
         var el_to_add = $(data).html();
         $('#memberships').append(el_to_add);
+        TeamAutocomplete
+          .enhance( $('.team-select')
+          .not('.team-select-enhanced')[0]);
       }
     });
   });

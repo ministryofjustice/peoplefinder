@@ -294,51 +294,6 @@ feature 'Person maintenance' do
     expect(last_email.body.encoded).to have_text(person_url(person))
   end
 
-  scenario 'Adding skills and expertise to a new profile' do
-    visit new_person_path
-    fill_in 'Surname', with: 'Smith'
-    fill_in 'Email', with: person_attributes[:email]
-    fill_in 'person_tags', with: 'ruby,cakes and bakes'
-    click_button 'Save'
-
-    expect(page).to have_text('Skills and expertise')
-    within '.tags' do
-      expect(page).to have_text('Cakes and bakes')
-      expect(page).to have_text('Ruby')
-    end
-  end
-
-  scenario 'Editing skills and expertise with javascript', js: true do
-    create(:group, name: 'Digital')
-    person = create(:person, tags: 'Cooking')
-    javascript_log_in
-
-    visit edit_person_path(person)
-
-    within('.select2-container') do
-      expect(page).to have_text('Cooking')
-    end
-
-    # remove Cooking
-    find('.select2-search-choice-close').click
-
-    # add Baking
-    page.execute_script("i = $('.select2-container input').first();")
-    page.execute_script("i.val('baking').trigger('keydown');")
-    find('.select2-results li:first-child').click
-
-    # add Washing dishes
-    page.execute_script("i.val('washing dishes').trigger('keydown');")
-    find('.select2-results li:first-child').click
-
-    click_button 'Save'
-    within '.tags' do
-      expect(page).not_to have_text('Cooking')
-      expect(page).to have_text('Baking')
-      expect(page).to have_text('Washing dishes')
-    end
-  end
-
   scenario 'Tagging is disabled' do
     without_feature("profile_tags") do
       visit new_person_path
