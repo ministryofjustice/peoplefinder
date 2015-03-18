@@ -6,6 +6,7 @@ class Peoplefinder::Person < ActiveRecord::Base
   include Peoplefinder::Concerns::Completion
   include Peoplefinder::Concerns::Notifications
   include Peoplefinder::Concerns::WorkDays
+  include Peoplefinder::Concerns::ExposeMandatoryFields
 
   extend FriendlyId
   friendly_id :slug_source, use: :slugged
