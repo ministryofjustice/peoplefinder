@@ -5,15 +5,17 @@ var TeamAutocomplete = (function (){
     transformations: [
       // replace Ministry of Justice with MoJ
       function (o){
-        o.innerHTML = o.innerHTML.replace('Ministry of Justice', 'MoJ');
+        if($.trim(o.innerHTML) !== 'Ministry of Justice'){
+          o.innerHTML = o.innerHTML.replace('Ministry of Justice', 'MOJ');
+        }
       }
     ],
 
     formatResults: function ( o ){
       var name, path = '';
-      if( o.text === 'MoJ' ){
+      if( o.text === 'Ministry of Justice' ){
         name = 'Ministry of Justice';
-        path = '';
+        path = '<span class="hidden">Ministry of Justice</span>';
       }else{
         name = o.text.substring(0, o.text.indexOf('[') - 1);
         path = o.text.substring(o.text.indexOf('['));
