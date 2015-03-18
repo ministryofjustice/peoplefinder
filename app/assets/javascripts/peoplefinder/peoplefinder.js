@@ -8,7 +8,9 @@ $(function() {
       success: function(data) {
         var el_to_add = $(data).html();
         $('#memberships').append(el_to_add);
-        TeamAutocomplete.enhance( $('.team-select').not('.team-select-enhanced')[0]);
+        TeamAutocomplete
+          .enhance( $('.team-select')
+          .not('.team-select-enhanced')[0]);
       }
     });
   });
