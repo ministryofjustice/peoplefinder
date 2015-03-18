@@ -5,7 +5,10 @@ module Peoplefinder
       @person_responsible = person_responsible
       @group_url = group_url(group)
 
-      mail to: recipient.email
+      mail(to: recipient.email)  do |format|
+        format.html { render layout: 'peoplefinder/email' }
+        format.text
+      end
     end
   end
 end

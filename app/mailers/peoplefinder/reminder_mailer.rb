@@ -6,7 +6,10 @@ class Peoplefinder::ReminderMailer < ActionMailer::Base
   def inadequate_profile(person)
     @person = person
     @edit_url = edit_person_url(@person)
-    mail to: @person.email
+    mail(to: @person.email) do |format|
+      format.html { render layout: 'peoplefinder/email' }
+      format.text
+    end
   end
 
   def information_request(information_request)
@@ -14,7 +17,10 @@ class Peoplefinder::ReminderMailer < ActionMailer::Base
     @edit_url = edit_person_url(@person)
     @message = information_request.message
 
-    mail to: @person.email
+    mail(to: @person.email) do |format|
+      format.html { render layout: 'peoplefinder/email' }
+      format.text
+    end
   end
 
   def reported_profile(reported_profile)
@@ -23,6 +29,9 @@ class Peoplefinder::ReminderMailer < ActionMailer::Base
     @reason_for_reporting = reported_profile.reason_for_reporting
     @additional_details = reported_profile.additional_details
 
-    mail to: reported_profile.recipient_email
+    mail(to: reported_profile.recipient_email) do |format|
+      format.html { render layout: 'peoplefinder/email' }
+      format.text
+    end
   end
 end

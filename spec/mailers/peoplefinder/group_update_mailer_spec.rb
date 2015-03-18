@@ -16,15 +16,21 @@ RSpec.describe Peoplefinder::GroupUpdateMailer do
     }
 
     it 'includes the name of the group changed' do
-      expect(mail.body).to have_text(group.name)
+      %w[plain html].each do |part_type|
+        expect(get_message_part(mail, part_type)).to have_text(group.name)
+      end
     end
 
     it 'includes a link to the group changed' do
-      expect(mail.body).to have_text(group_url(group))
+      %w[plain html].each do |part_type|
+        expect(get_message_part(mail, part_type)).to have_text(group_url(group))
+      end
     end
 
     it 'includes the name of the person who changed the group' do
-      expect(mail.body).to have_text(person_responsible.name)
+      %w[plain html].each do |part_type|
+        expect(get_message_part(mail, part_type)).to have_text(person_responsible.name)
+      end
     end
 
     it 'is sent to the recipient' do

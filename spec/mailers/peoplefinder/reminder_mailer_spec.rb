@@ -22,11 +22,15 @@ RSpec.describe Peoplefinder::ReminderMailer do
     end
 
     it 'describes the profile completion score' do
-      expect(mail.body).to have_text("profile is #{ person.completion_score }% complete")
+      %w[plain html].each do |part_type|
+        expect(get_message_part(mail, part_type)).to have_text("profile is #{ person.completion_score }% complete")
+      end
     end
 
     it 'includes the the person edit url' do
-      expect(mail.body).to have_text(edit_person_url(person))
+      %w[plain html].each do |part_type|
+        expect(get_message_part(mail, part_type)).to have_text(edit_person_url(person))
+      end
     end
   end
 
@@ -50,7 +54,9 @@ RSpec.describe Peoplefinder::ReminderMailer do
     end
 
     it 'includes the person edit url' do
-      expect(mail.body).to have_text(edit_person_url(person))
+      %w[plain html].each do |part_type|
+        expect(get_message_part(mail, part_type)).to have_text(edit_person_url(person))
+      end
     end
   end
 
@@ -76,15 +82,21 @@ RSpec.describe Peoplefinder::ReminderMailer do
     end
 
     it 'includes the notifier' do
-      expect(mail.body).to have_text('notifier-person has said that ')
+      %w[plain html].each do |part_type|
+        expect(get_message_part(mail, part_type)).to have_text('notifier-person has said that ')
+      end
     end
 
     it 'includes the subject' do
-      expect(mail.body).to have_text('the information on given_name subject-person')
+      %w[plain html].each do |part_type|
+        expect(get_message_part(mail, part_type)).to have_text('the information on given_name subject-person')
+      end
     end
 
     it 'includes the subject url' do
-      expect(mail.body).to have_text(person_url(subject))
+      %w[plain html].each do |part_type|
+        expect(get_message_part(mail, part_type)).to have_text(person_url(subject))
+      end
     end
   end
 end
