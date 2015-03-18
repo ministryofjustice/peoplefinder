@@ -1,5 +1,5 @@
 = editing_mode(building)
-= form_for @person, builder: Peoplefinder::CustomFormBuilder, html: {:multipart => true} do |f|
+= form_for @person, builder: Peoplefinder::PersonFormBuilder, html: {:multipart => true} do |f|
 
   - if @person.errors.any?
     .alert.alert-error
