@@ -1,5 +1,5 @@
 = editing_mode(building)
-= form_for @person, html: {:multipart => true} do |f|
+= form_for @person, builder: Peoplefinder::CustomFormBuilder, html: {:multipart => true} do |f|
 
   - if @person.errors.any?
     .alert.alert-error
@@ -9,6 +9,7 @@
           %li
             = link_to "#{Peoplefinder::Person.human_attribute_name(field)} #{error.downcase}", "#person_#{field}"
 
+  %p * mandatory field
 
   .form-group{ :class => ('gov-uk-field-error' if @person.errors.include?(:given_name)) }
     = f.label :given_name, class: 'form-label-bold' do

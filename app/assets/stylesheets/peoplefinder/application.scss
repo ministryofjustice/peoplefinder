@@ -288,6 +288,10 @@ label.form-label-bold {
     font-size: 17px;
   }
 }
+label.mandatory:after {
+  content: '*';
+}
+
 fieldset {
   legend.form-label-bold {
     display: block;
