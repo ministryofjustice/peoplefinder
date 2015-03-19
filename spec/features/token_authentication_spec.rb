@@ -75,6 +75,16 @@ feature 'Token Authentication' do
     expect(login_page).to be_displayed
   end
 
+  scenario 'being inconsistent about capitalisation' do
+    create(:person,
+      given_name: 'Example',
+      surname: 'User',
+      email: 'example.user@digital.justice.gov.uk'
+    )
+    token_log_in_as('Example.USER@digital.justice.gov.uk')
+    expect(page).to have_text('Signed in as Example User')
+  end
+
   context 'token_auth feature disabled' do
     include_context "token_auth feature disabled"
     let(:token) { create(:token) }

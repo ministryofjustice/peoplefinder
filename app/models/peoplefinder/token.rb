@@ -1,8 +1,8 @@
 require 'peoplefinder'
 
 class Peoplefinder::Token < ActiveRecord::Base
-  include Peoplefinder::Concerns::Sanitisable
-  sanitise_fields :user_email
+  include Peoplefinder::Concerns::Sanitizable
+  sanitize_fields :user_email, strip: true, downcase: true
 
   self.table_name = 'tokens'
 
