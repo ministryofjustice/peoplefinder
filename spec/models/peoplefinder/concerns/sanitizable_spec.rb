@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Peoplefinder::Concerns::Sanitisable do
+RSpec.describe Peoplefinder::Concerns::Sanitizable do
 
   class TestModel
     include ActiveModel::Model
@@ -12,8 +12,8 @@ RSpec.describe Peoplefinder::Concerns::Sanitisable do
 
     attr_accessor :colour, :shape
 
-    include Peoplefinder::Concerns::Sanitisable
-    sanitise_fields :colour
+    include Peoplefinder::Concerns::Sanitizable
+    sanitize_fields :colour
   end
 
   subject { TestModel.new(colour: ' orange ', shape: ' square  ') }

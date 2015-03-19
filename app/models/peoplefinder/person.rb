@@ -48,8 +48,8 @@ class Peoplefinder::Person < ActiveRecord::Base
     }
   end
 
-  include Peoplefinder::Concerns::Sanitisable
-  sanitise_fields :given_name, :surname, :email
+  include Peoplefinder::Concerns::Sanitizable
+  sanitize_fields :given_name, :surname, :email
   before_save :sanitize_tags
 
   mount_uploader :image, Peoplefinder::ImageUploader
