@@ -36,6 +36,8 @@ module Dummy
       host: 'www.example.com'
     }
 
+    config.action_mailer.asset_host = 'www.example.com'
+
     config.action_mailer.default_options = {
       from:  config.support_email
     }

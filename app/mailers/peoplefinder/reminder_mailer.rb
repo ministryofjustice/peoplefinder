@@ -2,6 +2,7 @@ require 'peoplefinder'
 
 class Peoplefinder::ReminderMailer < ActionMailer::Base
   include Peoplefinder::FeatureHelper
+  layout 'peoplefinder/email'
 
   def inadequate_profile(person)
     @person = person

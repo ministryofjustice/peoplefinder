@@ -15,5 +15,9 @@ module SpecSupport
     def check_email_has_profile_link(person)
       expect(last_email.body.encoded).to match(person_url(person))
     end
+
+    def get_message_part(mail, content_type)
+      mail.body.parts.find { |p| p.content_type.match content_type }.body
+    end
   end
 end

@@ -132,6 +132,9 @@ en:
     group_update_mailer:
       inform_subscriber:
         subject: "People Finder team updated"
+    token_mailer:
+      new_token_email:
+        subject: 'Access request to MOJ People Finder'
     errors:
       information_request:
         message_required: "You must enter a message to be sent to the person"
