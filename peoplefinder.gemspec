@@ -37,6 +37,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'omniauth-gplus', '~> 2.0.1'
   s.add_dependency 'paper_trail', '~> 4.0.0.beta'
   s.add_dependency 'pg'
+  s.add_dependency 'premailer-rails'
   s.add_dependency 'recipient_interceptor', '~> 0.1.2'
   s.add_dependency 'sass-rails', '~> 4.0.3'
   s.add_dependency 'uglifier', '>= 1.3.0'
