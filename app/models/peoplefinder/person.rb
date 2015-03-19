@@ -49,7 +49,8 @@ class Peoplefinder::Person < ActiveRecord::Base
   end
 
   include Peoplefinder::Concerns::Sanitizable
-  sanitize_fields :given_name, :surname, :email, strip: true
+  sanitize_fields :given_name, :surname, strip: true
+  sanitize_fields :email, strip: true, downcase: true
   before_save :sanitize_tags
 
   mount_uploader :image, Peoplefinder::ImageUploader
