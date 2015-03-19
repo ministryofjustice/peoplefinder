@@ -2,7 +2,7 @@ require 'peoplefinder'
 
 class Peoplefinder::Token < ActiveRecord::Base
   include Peoplefinder::Concerns::Sanitizable
-  sanitize_fields :user_email
+  sanitize_fields :user_email, strip: true
 
   self.table_name = 'tokens'
 
