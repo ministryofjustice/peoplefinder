@@ -14,7 +14,7 @@ application quite easiliy.
 Start by creating a bare rails application:
 
 ```
-$ rails application new my_peoplfinder
+$ rails application new my_peoplefinder
 ```
 
 Then you need to modify the `Gemfile` to include the peoplefinder engine gem:
