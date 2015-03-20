@@ -1,6 +1,10 @@
 Peoplefinder::Engine.routes.draw do
   root 'home#show', as: :home
 
+  namespace :api, format: [:json] do
+    resources :people, only: [:show]
+  end
+
   resources :groups, path: 'teams' do
     resources :groups, only: [:new]
     get :people, on: :member, action: 'all_people'
