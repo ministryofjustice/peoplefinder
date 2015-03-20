@@ -257,16 +257,30 @@ form input[readonly] {
   }
 }
 
-.incomplete {
-  border: 0 solid $green;
+.completing {
+  .incomplete {
+    border: 0 solid $green;
+    background: $palegreen;
+    padding: 15px;
+    width: 60%;
+
+    border-left-width: 4px;
+
+    input {
+      width: 90%;
+    }
+  }
+}
+
+.completion-prompt {
+  border: 02px solid $green;
+  color: $green;
   background: $palegreen;
   padding: 15px;
-  width: 60%;
 
-  border-left-width: 4px;
-
-  input {
-    width: 90%;
+  p {
+    margin: 0;
+    font-weight: bold;
   }
 }
 

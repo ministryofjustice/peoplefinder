@@ -10,6 +10,10 @@ feature 'Person maintenance' do
   let(:edit_profile_page) { Pages::EditProfile.new }
   let(:new_profile_page) { Pages::NewProfile.new }
 
+  let(:completion_prompt_text) {
+    'Fill in the highlighted fields to achieve 100% profile completion'
+  }
+
   context 'Creating a person' do
     scenario 'Creating a person with a complete profile', js: true do
       create(:group, name: 'Digital')
@@ -17,6 +21,7 @@ feature 'Person maintenance' do
       javascript_log_in
       visit new_person_path
       expect(page).to have_title("New profile - #{ app_title }")
+      expect(page).not_to have_text(completion_prompt_text)
       fill_in_complete_profile_details
 
       click_button 'Save'
@@ -117,6 +122,7 @@ feature 'Person maintenance' do
       click_link 'Edit this profile'
 
       expect(page).to have_title("Edit profile - #{ app_title }")
+      expect(page).not_to have_text(completion_prompt_text)
       fill_in 'First name', with: 'Jane'
       fill_in 'Surname', with: 'Doe'
       click_button 'Save'
@@ -125,6 +131,19 @@ feature 'Person maintenance' do
       within('h1') do
         expect(page).to have_text('Jane Doe')
       end
+    end
+
+    scenario 'Editing my own profile from a normal edit link' do
+      visit person_path(person)
+      click_link 'Edit this profile'
+      expect(page).not_to have_text(completion_prompt_text)
+    end
+
+    scenario 'Editing my own profile from a "complete this profile" link' do
+      visit person_path(person)
+      click_link 'complete your profile'
+      expect(page).to have_text(completion_prompt_text)
+      expect(page).to have_text(completion_prompt_text)
     end
 
     scenario 'Validates required fields' do
