@@ -53,7 +53,7 @@ feature 'Token Authentication' do
     token = create(:token)
     visit token_path(token)
 
-    expect(page).to have_link('Signed in as')
+    expect(page).to have_text('Signed in as')
     expect(page).to have_text('Start building your profile now')
     within('h1') do
       expect(page).to have_text('Edit profile')
@@ -64,7 +64,8 @@ feature 'Token Authentication' do
     person = create(:person, given_name: 'Bob', surname: 'Smith', email: 'test.user@digital.justice.gov.uk')
     token = Peoplefinder::Token.for_person(person)
     visit token_path(token)
-    expect(page).to have_link('Signed in as Bob Smith', href: person_path(person))
+    expect(page).to have_text('Signed in as Bob Smith')
+    expect(page).to have_link('Bob Smith', href: person_path(person))
   end
 
   scenario 'logging out' do
