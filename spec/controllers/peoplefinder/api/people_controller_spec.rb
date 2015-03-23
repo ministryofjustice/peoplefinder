@@ -36,7 +36,7 @@ RSpec.describe Peoplefinder::Api::PeopleController, type: :controller do
       end
 
       it 'returns a JSON representation of the person' do
-        expect(response.body).to eq(subject.to_json)
+        expect(JSON.parse(response.body)).to eq(JSON.parse(subject.to_json))
       end
     end
 
