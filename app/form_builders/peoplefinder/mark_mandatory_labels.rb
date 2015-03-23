@@ -1,5 +1,7 @@
+require 'delegate'
+
 module Peoplefinder
-  class CustomFormBuilder < ActionView::Helpers::FormBuilder
+  class MarkMandatoryLabels < SimpleDelegator
     def label(method, text = nil, options = {}, &block)
       if text.is_a?(Hash)
         options = text
@@ -10,7 +12,7 @@ module Peoplefinder
         options[:class] = [options[:class], 'mandatory'].compact.join(' ')
       end
 
-      super(method, text, options, &block)
+      __getobj__.label(method, text, options, &block)
     end
 
   private

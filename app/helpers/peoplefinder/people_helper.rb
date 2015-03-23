@@ -12,4 +12,14 @@ module Peoplefinder::PeopleHelper
   def profile_image_tag(person, source, options = {})
     image_tag(source, options.merge(alt: "Current photo of #{ person }"))
   end
+
+  # Why do we need to go to this trouble to repeat new_person/edit_person? you
+  # might wonder. Well, form_for only allows us to replace the form class, not
+  # augment it, and we rely on the default classes elsewhere.
+  #
+  def person_form_class(person, activity)
+    [person.new_record? ? 'new_person' : 'edit_person'].tap { |classes|
+      classes << 'completing' if activity == 'complete'
+    }.join(' ')
+  end
 end

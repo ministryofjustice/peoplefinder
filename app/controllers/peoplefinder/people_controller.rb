@@ -25,6 +25,7 @@ module Peoplefinder
 
     # GET /people/1/edit
     def edit
+      @activity = params[:activity]
       @person.memberships.build if @person.memberships.empty?
     end
 
