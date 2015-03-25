@@ -9,7 +9,6 @@
 /spec/support/uploads/*
 .idea
 /.env
-.ruby-version
 /pkg/
 /spec/dummy/db/*.sqlite3
 /spec/dummy/db/*.sqlite3-journal
