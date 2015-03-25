@@ -89,6 +89,7 @@ Lint/AssignmentInCondition:
 # Just a preference to use %w[] over %w()
 Style/PercentLiteralDelimiters:
   PreferredDelimiters:
+    '%i': '[]'
     '%w': '[]'
     '%W': '[]'
 
