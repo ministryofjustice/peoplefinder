@@ -18,6 +18,7 @@
 
     .missing-fields-info.extra-info{style: 'display: none;'}
       %p Your message will be emailed to the person. You can make changes to the wording.
+      =f.label :missing_fields_info, class: 'visuallyhidden'
       =f.text_area :missing_fields_info, class: 'form-control'
 
     .form-group.check-box
@@ -60,6 +61,7 @@
 
     .inappropriate-content-info.extra-info{style: 'display: none;'}
       %p Enter details of the content (mandatory)
+      =f.label :inappropriate_content_info, class: 'visuallyhidden'
       =f.text_area :inappropriate_content_info, class: 'form-control'
 
     .form-group.check-box
@@ -68,6 +70,7 @@
 
     .person-left-info.extra-info{style: 'display: none;'}
       %p Enter any additional information (optional)
+      =f.label :person_left_info, class: 'visuallyhidden'
       =f.text_area :person_left_info, class: 'form-control'
 
   .submit-button{style: 'display: none;'}
