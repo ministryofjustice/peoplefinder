@@ -111,6 +111,15 @@ en:
       show:
         community: Community
         community_unset: Not specified
+    suggestions:
+      thank_you_intro: Thank you for helping improve this profile.
+      thank_you_detail:
+        one: |
+          We’ve sent an email to the relevant person to make the changes you’ve
+          suggested.
+        other: |
+          We’ve sent emails to the relevant people to make the changes you’ve
+          suggested.
     reminder_mailer:
       inadequate_profile:
         subject: "Reminder: update your profile today"
