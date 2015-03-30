@@ -184,6 +184,37 @@ ALTER SEQUENCE people_id_seq OWNED BY people.id;
 
 
 --
+-- Name: permitted_domains; Type: TABLE; Schema: public; Owner: -; Tablespace:
+--
+
+CREATE TABLE permitted_domains (
+    id integer NOT NULL,
+    domain character varying,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone
+);
+
+
+--
+-- Name: permitted_domains_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE permitted_domains_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: permitted_domains_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE permitted_domains_id_seq OWNED BY permitted_domains.id;
+
+
+--
 -- Name: schema_migrations; Type: TABLE; Schema: public; Owner: -; Tablespace:
 --
 
@@ -293,6 +324,13 @@ ALTER TABLE ONLY people ALTER COLUMN id SET DEFAULT nextval('people_id_seq'::reg
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
+ALTER TABLE ONLY permitted_domains ALTER COLUMN id SET DEFAULT nextval('permitted_domains_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
 ALTER TABLE ONLY tokens ALTER COLUMN id SET DEFAULT nextval('tokens_id_seq'::regclass);
 
 
@@ -333,6 +371,14 @@ ALTER TABLE ONLY memberships
 
 ALTER TABLE ONLY people
     ADD CONSTRAINT people_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: permitted_domains_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
+--
+
+ALTER TABLE ONLY permitted_domains
+    ADD CONSTRAINT permitted_domains_pkey PRIMARY KEY (id);
 
 
 --
@@ -448,3 +494,5 @@ INSERT INTO schema_migrations (version) VALUES ('20150303153605');
 INSERT INTO schema_migrations (version) VALUES ('20150304110649');
 
 INSERT INTO schema_migrations (version) VALUES ('20150319122348');
+
+INSERT INTO schema_migrations (version) VALUES ('20150330140053');
