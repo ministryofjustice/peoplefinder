@@ -1,0 +1,79 @@
+<table cellpadding="0" cellspacing="0" border="0" align="center" style="border-collapse:collapse;mso-table-lspace:0pt;mso-table-rspace:0pt;">
+  <tbody><tr>
+    <td width="20" style="min-width:10px;border-collapse:collapse;"></td>
+    <td width="560" align="center" valign="top" style="border-collapse:collapse;">
+      <table cellpadding="0" cellspacing="0" border="0" align="center" class="body" style="border-collapse:collapse;mso-table-lspace:0pt;mso-table-rspace:0pt;">
+        <tbody><tr>
+          <td width="560" align="left" valign="top" style="font-family:Arial, sans-serif;font-size:22px;font-weight:normal;line-height:normal;color:#434343;padding-bottom:30px;border-collapse:collapse;">
+            People Finder
+          </td>
+        </tr>
+        <tr>
+          <td width="560" align="left" valign="top" style="font-family:Arial, sans-serif;font-size:16px;font-weight:normal;line-height:30px;color:#434343;padding-bottom:20px;border-collapse:collapse;">
+            Hello,
+          </td>
+        </tr>
+        <tr>
+          <td width="560" align="left" valign="top" style="font-family:Arial, sans-serif;font-size:16px;font-weight:normal;line-height:30px;color:#434343;padding-bottom:20px;border-collapse:collapse;">
+            <p>
+              <%= @suggester.name %> suggested the following improvements to
+              the profile of <%= @person.name %>:
+            </p>
+
+            <% if @suggestion.duplicate_profile %>
+              <p>
+                They suggested it was a duplicate profile.
+              </p>
+            <% end %>
+
+            <% if @suggestion.inappropriate_content %>
+              <p>
+                They suggested it contains inappropriate content.
+              </p>
+            <% end %>
+
+            <% if @suggestion.inappropriate_content_info.present? %>
+              <p>
+                They provided the following information about inappropriate content:
+              </p>
+              <p>
+                <%= @suggestion.inappropriate_content_info %>
+              </p>
+            <% end %>
+
+            <% if @suggestion.person_left %>
+              <p>
+                They suggested that the person left the organisation.
+              </p>
+            <% end %>
+
+            <% if @suggestion.person_left_info.present? %>
+              <p>
+                They provided the following information about the person leaving:
+              </p>
+              <p>
+                <%= @suggestion.person_left_info %>
+              </p>
+            <% end %>
+          </td>
+        </tr>
+        <tr>
+          <td width="560" align="center" valign="top" style="padding-bottom:40px;border-collapse:collapse;">
+            <table cellpadding="15" cellspacing="0" border="0" align="left" bgcolor="#00823b" style="border-bottom-width:2px;border-bottom-style:solid;border-bottom-color:#003518;border-collapse:collapse;mso-table-lspace:0pt;mso-table-rspace:0pt;">
+              <tbody><tr>
+                <td align="left" valign="middle" bgcolor="#00823b" style="border-collapse:collapse;">
+                  <a href="<%= person_url(@person) %>" target="_blank" class="button" style="font-family:Arial, sans-serif;font-size:24px;font-weight:normal;text-decoration:none;line-height:normal;color:#ffffff;background-color:#00823b;">
+                    Log in to People Finder
+                  </a>
+                </td>
+              </tr>
+              </tbody></table>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </td>
+    <td width="20" style="min-width:10px;border-collapse:collapse;"></td>
+  </tr>
+  </tbody>
+</table>

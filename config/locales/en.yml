@@ -111,6 +111,15 @@ en:
       show:
         community: Community
         community_unset: Not specified
+    suggestions:
+      thank_you_intro: Thank you for helping improve this profile.
+      thank_you_detail:
+        one: |
+          We’ve sent an email to the relevant person to make the changes you’ve
+          suggested.
+        other: |
+          We’ve sent emails to the relevant people to make the changes you’ve
+          suggested.
     reminder_mailer:
       inadequate_profile:
         subject: "Reminder: update your profile today"
@@ -184,8 +193,8 @@ en:
         photo_upload_hint: "Add or replace an image. (Please, no files over 3MB.)"
         profile_deletable: "(Note that deleting a profile cannot be undone.)"
         reported_profile_additional_details_label: "Additional details (optional)"
-        request_information: "Is this profile complete?"
-        request_information_link: "Ask the person to update their details"
+        request_information: "Incorrect or missing information? Has this person left the department or is this a duplicate?"
+        request_information_link: "Help improve this profile"
         skills_and_expertise_hint_html: "You can add tags to your profile to allow people to find you based on<br/>your specific skills or expertise. Add them using the field below and<br/>remove them at any time with the ‘X’."
         team_deletable: "Note that team deletion cannot be undone."
         team_not_deletable: "Team deletion is only possible if there are no people associated with it."

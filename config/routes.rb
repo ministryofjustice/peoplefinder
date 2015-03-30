@@ -15,8 +15,7 @@ Peoplefinder::Engine.routes.draw do
       get :add_membership
     end
     resource :image, controller: 'person_image', only: [:edit, :update]
-    resources :information_requests, only: [:new, :create]
-    resources :reported_profiles, only: [:new, :create]
+    resources :suggestions, only: [:new, :create]
   end
   resources :memberships, only: [:destroy]
   resource :sessions, only: [:new, :create, :destroy]

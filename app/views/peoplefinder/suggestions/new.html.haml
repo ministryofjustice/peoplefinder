@@ -1,0 +1,77 @@
+%h1 Help improve this profile
+
+- if @suggestion.errors.any?
+  .alert.alert-error
+    %p= error_text('group.general_message')
+    %ul.form-error-list
+      -@suggestion.errors.full_messages.each do |error|
+        %li=error
+
+=form_for @suggestion, url: person_suggestions_path do |f|
+
+  %fieldset
+    %legend Ask the person to:
+
+    .form-group.check-box
+      =f.check_box :missing_fields, target: '.missing-fields-info'
+      =f.label :missing_fields, 'fill missing fields'
+
+    .missing-fields-info.extra-info{style: 'display: none;'}
+      %p Your message will be emailed to the person. You can make changes to the wording.
+      =f.label :missing_fields_info, class: 'visuallyhidden'
+      =f.text_area :missing_fields_info, class: 'form-control'
+
+    .form-group.check-box
+      =f.check_box :incorrect_fields, target: '.incorrect_fields_info'
+      =f.label :incorrect_fields, 'update incorrect fields'
+
+    .incorrect_fields_info.extra-info{style: 'display: none;'}
+      %p Choose which information is incorrect
+
+      .form-group
+        =f.check_box :incorrect_first_name
+        =f.label :incorrect_first_name, 'First name'
+
+      .form-group
+        =f.check_box :incorrect_last_name
+        =f.label :incorrect_last_name, 'Last name'
+
+      .form-group
+        =f.check_box :incorrect_roles
+        =f.label :incorrect_roles, 'Roles'
+
+      .form-group
+        =f.check_box :incorrect_location_of_work
+        =f.label :incorrect_location_of_work, 'Location of work'
+
+      .form-group
+        =f.check_box :incorrect_working_days
+        =f.label :incorrect_working_days, 'Working days'
+      &nbsp;
+
+  %fieldset
+    %legend Ask the team admin to:
+    .form-group.check-box
+      =f.check_box :duplicate_profile
+      =f.label :duplicate_profile, 'remove duplicate profile'
+
+    .form-group.check-box
+      =f.check_box :inappropriate_content, target: '.inappropriate-content-info'
+      =f.label :inappropriate_content, 'remove inappropriate content'
+
+    .inappropriate-content-info.extra-info{style: 'display: none;'}
+      %p Enter details of the content (mandatory)
+      =f.label :inappropriate_content_info, class: 'visuallyhidden'
+      =f.text_area :inappropriate_content_info, class: 'form-control'
+
+    .form-group.check-box
+      =f.check_box :person_left, target: '.person-left-info'
+      =f.label :person_left, 'remove the profile as the person has left MOJ'
+
+    .person-left-info.extra-info{style: 'display: none;'}
+      %p Enter any additional information (optional)
+      =f.label :person_left_info, class: 'visuallyhidden'
+      =f.text_area :person_left_info, class: 'form-control'
+
+  .submit-button{style: 'display: none;'}
+    =f.submit 'Submit', class: 'button'
