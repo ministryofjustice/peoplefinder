@@ -10,8 +10,32 @@
 
 = render 'peoplefinder/shared/search'
 
-%h2.org-structure= t('peoplefinder.home.org_heading')
-%h3.hint-text= t('peoplefinder.home.org_sub_heading')
-%p.hint-text= t('peoplefinder.home.org_hint_html', link: link_to(@group.name, groups_path))
 
-= render 'peoplefinder/shared/org_browser', org_structure: @org_structure
+%div.root-team
+  %h2.org-structure= @group.name
+  %div.leaders.grid.grid-1-3
+    - @group.leaders.each do |leader|
+      %div.profile
+        = profile_image_tag leader, leader.image.medium
+        %p
+          =link_to leader.name, leader, class: 'leader-name'
+          %span.leader-role= leader.memberships.where(group:@group).first.role
+
+  %h3.grid.grid-2-3.about-team-header About the team
+  %div.about-the-team.formatted-text.about.text.grid.grid-2-3
+    = govspeak(@group.with_placeholder_default(:description))
+
+
+%div.root-subteams
+  %h2
+    = "Teams within #{@group.name}"
+
+  .grid-wrapper
+    = render partial: "peoplefinder/groups/subgroup", collection: @group.children
+
+
+
+/ %h3.hint-text= t('peoplefinder.home.org_sub_heading')
+/ %p.hint-text= t('peoplefinder.home.org_hint_html', link: link_to(@group.name, groups_path))
+
+/ = render 'peoplefinder/shared/org_browser', org_structure: @org_structure
