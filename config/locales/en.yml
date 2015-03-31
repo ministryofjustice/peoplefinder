@@ -127,6 +127,11 @@ en:
         subject: "Request to update your People Finder profile"
       reported_profile:
         subject: "A People Finder profile has been reported"
+    suggestion_mailer:
+      person_email:
+        subject: "Your People Finder profile"
+      team_admin_email:
+        subject: "People Finder profile improvements"
     user_update_mailer:
       new_profile_email:
         subject: "A new profile on MOJ People Finder has been created for you"
