@@ -1,0 +1,23 @@
+// IE9 < styles
+$blackish: #6F777B;
+$darkblue: #005EA5;
+$turqoise: #93cfca ;
+$opaqueblue: rgba(#2B8CC4, 0.25);
+$paleblue: rgba(#9BB7CE, 0.5);
+$error-text: #DF3034;
+$error-border: $error-text;
+$error-bg: #FBE1E1;
+$palegreen: #c9d8bd;
+$notice-bg: $palegreen;
+$pink-bg: #FEF7F7;
+$grey-bg: #DEE0E2;
+$green: #006435;
+$border-color: #bfc1c3;
+
+.editing-alert {
+  background-color: $turqoise;
+  text-align: center;
+  padding:1em;
+  height: auto;
+  display: block;
+}
