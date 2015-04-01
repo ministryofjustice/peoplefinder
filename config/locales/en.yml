@@ -60,6 +60,9 @@ en:
     tokens:
       expired_token: "The authentication token has expired and is more than %{time} hours old"
       invalid_token: "The authentication token doesn't exist and so isn't valid"
+    admin/person_uploads:
+        upload_succeeded: "Successfully uploaded %{count} people"
+        upload_failed: "Upload failed"
     people:
       profile_created: "Created %{person}’s profile"
       profile_updated:
@@ -240,3 +243,7 @@ en:
       information_request:
         create: "Submit"
         create: "Submit"
+      person_upload:
+        create: "Upload"
+    person_uploads:
+      group_id: "Team"
