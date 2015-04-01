@@ -232,7 +232,8 @@ CREATE TABLE tokens (
     value text,
     user_email text,
     created_at timestamp without time zone,
-    updated_at timestamp without time zone
+    updated_at timestamp without time zone,
+    spent boolean DEFAULT false
 );
 
 
@@ -496,3 +497,5 @@ INSERT INTO schema_migrations (version) VALUES ('20150304110649');
 INSERT INTO schema_migrations (version) VALUES ('20150319122348');
 
 INSERT INTO schema_migrations (version) VALUES ('20150330140053');
+
+INSERT INTO schema_migrations (version) VALUES ('20150401134903');
