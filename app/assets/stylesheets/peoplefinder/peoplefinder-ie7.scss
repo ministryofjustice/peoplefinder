@@ -16,6 +16,7 @@ $border-color: #bfc1c3;
 
 // TODO: sort out 3 misaligned fields on /people/mark-ford/edit?prompt=profile
 
+// layout stuff
 .header-app-name a{
   color: white;
   text-decoration: none;
@@ -61,6 +62,7 @@ h1, h2 {
     }
   }
 }
+// form
 form #working-days ul,
 .working_days {
   float: left;
@@ -69,5 +71,16 @@ form #working-days ul,
     display: block;
     float: left;
     margin-right: 3px;
+  }
+}
+
+// profile
+#search_results {
+  .image-background{
+    float: left;
+    width:auto;
+  }
+  .details {
+    margin: 0 0 0 15px !important;
   }
 }
