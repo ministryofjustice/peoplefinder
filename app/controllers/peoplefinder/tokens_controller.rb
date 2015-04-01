@@ -23,7 +23,7 @@ module Peoplefinder
         error :invalid_token
         redirect_to new_sessions_path
       elsif !token.active?
-        error :expired_token, hours: Token::ttl
+        error :expired_token, hours: Token.ttl
         redirect_to new_sessions_path
       end
     end

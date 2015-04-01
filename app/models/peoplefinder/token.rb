@@ -30,7 +30,7 @@ class Peoplefinder::Token < ActiveRecord::Base
   end
 
   def active?
-    (self.created_at > ttl.hours.ago) and !spent?
+    (created_at > ttl.hours.ago) && !spent?
   end
 
   def self.ttl
@@ -45,12 +45,12 @@ class Peoplefinder::Token < ActiveRecord::Base
     update_attributes!(spent: true)
   end
 
-  private
+private
 
   def deactivate_tokens
-     Peoplefinder::Token.where(spent: false, user_email: user_email).each do |token|
-       token.spend!
-     end
+    Peoplefinder::Token.where(spent: false, user_email: user_email).each do |token|
+      token.spend! if token != self
+    end
   end
 
   def generate_value
