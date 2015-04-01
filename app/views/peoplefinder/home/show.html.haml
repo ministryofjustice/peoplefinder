@@ -3,12 +3,15 @@
 %h1= t('peoplefinder.home.heading', group_name: @group.name)
 %p= t('peoplefinder.home.explanation')
 
-%p= t('peoplefinder.home.usage')
+%div.search-wrapper.grid-wrapper
+  %p.grid-1-3.help-peoplefinder
+    = t('peoplefinder.home.usage')
 
-%h2= t('peoplefinder.home.search_heading')
-%p.hint-text{ aria: { hidden: 'true' } }= t('peoplefinder.home.search_hint')
+  %div.grid-1-2
+    %h2= t('peoplefinder.home.search_heading')
+    %p.hint-text{ aria: { hidden: 'true' } }= t('peoplefinder.home.search_hint')
 
-= render 'peoplefinder/shared/search'
+    = render 'peoplefinder/shared/search'
 
 
 %div.root-team
@@ -32,10 +35,3 @@
 
   .grid-wrapper
     = render partial: "peoplefinder/groups/subgroup", collection: @group.children
-
-
-
-/ %h3.hint-text= t('peoplefinder.home.org_sub_heading')
-/ %p.hint-text= t('peoplefinder.home.org_hint_html', link: link_to(@group.name, groups_path))
-
-/ = render 'peoplefinder/shared/org_browser', org_structure: @org_structure
