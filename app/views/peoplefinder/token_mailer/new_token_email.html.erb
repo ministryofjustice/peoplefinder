@@ -20,7 +20,12 @@
         </tr>
         <tr>
           <td width="560" align="left" valign="top" style="font-family:Arial, sans-serif;font-size:16px;font-weight:normal;line-height:30px;color:#434343;padding-bottom:40px;border-collapse:collapse;">
-            Instead of creating a password to use People Finder, the service has sent you this email token with a link to log in. The token will expire in 5 days.
+            Instead of creating a password to use People Finder, the service has sent you this email token with a link to log in.
+          </td>
+        </tr>
+        <tr>
+          <td width="560" align="left" valign="top" style="font-family:Arial, sans-serif;font-size:16px;font-weight:normal;line-height:30px;color:#434343;padding-bottom:40px;border-collapse:collapse;">
+            Please note that the token will expire in <strong><%= Peoplefinder::Token::ttl%> hours</strong>. Also note that each time a new token is requested all previous tokens will be invalidated.
           </td>
         </tr>
         <tr>

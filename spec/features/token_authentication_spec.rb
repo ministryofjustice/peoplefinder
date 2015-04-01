@@ -60,6 +60,25 @@ feature 'Token Authentication' do
     end
   end
 
+  scenario "logging in with a fake token" do
+    visit token_path(id: "gobbledygoock")
+
+    expect(page).to_not have_text('Signed in as')
+    expect(page).to_not have_text('Start building your profile now')
+
+    expect(page).to have_text("The authentication token doesn't exist and so isn't valid")
+  end
+
+  scenario "logging in with a token that's more than 3 hours old" do
+    token = create(:token, created_at: 4.hours.ago)
+    visit token_path(token)
+
+    expect(page).to_not have_text('Signed in as')
+    expect(page).to_not have_text('Start building your profile now')
+
+    expect(page).to have_text("The authentication token has expired and is more than 3 hours old")
+  end
+
   scenario 'logging in and displaying a link to my profile' do
     person = create(:person, given_name: 'Bob', surname: 'Smith', email: 'test.user@digital.justice.gov.uk')
     token = Peoplefinder::Token.for_person(person)

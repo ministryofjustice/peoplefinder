@@ -16,10 +16,16 @@ module Peoplefinder
 
     def show
       token = Token.where(value: params[:id]).first
-      return forbidden unless token
-
-      person = FindCreatePerson.from_token(token)
-      login_person(person)
+      if token && token.active?
+        person = FindCreatePerson.from_token(token)
+        login_person(person)
+      elsif token.nil?
+        error :invalid_token
+        redirect_to new_sessions_path
+      elsif !token.active?
+        error :expired_token, hours: Token::ttl
+        redirect_to new_sessions_path
+      end
     end
 
   protected
