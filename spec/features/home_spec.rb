@@ -11,6 +11,5 @@ feature 'Home page' do
     within('h1') { expect(page).to have_text('Welcome to People Finder') }
     expect(page).to have_text('Search People Finder')
     expect(page).to have_css('input#query')
-    expect(page).to have_link('Ministry of Justice', href: groups_path)
   end
 end
