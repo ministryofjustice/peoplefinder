@@ -11,7 +11,7 @@ class Peoplefinder::Token < ActiveRecord::Base
 
   validate :valid_email_address
 
-  DEFAULT_TTL = 3
+  DEFAULT_TTL_HOURS = 3
 
   def to_param
     value
@@ -30,15 +30,15 @@ class Peoplefinder::Token < ActiveRecord::Base
   end
 
   def active?
-    (created_at > ttl.hours.ago) && !spent?
+    (created_at > ttl_hours.hours.ago) && !spent?
   end
 
-  def self.ttl
-    Rails.configuration.try(:token_ttl) || DEFAULT_TTL
+  def self.ttl_hours
+    Rails.configuration.try(:token_ttl) || DEFAULT_TTL_HOURS
   end
 
-  def ttl
-    self.class.ttl
+  def ttl_hours
+    self.class.ttl_hours
   end
 
   def spend!

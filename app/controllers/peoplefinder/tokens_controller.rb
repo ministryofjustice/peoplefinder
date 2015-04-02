@@ -16,19 +16,25 @@ module Peoplefinder
 
     def show
       token = Token.where(value: params[:id]).first
-      if token && token.active?
-        person = FindCreatePerson.from_token(token)
-        login_person(person)
-      elsif token.nil?
+      if token
+        verify_active_token(token)
+      else
         error :invalid_token
-        redirect_to new_sessions_path
-      elsif !token.active?
-        error :expired_token, hours: Token.ttl
         redirect_to new_sessions_path
       end
     end
 
   protected
+
+    def verify_active_token(token)
+      if token.active?
+        person = FindCreatePerson.from_token(token)
+        login_person(person)
+      else
+        error :expired_token, hours: Token.ttl_hours
+        redirect_to new_sessions_path
+      end
+    end
 
     def ensure_token_auth_enabled!
       return if feature_enabled?('token_auth')

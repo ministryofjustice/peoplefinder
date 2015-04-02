@@ -43,7 +43,7 @@ RSpec.describe Peoplefinder::Token, type: :model do
     let(:active_token) { create(:token) }
     describe '#ttl' do
       it 'defaults to 3 hours' do
-        expect(active_token.ttl).to eql(3)
+        expect(active_token.ttl_hours).to eql(3)
       end
     end
 
