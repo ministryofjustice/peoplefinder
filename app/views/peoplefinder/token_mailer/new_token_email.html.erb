@@ -25,7 +25,7 @@
         </tr>
         <tr>
           <td width="560" align="left" valign="top" style="font-family:Arial, sans-serif;font-size:16px;font-weight:normal;line-height:30px;color:#434343;padding-bottom:40px;border-collapse:collapse;">
-            Please note that the token will expire in <strong><%= Peoplefinder::Token.ttl_hours%> hours</strong>. Also note that each time a new token is requested all previous tokens will be invalidated.
+            Please note that the token will expire in <strong><%= distance_of_time_in_words(Peoplefinder::Token.ttl)%></strong>. Also note that each time a new token is requested all previous tokens will be invalidated.
           </td>
         </tr>
         <tr>

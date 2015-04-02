@@ -52,7 +52,7 @@ module Dummy
     config.phase = 'beta'
     config.feedback_url = 'https://docs.google.com/a/digital.justice.gov.uk/forms/d/1dJ9xQ66QFvk8K7raf60W4ZXfK4yTQ1U3EeO4OLLlq88/viewform'
 
-    # Time in hours for auth token to live
-    config.token_ttl = 3
+    # Time in seconds for auth token to live
+    config.token_ttl = 108_00
   end
 end

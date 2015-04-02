@@ -42,23 +42,23 @@ RSpec.describe Peoplefinder::Token, type: :model do
   context 'time dependent tokens' do
     let(:active_token) { create(:token) }
     describe '#ttl' do
-      it 'defaults to 3 hours' do
-        expect(active_token.ttl_hours).to eql(3)
+      it 'defaults to 10800 seconds (3 hours)' do
+        expect(active_token.ttl).to eql(108_00)
       end
     end
 
     describe '#active?' do
-      it 'returns true if token is less than 3 hours old and not spent' do
+      it 'returns true if token is less than 10800 seconds old and not spent' do
         expect(active_token).to be_active
         expect(active_token).to_not be_spent
       end
 
-      it 'returns false if token is less than 3 hours old but already used' do
+      it 'returns false if token is less than 10800 seconds old but already used' do
         spent_token = create(:token, spent: true)
         expect(spent_token).to_not be_active
       end
 
-      it 'returns false if token is 3 or more hours old' do
+      it 'returns false if token is 10800 seconds or more old' do
         inactive_token = create(:token)
         Timecop.freeze(4.hours.from_now) do
           expect(inactive_token).to_not be_active

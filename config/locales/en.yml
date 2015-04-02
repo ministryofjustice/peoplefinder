@@ -59,7 +59,7 @@ en:
       memberships:
         member_removed: "Removed %{person} from %{group}"
       tokens:
-        expired_token: "The authentication token has expired and is more than %{hours} hours old"
+        expired_token: "The authentication token has expired and is more than %{time} hours old"
         invalid_token: "The authentication token doesn't exist and so isn't valid"
       people:
         profile_created: "Created %{person}’s profile"
