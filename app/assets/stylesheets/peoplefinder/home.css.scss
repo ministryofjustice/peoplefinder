@@ -1,11 +1,14 @@
 #home-page {
   .hint-text {
     margin: 12px 0 -8px 0;
+    font-size: 1em;
   }
   .search-wrapper {
     padding-bottom: 56px;
     border-bottom: 1px solid $grey-2;
+    overflow: hidden;
   }
+
   a.add-new-person {
     margin-top: 2px;
     max-width: 40% !important;
@@ -26,12 +29,17 @@
     border-bottom: none;
   }
 
+  h1, .search-wrapper h2 {
+    margin-bottom: 0;
+  }
+
   .help-peoplefinder {
     float: right;
 
     p {
       background: #ededed image-url('icon_info.png') scroll no-repeat 15px 20px;
       padding: 20px 15px 20px 80px;
+      margin-top: 15px;
 
       @media screen and (min-width: 640px) {
         margin-left: 50px;

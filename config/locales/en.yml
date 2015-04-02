@@ -165,13 +165,13 @@ en:
       explanation: |
         Find out how to contact people, what team they’re in, where and when
         they work.
-      search_heading: Search People Finder
+      search_heading: Search
       search_hint: |
         You can search by skills, job title, location, phone number,
         or by name.
+      usage_heading: Help keep People Finder up to date.
       usage: |
-        Help keep People Finder up to date. Edit your profile to make sure
-        your information is current and accurate.
+        Edit your profile to make sure your information is current and accurate.
         You can also make changes to other people’s profiles. They will receive
         an email notifying them of changes.
       org_heading: Browse the organisation
