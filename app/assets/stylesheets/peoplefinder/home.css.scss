@@ -2,9 +2,9 @@
   .hint-text {
     margin: 12px 0 -8px 0;
   }
-  .search-box {
+  .search-wrapper {
     padding-bottom: 56px;
-    border-bottom: 1px solid $darkblue;
+    border-bottom: 1px solid $grey-2;
   }
   a.add-new-person {
     margin-top: 2px;
@@ -25,7 +25,42 @@
   h1, h2 {
     border-bottom: none;
   }
-  h3.org-structure {
-    margin: 29px 0 30px 0;
+
+  .help-peoplefinder {
+    float: right;
+
+    p {
+      background: #ededed image-url('icon_info.png') scroll no-repeat 15px 20px;
+      padding: 20px 15px 20px 80px;
+
+      @media screen and (min-width: 640px) {
+        margin-left: 50px;
+      }
+    }
+  }
+
+  .root-team {
+    overflow: hidden;
+
+    .leaders {
+      .leader-name, .leader-role {
+        display: block;
+      }
+
+      .leader-name {
+        font-weight: bold;
+      }
+    }
+
+    .about-team-header {
+      margin-top: 0;
+      padding-top: 0;
+    }
+  }
+
+  .root-subteams {
+    h2 {
+      border-bottom: 1px solid $grey-2;
+    }
   }
 }

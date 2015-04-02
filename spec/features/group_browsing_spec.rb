@@ -25,37 +25,6 @@ feature 'Group browsing' do
     expect(page).to have_link('A Leaf Node')
   end
 
-  scenario 'Drilling down through groups in the org browser', js: true do
-    javascript_log_in
-
-    visit '/'
-
-    expect(page).not_to have_text 'A Leaf Node'
-
-    click_on_subteam_in_org_browser 'A Team'
-    click_on_subteam_in_org_browser 'A Subteam'
-
-    expect(page).to have_text 'A Leaf Node'
-
-    click_on_team_in_org_browser 'Ministry of Justice'
-
-    expect(page).not_to have_text 'A Leaf Node'
-  end
-
-  scenario 'Linking to a leaf node page from the org browser', js: true do
-    javascript_log_in
-
-    visit '/'
-
-    click_on_subteam_in_org_browser 'A Team'
-    click_on_subteam_in_org_browser 'A Subteam'
-    click_link 'A Leaf Node'
-
-    within('h1') do
-      expect(page).to have_text('A Leaf Node')
-    end
-  end
-
   scenario 'A team with subteams' do
     current_group = team
     add_people_to_group(names, current_group)
