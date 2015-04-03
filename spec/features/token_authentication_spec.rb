@@ -1,14 +1,8 @@
 require 'rails_helper'
 
 RSpec.shared_context "token_auth feature disabled" do
-  around(:each) do |example|
-    orig = Rails.application.config.try(:disable_token_auth) || false
-    Rails.application.config.disable_token_auth = true
-
-    example.run
-
-    Rails.application.config.disable_token_auth = orig
-  end
+  extend FeatureFlagSpecHelper
+  disable_feature :token_auth
 end
 
 feature 'Token Authentication' do

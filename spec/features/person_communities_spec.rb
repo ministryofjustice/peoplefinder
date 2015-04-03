@@ -1,14 +1,8 @@
 require 'rails_helper'
 
 feature "Communities" do
-  around(:each) do |example|
-    orig = Rails.application.config.try(:disable_communities) || false
-    Rails.application.config.disable_communities = false
-
-    example.run
-
-    Rails.application.config.disable_communities = orig
-  end
+  extend FeatureFlagSpecHelper
+  enable_feature :communities
 
   before do
     omni_auth_log_in_as 'test.user@digital.justice.gov.uk'
