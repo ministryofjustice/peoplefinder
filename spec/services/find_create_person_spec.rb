@@ -63,7 +63,7 @@ RSpec.describe FindCreatePerson, type: :service do
   end
 
   describe '.from_token' do
-    let(:token) { Token.create(user_email: 'aled.jones@digitial.justice.gov.uk') }
+    let(:token) { Token.create(user_email: 'aled.jones@digital.justice.gov.uk') }
     subject { described_class.from_token(token) }
 
     context 'for a new person' do
@@ -74,7 +74,7 @@ RSpec.describe FindCreatePerson, type: :service do
     end
 
     context 'for an existing person' do
-      let!(:person) { create(:person_with_multiple_logins, given_name: 'aled', surname: 'jones', email: 'aled.jones@digitial.justice.gov.uk') }
+      let!(:person) { create(:person_with_multiple_logins, given_name: 'aled', surname: 'jones', email: 'aled.jones@digital.justice.gov.uk') }
 
       it_behaves_like 'existing person returned'
     end
