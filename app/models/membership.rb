@@ -1,9 +1,5 @@
-require 'peoplefinder'
-
-class Peoplefinder::Membership < ActiveRecord::Base
-  self.table_name = 'memberships'
-
-  has_paper_trail class_name: 'Peoplefinder::Version',
+class Membership < ActiveRecord::Base
+  has_paper_trail class_name: 'Version',
                   ignore: [:updated_at, :created_at, :id]
 
   belongs_to :person, touch: true
@@ -16,7 +12,7 @@ class Peoplefinder::Membership < ActiveRecord::Base
   delegate :name, to: :group, prefix: true
   delegate :path, to: :group
 
-  include Peoplefinder::Concerns::ConcatenatedFields
+  include Concerns::ConcatenatedFields
   concatenated_field :to_s, :group_name, :role, join_with: ', '
 
   scope :subscribing, -> { where(subscribed: true) }

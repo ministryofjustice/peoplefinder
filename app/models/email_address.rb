@@ -1,7 +1,6 @@
-require 'peoplefinder'
 require 'forwardable'
 
-class Peoplefinder::EmailAddress
+class EmailAddress
   extend Forwardable
   def_delegators :@mail_address, :domain, :address, :local, :to_s
 

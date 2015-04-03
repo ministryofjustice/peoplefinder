@@ -1,6 +1,4 @@
-require 'peoplefinder'
-
-module Peoplefinder::Concerns::ConcatenatedFields
+module Concerns::ConcatenatedFields
   extend ActiveSupport::Concern
 
   included do

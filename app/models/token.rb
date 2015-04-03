@@ -1,11 +1,7 @@
-require 'peoplefinder'
-
-class Peoplefinder::Token < ActiveRecord::Base
-  include Peoplefinder::Concerns::Sanitizable
+class Token < ActiveRecord::Base
+  include Concerns::Sanitizable
   sanitize_fields :user_email, strip: true, downcase: true
   after_create :deactivate_tokens
-
-  self.table_name = 'tokens'
 
   after_initialize :generate_value
 
@@ -18,15 +14,15 @@ class Peoplefinder::Token < ActiveRecord::Base
   end
 
   def valid_email_address
-    if !Peoplefinder::EmailAddress.new(user_email).valid_format?
+    if !EmailAddress.new(user_email).valid_format?
       errors.add(:user_email, :invalid_address)
-    elsif !Peoplefinder::EmailAddress.new(user_email).valid_domain?
+    elsif !EmailAddress.new(user_email).valid_domain?
       errors.add(:user_email, :invalid_domain)
     end
   end
 
   def self.for_person(person)
-    Peoplefinder::Token.create!(user_email: person.email)
+    Token.create!(user_email: person.email)
   end
 
   def active?
@@ -48,7 +44,7 @@ class Peoplefinder::Token < ActiveRecord::Base
 private
 
   def deactivate_tokens
-    Peoplefinder::Token.where(spent: false, user_email: user_email).each do |token|
+    Token.where(spent: false, user_email: user_email).each do |token|
       token.spend! if token != self
     end
   end

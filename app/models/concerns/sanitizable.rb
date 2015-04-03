@@ -1,6 +1,4 @@
-require 'peoplefinder'
-
-module Peoplefinder::Concerns::Sanitizable
+module Concerns::Sanitizable
   extend ActiveSupport::Concern
 
   included do

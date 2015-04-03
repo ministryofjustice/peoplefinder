@@ -1,6 +1,4 @@
-require 'peoplefinder'
-
-module Peoplefinder::Concerns::Placeholder
+module Concerns::Placeholder
   extend ActiveSupport::Concern
 
   def placeholder(field)

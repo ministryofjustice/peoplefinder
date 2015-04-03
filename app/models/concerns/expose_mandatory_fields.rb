@@ -1,4 +1,4 @@
-module Peoplefinder::Concerns::ExposeMandatoryFields
+module Concerns::ExposeMandatoryFields
   extend ActiveSupport::Concern
 
   included do

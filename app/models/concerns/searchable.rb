@@ -1,6 +1,4 @@
-require 'peoplefinder'
-
-module Peoplefinder::Concerns::Searchable
+module Concerns::Searchable
   extend ActiveSupport::Concern
 
   included do

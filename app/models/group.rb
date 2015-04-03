@@ -1,14 +1,10 @@
-require 'peoplefinder'
-
-class Peoplefinder::Group < ActiveRecord::Base
-  self.table_name = 'groups'
-
-  include Peoplefinder::Concerns::Hierarchical
-  include Peoplefinder::Concerns::Placeholder
+class Group < ActiveRecord::Base
+  include Concerns::Hierarchical
+  include Concerns::Placeholder
 
   MAX_DESCRIPTION = 1000
 
-  has_paper_trail class_name: 'Peoplefinder::Version',
+  has_paper_trail class_name: 'Version',
                   ignore: [:updated_at, :created_at, :slug, :id]
 
   extend FriendlyId
@@ -61,7 +57,7 @@ class Peoplefinder::Group < ActiveRecord::Base
   end
 
   def all_people
-    Peoplefinder::Person.all_in_groups(subtree_ids)
+    Person.all_in_groups(subtree_ids)
   end
 
   def editable_parent?
@@ -76,7 +72,7 @@ private
 
   def name_and_sequence
     slug = name.to_param
-    sequence = Peoplefinder::Group.where('slug like ?', "#{slug}-%").count + 2
+    sequence = Group.where('slug like ?', "#{slug}-%").count + 2
     "#{slug}-#{sequence}"
   end
 

@@ -1,6 +1,4 @@
-require 'peoplefinder'
-
-module Peoplefinder::Concerns::Hierarchical
+module Concerns::Hierarchical
   extend ActiveSupport::Concern
 
   included do

@@ -1,8 +1,6 @@
-require 'peoplefinder'
-
 # Why is this a Concern? It really isn't.
 #
-module Peoplefinder::Concerns::Completion
+module Concerns::Completion
   extend ActiveSupport::Concern
 
   ADEQUATE_FIELDS = [

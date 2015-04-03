@@ -1,8 +1,4 @@
-require 'peoplefinder'
-
-class Peoplefinder::Version < PaperTrail::Version
-  self.table_name = 'versions'
-
+class Version < PaperTrail::Version
   def self.public_user
     'Public user'
   end
@@ -20,7 +16,7 @@ class Peoplefinder::Version < PaperTrail::Version
   end
 
   def membership?
-    item_type == 'Peoplefinder::Membership'
+    item_type == 'Membership'
   end
 
   def undo
@@ -44,7 +40,7 @@ class Peoplefinder::Version < PaperTrail::Version
     stored = super
     case stored
     when /\A\d+\z/
-      Peoplefinder::Person.find_by(id: stored.to_i)
+      Person.find_by(id: stored.to_i)
     else
       stored
     end

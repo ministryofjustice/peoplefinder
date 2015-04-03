@@ -1,12 +1,8 @@
-require 'peoplefinder'
-
-class Peoplefinder::Person < ActiveRecord::Base
-  self.table_name = 'people'
-
-  include Peoplefinder::Concerns::Completion
-  include Peoplefinder::Concerns::Notifications
-  include Peoplefinder::Concerns::WorkDays
-  include Peoplefinder::Concerns::ExposeMandatoryFields
+class Person < ActiveRecord::Base
+  include Concerns::Completion
+  include Concerns::Notifications
+  include Concerns::WorkDays
+  include Concerns::ExposeMandatoryFields
 
   extend FriendlyId
   friendly_id :slug_source, use: :slugged
@@ -15,7 +11,7 @@ class Peoplefinder::Person < ActiveRecord::Base
     email.present? ? email.split(/@/).first : name
   end
 
-  include Peoplefinder::Concerns::Searchable
+  include Concerns::Searchable
 
   def as_indexed_json(_options = {})
     as_json(
@@ -39,7 +35,7 @@ class Peoplefinder::Person < ActiveRecord::Base
     )
   end
 
-  has_paper_trail class_name: 'Peoplefinder::Version',
+  has_paper_trail class_name: 'Version',
                   ignore: [:updated_at, :created_at, :id, :slug, :login_count, :last_login_at]
 
   def changes_for_paper_trail
@@ -48,12 +44,12 @@ class Peoplefinder::Person < ActiveRecord::Base
     }
   end
 
-  include Peoplefinder::Concerns::Sanitizable
+  include Concerns::Sanitizable
   sanitize_fields :given_name, :surname, strip: true
   sanitize_fields :email, strip: true, downcase: true
   before_save :sanitize_tags
 
-  mount_uploader :image, Peoplefinder::ImageUploader
+  mount_uploader :image, ImageUploader
   attr_accessor :crop_x, :crop_y, :crop_w, :crop_h
 
   validates :given_name, presence: true, on: :update
@@ -109,7 +105,7 @@ class Peoplefinder::Person < ActiveRecord::Base
 
   delegate :name, to: :community, prefix: true, allow_nil: true
 
-  include Peoplefinder::Concerns::ConcatenatedFields
+  include Concerns::ConcatenatedFields
   concatenated_field :location, :location_in_building, :building, :city, join_with: ', '
   concatenated_field :name, :given_name, :surname, join_with: ' '
 
