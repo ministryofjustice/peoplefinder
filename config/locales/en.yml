@@ -32,8 +32,8 @@ en:
       body_google:
         If you have a government Google account you can log in quickly
         with the official authentication screen.
-      heading_other: Use a government email address
-      body_other: Enter a valid government email address below
+      heading_other: Use an MOJ email address
+      body_other: Enter a valid MOJ email address below
       log_in_google: Use Google
       log_in_email: Use email
   tokens:
