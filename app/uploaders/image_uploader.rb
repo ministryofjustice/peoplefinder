@@ -1,7 +1,5 @@
 # encoding: utf-8
-require 'peoplefinder'
-
-class Peoplefinder::ImageUploader < CarrierWave::Uploader::Base
+class ImageUploader < CarrierWave::Uploader::Base
   include CarrierWave::MiniMagick
   include CarrierWave::DirHelpers
 
