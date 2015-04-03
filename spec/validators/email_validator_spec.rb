@@ -1,12 +1,12 @@
 require 'rails_helper'
 
-RSpec.describe Peoplefinder::EmailValidator do
+RSpec.describe EmailValidator do
   class TestModel
     include ActiveModel::Model
 
     attr_accessor :email
 
-    validates :email, 'peoplefinder/email' => true
+    validates :email, 'email' => true
   end
 
   before do
