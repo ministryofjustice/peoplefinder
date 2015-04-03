@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Peoplefinder::AuditVersionPresenter, type: :presenter do
+RSpec.describe AuditVersionPresenter, type: :presenter do
   let(:whodunnit)  { 'Tom Smith' }
   let(:event)      { 'update' }
   let(:created_at) { DateTime.now }
