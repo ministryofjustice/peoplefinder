@@ -1,7 +1,7 @@
 require 'rails_helper'
 
-RSpec.describe Peoplefinder::Api::PeopleController, type: :controller do
-  routes { Peoplefinder::Engine.routes }
+RSpec.describe Api::PeopleController, type: :controller do
+  routes { Engine.routes }
 
   # This should return the minimal set of attributes required to create a valid
   # Person. As you add validations to Person, be sure to

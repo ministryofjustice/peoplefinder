@@ -1,6 +1,6 @@
 require 'rails_helper'
-RSpec.describe Peoplefinder::Metrics::ProfilesController, type: :controller do
-  routes { Peoplefinder::Engine.routes }
+RSpec.describe Metrics::ProfilesController, type: :controller do
+  routes { Engine.routes }
 
   let(:parsed_body) { JSON.parse(response.body) }
 

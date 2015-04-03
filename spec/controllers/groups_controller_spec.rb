@@ -18,8 +18,8 @@ require 'rails_helper'
 # Message expectations are only used when there is no simpler way to specify
 # that an instance is receiving a specific message.
 
-RSpec.describe Peoplefinder::GroupsController, type: :controller do
-  routes { Peoplefinder::Engine.routes }
+RSpec.describe GroupsController, type: :controller do
+  routes { Engine.routes }
 
   before do
     mock_logged_in_user
@@ -73,7 +73,7 @@ RSpec.describe Peoplefinder::GroupsController, type: :controller do
   describe 'GET new' do
     it 'assigns a new group as @group' do
       get :new, {}, valid_session
-      expect(assigns(:group)).to be_a_new(Peoplefinder::Group)
+      expect(assigns(:group)).to be_a_new(Group)
     end
 
     it 'assigns a membership object' do
@@ -96,18 +96,18 @@ RSpec.describe Peoplefinder::GroupsController, type: :controller do
       it 'creates a new Group' do
         expect {
           post :create, { group: valid_attributes }, valid_session
-        }.to change(Peoplefinder::Group, :count).by(1)
+        }.to change(Group, :count).by(1)
       end
 
       it 'assigns a newly created group as @group' do
         post :create, { group: valid_attributes }, valid_session
-        expect(assigns(:group)).to be_a(Peoplefinder::Group)
+        expect(assigns(:group)).to be_a(Group)
         expect(assigns(:group)).to be_persisted
       end
 
       it 'redirects to the created group' do
         post :create, { group: valid_attributes }, valid_session
-        expect(response).to redirect_to(Peoplefinder::Group.last)
+        expect(response).to redirect_to(Group.last)
       end
     end
 
@@ -117,7 +117,7 @@ RSpec.describe Peoplefinder::GroupsController, type: :controller do
       end
 
       it 'assigns a newly created but unsaved group as @group' do
-        expect(assigns(:group)).to be_a_new(Peoplefinder::Group)
+        expect(assigns(:group)).to be_a_new(Group)
       end
 
       it 're-renders the new template' do
@@ -182,7 +182,7 @@ RSpec.describe Peoplefinder::GroupsController, type: :controller do
       group = create(:group, valid_attributes)
       expect {
         delete :destroy, { id: group.to_param }, valid_session
-      }.to change(Peoplefinder::Group, :count).by(-1)
+      }.to change(Group, :count).by(-1)
     end
 
     it 'redirects to the parent group' do

@@ -1,7 +1,7 @@
 require 'rails_helper'
 
-RSpec.describe Peoplefinder::PeopleController, type: :controller do
-  routes { Peoplefinder::Engine.routes }
+RSpec.describe PeopleController, type: :controller do
+  routes { Engine.routes }
 
   before do
     mock_logged_in_user
@@ -42,7 +42,7 @@ RSpec.describe Peoplefinder::PeopleController, type: :controller do
   describe 'GET new' do
     it 'assigns a new person as @person' do
       get :new, {}
-      expect(assigns(:person)).to be_a_new(Peoplefinder::Person)
+      expect(assigns(:person)).to be_a_new(Person)
     end
 
     it 'builds a membership object' do
@@ -78,18 +78,18 @@ RSpec.describe Peoplefinder::PeopleController, type: :controller do
       it 'creates a new Person' do
         expect {
           post :create, person: valid_attributes
-        }.to change(Peoplefinder::Person, :count).by(1)
+        }.to change(Person, :count).by(1)
       end
 
       it 'assigns a newly created person as @person' do
         post :create, person: valid_attributes
-        expect(assigns(:person)).to be_a(Peoplefinder::Person)
+        expect(assigns(:person)).to be_a(Person)
         expect(assigns(:person)).to be_persisted
       end
 
       it 'redirects to the created person' do
         post :create, person: valid_attributes
-        expect(response).to redirect_to(Peoplefinder::Person.last)
+        expect(response).to redirect_to(Person.last)
       end
     end
 
@@ -99,7 +99,7 @@ RSpec.describe Peoplefinder::PeopleController, type: :controller do
       end
 
       it 'redirects to the cropping tool' do
-        expect(response).to redirect_to(edit_person_image_path(Peoplefinder::Person.last))
+        expect(response).to redirect_to(edit_person_image_path(Person.last))
       end
     end
 
@@ -109,7 +109,7 @@ RSpec.describe Peoplefinder::PeopleController, type: :controller do
       end
 
       it 'assigns a newly created but unsaved person as @person' do
-        expect(assigns(:person)).to be_a_new(Peoplefinder::Person)
+        expect(assigns(:person)).to be_a_new(Person)
       end
 
       it 're-renders the new template' do
@@ -276,7 +276,7 @@ RSpec.describe Peoplefinder::PeopleController, type: :controller do
       person = create(:person, valid_attributes)
       expect {
         delete :destroy, id: person.to_param
-      }.to change(Peoplefinder::Person, :count).by(-1)
+      }.to change(Person, :count).by(-1)
     end
 
     it 'redirects to the people list' do

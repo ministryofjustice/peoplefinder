@@ -1,7 +1,7 @@
 require 'rails_helper'
 
-RSpec.describe Peoplefinder::SuggestionsController, type: :controller do
-  routes { Peoplefinder::Engine.routes }
+RSpec.describe SuggestionsController, type: :controller do
+  routes { Engine.routes }
 
   before do
     mock_logged_in_user
@@ -14,8 +14,8 @@ RSpec.describe Peoplefinder::SuggestionsController, type: :controller do
     let(:friendly)   { double('friendly') }
 
     it 'assigns a new suggestion as @suggestion' do
-      expect(Peoplefinder::Suggestion).to receive(:new).and_return(suggestion)
-      allow(Peoplefinder::Person).to receive(:friendly).and_return(friendly)
+      expect(Suggestion).to receive(:new).and_return(suggestion)
+      allow(Person).to receive(:friendly).and_return(friendly)
       allow(friendly).to receive(:find).with(person_id).and_return(person)
 
       get :new, person_id: person_id
@@ -24,8 +24,8 @@ RSpec.describe Peoplefinder::SuggestionsController, type: :controller do
     end
 
     it 'assigns loaded person to @person' do
-      allow(Peoplefinder::Suggestion).to receive(:new).and_return(suggestion)
-      expect(Peoplefinder::Person).to receive(:friendly).and_return(friendly)
+      allow(Suggestion).to receive(:new).and_return(suggestion)
+      expect(Person).to receive(:friendly).and_return(friendly)
       expect(friendly).to receive(:find).with(person_id).and_return(person)
 
       get :new, person_id: person_id
@@ -40,7 +40,7 @@ RSpec.describe Peoplefinder::SuggestionsController, type: :controller do
       let(:suggestion) { double('suggestion', :'valid?' => false) }
 
       it 'renders the form' do
-        expect(Peoplefinder::Suggestion).to receive(:new).with(params).and_return(suggestion)
+        expect(Suggestion).to receive(:new).with(params).and_return(suggestion)
         post :create, person_id: 'foo', suggestion: params
         expect(response).to render_template(:new)
       end
@@ -53,10 +53,10 @@ RSpec.describe Peoplefinder::SuggestionsController, type: :controller do
       let(:suggestion) { double('suggestion', :'valid?' => true) }
 
       it 'delivers the suggestion' do
-        expect(Peoplefinder::Suggestion).to receive(:new).with(params).and_return(suggestion)
-        expect(Peoplefinder::Person).to receive(:friendly).and_return(friendly)
+        expect(Suggestion).to receive(:new).with(params).and_return(suggestion)
+        expect(Person).to receive(:friendly).and_return(friendly)
         expect(friendly).to receive(:find).with(person_id).and_return(person)
-        expect(Peoplefinder::SuggestionDelivery).to receive(:deliver).with(person, current_user, suggestion)
+        expect(SuggestionDelivery).to receive(:deliver).with(person, current_user, suggestion)
 
         post :create, person_id: person_id, suggestion: params
 

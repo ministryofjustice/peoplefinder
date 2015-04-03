@@ -1,7 +1,7 @@
 require 'rails_helper'
 
-RSpec.describe Peoplefinder::HomeController, type: :controller do
-  routes { Peoplefinder::Engine.routes }
+RSpec.describe HomeController, type: :controller do
+  routes { Engine.routes }
 
   before do
     mock_logged_in_user

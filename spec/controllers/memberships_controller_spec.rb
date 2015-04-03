@@ -1,7 +1,7 @@
 require 'rails_helper'
 
-RSpec.describe Peoplefinder::MembershipsController, type: :controller do
-  routes { Peoplefinder::Engine.routes }
+RSpec.describe MembershipsController, type: :controller do
+  routes { Engine.routes }
 
   before do
     mock_logged_in_user
@@ -13,7 +13,7 @@ RSpec.describe Peoplefinder::MembershipsController, type: :controller do
     it 'deletes the record' do
       delete :destroy, id: membership.to_param, referer: people_path
       expect {
-        Peoplefinder::Membership.find(membership.id)
+        Membership.find(membership.id)
       }.to raise_error(ActiveRecord::RecordNotFound)
     end
 

@@ -1,12 +1,12 @@
 require 'rails_helper'
-RSpec.describe Peoplefinder::Metrics::CompletionsController, type: :controller do
-  routes { Peoplefinder::Engine.routes }
+RSpec.describe Metrics::CompletionsController, type: :controller do
+  routes { Engine.routes }
 
   let(:parsed_body) { JSON.parse(response.body) }
 
   describe 'GET index' do
     it 'returns JSON for the overall completion score' do
-      allow(Peoplefinder::Person).to receive(:overall_completion).and_return(37)
+      allow(Person).to receive(:overall_completion).and_return(37)
       expected = {
         'item' => 37,
         'min' => { 'value' => 0 },
