@@ -2,69 +2,6 @@
 
 [![Build Status](https://travis-ci.org/ministryofjustice/peoplefinder.svg?branch=master)](https://travis-ci.org/ministryofjustice/peoplefinder)
 
-This is a rails engine that can be mounted inside a rails 4 application.
-
-A working example can be seen at https://github.com/alphagov/gds-peoplefinder
-
-## Creating your own wrapper application
-
-If you want to deploy peoplefinder yourself, you can create your own wrapper
-application quite easiliy.
-
-Start by creating a bare rails application:
-
-```
-$ rails application new my_peoplefinder
-```
-
-Then you need to modify the `Gemfile` to include the peoplefinder engine gem:
-
-```
-gem 'peoplefinder'
-```
-
-The peoplefinder engine requires some forked / tagged versions gems. It's not
-possible to specify these forked requirements in the `peoplefinder` gemspec,
-so you need to specify them in the `Gemfile` of the wrapper application:
-
-```
-gem 'carrierwave',
-  git: 'https://github.com/carrierwaveuploader/carrierwave.git',
-  tag: 'cc39842e44edcb6187b2d379a606ec48a6b5e4a8'
-
-gem 'omniauth-gplus',
-  git: 'https://github.com/ministryofjustice/omniauth-gplus.git'
-```
-
-Install the gems with bundler:
-
-```
-bundle install
-```
-
-## Mounting the engine
-
-In config/routes.rb:
-
-`mount Peoplefinder::Engine, at: "/"`
-
-## Importing migrations from engine
-
-If the engine has new database migrations, you can import them into this application to apply them to the application database using the following:
-
-`$ bundle exec rake peoplefinder:install:migrations`
-
-This copies the migrations into the application's `db/migrate` directory. You should commit any such imported migration files to this applications repo:
-
-`$ git add db/migrate $ git commit -m 'Imported new migrations from engine'`
-
-You should then run the migrations in the usual way:
-
-` $ bundle exec rake db:migrate`
-
-And commit the `schema.rb`
-
-
 ## Configuration
 
 These should be defined in the config/application.rb or in the enviroments/__environment__.rb files if the settings need to be
@@ -134,22 +71,22 @@ Elasticsearch requires [jdk version 7 or greater](http://www.oracle.com/technetw
 If you get an IndexMissingException, you will need to index the Person model:
 
 ```
-bundle exec rake environment elasticsearch:import:model CLASS='Peoplefinder::Person' FORCE=y
+bundle exec rake environment elasticsearch:import:model CLASS='Person' FORCE=y
 ```
 
 Or you can create the index from the console:
 
 ```
-Peoplefinder::Person.__elasticsearch__.create_index! index: Peoplefinder::Person.index_name, force: true`
+Person.__elasticsearch__.create_index! index: Person.index_name, force: true`
 ```
 
 And populate it:
 
-`Peoplefinder::Person.import`
+`Person.import`
 
 You can also delete the index:
 
-`Peoplefinder::Person.delete_indexes`
+`Person.delete_indexes`
 
 To run specs without Elasticsearch:
 
@@ -181,18 +118,6 @@ You can override this layout in wrapper application, create your own file:
 
 `app/views/layouts/peoplefinder/peoplefinder.html.haml`
 
-
-## Angular.js notes
-
-The organisational browser uses angular.js. When heroku compiles the assets, the minified js is mangled and does not work.
-
-Asset mangling is prevented in the engine with help of the uglifier gem.
-
-Make sure that this is not overwritten in the wraper by commenting out the js_compressor in config/environments/production.rb:
-
-`# config.assets.js_compressor = :uglifier`
-
-
 ## Translation file
 
 A lot of the text in the views is configurable in the translations file.
@@ -205,16 +130,16 @@ You can override these in wrapper application by creating your own file:
 
 ### Random data generator for testing
 
-The `Peoplefinder::RandomGenerator` is able to generate several layers of teams and people with randomly generated details in those teams.
+The `RandomGenerator` is able to generate several layers of teams and people with randomly generated details in those teams.
 
 Usage:
 
 ```Ruby
 
-  group = Peoplefinder::Group.find(...)
+  group = Group.find(...)
 
   # initialise the generator with a parent group
-  generator = Peoplefinder::RandomGenerator.new(group)
+  generator = RandomGenerator.new(group)
 
   # clean all subgroups and people within the provided parent group
   generator.clear
