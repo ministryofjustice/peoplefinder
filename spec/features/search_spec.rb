@@ -1,6 +1,9 @@
 require 'rails_helper'
 
 feature 'Search for people', elastic: true do
+  extend FeatureFlagSpecHelper
+  enable_feature :communities
+
   describe 'with elasticsearch' do
     let(:community) { create(:community, name: 'Design') }
     let!(:person) {
