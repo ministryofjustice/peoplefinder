@@ -1,8 +1,6 @@
-require 'peoplefinder'
-
-class Peoplefinder::UserUpdateMailer < ActionMailer::Base
-  include Peoplefinder::FeatureHelper
-  layout 'peoplefinder/email'
+class UserUpdateMailer < ActionMailer::Base
+  include FeatureHelper
+  layout 'email'
 
   def new_profile_email(person, by_email = nil)
     @person = person
