@@ -1,3 +1,5 @@
+require 'csv'
+
 class CsvPeopleImporter
   COLUMNS = %w[given_name surname email]
 
