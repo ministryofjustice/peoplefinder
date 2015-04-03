@@ -1,3 +1,4 @@
+# This migration comes from peoplefinder (originally 20141010090624)
 class MigrateItemTypesInVersions < ActiveRecord::Migration
   def up
     execute <<-SQL

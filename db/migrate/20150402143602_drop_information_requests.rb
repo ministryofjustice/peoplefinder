@@ -1,3 +1,4 @@
+# This migration comes from peoplefinder (originally 20150303152942)
 class DropInformationRequests < ActiveRecord::Migration
   def up
     drop_table :information_requests

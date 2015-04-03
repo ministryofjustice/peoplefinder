@@ -1,3 +1,4 @@
+# This migration comes from peoplefinder (originally 20150319122348)
 class NormalizeEmailCase < ActiveRecord::Migration
   def up
     execute <<-SQL
@@ -6,12 +7,6 @@ class NormalizeEmailCase < ActiveRecord::Migration
 
       UPDATE tokens
       SET user_email = lower(user_email);
-
-      UPDATE information_requests
-      SET sender_email = lower(sender_email);
-
-      UPDATE reported_profiles
-      SET recipient_email = lower(recipient_email);
     SQL
   end
 end

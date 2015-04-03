@@ -1,3 +1,4 @@
+# This migration comes from peoplefinder (originally 20150217105036)
 class AddUniqueConstraintToEmail < ActiveRecord::Migration
   def up
     execute <<-SQL

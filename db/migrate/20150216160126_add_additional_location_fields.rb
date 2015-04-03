@@ -1,3 +1,4 @@
+# This migration comes from peoplefinder (originally 20150213103214)
 class AddAdditionalLocationFields < ActiveRecord::Migration
   def change
     rename_column 'people', 'location', 'location_in_building'
