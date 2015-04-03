@@ -1,9 +1,9 @@
 require 'rails_helper'
 
-RSpec.describe Peoplefinder::Community, type: :model do
+RSpec.describe Community, type: :model do
   let(:person) { create(:person) }
   let(:community) { create(:community) }
-  let(:reloaded_person) { Peoplefinder::Person.find(person.id) }
+  let(:reloaded_person) { Person.find(person.id) }
 
   it 'can assign a community to a person' do
     person.community = community

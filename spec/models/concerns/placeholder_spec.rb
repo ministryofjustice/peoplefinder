@@ -1,10 +1,10 @@
 require 'rails_helper'
 
-RSpec.describe Peoplefinder::Concerns::Placeholder do
+RSpec.describe Concerns::Placeholder do
 
   class TestModel
     extend ActiveModel::Naming
-    include Peoplefinder::Concerns::Placeholder
+    include Concerns::Placeholder
     attr_accessor :field
   end
 

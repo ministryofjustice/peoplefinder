@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Peoplefinder::Person, type: :model do
+RSpec.describe Person, type: :model do
   let(:person) { build(:person) }
   it { should validate_presence_of(:given_name).on(:update) }
   it { should validate_presence_of(:surname) }

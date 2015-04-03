@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Peoplefinder::Concerns::Sanitizable do
+RSpec.describe Concerns::Sanitizable do
 
   class TestModel
     include ActiveModel::Model
@@ -12,7 +12,7 @@ RSpec.describe Peoplefinder::Concerns::Sanitizable do
 
     attr_accessor :color, :shape, :flavor, :smell
 
-    include Peoplefinder::Concerns::Sanitizable
+    include Concerns::Sanitizable
     sanitize_fields :color, strip: true
     sanitize_fields :shape, downcase: true
     sanitize_fields :flavor, downcase: true, strip: true

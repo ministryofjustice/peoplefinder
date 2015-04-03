@@ -4,18 +4,18 @@ RSpec.describe 'Completion' do # rubocop:disable RSpec/DescribeClass
 
   context '#completion score' do
     it 'returns 0 if all fields are empty' do
-      person = Peoplefinder::Person.new
+      person = Person.new
       expect(person.completion_score).to eql(0)
       expect(person).to be_incomplete
     end
 
     it 'returns non-0 if a group is assigned' do
-      person = Peoplefinder::Person.new(groups: [Peoplefinder::Group.new])
+      person = Person.new(groups: [Group.new])
       expect(person.completion_score).not_to eql(0)
     end
 
     it 'returns 50 if half the fields are completed' do
-      person = Peoplefinder::Person.new(
+      person = Person.new(
         given_name: generate(:given_name),
         surname: generate(:surname),
         email: generate(:email),
@@ -27,7 +27,7 @@ RSpec.describe 'Completion' do # rubocop:disable RSpec/DescribeClass
     end
 
     context 'when all the fields are completed' do
-      let(:person) { Peoplefinder::Person.new(completed_attributes) }
+      let(:person) { Person.new(completed_attributes) }
       before { person.groups << build(:group)  }
 
       it 'returns 100' do
@@ -41,7 +41,7 @@ RSpec.describe 'Completion' do # rubocop:disable RSpec/DescribeClass
     it 'returns 100 if one person is 100% complete' do
       person = create(:person, completed_attributes)
       create(:membership, person: person)
-      expect(Peoplefinder::Person.overall_completion).to eq(100)
+      expect(Person.overall_completion).to eq(100)
     end
 
     it 'returns 50 if two profiles are 50% complete' do
@@ -54,7 +54,7 @@ RSpec.describe 'Completion' do # rubocop:disable RSpec/DescribeClass
           primary_phone_number: generate(:phone_number)
         )
       end
-      expect(Peoplefinder::Person.overall_completion).to eq(50)
+      expect(Person.overall_completion).to eq(50)
     end
 
     it 'includes membership in calculation' do
@@ -72,40 +72,40 @@ RSpec.describe 'Completion' do # rubocop:disable RSpec/DescribeClass
       end
       expect(people[0].completion_score).to eq(60)
       expect(people[1].completion_score).to eq(50)
-      expect(Peoplefinder::Person.overall_completion).to eq(55)
+      expect(Person.overall_completion).to eq(55)
     end
   end
 
   describe '#inadequate_profiles' do
     let!(:person) { create(:person, completed_attributes) }
-    subject { Peoplefinder::Person.inadequate_profiles }
+    subject { Person.inadequate_profiles }
 
     it 'is empty when all attributes are populated' do
       expect(subject).to be_empty
     end
 
     it 'returns the person when there is no primary phone number' do
-      Peoplefinder::Person.update_all 'primary_phone_number = \'\''
+      Person.update_all 'primary_phone_number = \'\''
       expect(subject).to include(person)
     end
 
     it 'returns the person when there is no location in building' do
-      Peoplefinder::Person.update_all 'location_in_building = \'\''
+      Person.update_all 'location_in_building = \'\''
       expect(subject).to include(person)
     end
 
     it 'returns the person when there is no building' do
-      Peoplefinder::Person.update_all 'building = \'\''
+      Person.update_all 'building = \'\''
       expect(subject).to include(person)
     end
 
     it 'returns the person when there is no city' do
-      Peoplefinder::Person.update_all 'city = \'\''
+      Person.update_all 'city = \'\''
       expect(subject).to include(person)
     end
 
     it 'returns the person when there is no image' do
-      Peoplefinder::Person.update_all 'image = null'
+      Person.update_all 'image = null'
       expect(subject).to include(person)
     end
   end

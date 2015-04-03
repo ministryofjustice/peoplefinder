@@ -1,11 +1,11 @@
 require 'rails_helper'
 
-RSpec.describe Peoplefinder::Concerns::ConcatenatedFields do
+RSpec.describe Concerns::ConcatenatedFields do
 
   class TestModel
     attr_accessor :field_a, :field_b
 
-    include Peoplefinder::Concerns::ConcatenatedFields
+    include Concerns::ConcatenatedFields
     concatenated_field :concatenated, :field_a, :field_b, join_with: ', '
   end
 

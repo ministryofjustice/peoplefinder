@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Peoplefinder::EmailAddress do
+RSpec.describe EmailAddress do
   let(:valid_login_domains) { ['something.gov.uk'] }
 
   subject { described_class.new(email, valid_login_domains) }

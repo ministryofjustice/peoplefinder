@@ -1,7 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Peoplefinder::Token, type: :model do
-
+RSpec.describe Token, type: :model do
   it 'generates a token' do
     token = create(:token)
     expect(token.value).to match(/\A[a-z0-9\-]{36}\z/)

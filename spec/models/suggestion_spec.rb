@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Peoplefinder::Suggestion, type: :model do
+RSpec.describe Suggestion, type: :model do
   let(:default_suggestion)  { described_class.new }
 
   describe 'for_person?' do

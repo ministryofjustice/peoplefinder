@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Peoplefinder::Person, elastic: true do
+RSpec.describe Person, elastic: true do
   after(:all) do
     clean_up_indexes_and_tables
   end

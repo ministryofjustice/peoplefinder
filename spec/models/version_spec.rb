@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Peoplefinder::Version, type: :model do
+RSpec.describe Version, type: :model do
   context 'whodunnit' do
     let(:author) { create(:person) }
 
