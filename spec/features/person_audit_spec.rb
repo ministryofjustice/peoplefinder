@@ -10,7 +10,7 @@ feature 'View person audit' do
   let(:profile_page) { Pages::Profile.new }
 
   let(:sample_image) {
-    File.open(File.join(Engine.root, 'spec', 'fixtures', 'placeholder.png'))
+    File.open(File.join(Rails.root, 'spec', 'fixtures', 'placeholder.png'))
   }
 
   let(:author) { create(:person) }
