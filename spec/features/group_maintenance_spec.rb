@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 feature 'Group maintenance' do
+  include ActiveJobHelper
+
   before do
     omni_auth_log_in_as 'test.user@digital.justice.gov.uk'
   end

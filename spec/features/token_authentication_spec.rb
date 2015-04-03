@@ -12,6 +12,8 @@ RSpec.shared_context "token_auth feature disabled" do
 end
 
 feature 'Token Authentication' do
+  include ActiveJobHelper
+
   let(:login_page) { Pages::Login.new }
 
   before { create(:group) }

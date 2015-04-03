@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 feature 'Person edit notifications' do
+  include ActiveJobHelper
+
   let(:person) { create(:person, email: 'test.user@digital.justice.gov.uk') }
   before do
     omni_auth_log_in_as(person.email)
