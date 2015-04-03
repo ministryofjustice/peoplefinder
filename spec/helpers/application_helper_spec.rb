@@ -1,12 +1,8 @@
 require 'rails_helper'
 
-RSpec.describe Peoplefinder::ApplicationHelper, type: :helper do
-  before {
-    helper.extend Peoplefinder::Engine.routes.url_helpers
-  }
-
+RSpec.describe ApplicationHelper, type: :helper do
   let(:stubbed_time) { Time.new(2012, 10, 31, 2, 2, 2, "+01:00") }
-  let(:originator) { Peoplefinder::Version.public_user }
+  let(:originator) { Version.public_user }
 
   context '#last_update' do
     it 'shows last_update for a person by a system generated user' do

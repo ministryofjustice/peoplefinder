@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Peoplefinder::PeopleHelper, type: :helper do
+RSpec.describe PeopleHelper, type: :helper do
   describe 'day_name' do
     it "returns a name for each day" do
       expect(day_name(:works_wednesday)).to eql("Wednesday")
@@ -12,7 +12,7 @@ RSpec.describe Peoplefinder::PeopleHelper, type: :helper do
   end
 
   describe 'person_form_class' do
-    let(:person) { double(Peoplefinder::Person, new_record?: false) }
+    let(:person) { double(Person, new_record?: false) }
 
     it 'includes "new_person" if person is a new record' do
       allow(person).to receive(:new_record?).and_return(true)
