@@ -1,8 +1,8 @@
 module SpecSupport
   module Login
     def mock_logged_in_user
-      controller.session[Login::SESSION_KEY] =
-        create(:person, email: 'test.user@digital.moj.gov.uk').id
+      controller.session[::Login::SESSION_KEY] =
+        create(:person, email: 'test.user@digital.justice.gov.uk').id
     end
 
     def current_user
