@@ -26,16 +26,16 @@ RSpec.describe RandomGenerator do
     let(:groups_levels) { 2 }
     let(:groups_per_level) { 2 }
     let(:people_per_group) { 3 }
-    let(:domain) { 'fake.digital.justice.gov.uk' }
+    let(:domain) { 'digital.justice.gov.uk' }
     before do
       subject.generate(groups_levels, groups_per_level, people_per_group, domain)
     end
 
     it 'generate all levels of groups' do
-      expect(group.descendants.count).to be(6)
+      expect(group.descendants.count).to eq(6)
     end
     it 'generate people for the leaf groups' do
-      expect(Person.all_in_groups(group.descendants.pluck(:id)).count).to be(12)
+      expect(Person.all_in_groups(group.descendants.pluck(:id)).count).to eq(12)
     end
   end
 end
