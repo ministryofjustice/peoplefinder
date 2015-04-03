@@ -15,8 +15,8 @@ feature 'Search for people', elastic: true do
 
     before do
       create(:department)
-      Peoplefinder::Person.import
-      Peoplefinder::Person.__elasticsearch__.client.indices.refresh
+      Person.import
+      Person.__elasticsearch__.client.indices.refresh
       omni_auth_log_in_as 'test.user@digital.justice.gov.uk'
     end
 

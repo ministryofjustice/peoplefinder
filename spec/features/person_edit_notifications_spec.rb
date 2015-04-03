@@ -17,7 +17,7 @@ feature 'Person edit notifications' do
     expect(last_email.subject).to eq('A new profile on MOJ People Finder has been created for you')
 
     check_email_to_and_from
-    check_email_has_profile_link(Peoplefinder::Person.where(email: 'bob.smith@digital.justice.gov.uk').first)
+    check_email_has_profile_link(Person.where(email: 'bob.smith@digital.justice.gov.uk').first)
   end
 
   scenario 'Deleting a person with different email' do
@@ -56,7 +56,7 @@ feature 'Person edit notifications' do
 
   scenario 'Verifying the link to bob that is render in the emails' do
     bob = create(:person, email: 'bob@digital.justice.gov.uk', surname: 'bob')
-    visit token_url(Peoplefinder::Token.for_person(bob), desired_path: person_path(bob))
+    visit token_url(Token.for_person(bob), desired_path: person_path(bob))
 
     within('h1') do
       expect(page).to have_text('bob')

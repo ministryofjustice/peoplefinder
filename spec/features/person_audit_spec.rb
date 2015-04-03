@@ -10,7 +10,7 @@ feature 'View person audit' do
   let(:profile_page) { Pages::Profile.new }
 
   let(:sample_image) {
-    File.open(File.join(Peoplefinder::Engine.root, 'spec', 'fixtures', 'placeholder.png'))
+    File.open(File.join(Engine.root, 'spec', 'fixtures', 'placeholder.png'))
   }
 
   let(:author) { create(:person) }
@@ -51,7 +51,7 @@ feature 'View person audit' do
       end
 
       scenario 'show IP address of author of a change' do
-        Peoplefinder::Version.last.update ip_address: '1.2.3.4'
+        Version.last.update ip_address: '1.2.3.4'
         profile_page.load(slug: person.slug)
 
         profile_page.audit.versions.tap do |v|
@@ -61,7 +61,7 @@ feature 'View person audit' do
 
       scenario 'show browser used by author of a change' do
         ua = 'Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)'
-        Peoplefinder::Version.last.update user_agent: ua
+        Version.last.update user_agent: ua
         profile_page.load(slug: person.slug)
 
         profile_page.audit.versions.tap do |v|

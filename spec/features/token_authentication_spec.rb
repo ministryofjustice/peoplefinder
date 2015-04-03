@@ -37,7 +37,7 @@ feature 'Token Authentication' do
     expect(page).to have_text('We are sending you a link to log in')
 
     expect(last_email.to).to eql(['james.darling@digital.justice.gov.uk'])
-    expect(last_email.body.encoded).to have_text(token_url(Peoplefinder::Token.last))
+    expect(last_email.body.encoded).to have_text(token_url(Token.last))
   end
 
   scenario 'copy-pasting an email with extraneous spaces' do
@@ -81,7 +81,7 @@ feature 'Token Authentication' do
 
   scenario 'logging in and displaying a link to my profile' do
     person = create(:person, given_name: 'Bob', surname: 'Smith', email: 'test.user@digital.justice.gov.uk')
-    token = Peoplefinder::Token.for_person(person)
+    token = Token.for_person(person)
     visit token_path(token)
     expect(page).to have_text('Signed in as Bob Smith')
     expect(page).to have_link('Bob Smith', href: person_path(person))
