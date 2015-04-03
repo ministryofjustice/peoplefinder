@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Peoplefinder::SuggestionMailer do
+RSpec.describe SuggestionMailer do
   let(:suggester) { create(:person, email: 'suggester@digital.justice.gov.uk') }
   let(:person)    { create(:person, email: 'person@digital.justice.gov.uk') }
   let(:admin)     { create(:person,  email: 'admin@digital.justice.gov.uk') }

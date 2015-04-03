@@ -1,10 +1,6 @@
 require 'rails_helper'
 
-RSpec.configure do |c|
-  c.include Peoplefinder::Engine.routes.url_helpers
-end
-
-RSpec.describe Peoplefinder::GroupUpdateMailer do
+RSpec.describe GroupUpdateMailer do
   let(:recipient) { create(:person, email: 'test.user@digital.justice.gov.uk') }
   let(:person_responsible) { create(:person) }
   let(:group) { create(:person) }

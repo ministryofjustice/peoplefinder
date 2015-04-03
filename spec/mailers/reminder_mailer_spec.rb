@@ -1,10 +1,6 @@
 require 'rails_helper'
 
-RSpec.configure do |c|
-  c.include Peoplefinder::Engine.routes.url_helpers
-end
-
-RSpec.describe Peoplefinder::ReminderMailer do
+RSpec.describe ReminderMailer do
   describe '.inadequate_profile' do
     let(:person) { create(:person, email: 'test.user@digital.justice.gov.uk') }
     let(:mail) { described_class.inadequate_profile(person).deliver_now }
