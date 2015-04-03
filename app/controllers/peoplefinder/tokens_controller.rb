@@ -56,8 +56,8 @@ module Peoplefinder
 
     def ttl_seconds_in_hours
       minutes = Token.ttl.div(60)
-      seconds = minutes.div(60)
-      seconds
+      hours = minutes.div(60)
+      hours
     end
   end
 end
