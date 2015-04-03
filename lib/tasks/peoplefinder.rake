@@ -1,7 +1,7 @@
 namespace :peoplefinder do
 
   def inadequate_profiles
-    @inadequate_profiles = Peoplefinder::Person.inadequate_profiles
+    @inadequate_profiles = Person.inadequate_profiles
   end
 
   def inadequate_profiles_with_email
@@ -30,8 +30,8 @@ namespace :peoplefinder do
     if STDIN.gets.chomp == 'Y'
       recipients.each do |recipient|
 
-        if Peoplefinder::EmailAddress.new(recipient.email).valid_address?
-          Peoplefinder::ReminderMailer.inadequate_profile(recipient).deliver
+        if EmailAddress.new(recipient.email).valid_address?
+          ReminderMailer.inadequate_profile(recipient).deliver
           puts "Email sent to: #{ recipient.email }"
 
         else
