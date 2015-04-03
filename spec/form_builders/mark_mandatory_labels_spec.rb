@@ -1,7 +1,7 @@
 require 'spec_helper'
-require 'peoplefinder/mark_mandatory_labels'
+require 'mark_mandatory_labels'
 
-describe Peoplefinder::MarkMandatoryLabels do
+describe MarkMandatoryLabels do
   let(:object) { double }
   let(:form_builder) { double(object: object, label: nil) }
   subject { described_class.new(form_builder) }

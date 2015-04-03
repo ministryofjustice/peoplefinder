@@ -1,7 +1,7 @@
 require 'spec_helper'
-require 'peoplefinder/form_groups'
+require 'form_groups'
 
-describe Peoplefinder::FormGroups do
+describe FormGroups do
   let(:object) { double(errors: []) }
   let(:template) { double(content_tag: nil) }
   let(:form_builder) { double(object: object, template: template) }
