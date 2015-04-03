@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Peoplefinder::CsvPeopleImporter, type: :service do
+RSpec.describe CsvPeopleImporter, type: :service do
 
   before do
     allow(Rails.configuration).to receive(:valid_login_domains).and_return(['valid.gov.uk'])
@@ -88,7 +88,7 @@ CSV
       end
 
       it 'creates new records' do
-        new = Peoplefinder::Person.where(email: 'peter.bly@valid.gov.uk')
+        new = Person.where(email: 'peter.bly@valid.gov.uk')
 
         expect(new.size).to be 1
       end

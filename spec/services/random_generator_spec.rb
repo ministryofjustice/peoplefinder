@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Peoplefinder::RandomGenerator do
+RSpec.describe RandomGenerator do
   let(:group) { create(:group) }
   subject { described_class.new(group) }
 
@@ -35,7 +35,7 @@ RSpec.describe Peoplefinder::RandomGenerator do
       expect(group.descendants.count).to be(6)
     end
     it 'generate people for the leaf groups' do
-      expect(Peoplefinder::Person.all_in_groups(group.descendants.pluck(:id)).count).to be(12)
+      expect(Person.all_in_groups(group.descendants.pluck(:id)).count).to be(12)
     end
   end
 end

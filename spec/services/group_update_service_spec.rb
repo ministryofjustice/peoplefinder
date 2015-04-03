@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Peoplefinder::GroupUpdateService, type: :service do
+RSpec.describe GroupUpdateService, type: :service do
   let(:group) { build(:group) }
   let(:person_responsible) { build(:person) }
   subject { described_class.new(group: group, person_responsible: person_responsible) }
@@ -18,11 +18,11 @@ RSpec.describe Peoplefinder::GroupUpdateService, type: :service do
     email_1 = double(Mail::Message)
     email_2 = double(Mail::Message)
 
-    expect(Peoplefinder::GroupUpdateMailer).
+    expect(GroupUpdateMailer).
       to receive(:inform_subscriber).
       with(subscribers[0], group, person_responsible).
       and_return(email_1)
-    expect(Peoplefinder::GroupUpdateMailer).
+    expect(GroupUpdateMailer).
       to receive(:inform_subscriber).
       with(subscribers[1], group, person_responsible).
       and_return(email_2)

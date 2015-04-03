@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Peoplefinder::Login, type: :service do
+RSpec.describe Login, type: :service do
 
   let(:session) { {} }
   let(:person) { create(:person) }
@@ -19,18 +19,18 @@ RSpec.describe Peoplefinder::Login, type: :service do
       end
     end
     it 'stores the person id in the session' do
-      expect { subject }.to change { session[Peoplefinder::Login::SESSION_KEY] }.from(nil).to(person.id)
+      expect { subject }.to change { session[Login::SESSION_KEY] }.from(nil).to(person.id)
     end
   end
 
   describe '#logout' do
     subject { service.logout }
     before do
-      session[Peoplefinder::Login::SESSION_KEY] = person.id
+      session[Login::SESSION_KEY] = person.id
     end
 
     it 'removes the person id from the session' do
-      expect { subject }.to change { session[Peoplefinder::Login::SESSION_KEY] }.to(nil)
+      expect { subject }.to change { session[Login::SESSION_KEY] }.to(nil)
     end
   end
 
@@ -78,7 +78,7 @@ RSpec.describe Peoplefinder::Login, type: :service do
     subject { described_class.current_user(session) }
 
     before do
-      session[Peoplefinder::Login::SESSION_KEY] = person_id
+      session[Login::SESSION_KEY] = person_id
     end
 
     context 'when user is logged in' do

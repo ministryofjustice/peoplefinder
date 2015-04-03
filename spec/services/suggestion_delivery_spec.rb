@@ -1,13 +1,13 @@
 require 'rails_helper'
 
-RSpec.describe Peoplefinder::SuggestionDelivery do
+RSpec.describe SuggestionDelivery do
   describe '.deliver' do
-    let(:mailer) { Peoplefinder::SuggestionMailer }
+    let(:mailer) { SuggestionMailer }
     let(:mail)   { double('mail') }
     let(:suggestion_hash) { double('hash') }
 
     before do
-      allow(Peoplefinder::Suggestion).to receive(:new).
+      allow(Suggestion).to receive(:new).
         with(suggestion_hash).and_return(suggestion)
     end
 

@@ -7,7 +7,7 @@ shared_examples 'existing person returned' do
 end
 shared_examples 'new person created' do
   it 'returns a person model' do
-    is_expected.to be_a(Peoplefinder::Person)
+    is_expected.to be_a(Person)
   end
 
   describe 'the person' do
@@ -20,7 +20,7 @@ shared_examples 'new person created' do
   end
 end
 
-RSpec.describe Peoplefinder::FindCreatePerson, type: :service do
+RSpec.describe FindCreatePerson, type: :service do
   let(:valid_auth_hash) do
     {
       'info' => {
@@ -63,7 +63,7 @@ RSpec.describe Peoplefinder::FindCreatePerson, type: :service do
   end
 
   describe '.from_token' do
-    let(:token) { Peoplefinder::Token.create(user_email: 'aled.jones@digitial.justice.gov.uk') }
+    let(:token) { Token.create(user_email: 'aled.jones@digitial.justice.gov.uk') }
     subject { described_class.from_token(token) }
 
     context 'for a new person' do
