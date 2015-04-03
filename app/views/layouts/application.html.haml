@@ -1,0 +1,28 @@
+= render partial: 'layouts/shared'
+- content_for :header_app_name do
+  =link_to app_title, home_path
+- content_for :content do
+  #wrapper
+    %main#content{role: 'main'}
+      = render partial: 'layouts/partials/phase'
+      = yield :editing_alert
+      = flash_messages
+      = render "shared/loginout"
+      .inner-block
+        %nav
+          .breadcrumbs= yield :breadcrumbs
+      - if current_user && !@editing_mode
+        .grid-wrapper
+          .grid.grid-2-3
+            .inner-block= render 'shared/search'
+          .grid.grid-1-3
+            .inner-block= render 'shared/edit_links'
+      .inner-block
+        = yield
+        #report_link
+          = yield :report_link
+        #last_update
+          = last_update
+
+= render 'layouts/script'
+= render template: "layouts/peoplefinder"

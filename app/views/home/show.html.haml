@@ -1,0 +1,40 @@
+- content_for :body_classes, 'home-page'
+
+%h1= t('home.heading', group_name: @group.name)
+%p= t('home.explanation')
+
+%div.search-wrapper
+  %div.help-grid-1-2
+    %p
+      = t('home.usage_heading')
+      %br
+      = t('home.usage')
+
+
+  %div.grid-1-2
+    %h2= t('home.search_heading')
+    %p.hint-text{ aria: { hidden: 'true' } }= t('home.search_hint')
+
+    = render 'shared/search'
+
+%div.root-team
+  %h2.org-structure= @group.name
+  %div.leaders.grid.grid-1-3
+    - @group.leaders.each do |leader|
+      %div.profile
+        = profile_image_tag leader, leader.image.medium
+        %p
+          =link_to leader.name, leader, class: 'leader-name'
+          %span.leader-role= leader.memberships.where(group:@group).first.role
+
+  %h3.grid.grid-2-3.about-team-header About the team
+  %div.about-the-team.formatted-text.about.text.grid.grid-2-3
+    = govspeak(@group.with_placeholder_default(:description))
+
+
+%div.root-subteams
+  %h2
+    = "Teams within #{@group.name}"
+
+  .grid-wrapper
+    = render partial: "groups/subgroup", collection: @group.children
