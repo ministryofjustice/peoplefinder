@@ -1,8 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe PeopleController, type: :controller do
-  routes { Engine.routes }
-
   before do
     mock_logged_in_user
   end

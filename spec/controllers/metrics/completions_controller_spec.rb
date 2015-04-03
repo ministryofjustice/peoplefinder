@@ -1,7 +1,5 @@
 require 'rails_helper'
 RSpec.describe Metrics::CompletionsController, type: :controller do
-  routes { Engine.routes }
-
   let(:parsed_body) { JSON.parse(response.body) }
 
   describe 'GET index' do

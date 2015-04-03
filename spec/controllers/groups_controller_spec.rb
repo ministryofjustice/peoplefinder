@@ -19,8 +19,6 @@ require 'rails_helper'
 # that an instance is receiving a specific message.
 
 RSpec.describe GroupsController, type: :controller do
-  routes { Engine.routes }
-
   before do
     mock_logged_in_user
   end

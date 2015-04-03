@@ -1,8 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe HomeController, type: :controller do
-  routes { Engine.routes }
-
   before do
     mock_logged_in_user
   end
