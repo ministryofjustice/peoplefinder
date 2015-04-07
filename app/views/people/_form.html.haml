@@ -12,13 +12,15 @@
   %p * mandatory field
 
   = f.form_group :given_name do
-    = f.label :given_name, 'First name',class: 'form-label-bold' do
+    = f.label :given_name, class: 'form-label-bold' do
+      First name
       - if @person.errors.include?(:given_name)
         %span.error= @person.errors[:given_name].first
     = f.text_field :given_name, class: 'form-control'
 
   = f.form_group :surname do
-    = f.label :surname, 'Surname',class: 'form-label-bold' do
+    = f.label :surname, class: 'form-label-bold' do
+      Surname
       - if @person.errors.include?(:surname)
         %span.error= @person.errors[:surname].first
     = f.text_field :surname, class: 'form-control'
@@ -43,7 +45,8 @@
 
       .emails
         = f.form_group :email do
-          = f.label :email, 'Email',class: 'form-label-bold' do
+          = f.label :email, class: 'form-label-bold' do
+            Email
             - if @person.errors.include?(:email)
               %span.error= @person.errors[:email].first
           = f.text_field :email, class: 'form-control', readonly: @person.persisted?
@@ -52,17 +55,20 @@
               =t('.notes.email')
 
       = f.form_group :location_in_building do
-        = f.label :location_in_building, 'Location in building', class: 'form-label-bold' do
+        = f.label :location_in_building, class: 'form-label-bold' do
+          Location in building
           %p.form-hint= info_text('location_in_building_hint')
         = f.text_field :location_in_building, class: 'form-control'
 
       = f.form_group :building do
-        = f.label :building, 'Building', class: 'form-label-bold' do
+        = f.label :building, class: 'form-label-bold' do
+          Building
           %p.form-hint= info_text('building_hint')
         = f.text_field :building, class: 'form-control'
 
       = f.form_group :city do
-        = f.label :city, 'City', class: 'form-label-bold' do
+        = f.label :city, class: 'form-label-bold' do
+          City
           %p.form-hint= info_text('city_hint')
         = f.text_field :city, class: 'form-control'
 
@@ -86,12 +92,14 @@
 
 
   =f.form_group :description do
-    = f.label :description, 'Extra information', class: 'form-label-bold'
-    %span.form-hint= info_text('notes_field_hint')
+    = f.label :description, class: 'form-label-bold' do
+      Extra information
+      %p.form-hint= info_text('notes_field_hint')
     = f.text_area :description, class: 'form-control'
 
   =f.form_group :image, class: 'line-above' do
-    = f.label :image, 'Photo', class: 'form-label-bold' do
+    = f.label :image, class: 'form-label-bold' do
+      Photo
       %p.form-hint= info_text('photo_upload_hint')
     = f.file_field :image, class: 'form-control file'
 

@@ -10,13 +10,15 @@
             = link_to "#{Group.human_attribute_name(field)} #{error.downcase}", "#group_#{field}"
 
   .form-group{ :class => ('gov-uk-field-error' if @group.errors.include?(:name)) }
-    = f.label :name, 'Team name', class: 'form-label-bold'
-    %span.error= @group.errors[:name].first if @group.errors.include?(:name)
+    = f.label :name, class: 'form-label-bold' do
+      Team name
+      %span.error= @group.errors[:name].first if @group.errors.include?(:name)
     = f.text_field :name, class: 'form-control'
 
   .form-group
-    = f.label :description, 'Team description', class: 'form-label-bold'
-    %span.form-hint= info_text('hint_team_description')
+    = f.label :description, class: 'form-label-bold' do
+      Team description
+      %p.form-hint= info_text('hint_team_description')
     - text_limit = Group::MAX_DESCRIPTION # to be replaced with a variable
     = f.text_area :description, class: 'form-control', placeholder: f.object.placeholder(:description), "data-limit" => text_limit
 
@@ -26,7 +28,7 @@
         = f.hidden_field :parent_id
       - else
         %label.form-label-bold Team parent
-        %span.form-hint Use this to change where in the organisation this team is located.
+        %p.form-hint Use this to change where in the organisation this team is located.
 
         .editable-fields{ style: ('display:none' unless @group.new_record?) }
           - if @org_structure
@@ -38,9 +40,10 @@
               .title= breadcrumbs(@group.parent.path)
             .cta= link_to 'Edit', '#', class: 'show-editable-fields'
 
-  = f.submit class: 'button'
-  .cancel
-    - if @group.new_record?
-      = link_to 'Cancel', :back
-    - else
-      = link_to 'Cancel', @group
+  .form-group
+    = f.submit class: 'button'
+    .cancel
+      - if @group.new_record?
+        = link_to 'Cancel', :back
+      - else
+        = link_to 'Cancel', @group

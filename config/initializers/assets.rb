@@ -7,8 +7,6 @@ Rails.application.config.assets.precompile += %w[
   gov-static/gov-fonts-ie8.css
   gov-static/gov-print.css
   moj-base.css
-  peoplefinder/peoplefinder-lt-ie9.css
-  peoplefinder/peoplefinder-ie7.css
   gov-static/gov-ie.js
   jquery.Jcrop.min.css
   jquery.Jcrop.min.js
