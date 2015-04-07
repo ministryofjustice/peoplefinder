@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe Person, type: :model do
+  include PermittedDomainHelper
+
   let(:person) { build(:person) }
   it { should validate_presence_of(:given_name).on(:update) }
   it { should validate_presence_of(:surname) }

@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 feature 'Login flow' do
+  include PermittedDomainHelper
+
   let(:email) { 'test.user@digital.justice.gov.uk' }
   let!(:department) { create(:department) }
   let(:current_time) { Time.now }

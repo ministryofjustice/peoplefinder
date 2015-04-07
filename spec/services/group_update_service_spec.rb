@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe GroupUpdateService, type: :service do
+  include PermittedDomainHelper
+
   let(:group) { build(:group) }
   let(:person_responsible) { build(:person) }
   subject { described_class.new(group: group, person_responsible: person_responsible) }

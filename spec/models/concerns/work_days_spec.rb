@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Concerns::WorkDays do
+  include PermittedDomainHelper
 
   describe '.works_weekends?' do
     let(:weekday_person) { create(:person) }

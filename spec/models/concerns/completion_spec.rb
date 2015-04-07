@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe 'Completion' do # rubocop:disable RSpec/DescribeClass
+  include PermittedDomainHelper
 
   context '#completion score' do
     it 'returns 0 if all fields are empty' do

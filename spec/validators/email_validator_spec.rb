@@ -10,7 +10,7 @@ RSpec.describe EmailValidator do
   end
 
   before do
-    allow(Rails.configuration).to receive(:valid_login_domains).and_return(['valid.gov.uk'])
+    allow(PermittedDomain).to receive(:pluck).with(:domain).and_return(['valid.gov.uk'])
   end
 
   subject { TestModel.new(email: email) }

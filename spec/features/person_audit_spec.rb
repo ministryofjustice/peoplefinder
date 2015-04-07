@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 feature 'View person audit' do
+  include PermittedDomainHelper
+
   let(:super_admin_email)  { 'test.user@digital.justice.gov.uk' }
   let!(:super_admin)  { create(:super_admin, email: super_admin_email) }
 

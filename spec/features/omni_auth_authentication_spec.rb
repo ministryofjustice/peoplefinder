@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 feature 'OmniAuth Authentication' do
+  include PermittedDomainHelper
+
   let(:login_page) { Pages::Login.new }
 
   before do

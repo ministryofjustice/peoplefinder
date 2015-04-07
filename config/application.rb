@@ -57,22 +57,6 @@ module Peoplefinder
 
     config.action_mailer.asset_host = ENV['ACTION_MAILER_DEFAULT_URL']
 
-    config.valid_login_domains = %w[
-      cjs.gsi.gov.uk
-      digital.cabinet-office.gov.uk
-      digital.justice.gov.uk
-      hmcourts-service.gsi.gov.uk
-      hmcts.gsi.gov.uk
-      hmps.gsi.gov.uk
-      homeoffice.gsi.gov.uk
-      ips.gsi.gov.uk
-      justice.gsi.gov.uk
-      legalaid.gsi.gov.uk
-      noms.gsi.gov.uk
-      publicguardian.gsi.gov.uk
-      yjb.gsi.gov.uk
-    ]
-
     # The following values are required by the phase banner
     config.phase = 'beta'
     config.feedback_url = 'https://docs.google.com/a/digital.justice.gov.uk/forms/d/1dJ9xQ66QFvk8K7raf60W4ZXfK4yTQ1U3EeO4OLLlq88/viewform'

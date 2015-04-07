@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe Version, type: :model do
+  include PermittedDomainHelper
+
   context 'whodunnit' do
     let(:author) { create(:person) }
 

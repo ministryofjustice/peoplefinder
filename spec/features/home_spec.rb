@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 feature 'Home page' do
+  include PermittedDomainHelper
+
   before do
     create(:department)
     omni_auth_log_in_as 'test.user@digital.justice.gov.uk'

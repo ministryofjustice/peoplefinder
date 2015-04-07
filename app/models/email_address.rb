@@ -58,7 +58,7 @@ private
   end
 
   def default_valid_login_domains
-    Rails.configuration.try(:valid_login_domains) || []
+    PermittedDomain.pluck(:domain)
   end
 
   def capitalise(word)

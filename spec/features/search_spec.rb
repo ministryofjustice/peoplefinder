@@ -2,6 +2,8 @@ require 'rails_helper'
 
 feature 'Search for people', elastic: true do
   extend FeatureFlagSpecHelper
+  include PermittedDomainHelper
+
   enable_feature :communities
 
   describe 'with elasticsearch' do

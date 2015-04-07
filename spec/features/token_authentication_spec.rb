@@ -7,6 +7,7 @@ end
 
 feature 'Token Authentication' do
   include ActiveJobHelper
+  include PermittedDomainHelper
 
   let(:login_page) { Pages::Login.new }
 
