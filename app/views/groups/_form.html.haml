@@ -17,7 +17,7 @@
   .form-group
     = f.label :description, 'Team description', class: 'form-label-bold'
     %span.form-hint= info_text('hint_team_description')
-    - text_limit = Peoplefinder::Group::MAX_DESCRIPTION # to be replaced with a variable
+    - text_limit = Group::MAX_DESCRIPTION # to be replaced with a variable
     = f.text_area :description, class: 'form-control', placeholder: f.object.placeholder(:description), "data-limit" => text_limit
 
   - if @group.editable_parent?
