@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-feature "Peoplefinder::Person maintenance" do
+feature "Person maintenance" do
   before do
     omni_auth_log_in_as 'test.user@digital.justice.gov.uk'
   end
@@ -17,7 +17,7 @@ feature "Peoplefinder::Person maintenance" do
     check 'leader'
     click_button 'Save'
 
-    membership = Peoplefinder::Person.last.memberships.last
+    membership = Person.last.memberships.last
     expect(membership.role).to eql('Head Honcho')
     expect(membership.group).to eql(group)
     expect(membership.leader?).to be true
@@ -33,7 +33,7 @@ feature "Peoplefinder::Person maintenance" do
     fill_in 'Job title', with: 'Head Honcho'
     click_button 'Save'
 
-    membership = Peoplefinder::Person.last.memberships.last
+    membership = Person.last.memberships.last
     expect(membership.role).to eql('Head Honcho')
   end
 
@@ -53,7 +53,7 @@ feature "Peoplefinder::Person maintenance" do
     end
 
     click_button 'Save'
-    expect(Peoplefinder::Person.last.memberships.length).to eql(2)
+    expect(Person.last.memberships.length).to eql(2)
   end
 
   scenario 'Unsubscribing from notifications', js: true do
@@ -66,7 +66,7 @@ feature "Peoplefinder::Person maintenance" do
     uncheck 'Team updates'
     click_button 'Save'
 
-    membership = Peoplefinder::Person.last.memberships.last
+    membership = Person.last.memberships.last
     expect(membership).not_to be_subscribed
   end
 

@@ -8,8 +8,6 @@ SimpleCov.minimum_coverage 100
 
 require "factory_girl"
 require "factory_girl_rails"
-FactoryGirl.definition_file_paths << File.join(File.dirname(__FILE__), 'factories')
-FactoryGirl.find_definitions
 
 require 'pry-rails'
 

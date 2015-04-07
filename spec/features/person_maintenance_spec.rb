@@ -77,7 +77,7 @@ feature 'Person maintenance' do
       expect(page).to have_text('1 result found')
       click_button 'Continue'
       check_creation_of_profile_details
-      expect(Peoplefinder::Person.where(surname: person_attributes[:surname]).count).to eql(2)
+      expect(Person.where(surname: person_attributes[:surname]).count).to eql(2)
     end
 
     scenario 'Cancelling creation of a person with an identical name' do
@@ -90,7 +90,7 @@ feature 'Person maintenance' do
       click_button 'Save'
 
       click_link 'Return to home page'
-      expect(Peoplefinder::Person.where(surname: person_attributes[:surname]).count).to eql(1)
+      expect(Person.where(surname: person_attributes[:surname]).count).to eql(1)
     end
 
     scenario 'Adding a profile image' do
@@ -101,7 +101,7 @@ feature 'Person maintenance' do
       expect(page).not_to have_link('Crop image')
       click_button 'Save'
 
-      person = Peoplefinder::Person.find_by_surname(person_attributes[:surname])
+      person = Person.find_by_surname(person_attributes[:surname])
       visit person_path(person)
       expect(page).to have_css("img[src*='#{person.image.medium}']")
       expect(page).to have_css("img[alt*='Current photo of #{ person }']")
@@ -173,7 +173,7 @@ feature 'Person maintenance' do
         click_button 'Save'
       end
 
-      version = Peoplefinder::Version.last
+      version = Version.last
       expect(version.ip_address).to eq('1.2.3.4')
       expect(version.user_agent).to eq('NCSA Mosaic/3.0 (Windows 95)')
       expect(version.whodunnit).to eq(person)
@@ -190,7 +190,7 @@ feature 'Person maintenance' do
 
       expect(page).to have_title("Duplicate names found - #{ app_title }")
       click_button 'Continue'
-      expect(Peoplefinder::Person.where(surname: person_attributes[:surname]).count).to eql(2)
+      expect(Person.where(surname: person_attributes[:surname]).count).to eql(2)
     end
 
     scenario 'Editing an invalid person' do
@@ -217,7 +217,7 @@ feature 'Person maintenance' do
       person = create(:person)
       visit edit_person_path(person)
       click_link('Delete this profile')
-      expect { Peoplefinder::Person.find(person.id) }.to raise_error(ActiveRecord::RecordNotFound)
+      expect { Person.find(person.id) }.to raise_error(ActiveRecord::RecordNotFound)
     end
 
     scenario 'Allow deletion of a person even when there are memberships' do
@@ -225,8 +225,8 @@ feature 'Person maintenance' do
       person = membership.person
       visit edit_person_path(person)
       click_link('Delete this profile')
-      expect { Peoplefinder::Membership.find(membership.id) }.to raise_error(ActiveRecord::RecordNotFound)
-      expect { Peoplefinder::Person.find(person.id) }.to raise_error(ActiveRecord::RecordNotFound)
+      expect { Membership.find(membership.id) }.to raise_error(ActiveRecord::RecordNotFound)
+      expect { Person.find(person.id) }.to raise_error(ActiveRecord::RecordNotFound)
     end
   end
 

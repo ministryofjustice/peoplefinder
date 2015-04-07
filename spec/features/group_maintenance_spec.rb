@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 feature 'Group maintenance' do
+  include ActiveJobHelper
+
   before do
     omni_auth_log_in_as 'test.user@digital.justice.gov.uk'
   end
@@ -17,7 +19,7 @@ feature 'Group maintenance' do
 
     expect(page).to have_content('Created Ministry of Justice')
 
-    dept = Peoplefinder::Group.find_by_name(name)
+    dept = Group.find_by_name(name)
     expect(dept.name).to eql(name)
     expect(dept.description).to eql('about my team')
     expect(dept.parent).to be_nil
@@ -36,7 +38,7 @@ feature 'Group maintenance' do
 
     expect(page).to have_content('Created CSG')
 
-    team = Peoplefinder::Group.find_by_name(name)
+    team = Group.find_by_name(name)
     expect(team.name).to eql(name)
     expect(team.parent).to eql(dept)
   end
@@ -54,7 +56,7 @@ feature 'Group maintenance' do
 
     expect(page).to have_content('Created Digital Services')
 
-    subteam = Peoplefinder::Group.find_by_name(name)
+    subteam = Group.find_by_name(name)
     expect(subteam.name).to eql(name)
     expect(subteam.parent).to eql(team)
   end
@@ -81,7 +83,7 @@ feature 'Group maintenance' do
     click_link('Delete this team')
 
     expect(page).to have_content("Deleted #{group.name}")
-    expect { Peoplefinder::Group.find(group.id) }.to raise_error(ActiveRecord::RecordNotFound)
+    expect { Group.find(group.id) }.to raise_error(ActiveRecord::RecordNotFound)
   end
 
   scenario 'Prevent deletion of a team that has memberships' do

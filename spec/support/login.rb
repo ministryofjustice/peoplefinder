@@ -1,12 +1,12 @@
 module SpecSupport
   module Login
     def mock_logged_in_user
-      controller.session[Peoplefinder::Login::SESSION_KEY] =
-        create(:person, email: 'test.user@digital.moj.gov.uk').id
+      controller.session[::Login::SESSION_KEY] =
+        create(:person, email: 'test.user@digital.justice.gov.uk').id
     end
 
     def current_user
-      Peoplefinder::Person.where(email: 'test.user@digital.moj.gov.uk').first
+      Person.where(email: 'test.user@digital.justice.gov.uk').first
     end
 
     def omni_auth_log_in_as(email)

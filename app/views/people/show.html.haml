@@ -1,0 +1,65 @@
+- content_for :body_classes, 'profile-page'
+
+= render partial: 'breadcrumbs'
+
+.title
+  %h1= @page_title = @person
+
+.grid-wrapper.profile
+  .grid.grid-1-3
+    .inner-block
+      .image-background
+        = profile_image_tag @person, @person.image.medium, class: 'profile-page'
+      .spacer-15
+      %h4 Days worked
+      %ul.working_days
+        = render 'working_days'
+
+  .grid.grid-2-3
+    .inner-block
+      - @person.memberships.each do |membership|
+        %h3= membership.role
+        - if membership.path.length > 1
+          %dl.inline-labels.role-and-location
+            %dt Team
+            %dd.breadcrumbs= breadcrumbs(membership.path.drop(1))
+
+      %dl.inline-labels
+        - if feature_enabled?(:communities)
+          = render partial: "communities"
+
+      %dl.inline-labels
+        - if @person.location.present?
+          %dt Location
+          %dd= @person.location
+
+      %dl.inline-labels
+        - if @person.email.present?
+          %dt Email
+          %dd= mail_to(@person.email)
+
+      %dl.inline-labels
+        - if @person.primary_phone_number.present?
+          %dt Primary phone number
+          %dd= call_to(@person.primary_phone_number)
+
+        - if @person.secondary_phone_number.present?
+          %dt Other phone number
+          %dd= call_to(@person.secondary_phone_number)
+
+      - if @person.description.present?
+        %h5 Extra information:
+        %p= @person.description
+
+      - if feature_enabled?(:profile_tags)
+        = render partial: "show_tags"
+
+- if @person.email.present?
+  - if current_user.email == @person.email
+    = render partial: "completeness", locals: { person: @person }
+  - elsif @person.incomplete?
+    = render partial: "request_information", locals: { person: @person }
+
+- unless @versions.nil?
+  %h1 Audit Log
+  =render 'shared/audit', versions: @versions

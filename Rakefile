@@ -1,17 +1,6 @@
-begin
-  require 'bundler/setup'
-rescue LoadError
-  puts 'You must `gem install bundler` and `bundle install` to run rake tasks'
-end
+# Add your own tasks in files placed in lib/tasks ending in .rake,
+# for example lib/tasks/capistrano.rake, and they will automatically be available to Rake.
 
-APP_RAKEFILE = File.expand_path("../spec/dummy/Rakefile", __FILE__)
-load 'rails/tasks/engine.rake'
-load 'rspec/rails/tasks/rspec.rake'
+require File.expand_path('../config/application', __FILE__)
 
-load "jshint/tasks/jshint.rake"
-
-Peoplefinder::Engine.load_tasks
-
-Bundler::GemHelper.install_tasks
-
-task 'db:structure:load' => [:load_app, 'app:db:structure:load']
+Rails.application.load_tasks

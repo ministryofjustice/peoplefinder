@@ -1,0 +1,114 @@
+= editing_mode(building)
+= form_for @person, builder: PersonFormBuilder, html: { multipart: true, class: person_form_class(@person, @activity) } do |f|
+
+  - if @person.errors.any?
+    .alert.alert-error
+      %p= error_text('person.general_message')
+      %ol.form-error-list
+        - @person.errors.each do |field, error|
+          %li
+            = link_to "#{Person.human_attribute_name(field)} #{error.downcase}", "#person_#{field}"
+
+  %p * mandatory field
+
+  = f.form_group :given_name do
+    = f.label :given_name, class: 'form-label-bold' do
+      First name
+      - if @person.errors.include?(:given_name)
+        %span.error= @person.errors[:given_name].first
+    = f.text_field :given_name, class: 'form-control'
+
+  = f.form_group :surname do
+    = f.label :surname, class: 'form-label-bold' do
+      Surname
+      - if @person.errors.include?(:surname)
+        %span.error= @person.errors[:surname].first
+    = f.text_field :surname, class: 'form-control'
+
+
+  - if feature_enabled?("communities")
+    = f.form_group :community_id do
+      %label.form-label-bold{ for: :person_community_id } Community
+      = f.select(:community_id, Community.all.map { |c| [c.name, c.id] }, { include_blank: true} )
+
+  .form-group
+    #contact-details
+      %h2.line-above Contact details
+
+      .phone_numbers
+        = f.form_group :primary_phone_number do
+          = f.label :primary_phone_number, 'Main phone number', class: 'form-label-bold'
+          = f.text_field :primary_phone_number, class: 'form-control'
+        = f.form_group :secondary_phone_number do
+          = f.label :secondary_phone_number, 'Any other phone number', class: 'form-label-bold'
+          = f.text_field :secondary_phone_number, class: 'form-control'
+
+      .emails
+        = f.form_group :email do
+          = f.label :email, class: 'form-label-bold' do
+            Email
+            - if @person.errors.include?(:email)
+              %span.error= @person.errors[:email].first
+          = f.text_field :email, class: 'form-control', readonly: @person.persisted?
+          - if @person.persisted?
+            %p.form-hint
+              =t('.notes.email')
+
+      = f.form_group :location_in_building do
+        = f.label :location_in_building, class: 'form-label-bold' do
+          Location in building
+          %p.form-hint= info_text('location_in_building_hint')
+        = f.text_field :location_in_building, class: 'form-control'
+
+      = f.form_group :building do
+        = f.label :building, class: 'form-label-bold' do
+          Building
+          %p.form-hint= info_text('building_hint')
+        = f.text_field :building, class: 'form-control'
+
+      = f.form_group :city do
+        = f.label :city, class: 'form-label-bold' do
+          City
+          %p.form-hint= info_text('city_hint')
+        = f.text_field :city, class: 'form-control'
+
+  .form-group
+    #memberships
+      %h2.line-above Role
+      = f.fields_for :memberships do |membership_f|
+        = render 'membership_fields', membership_f: membership_f, org_structure: @org_structure
+
+    = link_to 'Add another role', add_membership_people_path(id: @person.to_param), id: 'add_membership'
+
+  .form-group.line-above
+    %fieldset#working-days
+      %legend.form-label-bold Working days
+      %ul
+        - Person::DAYS_WORKED.each do |day|
+          %li
+            = f.label day do
+              = f.check_box day
+              = day_name(day)
+
+
+  =f.form_group :description do
+    = f.label :description, class: 'form-label-bold' do
+      Extra information
+      %p.form-hint= info_text('notes_field_hint')
+    = f.text_area :description, class: 'form-control'
+
+  =f.form_group :image, class: 'line-above' do
+    = f.label :image, class: 'form-label-bold' do
+      Photo
+      %p.form-hint= info_text('photo_upload_hint')
+    = f.file_field :image, class: 'form-control file'
+
+    = profile_image_tag @person, @person.image.medium, class: 'preview'
+    %p
+      - if @person.image?
+        = link_to 'Crop image', edit_person_image_path(@person)
+
+  .form-group.save-cancel-actions
+    = f.submit class: 'button'
+    .cancel
+      = link_to 'Cancel and go to profile page', @person.new_record? ? :back : @person

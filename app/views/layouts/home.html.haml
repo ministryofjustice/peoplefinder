@@ -1,0 +1,13 @@
+- @disable_logo_link  = true
+= render partial: 'layouts/shared'
+- content_for :content do
+  #wrapper
+    %main#content{role: 'main'}
+      = render partial: 'layouts/partials/phase'
+      =flash_messages
+      = render "shared/loginout"
+      .inner-block
+        #home-page= yield
+
+= render 'layouts/script'
+= render template: "layouts/peoplefinder"

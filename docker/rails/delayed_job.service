@@ -1,0 +1,8 @@
+#!/bin/bash
+cd /rails
+
+# Increment restart metric
+echo "restart.delayed_job:1|s" | nc.traditional -w 1 -u 127.0.0.1 8125
+
+echo "delayed_job startup" >>/rails/log/delayed_job.log
+exec bundle exec rake jobs:work  >>/rails/log/delayed_job.log 2>&1

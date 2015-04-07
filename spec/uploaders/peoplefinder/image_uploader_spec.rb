@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Peoplefinder::ImageUploader, type: :uploader do
+RSpec.describe ImageUploader, type: :uploader do
   include CarrierWave::Test::Matchers
   let(:person) { create(:person, image: File.open(sample_image)) }
 

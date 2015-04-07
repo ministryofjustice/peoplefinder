@@ -1,6 +1,0 @@
-- content_for :breadcrumbs do
-  = breadcrumbs(Peoplefinder::Home.path + @group.path + ['All people'])
-
-%h1= @page_title = "People in #{ @group.name }"
-.grid-wrapper
-  = render partial: "peoplefinder/people/summary", collection: @group.all_people

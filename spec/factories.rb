@@ -6,20 +6,20 @@ FactoryGirl.define do
   sequence(:city) { |n| 'Megacity %d' % n }
   sequence(:phone_number) { |n| '07700 %06d' % (900_000 + n) }
 
-  factory :department, class: 'Peoplefinder::Group' do
+  factory :department, class: 'Group' do
     initialize_with do
-      Peoplefinder::Group.where(ancestry_depth: 0).first_or_create(name: 'Ministry of Justice')
+      Group.where(ancestry_depth: 0).first_or_create(name: 'Ministry of Justice')
     end
   end
 
-  factory :group, class: 'Peoplefinder::Group' do
+  factory :group do
     sequence :name do |n|
       'Group-%04d' % n
     end
     association :parent, factory: :department
   end
 
-  factory :person, class: 'Peoplefinder::Person' do
+  factory :person do
     given_name
     surname
     email
@@ -34,22 +34,22 @@ FactoryGirl.define do
     end
   end
 
-  factory :community, class: 'Peoplefinder::Community' do
+  factory :community do
     sequence :name do |n|
       'Community-%04d' % n
     end
   end
 
-  factory :information_request, class: 'Peoplefinder::InformationRequest' do
+  factory :information_request do
     message "This is the information request message body"
   end
 
-  factory :membership, class: 'Peoplefinder::Membership' do
+  factory :membership do
     person
     group
   end
 
-  factory :token, class: 'Peoplefinder::Token' do
+  factory :token do
     user_email { generate(:email) }
   end
 end

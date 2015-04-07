@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 feature 'Make a suggestion about a profile', js: true do
+  include ActiveJobHelper
+
   let(:me) { create(:person) }
   let(:leader) { create(:person) }
   let(:group) {
