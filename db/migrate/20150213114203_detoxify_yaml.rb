@@ -1,13 +1,8 @@
-require 'peoplefinder/image_uploader'
-require 'peoplefinder/person'
+require 'image_uploader'
+require 'person'
 class DetoxifyYaml < ActiveRecord::Migration
   class Version < ActiveRecord::Base
   end
-
-  ImageUploader = Peoplefinder::ImageUploader
-  Membership = Peoplefinder::Membership
-  Group = Peoplefinder::Group
-  Person = Peoplefinder::Person
 
   def clean_yaml(yaml)
     yaml.gsub(/ !ruby\/object:(Peoplefinder::)?ImageUploader::Uploader\d+/, '')
