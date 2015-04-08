@@ -6,8 +6,8 @@ services:
 before_install:
   - sudo apt-get install -qq phantomjs
 before_script:
-  - psql -c 'create database pf_engine_test;' -U postgres
-  - psql -U postgres pf_engine_test < spec/dummy/db/structure.sql
+  - psql -c 'create database peoplefinder_test;' -U postgres
+  - psql -U postgres peoplefinder_test < db/structure.sql
 script:
   - bundle exec rake
 notifications:
