@@ -15,4 +15,5 @@
 //= require jquery
 //= require jquery_ujs
 //= require select2/select2
+//= require lodash
 //= require_tree .
