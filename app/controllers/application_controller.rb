@@ -64,7 +64,7 @@ private
 
   def i18n_flash(type, *partial_key, **options)
     full_key = [
-      :controllers, controller_name, *partial_key
+      :controllers, controller_path, *partial_key
     ].join('.')
     flash[type] = I18n.t(full_key, options)
   end
