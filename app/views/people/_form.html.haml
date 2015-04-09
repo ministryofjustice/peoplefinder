@@ -102,13 +102,15 @@
       %p.form-hint= info_text('notes_field_hint')
     = f.text_area :description, class: 'form-control'
 
-  =f.form_group :image, class: 'line-above' do
+  =f.form_group :image, class: 'line-above person-photo' do
     = f.label :image, class: 'form-label-bold' do
       Photo
       %p.form-hint= info_text('photo_upload_hint')
+
+    %p
+      = profile_image_tag @person, class: 'preview'
     = f.file_field :image, class: 'form-control file'
 
-    = profile_image_tag @person, class: 'preview'
     %p
       - if @person.image?
         = link_to 'Crop image', edit_person_image_path(@person)
