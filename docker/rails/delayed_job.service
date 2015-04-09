@@ -1,5 +1,12 @@
 #!/bin/bash
+set -e
+
 cd /rails
+sv start 000_unicorn
+while test -f /tmp/db.lock; 
+    do echo 'db operation in progress. waiting' >>/rails/log/delayed_job.log
+    sleep 5s
+done
 
 # Increment restart metric
 echo "restart.delayed_job:1|s" | nc.traditional -w 1 -u 127.0.0.1 8125
