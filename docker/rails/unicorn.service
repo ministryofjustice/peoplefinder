@@ -1,25 +1,27 @@
 #!/bin/bash
+touch /tmp/db.lock
 cd /rails
 echo "rails startup"              >>/rails/log/unicorn.log
 # We want to run scheduling and db tasks only on the master. For single box environments
 # APP_MASTER_SERVER will not be set so run all the time
 if [ -z "$APP_MASTER_SERVER" -o "$APPHOST" == "$APP_MASTER_SERVER" ]; then
-
     case ${DOCKER_STATE} in
-    migrate)
-        echo "running migrate"        >>/rails/log/unicorn.log
-        bundle exec rake db:migrate   >>/rails/log/unicorn.log 2>&1
-        ;;
-    seed)
+    reset)
         echo "running db:reset"     >>/rails/log/unicorn.log
         bundle exec rake db:reset >>/rails/log/unicorn.log 2>&1
         ;;
+    seed)
+        echo "running db:seed"     >>/rails/log/unicorn.log
+        bundle exec rake db:seed >>/rails/log/unicorn.log 2>&1
     esac
-
 else
     echo "Slave server: skipping DB and cron configuration"   >>/rails/log/unicorn.log
 fi
 
+echo "running migrate"        >>/rails/log/unicorn.log
+bundle exec rake db:migrate   >>/rails/log/unicorn.log 2>&1
+
+rm /tmp/db.lock
 # Increment restart metric
 echo "restart.rails:1|s" | nc.traditional -w 1 -u 127.0.0.1 8125
 
