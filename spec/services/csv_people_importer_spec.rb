@@ -42,11 +42,19 @@ CSV
 
         it { is_expected.to be false }
 
-        # These errors come from translation file, so may be different when the engine is used
         it 'errors contain missing columns' do
           expect(importer.errors).to match_array([
-            %q(row "jon.o. carey@valid.gov.uk,Jon,O'Carey": Email isn’t valid),
-            'row "jack@invalid.gov.uk,Jack,": Surname is required, Email you have entered can’t be used to access People Finder'
+            CsvPeopleImporter::ErrorRow.new(
+              3, "jon.o. carey@valid.gov.uk,Jon,O'Carey",
+              ['Email isn’t valid']
+            ),
+            CsvPeopleImporter::ErrorRow.new(
+              4, "jack@invalid.gov.uk,Jack,",
+              [
+                'Surname is required',
+                'Email you have entered can’t be used to access People Finder'
+              ]
+            )
           ])
         end
       end
@@ -64,8 +72,12 @@ CSV
 
       it 'errors contain missing columns' do
         expect(importer.errors).to match_array([
-          'given_name column is missing',
-          'surname column is missing'
+          CsvPeopleImporter::ErrorRow.new(
+            1, "email", ['given_name column is missing']
+          ),
+          CsvPeopleImporter::ErrorRow.new(
+            1, "email", ['surname column is missing']
+          )
         ])
       end
     end
@@ -115,5 +127,12 @@ CSV
 
       it { is_expected.to be nil }
     end
+  end
+
+  it 'renders errors as strings' do
+    error_row = CsvPeopleImporter::ErrorRow.new(
+      4, "jack@invalid.gov.uk,Jack,", ['Something', 'Something else']
+    )
+    expect(error_row.to_s).to eq('line 4 "jack@invalid.gov.uk,Jack,": Something, Something else')
   end
 end

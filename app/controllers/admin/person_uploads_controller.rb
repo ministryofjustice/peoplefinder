@@ -11,7 +11,6 @@ module Admin
         redirect_to action: :new
       else
         error :upload_failed
-        render action: :new
       end
     end
 

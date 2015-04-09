@@ -1,0 +1,19 @@
+- if @upload.csv_errors.any?
+  %div.csv-upload-errors
+    %p
+      There were some errors in the CSV file, and no people were imported.
+    %table
+      %thead
+        %tr
+          %th Line
+          %th Error
+          %th Uploaded data
+      %tbody
+        - @upload.csv_errors.each do |row|
+          %tr
+            %td= row.line_number || 'None'
+            %td= row.messages.join('; ')
+            %td
+              %code= row.raw
+    %p
+      Please correct the problems and try again.

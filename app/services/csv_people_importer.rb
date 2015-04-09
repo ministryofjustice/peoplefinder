@@ -3,6 +3,12 @@ require 'csv'
 class CsvPeopleImporter
   COLUMNS = %w[given_name surname email]
 
+  ErrorRow = Struct.new(:line_number, :raw, :messages) do
+    def to_s
+      'line %d "%s": %s' % [line_number, raw, messages.join(', ')]
+    end
+  end
+
   attr_reader :errors
 
   def initialize(csv)
@@ -48,19 +54,24 @@ private
   end
 
   def validate_csv
+    missing_columns.any? ? validate_columns : validate_rows
+  end
+
+  def validate_rows
     errors = []
-
-    if missing_columns.empty?
-      @rows.each do |row|
-        person = Person.new(row.to_h.slice(*COLUMNS))
-        unless person.valid?
-          errors << %(row "#{row.to_csv.strip}": #{person.errors.full_messages.join(', ')})
-        end
+    @rows.each.with_index do |row, i|
+      person = Person.new(row.to_h.slice(*COLUMNS))
+      unless person.valid?
+        errors <<
+          ErrorRow.new(i + 2, row.to_csv.strip, person.errors.full_messages)
       end
-    else
-      errors = missing_columns.map { |column| "#{column} column is missing" }
     end
-
     errors
+  end
+
+  def validate_columns
+    missing_columns.map { |column|
+      ErrorRow.new(1, @header_row.to_csv.strip, ["#{column} column is missing"])
+    }
   end
 end

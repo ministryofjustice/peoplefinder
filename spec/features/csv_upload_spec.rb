@@ -37,5 +37,6 @@ feature 'Upload CSV' do
     expect(current_path).to eql(admin_person_uploads_path)
 
     expect(page).to have_text('Upload failed')
+    expect(page).to have_text('can’t be used to access')
   end
 end
