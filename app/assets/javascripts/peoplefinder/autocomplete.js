@@ -1,4 +1,4 @@
-/* global $ */
+/* global $, _ */
 
 var TeamAutocomplete = (function (){
   var TeamAutocomplete = {
@@ -19,6 +19,17 @@ var TeamAutocomplete = (function (){
       }else{
         name = o.text.substring(0, o.text.indexOf('[') - 1);
         path = o.text.substring(o.text.indexOf('['));
+      }
+
+      if( path.length > 70 ){
+        var p = path.slice(1, -1).replace('MOJ > ', '');
+
+        path = _.reduce(p.split(' > ').reverse(), function (str, x){
+          var nstr = x + ' > ' + str;
+          return nstr.length > 70 ? str : nstr;
+        });
+
+        path = '[' + path + ']';
       }
 
       return $( '<span class="team-name">' +
