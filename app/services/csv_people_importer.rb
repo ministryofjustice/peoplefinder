@@ -11,8 +11,9 @@ class CsvPeopleImporter
 
   attr_reader :errors
 
-  def initialize(csv)
+  def initialize(csv, creation_options = {})
     @rows, @header_row = process_csv(csv)
+    @creation_options = creation_options
     @valid = nil
   end
 
@@ -25,22 +26,18 @@ class CsvPeopleImporter
   end
 
   def import
-    result = nil
+    return nil unless valid?
 
-    if valid?
-      result = 0
-
-      @rows.each do |row|
-        if Person.create(row.to_h.slice(*COLUMNS))
-          result += 1
-        end
-      end
-    end
-
-    result
+    @rows.inject(0) { |result, row|
+      result + (Person.create(row_to_params(row)) ? 1 : 0)
+    }
   end
 
 private
+
+  def row_to_params(row)
+    @creation_options.merge(row.to_h.slice(*COLUMNS))
+  end
 
   def process_csv(csv)
     rows = CSV.new(csv, headers: true, return_headers: true).to_a

@@ -108,6 +108,17 @@ CSV
       it 'returns number of imported  records' do
         is_expected.to eql 2
       end
+
+      context 'with extra parameters' do
+        let(:importer) { described_class.new(csv, extra_params) }
+        let(:extra_params) { { groups: [group] } }
+        let(:group) { create(:group) }
+
+        it 'merges CSV fields into supplied parameters' do
+          person = Person.find_by(email: 'peter.bly@valid.gov.uk')
+          expect(person.groups).to eq([group])
+        end
+      end
     end
 
     context 'for an invalid csv (including duplicates)' do

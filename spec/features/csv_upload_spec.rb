@@ -21,6 +21,14 @@ feature 'Upload CSV' do
     expect(current_path).to eql(new_admin_person_upload_path)
 
     expect(page).to have_text('Successfully uploaded 2 people')
+
+    %w[
+      peter.bly@digital.justice.gov.uk
+      jon.o.carey@digital.justice.gov.uk
+    ].each do |email|
+      person = Person.find_by(email: email)
+      expect(person.groups).to eq([group])
+    end
   end
 
   scenario 'uploading a bad CSV file' do
