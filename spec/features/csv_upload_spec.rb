@@ -47,4 +47,15 @@ feature 'Upload CSV' do
     expect(page).to have_text('Upload failed')
     expect(page).to have_text('can’t be used to access')
   end
+
+  scenario 'forgetting to attach a file' do
+    group = create(:group)
+
+    visit new_admin_person_upload_path
+    select group.name, from: 'Team'
+    click_button 'Upload'
+
+    expect(page).to have_text('Upload failed')
+    expect(page).to have_text('File is required')
+  end
 end

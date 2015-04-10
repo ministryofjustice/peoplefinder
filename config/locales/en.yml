@@ -154,13 +154,33 @@ en:
   token_mailer:
     new_token_email:
       subject: 'Access request to MOJ People Finder'
-  errors:
+  errors: &errors
     information_request:
       message_required: "You must enter a message to be sent to the person"
     person:
       general_message: "You need to add more information to complete your profile - see below."
     group:
       general_message: "You need to add more information - see below."
+    messages:
+      blank: "is required"
+      invalid_format: "isn’t valid"
+      invalid_domain: "you have entered can’t be used to access People Finder"
+    models:
+      token:
+        invalid_address: "Email address is not formatted correctly"
+        invalid_domain: "Email address is not valid"
+      group:
+        attributes:
+          base:
+            memberships_exist: "cannot be deleted until all the memberships have been removed"
+    attributes:
+      token:
+        user_email: "Email address"
+      person:
+        given_name: "First name"
+  activerecord:
+    errors:
+      <<: *errors
   shared:
     search:
       label: Enter the name of a person or role
@@ -212,25 +232,6 @@ en:
     group:
       description: |
         Discover what this team is responsible for, who is in it and how you can get in touch with them.
-  activerecord:
-    errors:
-      messages:
-        blank: "is required"
-        invalid_format: "isn’t valid"
-        invalid_domain: "you have entered can’t be used to access People Finder"
-      models:
-        token:
-          invalid_address: "Email address is not formatted correctly"
-          invalid_domain: "Email address is not valid"
-        group:
-          attributes:
-            base:
-              memberships_exist: "cannot be deleted until all the memberships have been removed"
-    attributes:
-      token:
-        user_email: "Email address"
-      person:
-        given_name: "First name"
 
   helpers:
     submit:

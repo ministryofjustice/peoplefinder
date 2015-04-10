@@ -1,11 +1,17 @@
 = form_for [:admin, @upload], multipart: true do |f|
 
-  .form-group
-    = f.label :file, class: 'form-label-bold'
+  .form-group{ :class => ('gov-uk-field-error' if f.object.errors.include?(:file)) }
+    = f.label :file, class: 'form-label-bold' do
+      File
+      - if f.object.errors.include?(:file)
+        %span.error= f.object.errors[:file].first
     = f.file_field :file
 
-  .form-group
-    = f.label :group_id, 'Team', class: 'form-label-bold'
+  .form-group{ :class => ('gov-uk-field-error' if f.object.errors.include?(:group_id)) }
+    = f.label :group_id, class: 'form-label-bold' do
+      Team
+      - if f.object.errors.include?(:group_id)
+        %span.error= f.object.errors[:group_id].first
     %p.form-hint= info_text('hint_add_person_to_team')
     = f.collection_select :group_id,
       Group.all.sort_by { |g| g.path.map(&:to_s) },
