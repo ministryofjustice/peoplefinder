@@ -89,7 +89,7 @@ private
   def person_shared_params_list
     [
       :given_name, :surname, :location_in_building, :building, :city,
-      :primary_phone_number, :secondary_phone_number, :email, :image,
+      :primary_phone_number, :secondary_phone_number, :email, :secondary_email, :image,
       :image_cache, :description, :tags, :community_id,
       *Person::DAYS_WORKED,
       memberships_attributes: [:id, :role, :group_id, :leader, :subscribed]

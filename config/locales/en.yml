@@ -191,6 +191,7 @@ en:
         user_email: "Email address"
       person:
         given_name: "First name"
+        secondary_email: Alternative work email
   shared:
     search:
       label: Enter the name of a person or role

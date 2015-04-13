@@ -37,6 +37,9 @@
         - if @person.email.present?
           %dt Email
           %dd= mail_to(@person.email)
+        - if @person.secondary_email.present?
+          %dt= t(:secondary_email, scope: 'activerecord.attributes.person')
+          %dd= mail_to(@person.secondary_email)
 
       %dl.inline-labels
         - if @person.primary_phone_number.present?
