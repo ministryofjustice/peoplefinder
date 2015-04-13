@@ -1,6 +1,0 @@
-- if @person.tags.present?
-  .spacer-25
-  %ul.tags
-    %h4 Skills and expertise
-    - @person.tags.split(',').each do |tag|
-      %li= link_to tag, search_path(query: tag)
