@@ -47,11 +47,6 @@ class Group < ActiveRecord::Base
     name
   end
 
-  def name_with_path
-    return name if ancestors.empty?
-    "#{name} [#{ancestors.join ' > '}]"
-  end
-
   def deletable?
     leaf_node? && memberships.reject(&:new_record?).empty?
   end
