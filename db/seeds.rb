@@ -6,6 +6,15 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
-Dir[Rails.root.join('db', 'seeds', '*.rb')].each do |seed|
-  require seed
-end
+# HEY YOU! YES YOU. This comment is important. Expect `rake db:seed` to be run
+# in all environments at random. Along with being run as part of `rake
+# db:setup`, it might be run on server restart, on building an environment,
+# whenever Jupiter is in aphelion, when the wolf lies with the lamb, etc.
+#
+# This means anything it runs should be idempotent (i.e. running `rake db:seed`
+# multiple times should have the same end result as running it once). See
+# `permitted_domains.rb` for an example of this.
+
+$:.unshift(Rails.root.join('db', 'seeds'))
+
+require 'permitted_domains'
