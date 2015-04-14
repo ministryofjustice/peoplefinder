@@ -8,7 +8,7 @@
     = membership_f.label :group_id, 'Team', class: 'form-label-bold'
     %p.form-hint= info_text('hint_add_person_to_team')
     = membership_f.collection_select :group_id,
-      Group.all.sort_by { |g| g.path.map(&:to_s) },
+      GroupLister.new.list.sort_by { |g| g.path.map(&:to_s) },
       :id, :name_with_path, {}, class: 'form-control select-autocomplete team-select'
 
   .form-group
