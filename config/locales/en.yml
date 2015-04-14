@@ -191,6 +191,7 @@ en:
         user_email: "Email address"
       person:
         given_name: "First name"
+        email: Main email
         secondary_email: Alternative work email
   shared:
     search:

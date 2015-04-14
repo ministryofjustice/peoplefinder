@@ -46,13 +46,13 @@ CSV
           expect(importer.errors).to match_array([
             CsvPeopleImporter::ErrorRow.new(
               3, "jon.o. carey@valid.gov.uk,Jon,O'Carey",
-              ['Email isn’t valid']
+              ['Main email isn’t valid']
             ),
             CsvPeopleImporter::ErrorRow.new(
               4, "jack@invalid.gov.uk,Jack,",
               [
                 'Surname is required',
-                'Email you have entered can’t be used to access People Finder'
+                'Main email you have entered can’t be used to access People Finder'
               ]
             )
           ])

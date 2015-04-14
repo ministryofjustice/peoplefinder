@@ -46,7 +46,7 @@
       .emails
         = f.form_group :email do
           = f.label :email, class: 'form-label-bold' do
-            Email
+            = t(:email, scope: 'activerecord.attributes.person')
             - if @person.errors.include?(:email)
               %span.error= @person.errors[:email].first
           = f.text_field :email, class: 'form-control', readonly: @person.persisted?
