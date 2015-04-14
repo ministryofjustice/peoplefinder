@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Login, type: :service do
+  include PermittedDomainHelper
 
   let(:session) { {} }
   let(:person) { create(:person) }

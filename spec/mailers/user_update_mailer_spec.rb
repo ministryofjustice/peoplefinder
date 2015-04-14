@@ -16,6 +16,8 @@ RSpec.shared_examples "observe token_auth feature flag" do
 end
 
 RSpec.describe UserUpdateMailer do
+  include PermittedDomainHelper
+
   let(:person) { create(:person, email: 'test.user@digital.justice.gov.uk') }
 
   describe ".new_profile_email" do

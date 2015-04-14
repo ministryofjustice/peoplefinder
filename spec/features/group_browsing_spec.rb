@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 feature 'Group browsing' do
+  include PermittedDomainHelper
+
   let!(:department) { create(:department) }
   let!(:team) { create(:group, name: 'A Team', parent: department) }
   let!(:subteam) { create(:group, name: 'A Subteam', parent: team) }

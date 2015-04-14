@@ -21,6 +21,8 @@ shared_examples 'new person created' do
 end
 
 RSpec.describe FindCreatePerson, type: :service do
+  include PermittedDomainHelper
+
   let(:valid_auth_hash) do
     {
       'info' => {

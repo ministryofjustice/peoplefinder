@@ -2,6 +2,8 @@ require 'rails_helper'
 
 feature "Communities" do
   extend FeatureFlagSpecHelper
+  include PermittedDomainHelper
+
   enable_feature :communities
 
   before do

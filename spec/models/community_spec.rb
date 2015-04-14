@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe Community, type: :model do
+  include PermittedDomainHelper
+
   let(:person) { create(:person) }
   let(:community) { create(:community) }
   let(:reloaded_person) { Person.find(person.id) }

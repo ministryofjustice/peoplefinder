@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe RandomGenerator do
+  include PermittedDomainHelper
+
   let(:group) { create(:group) }
   subject { described_class.new(group) }
 

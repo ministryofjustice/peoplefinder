@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 feature 'Person maintenance' do
+  include PermittedDomainHelper
 
   let(:person) { create(:person, email: 'test.user@digital.justice.gov.uk') }
   before do

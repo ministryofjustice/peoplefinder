@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe Group, type: :model do
+  include PermittedDomainHelper
+
   it { should have_many(:leaders) }
   it { should validate_length_of(:description).is_at_most(1000) }
 

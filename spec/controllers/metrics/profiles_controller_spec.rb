@@ -1,5 +1,7 @@
 require 'rails_helper'
 RSpec.describe Metrics::ProfilesController, type: :controller do
+  include PermittedDomainHelper
+
   let(:parsed_body) { JSON.parse(response.body) }
 
   describe 'GET index' do

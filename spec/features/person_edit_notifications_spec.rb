@@ -2,6 +2,7 @@ require 'rails_helper'
 
 feature 'Person edit notifications' do
   include ActiveJobHelper
+  include PermittedDomainHelper
 
   let(:person) { create(:person, email: 'test.user@digital.justice.gov.uk') }
   before do

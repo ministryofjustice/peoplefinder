@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe ReminderMailer do
+  include PermittedDomainHelper
+
   describe '.inadequate_profile' do
     let(:person) { create(:person, email: 'test.user@digital.justice.gov.uk') }
     let(:mail) { described_class.inadequate_profile(person).deliver_now }

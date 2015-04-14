@@ -2,6 +2,7 @@ require 'rails_helper'
 
 feature 'Make a suggestion about a profile', js: true do
   include ActiveJobHelper
+  include PermittedDomainHelper
 
   let(:me) { create(:person) }
   let(:leader) { create(:person) }

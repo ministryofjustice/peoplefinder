@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 feature 'Group maintenance' do
+  include PermittedDomainHelper
   include ActiveJobHelper
 
   before do

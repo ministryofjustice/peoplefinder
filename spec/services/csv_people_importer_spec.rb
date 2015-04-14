@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe CsvPeopleImporter, type: :service do
 
   before do
-    allow(Rails.configuration).to receive(:valid_login_domains).and_return(['valid.gov.uk'])
+    allow(PermittedDomain).to receive(:pluck).with(:domain).and_return(['valid.gov.uk'])
   end
 
   subject(:importer) { described_class.new(csv) }

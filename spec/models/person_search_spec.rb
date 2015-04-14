@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe Person, elastic: true do
+  include PermittedDomainHelper
+
   after(:all) do
     clean_up_indexes_and_tables
   end
