@@ -103,8 +103,11 @@ $focus-color: #FFBF47;
   }
 }
 .view-all-people {
-  border-top: 1px solid $blackish;
-  padding-top: 15px;
+  float:right;
+  font-size: 44.5%;
+  font-weight: normal;
+  margin-top: 1em;
+  text-decoration: underline;
 }
 
 form {

@@ -8,7 +8,7 @@
   %h2
     Teams within
     = @group.name
-
+    .view-all-people= link_to "View all people in #{ @group.name }", people_group_path(@group)
   .grid-wrapper
     = render partial: "subgroup", collection: @group.children
 
@@ -17,9 +17,6 @@
     %h2 People in #{ @group.name }
   .grid-wrapper
     = render partial: "memberships/summary", collection: @group.non_leaderships
-
-- else
-  .view-all-people= link_to "View all people in #{ @group.name }", people_group_path(@group)
 
 - unless @versions.nil?
   %h1 Audit Log
