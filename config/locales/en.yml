@@ -119,6 +119,13 @@ en:
   person_uploads:
     header: Upload people’s details
     add_new_team: Add new team
+    error_header: We couldn’t upload this file
+    error_blurb: |
+      There were some errors in the CSV file. Update the file then try again.
+    error_table:
+      line_number: Line
+      messages: Error
+      raw: Current content
   suggestions:
     thank_you_intro: Thank you for helping improve this profile.
     thank_you_detail:
