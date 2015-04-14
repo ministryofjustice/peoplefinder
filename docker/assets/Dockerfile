@@ -4,7 +4,6 @@
 # a list of version numbers.
 FROM moj-nginx:latest
 
-
 # Set correct environment variables.
 ENV HOME /root
 
