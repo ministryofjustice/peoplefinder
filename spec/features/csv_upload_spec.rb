@@ -13,8 +13,8 @@ feature 'Upload CSV' do
     visit new_admin_person_upload_path
 
     expect {
-      attach_file 'File', File.expand_path('../../fixtures/valid.csv', __FILE__)
-      select group.name, from: 'Team'
+      attach_file 'Upload CSV file', File.expand_path('../../fixtures/valid.csv', __FILE__)
+      select group.name, from: 'Choose your team'
       click_button 'Upload'
     }.to change(Person, :count).by(2)
 
@@ -37,8 +37,8 @@ feature 'Upload CSV' do
     visit new_admin_person_upload_path
 
     expect {
-      attach_file 'File', File.expand_path('../../fixtures/invalid.csv', __FILE__)
-      select group.name, from: 'Team'
+      attach_file 'Upload CSV file', File.expand_path('../../fixtures/invalid.csv', __FILE__)
+      select group.name, from: 'Choose your team'
       click_button 'Upload'
     }.not_to change(Person, :count)
 
@@ -52,10 +52,10 @@ feature 'Upload CSV' do
     group = create(:group)
 
     visit new_admin_person_upload_path
-    select group.name, from: 'Team'
+    select group.name, from: 'Choose your team'
     click_button 'Upload'
 
     expect(page).to have_text('Upload failed')
-    expect(page).to have_text('File is required')
+    expect(page).to have_text('Upload CSV file is required')
   end
 end

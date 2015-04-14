@@ -1,21 +1,26 @@
 = form_for [:admin, @upload], multipart: true do |f|
 
-  .form-group{ :class => ('gov-uk-field-error' if f.object.errors.include?(:file)) }
-    = f.label :file, class: 'form-label-bold' do
-      File
-      - if f.object.errors.include?(:file)
-        %span.error= f.object.errors[:file].first
-    = f.file_field :file
-
   .form-group{ :class => ('gov-uk-field-error' if f.object.errors.include?(:group_id)) }
     = f.label :group_id, class: 'form-label-bold' do
-      Team
+      = t(:group_id, scope: 'helpers.person_uploads')
       - if f.object.errors.include?(:group_id)
         %span.error= f.object.errors[:group_id].first
-    %p.form-hint= info_text('hint_add_person_to_team')
+    %p.form-hint
+      = info_text('hint_person_upload_group')
     = f.collection_select :group_id,
       Group.all.sort_by { |g| g.path.map(&:to_s) },
       :id, :name_with_path, {}, class: 'form-control select-autocomplete team-select'
+    %p
+      = link_to t('person_uploads.add_new_team'), new_group_path
+
+  .form-group{ :class => ('gov-uk-field-error' if f.object.errors.include?(:file)) }
+    = f.label :file, class: 'form-label-bold' do
+      = t(:file, scope: 'helpers.person_uploads')
+      - if f.object.errors.include?(:file)
+        %span.error= f.object.errors[:file].first
+    %p.form-hint
+      =info_text('hint_person_upload_file_html')
+    = f.file_field :file
 
   %fieldset
-    = f.button
+    = f.submit class: 'button'

@@ -116,6 +116,9 @@ en:
     show:
       community: Community
       community_unset: Not specified
+  person_uploads:
+    header: Upload people’s details
+    add_new_team: Add new team
   suggestions:
     thank_you_intro: Thank you for helping improve this profile.
     thank_you_detail:
@@ -215,6 +218,11 @@ en:
       hint_add_person_to_team: "Find the team from this organisation browser."
       hint_team_description: "What is the role and purpose of the team?"
       hint_team_email_address: "Enter an email for people to get in touch with the team"
+      hint_person_upload_group: |
+        You can only upload people’s details to an existing team.
+      hint_person_upload_file_html: |
+        Row 1 of file must have columns named and ordered in the following way:
+        <code>given_name</code> <code>last name</code> <code>email</code>
       information_request_label: "Enter your message"
       location_in_building_hint: "(eg 10.30)"
       building_hint: "(eg 102 Petty France)"
@@ -247,4 +255,5 @@ en:
       person_upload:
         create: "Upload"
     person_uploads:
-      group_id: "Team"
+      group_id: Choose your team
+      file: Upload CSV file
