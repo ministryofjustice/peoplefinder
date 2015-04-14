@@ -50,10 +50,11 @@
       - if @person.description.present?
         %h5 Extra information:
         %p= @person.description
-
+-#
+  comment out tag feature in case it needs to be reintroduced later
       - if feature_enabled?(:profile_tags)
         = render partial: "show_tags"
-
+#-
 - if @person.email.present?
   - if current_user.email == @person.email
     = render partial: "completeness", locals: { person: @person }

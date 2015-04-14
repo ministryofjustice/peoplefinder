@@ -44,15 +44,6 @@ feature 'Search for people', elastic: true do
       expect(page).to have_link('add them', href: new_person_path)
     end
 
-    scenario 'clicking a tag on a profile page' do
-      visit person_path(person)
-      click_link 'Cooking'
-      within('.breadcrumbs ol') do
-        expect(page).to have_text('Search results')
-      end
-      expect(page).to have_text('Jon Browne')
-    end
-
     scenario 'searching by community' do
       visit home_path
       fill_in 'query', with: community.name
