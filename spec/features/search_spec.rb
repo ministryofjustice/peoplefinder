@@ -42,7 +42,6 @@ feature 'Search for people', elastic: true do
       expect(page).to have_link('add them', href: new_person_path)
     end
 
-
     scenario 'searching by community' do
       visit home_path
       fill_in 'query', with: community.name
