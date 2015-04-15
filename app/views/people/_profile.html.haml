@@ -50,7 +50,7 @@
         %h5 Extra information:
         %p= @person.description
 
-- if @person.email.present?
+- if @person.email.present? && !@preview
   - if current_user.email == @person.email
     = render partial: "completeness", locals: { person: @person }
   - elsif @person.incomplete?

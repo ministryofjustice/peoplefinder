@@ -6,6 +6,7 @@ class PeopleController < ApplicationController
   before_action :set_org_structure,
     only: [:new, :edit, :create, :update, :add_membership]
   before_action :load_versions, only: [:show]
+  before_action :check_and_set_preview_flag, only: [:create]
 
   # GET /people
   def index
@@ -32,7 +33,9 @@ class PeopleController < ApplicationController
   def create
     @person = Person.new(person_create_params)
 
-    if @person.valid?
+    if @preview
+      render :new
+    elsif @person.valid?
       confirm_or_create
     else
       error :create_error
@@ -147,5 +150,9 @@ private
     if super_admin?
       @versions = AuditVersionPresenter.wrap(@person.versions)
     end
+  end
+
+  def check_and_set_preview_flag
+    @preview = params[:preview].present?
   end
 end

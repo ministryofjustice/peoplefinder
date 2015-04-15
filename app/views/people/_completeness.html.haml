@@ -4,7 +4,8 @@
     .on{ style: "width: #{ person.completion_score }%" } &nbsp;
     .off{ style: "width: #{ 100 - person.completion_score }%" } &nbsp;
   .score #{person.completion_score}%
-  - if person.incomplete?
-    %p= link_to 'complete your profile', edit_person_path(person, activity: 'complete')
-  - else
-    %p Thanks for improving People Finder for everyone!
+  - unless @preview
+    - if person.incomplete?
+      %p= link_to 'complete your profile', edit_person_path(person, activity: 'complete')
+    - else
+      %p Thanks for improving People Finder for everyone!

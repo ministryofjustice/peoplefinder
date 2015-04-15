@@ -29,6 +29,24 @@ feature 'Person maintenance' do
       check_creation_of_profile_details
     end
 
+    scenario 'Previewing on creation' do
+      visit new_person_path
+
+      fill_in 'First name', with: 'Jane'
+      fill_in 'Surname', with: 'Doe'
+      fill_in 'Main email', with: person_attributes[:email]
+
+      expect {
+        click_button 'Preview'
+      }.not_to change(Person, :count)
+
+      expect(page).to have_selector('.preview h1', text: 'Jane Doe')
+
+      expect {
+        click_button 'Save'
+      }.to change(Person, :count).by(1)
+    end
+
     scenario 'Creating an invalid person' do
       new_profile_page.load
       new_profile_page.form.save.click

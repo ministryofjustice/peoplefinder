@@ -1,5 +1,9 @@
 - content_for :body_classes, 'new-profile-page'
 
+- if @preview
+  .preview
+    = render partial: 'profile'
+
 %h1= @page_title = 'New profile'
 
 = render partial: 'form', locals: { building: true }
