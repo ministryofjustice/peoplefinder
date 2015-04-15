@@ -55,7 +55,8 @@ class Person < ActiveRecord::Base
   validates :given_name, presence: true, on: :update
   validates :surname, presence: true
   validates :email,
-    presence: true, uniqueness: { case_sensitive: false }, 'email' => true
+    presence: true, uniqueness: { case_sensitive: false }, email: true
+  validates :secondary_email, email: true, allow_blank: true
 
   has_many :memberships, -> { includes(:group).order('groups.name') }, dependent: :destroy
   has_many :groups, through: :memberships

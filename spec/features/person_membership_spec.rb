@@ -13,7 +13,7 @@ feature "Person maintenance" do
 
     visit new_person_path
     fill_in 'Surname', with: 'Taylor'
-    fill_in 'Email', with: person_attributes[:email]
+    fill_in 'Main email', with: person_attributes[:email]
     fill_in 'Job title', with: 'Head Honcho'
     select_in_team_select 'Digital Justice'
     check 'leader'

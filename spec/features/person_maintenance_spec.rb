@@ -87,7 +87,7 @@ feature 'Person maintenance' do
 
       fill_in 'First name', with: person_attributes[:given_name]
       fill_in 'Surname', with: person_attributes[:surname]
-      fill_in 'Email', with: person_attributes[:email]
+      fill_in 'Main email', with: person_attributes[:email]
       click_button 'Save'
 
       click_link 'Return to home page'
@@ -97,7 +97,7 @@ feature 'Person maintenance' do
     scenario 'Adding a profile image' do
       visit new_person_path
       fill_in 'Surname', with: person_attributes[:surname]
-      fill_in 'Email', with: person_attributes[:email]
+      fill_in 'Main email', with: person_attributes[:email]
       attach_file 'person[image]', sample_image
       expect(page).not_to have_link('Crop image')
       click_button 'Save'
@@ -262,7 +262,7 @@ feature 'Person maintenance' do
     expect(page).to have_text('You are creating a profile')
 
     fill_in 'Surname', with: person_attributes[:surname]
-    fill_in 'Email', with: person_attributes[:email]
+    fill_in 'Main email', with: person_attributes[:email]
     click_button 'Save'
     expect(page).to have_selector('.search-box')
     expect(page).not_to have_text('You are currently editing this profile')

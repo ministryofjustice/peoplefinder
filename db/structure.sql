@@ -213,7 +213,8 @@ CREATE TABLE people (
     last_login_at timestamp without time zone,
     super_admin boolean DEFAULT false,
     building text,
-    city text
+    city text,
+    secondary_email text
 );
 
 
@@ -578,3 +579,5 @@ INSERT INTO schema_migrations (version) VALUES ('20150402143820');
 INSERT INTO schema_migrations (version) VALUES ('20150403162416');
 
 INSERT INTO schema_migrations (version) VALUES ('20150407101222');
+
+INSERT INTO schema_migrations (version) VALUES ('20150413101844');

@@ -14,7 +14,7 @@ feature 'Person edit notifications' do
 
     fill_in 'First name', with: 'Bob'
     fill_in 'Surname', with: 'Smith'
-    fill_in 'Email', with: 'bob.smith@digital.justice.gov.uk'
+    fill_in 'Main email', with: 'bob.smith@digital.justice.gov.uk'
     expect { click_button 'Save' }.to change { ActionMailer::Base.deliveries.count }.by(1)
 
     expect(last_email.subject).to eq('A new profile on MOJ People Finder has been created for you')
