@@ -6,7 +6,7 @@ class PeopleController < ApplicationController
   before_action :set_org_structure,
     only: [:new, :edit, :create, :update, :add_membership]
   before_action :load_versions, only: [:show]
-  before_action :check_and_set_preview_flag, only: [:create]
+  before_action :check_and_set_preview_flag, only: [:create, :update]
 
   # GET /people
   def index
@@ -47,7 +47,9 @@ class PeopleController < ApplicationController
   def update
     @person.assign_attributes(person_update_params)
 
-    if @person.valid?
+    if @preview
+      render :edit
+    elsif @person.valid?
       confirm_or_update
     else
       render :edit

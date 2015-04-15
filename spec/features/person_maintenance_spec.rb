@@ -152,6 +152,25 @@ feature 'Person maintenance' do
       end
     end
 
+    scenario 'Previewing on update' do
+      person = create(:person, given_name: 'Jane', surname: 'Doe')
+
+      visit person_path(person)
+      click_link 'Edit this profile'
+
+      fill_in 'First name', with: 'Monica'
+      fill_in 'Surname', with: 'Changed'
+
+      click_button 'Preview'
+
+      expect(page).to have_selector('.preview h1', text: 'Monica Changed')
+      expect(person.reload.name).to eq('Jane Doe')
+
+      click_button 'Save'
+
+      expect(person.reload.name).to eq('Monica Changed')
+    end
+
     scenario 'Editing my own profile from a normal edit link' do
       visit person_path(person)
       click_link 'Edit this profile'
