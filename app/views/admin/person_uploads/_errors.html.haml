@@ -1,0 +1,17 @@
+- if @upload.csv_errors.any?
+  %div.csv-upload-errors
+    %h2= t('person_uploads.error_header')
+    %p= t('person_uploads.error_blurb')
+    %table
+      %thead
+        %tr
+          %th= t('person_uploads.error_table.line_number')
+          %th= t('person_uploads.error_table.messages')
+          %th= t('person_uploads.error_table.raw')
+      %tbody
+        - @upload.csv_errors.each do |row|
+          %tr
+            %td= row.line_number || 'None'
+            %td= row.messages.join('; ')
+            %td
+              %code= row.raw

@@ -1,0 +1,28 @@
+= form_for [:admin, @upload], multipart: true do |f|
+
+  .form-group{ :class => ('gov-uk-field-error' if f.object.errors.include?(:group_id)) }
+    = f.label :group_id, class: 'form-label-bold' do
+      = t(:group_id, scope: 'helpers.person_uploads')
+      - if f.object.errors.include?(:group_id)
+        %span.error= f.object.errors[:group_id].first
+    %p.form-hint
+      = info_text('hint_person_upload_group')
+    = f.collection_select :group_id,
+      GroupLister.new.list.sort_by { |g| g.path.map(&:to_s) },
+      :id, :name_with_path, {}, class: 'form-control select-autocomplete team-select'
+    %p
+      = link_to t('person_uploads.add_new_team'), new_group_path
+
+  = render partial: 'errors'
+
+  .form-group{ :class => ('gov-uk-field-error' if f.object.errors.include?(:file)) }
+    = f.label :file, class: 'form-label-bold' do
+      = t(:file, scope: 'helpers.person_uploads')
+      - if f.object.errors.include?(:file)
+        %span.error= f.object.errors[:file].first
+    %p.form-hint
+      =info_text('hint_person_upload_file_html')
+    = f.file_field :file
+
+  %fieldset
+    = f.submit class: 'button'

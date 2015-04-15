@@ -60,6 +60,9 @@ en:
     tokens:
       expired_token: "The authentication token has expired and is more than %{time} hours old"
       invalid_token: "The authentication token doesn't exist and so isn't valid"
+    admin/person_uploads:
+        upload_succeeded: "Successfully uploaded %{count} people"
+        upload_failed: "Upload failed"
     people:
       profile_created: "Created %{person}’s profile"
       profile_updated:
@@ -113,6 +116,16 @@ en:
     show:
       community: Community
       community_unset: Not specified
+  person_uploads:
+    header: Upload people’s details
+    add_new_team: Add new team
+    error_header: We couldn’t upload this file
+    error_blurb: |
+      There were some errors in the CSV file. Update the file then try again.
+    error_table:
+      line_number: Line
+      messages: Error
+      raw: Current content
   suggestions:
     thank_you_intro: Thank you for helping improve this profile.
     thank_you_detail:
@@ -151,13 +164,33 @@ en:
   token_mailer:
     new_token_email:
       subject: 'Access request to MOJ People Finder'
-  errors:
+  errors: &errors
     information_request:
       message_required: "You must enter a message to be sent to the person"
     person:
       general_message: "You need to add more information to complete your profile - see below."
     group:
       general_message: "You need to add more information - see below."
+    messages:
+      blank: "is required"
+      invalid_format: "isn’t valid"
+      invalid_domain: "you have entered can’t be used to access People Finder"
+    models:
+      token:
+        invalid_address: "Email address is not formatted correctly"
+        invalid_domain: "Email address is not valid"
+      group:
+        attributes:
+          base:
+            memberships_exist: "cannot be deleted until all the memberships have been removed"
+    attributes:
+      token:
+        user_email: "Email address"
+      person:
+        given_name: "First name"
+  activerecord:
+    errors:
+      <<: *errors
   shared:
     search:
       label: Enter the name of a person or role
@@ -192,6 +225,11 @@ en:
       hint_add_person_to_team: "Find the team from this organisation browser."
       hint_team_description: "What is the role and purpose of the team?"
       hint_team_email_address: "Enter an email for people to get in touch with the team"
+      hint_person_upload_group: |
+        You can only upload people’s details to an existing team.
+      hint_person_upload_file_html: |
+        Row 1 of file must have columns named and ordered in the following way:
+        <code>given_name</code> <code>last name</code> <code>email</code>
       information_request_label: "Enter your message"
       location_in_building_hint: "(eg 10.30)"
       building_hint: "(eg 102 Petty France)"
@@ -209,25 +247,6 @@ en:
     group:
       description: |
         Discover what this team is responsible for, who is in it and how you can get in touch with them.
-  activerecord:
-    errors:
-      messages:
-        blank: "is required"
-        invalid_format: "isn’t valid"
-        invalid_domain: "you have entered can’t be used to access People Finder"
-      models:
-        token:
-          invalid_address: "Email address is not formatted correctly"
-          invalid_domain: "Email address is not valid"
-        group:
-          attributes:
-            base:
-              memberships_exist: "cannot be deleted until all the memberships have been removed"
-    attributes:
-      token:
-        user_email: "Email address"
-      person:
-        given_name: "First name"
 
   helpers:
     submit:
@@ -240,3 +259,8 @@ en:
       information_request:
         create: "Submit"
         create: "Submit"
+      person_upload:
+        create: "Upload"
+    person_uploads:
+      group_id: Choose your team
+      file: Upload CSV file

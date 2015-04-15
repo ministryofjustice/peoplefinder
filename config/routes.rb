@@ -35,4 +35,8 @@ Rails.application.routes.draw do
     resources :completions, only: [:index]
     resources :profiles, only: [:index]
   end
+
+  namespace :admin do
+    resources :person_uploads, only: [:new, :create]
+  end
 end

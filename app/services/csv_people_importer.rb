@@ -3,10 +3,17 @@ require 'csv'
 class CsvPeopleImporter
   COLUMNS = %w[given_name surname email]
 
+  ErrorRow = Struct.new(:line_number, :raw, :messages) do
+    def to_s
+      'line %d "%s": %s' % [line_number, raw, messages.join(', ')]
+    end
+  end
+
   attr_reader :errors
 
-  def initialize(csv)
+  def initialize(csv, creation_options = {})
     @rows, @header_row = process_csv(csv)
+    @creation_options = creation_options
     @valid = nil
   end
 
@@ -19,22 +26,18 @@ class CsvPeopleImporter
   end
 
   def import
-    result = nil
+    return nil unless valid?
 
-    if valid?
-      result = 0
-
-      @rows.each do |row|
-        if Person.create(row.to_h.slice(*COLUMNS))
-          result += 1
-        end
-      end
-    end
-
-    result
+    @rows.inject(0) { |result, row|
+      result + (Person.create(row_to_params(row)) ? 1 : 0)
+    }
   end
 
 private
+
+  def row_to_params(row)
+    @creation_options.merge(row.to_h.slice(*COLUMNS))
+  end
 
   def process_csv(csv)
     rows = CSV.new(csv, headers: true, return_headers: true).to_a
@@ -48,19 +51,24 @@ private
   end
 
   def validate_csv
+    missing_columns.any? ? validate_columns : validate_rows
+  end
+
+  def validate_rows
     errors = []
-
-    if missing_columns.empty?
-      @rows.each do |row|
-        person = Person.new(row.to_h.slice(*COLUMNS))
-        unless person.valid?
-          errors << %(row "#{row.to_csv.strip}": #{person.errors.full_messages.join(', ')})
-        end
+    @rows.each.with_index do |row, i|
+      person = Person.new(row.to_h.slice(*COLUMNS))
+      unless person.valid?
+        errors <<
+          ErrorRow.new(i + 2, row.to_csv.strip, person.errors.full_messages)
       end
-    else
-      errors = missing_columns.map { |column| "#{column} column is missing" }
     end
-
     errors
+  end
+
+  def validate_columns
+    missing_columns.map { |column|
+      ErrorRow.new(1, @header_row.to_csv.strip, ["#{column} column is missing"])
+    }
   end
 end
