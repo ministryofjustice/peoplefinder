@@ -183,14 +183,14 @@ en:
         attributes:
           base:
             memberships_exist: "cannot be deleted until all the memberships have been removed"
+  activerecord:
+    errors:
+      <<: *errors
     attributes:
       token:
         user_email: "Email address"
       person:
         given_name: "First name"
-  activerecord:
-    errors:
-      <<: *errors
   shared:
     search:
       label: Enter the name of a person or role
