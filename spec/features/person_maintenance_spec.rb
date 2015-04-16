@@ -16,6 +16,27 @@ feature 'Person maintenance' do
   }
 
   context 'Creating a person' do
+    scenario 'Creating a person from a group' do
+      department = create(:department)
+      team = create(:group, parent: department)
+      subteam = create(:group, parent: team)
+
+      cta_text = 'Create a new profile'
+      visit group_path(department)
+      expect(page).not_to have_selector('a', text: cta_text)
+
+      click_link team.name
+      expect(page).not_to have_selector('a', text: cta_text)
+
+      click_link subteam.name
+      expect(page).to have_selector('a', text: cta_text)
+
+      click_link cta_text
+      expect(page.current_path).to eq(new_person_path)
+
+      # TODO: Should we set the group ID?
+    end
+
     scenario 'Creating a person with a complete profile', js: true do
       create(:group, name: 'Digital')
 
