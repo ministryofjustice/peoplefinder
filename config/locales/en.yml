@@ -231,7 +231,7 @@ en:
         You can only upload people’s details to an existing team.
       hint_person_upload_file_html: |
         Row 1 of file must have columns named and ordered in the following way:
-        <code>given_name</code> <code>last name</code> <code>email</code>
+        <code>given_name</code> <code>surname</code> <code>email</code>
       information_request_label: "Enter your message"
       location_in_building_hint: "(eg 10.30)"
       building_hint: "(eg 102 Petty France)"
