@@ -25,7 +25,7 @@ feature 'Person maintenance' do
       expect(page).not_to have_text(completion_prompt_text)
       fill_in_complete_profile_details
 
-      click_button 'Save'
+      click_button 'Save', match: :first
       check_creation_of_profile_details
     end
 
@@ -43,7 +43,7 @@ feature 'Person maintenance' do
       expect(page).to have_selector('.preview h1', text: 'Jane Doe')
 
       expect {
-        click_button 'Save'
+        click_button 'Save', match: :first
       }.to change(Person, :count).by(1)
     end
 
@@ -91,7 +91,7 @@ feature 'Person maintenance' do
       visit new_person_path
       fill_in_complete_profile_details
 
-      click_button 'Save'
+      click_button 'Save', match: :first
 
       expect(page).to have_text('1 result found')
       click_button 'Continue'
@@ -106,7 +106,7 @@ feature 'Person maintenance' do
       fill_in 'First name', with: person_attributes[:given_name]
       fill_in 'Surname', with: person_attributes[:surname]
       fill_in 'Main email', with: person_attributes[:email]
-      click_button 'Save'
+      click_button 'Save', match: :first
 
       click_link 'Return to home page'
       expect(Person.where(surname: person_attributes[:surname]).count).to eql(1)
@@ -118,7 +118,7 @@ feature 'Person maintenance' do
       fill_in 'Main email', with: person_attributes[:email]
       attach_file 'person[image]', sample_image
       expect(page).not_to have_link('Crop image')
-      click_button 'Save'
+      click_button 'Save', match: :first
 
       person = Person.find_by_surname(person_attributes[:surname])
       visit person_path(person)
@@ -144,7 +144,7 @@ feature 'Person maintenance' do
       expect(page).not_to have_text(completion_prompt_text)
       fill_in 'First name', with: 'Jane'
       fill_in 'Surname', with: 'Doe'
-      click_button 'Save'
+      click_button 'Save', match: :first
 
       expect(page).to have_content('We have let Jane Doe know that you’ve made changes')
       within('h1') do
@@ -166,7 +166,7 @@ feature 'Person maintenance' do
       expect(page).to have_selector('.preview h1', text: 'Monica Changed')
       expect(person.reload.name).to eq('Jane Doe')
 
-      click_button 'Save'
+      click_button 'Save', match: :first
 
       expect(person.reload.name).to eq('Monica Changed')
     end
@@ -208,7 +208,7 @@ feature 'Person maintenance' do
         visit edit_person_path(person)
 
         fill_in 'First name', with: 'Jane'
-        click_button 'Save'
+        click_button 'Save', match: :first
       end
 
       version = Version.last
@@ -224,7 +224,7 @@ feature 'Person maintenance' do
 
       fill_in 'First name', with: person_attributes[:given_name]
       fill_in 'Surname', with: person_attributes[:surname]
-      click_button 'Save'
+      click_button 'Save', match: :first
 
       expect(page).to have_title("Duplicate names found - #{ app_title }")
       click_button 'Continue'
@@ -300,7 +300,7 @@ feature 'Person maintenance' do
 
     fill_in 'Surname', with: person_attributes[:surname]
     fill_in 'Main email', with: person_attributes[:email]
-    click_button 'Save'
+    click_button 'Save', match: :first
     expect(page).to have_selector('.search-box')
     expect(page).not_to have_text('You are currently editing this profile')
 

@@ -12,7 +12,7 @@ feature 'Audit trail' do
       person = create(:person, surname: 'original surname')
       visit edit_person_path(person)
       fill_in 'Surname', with: 'something else'
-      click_button 'Save'
+      click_button 'Save', match: :first
 
       visit '/audit_trail'
       expect(page).to have_text('Person Edited')
@@ -31,7 +31,7 @@ feature 'Audit trail' do
       fill_in 'First name', with: 'Jon'
       fill_in 'Surname', with: 'Smith'
       fill_in 'Main email', with: person_attributes[:email]
-      click_button 'Save'
+      click_button 'Save', match: :first
 
       visit '/audit_trail'
 
@@ -66,7 +66,7 @@ feature 'Audit trail' do
       group = create(:group, name: 'original name')
       visit edit_group_path(group)
       fill_in 'Team name', with: 'something else'
-      click_button 'Save'
+      click_button 'Save', match: :first
 
       visit '/audit_trail'
       expect(page).to have_text('Group Edited')
@@ -78,7 +78,7 @@ feature 'Audit trail' do
     with_versioning do
       visit new_group_path
       fill_in 'Team name', with: 'Jon'
-      click_button 'Save'
+      click_button 'Save', match: :first
 
       visit '/audit_trail'
       expect(page).to have_text('New Group')
@@ -103,7 +103,7 @@ feature 'Audit trail' do
       person = create(:person)
       visit edit_person_path(person)
       attach_file('person[image]', sample_image)
-      click_button 'Save'
+      click_button 'Save', match: :first
 
       visit '/audit_trail'
       expect(page).to have_text('Person Edited')
@@ -120,7 +120,7 @@ feature 'Audit trail' do
       visit edit_person_path(person)
       select_in_team_select 'Digital Justice'
       fill_in('Job title', with: 'Jefe')
-      click_button 'Save'
+      click_button 'Save', match: :first
 
       visit '/audit_trail'
 

@@ -9,6 +9,8 @@
           %li
             = link_to "#{Person.human_attribute_name(field)} #{error.downcase}", "#person_#{field}"
 
+  = f.submit class: 'button top-button'
+
   %p * mandatory field
 
   = f.form_group :given_name do
