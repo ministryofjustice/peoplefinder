@@ -15,7 +15,7 @@ RSpec.describe 'Completion' do # rubocop:disable RSpec/DescribeClass
       expect(person.completion_score).not_to eql(0)
     end
 
-    it 'returns 50 if half the fields are completed' do
+    it 'returns 55 if half the fields are completed' do
       person = Person.new(
         given_name: generate(:given_name),
         surname: generate(:surname),
@@ -23,7 +23,7 @@ RSpec.describe 'Completion' do # rubocop:disable RSpec/DescribeClass
         city: generate(:city),
         primary_phone_number: generate(:phone_number)
       )
-      expect(person.completion_score).to eql(50)
+      expect(person.completion_score).to eql(55)
       expect(person).to be_incomplete
     end
 
@@ -55,7 +55,7 @@ RSpec.describe 'Completion' do # rubocop:disable RSpec/DescribeClass
           primary_phone_number: generate(:phone_number)
         )
       end
-      expect(Person.overall_completion).to eq(50)
+      expect(Person.overall_completion).to be_within(1).of(55)
     end
 
     it 'includes membership in calculation' do
@@ -71,9 +71,9 @@ RSpec.describe 'Completion' do # rubocop:disable RSpec/DescribeClass
       2.times do
         create(:membership, person: people[0])
       end
-      expect(people[0].completion_score).to eq(60)
-      expect(people[1].completion_score).to eq(50)
-      expect(Person.overall_completion).to eq(55)
+      expect(people[0].completion_score).to eq(66)
+      expect(people[1].completion_score).to eq(55)
+      expect(Person.overall_completion).to be_within(1).of(61)
     end
   end
 

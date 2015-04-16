@@ -9,7 +9,7 @@ module Concerns::Completion
 
   COMPLETION_FIELDS = [
     :given_name, :surname, :email, :location_in_building, :building, :city,
-    :primary_phone_number, :description, :groups, :image
+    :primary_phone_number, :groups, :image
   ]
 
   included do
