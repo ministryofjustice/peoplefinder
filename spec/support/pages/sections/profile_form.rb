@@ -12,7 +12,7 @@ module Pages
       element :email, '#person_email'
       element :email_error, :xpath, '//label[@for="person_email"]/*[@class="error"]'
 
-      element :save, 'input[type=submit]'
+      element :save, 'input[type=submit][name!=preview]'
     end
   end
 end
