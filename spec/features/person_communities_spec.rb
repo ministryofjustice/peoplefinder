@@ -19,7 +19,7 @@ feature "Communities" do
     fill_in 'Surname', with: 'Doe'
     fill_in 'Main email', with: person_attributes[:email]
     select('Advanced cybernetics', from: 'Community')
-    click_button 'Save'
+    click_button 'Save', match: :first
 
     expect(page).to have_text("Jane Doe")
     expect(page).to have_text("Advanced cybernetics")

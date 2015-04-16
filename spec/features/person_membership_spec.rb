@@ -17,7 +17,7 @@ feature "Person maintenance" do
     fill_in 'Job title', with: 'Head Honcho'
     select_in_team_select 'Digital Justice'
     check 'leader'
-    click_button 'Save'
+    click_button 'Save', match: :first
 
     membership = Person.last.memberships.last
     expect(membership.role).to eql('Head Honcho')
@@ -33,7 +33,7 @@ feature "Person maintenance" do
     visit edit_person_path(person)
 
     fill_in 'Job title', with: 'Head Honcho'
-    click_button 'Save'
+    click_button 'Save', match: :first
 
     membership = Person.last.memberships.last
     expect(membership.role).to eql('Head Honcho')
@@ -54,7 +54,7 @@ feature "Person maintenance" do
       fill_in 'Job title', with: 'Talker'
     end
 
-    click_button 'Save'
+    click_button 'Save', match: :first
     expect(Person.last.memberships.length).to eql(2)
   end
 
@@ -66,7 +66,7 @@ feature "Person maintenance" do
 
     fill_in 'Job title', with: 'Head Honcho'
     uncheck 'Team updates'
-    click_button 'Save'
+    click_button 'Save', match: :first
 
     membership = Person.last.memberships.last
     expect(membership).not_to be_subscribed
