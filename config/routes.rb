@@ -36,7 +36,9 @@ Rails.application.routes.draw do
     resources :profiles, only: [:index]
   end
 
-  namespace :admin do
-    resources :person_uploads, only: [:new, :create]
+  constraints ip: /81\.134\.202\.29|127\.0\.0\.1/ do
+    namespace :admin do
+      resources :person_uploads, only: [:new, :create]
+    end
   end
 end
