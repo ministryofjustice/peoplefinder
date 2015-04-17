@@ -3,6 +3,8 @@ class TokensController < ApplicationController
   before_action :set_desired_path, only: [:show]
   before_action :ensure_token_auth_enabled!
 
+  rescue_from Token::MaxNumberOfTokensError, with: :throttle_limit_error
+
   def create
     @token = Token.new(token_params)
     if @token.save
@@ -57,5 +59,10 @@ private
     minutes = Token.ttl.div(60)
     hours = minutes.div(60)
     hours
+  end
+
+  def throttle_limit_error
+    error :token_throttle_limit, limit: Token.max_tokens_per_hour
+    render action: :new
   end
 end

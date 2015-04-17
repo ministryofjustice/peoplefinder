@@ -1,6 +1,9 @@
 class Token < ActiveRecord::Base
   include Concerns::Sanitizable
+  MaxNumberOfTokensError = Class.new(StandardError)
+
   sanitize_fields :user_email, strip: true, downcase: true
+  before_create :throttle_check
   after_create :deactivate_tokens
 
   after_initialize :generate_value
@@ -8,6 +11,7 @@ class Token < ActiveRecord::Base
   validate :valid_email_address
 
   DEFAULT_TTL = 10_800
+  DEFAULT_MAX_TOKENS_PER_HOUR = 8
 
   def to_param
     value
@@ -41,7 +45,19 @@ class Token < ActiveRecord::Base
     update_attributes!(spent: true)
   end
 
+  def self.max_tokens_per_hour
+    Rails.configuration.try(:max_tokens_per_hour) || DEFAULT_MAX_TOKENS_PER_HOUR
+  end
+
+  def max_tokens_per_hour
+    self.class.max_tokens_per_hour
+  end
+
 private
+
+  def throttle_check
+    fail(MaxNumberOfTokensError) if tokens_in_the_last_hour.count >= max_tokens_per_hour
+  end
 
   def deactivate_tokens
     Token.where(spent: false, user_email: user_email).each do |token|
@@ -51,5 +67,9 @@ private
 
   def generate_value
     self.value ||= SecureRandom.uuid
+  end
+
+  def tokens_in_the_last_hour
+    Token.where(['user_email = ? and created_at between ? and ?', user_email, 1.hour.ago, Time.now])
   end
 end

@@ -76,6 +76,21 @@ feature 'Token Authentication' do
     expect(page).to have_text("The authentication token has expired and is more than 3 hours old")
   end
 
+  scenario "requesting more than 8 tokens per hour isn't permitted" do
+    1.upto(9) do |count|
+      visit '/'
+      fill_in 'token_user_email', with: ' tony.stark@digital.justice.gov.uk '
+      click_button 'Use email'
+      if count < 9
+        expect(page).to have_text('We are sending you a link to log in')
+        expect(page).to_not have_text("You've reached the limit of 8 tokens requested within an hour")
+      else
+        expect(page).to_not have_text('We are sending you a link to log in')
+        expect(page).to have_text("You've reached the limit of 8 tokens requested within an hour")
+      end
+    end
+  end
+
   scenario 'logging in and displaying a link to my profile' do
     person = create(:person, given_name: 'Bob', surname: 'Smith', email: 'test.user@digital.justice.gov.uk')
     token = Token.for_person(person)
