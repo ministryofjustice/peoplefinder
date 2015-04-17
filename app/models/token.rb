@@ -70,6 +70,6 @@ private
   end
 
   def tokens_in_the_last_hour
-    Token.where(['user_email = ? and created_at between ? and ?', user_email, 1.hour.ago, Time.now])
+    Token.where(user_email: user_email, created_at: 1.hour.ago..Time.now)
   end
 end
