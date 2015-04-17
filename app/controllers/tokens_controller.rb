@@ -5,11 +5,11 @@ class TokensController < ApplicationController
 
   def create
     @token = generate_token(token_params)
-    if @token && @token.valid?
-      TokenMailer.new_token_email(@token).deliver_later
-      render
+    if @token.nil?
+      show_throttle_limit_error
+    elsif @token.valid?
+      send_token_and_render(@token)
     else
-      error :token_throttle_limit, limit: Token.max_tokens_per_hour
       render action: :new
     end
   end
@@ -53,6 +53,16 @@ protected
   end
 
 private
+
+  def send_token_and_render(token)
+    TokenMailer.new_token_email(token).deliver_later
+    render
+  end
+
+  def show_throttle_limit_error
+    error :token_throttle_limit, limit: Token.max_tokens_per_hour
+    render action: :new
+  end
 
   def ttl_seconds_in_hours
     minutes = Token.ttl.div(60)
