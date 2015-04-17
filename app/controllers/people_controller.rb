@@ -20,7 +20,7 @@ class PeopleController < ApplicationController
   # GET /people/new
   def new
     @person = Person.new
-    @person.memberships.build group: group_from_group_id
+    @person.memberships.build
   end
 
   # GET /people/1/edit
@@ -111,10 +111,6 @@ private
 
   def set_org_structure
     @org_structure = Group.arrange.to_h
-  end
-
-  def group_from_group_id
-    params[:group_id] ? Group.friendly.find(params[:group_id]) : nil
   end
 
   def namesakes?
