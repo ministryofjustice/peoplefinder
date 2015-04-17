@@ -36,7 +36,9 @@ Rails.application.routes.draw do
     resources :profiles, only: [:index]
   end
 
-  constraints ip: /81\.134\.202\.29|127\.0\.0\.1/ do
+  admin_ip_matcher = IpAddressMatcher.new(Rails.configuration.admin_ip_ranges)
+
+  constraints ip: admin_ip_matcher do
     namespace :admin do
       resources :person_uploads, only: [:new, :create]
     end

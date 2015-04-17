@@ -28,6 +28,8 @@ module Peoplefinder
     # app title appears in the header bar
     config.app_title = 'People Finder'
 
+    config.admin_ip_ranges = ENV.fetch('ADMIN_IP_RANGES', '127.0.0.1')
+
     config.assets.paths << Rails.root.join('vendor', 'assets', 'components')
 
     config.support_email =
