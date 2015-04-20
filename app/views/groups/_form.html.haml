@@ -12,8 +12,16 @@
   .form-group{ :class => ('gov-uk-field-error' if @group.errors.include?(:name)) }
     = f.label :name, class: 'form-label-bold' do
       Team name
+      %p.form-hint= info_text('hint_team_name')
       %span.error= @group.errors[:name].first if @group.errors.include?(:name)
     = f.text_field :name, class: 'form-control'
+
+  .form-group{ :class => ('gov-uk-field-error' if @group.errors.include?(:acronym)) }
+    = f.label :acronym, class: 'form-label-bold' do
+      Team initials
+      %p.form-hint= info_text('hint_team_acronym')
+      %span.error= @group.errors[:acronym].first if @group.errors.include?(:acronym)
+    = f.text_field :acronym, class: 'form-control'
 
   .form-group
     = f.label :description, class: 'form-label-bold' do

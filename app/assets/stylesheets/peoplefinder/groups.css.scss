@@ -11,6 +11,19 @@ $focus-color: #FFBF47;
   }
 }
 
+.group-title {
+  h1 {
+    padding-bottom: 6px;
+  }
+
+  h2 {
+    border: none;
+    margin: 0;
+    font-size: 1.6em;
+    padding-top: 0;
+  }
+}
+
 .team-member {
   min-height: 300px;
   .image-background {

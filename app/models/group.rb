@@ -47,6 +47,10 @@ class Group < ActiveRecord::Base
     name
   end
 
+  def short_name
+    acronym.present? ? acronym : name
+  end
+
   def deletable?
     leaf_node? && memberships.reject(&:new_record?).empty?
   end
