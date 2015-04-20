@@ -99,13 +99,10 @@ RSpec.describe Token, type: :model do
 
     describe '#save or #create of a new token' do
       it 'throws and error if more than 8 tokens have been generated in the past hour for the same person' do
-        1.upto(9) do |count|
-          if count < 9
-            expect { described_class.for_person(person) }.to_not raise_error
-          else
-            expect { described_class.for_person(person) }.to raise_error
-          end
+        8.times do
+          expect { described_class.for_person(person) }.to_not raise_error
         end
+        expect { described_class.for_person(person) }.to raise_error
       end
     end
   end
