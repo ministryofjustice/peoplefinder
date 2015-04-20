@@ -124,8 +124,8 @@ private
     if namesakes?
       render(:confirm)
     else
-      @person.save
-      @person.send_create_email!(current_user)
+      creator = PersonCreator.new(@person, current_user)
+      creator.create!
       notice :profile_created, person: @person
       redirect_to successful_redirect_path
     end
