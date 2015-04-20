@@ -10,17 +10,53 @@
         </tr>
         <tr>
           <td width="560" align="left" valign="top" style="font-family:Arial, sans-serif;font-size:16px;font-weight:normal;line-height:30px;color:#434343;padding-bottom:20px;border-collapse:collapse;">
-            Hello,
+            Hello <%= @person.given_name %>,
           </td>
         </tr>
         <tr>
           <td width="560" align="left" valign="top" style="font-family:Arial, sans-serif;font-size:16px;font-weight:normal;line-height:30px;color:#434343;padding-bottom:20px;border-collapse:collapse;">
+
             <p>
-              A profile on MOJ People Finder been created<% if @by_email.present? %> by <%= @by_email %><% end %>. They included this email address as the contact email address for this person.
+              You’ve just been added to MOJ People Finder - the new way to
+              share your details and find colleagues<% if @by_email %> - by <%=
+              @by_email %><% end %>.
             </p>
-            <br/>
+
             <p>
-              To see the profile, visit <%= link_to @profile_url, @profile_url %>.
+              To check your profile, visit
+              <%= link_to @profile_url, @profile_url %> today.
+            </p>
+
+            <p>
+              For security reasons, you’ll need to enter this work email
+              address when prompted.
+            </p>
+
+            <p>
+              You can log into People Finder anytime on the following website address:
+            </p>
+
+            <p>
+              To check your profile, visit <%= link_to home_url, home_url %>
+            </p>
+
+            <p>
+              It’s easy to view and update your MOJ People Finder profile. The
+              more details you add, the easier it is for colleagues to
+              recognise and get in touch with you when you’re working.
+            </p>
+
+            <p>
+              If you have any questions about MOJ People Finder, ask your team
+              lead or check the intranet for more information.
+            </p>
+
+            <p>
+              The MOJ People Finder Team
+            </p>
+
+            <p>
+              This email is automatically generated. Do not reply.
             </p>
 
           </td>

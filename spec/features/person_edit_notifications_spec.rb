@@ -19,7 +19,7 @@ feature 'Person edit notifications' do
       click_button 'Save', match: :first
     }.to change { ActionMailer::Base.deliveries.count }.by(1)
 
-    expect(last_email.subject).to eq('A new profile on MOJ People Finder has been created for you')
+    expect(last_email.subject).to eq('You’re on MOJ People Finder, check your profile today')
 
     check_email_to_and_from
     check_email_has_profile_link(Person.where(email: 'bob.smith@digital.justice.gov.uk').first)

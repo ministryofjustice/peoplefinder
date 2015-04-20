@@ -149,7 +149,7 @@ en:
       subject: "People Finder profile improvements"
   user_update_mailer:
     new_profile_email:
-      subject: "A new profile on MOJ People Finder has been created for you"
+      subject: "You’re on MOJ People Finder, check your profile today"
     updated_profile_email:
       subject: "Your profile on MOJ People Finder has been edited"
     deleted_profile_email:
