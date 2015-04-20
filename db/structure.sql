@@ -215,7 +215,8 @@ CREATE TABLE people (
     super_admin boolean DEFAULT false,
     building text,
     city text,
-    secondary_email text
+    secondary_email text,
+    profile_photo_id integer
 );
 
 
@@ -267,6 +268,37 @@ CREATE SEQUENCE permitted_domains_id_seq
 --
 
 ALTER SEQUENCE permitted_domains_id_seq OWNED BY permitted_domains.id;
+
+
+--
+-- Name: profile_photos; Type: TABLE; Schema: public; Owner: -; Tablespace:
+--
+
+CREATE TABLE profile_photos (
+    id integer NOT NULL,
+    image character varying,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone
+);
+
+
+--
+-- Name: profile_photos_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE profile_photos_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: profile_photos_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE profile_photos_id_seq OWNED BY profile_photos.id;
 
 
 --
@@ -394,6 +426,13 @@ ALTER TABLE ONLY permitted_domains ALTER COLUMN id SET DEFAULT nextval('permitte
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
+ALTER TABLE ONLY profile_photos ALTER COLUMN id SET DEFAULT nextval('profile_photos_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
 ALTER TABLE ONLY tokens ALTER COLUMN id SET DEFAULT nextval('tokens_id_seq'::regclass);
 
 
@@ -450,6 +489,14 @@ ALTER TABLE ONLY people
 
 ALTER TABLE ONLY permitted_domains
     ADD CONSTRAINT permitted_domains_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: profile_photos_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
+--
+
+ALTER TABLE ONLY profile_photos
+    ADD CONSTRAINT profile_photos_pkey PRIMARY KEY (id);
 
 
 --
@@ -584,3 +631,7 @@ INSERT INTO schema_migrations (version) VALUES ('20150407101222');
 INSERT INTO schema_migrations (version) VALUES ('20150413101844');
 
 INSERT INTO schema_migrations (version) VALUES ('20150417141735');
+
+INSERT INTO schema_migrations (version) VALUES ('20150420132554');
+
+INSERT INTO schema_migrations (version) VALUES ('20150420132854');

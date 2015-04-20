@@ -2,6 +2,7 @@ class Person < ActiveRecord::Base
   include Concerns::Completion
   include Concerns::WorkDays
   include Concerns::ExposeMandatoryFields
+  belongs_to :profile_photo
 
   extend FriendlyId
   friendly_id :slug_source, use: :slugged
