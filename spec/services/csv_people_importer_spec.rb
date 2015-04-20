@@ -84,37 +84,32 @@ CSV
   end
 
   describe '#import' do
-    subject { importer.import }
-
     context 'for a valid csv' do
-      let(:csv) do
+      let(:csv) {
         <<CSV
 email,given_name,surname
 peter.bly@valid.gov.uk,Peter,Bly
 jon.con@valid.gov.uk,Jon,Con
 CSV
-      end
-
-      before do
-        subject
-      end
+      }
 
       it 'creates new records' do
-        new = Person.where(email: 'peter.bly@valid.gov.uk')
-
-        expect(new.size).to be 1
+        subject.import
+        created = Person.where(email: 'peter.bly@valid.gov.uk')
+        expect(created.size).to be 1
       end
 
       it 'returns number of imported  records' do
-        is_expected.to eql 2
+        expect(subject.import).to eql 2
       end
 
       context 'with extra parameters' do
-        let(:importer) { described_class.new(csv, extra_params) }
+        subject { described_class.new(csv, extra_params) }
         let(:extra_params) { { groups: [group] } }
         let(:group) { create(:group) }
 
         it 'merges CSV fields into supplied parameters' do
+          subject.import
           person = Person.find_by(email: 'peter.bly@valid.gov.uk')
           expect(person.groups).to eq([group])
         end
@@ -122,21 +117,21 @@ CSV
     end
 
     context 'for an invalid csv (including duplicates)' do
-      before do
-        create(:person, email: 'jon.o.carey@valid.gov.uk')
-
-        subject
-      end
-
-      let(:csv) do
+      let(:csv) {
         <<CSV
 email,given_name,surname
 peter.bly@valid.gov.uk,,Bly
 jon.o.carey@valid.gov.uk,Jon,O'Carey
 CSV
+      }
+
+      before do
+        create(:person, email: 'jon.o.carey@valid.gov.uk')
       end
 
-      it { is_expected.to be nil }
+      it 'returns nil on import' do
+        expect(subject.import).to be_nil
+      end
     end
   end
 
