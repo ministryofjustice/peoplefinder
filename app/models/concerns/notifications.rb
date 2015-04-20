@@ -5,7 +5,7 @@ module Concerns::Notifications
     def send_create_email!(current_user)
       if should_send_email_notification?(current_user)
         UserUpdateMailer.new_profile_email(
-          self, current_user.email
+          self, current_user.try(:email)
         ).deliver_later
       end
     end
@@ -30,7 +30,7 @@ module Concerns::Notifications
 
     def should_send_email_notification?(current_user)
       EmailAddress.new(email).valid_address? &&
-        current_user.email != email
+        current_user.try(:email) != email
     end
   end
 end

@@ -28,7 +28,9 @@ class CsvPeopleImporter
   def import
     return nil unless valid?
 
-    people.each(&:save!)
+    people.each do |person|
+      PersonCreator.new(person, nil).create!
+    end
     people.length
   end
 

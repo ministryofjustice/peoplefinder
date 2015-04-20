@@ -99,6 +99,12 @@ CSV
         expect(created.size).to be 1
       end
 
+      it 'uses the PersonCreator' do
+        expect(PersonCreator).to receive(:new).
+          with(instance_of(Person), nil).twice.and_call_original
+        subject.import
+      end
+
       it 'returns number of imported  records' do
         expect(subject.import).to eql 2
       end
