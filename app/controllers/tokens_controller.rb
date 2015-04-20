@@ -4,7 +4,7 @@ class TokensController < ApplicationController
   before_action :ensure_token_auth_enabled!
 
   def create
-    @token = Token.create(token_params)
+    @token = Token.new(token_params)
     if @token.save
       send_token_and_render(@token)
     else
