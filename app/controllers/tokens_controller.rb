@@ -6,8 +6,7 @@ class TokensController < ApplicationController
   def create
     @token = Token.new(token_params)
     if @token.save
-      TokenMailer.new_token_email(@token).deliver_later
-      render
+      send_token_and_render(@token)
     else
       render action: :new
     end
@@ -52,6 +51,11 @@ protected
   end
 
 private
+
+  def send_token_and_render(token)
+    TokenMailer.new_token_email(token).deliver_later
+    render
+  end
 
   def ttl_seconds_in_hours
     minutes = Token.ttl.div(60)

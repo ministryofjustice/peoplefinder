@@ -179,6 +179,7 @@ en:
       token:
         invalid_address: "Email address is not formatted correctly"
         invalid_domain: "Email address is not valid"
+        token_throttle_limit: "You've reached the limit of %{limit} tokens requested within an hour"
       group:
         attributes:
           base:

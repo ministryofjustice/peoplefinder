@@ -93,4 +93,17 @@ RSpec.describe Token, type: :model do
       end
     end
   end
+
+  context 'throttling token generation' do
+    let(:person) { create(:person, email: 'text.user1@digital.justice.gov.uk') }
+
+    describe '#save or #create of a new token' do
+      it 'throws and error if more than 8 tokens have been generated in the past hour for the same person' do
+        8.times do
+          expect(described_class.for_person(person)).to be_valid
+        end
+        expect { described_class.for_person(person) }.to raise_error(ActiveRecord::RecordInvalid)
+      end
+    end
+  end
 end

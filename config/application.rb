@@ -52,6 +52,8 @@ module Peoplefinder
 
     config.rack_timeout = (ENV['RACK_TIMEOUT'] || 14)
 
+    config.max_tokens_per_hour = ENV['MAX_TOKENS_PER_HOUR']
+
     config.action_mailer.default_url_options = {
       host: ENV['ACTION_MAILER_DEFAULT_URL'],
       protocol: (ENV['SSL_ON'] != 'false' ? 'https' : 'http')
