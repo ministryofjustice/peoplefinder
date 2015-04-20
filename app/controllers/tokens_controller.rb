@@ -4,10 +4,8 @@ class TokensController < ApplicationController
   before_action :ensure_token_auth_enabled!
 
   def create
-    @token = generate_token(token_params)
-    if @token.nil?
-      show_throttle_limit_error
-    elsif @token.valid?
+    @token = Token.create(token_params)
+    if @token.save
       send_token_and_render(@token)
     else
       render action: :new
@@ -59,20 +57,9 @@ private
     render
   end
 
-  def show_throttle_limit_error
-    error :token_throttle_limit, limit: Token.max_tokens_per_hour
-    render action: :new
-  end
-
   def ttl_seconds_in_hours
     minutes = Token.ttl.div(60)
     hours = minutes.div(60)
     hours
-  end
-
-  def generate_token(token_params)
-    @token = Token.create(token_params)
-  rescue Token::MaxNumberOfTokensError
-    nil
   end
 end

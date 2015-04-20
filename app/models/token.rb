@@ -1,14 +1,13 @@
 class Token < ActiveRecord::Base
   include Concerns::Sanitizable
-  MaxNumberOfTokensError = Class.new(StandardError)
 
   sanitize_fields :user_email, strip: true, downcase: true
-  before_create :throttle_check
   after_create :deactivate_tokens
 
   after_initialize :generate_value
 
   validate :valid_email_address
+  validate :within_throttle_limit, on: :create
 
   DEFAULT_TTL = 10_800
   DEFAULT_MAX_TOKENS_PER_HOUR = 8
@@ -53,11 +52,13 @@ class Token < ActiveRecord::Base
     self.class.max_tokens_per_hour
   end
 
-private
-
-  def throttle_check
-    fail(MaxNumberOfTokensError) if tokens_in_the_last_hour.count >= max_tokens_per_hour
+  def within_throttle_limit
+    if tokens_in_the_last_hour.count >= max_tokens_per_hour
+      errors.add(:user_email, :token_throttle_limit, limit: max_tokens_per_hour)
+    end
   end
+
+private
 
   def deactivate_tokens
     Token.where(spent: false, user_email: user_email).each do |token|

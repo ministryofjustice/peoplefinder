@@ -60,7 +60,6 @@ en:
     tokens:
       expired_token: "The authentication token has expired and is more than %{time} hours old"
       invalid_token: "The authentication token doesn't exist and so isn't valid"
-      token_throttle_limit: "You've reached the limit of %{limit} tokens requested within an hour"
     admin/person_uploads:
         upload_succeeded: "Successfully uploaded %{count} people"
         upload_failed: "Upload failed"
@@ -180,6 +179,7 @@ en:
       token:
         invalid_address: "Email address is not formatted correctly"
         invalid_domain: "Email address is not valid"
+        token_throttle_limit: "You've reached the limit of %{limit} tokens requested within an hour"
       group:
         attributes:
           base:
