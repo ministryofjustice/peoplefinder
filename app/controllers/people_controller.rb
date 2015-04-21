@@ -135,8 +135,8 @@ private
     if namesakes?
       render(:confirm)
     else
-      @person.save
-      @person.send_update_email!(current_user)
+      updater = PersonUpdater.new(@person, current_user)
+      updater.update!
 
       type = @person == current_user ? :mine : :other
       notice :profile_updated, type, person: @person
