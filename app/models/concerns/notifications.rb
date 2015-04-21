@@ -3,7 +3,7 @@ module Concerns::Notifications
 
   included do
     def send_create_email!(current_user)
-      if should_send_email_notification?(email, current_user)
+      if should_send_email_notification?(current_user)
         UserUpdateMailer.new_profile_email(
           self, current_user.email
         ).deliver_later
@@ -11,7 +11,7 @@ module Concerns::Notifications
     end
 
     def send_update_email!(current_user)
-      if should_send_email_notification?(email, current_user)
+      if should_send_email_notification?(current_user)
         UserUpdateMailer.updated_profile_email(
           self, current_user.email
         ).deliver_later
@@ -19,7 +19,7 @@ module Concerns::Notifications
     end
 
     def send_destroy_email!(current_user)
-      if should_send_email_notification?(email, current_user)
+      if should_send_email_notification?(current_user)
         UserUpdateMailer.deleted_profile_email(
           self, current_user.email
         ).deliver_later
@@ -28,7 +28,7 @@ module Concerns::Notifications
 
   private
 
-    def should_send_email_notification?(email, current_user)
+    def should_send_email_notification?(current_user)
       EmailAddress.new(email).valid_address? &&
         current_user.email != email
     end
