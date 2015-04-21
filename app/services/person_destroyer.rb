@@ -24,7 +24,7 @@ class PersonDestroyer
 private
 
   def send_destroy_email!
-    if @person.should_send_email_notification?(@current_user)
+    if @person.notify_of_change?(@current_user)
       UserUpdateMailer.deleted_profile_email(
         @person, @current_user.email
       ).deliver_later

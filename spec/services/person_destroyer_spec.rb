@@ -7,7 +7,7 @@ RSpec.describe PersonDestroyer, type: :service do
       'Person',
       destroy!: true,
       new_record?: false,
-      should_send_email_notification?: false
+      notify_of_change?: false
     )
   }
   let(:current_user) { double('Current User', email: 'user@example.com') }
@@ -36,7 +36,7 @@ RSpec.describe PersonDestroyer, type: :service do
 
     it 'sends no deleted profile email if not required' do
       allow(person).
-        to receive(:should_send_email_notification?).
+        to receive(:notify_of_change?).
         with(current_user).
         and_return(false)
       expect(class_double('UserUpdateMailer').as_stubbed_const).
@@ -47,7 +47,7 @@ RSpec.describe PersonDestroyer, type: :service do
 
     it 'sends a deleted profile email if required' do
       allow(person).
-        to receive(:should_send_email_notification?).
+        to receive(:notify_of_change?).
         with(current_user).
         and_return(true)
       mailing = double('mailing')
