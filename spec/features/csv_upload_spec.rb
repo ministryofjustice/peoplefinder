@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 feature 'Upload CSV' do
+  include ActiveJobHelper
   include PermittedDomainHelper
 
   before do
@@ -28,6 +29,7 @@ feature 'Upload CSV' do
     ].each do |email|
       person = Person.find_by(email: email)
       expect(person.groups).to eq([group])
+      check_new_user_notification_email(email)
     end
   end
 
@@ -57,5 +59,12 @@ feature 'Upload CSV' do
 
     expect(page).to have_text('Upload failed')
     expect(page).to have_text('Upload CSV file is required')
+  end
+
+  def check_new_user_notification_email(addr)
+    msg = ActionMailer::Base.deliveries.reverse.find { |d| d.to.include?(addr) }
+    expect(msg).not_to be_nil
+
+    expect(msg.subject).to eq('You’re on MOJ People Finder, check your profile today')
   end
 end

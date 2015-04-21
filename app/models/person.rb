@@ -1,6 +1,5 @@
 class Person < ActiveRecord::Base
   include Concerns::Completion
-  include Concerns::Notifications
   include Concerns::WorkDays
   include Concerns::ExposeMandatoryFields
 
@@ -109,6 +108,10 @@ class Person < ActiveRecord::Base
   include Concerns::ConcatenatedFields
   concatenated_field :location, :location_in_building, :building, :city, join_with: ', '
   concatenated_field :name, :given_name, :surname, join_with: ' '
+
+  def notify_of_change?(person_responsible)
+    EmailAddress.new(email).valid_address? && person_responsible.try(:email) != email
+  end
 
 private
 

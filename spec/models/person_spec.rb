@@ -195,4 +195,34 @@ RSpec.describe Person, type: :model do
       expect(person.location).to eq('At home')
     end
   end
+
+  describe '#notify_of_change?' do
+    context 'when the email is invalid' do
+      before do
+        person.email = 'invalid'
+      end
+
+      it 'is false' do
+        expect(person.notify_of_change?(build(:person))).
+          to be_falsy
+      end
+    end
+
+    context 'when the email is valid' do
+      it 'is true if there is no reponsible person' do
+        rp = nil
+        expect(person.notify_of_change?(rp)).to be_truthy
+      end
+
+      it 'is false if the reponsible person is this person' do
+        rp = person
+        expect(person.notify_of_change?(rp)).to be_falsy
+      end
+
+      it 'is true if the reponsible person is a third party' do
+        rp = build(:person)
+        expect(person.notify_of_change?(rp)).to be_truthy
+      end
+    end
+  end
 end

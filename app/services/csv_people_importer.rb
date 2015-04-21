@@ -28,15 +28,18 @@ class CsvPeopleImporter
   def import
     return nil unless valid?
 
-    @rows.inject(0) { |result, row|
-      result + (Person.create(row_to_params(row)) ? 1 : 0)
-    }
+    people.each do |person|
+      PersonCreator.new(person, nil).create!
+    end
+    people.length
   end
 
 private
 
-  def row_to_params(row)
-    @creation_options.merge(row.to_h.slice(*COLUMNS))
+  def people
+    @people ||= @rows.map { |row|
+      Person.new(@creation_options.merge(row.to_h.slice(*COLUMNS)))
+    }
   end
 
   def process_csv(csv)
@@ -55,15 +58,14 @@ private
   end
 
   def validate_rows
-    errors = []
-    @rows.each.with_index do |row, i|
-      person = Person.new(row.to_h.slice(*COLUMNS))
-      unless person.valid?
-        errors <<
-          ErrorRow.new(i + 2, row.to_csv.strip, person.errors.full_messages)
+    [].tap { |errors|
+      people.zip(@rows).each.with_index do |(person, row), i|
+        unless person.valid?
+          errors <<
+            ErrorRow.new(i + 2, row.to_csv.strip, person.errors.full_messages)
+        end
       end
-    end
-    errors
+    }
   end
 
   def validate_columns

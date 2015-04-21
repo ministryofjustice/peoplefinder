@@ -20,7 +20,7 @@ class PeopleController < ApplicationController
   # GET /people/new
   def new
     @person = Person.new
-    @person.memberships.build group: group_from_group_id
+    @person.memberships.build
   end
 
   # GET /people/1/edit
@@ -58,8 +58,8 @@ class PeopleController < ApplicationController
 
   # DELETE /people/1
   def destroy
-    @person.send_destroy_email!(current_user)
-    @person.destroy
+    destroyer = PersonDestroyer.new(@person, current_user)
+    destroyer.destroy!
     notice :profile_deleted, person: @person
     redirect_to home_path
   end
@@ -113,10 +113,6 @@ private
     @org_structure = Group.arrange.to_h
   end
 
-  def group_from_group_id
-    params[:group_id] ? Group.friendly.find(params[:group_id]) : nil
-  end
-
   def namesakes?
     return false if params['commit'] == 'Continue'
 
@@ -128,8 +124,8 @@ private
     if namesakes?
       render(:confirm)
     else
-      @person.save
-      @person.send_create_email!(current_user)
+      creator = PersonCreator.new(@person, current_user)
+      creator.create!
       notice :profile_created, person: @person
       redirect_to successful_redirect_path
     end
@@ -139,8 +135,8 @@ private
     if namesakes?
       render(:confirm)
     else
-      @person.save
-      @person.send_update_email!(current_user)
+      updater = PersonUpdater.new(@person, current_user)
+      updater.update!
 
       type = @person == current_user ? :mine : :other
       notice :profile_updated, type, person: @person
