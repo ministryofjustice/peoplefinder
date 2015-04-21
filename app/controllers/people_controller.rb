@@ -58,8 +58,8 @@ class PeopleController < ApplicationController
 
   # DELETE /people/1
   def destroy
-    @person.send_destroy_email!(current_user)
-    @person.destroy
+    destroyer = PersonDestroyer.new(@person, current_user)
+    destroyer.destroy!
     notice :profile_deleted, person: @person
     redirect_to home_path
   end
