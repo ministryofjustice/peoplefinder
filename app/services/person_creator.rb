@@ -14,6 +14,16 @@ class PersonCreator
 
   def create!
     person.save!
-    person.send_create_email! @current_user
+    send_create_email!
+  end
+
+private
+
+  def send_create_email!
+    if person.should_send_email_notification?(@current_user)
+      UserUpdateMailer.new_profile_email(
+        @person, @current_user.try(:email)
+      ).deliver_later
+    end
   end
 end

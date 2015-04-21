@@ -18,6 +18,16 @@ class PersonUpdater
 
   def update!
     person.save!
-    person.send_update_email! @current_user
+    send_update_email!
+  end
+
+private
+
+  def send_update_email!
+    if @person.should_send_email_notification?(@current_user)
+      UserUpdateMailer.updated_profile_email(
+        @person, @current_user.email
+      ).deliver_later
+    end
   end
 end
