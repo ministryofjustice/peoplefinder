@@ -87,4 +87,72 @@ RSpec.describe ApplicationHelper, type: :helper do
       expect(role_translate(build(:person), 'foo.bar')).to eq('translation')
     end
   end
+
+  describe '#link_to_short_name_unless_current' do
+    context 'with an object that has a short name' do
+      let(:obj) { double('obj', name: 'Full Name', short_name: 'FN') }
+
+      it 'links to the object' do
+        expect(self).to receive(:link_to).
+          with(anything, obj, anything)
+        link_to_short_name_unless_current(obj)
+      end
+
+      it 'uses the short name for the link text' do
+        expect(self).to receive(:link_to).
+          with('FN', anything, anything)
+        link_to_short_name_unless_current(obj)
+      end
+
+      it 'uses the name for the link title' do
+        expect(self).to receive(:link_to).
+          with(anything, anything, title: 'Full Name')
+        link_to_short_name_unless_current(obj)
+      end
+    end
+
+    context 'with an object that has an empty short name' do
+      let(:obj) { double('object', name: 'Full Name', short_name: '') }
+
+      it 'links to the object' do
+        expect(self).to receive(:link_to).
+          with(anything, obj, anything)
+        link_to_short_name_unless_current(obj)
+      end
+
+      it 'uses the name for the link text' do
+        expect(self).to receive(:link_to).
+          with('Full Name', anything, anything)
+        link_to_short_name_unless_current(obj)
+      end
+
+      it 'has no link title' do
+        expect(self).to receive(:link_to).
+          with(anything, anything, {})
+        link_to_short_name_unless_current(obj)
+      end
+    end
+
+    context 'with an object that has no short name' do
+      let(:obj) { double('object', name: 'Full Name') }
+
+      it 'links to the object' do
+        expect(self).to receive(:link_to).
+          with(anything, obj, anything)
+        link_to_short_name_unless_current(obj)
+      end
+
+      it 'uses the name for the link text' do
+        expect(self).to receive(:link_to).
+          with('Full Name', anything, anything)
+        link_to_short_name_unless_current(obj)
+      end
+
+      it 'has no link title' do
+        expect(self).to receive(:link_to).
+          with(anything, anything, {})
+        link_to_short_name_unless_current(obj)
+      end
+    end
+  end
 end

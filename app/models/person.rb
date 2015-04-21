@@ -91,8 +91,6 @@ class Person < ActiveRecord::Base
     name
   end
 
-  alias_method :short_name, :to_s
-
   def role_and_group
     memberships.join('; ')
   end
