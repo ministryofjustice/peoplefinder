@@ -6,6 +6,8 @@ Rails.application.routes.draw do
     resources :people, only: [:show]
   end
 
+  resources :profile_photos, only: [:create]
+
   resources :groups, path: 'teams' do
     resources :groups, only: [:new]
     get :people, on: :member, action: 'all_people'
