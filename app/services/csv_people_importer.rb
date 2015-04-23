@@ -11,8 +11,8 @@ class CsvPeopleImporter
 
   attr_reader :errors
 
-  def initialize(csv, creation_options = {})
-    @rows, @header_row = process_csv(csv)
+  def initialize(serialized, creation_options = {})
+    @rows = parse_csv(serialized)
     @creation_options = creation_options
     @valid = nil
   end
@@ -36,21 +36,26 @@ class CsvPeopleImporter
 
 private
 
+  def parse_csv(serialized)
+    CSV.new(serialized, headers: true, return_headers: true).to_a
+  end
+
+  def records
+    @rows.drop(1)
+  end
+
+  def header_row
+    @rows.first
+  end
+
   def people
-    @people ||= @rows.map { |row|
+    @people ||= records.map { |row|
       Person.new(@creation_options.merge(row.to_h.slice(*COLUMNS)))
     }
   end
 
-  def process_csv(csv)
-    rows = CSV.new(csv, headers: true, return_headers: true).to_a
-    header_row = rows.shift
-
-    [rows, header_row]
-  end
-
   def missing_columns
-    COLUMNS.reject { |column| @header_row.include?(column) }
+    COLUMNS.reject { |column| header_row.include?(column) }
   end
 
   def validate_csv
@@ -59,7 +64,7 @@ private
 
   def validate_rows
     [].tap { |errors|
-      people.zip(@rows).each.with_index do |(person, row), i|
+      people.zip(records).each.with_index do |(person, row), i|
         unless person.valid?
           errors <<
             ErrorRow.new(i + 2, row.to_csv.strip, person.errors.full_messages)
@@ -70,7 +75,7 @@ private
 
   def validate_columns
     missing_columns.map { |column|
-      ErrorRow.new(1, @header_row.to_csv.strip, ["#{column} column is missing"])
+      ErrorRow.new(1, header_row.to_csv.strip, ["#{column} column is missing"])
     }
   end
 end
