@@ -84,7 +84,7 @@ private
   # through.
   def group_params
     params.require(:group).
-      permit(:parent_id, :name, :description)
+      permit(:parent_id, :name, :acronym, :description)
   end
 
   def collection

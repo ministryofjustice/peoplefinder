@@ -226,6 +226,8 @@ en:
       editing_alert: "You are currently editing this profile - click the Save button to finish"
       hint_add_person_team_not_found: "If you can’t find your team, you’ll need to add it."
       hint_add_person_to_team: "Find the team from this organisation browser."
+      hint_team_name: "Write out the name of your team in full. Do not use initials."
+      hint_team_acronym: "If your team is also known by its initials (eg HMCTS) add them below."
       hint_team_description: "What is the role and purpose of the team?"
       hint_team_email_address: "Enter an email for people to get in touch with the team"
       hint_person_upload_group: |

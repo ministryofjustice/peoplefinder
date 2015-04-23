@@ -14,7 +14,7 @@
 
 - if @group.leaf_node?
   .title_with_edit
-    %h2 People in #{ @group.name }
+    %h2 People in #{ @group.short_name }
   .grid-wrapper
     = render partial: "memberships/summary", collection: @group.non_leaderships
 

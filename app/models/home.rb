@@ -9,7 +9,7 @@ class Home
     true
   end
 
-  def to_s
+  def name
     'Home'
   end
 

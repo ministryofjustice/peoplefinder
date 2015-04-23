@@ -39,6 +39,20 @@ module ApplicationHelper
     t(key, scope: 'views.info_text')
   end
 
+  def link_to_short_name_unless_current(obj)
+    full_name = obj.name
+
+    if obj.respond_to?(:short_name) && obj.short_name.present?
+      link_text = obj.short_name
+    else
+      link_text = full_name
+    end
+
+    html_options = (full_name == link_text) ? {} : { title: full_name }
+
+    link_to link_text, obj, html_options
+  end
+
   def app_title
     Rails.configuration.app_title
   end
