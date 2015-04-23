@@ -141,6 +141,32 @@ RSpec.describe PersonCsvImporter, type: :service do
     end
   end
 
+  describe '#import' do
+    context 'for a CSV exported by Estates' do
+      let(:csv) {
+        <<-CSV.strip_heredoc
+          First Name,Last Name,E-mail Display Name
+          Reinhold,Denesik,"Denesik, Reinhold (Reinhold.Denesik@valid.gov.uk)"
+          Lelah,Jerde,"Jerde, Lelah (Lelah.Jerde@valid.gov.uk)"
+        CSV
+      }
+
+      it 'creates records' do
+        subject.import
+        expect(Person.where(
+          given_name: 'Reinhold',
+          surname: 'Denesik',
+          email: 'reinhold.denesik@valid.gov.uk'
+        ).count).to eq(1)
+        expect(Person.where(
+          given_name: 'Lelah',
+          surname: 'Jerde',
+          email: 'lelah.jerde@valid.gov.uk'
+        ).count).to eq(1)
+      end
+    end
+  end
+
   it 'renders errors as strings' do
     error_row = PersonCsvImporter::ErrorRow.new(
       4, "jack@invalid.gov.uk,Jack,", ['Something', 'Something else']

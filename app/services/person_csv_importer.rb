@@ -1,7 +1,10 @@
 require 'csv'
+require 'forwardable'
 
 class PersonCsvImporter
-  COLUMNS = %w[given_name surname email]
+  extend Forwardable
+
+  COLUMNS = %i[given_name surname email]
 
   ErrorRow = Struct.new(:line_number, :raw, :messages) do
     def to_s
@@ -12,16 +15,14 @@ class PersonCsvImporter
   attr_reader :errors
 
   def initialize(serialized, creation_options = {})
-    @rows = parse_csv(serialized)
+    @parser = parse_csv(serialized)
     @creation_options = creation_options
     @valid = nil
   end
 
   def valid?
     return @valid unless @valid.nil?
-
-    @errors = validate_csv
-
+    @errors = missing_columns.any? ? column_errors : row_errors
     @valid = @errors.empty?
   end
 
@@ -36,46 +37,41 @@ class PersonCsvImporter
 
 private
 
+  def_delegators :@parser, :records, :header
+
+  def clean_fields(hash)
+    hash.merge(email: EmailExtractor.new.extract(hash[:email]))
+  end
+
   def parse_csv(serialized)
-    CSV.new(serialized, headers: true, return_headers: true).to_a
-  end
-
-  def records
-    @rows.drop(1)
-  end
-
-  def header_row
-    @rows.first
+    PersonCsvParser.new(serialized)
   end
 
   def people
-    @people ||= records.map { |row|
-      Person.new(@creation_options.merge(row.to_h.slice(*COLUMNS)))
+    @people ||= records.map { |record|
+      Person.new(@creation_options.merge(clean_fields(record.fields)))
     }
   end
 
   def missing_columns
-    COLUMNS.reject { |column| header_row.include?(column) }
+    COLUMNS - header.columns
   end
 
-  def validate_csv
-    missing_columns.any? ? validate_columns : validate_rows
-  end
-
-  def validate_rows
-    [].tap { |errors|
-      people.zip(records).each.with_index do |(person, row), i|
-        unless person.valid?
-          errors <<
-            ErrorRow.new(i + 2, row.to_csv.strip, person.errors.full_messages)
-        end
+  def row_errors
+    people.zip(records).map { |person, record|
+      if person.valid?
+        nil
+      else
+        ErrorRow.new(
+          record.line_number, record.original, person.errors.full_messages
+        )
       end
-    }
+    }.compact
   end
 
-  def validate_columns
+  def column_errors
     missing_columns.map { |column|
-      ErrorRow.new(1, header_row.to_csv.strip, ["#{column} column is missing"])
+      ErrorRow.new(1, header.original, ["#{column} column is missing"])
     }
   end
 end
