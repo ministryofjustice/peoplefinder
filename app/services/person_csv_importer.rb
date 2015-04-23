@@ -1,6 +1,6 @@
 require 'csv'
 
-class CsvPeopleImporter
+class PersonCsvImporter
   COLUMNS = %w[given_name surname email]
 
   ErrorRow = Struct.new(:line_number, :raw, :messages) do

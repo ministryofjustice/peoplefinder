@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe CsvPeopleImporter, type: :service do
+RSpec.describe PersonCsvImporter, type: :service do
 
   before do
     allow(PermittedDomain).to receive(:pluck).with(:domain).and_return(['valid.gov.uk'])
@@ -44,11 +44,11 @@ RSpec.describe CsvPeopleImporter, type: :service do
 
         it 'errors contain missing columns' do
           expect(importer.errors).to match_array([
-            CsvPeopleImporter::ErrorRow.new(
+            PersonCsvImporter::ErrorRow.new(
               3, "jon.o. carey@valid.gov.uk,Jon,O'Carey",
               ['Main email isn’t valid']
             ),
-            CsvPeopleImporter::ErrorRow.new(
+            PersonCsvImporter::ErrorRow.new(
               4, "jack@invalid.gov.uk,Jack,",
               [
                 'Surname is required',
@@ -72,10 +72,10 @@ RSpec.describe CsvPeopleImporter, type: :service do
 
       it 'errors contain missing columns' do
         expect(importer.errors).to match_array([
-          CsvPeopleImporter::ErrorRow.new(
+          PersonCsvImporter::ErrorRow.new(
             1, "email", ['given_name column is missing']
           ),
-          CsvPeopleImporter::ErrorRow.new(
+          PersonCsvImporter::ErrorRow.new(
             1, "email", ['surname column is missing']
           )
         ])
@@ -142,7 +142,7 @@ RSpec.describe CsvPeopleImporter, type: :service do
   end
 
   it 'renders errors as strings' do
-    error_row = CsvPeopleImporter::ErrorRow.new(
+    error_row = PersonCsvImporter::ErrorRow.new(
       4, "jack@invalid.gov.uk,Jack,", ['Something', 'Something else']
     )
     expect(error_row.to_s).to eq('line 4 "jack@invalid.gov.uk,Jack,": Something, Something else')

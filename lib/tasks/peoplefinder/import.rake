@@ -3,7 +3,7 @@ namespace :peoplefinder do
     desc 'Check validity of CSV file before import'
     task :csv_check, [:path] => :environment do |_, args|
       if File.exist?(args[:path])
-        importer = CsvPeopleImporter.new(File.new(args[:path]))
+        importer = PersonCsvImporter.new(File.new(args[:path]))
         if importer.valid?
           puts 'The given file is valid'
         else
@@ -20,7 +20,7 @@ namespace :peoplefinder do
     desc 'Import valid CSV file'
     task :csv_import, [:path] => :environment do |_, args|
       if File.exist?(args[:path])
-        importer = CsvPeopleImporter.new(File.new(args[:path]))
+        importer = PersonCsvImporter.new(File.new(args[:path]))
         result = importer.import
 
         if result.nil?

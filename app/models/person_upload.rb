@@ -20,7 +20,7 @@ class PersonUpload
     return nil unless valid?
 
     groups = Group.where(id: group_id)
-    importer = CsvPeopleImporter.new(file.read, groups: groups)
+    importer = PersonCsvImporter.new(file.read, groups: groups)
     @import_count = importer.import || 0
     @csv_errors = importer.errors
     @import_count > 0
