@@ -203,4 +203,24 @@ RSpec.describe Group, type: :model do
       expect(group.subscribers).to match_array([subscriber_a, subscriber_b])
     end
   end
+
+  describe '.short_name' do
+    let(:dept_name) { 'HM Courts and Tribunals Service' }
+    let(:dept_acronym) { 'HMCTS' }
+    let(:dept) { create(:group, name: dept_name) }
+
+    context 'if a group does not have an acronym' do
+      it 'returns the full name' do
+        expect(dept.short_name).to eql(dept_name)
+      end
+    end
+
+    context 'if a group does have an acronym' do
+      it 'returns the acronym' do
+        dept.acronym = dept_acronym
+        expect(dept.short_name).to eql(dept_acronym)
+      end
+    end
+  end
+
 end

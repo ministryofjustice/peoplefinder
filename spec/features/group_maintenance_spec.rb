@@ -130,6 +130,24 @@ feature 'Group maintenance' do
     expect(last_email.body.encoded).to match(group_url(group))
   end
 
+  scenario 'Showing the acronym', js: true do
+    group = create(:group, name: 'HM Courts and Tribunal Service', acronym: 'HMCTS')
+
+    javascript_log_in
+    visit group_path(group)
+
+    within('.group-title h1') do
+      expect(page).to have_text('HMCTS')
+    end
+
+    click_link 'Edit'
+    fill_in 'Team initials', with: ''
+    click_button 'Save'
+
+    expect(page).not_to have_text('HMCTS')
+    expect(page).not_to have_selector('.group-title h2')
+  end
+
   scenario 'Not responding to the selection of impossible parent nodes', js: true do
     dept = create(:department)
     org = create(:group, name: 'CSG', parent: dept)
