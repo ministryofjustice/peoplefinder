@@ -120,6 +120,56 @@ form {
   .parent-summary {
     padding: 12px 0 69px 0;
   }
+
+  .person-photo {
+
+    .crop-state {
+      display: none;
+    }
+
+    &.cropping {
+      .initial-state {
+        display: none;
+      }
+
+      .crop-state {
+        display: block;
+      }
+    }
+
+
+    form {
+      display: none;
+    }
+
+    .preview-box {
+      transition: all 500ms ease-in-out;
+
+      &.upload-in-progress {
+        opacity: 0.3;
+      }
+
+      .uploaded-photo {
+        clip: initial;
+      }
+    }
+
+
+    .upload-button-bar {
+      #person-image {
+        margin-top: 0;
+      }
+
+      .form-hint {
+        margin-top: 0;
+      }
+
+      button {
+        display: block;
+        margin-top: 10px;
+      }
+    }
+  }
 }
 
 

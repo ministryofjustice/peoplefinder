@@ -105,15 +105,17 @@
   =f.form_group :image, class: 'line-above person-photo' do
     = f.label :image, class: 'form-label-bold' do
       Photo
-      %p.form-hint= info_text('photo_upload_hint')
+    %p.form-hint.crop-state= info_text('photo_crop_hint')
 
-    %p
+    %p.preview-box
       = profile_image_tag @person, class: 'preview'
-    = f.file_field :image, class: 'form-control file'
-
-    %p
-      - if @person.image?
-        = link_to 'Crop image', edit_person_image_path(@person)
+    %div.upload-button-bar
+      %div.initial-state
+        %label{ for: 'person-image', class: 'form-hint' }= info_text('photo_upload_hint')
+        %input{ name: 'profile_photo[image]', id: 'person-image', type: 'file', class: 'form-control file' }
+        %button.photo-upload-button.button.hidden Upload photo
+      %div.crop-state
+        %button.button Finished
 
   .form-group.save-cancel-actions
     = f.submit 'Preview', name: 'preview', class: 'button'
