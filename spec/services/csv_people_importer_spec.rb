@@ -16,11 +16,11 @@ RSpec.describe CsvPeopleImporter, type: :service do
     context 'when csv has valid format' do
       context 'when all people have surname and email' do
         let(:csv) do
-          <<CSV
-email,given_name,surname
-peter.bly@valid.gov.uk,Peter,Bly
-jon.o.carey@valid.gov.uk,Jon,O'Carey
-CSV
+          <<-CSV.strip_heredoc
+            email,given_name,surname
+            peter.bly@valid.gov.uk,Peter,Bly
+            jon.o.carey@valid.gov.uk,Jon,O'Carey
+          CSV
         end
 
         it { is_expected.to be true }
@@ -32,12 +32,12 @@ CSV
 
       context 'when some people have incorrect details' do
         let(:csv) do
-          <<CSV
-email,given_name,surname
-peter.bly@valid.gov.uk,Peter,Bly
-jon.o. carey@valid.gov.uk,Jon,O'Carey
-jack@invalid.gov.uk,Jack,
-CSV
+          <<-CSV.strip_heredoc
+            email,given_name,surname
+            peter.bly@valid.gov.uk,Peter,Bly
+            jon.o. carey@valid.gov.uk,Jon,O'Carey
+            jack@invalid.gov.uk,Jack,
+          CSV
         end
 
         it { is_expected.to be false }
@@ -62,10 +62,10 @@ CSV
 
     context 'when the csv has missing columns' do
       let(:csv) do
-        <<CSV
-email
-peter.bly@valid.gov.uk
-CSV
+        <<-CSV.strip_heredoc
+          email
+          peter.bly@valid.gov.uk
+        CSV
       end
 
       it { is_expected.to be false }
@@ -86,11 +86,11 @@ CSV
   describe '#import' do
     context 'for a valid csv' do
       let(:csv) {
-        <<CSV
-email,given_name,surname
-peter.bly@valid.gov.uk,Peter,Bly
-jon.con@valid.gov.uk,Jon,Con
-CSV
+        <<-CSV.strip_heredoc
+          email,given_name,surname
+          peter.bly@valid.gov.uk,Peter,Bly
+          jon.con@valid.gov.uk,Jon,Con
+        CSV
       }
 
       it 'creates new records' do
@@ -124,11 +124,11 @@ CSV
 
     context 'for an invalid csv (including duplicates)' do
       let(:csv) {
-        <<CSV
-email,given_name,surname
-peter.bly@valid.gov.uk,,Bly
-jon.o.carey@valid.gov.uk,Jon,O'Carey
-CSV
+        <<-CSV.strip_heredoc
+          email,given_name,surname
+          peter.bly@valid.gov.uk,,Bly
+          jon.o.carey@valid.gov.uk,Jon,O'Carey
+        CSV
       }
 
       before do
