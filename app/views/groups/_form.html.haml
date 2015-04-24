@@ -29,6 +29,35 @@
       %p.form-hint= info_text('hint_team_description')
     - text_limit = Group::MAX_DESCRIPTION # to be replaced with a variable
     = f.text_area :description, class: 'form-control', placeholder: f.object.placeholder(:description), "data-limit" => text_limit
+    .help-area
+      %h3
+        Formatting
+      %p
+        Click each heading below to find out how you can add formatting to your text.
+      %p.help-toggle
+        Bullet point list
+      .help-content
+        To create a (bulleted) lists use asterisks at the start of each line
+        %br
+        * First item.
+        %br
+        * Second item.
+        %br
+        * Third item.
+      %p.help-toggle
+        Numbered list
+      .help-content
+        Numbered lists use regular numbers, followed by periods, as list markers:
+        %br
+        1. First item.
+        %br
+        2. Second item.
+        %br
+        3. Third item.
+      %p.help-toggle
+        Line space
+      .help-content
+        To add a line space press the spacebar twice
 
   - if @group.editable_parent?
     .form-group.group-parent.editable-container

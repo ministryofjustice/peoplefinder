@@ -1,0 +1,11 @@
+.help-area{
+  .help-toggle{
+    color: $link-colour;
+    cursor: pointer;
+    text-decoration: underline;
+    margin-bottom: 0;
+  }
+  .help-content{
+    margin-bottom: 1em;
+  }
+}
