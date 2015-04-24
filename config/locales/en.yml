@@ -25,17 +25,16 @@ en:
       default: "%d %b %Y %H:%M"
   sessions:
     login_page:
-      heading: Get an email link to log in to People Finder
+      heading: Request link to access People Finder
       intro: |
-        Instead of creating a password to use People Finder, the service will send you an email with a link to automatically log in. Please give your email address then check your inbox to start using People Finder.
-      heading_google: Use a government Google account
+        We will email you a secure link so you can log in to People Finder and create or edit profiles. The link will be active for 3 hours.
+      heading_google: Got a government Google account?
       body_google:
-        If you have a government Google account you can log in quickly
-        with the official authentication screen.
-      heading_other: Use an MOJ email address
+        If you have a Google account ending in gov.uk, you can log in now.
+      heading_other: Enter your MOJ email address
       body_other: Enter a valid MOJ email address below
-      log_in_google: Use Google
-      log_in_email: Use email
+      log_in_google: Log in
+      log_in_email: Request link
   tokens:
     show:
       token_auth_disabled: "Sorry, that login link is invalid. Please login using your Google account."
@@ -58,7 +57,7 @@ en:
     memberships:
       member_removed: "Removed %{person} from %{group}"
     tokens:
-      expired_token: "The authentication token has expired and is more than %{time} hours old"
+      expired_token: "The authentication token has expired and is more than %{time} hours only. Request a new link to log in."
       invalid_token: "The authentication token doesn't exist and so isn't valid"
     admin/person_uploads:
         upload_succeeded: "Successfully uploaded %{count} people"
@@ -197,7 +196,7 @@ en:
   shared:
     search:
       label: Enter the name of a person or role
-      placeholder: Enter your text here
+      placeholder: 'Enter name, job title, team name or location'
   home:
     heading: Welcome to People Finder
     explanation: |
@@ -239,7 +238,7 @@ en:
       location_in_building_hint: "(eg 10.30)"
       building_hint: "(eg 102 Petty France)"
       city_hint: "(eg London)"
-      notes_field_hint: "(eg I’m based at Bristol Crown Court on Mondays)"
+      notes_field_hint: "Include details about where you work on different days, any days out of the office and if you start early or late."
       photo_upload_hint: "Add or replace an image. (Please, no files over 3MB.)"
       profile_deletable: "(Note that deleting a profile cannot be undone.)"
       reported_profile_additional_details_label: "Additional details (optional)"

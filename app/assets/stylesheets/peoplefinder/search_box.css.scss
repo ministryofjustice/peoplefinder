@@ -21,3 +21,7 @@ form.search-box {
     background: $blackish image-url('icon_search.png') no-repeat -1px 50%;
   }
 }
+.search-wrapper h2, h2.search {
+    margin-bottom: 0;
+    border-bottom: 0;
+  }

@@ -11,7 +11,7 @@
 - if feature_enabled?('token_auth')
   %h2.h3.no-line= t('.heading_other')
 
-  %p= t('.body_other')
+  //%p= t('.body_other')
 
   = form_for (@token ||= Token.new) do |f|
 
