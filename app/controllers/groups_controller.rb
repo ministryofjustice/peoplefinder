@@ -63,7 +63,7 @@ class GroupsController < ApplicationController
 
   # DELETE /groups/1
   def destroy
-    next_page = @group.parent ? @group.parent : groups_url
+    next_page = @group.parent ? group_path(@group.parent) : groups_path
     @group.destroy
     notice :group_deleted, group: @group
     redirect_to next_page
