@@ -532,7 +532,7 @@ DEPENDENCIES
   poltergeist
   premailer-rails
   pry-rails
-  rails (~> 4.2.0)
+  rails (~> 4.2.1)
   recipient_interceptor (~> 0.1.2)
   rspec-rails (~> 3.2)
   rubocop (~> 0.26.1)
