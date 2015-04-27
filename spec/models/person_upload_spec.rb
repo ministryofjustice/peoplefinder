@@ -7,29 +7,29 @@ RSpec.describe PersonUpload, type: :model do
 
   before do
     allow(Group).to receive(:where).with(id: group.id).and_return([group])
-    allow(CsvPeopleImporter).to receive(:new).with('contents', groups: [group])
+    allow(PersonCsvImporter).to receive(:new).with('contents', groups: [group])
   end
 
   context 'with a valid upload' do
     describe 'save' do
-      it 'initialises a CsvPeopleImporter with the file contents and groups' do
-        importer = double(CsvPeopleImporter, import: 1, errors: [])
-        expect(CsvPeopleImporter).to receive(:new).
+      it 'initialises a PersonCsvImporter with the file contents and groups' do
+        importer = double(PersonCsvImporter, import: 1, errors: [])
+        expect(PersonCsvImporter).to receive(:new).
           with('contents', groups: [group]).
           and_return(importer)
         subject.save
       end
 
       it 'returns falsy if upload failed' do
-        importer = double(CsvPeopleImporter, import: nil, errors: [])
-        allow(CsvPeopleImporter).to receive(:new).and_return(importer)
+        importer = double(PersonCsvImporter, import: nil, errors: [])
+        allow(PersonCsvImporter).to receive(:new).and_return(importer)
 
         expect(subject.save).to be_falsy
       end
 
       it 'returns truthy if upload succeeded' do
-        importer = double(CsvPeopleImporter, import: 1, errors: [])
-        allow(CsvPeopleImporter).to receive(:new).and_return(importer)
+        importer = double(PersonCsvImporter, import: 1, errors: [])
+        allow(PersonCsvImporter).to receive(:new).and_return(importer)
 
         expect(subject.save).to be_truthy
       end
@@ -37,16 +37,16 @@ RSpec.describe PersonUpload, type: :model do
 
     describe 'import_count' do
       it 'returns the number of items uploaded after save' do
-        importer = double(CsvPeopleImporter, import: 1, errors: [])
-        allow(CsvPeopleImporter).to receive(:new).and_return(importer)
+        importer = double(PersonCsvImporter, import: 1, errors: [])
+        allow(PersonCsvImporter).to receive(:new).and_return(importer)
 
         subject.save
         expect(subject.import_count).to eq(1)
       end
 
       it 'returns 0 if no items were uploaded' do
-        importer = double(CsvPeopleImporter, import: nil, errors: [])
-        allow(CsvPeopleImporter).to receive(:new).and_return(importer)
+        importer = double(PersonCsvImporter, import: nil, errors: [])
+        allow(PersonCsvImporter).to receive(:new).and_return(importer)
 
         subject.save
         expect(subject.import_count).to eq(0)
@@ -55,8 +55,8 @@ RSpec.describe PersonUpload, type: :model do
 
     describe 'csv_errors' do
       it 'is empty after save' do
-        importer = double(CsvPeopleImporter, import: 1, errors: [])
-        allow(CsvPeopleImporter).to receive(:new).and_return(importer)
+        importer = double(PersonCsvImporter, import: 1, errors: [])
+        allow(PersonCsvImporter).to receive(:new).and_return(importer)
 
         subject.save
         expect(subject.csv_errors).to eq([])
@@ -64,8 +64,8 @@ RSpec.describe PersonUpload, type: :model do
 
       it 'returns the errors found during save' do
         error = double('error')
-        importer = double(CsvPeopleImporter, import: nil, errors: [error])
-        allow(CsvPeopleImporter).to receive(:new).and_return(importer)
+        importer = double(PersonCsvImporter, import: nil, errors: [error])
+        allow(PersonCsvImporter).to receive(:new).and_return(importer)
 
         subject.save
         expect(subject.csv_errors).to eq([error])

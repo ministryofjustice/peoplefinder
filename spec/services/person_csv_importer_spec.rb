@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe CsvPeopleImporter, type: :service do
+RSpec.describe PersonCsvImporter, type: :service do
 
   before do
     allow(PermittedDomain).to receive(:pluck).with(:domain).and_return(['valid.gov.uk'])
@@ -16,11 +16,11 @@ RSpec.describe CsvPeopleImporter, type: :service do
     context 'when csv has valid format' do
       context 'when all people have surname and email' do
         let(:csv) do
-          <<CSV
-email,given_name,surname
-peter.bly@valid.gov.uk,Peter,Bly
-jon.o.carey@valid.gov.uk,Jon,O'Carey
-CSV
+          <<-CSV.strip_heredoc
+            email,given_name,surname
+            peter.bly@valid.gov.uk,Peter,Bly
+            jon.o.carey@valid.gov.uk,Jon,O'Carey
+          CSV
         end
 
         it { is_expected.to be true }
@@ -32,23 +32,23 @@ CSV
 
       context 'when some people have incorrect details' do
         let(:csv) do
-          <<CSV
-email,given_name,surname
-peter.bly@valid.gov.uk,Peter,Bly
-jon.o. carey@valid.gov.uk,Jon,O'Carey
-jack@invalid.gov.uk,Jack,
-CSV
+          <<-CSV.strip_heredoc
+            email,given_name,surname
+            peter.bly@valid.gov.uk,Peter,Bly
+            jon.o. carey@valid.gov.uk,Jon,O'Carey
+            jack@invalid.gov.uk,Jack,
+          CSV
         end
 
         it { is_expected.to be false }
 
         it 'errors contain missing columns' do
           expect(importer.errors).to match_array([
-            CsvPeopleImporter::ErrorRow.new(
+            PersonCsvImporter::ErrorRow.new(
               3, "jon.o. carey@valid.gov.uk,Jon,O'Carey",
               ['Main email isn’t valid']
             ),
-            CsvPeopleImporter::ErrorRow.new(
+            PersonCsvImporter::ErrorRow.new(
               4, "jack@invalid.gov.uk,Jack,",
               [
                 'Surname is required',
@@ -62,20 +62,20 @@ CSV
 
     context 'when the csv has missing columns' do
       let(:csv) do
-        <<CSV
-email
-peter.bly@valid.gov.uk
-CSV
+        <<-CSV.strip_heredoc
+          email
+          peter.bly@valid.gov.uk
+        CSV
       end
 
       it { is_expected.to be false }
 
       it 'errors contain missing columns' do
         expect(importer.errors).to match_array([
-          CsvPeopleImporter::ErrorRow.new(
+          PersonCsvImporter::ErrorRow.new(
             1, "email", ['given_name column is missing']
           ),
-          CsvPeopleImporter::ErrorRow.new(
+          PersonCsvImporter::ErrorRow.new(
             1, "email", ['surname column is missing']
           )
         ])
@@ -86,11 +86,11 @@ CSV
   describe '#import' do
     context 'for a valid csv' do
       let(:csv) {
-        <<CSV
-email,given_name,surname
-peter.bly@valid.gov.uk,Peter,Bly
-jon.con@valid.gov.uk,Jon,Con
-CSV
+        <<-CSV.strip_heredoc
+          email,given_name,surname
+          peter.bly@valid.gov.uk,Peter,Bly
+          jon.con@valid.gov.uk,Jon,Con
+        CSV
       }
 
       it 'creates new records' do
@@ -124,11 +124,11 @@ CSV
 
     context 'for an invalid csv (including duplicates)' do
       let(:csv) {
-        <<CSV
-email,given_name,surname
-peter.bly@valid.gov.uk,,Bly
-jon.o.carey@valid.gov.uk,Jon,O'Carey
-CSV
+        <<-CSV.strip_heredoc
+          email,given_name,surname
+          peter.bly@valid.gov.uk,,Bly
+          jon.o.carey@valid.gov.uk,Jon,O'Carey
+        CSV
       }
 
       before do
@@ -141,8 +141,34 @@ CSV
     end
   end
 
+  describe '#import' do
+    context 'for a CSV exported by Estates' do
+      let(:csv) {
+        <<-CSV.strip_heredoc
+          First Name,Last Name,E-mail Display Name
+          Reinhold,Denesik,"Denesik, Reinhold (Reinhold.Denesik@valid.gov.uk)"
+          Lelah,Jerde,"Jerde, Lelah (Lelah.Jerde@valid.gov.uk)"
+        CSV
+      }
+
+      it 'creates records' do
+        subject.import
+        expect(Person.where(
+          given_name: 'Reinhold',
+          surname: 'Denesik',
+          email: 'reinhold.denesik@valid.gov.uk'
+        ).count).to eq(1)
+        expect(Person.where(
+          given_name: 'Lelah',
+          surname: 'Jerde',
+          email: 'lelah.jerde@valid.gov.uk'
+        ).count).to eq(1)
+      end
+    end
+  end
+
   it 'renders errors as strings' do
-    error_row = CsvPeopleImporter::ErrorRow.new(
+    error_row = PersonCsvImporter::ErrorRow.new(
       4, "jack@invalid.gov.uk,Jack,", ['Something', 'Something else']
     )
     expect(error_row.to_s).to eq('line 4 "jack@invalid.gov.uk,Jack,": Something, Something else')
