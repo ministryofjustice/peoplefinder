@@ -63,7 +63,7 @@ class GroupsController < ApplicationController
 
   # DELETE /groups/1
   def destroy
-    next_page = @group.parent ? @group.parent : groups_url
+    next_page = @group.parent ? group_path(@group.parent) : groups_path
     @group.destroy
     notice :group_deleted, group: @group
     redirect_to next_page
@@ -73,7 +73,8 @@ private
 
   # Use callbacks to share common setup or constraints between actions.
   def set_group
-    @group = collection.friendly.includes(:people).find(params[:id])
+    group = collection.friendly.find(params[:id])
+    @group = Group.includes(:people).find(group.id)
   end
 
   def set_org_structure

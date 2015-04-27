@@ -1,10 +1,11 @@
-namespace :brakeman do
+task :brakeman do
+  sh <<END
+(brakeman --no-progress --quiet --output tmp/brakeman.out --exit-on-warn && \
+echo "No warnings or errors") || \
+(cat tmp/brakeman.out; exit 1)
+END
+end
 
-  desc "Run Brakeman"
-  task :run, :output_files do |t, args|
-    require 'brakeman'
-
-    files = args[:output_files].split(' ') if args[:output_files]
-    Brakeman.run :app_path => ".", :output_files => files, :print_report => true
-  end
+if %w[development test].include? Rails.env
+  task(:default).prerequisites << task(:brakeman)
 end
