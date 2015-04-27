@@ -1,0 +1,179 @@
+#!/usr/bin/env ruby
+
+# Peoplefinder smoke test
+# =======================
+#
+# Set the following environment variables:
+#
+# * HOST - the root of the server to be tested, e.g. http://example.com/
+# * EMAIL_ADDRESS - the email address to sign in with
+# * EMAIL_PASSWORD - the IMAP password
+#
+# Google Apps IMAP is assumed, and the account must have IMAP access
+# configured. For the password, generate an app-specific password (this is
+# necessary if two-factor authentication is enabled).
+#
+# Run the test:
+#
+#     $ bundle exec ./smoke_test
+#
+# Successful output will look like this:
+#
+#     Request token ... OK
+#     Fetch token email ... wait 2s ... OK
+#     Sign in ... OK
+#     Edit profile ... OK
+#     Search for profile ... wait 2s ... OK
+#
+# On success, the return code is zero. Failure will result in a non-zero return
+# code.
+
+require 'bundler/setup'
+require 'capybara'
+require 'capybara/dsl'
+require 'capybara/poltergeist'
+require 'mail'
+require 'net/imap'
+require 'securerandom'
+
+host = ENV.fetch('HOST')
+email_address = ENV.fetch('EMAIL_ADDRESS')
+email_password = ENV.fetch('EMAIL_PASSWORD')
+
+Capybara.run_server = false
+Capybara.current_driver = :poltergeist
+Capybara.app_host = host
+
+# rubocop:disable ClassLength
+class SmokeTest
+  include Capybara::DSL
+
+  TIME_DRIFT_ALLOWANCE = 5
+
+  def initialize(email_address, imap)
+    @email_address = email_address
+    @imap = imap
+    @start_time = Time.now.utc
+  end
+
+  # rubocop:disable MethodLength
+  def run
+    step 'Request token' do
+      request_token
+    end
+
+    signin_path = nil
+    step 'Fetch token email' do
+      token_mail = with_retries { fetch_token_mail }
+      fail "couldn't find token email" unless token_mail
+
+      text_part = token_mail.text_part.decoded
+      signin_path = text_part[%r{/tokens/[0-9a-f-]+}]
+      fail "couldn't find sign-in token link" unless signin_path
+    end
+
+    my_name = nil
+    step 'Sign in' do
+      sign_in signin_path
+      my_name = find_own_name
+    end
+
+    unique_string = SecureRandom.uuid
+    step 'Edit profile' do
+      update_profile my_name, unique_string
+    end
+
+    step 'Search for profile' do
+      found = with_retries { search_profile my_name, unique_string }
+      fail "couldn't find profile via search" unless found
+    end
+
+  rescue => e
+    puts page.text
+    raise e
+  end
+
+private
+
+  attr_reader :imap, :email_address
+
+  def find_own_name
+    page.text[/Signed in as (.*?) Sign out/, 1].tap { |name|
+      fail "couldn't find own name" unless name
+    }
+  end
+
+  def search_profile(name, search_term)
+    visit '/'
+    fill_in 'Enter your text here', with: search_term
+    click_button 'Submit search'
+    result = nil
+    within '#search_results' do
+      result = page.has_text?(name)
+    end
+    result
+  end
+
+  def update_profile(name, uuid)
+    desc = "Smoke test started at #{@start_time.iso8601}\n\nUnique identifier: #{uuid}"
+    click_link name, match: :first
+    click_link 'Edit this profile'
+    fill_in 'Extra information', with: desc
+    click_button 'Save', match: :first
+    fail "couldn't update profile" unless page.has_text?('Updated your profile')
+  end
+
+  def request_token
+    visit '/'
+    fill_in 'Email address', with: email_address
+    click_button 'Use email'
+  end
+
+  def fetch_token_mail
+    imap.examine 'INBOX'
+    candidate_ids = imap.search(['SINCE', @start_time.strftime('%-d-%b-%Y')])
+    mails = candidate_ids.map { |id|
+      msg = imap.fetch(id, 'RFC822')[0].attr['RFC822']
+      Mail.read_from_string(msg)
+    }
+    mails.reverse.find { |mail|
+      mail.subject =~ /access request/i &&
+        mail.date.to_time >= (@start_time - TIME_DRIFT_ALLOWANCE)
+    }
+  end
+
+  def sign_in(path)
+    visit path
+    fail "couldn't sign in via #{path}" unless page.body =~ /Signed in as/
+  end
+
+  def with_retries(tries: 5, initial_delay: 2, max_delay: 30)
+    delay = initial_delay
+    result = nil
+    tries.times do
+      result = yield
+      break if result
+      wait delay
+      delay = [max_delay, delay * 2].min
+    end
+    result
+  end
+
+  def wait(delay)
+    $stdout.print "wait #{delay} ... "
+    $stdout.flush
+    sleep delay
+  end
+
+  def step(s)
+    $stdout.print s, ' ... '
+    $stdout.flush
+    yield.tap { $stdout.puts 'OK' }
+  end
+end
+
+imap = Net::IMAP.new('imap.gmail.com', port: 993, ssl: true)
+imap.login email_address, email_password
+SmokeTest.new(email_address, imap).run
+imap.logout
+imap.disconnect
