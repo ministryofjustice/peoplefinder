@@ -1,0 +1,14 @@
+- content_for :footer_support_links do
+  #feedback_container
+    %a{href: '#feedback', id: 'feedbackToggle'}
+      Report a problem
+    %form#feedback
+      %label{for: 'feedback_failed_action'}
+        What were you trying to do
+      %textarea{id: 'feedback_failed_action'}
+      %label{for: 'feedback_failure_description'}
+        What went wrong?
+      %textarea{id: 'feedback_failure_description'}
+      %input{type: 'hidden', id: 'feedback_environment'}
+      %input{type: 'hidden', id: 'feedback_time'}
+      %input{type: 'submit', class: 'button'}
