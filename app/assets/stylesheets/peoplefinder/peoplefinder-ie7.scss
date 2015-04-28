@@ -109,3 +109,17 @@ form #working-days ul,
 .root-subteams{
   clear: both;
 }
+
+#flash-messages {
+  text-align: center;
+  .flash-message {
+    margin: 15px 0;
+    padding: 15px;
+  }
+  .notice {
+    background-color: $notice-bg;
+  }
+  .error {
+    background-color: $error-bg;
+  }
+}
