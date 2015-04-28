@@ -47,6 +47,20 @@ h1, h2 {
     }
   }
 }
+
+// homepage
+  .help-peoplefinder {
+    float: right;
+    
+
+    p {
+      background: #ededed image-url('icon_info.png') scroll no-repeat 15px 20px;
+      padding: 20px 15px 20px 80px;
+      margin-top: 15px;
+      margin-left: 50px;
+    }
+  }
+
 // form
 form #working-days ul,
 .working_days {
