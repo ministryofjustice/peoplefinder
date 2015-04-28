@@ -6,7 +6,10 @@
 @import "search_box";
 @import "org_browser";
 @import "suggestions";
-
+@import "help-area";
+*{
+  box-sizing: border-box;
+}
 .form-control {
   max-width: 100% !important;
 }
