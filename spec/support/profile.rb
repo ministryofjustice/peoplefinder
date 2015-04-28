@@ -26,7 +26,7 @@ module SpecSupport
       select_in_team_select 'Digital'
       fill_in 'Main email', with: person_attributes[:email]
       fill_in 'Main phone number', with: person_attributes[:primary_phone_number]
-      fill_in 'Any other phone number', with: person_attributes[:secondary_phone_number]
+      fill_in 'Alternative phone number', with: person_attributes[:secondary_phone_number]
       fill_in 'Location in building', with: person_attributes[:location_in_building]
       fill_in 'Building', with: person_attributes[:building]
       fill_in 'City', with: person_attributes[:city]

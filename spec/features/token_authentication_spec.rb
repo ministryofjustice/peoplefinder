@@ -16,21 +16,21 @@ feature 'Token Authentication' do
   scenario 'trying to log in with an invalid email address' do
     visit '/'
     fill_in 'token_user_email', with: 'Bob'
-    expect { click_button 'Use email' }.not_to change { ActionMailer::Base.deliveries.count }
+    expect { click_button 'Request link' }.not_to change { ActionMailer::Base.deliveries.count }
     expect(page).to have_text('Email address is not formatted correctly')
   end
 
   scenario 'trying to log in with a non-whitelisted email address domain' do
     visit '/'
     fill_in 'token_user_email', with: 'james@abscond.org'
-    expect { click_button 'Use email' }.not_to change { ActionMailer::Base.deliveries.count }
+    expect { click_button 'Request link' }.not_to change { ActionMailer::Base.deliveries.count }
     expect(page).to have_text('Email address is not valid')
   end
 
   scenario 'accurate email' do
     visit '/'
     fill_in 'token_user_email', with: 'james.darling@digital.justice.gov.uk'
-    expect { click_button 'Use email' }.to change { ActionMailer::Base.deliveries.count }.by(1)
+    expect { click_button 'Request link' }.to change { ActionMailer::Base.deliveries.count }.by(1)
     expect(page).to have_text('We are sending you a link to log in')
 
     expect(last_email.to).to eql(['james.darling@digital.justice.gov.uk'])
@@ -40,7 +40,7 @@ feature 'Token Authentication' do
   scenario 'copy-pasting an email with extraneous spaces' do
     visit '/'
     fill_in 'token_user_email', with: ' correct@digital.justice.gov.uk '
-    click_button 'Use email'
+    click_button 'Request link'
     expect(page).to have_text('We are sending you a link to log in')
 
     expect(last_email.to).to include('correct@digital.justice.gov.uk')
@@ -80,7 +80,7 @@ feature 'Token Authentication' do
     1.upto(9) do |count|
       visit '/'
       fill_in 'token_user_email', with: ' tony.stark@digital.justice.gov.uk '
-      click_button 'Use email'
+      click_button 'Request link'
       if count < 9
         expect(page).to have_text('We are sending you a link to log in')
         expect(page).to_not have_text("You've reached the limit of 8 tokens requested within an hour")

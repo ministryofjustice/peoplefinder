@@ -32,7 +32,7 @@ module SpecSupport
 
     def javascript_log_in
       visit '/'
-      click_link 'Use Google'
+      click_link 'Log in'
     end
   end
 end

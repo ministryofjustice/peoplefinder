@@ -16,7 +16,7 @@ feature 'OmniAuth Authentication' do
     expect(login_page).to be_displayed
     expect(page).to have_title("Log in - #{ app_title }")
 
-    click_link 'Use Google'
+    click_link 'Log in'
     expect(page).to have_text('Signed in as John Doe')
 
     click_link 'Sign out'
@@ -29,7 +29,7 @@ feature 'OmniAuth Authentication' do
     visit '/'
     expect(login_page).to be_displayed
 
-    click_link 'Use Google'
+    click_link 'Log in'
     expect(page).to have_title("Login failure - #{ app_title }")
     expect(page).to have_text(/log in with a MOJ or GDS email address/)
 
@@ -44,7 +44,7 @@ feature 'OmniAuth Authentication' do
     path = group_path(group)
 
     visit path
-    click_link 'Use Google'
+    click_link 'Log in'
 
     expect(current_path).to eql(path)
   end
