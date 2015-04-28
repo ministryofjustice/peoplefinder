@@ -32,7 +32,6 @@ en:
       body_google:
         If you have a Google account ending in gov.uk, you can log in now.
       heading_other: Enter your MOJ email address
-      body_other: Enter a valid MOJ email address below
       log_in_google: Log in
       log_in_email: Request link
   tokens:
