@@ -15,7 +15,7 @@
         </tr>
         <tr>
           <td width="560" align="left" valign="top" style="font-family:Arial, sans-serif;font-size:16px;font-weight:normal;line-height:30px;color:#434343;padding-bottom:20px;border-collapse:collapse;">
-            To access People Finder, visit <strong><%= distance_of_time_in_words(Token.ttl)%></strong> today. For security reasons, this link will be active for 3 hours only.
+            To access People Finder, visit <%= link_to token_url(@token), token_url(@token), target: '_blank' %> today. For security reasons, this link will be active for 3 hours only.
           </td>
         </tr>
         <tr>
