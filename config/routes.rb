@@ -36,6 +36,8 @@ Rails.application.routes.draw do
     resources :profiles, only: [:index]
   end
 
+  resources :problem_reports, only: [:create]
+
   admin_ip_matcher = IpAddressMatcher.new(Rails.configuration.admin_ip_ranges)
 
   constraints ip: admin_ip_matcher do

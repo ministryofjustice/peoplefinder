@@ -1,11 +1,10 @@
 /* global $ */
 
 $(function() {
-  $('#feedback_environment').val(navigator.userAgent);
-  $('#feedback_time').val(Date);
-  $('#feedback').hide();
-  $('#feedbackToggle').click(function(e){
+  $('#problem_report_browser').val(navigator.userAgent);
+  $('#new_problem_report').hide();
+  $('#feedbackToggle').click(function(){
     $(this).toggleClass('open');
-    $('#feedback').slideToggle('slow');
+    $('#new_problem_report').slideToggle('slow');
   });
 });
