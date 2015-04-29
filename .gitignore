@@ -12,7 +12,7 @@
 /log/*.log
 /tmp
 # Ignore environment variable configuration
-/.env
+/.env.local
 /public/assets/
 /public/uploads/
 /coverage
