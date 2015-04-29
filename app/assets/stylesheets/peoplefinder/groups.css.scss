@@ -1,14 +1,11 @@
+@import 'maginot';
 $focus-color: #FFBF47;
 
 .group-leader {
   .image-background {
     height: 300px;
   }
-  img {
-    width: 300px;
-    clip: rect(0px, 300px, 300px, 0px);
-    max-width: 100%;
-  }
+  @include maginot(300px, 300px);
 }
 
 .group-title {
@@ -29,11 +26,7 @@ $focus-color: #FFBF47;
   .image-background {
     height: 217px;
   }
-  img {
-    width: 217px;
-    max-width: 100%;
-    clip: rect(0px, 217px, 217px, 0px);
-  }
+  @include maginot(217px, 217px);
   .role {
     font-size: 16px;
     width: 212px;

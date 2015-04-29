@@ -1,3 +1,4 @@
+@import 'maginot';
 ul.working_days {
   clear: both;
   list-style: none;
@@ -25,11 +26,7 @@ ul.working_days {
   .image-background {
     height: 300px;
   }
-  img {
-    width: 300px;
-    clip: rect(0px, 300px, 300px, 0px);
-    max-width: 100%;
-  }
+  @include maginot(300px, 300px);
   dl {
     margin-bottom: 15px;
   }
@@ -88,12 +85,7 @@ img.preview {
           height: 125px;
         }
       }
-
-      img {
-        width: 125px;
-        clip: rect(0px, 125px, 125px, 0px);
-        float: left;
-      }
+      @include maginot(125px, 125px);
       .details {
         @media screen and (max-width: 320px) {
           float: none;
