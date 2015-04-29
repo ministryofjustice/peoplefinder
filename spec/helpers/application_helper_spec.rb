@@ -93,19 +93,19 @@ RSpec.describe ApplicationHelper, type: :helper do
       let(:obj) { double('obj', name: 'Full Name', short_name: 'FN') }
 
       it 'links to the object' do
-        expect(self).to receive(:link_to).
+        expect(self).to receive(:link_to_unless_current).
           with(anything, obj, anything)
         link_to_short_name_unless_current(obj)
       end
 
       it 'uses the short name for the link text' do
-        expect(self).to receive(:link_to).
+        expect(self).to receive(:link_to_unless_current).
           with('FN', anything, anything)
         link_to_short_name_unless_current(obj)
       end
 
       it 'uses the name for the link title' do
-        expect(self).to receive(:link_to).
+        expect(self).to receive(:link_to_unless_current).
           with(anything, anything, title: 'Full Name')
         link_to_short_name_unless_current(obj)
       end
@@ -115,19 +115,19 @@ RSpec.describe ApplicationHelper, type: :helper do
       let(:obj) { double('object', name: 'Full Name', short_name: '') }
 
       it 'links to the object' do
-        expect(self).to receive(:link_to).
+        expect(self).to receive(:link_to_unless_current).
           with(anything, obj, anything)
         link_to_short_name_unless_current(obj)
       end
 
       it 'uses the name for the link text' do
-        expect(self).to receive(:link_to).
+        expect(self).to receive(:link_to_unless_current).
           with('Full Name', anything, anything)
         link_to_short_name_unless_current(obj)
       end
 
       it 'has no link title' do
-        expect(self).to receive(:link_to).
+        expect(self).to receive(:link_to_unless_current).
           with(anything, anything, {})
         link_to_short_name_unless_current(obj)
       end
@@ -137,19 +137,19 @@ RSpec.describe ApplicationHelper, type: :helper do
       let(:obj) { double('object', name: 'Full Name') }
 
       it 'links to the object' do
-        expect(self).to receive(:link_to).
+        expect(self).to receive(:link_to_unless_current).
           with(anything, obj, anything)
         link_to_short_name_unless_current(obj)
       end
 
       it 'uses the name for the link text' do
-        expect(self).to receive(:link_to).
+        expect(self).to receive(:link_to_unless_current).
           with('Full Name', anything, anything)
         link_to_short_name_unless_current(obj)
       end
 
       it 'has no link title' do
-        expect(self).to receive(:link_to).
+        expect(self).to receive(:link_to_unless_current).
           with(anything, anything, {})
         link_to_short_name_unless_current(obj)
       end

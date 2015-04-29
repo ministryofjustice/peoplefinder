@@ -22,7 +22,7 @@ $(window).load(function() {
       tags: tag_list,
       width: '480',
       dropdownCssClass: 'form-control',
-      tokenSeparators: [','],
+      tokenSeparators: [',']
     });
 
     // set the default state of the select2 widget

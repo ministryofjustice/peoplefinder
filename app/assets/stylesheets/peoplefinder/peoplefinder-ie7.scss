@@ -47,6 +47,20 @@ h1, h2 {
     }
   }
 }
+
+// homepage
+  .help-peoplefinder {
+    float: right;
+    
+
+    p {
+      background: #ededed image-url('icon_info.png') scroll no-repeat 15px 20px;
+      padding: 20px 15px 20px 80px;
+      margin-top: 15px;
+      margin-left: 50px;
+    }
+  }
+
 // form
 form #working-days ul,
 .working_days {
@@ -94,4 +108,29 @@ form #working-days ul,
 }
 .root-subteams{
   clear: both;
+}
+
+#flash-messages {
+  text-align: center;
+  .flash-message {
+    margin: 15px 0;
+    padding: 15px;
+  }
+  .notice {
+    background-color: $notice-bg;
+  }
+  .error {
+    background-color: $error-bg;
+  }
+}
+.breadcrumbs {
+  li {
+    padding-left: 16px;
+    background: image-url('peoplefinder/breadcrumb.gif') scroll no-repeat center left;
+  }
+  li.breadcrumb-0{
+    padding-left: 0;
+    background-image: none;
+  }
+   
 }
