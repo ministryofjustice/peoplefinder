@@ -50,7 +50,7 @@ module ApplicationHelper
 
     html_options = (full_name == link_text) ? {} : { title: full_name }
 
-    link_to link_text, obj, html_options
+    link_to_unless_current link_text, obj, html_options
   end
 
   def app_title
