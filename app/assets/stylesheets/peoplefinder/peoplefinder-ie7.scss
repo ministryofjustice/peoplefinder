@@ -123,3 +123,14 @@ form #working-days ul,
     background-color: $error-bg;
   }
 }
+.breadcrumbs {
+  li {
+    padding-left: 16px;
+    background: image-url('peoplefinder/breadcrumb.gif') scroll no-repeat center left;
+  }
+  li.breadcrumb-0{
+    padding-left: 0;
+    background-image: none;
+  }
+   
+}
