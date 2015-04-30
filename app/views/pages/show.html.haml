@@ -1,0 +1,4 @@
+%h1= t(:title, scope: [:pages, @page_name])
+
+.formatted-text
+  = govspeak(t(:body, scope: [:pages, @page_name]))

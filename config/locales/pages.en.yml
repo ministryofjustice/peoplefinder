@@ -1,0 +1,66 @@
+en:
+  pages:
+    cookies:
+      title: Cookies
+      body: |
+        People Finder stores small pieces of data (known as ‘cookies’) on your
+        computer in order to operate and to collect information about how you
+        browse the site.
+
+        Cookies are used to:
+
+        * keep you logged into the website
+        * measure how you use the website so it can be updated and improved
+          based on your needs
+        * remember the notifications you’ve seen so that we don’t show them to
+          you again
+
+        Third party cookies on People Finder aren’t used to identify you
+        personally.
+
+        Find out more about [how to manage cookies][manage-cookies].
+
+        # How cookies are used on People Finder
+
+        ## Measuring website usage (Google Analytics)
+
+        We use Google Analytics software to collect information about how you
+        use People Finder.
+        We do this to help make sure the site is meeting the needs of its users
+        and to [help us make improvements][improvements].
+
+        Google Analytics stores information about:
+
+        * the pages you visit on People Finder
+        * how long you spend on each People Finder page 
+        * how you got to the site  
+        * what you click on while you’re visiting the site
+
+        We don’t collect or store your personal information (eg your name or
+        address) so this information can’t be used to identify who you are.
+
+        We don’t allow Google to use or share our analytics data.
+
+        You can [opt out of Google Analytics cookies][google-optout].
+
+        ## Our introductory message
+
+        You may see a pop-up welcome message when you first visit People
+        Finder.
+        We’ll store a cookie so that your computer knows you’ve seen it and
+        knows not to show it again.
+
+        ## Sessions
+
+        People Finder will store a cookie when you log into the site to open a
+        session.
+        This cookie is stored so that you don’t need to log in every time you
+        visit the site.
+        If you are working on a government machine, you may find that your
+        cookies are cleared automatically every time you turn off or log out of
+        your machine.
+        This will mean you need to log into People Finder again.
+
+        [manage-cookies]: http://www.aboutcookies.org/
+        [improvements]: https://insidegovuk.blog.gov.uk/2014/10/29/info-pages-publishing-data-about-user-needs-and-metrics/
+        [google-optout]: https://tools.google.com/dlpage/gaoptout
