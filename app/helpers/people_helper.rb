@@ -8,7 +8,10 @@ module PeopleHelper
   end
 
   def profile_image_tag(person, source, options = {})
-    image_tag(source, options.merge(alt: "Current photo of #{ person }"))
+    content_tag(:div, class: 'maginot') {
+      image_tag(source, options.merge(alt: "Current photo of #{ person }")) +
+      content_tag(:div, class: 'barrier') {}
+    }
   end
 
   # Why do we need to go to this trouble to repeat new_person/edit_person? you

@@ -1,0 +1,17 @@
+@mixin maginot($width, $height) {
+  .maginot {
+    position: relative;
+    width: $width;
+    .barrier, img {
+      position: absolute;
+      width: $width;
+      height: $height;
+      top: 0;
+      left: 0;
+    }
+    img {
+      clip: rect(0px, $width, $height, 0px);
+      max-width: 100%;
+    }
+  }
+}
