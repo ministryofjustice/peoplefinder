@@ -135,6 +135,9 @@ en:
       other: |
         We’ve sent emails to the relevant people to make the changes you’ve
         suggested.
+  problem_report_mailer:
+    problem_report:
+      subject: "Problem reported by People Finder user"
   reminder_mailer:
     inadequate_profile:
       subject: "Reminder: update your profile today"
@@ -266,6 +269,8 @@ en:
         create: "Submit"
       person_upload:
         create: "Upload"
+      problem_report:
+        create: "Report"
     person_uploads:
       group_id: Choose your team
       file: Upload CSV file

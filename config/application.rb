@@ -32,8 +32,7 @@ module Peoplefinder
 
     config.assets.paths << Rails.root.join('vendor', 'assets', 'components')
 
-    config.support_email =
-        ENV['SUPPORT_EMAIL'] || 'people-finder@digital.justice.gov.uk'
+    config.support_email = ENV.fetch('SUPPORT_EMAIL')
 
     config.action_mailer.default_options = {
       from:  config.support_email

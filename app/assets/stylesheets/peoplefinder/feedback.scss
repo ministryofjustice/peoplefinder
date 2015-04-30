@@ -1,0 +1,20 @@
+#feedback_container{
+  font-size:16px;
+  #feedbackToggle{
+    color:$link-colour;
+    &:before{
+      content: "\25BC ";
+    }
+    &.open:before{
+      content: "\25B2 ";
+    }
+  }
+  form{
+    label{
+      display: block;
+    }
+    textarea{
+      width:100%;
+    }
+  }
+}
