@@ -201,6 +201,9 @@ en:
     search:
       label: Enter the name of a person or role
       placeholder: 'Enter name, job title, team name or location'
+    cookie_message_html:
+      People Finder uses cookies to make the site simpler.
+      <a href="/cookies">Find out more about cookies</a>
   home:
     heading: Welcome to People Finder
     explanation: |

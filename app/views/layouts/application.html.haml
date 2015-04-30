@@ -23,6 +23,8 @@
           = yield :report_link
         #last_update
           = last_update
+- content_for :cookie_message do
+  %p= t('shared.cookie_message_html')
 = render partial: "shared/feedback_form"
 = render 'layouts/script'
 = render template: "layouts/peoplefinder"

@@ -1,1 +1,2 @@
-//= require peoplefinder/application.js
+//= require peoplefinder/application
+//= require cookie-message

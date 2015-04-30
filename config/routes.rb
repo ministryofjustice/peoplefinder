@@ -45,4 +45,6 @@ Rails.application.routes.draw do
       resources :person_uploads, only: [:new, :create]
     end
   end
+
+  get '/cookies', to: 'pages#show', id: 'cookies', as: :cookies
 end
