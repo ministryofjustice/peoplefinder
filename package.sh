@@ -115,7 +115,7 @@ bundle --quiet \
 
 
 set -a 
-. .env.sample
+. .env.example
 set +a
 /bin/rm bin/rails bin/rake bin/setup
 bundle exec rake rails:update:bin
