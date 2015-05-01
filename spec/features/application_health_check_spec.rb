@@ -18,6 +18,6 @@ feature 'healthcheck.json' do
     visit '/healthcheck.json'
 
     expect(page.status_code).to eq 500
-    expect(page.body).to match /Database Error/
+    expect(page.body).to match(/Database Error/)
   end
 end

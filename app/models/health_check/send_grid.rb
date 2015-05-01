@@ -19,40 +19,37 @@ module HealthCheck
     end
 
     def available?
-      response = Net::SMTP.start(@config.address, @config.port) do |smtp|
-        smtp.helo(@config.sending_host)
+      with_error_detection('Access') do
+        Net::SMTP.start(@config.address, @config.port) do |smtp|
+          smtp.helo(@config.sending_host)
+        end
       end
-
-      !!response
-
-    rescue *ERRS_TO_CATCH => e
-      log_error('Access', e)
-      false
-    rescue => e
-      log_unknown_error(e)
-      false
     end
 
     def accessible?
-      response = Net::SMTP.start(@config.address, @config.port) do |smtp|
-        smtp.authenticate(
-          @config.user_name,
-          @config.password,
-          @config.authentication
-        )
+      with_error_detection('Authentication') do
+        Net::SMTP.start(@config.address, @config.port) do |smtp|
+          smtp.authenticate(
+            @config.user_name,
+            @config.password,
+            @config.authentication
+          )
+        end
       end
-
-      !!response
-
-    rescue *ERRS_TO_CATCH => e
-      log_error('Authentication', e)
-      false
-    rescue => e
-      log_unknown_error(e)
-      false
     end
 
-    private
+  private
+
+    def with_error_detection(desc)
+      yield
+      true
+    rescue *ERRS_TO_CATCH => e
+      log_error desc, e
+      false
+    rescue => e
+      log_unknown_error e
+      false
+    end
 
     def log_error(type, e)
       @errors << "SendGrid #{type} Error: #{e.message}"

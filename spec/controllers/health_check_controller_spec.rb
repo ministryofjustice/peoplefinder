@@ -2,9 +2,11 @@ require 'spec_helper'
 
 describe HealthCheckController, type: :controller do
   describe 'INDEX' do
-    it 'should return  200 if successful' do
+    it 'returns  200 if successful' do
       service = double HealthCheckService
-      report = HealthCheckService::HealthCheckReport.new('200', 'All Components OK')
+      report = HealthCheckService::HealthCheckReport.new(
+        '200', 'All Components OK'
+      )
       expect(HealthCheckService).to receive(:new).and_return(service)
       expect(service).to receive(:report).and_return(report)
 
@@ -13,9 +15,11 @@ describe HealthCheckController, type: :controller do
       expect(response.body).to eq report.to_json
     end
 
-    it 'should return 500 if unsuccessful' do
+    it 'returns 500 if unsuccessful' do
       service = double HealthCheckService
-      report = HealthCheckService::HealthCheckReport.new('500', ['Error message 1', 'Error message 2'] )
+      report = HealthCheckService::HealthCheckReport.new(
+        '500', ['Error message 1', 'Error message 2']
+      )
       expect(HealthCheckService).to receive(:new).and_return(service)
       expect(service).to receive(:report).and_return(report)
 
@@ -24,5 +28,4 @@ describe HealthCheckController, type: :controller do
       expect(response.body).to eq report.to_json
     end
   end
-
 end

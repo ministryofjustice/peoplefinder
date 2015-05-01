@@ -1,10 +1,9 @@
 module HealthCheck
   class Database < Component
-
     def accessible?
       begin
         tuple = execute_simple_select_on_database
-        result = tuple.to_a == [{"result"=>"1"}]
+        result = tuple.to_a == [{ 'result' => '1' }]
       rescue => e
         log_unknown_error(e)
         result = false
@@ -23,22 +22,22 @@ module HealthCheck
       result
     end
 
-    private
+  private
 
     def execute_simple_select_on_database
-      tuple = ActiveRecord::Base.connection.execute('select 1 as result')
+      ActiveRecord::Base.connection.execute('select 1 as result')
     end
 
     def log_error
       @errors = [
-        "Database Error: could not connect to #{config.database} " +
-        "on #{config.host} using #{config.adapter}"
+        'Database Error: could not connect to %s on %s using %s' % [
+          config.database, config.host, config.adapter
+        ]
       ]
     end
 
     def config
       OpenStruct.new(Rails.configuration.database_configuration[Rails.env])
     end
-
   end
 end
