@@ -45,7 +45,7 @@ class Token < ActiveRecord::Base
   end
 
   def self.max_tokens_per_hour
-    Rails.configuration.try(:max_tokens_per_hour) || DEFAULT_MAX_TOKENS_PER_HOUR
+    Integer(Rails.configuration.try(:max_tokens_per_hour) || DEFAULT_MAX_TOKENS_PER_HOUR)
   end
 
   def max_tokens_per_hour
