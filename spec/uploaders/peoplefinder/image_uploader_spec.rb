@@ -24,6 +24,13 @@ RSpec.describe ImageUploader, type: :uploader do
     expect(subject.medium).to have_dimensions(20, 20)
   end
 
+  it 'has a consistent path' do
+    # If you change this, you must also consider what to do with legacy image
+    # uploads.
+    expect(subject.store_dir).
+      to eq("uploads/peoplefinder/person/image/#{person.id}")
+  end
+
   after do
     described_class.enable_processing = false
   end
