@@ -48,7 +48,7 @@ set_tag() {
       exit 2
     fi
   done
-  git tag -a -m"Create TAG" ${PREFIX}${NEWTAG} && git push --tags
+  git tag -a -m"Create TAG" ${PREFIX}${NEWTAG} && git push origin ${PREFIX}${NEWTAG}
 }
 
 
