@@ -1,4 +1,4 @@
-/* global $ */
+/* global $, _ */
 
 var PhotoUpload = (function (){
   'use strict';
@@ -24,15 +24,15 @@ var PhotoUpload = (function (){
       event.preventDefault();
       var els = PhotoUpload.findElements(event.target);
 
-      var iframeId = "photo-upload-iframe-" + ~new Date();
+      var iframeId = 'photo-upload-iframe-' + ~new Date();
       var iframe = $('<iframe id="' + iframeId + '" name="' + iframeId + '">');
       iframe.hide();
       iframe.load(PhotoUpload.photoUploaded);
 
-      var form = $('<form target="'
-        + iframeId
-        + '" method="POST" action="/profile_photos" '
-        + 'enctype="multipart/form-data">');
+      var form = $('<form target="' +
+        iframeId +
+        '" method="POST" action="/profile_photos" ' +
+        'enctype="multipart/form-data">');
 
       form.append(els.$input);
       form.append($('input[name="authenticity_token"]').clone());
@@ -60,8 +60,9 @@ var PhotoUpload = (function (){
     },
 
     preview: function ( event ){
-      if( !window.FileReader )
+      if( !window.FileReader ) {
         return false;
+      }
 
       var els = PhotoUpload.findElements(event.target);
       var file = els.$input[0].files[0];
@@ -83,7 +84,7 @@ var PhotoUpload = (function (){
 
     setupCrop: function ( els ){
       var imgw = els.$preview.width();
-      var imgh = els.$preview.height();
+      // var imgh = els.$preview.height();
 
       els.$el.addClass('cropping');
 
@@ -91,7 +92,7 @@ var PhotoUpload = (function (){
         setSelect: [20, 20, imgw-20, imgw-20],
         boxWidth:  ($(window).width()*0.80),
         onSelect: function (){
-          console.log(arguments);
+          // console.log(arguments);
         },
         aspectRatio: 1
       }, function (){
@@ -108,9 +109,9 @@ var PhotoUpload = (function (){
       var $uploadButton = $el.find('.upload-button-bar .initial-state button');
       var $cropButton   = $el.find('.upload-button-bar .crop-state button');
 
-      if( !$el.hasClass('person-photo')
-          && $input.length   == 0
-          && $preview.length == 0 ){
+      if( !$el.hasClass('person-photo') &&
+          $input.length   === 0 &&
+          $preview.length === 0 ){
         return new Error('PhotoUpload needs a .person-photo block.');
       }
 
@@ -121,10 +122,10 @@ var PhotoUpload = (function (){
         $preview:       $preview,
         $uploadButton:  $uploadButton,
         $cropButton:    $cropButton
-      }
+      };
     }),
 
-  }
+  };
 
   return PhotoUpload;
 })();
