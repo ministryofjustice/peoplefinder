@@ -13,6 +13,36 @@
   box-sizing: border-box;
 }
 
+footer {
+  .footer-meta-inner {
+    width: 100%!important;
+  }
+
+  .footer-content {
+    overflow: hidden;
+
+    ul {
+      width: 75%;
+      float: left;
+      line-height: 2.5!important;
+
+      @media screen and (min-width: 640px) {
+        height: 160px!important;
+        line-height: 260px!important;
+      }
+    }
+
+    .copyright {
+      width: 25%;
+      float: right;
+
+      a {
+        display: block;
+      }
+    }
+  }
+}
+
 .form-control {
   max-width: 100% !important;
 }
@@ -29,8 +59,10 @@
 
 #last_update {
   float: right;
-  top: 75px;
-  position: relative;
+  @media screen and (min-width: 768px){
+    top: 75px;
+    position: relative;
+  }
 }
 
 .breadcrumbs {
@@ -72,6 +104,10 @@
 
 a {
   text-decoration: none;
+
+  &.underlined {
+    text-decoration: underline;
+  }
 }
 
 a:hover {
