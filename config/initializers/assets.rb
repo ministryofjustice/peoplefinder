@@ -10,8 +10,8 @@ Rails.application.config.assets.precompile += %w[
   peoplefinder/peoplefinder-lt-ie9.css
   peoplefinder/peoplefinder-ie7.css
   gov-static/gov-ie.js
-  jquery.Jcrop.min.css
-  jquery.Jcrop.min.js
+  Jcrop/css/jquery.Jcrop.min.css
+  Jcrop/css/jquery.Jcrop.min.js
 ]
 
 unless Rails.env.production?
