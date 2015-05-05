@@ -105,6 +105,11 @@
   =f.form_group :image, class: 'line-above person-photo' do
     = f.label :image, class: 'form-label-bold' do
       Photo
+    = f.hidden_field :profile_photo_id
+    = f.hidden_field :crop_x
+    = f.hidden_field :crop_y
+    = f.hidden_field :crop_w
+    = f.hidden_field :crop_h
     %p.form-hint.crop-state= info_text('photo_crop_hint')
 
     %p.preview-box

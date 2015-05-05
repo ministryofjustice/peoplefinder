@@ -105,7 +105,7 @@ var PhotoUpload = (function (){
       var $el           = $(el).closest('.person-photo');
       var $label        = $el.find('label[for="person-image"]');
       var $input        = $el.find('#person-image');
-      var $preview      = $el.find('p > img.preview');
+      var $preview      = $el.find('img.preview');
       var $uploadButton = $el.find('.upload-button-bar .initial-state button');
       var $cropButton   = $el.find('.upload-button-bar .crop-state button');
 

@@ -49,8 +49,14 @@ class Person < ActiveRecord::Base
   sanitize_fields :email, strip: true, downcase: true
   before_save :sanitize_tags
 
-  mount_uploader :image, ImageUploader
   attr_accessor :crop_x, :crop_y, :crop_w, :crop_h
+  after_save :crop_profile_photo
+
+  def crop_profile_photo
+    profile_photo.crop crop_x, crop_y, crop_w, crop_h if crop_x.present?
+  end
+
+  delegate :image, to: :profile_photo, allow_nil: true
 
   validates :given_name, presence: true, on: :update
   validates :surname, presence: true
