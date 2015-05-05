@@ -108,7 +108,7 @@
       %p.form-hint= info_text('photo_upload_hint')
     = f.file_field :image, class: 'form-control file'
 
-    = profile_image_tag @person, @person.image.medium, class: 'preview'
+    = profile_image_tag @person, class: 'preview'
     %p
       - if @person.image?
         = link_to 'Crop image', edit_person_image_path(@person)

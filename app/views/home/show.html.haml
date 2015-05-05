@@ -19,7 +19,7 @@
   %div.leaders.grid.grid-1-3
     - @group.leaders.each do |leader|
       %div.profile
-        = profile_image_tag leader, leader.image.medium
+        = profile_image_tag leader
         %p
           =link_to leader.name, leader, class: 'leader-name'
           %span.leader-role= leader.memberships.where(group:@group).first.role

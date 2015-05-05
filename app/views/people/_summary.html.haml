@@ -3,7 +3,7 @@
 
     = link_to summary do
       .image-background
-        = profile_image_tag summary, summary.image.medium, class: 'team-members'
+        = profile_image_tag summary, class: 'team-members'
       %h4.person-name= summary.name
 
     .role= summary.role_names
