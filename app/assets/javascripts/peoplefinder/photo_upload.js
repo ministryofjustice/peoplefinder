@@ -12,7 +12,7 @@ var PhotoUpload = (function (){
       els.$input.change(PhotoUpload.photoSelected);
 
       els.$uploadButton.click(PhotoUpload.uploadPhoto);
-      els.$cropButton.click(PhotoUpload.doCrop);
+      els.$cropButton.click(PhotoUpload.cropDone);
     },
 
     photoSelected: function ( event ){
@@ -44,7 +44,7 @@ var PhotoUpload = (function (){
       els.$label.after(els.$input);
       form.remove();
 
-      els.$preview[0].JCropObj.destroy();
+      els.$preview.data('jcrop').destroy();
     },
 
     photoUploaded: function ( event ){
@@ -56,6 +56,11 @@ var PhotoUpload = (function (){
       PhotoUpload.togglePreviewUploading(els.$preview);
       els.$preview.addClass('uploaded-photo');
       PhotoUpload.setupCrop(els);
+
+      console.log(uploadData.id);
+      els.$photo_id.data('old-id', els.$photo_id.val());
+      els.$photo_id.val(uploadData.id);
+
       $iframe.remove();
     },
 
@@ -91,23 +96,33 @@ var PhotoUpload = (function (){
       els.$preview.Jcrop({
         setSelect: [20, 20, imgw-20, imgw-20],
         boxWidth:  ($(window).width()*0.80),
-        onSelect: function (){
-          // console.log(arguments);
+        onSelect: function ( cropData ){
+          els.$preview.data('new-crop-data', cropData);
         },
         aspectRatio: 1
       }, function (){
-        els.$preview[0].JCropObj = this;
+        els.$preview.data('jcrop', this);
       });
 
+    },
+
+    cropDone: function ( event ){
+      event.preventDefault();
+
+      var els = PhotoUpload.findElements(event.target);
+      var cropData = els.$preview.data('new-crop-data');
+
+      els.$crop_x.val(cropData.x);
+      els.$crop_y.val(cropData.y);
+      els.$crop_w.val(cropData.w);
+      els.$crop_h.val(cropData.h);
     },
 
     findElements: _.memoize(function ( el ){
       var $el           = $(el).closest('.person-photo');
       var $label        = $el.find('label[for="person-image"]');
       var $input        = $el.find('#person-image');
-      var $preview      = $el.find('img.preview');
-      var $uploadButton = $el.find('.upload-button-bar .initial-state button');
-      var $cropButton   = $el.find('.upload-button-bar .crop-state button');
+      var $preview      = $el.find('.maginot > img.preview');
 
       if( !$el.hasClass('person-photo') &&
           $input.length   === 0 &&
@@ -120,8 +135,15 @@ var PhotoUpload = (function (){
         $input:         $input,
         $label:         $label,
         $preview:       $preview,
-        $uploadButton:  $uploadButton,
-        $cropButton:    $cropButton
+
+        $uploadButton:  $el.find('.upload-button-bar .initial-state button'),
+        $cropButton:    $el.find('.upload-button-bar .crop-state button'),
+
+        $photo_id     : $el.find('#person_profile_photo_id'),
+        $crop_x       : $el.find('#person_crop_x'),
+        $crop_y       : $el.find('#person_crop_y'),
+        $crop_w       : $el.find('#person_crop_w'),
+        $crop_h       : $el.find('#person_crop_h')
       };
     }),
 
