@@ -7,9 +7,10 @@ module PeopleHelper
     I18n.t(symbol, scope: [:people, :day_symbols])
   end
 
-  def profile_image_tag(person, source, options = {})
+  def profile_image_tag(person, options = {})
+    image = person.image.medium
     content_tag(:div, class: 'maginot') {
-      image_tag(source, options.merge(alt: "Current photo of #{ person }")) +
+      image_tag(image, options.merge(alt: "Current photo of #{ person }")) +
       content_tag(:div, class: 'barrier') {}
     }
   end
