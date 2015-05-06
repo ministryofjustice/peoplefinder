@@ -56,12 +56,6 @@ private
     redirect_to path
   end
 
-  def set_hint_group
-    if session[:last_group_visited]
-      @hint_group = Group.find(session[:last_group_visited])
-    end
-  end
-
   def i18n_flash(type, *partial_key, **options)
     full_key = [
       :controllers, controller_path, *partial_key

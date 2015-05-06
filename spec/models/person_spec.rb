@@ -127,14 +127,6 @@ RSpec.describe Person, type: :model do
       it 'uses the first group path' do
         expect(person.path).to eql([groups[0], groups[1], person])
       end
-
-      it 'uses the group hint to choose the path' do
-        expect(person.path(groups[3])).to eql([groups[2], groups[3], person])
-      end
-
-      it 'uses the first group path if the hint is unhelpful' do
-        expect(person.path(build(:group))).to eql([groups[0], groups[1], person])
-      end
     end
   end
 

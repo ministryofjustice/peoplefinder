@@ -95,8 +95,8 @@ class Person < ActiveRecord::Base
     memberships.join('; ')
   end
 
-  def path(hint_group = nil)
-    group_path(hint_group) + [self]
+  def path
+    groups.any? ? groups.first.path + [self] : [self]
   end
 
   def phone
@@ -114,12 +114,6 @@ class Person < ActiveRecord::Base
   end
 
 private
-
-  def group_path(hint_group)
-    return [] if groups.empty?
-    paths = groups.map(&:path)
-    paths.find { |a| a.include?(hint_group) } || paths.first
-  end
 
   def sanitize_tags
     return unless tags
