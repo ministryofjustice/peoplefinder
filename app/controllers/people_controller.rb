@@ -2,7 +2,6 @@
 # rubocop:disable ClassLength
 class PeopleController < ApplicationController
   before_action :set_person, only: [:show, :edit, :update, :destroy]
-  before_action :set_hint_group
   before_action :set_org_structure,
     only: [:new, :edit, :create, :update, :add_membership]
   before_action :load_versions, only: [:show]

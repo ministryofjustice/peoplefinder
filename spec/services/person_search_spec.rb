@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Person, elastic: true do
+RSpec.describe PersonSearch, elastic: true do
   include PermittedDomainHelper
 
   after(:all) do
@@ -21,8 +21,8 @@ RSpec.describe Person, elastic: true do
 
   context 'with some people' do
     before do
-      described_class.import
-      described_class.__elasticsearch__.client.indices.refresh
+      Person.import
+      Person.__elasticsearch__.client.indices.refresh
     end
 
     it 'searches by surname' do
@@ -63,6 +63,6 @@ RSpec.describe Person, elastic: true do
   end
 
   def search_for(query)
-    described_class.fuzzy_search(query).records
+    described_class.new.fuzzy_search(query).records
   end
 end

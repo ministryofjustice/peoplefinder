@@ -127,14 +127,6 @@ RSpec.describe Person, type: :model do
       it 'uses the first group path' do
         expect(person.path).to eql([groups[0], groups[1], person])
       end
-
-      it 'uses the group hint to choose the path' do
-        expect(person.path(groups[3])).to eql([groups[2], groups[3], person])
-      end
-
-      it 'uses the first group path if the hint is unhelpful' do
-        expect(person.path(build(:group))).to eql([groups[0], groups[1], person])
-      end
     end
   end
 
@@ -163,20 +155,6 @@ RSpec.describe Person, type: :model do
       it 'uses the secondary phone number' do
         expect(person.phone).to eql(secondary_phone_number)
       end
-    end
-  end
-
-  describe '#tag_list' do
-    before do
-      create(:person, tags: 'Ruby,Perl,Python')
-      create(:person, tags: 'Java,Scala,Ruby,Python,Perl')
-      create(:person, tags: '')
-    end
-
-    subject { described_class.tag_list }
-
-    it 'returns a tag_list' do
-      expect(subject).to eql('Java,Perl,Python,Ruby,Scala')
     end
   end
 

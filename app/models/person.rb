@@ -19,21 +19,6 @@ class Person < ActiveRecord::Base
     )
   end
 
-  def self.fuzzy_search(query)
-    search(
-      size: 100,
-      query: {
-        fuzzy_like_this: {
-          fields: [
-            :name, :tags, :description, :location_in_building, :building,
-            :city, :role_and_group, :community_name
-          ],
-          like_text: query, prefix_length: 3, ignore_tf: true
-        }
-      }
-    )
-  end
-
   has_paper_trail class_name: 'Version',
                   ignore: [:updated_at, :created_at, :id, :slug, :login_count, :last_login_at]
 
@@ -46,7 +31,6 @@ class Person < ActiveRecord::Base
   include Concerns::Sanitizable
   sanitize_fields :given_name, :surname, strip: true
   sanitize_fields :email, strip: true, downcase: true
-  before_save :sanitize_tags
 
   mount_uploader :image, ImageUploader
   attr_accessor :crop_x, :crop_y, :crop_w, :crop_h
@@ -71,10 +55,6 @@ class Person < ActiveRecord::Base
     where(surname: person.surname, given_name: person.given_name).where.not(id: person.id)
   end
 
-  def self.tag_list
-    where('tags is not null').pluck(:tags).flatten.join(',').split(',').uniq.sort.join(',')
-  end
-
   def self.all_in_groups(group_ids)
     query = <<-SQL
       SELECT DISTINCT p.*,
@@ -95,8 +75,8 @@ class Person < ActiveRecord::Base
     memberships.join('; ')
   end
 
-  def path(hint_group = nil)
-    group_path(hint_group) + [self]
+  def path
+    groups.any? ? groups.first.path + [self] : [self]
   end
 
   def phone
@@ -111,18 +91,5 @@ class Person < ActiveRecord::Base
 
   def notify_of_change?(person_responsible)
     EmailAddress.new(email).valid_address? && person_responsible.try(:email) != email
-  end
-
-private
-
-  def group_path(hint_group)
-    return [] if groups.empty?
-    paths = groups.map(&:path)
-    paths.find { |a| a.include?(hint_group) } || paths.first
-  end
-
-  def sanitize_tags
-    return unless tags
-    self.tags = tags.split(',').map { |t| t.strip.capitalize }.sort.join(',')
   end
 end
