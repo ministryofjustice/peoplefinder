@@ -19,21 +19,6 @@ class Person < ActiveRecord::Base
     )
   end
 
-  def self.fuzzy_search(query)
-    search(
-      size: 100,
-      query: {
-        fuzzy_like_this: {
-          fields: [
-            :name, :tags, :description, :location_in_building, :building,
-            :city, :role_and_group, :community_name
-          ],
-          like_text: query, prefix_length: 3, ignore_tf: true
-        }
-      }
-    )
-  end
-
   has_paper_trail class_name: 'Version',
                   ignore: [:updated_at, :created_at, :id, :slug, :login_count, :last_login_at]
 
