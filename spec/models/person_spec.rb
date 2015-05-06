@@ -158,20 +158,6 @@ RSpec.describe Person, type: :model do
     end
   end
 
-  describe '#tag_list' do
-    before do
-      create(:person, tags: 'Ruby,Perl,Python')
-      create(:person, tags: 'Java,Scala,Ruby,Python,Perl')
-      create(:person, tags: '')
-    end
-
-    subject { described_class.tag_list }
-
-    it 'returns a tag_list' do
-      expect(subject).to eql('Java,Perl,Python,Ruby,Scala')
-    end
-  end
-
   describe '#location' do
     it 'concatenates location_in_building, location, and city' do
       person.location_in_building = '99.99'

@@ -31,7 +31,6 @@ class Person < ActiveRecord::Base
   include Concerns::Sanitizable
   sanitize_fields :given_name, :surname, strip: true
   sanitize_fields :email, strip: true, downcase: true
-  before_save :sanitize_tags
 
   mount_uploader :image, ImageUploader
   attr_accessor :crop_x, :crop_y, :crop_w, :crop_h
@@ -54,10 +53,6 @@ class Person < ActiveRecord::Base
 
   def self.namesakes(person)
     where(surname: person.surname, given_name: person.given_name).where.not(id: person.id)
-  end
-
-  def self.tag_list
-    where('tags is not null').pluck(:tags).flatten.join(',').split(',').uniq.sort.join(',')
   end
 
   def self.all_in_groups(group_ids)
@@ -96,12 +91,5 @@ class Person < ActiveRecord::Base
 
   def notify_of_change?(person_responsible)
     EmailAddress.new(email).valid_address? && person_responsible.try(:email) != email
-  end
-
-private
-
-  def sanitize_tags
-    return unless tags
-    self.tags = tags.split(',').map { |t| t.strip.capitalize }.sort.join(',')
   end
 end
