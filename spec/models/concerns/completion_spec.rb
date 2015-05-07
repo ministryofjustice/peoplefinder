@@ -77,6 +77,25 @@ RSpec.describe 'Completion' do # rubocop:disable RSpec/DescribeClass
     end
   end
 
+  context '.bucketed_completion' do
+    it 'counts the people in each bucket' do
+      people = [
+        0, 18, 19,
+        20, 49,
+        50, 51, 52, 79,
+        80, 85, 90, 99, 100
+      ].map { |n| double(Person, completion_score: n) }
+      allow(Person).to receive(:all).and_return(people)
+
+      expect(Person.bucketed_completion).to eq(
+        (0...20)  => 3,
+        (20...50) => 2,
+        (50...80) => 4,
+        (80..100) => 5
+      )
+    end
+  end
+
   describe '#inadequate_profiles' do
     let!(:person) { create(:person, completed_attributes) }
     subject { Person.inadequate_profiles }
