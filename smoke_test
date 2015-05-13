@@ -105,7 +105,7 @@ private
 
   def search_profile(name, search_term)
     visit '/'
-    fill_in 'Enter your text here', with: search_term
+    fill_in 'Enter the name of a person or role', with: search_term
     click_button 'Submit search'
     result = nil
     within '#search_results' do
