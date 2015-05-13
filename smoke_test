@@ -126,7 +126,7 @@ private
   def request_token
     visit '/'
     fill_in 'Email address', with: email_address
-    click_button 'Use email'
+    click_button 'Request link'
   end
 
   def fetch_token_mail
