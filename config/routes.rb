@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   root 'home#show', as: :home
   get 'ping', to: 'ping#index'
+  get 'healthcheck', to: 'health_check#index'
 
   namespace :api, format: [:json] do
     resources :people, only: [:show]
