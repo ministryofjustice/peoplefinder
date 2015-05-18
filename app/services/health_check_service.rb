@@ -3,6 +3,7 @@ class HealthCheckService
     @components = []
     @components << HealthCheck::Database.new
     @components << HealthCheck::SendGrid.new
+    @components << HealthCheck::Elasticsearch.new
   end
 
   def report

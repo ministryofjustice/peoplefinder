@@ -10,9 +10,13 @@ describe HealthCheckService do
       to receive(:available?).and_return(true)
     expect_any_instance_of(HealthCheck::SendGrid).
       to receive(:available?).and_return(true)
+    expect_any_instance_of(HealthCheck::Elasticsearch).
+      to receive(:available?).and_return(true)
     expect_any_instance_of(HealthCheck::Database).
       to receive(:accessible?).and_return(true)
     expect_any_instance_of(HealthCheck::SendGrid).
+      to receive(:accessible?).and_return(true)
+    expect_any_instance_of(HealthCheck::Elasticsearch).
       to receive(:accessible?).and_return(true)
 
     result = subject.report
@@ -27,7 +31,7 @@ describe HealthCheckService do
       to receive(:accessible?).and_return(false)
     expect_any_instance_of(HealthCheck::Database).
       to receive(:errors).
-      and_return(['DB message 1', 'DB Message 2'])
+      and_return(['DB Message 1', 'DB Message 2'])
 
     expect_any_instance_of(HealthCheck::SendGrid).
       to receive(:available?).and_return(false)
@@ -35,16 +39,26 @@ describe HealthCheckService do
       to receive(:accessible?).and_return(false)
     expect_any_instance_of(HealthCheck::SendGrid).
       to receive(:errors).
-      and_return(['SG message 1', 'SG Message 2'])
+      and_return(['SG Message 1', 'SG Message 2'])
+
+    expect_any_instance_of(HealthCheck::Elasticsearch).
+      to receive(:available?).and_return(false)
+    expect_any_instance_of(HealthCheck::Elasticsearch).
+      to receive(:accessible?).and_return(false)
+    expect_any_instance_of(HealthCheck::Elasticsearch).
+      to receive(:errors).
+      and_return(['ES Message 1', 'ES Message 2'])
 
     result = subject.report
     expect(result.status).to eq '500'
     expect(result.messages).to eq(
       [
-        "DB message 1",
-        "DB Message 2",
-        "SG message 1",
-        "SG Message 2"
+        'DB Message 1',
+        'DB Message 2',
+        'SG Message 1',
+        'SG Message 2',
+        'ES Message 1',
+        'ES Message 2'
       ]
     )
   end
