@@ -59,12 +59,13 @@ class SmokeTest
   # rubocop:disable MethodLength
   def run
     step 'Request token' do
-      request_token
+      # 300 secs is the TTL for the DNS based maintenance page
+      with_retries(initial_delay: 15, max_delay: 120) { request_token }
     end
 
     signin_path = nil
     step 'Fetch token email' do
-      token_mail = with_retries { fetch_token_mail }
+      token_mail = with_retries(initial_delay: 5, max_delay: 120) { fetch_token_mail }
       fail "couldn't find token email" unless token_mail
 
       text_part = token_mail.text_part.decoded
@@ -124,9 +125,13 @@ private
   end
 
   def request_token
-    visit '/'
-    fill_in 'Email address', with: email_address
-    click_button 'Request link'
+    page_loaded = page.has_text?('Request link to access People Finder')
+    if page_loaded
+      visit '/'
+      fill_in 'Email address', with: email_address
+      click_button 'Request link'
+    end
+    page_loaded
   end
 
   def fetch_token_mail
