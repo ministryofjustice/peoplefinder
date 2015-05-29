@@ -60,7 +60,8 @@ class SmokeTest
   def run
     step 'Request token' do
       # 300 secs is the TTL for the DNS based maintenance page
-      with_retries(initial_delay: 15, max_delay: 120) { request_token }
+      with_retries(initial_delay: 15, max_delay: 60) { request_token }
+      # request_token
     end
 
     signin_path = nil
@@ -125,9 +126,9 @@ private
   end
 
   def request_token
+    visit '/'
     page_loaded = page.has_text?('Request link to access People Finder')
     if page_loaded
-      visit '/'
       fill_in 'Email address', with: email_address
       click_button 'Request link'
     end
