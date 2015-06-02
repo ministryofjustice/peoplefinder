@@ -7,7 +7,7 @@ machine:
       2.2.1
 
   environment:
-    DATABASE_URL: postgres://ubuntu:@127.0.0.1:5432/circle_test
+    DB_TEST_URL: postgres://ubuntu:@127.0.0.1:5432/circle_test
 
 checkout:
   post:
