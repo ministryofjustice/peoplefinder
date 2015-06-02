@@ -23,7 +23,7 @@ default: &default
 
 development:
   <<: *default
-  url: 'postgresql://localhost/peoplefinder_development'
+  database: peoplefinder_development
 
   # The specified database role being used to connect to postgres.
   # To create additional roles in postgres see `$ createuser --help`.
@@ -57,7 +57,11 @@ development:
 # Do not set this db to the same as development or production.
 test:
   <<: *default
-  url: <%= ENV.fetch('DB_TEST_URL','postgresql://localhost/peoplefinder_test') %>
+<% if ENV.key?('DB_TEST_URL') %>
+  url: <%= ENV.fetch('DB_TEST_URL') %>
+<% else %>
+  database: peoplefinder_test
+<% end %>
 
 # As with config/secrets.yml, you never want to store sensitive information,
 # like your database password, in your source code. If your source code is

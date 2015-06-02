@@ -29,15 +29,14 @@ module HealthCheck
     end
 
     def log_error
-      @errors = [
-        'Database Error: could not connect to %s using %s' % [
-          config.url, config.adapter
-        ]
-      ]
+      @errors = ["Database Error: could not connect with #{config}"]
     end
 
     def config
-      OpenStruct.new(Rails.configuration.database_configuration[Rails.env])
+      full_config = Rails.configuration.database_configuration[Rails.env]
+      permitted_keys = %w[ url database host adapter ]
+      filtered_config = full_config.slice(*permitted_keys)
+      filtered_config.sort.map { |k, v| "#{k}='#{v}'" }.join(' ')
     end
   end
 end
