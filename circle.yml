@@ -1,0 +1,32 @@
+machine:
+  services:
+    - elasticsearch
+
+  ruby:
+    version:
+      2.2.1
+
+  environment:
+    DATABASE_URL: postgres://ubuntu:@127.0.0.1:5432/circle_test
+
+checkout:
+  post:
+
+## Customize dependencies
+dependencies:
+  pre:
+
+## Customize database setup
+database:
+  override:
+    - bundle exec rake db:create db:structure:load
+
+## Customize test commands
+test:
+  override:
+
+  post:
+    # - bundle exec rake
+    #     environment:
+    #       RAILS_ENV: test
+    #       RACK_ENV: test

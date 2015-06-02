@@ -1,11 +1,12 @@
-# MoJ People Finder
+MoJ People Finder
+=================
 
-[![Build Status](https://travis-ci.org/ministryofjustice/peoplefinder.svg?branch=master)](https://travis-ci.org/ministryofjustice/peoplefinder)
+![Build Status](https://circleci.com/gh/ministryofjustice/peoplefinder.png?circle-token=7af6dba1153f14c5e9b4ca7aec831720aeb00b1c)
 
-## Configuration
+Configuration
+-------------
 
-These should be defined in the config/application.rb or in the enviroments/__environment__.rb files if the settings need to be
-defined on a per environment basis.
+These should be defined in the config/application.rb or in the enviroments/**environment**.rb files if the settings need to be defined on a per environment basis.
 
 `config.app_title` e.g. 'My New People Finder'
 
@@ -23,46 +24,34 @@ defined on a per environment basis.
 
 `config.support_email` e.g. 'peoplefinder-support@example.com'
 
-## Authentication
+Authentication
+--------------
 
-Authentication requires two environment variables. You can obtain these by
-visiting the [Google Developers Console](https://console.developers.google.com/)
-and selecting **APIs & auth** from the sidebar, followed by **Credentials**,
-then **Create new Client ID**.
+Authentication requires two environment variables. You can obtain these by visiting the [Google Developers Console](https://console.developers.google.com/) and selecting **APIs & auth** from the sidebar, followed by **Credentials**, then **Create new Client ID**.
 
-Set `GPLUS_CLIENT_ID` to the value of **Client ID** and `GPLUS_CLIENT_SECRET`
-to **Client secret**.
+Set `GPLUS_CLIENT_ID` to the value of **Client ID** and `GPLUS_CLIENT_SECRET` to **Client secret**.
 
 You will also need to configure **Consent screen** below for logging in to work.
 
-For local development, you can use a `.env` file; see `.env.sample` for an
-example.
+For local development, you can use a `.env` file; see `.env.sample` for an example.
 
 The permitted domains are configured in `config/application.rb`.
 
-## Token-based authentication
+Token-based authentication
+--------------------------
 
-An alternative 'token-based' authentication method is also supported. The
-token authentication method relies upon the users access to their email
-account to authenticate them.
+An alternative 'token-based' authentication method is also supported. The token authentication method relies upon the users access to their email account to authenticate them.
 
-Each time the user wishes to start a session, they need to generate an
-authentication token. This can be done by entering their email address on the
-login screen. They will be sent an email message containing a link with a
-unique random token. Clicking on the link will allow them to login.
+Each time the user wishes to start a session, they need to generate an authentication token. This can be done by entering their email address on the login screen. They will be sent an email message containing a link with a unique random token. Clicking on the link will allow them to login.
 
-## Search
+Search
+------
 
-To run the engine in production mode, `config.elastic_search_url` must be set in, for example, config/application.rb.
-See 'Configurable elements' above.
+To run the engine in production mode, `config.elastic_search_url` must be set in, for example, config/application.rb. See 'Configurable elements' above.
 
+Heroku provides [Bonsai Elasticsearch](https://devcenter.heroku.com/articles/bonsai) as an add-on.
 
-Heroku provides [Bonsai Elasticsearch](https://devcenter.heroku.com/articles/bonsai)
-as an add-on.
-
-You can install a development version from [Elasticsearch downloads](http://www.elasticsearch.org/download/)
-or with a package manager.
-e.g. `brew install elasticsearch`.
+You can install a development version from [Elasticsearch downloads](http://www.elasticsearch.org/download/) or with a package manager. e.g. `brew install elasticsearch`.
 
 Elasticsearch requires [jdk version 7 or greater](http://www.oracle.com/technetwork/java/javase/downloads/jdk7-downloads-1880260.html).
 
@@ -90,7 +79,8 @@ To run specs without Elasticsearch:
 
 `bundle exec rspec . --tag ~elastic`
 
-## Images
+Images
+------
 
 We use [MiniMagick](https://github.com/minimagick/minimagick) so either Imagemagick or Graphicsmagick need to be installed for image manipulation and for some of the tests.
 
@@ -98,7 +88,8 @@ If using brew you can use the following command:
 
 `brew install imagemagick`
 
-## Testing
+Testing
+-------
 
 You'll need to install PhantomJS in order to run the headless browser tests.
 
@@ -108,7 +99,8 @@ Also, if you'd like test coverage for Javascript you'll need to have Node and Is
 
 `npm install -g istanbul`
 
-## View templates
+View templates
+--------------
 
 The application layout is set by the [moj_internal_template](https://github.com/ministryofjustice/moj_internal_template) that is installed as part of this engine.
 
@@ -116,7 +108,8 @@ You can override this layout in wrapper application, create your own file:
 
 `app/views/layouts/peoplefinder/peoplefinder.html.haml`
 
-## Translation file
+Translation file
+----------------
 
 A lot of the text in the views is configurable in the translations file.
 
@@ -124,7 +117,8 @@ You can override these in wrapper application by creating your own file:
 
 `config/locales/en.yml`
 
-## Utilities
+Utilities
+---------
 
 ### Random data generator for testing
 
@@ -156,7 +150,8 @@ CI by [Travis](https://travis-ci.org/ministryofjustice/peoplefinder).
 
 Software metrics by [Code Climate](https://codeclimate.com/github/ministryofjustice/peoplefinder)
 
-## Reminders
+Reminders
+---------
 
 If the Peoplefinder is to be successful, profiles need to be populated and maintained.
 
