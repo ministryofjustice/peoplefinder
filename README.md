@@ -1,6 +1,6 @@
 # MoJ People Finder
 
-[![Build Status](https://travis-ci.org/ministryofjustice/peoplefinder.svg?branch=master)](https://travis-ci.org/ministryofjustice/peoplefinder)
+![Build Status](https://circleci.com/gh/ministryofjustice/peoplefinder.png?circle-token=7af6dba1153f14c5e9b4ca7aec831720aeb00b1c)
 
 ## Configuration
 
