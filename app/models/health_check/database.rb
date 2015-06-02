@@ -34,9 +34,7 @@ module HealthCheck
 
     def config
       full_config = Rails.configuration.database_configuration[Rails.env]
-      permitted_keys = %w[ url database host adapter ]
-      filtered_config = full_config.slice(*permitted_keys)
-      filtered_config.sort.map { |k, v| "#{k}='#{v}'" }.join(' ')
+      DatabaseConfiguration.new(full_config).to_s
     end
   end
 end
