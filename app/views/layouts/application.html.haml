@@ -4,7 +4,6 @@
 - content_for :content do
   #wrapper
     %main#content{role: 'main'}
-      = render partial: 'layouts/partials/phase'
       = yield :editing_alert
       = flash_messages
       = render "shared/loginout"
