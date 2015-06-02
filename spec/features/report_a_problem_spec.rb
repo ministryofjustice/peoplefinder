@@ -4,7 +4,7 @@ feature 'Report a problem', js: true do
   include ActiveJobHelper
   include PermittedDomainHelper
 
-  let(:current_time) { Time.at(1_410_298_077) }
+  let(:current_time) { Time.at(1_410_298_020) }
 
   around do |example|
     Timecop.travel(current_time)
