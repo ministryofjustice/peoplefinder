@@ -21,6 +21,8 @@ class Suggestion
     roles
     location_of_work
     working_days
+    phone_number
+    image
   ]
 
   POTENTIALLY_INCORRECT_FIELDS.each do |field|
