@@ -32,7 +32,7 @@ describe HealthCheck::Database do
       allow(ActiveRecord::Base).to receive(:connected?).and_return(false)
       subject.available?
 
-      expect(subject.errors.first).to match(/could not connect to \S+_test/)
+      expect(subject.errors.first).to match(/could not connect with .*?_test/)
     end
 
     it 'returns an error an backtrace for errors not specific to a component' do
