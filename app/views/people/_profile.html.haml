@@ -53,7 +53,7 @@
 - if @person.email.present? && !@preview
   - if current_user.email == @person.email
     = render partial: "completeness", locals: { person: @person }
-  - elsif @person.incomplete?
+  - else
     = render partial: "request_information", locals: { person: @person }
 
 - unless @versions.nil?
