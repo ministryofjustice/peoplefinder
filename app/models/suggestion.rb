@@ -14,11 +14,20 @@ class Suggestion
   attribute :missing_fields_info, String
 
   attribute :incorrect_fields, Boolean, default: false
-  attribute :incorrect_first_name, Boolean, default: false
-  attribute :incorrect_last_name, Boolean, default: false
-  attribute :incorrect_roles, Boolean, default: false
-  attribute :incorrect_location_of_work, Boolean, default: false
-  attribute :incorrect_working_days, Boolean, default: false
+
+  POTENTIALLY_INCORRECT_FIELDS = %i[
+    first_name
+    last_name
+    roles
+    location_of_work
+    working_days
+    phone_number
+    image
+  ]
+
+  POTENTIALLY_INCORRECT_FIELDS.each do |field|
+    attribute :"incorrect_#{field}", Boolean, default: false
+  end
 
   attribute :duplicate_profile, Boolean, default: false
 
@@ -38,9 +47,9 @@ class Suggestion
   end
 
   def incorrect_fields_info
-    fields = %w[first_name last_name roles location_of_work working_days]
-    incorrect_fields = fields.select { |f| send("incorrect_#{f}") }
-    incorrect_fields.map(&:humanize)
+    POTENTIALLY_INCORRECT_FIELDS.
+      select { |f| send(:"incorrect_#{f}") }.
+      map { |sym| sym.to_s.humanize }
   end
 
   def for_person?
