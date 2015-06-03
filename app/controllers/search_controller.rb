@@ -1,11 +1,20 @@
 class SearchController < ApplicationController
   def index
-    @people = PersonSearch.new.fuzzy_search(params[:query]).records.limit(100)
+    @query = query
+    @people = PersonSearch.new.fuzzy_search(@query)
   end
 
 private
 
   def can_add_person_here?
     true
+  end
+
+  def query
+    input = params[:query]
+    input.encode(Encoding::UTF_32LE)
+    input
+  rescue Encoding::InvalidByteSequenceError
+    ''
   end
 end

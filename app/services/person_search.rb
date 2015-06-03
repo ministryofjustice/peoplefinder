@@ -1,7 +1,7 @@
 class PersonSearch
-  def fuzzy_search(query)
+  def fuzzy_search(query, max = 100)
     Person.search(
-      size: 100,
+      size: max,
       query: {
         fuzzy_like_this: {
           fields: [
@@ -11,6 +11,6 @@ class PersonSearch
           like_text: query, prefix_length: 3, ignore_tf: true
         }
       }
-    )
+    ).records.limit(max)
   end
 end
