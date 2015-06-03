@@ -63,6 +63,6 @@ RSpec.describe PersonSearch, elastic: true do
   end
 
   def search_for(query)
-    described_class.new.fuzzy_search(query).records
+    described_class.new.fuzzy_search(query)
   end
 end
