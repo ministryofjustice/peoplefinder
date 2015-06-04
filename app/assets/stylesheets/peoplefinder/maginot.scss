@@ -2,9 +2,10 @@
   .maginot {
     position: relative;
     width: $width;
-    .barrier, img {
+    img {
       position: absolute;
-      width: $width;
+      width:auto;
+      max-width: $width;
       height: $height;
       top: 0;
       left: 0;
