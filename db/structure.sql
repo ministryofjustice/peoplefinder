@@ -155,8 +155,8 @@ ALTER SEQUENCE groups_id_seq OWNED BY groups.id;
 
 CREATE TABLE memberships (
     id integer NOT NULL,
-    group_id integer,
-    person_id integer,
+    group_id integer NOT NULL,
+    person_id integer NOT NULL,
     role text,
     created_at timestamp without time zone,
     updated_at timestamp without time zone,
@@ -532,6 +532,22 @@ CREATE UNIQUE INDEX unique_schema_migrations ON schema_migrations USING btree (v
 
 
 --
+-- Name: fk_rails_092b9b8356; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY memberships
+    ADD CONSTRAINT fk_rails_092b9b8356 FOREIGN KEY (person_id) REFERENCES people(id);
+
+
+--
+-- Name: fk_rails_aaf389f138; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY memberships
+    ADD CONSTRAINT fk_rails_aaf389f138 FOREIGN KEY (group_id) REFERENCES groups(id);
+
+
+--
 -- PostgreSQL database dump complete
 --
 
@@ -584,3 +600,7 @@ INSERT INTO schema_migrations (version) VALUES ('20150407101222');
 INSERT INTO schema_migrations (version) VALUES ('20150413101844');
 
 INSERT INTO schema_migrations (version) VALUES ('20150417141735');
+
+INSERT INTO schema_migrations (version) VALUES ('20150604110007');
+
+INSERT INTO schema_migrations (version) VALUES ('20150604110654');
