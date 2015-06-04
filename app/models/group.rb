@@ -19,7 +19,9 @@ class Group < ActiveRecord::Base
     name_changed?
   end
 
-  has_many :memberships, -> { includes(:person).order('people.surname')  }
+  has_many :memberships,
+    -> { includes(:person).order('people.surname')  },
+    dependent: :destroy
   has_many :people, through: :memberships
   has_many :leaderships, -> { where(leader: true) }, class_name: 'Membership'
   has_many :non_leaderships,

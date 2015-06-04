@@ -41,7 +41,9 @@ class Person < ActiveRecord::Base
     presence: true, uniqueness: { case_sensitive: false }, email: true
   validates :secondary_email, email: true, allow_blank: true
 
-  has_many :memberships, -> { includes(:group).order('groups.name') }, dependent: :destroy
+  has_many :memberships,
+    -> { includes(:group).order('groups.name') },
+    dependent: :destroy
   has_many :groups, through: :memberships
   belongs_to :community
 

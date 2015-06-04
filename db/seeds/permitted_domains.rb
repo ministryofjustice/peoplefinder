@@ -6,5 +6,3 @@ domains   = YAML.load_file(data_file)
 domains.each do |domain|
   PermittedDomain.find_or_create_by(domain: domain)
 end
-
-
