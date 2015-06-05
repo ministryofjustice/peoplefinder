@@ -47,8 +47,9 @@ var PhotoUpload = (function (){
       els.$label.after(els.$input);
       form.remove();
 
-      if( els.$preview.data('jcrop') )
+      if( els.$preview.data('jcrop') ) {
         els.$preview.data('jcrop').destroy();
+      }
     },
 
     photoUploaded: function ( event ){
@@ -97,9 +98,10 @@ var PhotoUpload = (function (){
 
     setupCrop: function ( els ){
       var imgw = els.$preview.width();
-      var trueSize = [els.$preview.naturalWidth(), els.$preview.naturalHeight()];
-
-
+      var trueSize = [
+        els.$preview.naturalWidth(),
+        els.$preview.naturalHeight()
+      ];
 
       els.$preview.Jcrop({
         setSelect: [20, 20, imgw-20, imgw-20],
@@ -134,9 +136,6 @@ var PhotoUpload = (function (){
         (cropData.x  * xaspect) + 'px'
       ].join(' ');
 
-      console.log(xaspect, yaspect);
-      console.log(clipstr);
-
       els.$preview.data('jcrop').destroy();
       els.$preview.css({
         marginLeft: -1 * cropData.x * xaspect / 2,
@@ -158,8 +157,6 @@ var PhotoUpload = (function (){
       if( _.contains(states, state) ){
         els.$el.removeClass(states.join(' '));
         els.$el.addClass(state);
-      }else{
-        console.error('State ' + state + ' not defined.');
       }
     },
 
@@ -222,30 +219,29 @@ var PhotoUpload = (function (){
   return PhotoUpload;
 })();
 
-(function($){ var props = ['Width', 'Height'], prop;
-  while (prop = props.pop()) {
-    (function (natural, prop) {
-      $.fn[natural] = (natural in new Image()) ?
-      function () {
-        return this[0][natural];
-      } :
-      function () {
-        var
-        node = this[0],
-        img,
-        value;
+(function(){
+  var makeProp = function (natural, prop) {
+    $.fn[natural] = (natural in new Image()) ?
+    function () {
+      return this[0][natural];
+    } :
+    function () {
+      var
+      node = this[0],
+      img,
+      value;
 
-        if (node.tagName.toLowerCase() === 'img') {
-          img = new Image();
-          img.src = node.src,
-          value = img[prop];
-        }
-        return value;
-      };
-    }('natural' + prop, prop.toLowerCase()));
-  }
-}(jQuery));
-
+      if (node.tagName.toLowerCase() === 'img') {
+        img = new Image();
+        img.src = node.src,
+        value = img[prop];
+      }
+      return value;
+    };
+  };
+  makeProp('naturalWidth', 'width');
+  makeProp('naturalHeight', 'height');
+})();
 
 $(function (){
   var photoBlocks = $('.person-photo');
