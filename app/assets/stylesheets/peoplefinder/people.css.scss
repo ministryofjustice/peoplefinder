@@ -56,8 +56,7 @@ ul.working_days {
 
 img.preview {
   margin-top: 15px;
-  width: 200px;
-  clip: rect(0px, 200px, 200px, 0px);
+  width: 300px;
 }
 
 #search_results {
@@ -191,7 +190,94 @@ form {
       margin: 0.4em 0.4em 0 0;
     }
   }
+
+
+  .parent-summary {
+    padding: 12px 0 69px 0;
+  }
+
+  .person-photo {
+
+    .maginot {
+      position: relative;
+      min-width: 200px;
+      min-height: 200px;
+      overflow: hidden;
+      transition: all 500ms ease-in-out;
+
+      .uploading & {
+        opacity: 0.3;
+      }
+    }
+
+    form {
+      display: none;
+    }
+
+    .crop-hint,
+    .crop-again-button,
+    .upload-hint,
+    #person-image,
+    .photo-upload-button,
+    .reset-image-button,
+    .uploading-hint,
+    .crop-finished-button {
+      display: none;
+    }
+
+    &.initial {
+      .upload-hint, #person-image, .photo-upload-button {
+        display: block;
+      }
+    }
+
+    &.uploading {
+      .uploading-hint {
+        display: block;
+      }
+    }
+
+    &.cropping {
+      .crop-finished-button {
+        display: block;
+      }
+    }
+
+    &.cropped {
+      .upload-hint, #person-image {
+        display: block;
+      }
+
+      .photo-upload-button, .reset-image-button {
+        display: inline;
+      }
+
+      .crop-again-button {
+        display: inherit;
+      }
+
+      .preview {
+        position: absolute;
+      }
+    }
+
+
+    .upload-button-bar {
+      #person-image {
+        margin-top: 0;
+      }
+
+      .form-hint {
+        margin-top: 0;
+      }
+
+      button {
+        margin-top: 10px;
+      }
+    }
+  }
 }
+
 
 ul.tags {
   h4 {

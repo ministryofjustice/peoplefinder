@@ -134,23 +134,6 @@ feature 'Person maintenance' do
       expect(Person.where(surname: person_attributes[:surname]).count).to eql(1)
     end
 
-    scenario 'Adding a profile image' do
-      visit new_person_path
-      fill_in 'Surname', with: person_attributes[:surname]
-      fill_in 'Main email', with: person_attributes[:email]
-      attach_file 'person[image]', sample_image
-      expect(page).not_to have_link('Crop image')
-      click_button 'Save', match: :first
-
-      person = Person.find_by_surname(person_attributes[:surname])
-      visit person_path(person)
-      expect(page).to have_css("img[src*='#{person.image.medium}']")
-      expect(page).to have_css("img[alt*='Current photo of #{ person }']")
-
-      visit edit_person_path(person)
-      expect(page).to have_link('Crop image', edit_person_image_path(person))
-    end
-
     scenario 'Cancelling a new form' do
       visit new_person_path
       expect(page).to have_link('Cancel', href: 'javascript:history.back()')

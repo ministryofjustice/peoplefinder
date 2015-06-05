@@ -9,6 +9,11 @@
 @import "feedback";
 @import "help-area";
 
+@import "design-patterns/buttons";
+@import "measurements";
+@import "elements/helpers";
+
+
 *{
   box-sizing: border-box;
 }
@@ -208,6 +213,13 @@ form {
   right:0;
   margin-right: 0;
 }
+
+.button-secondary {
+  @include button($grey-3);
+  padding: em(10) em(15) em(5) em(15);
+  margin: 0 $gutter-half $gutter-half 0;
+}
+
 form .text .wider   {
     width: 95%;
     height: 205px;

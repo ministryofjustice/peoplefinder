@@ -33,12 +33,9 @@ module SpecSupport
       fill_in 'Extra information', with: person_attributes[:description]
       uncheck('Monday')
       uncheck('Friday')
-      attach_file 'person[image]', sample_image
     end
 
     def check_creation_of_profile_details
-      click_button 'Update Image'
-
       name = "#{person_attributes[:given_name]} #{person_attributes[:surname]}"
 
       expect(page).to have_title("#{name} - #{ app_title }")
@@ -60,8 +57,6 @@ module SpecSupport
         expect(page).to_not have_selector("li.active[alt='Saturday']")
         expect(page).to_not have_selector("li.active[alt='Sunday']")
       end
-
-      expect(page).to have_css("img[src*='medium_placeholder.png']")
     end
   end
 end
