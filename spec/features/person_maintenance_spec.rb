@@ -2,6 +2,7 @@ require 'rails_helper'
 
 feature 'Person maintenance' do
   include PermittedDomainHelper
+  include ActiveJobHelper
 
   let(:person) { create(:person, email: 'test.user@digital.justice.gov.uk') }
   before do
@@ -274,9 +275,16 @@ feature 'Person maintenance' do
   context 'Deleting a person' do
     scenario 'Deleting a person' do
       person = create(:person)
+      email_address = person.email
+      given_name = person.given_name
+
       visit edit_person_path(person)
       click_link('Delete this profile')
       expect { Person.find(person.id) }.to raise_error(ActiveRecord::RecordNotFound)
+
+      expect(last_email.to).to include(email_address)
+      expect(last_email.subject).to eq('Your profile on MOJ People Finder has been deleted')
+      expect(last_email.body.encoded).to match("Hello #{given_name}")
     end
 
     scenario 'Allow deletion of a person even when there are memberships' do

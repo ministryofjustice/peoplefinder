@@ -26,7 +26,7 @@ private
   def send_destroy_email!
     if @person.notify_of_change?(@current_user)
       UserUpdateMailer.deleted_profile_email(
-        @person, @current_user.email
+        @person.email, @person.given_name, @current_user.email
       ).deliver_later
     end
   end
