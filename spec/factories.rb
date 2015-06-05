@@ -52,4 +52,10 @@ FactoryGirl.define do
   factory :token do
     user_email { generate(:email) }
   end
+
+  factory :profile_photo do
+    image Rack::Test::UploadedFile.new(
+      File.join(Rails.root, 'spec', 'fixtures', 'placeholder.png')
+    )
+  end
 end

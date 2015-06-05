@@ -23,12 +23,12 @@
     = f.hidden_field :primary_phone_number
     = f.hidden_field :secondary_phone_number
     = f.hidden_field :email
+    = f.hidden_field :secondary_email
     = f.hidden_field :description
+    = f.hidden_field :profile_photo_id
 
     - Person::DAYS_WORKED.each do |day|
       = f.hidden_field day
-
-    = f.hidden_field :image_cache
 
     .spacer-45
     .form-group

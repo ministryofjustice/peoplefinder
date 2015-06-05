@@ -11,12 +11,16 @@ module SpecSupport
         building: '102 Petty France',
         city: 'London',
         description: 'Lorem ipsum dolor sit amet...',
-        image: Rack::Test::UploadedFile.new(sample_image)
       }
     end
 
     def complete_profile!(person)
-      person.update_attributes(person_attributes.except(:email))
+      profile_photo = create(:profile_photo)
+      person.update_attributes(
+        person_attributes.
+          except(:email).
+          merge(profile_photo_id: profile_photo.id)
+      )
       person.groups << create(:group)
     end
 

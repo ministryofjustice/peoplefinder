@@ -86,10 +86,6 @@ private
     params.require(:person).permit(*(person_shared_params_list - [:email]))
   end
 
-  def person_image_params
-    params.require(:person).permit(:image, :image_cache)
-  end
-
   def person_shared_params_list
     [
       :given_name, :surname, :location_in_building, :building, :city,
@@ -102,11 +98,7 @@ private
   end
 
   def successful_redirect_path
-    if person_image_params[:image].present? || person_image_params[:image_cache].present?
-      edit_person_image_path(@person)
-    else
-      @person
-    end
+    @person
   end
 
   def set_org_structure

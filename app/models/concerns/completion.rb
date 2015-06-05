@@ -3,18 +3,26 @@
 module Concerns::Completion
   extend ActiveSupport::Concern
 
-  ADEQUATE_FIELDS = [
-    :image, :location_in_building, :building, :city, :primary_phone_number
+  ADEQUATE_FIELDS = %i[
+    building
+    city
+    location_in_building
+    primary_phone_number
+    profile_photo_id
   ]
 
-  COMPLETION_FIELDS = [
-    :given_name, :surname, :email, :location_in_building, :building, :city,
-    :primary_phone_number, :groups, :image
+  COMPLETION_FIELDS = ADEQUATE_FIELDS + %i[
+    email
+    given_name
+    groups
+    surname
   ]
 
   included do
     def self.inadequate_profiles
-      criteria = ADEQUATE_FIELDS.map { |f| "COALESCE(#{f}, '') = ''" }.join(' OR ')
+      criteria = ADEQUATE_FIELDS.map { |f|
+        "coalesce(cast(#{f} AS text), '') = ''"
+      }.join(' OR ')
       where(criteria).order(:email)
     end
 
