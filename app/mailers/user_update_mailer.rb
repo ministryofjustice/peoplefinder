@@ -16,10 +16,10 @@ class UserUpdateMailer < ActionMailer::Base
     mail to: @person.email
   end
 
-  def deleted_profile_email(person, by_email = nil)
-    @person = person
+  def deleted_profile_email(recipient_email, recipient_name, by_email = nil)
     @by_email = by_email
-    mail to: @person.email
+    @name = recipient_name
+    mail to: recipient_email
   end
 
 private

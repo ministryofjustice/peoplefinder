@@ -7,7 +7,9 @@ RSpec.describe PersonDestroyer, type: :service do
       'Person',
       destroy!: true,
       new_record?: false,
-      notify_of_change?: false
+      notify_of_change?: false,
+      email: 'user@example.com',
+      given_name: 'Rupert'
     )
   }
   let(:current_user) { double('Current User', email: 'user@example.com') }
@@ -53,7 +55,7 @@ RSpec.describe PersonDestroyer, type: :service do
       mailing = double('mailing')
       expect(class_double('UserUpdateMailer').as_stubbed_const).
         to receive(:deleted_profile_email).
-        with(person, current_user.email).
+        with(person.email, person.given_name, current_user.email).
         and_return(mailing)
       expect(mailing).to receive(:deliver_later)
       subject.destroy!
