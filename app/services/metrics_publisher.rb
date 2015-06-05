@@ -27,6 +27,6 @@ private
   end
 
   def range_inclusion_as_string(range)
-    range.end == 100 ? "#{range.begin} ≼ n ≼ 100" : "#{range.begin} ≼ n < #{range.end}"
+    range.end == 100 ? "#{range.begin} ≤ n ≤ 100" : "#{range.begin} ≤ n < #{range.end}"
   end
 end
