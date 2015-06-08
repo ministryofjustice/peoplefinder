@@ -167,13 +167,7 @@ var PhotoUpload = (function (){
       var els = PhotoUpload.findElements(event.target);
 
       els.$preview.attr('src', PhotoUpload.defaultImage);
-      els.$preview.css({
-        marginLeft: 0,
-        marginTop:  0,
-        width:  '300px',
-        height: 'auto',
-        clip:   ''
-      });
+      els.$preview.attr('style', '');
       els.$photo_id.val('');
 
       els.$crop_x.val('');
