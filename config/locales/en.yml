@@ -38,8 +38,10 @@ en:
     show:
       token_auth_disabled: "Sorry, that login link is invalid. Please login using your Google account."
     create:
-      title: Please check your emails
-      body: We are sending you a link to log in to People Finder.
+      title: Link sent — check your email
+      body_intro: We’re just emailing you a link to access People Finder. This can take up to 5 minutes.
+      body_informative_html: Please check your inbox for this email from <a href="mailto:people-finder-support@digital.justice.gov.uk">people-finder-support@digital.justice.gov.uk</a>.
+      body_dont_panic: If you can’t find it, check your junk folder and add our address to your safe list.
       token_auth_disabled: "Sorry, the alternate login method is not availabe. Please login using your Google account."
   controllers:
     groups:
@@ -59,7 +61,7 @@ en:
       expired_token: |
         The authentication token has expired and is more than %{time} hours old.
         Request a new link to log in.
-      invalid_token: "The authentication token doesn't exist and so isn't valid"
+      invalid_token: "The authentication token doesn’t exist and so isn’t valid"
     admin/person_uploads:
         upload_succeeded: "Successfully uploaded %{count} people"
         upload_failed: "Upload failed"
@@ -96,7 +98,7 @@ en:
   people:
     form:
       notes:
-        email: "Note: You can't change this email address. If it's changed, you must delete this profile and create a new one."
+        email: "Note: You can’t change this email address. If it’s changed, you must delete this profile and create a new one."
     day_names:
       works_monday: "Monday"
       works_tuesday: "Tuesday"
@@ -182,7 +184,7 @@ en:
       token:
         invalid_address: "Email address is not formatted correctly"
         invalid_domain: "Email address is not valid"
-        token_throttle_limit: "You've reached the limit of %{limit} tokens requested within an hour"
+        token_throttle_limit: "You’ve reached the limit of %{limit} tokens requested within an hour"
       group:
         attributes:
           base:

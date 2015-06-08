@@ -327,6 +327,13 @@ form input[readonly] {
   padding: 7px 30px;
 }
 
+.login-email-info {
+  background: #ededed image-url('icon_info.png') scroll no-repeat 15px 20px;
+  padding: 15px 15px 20px 90px;
+  margin-top: 15px;
+  font-size: 1.2em;
+}
+
 @media screen and (max-width: 640px) {
  .form-hint{
    width: 50%;
