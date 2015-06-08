@@ -54,7 +54,8 @@ var PhotoUpload = (function (){
 
     photoUploaded: function ( event ){
       var $iframe = $(event.target);
-      var uploadData = $.parseJSON($iframe.contents().text());
+      var jsonText = $iframe.contents().text();
+      var uploadData = $.parseJSON(jsonText);
 
       var els = PhotoUpload.findElements($iframe);
       els.$preview.attr('src', uploadData.image.croppable.url);
@@ -120,27 +121,27 @@ var PhotoUpload = (function (){
 
       var els = PhotoUpload.findElements(event.target);
       var cropData = els.$preview.data('new-crop-data');
+      var previewBoxWidth  = els.$preview.closest('.preview-box').width();
+      var previewBoxHeight = els.$preview.closest('.preview-box').height();
+      var naturalWidth  = els.$preview.naturalWidth();
+      var naturalHeight = els.$preview.naturalHeight();
 
-      var xaspect = 300 / els.$preview.naturalWidth();
-      var yaspect = 300 / els.$preview.naturalHeight();
+      var xaspect = previewBoxWidth  / naturalWidth;
+      var yaspect = previewBoxHeight / naturalHeight;
 
       els.$crop_x.val(cropData.x);
       els.$crop_y.val(cropData.y);
       els.$crop_w.val(cropData.w);
       els.$crop_h.val(cropData.h);
 
-      var clipstr = [
-        (cropData.y  * yaspect) + 'px',
-        (cropData.x2 * xaspect) + 'px',
-        (cropData.y2 * yaspect) + 'px',
-        (cropData.x  * xaspect) + 'px'
-      ].join(' ');
+      var zoomRatio = previewBoxWidth / cropData.w / xaspect;
 
       els.$preview.data('jcrop').destroy();
       els.$preview.css({
-        marginLeft: -1 * cropData.x * xaspect / 2,
-        marginTop:  -1 * cropData.y * yaspect / 2,
-        clip: 'rect(' + clipstr + ')'
+        marginLeft: -1 * xaspect * cropData.x,
+        marginTop:  -1 * xaspect * cropData.y,
+        zoom: zoomRatio,
+        '-moz-transform': 'scale('+ zoomRatio +')'
       });
 
       PhotoUpload.setState(els, 'cropped');
@@ -170,7 +171,7 @@ var PhotoUpload = (function (){
         marginLeft: 0,
         marginTop:  0,
         width:  '300px',
-        height: '300px',
+        height: 'auto',
         clip:   ''
       });
       els.$photo_id.val('');
