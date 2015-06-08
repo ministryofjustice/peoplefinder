@@ -31,7 +31,7 @@ feature 'Token Authentication' do
     visit '/'
     fill_in 'token_user_email', with: 'james.darling@digital.justice.gov.uk'
     expect { click_button 'Request link' }.to change { ActionMailer::Base.deliveries.count }.by(1)
-    expect(page).to have_text('We\'re just emailing you a link to access People Finder')
+    expect(page).to have_text('We’re just emailing you a link to access People Finder')
 
     expect(last_email.to).to eql(['james.darling@digital.justice.gov.uk'])
     expect(last_email.body.encoded).to have_text(token_url(Token.last))
@@ -41,7 +41,7 @@ feature 'Token Authentication' do
     visit '/'
     fill_in 'token_user_email', with: ' correct@digital.justice.gov.uk '
     click_button 'Request link'
-    expect(page).to have_text('We\'re just emailing you a link to access People Finder')
+    expect(page).to have_text('We’re just emailing you a link to access People Finder')
 
     expect(last_email.to).to include('correct@digital.justice.gov.uk')
   end
@@ -63,7 +63,7 @@ feature 'Token Authentication' do
     expect(page).to_not have_text('Signed in as')
     expect(page).to_not have_text('Start building your profile now')
 
-    expect(page).to have_text("The authentication token doesn't exist and so isn't valid")
+    expect(page).to have_text("The authentication token doesn’t exist and so isn’t valid")
   end
 
   scenario "logging in with a token that's more than 3 hours old" do
@@ -82,11 +82,11 @@ feature 'Token Authentication' do
       fill_in 'token_user_email', with: ' tony.stark@digital.justice.gov.uk '
       click_button 'Request link'
       if count < 9
-        expect(page).to have_text('We\'re just emailing you a link to access People Finder')
-        expect(page).to_not have_text("You've reached the limit of 8 tokens requested within an hour")
+        expect(page).to have_text('We’re just emailing you a link to access People Finder')
+        expect(page).to_not have_text("You’ve reached the limit of 8 tokens requested within an hour")
       else
-        expect(page).not_to have_text('We\'re just emailing you a link to access People Finder')
-        expect(page).to have_text("You've reached the limit of 8 tokens requested within an hour")
+        expect(page).not_to have_text('We’re just emailing you a link to access People Finder')
+        expect(page).to have_text("You’ve reached the limit of 8 tokens requested within an hour")
       end
     end
   end
