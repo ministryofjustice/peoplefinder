@@ -31,7 +31,7 @@ feature 'Token Authentication' do
     visit '/'
     fill_in 'token_user_email', with: 'james.darling@digital.justice.gov.uk'
     expect { click_button 'Request link' }.to change { ActionMailer::Base.deliveries.count }.by(1)
-    expect(page).to have_text('We are sending you a link to log in')
+    expect(page).to have_text('We\'re just emailing you a link to access People Finder')
 
     expect(last_email.to).to eql(['james.darling@digital.justice.gov.uk'])
     expect(last_email.body.encoded).to have_text(token_url(Token.last))
@@ -41,7 +41,7 @@ feature 'Token Authentication' do
     visit '/'
     fill_in 'token_user_email', with: ' correct@digital.justice.gov.uk '
     click_button 'Request link'
-    expect(page).to have_text('We are sending you a link to log in')
+    expect(page).to have_text('We\'re just emailing you a link to access People Finder')
 
     expect(last_email.to).to include('correct@digital.justice.gov.uk')
   end
@@ -82,10 +82,10 @@ feature 'Token Authentication' do
       fill_in 'token_user_email', with: ' tony.stark@digital.justice.gov.uk '
       click_button 'Request link'
       if count < 9
-        expect(page).to have_text('We are sending you a link to log in')
+        expect(page).to have_text('We\'re just emailing you a link to access People Finder')
         expect(page).to_not have_text("You've reached the limit of 8 tokens requested within an hour")
       else
-        expect(page).to_not have_text('We are sending you a link to log in')
+        expect(page).not_to have_text('We\'re just emailing you a link to access People Finder')
         expect(page).to have_text("You've reached the limit of 8 tokens requested within an hour")
       end
     end
