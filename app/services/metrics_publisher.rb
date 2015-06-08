@@ -19,14 +19,13 @@ private
 
   def completion_report
     report = { 'mean' => Person.overall_completion }
-    report['completions_by_range'] = Person.bucketed_completion.map do |range, total|
-      { 'range' => range_inclusion_as_string(range),
-        'total' => total }
+    Person.bucketed_completion.each do |range, total|
+      report[range_to_string(range)] = total
     end
     report
   end
 
-  def range_inclusion_as_string(range)
-    range.exclude_end? ? "#{range.begin} ≤ n < #{range.end}" : "#{range.begin} ≤ n ≤ 100"
+  def range_to_string(range)
+    '[%d,%d%s' % [range.begin, range.end, range.exclude_end? ? ')' : ']']
   end
 end

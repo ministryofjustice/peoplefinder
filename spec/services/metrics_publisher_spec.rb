@@ -31,24 +31,10 @@ RSpec.describe MetricsPublisher, type: :service do
     )
     expect(recipient).to receive(:publish).
       with(:completion, a_hash_including(
-        'completions_by_range' => [
-          {
-            'range' => '0 ≤ n < 20',
-            'total' => 10
-          },
-          {
-            'range' => '20 ≤ n < 50',
-            'total' => 20
-          },
-          {
-            'range' => '50 ≤ n < 80',
-            'total' => 30
-          },
-          {
-            'range' => '80 ≤ n ≤ 100',
-            'total' => 5
-          }
-        ]
+        '[0,20)'  => 10,
+        '[20,50)' => 20,
+        '[50,80)' => 30,
+        '[80,100]' =>  5
       ))
     subject.publish!
   end
