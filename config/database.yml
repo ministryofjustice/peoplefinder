@@ -84,4 +84,3 @@ test:
 #
 production:
   <<: *default
-  url: <%= ENV['MOJ_PF_DATABASE_URL'] %>
