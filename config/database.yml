@@ -82,3 +82,6 @@ test:
 #   production:
 #     url: <%= ENV['DATABASE_URL'] %>
 #
+production:
+  <<: *default
+  url: <%= ENV['MOJ_PF_DATABASE_URL'] %>
