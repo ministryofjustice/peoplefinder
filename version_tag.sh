@@ -4,7 +4,8 @@ if [ ! "$SORT" ]; then
   if hash gsort 2>/dev/null; then
     SORT=gsort
   else
-    SORT=sort
+    echo "ERROR: You need to install gsort - (Mac): brew install coreutils"
+    exit 2
   fi
 fi
 
