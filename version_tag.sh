@@ -6,10 +6,16 @@ if [ ! "$SORT" ]; then
   else
     SORT=sort
   fi
+
+  # Check our sort binary has the -V/--version-sort flag we need
+  if ! $SORT --version-sort 2>/dev/null </dev/null; then
+    echo "ERROR: $SORT doesn't support --version-sort. You probably need to install gsort - (Mac): brew install coreutils"
+    exit 2
+  fi
 fi
 
 PREFIX="release/"
-TAGS=$(git ls-remote -t 2>/dev/null | grep -o 'release/[0-9]\+\.[0-9]\+\.[0-9]\+$' | cut -d'/' -f 2 | $SORT -V)
+TAGS=$(git ls-remote -t 2>/dev/null | grep -o 'release/[0-9]\+\.[0-9]\+\.[0-9]\+$' | cut -d'/' -f 2 | $SORT --version-sort)
 LAST_TAG=$(echo "$TAGS" | tail -1)
 
 
