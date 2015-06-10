@@ -15,7 +15,7 @@ if [ ! "$SORT" ]; then
 fi
 
 PREFIX="release/"
-TAGS=$(git ls-remote -t 2>/dev/null | grep -o 'release/[0-9]\+\.[0-9]\+\.[0-9]\+$' | cut -d'/' -f 2 | $SORT -V)
+TAGS=$(git ls-remote -t 2>/dev/null | grep -o 'release/[0-9]\+\.[0-9]\+\.[0-9]\+$' | cut -d'/' -f 2 | $SORT --version-sort)
 LAST_TAG=$(echo "$TAGS" | tail -1)
 
 
