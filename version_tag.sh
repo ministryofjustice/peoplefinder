@@ -4,7 +4,12 @@ if [ ! "$SORT" ]; then
   if hash gsort 2>/dev/null; then
     SORT=gsort
   else
-    echo "ERROR: You need to install gsort - (Mac): brew install coreutils"
+    SORT=sort
+  fi
+
+  # Check our sort binary has the -V/--version-sort flag we need
+  if ! $SORT --version-sort 2>/dev/null </dev/null; then
+    echo "ERROR: $SORT doesn't support --version-sort. You probably need to install gsort - (Mac): brew install coreutils"
     exit 2
   fi
 fi
