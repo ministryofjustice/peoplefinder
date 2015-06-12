@@ -102,19 +102,32 @@
       %p.form-hint= info_text('notes_field_hint')
     = f.text_area :description, class: 'form-control'
 
-  =f.form_group :image, class: 'line-above' do
+  =f.form_group :image, class: 'line-above person-photo initial' do
     = f.label :image, class: 'form-label-bold' do
       Photo
-      %p.form-hint= info_text('photo_upload_hint')
-    = f.file_field :image, class: 'form-control file'
+    = f.hidden_field :profile_photo_id
+    = f.hidden_field :crop_x
+    = f.hidden_field :crop_y
+    = f.hidden_field :crop_w
+    = f.hidden_field :crop_h
+    %p.form-hint.crop-hint= info_text('photo_crop_hint')
 
-    = profile_image_tag @person, @person.image.medium, class: 'preview'
-    %p
-      - if @person.image?
-        = link_to 'Crop image', edit_person_image_path(@person)
+    %div.preview-box
+      = profile_image_tag @person, class: 'preview'
+    %p.hidden
+      %a{href: '#', class: 'crop-again-button'} Crop image again
+    %div.upload-button-bar
+      %div.initial-state
+        %label{ for: 'person-image', class: 'form-hint upload-hint' }= info_text('photo_upload_hint')
+        %p
+          %input{ name: 'profile_photo[image]', id: 'person-image', type: 'file', class: 'form-control file' }
+          %a{href: '#', class: 'reset-image-button'} Reset to default
+        %button.photo-upload-button.button.hidden Upload photo
+        %p.form-hint.uploading-hint Uploading
+        %button.crop-finished-button.button-secondary Finished
 
   .form-group.save-cancel-actions
-    = f.submit 'Preview', name: 'preview', class: 'button'
+    = f.submit 'Preview', name: 'preview', class: 'button-secondary'
     = f.submit class: 'button'
     .cancel
       = link_to 'Cancel and go to profile page', @person.new_record? ? :back : @person

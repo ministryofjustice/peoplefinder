@@ -2,6 +2,7 @@ class Person < ActiveRecord::Base
   include Concerns::Completion
   include Concerns::WorkDays
   include Concerns::ExposeMandatoryFields
+  belongs_to :profile_photo
 
   extend FriendlyId
   friendly_id :slug_source, use: :slugged
@@ -32,8 +33,14 @@ class Person < ActiveRecord::Base
   sanitize_fields :given_name, :surname, strip: true
   sanitize_fields :email, strip: true, downcase: true
 
-  mount_uploader :image, ImageUploader
   attr_accessor :crop_x, :crop_y, :crop_w, :crop_h
+  after_save :crop_profile_photo
+
+  def crop_profile_photo
+    profile_photo.crop crop_x, crop_y, crop_w, crop_h if crop_x.present?
+  end
+
+  delegate :image, to: :profile_photo, allow_nil: true
 
   validates :given_name, presence: true, on: :update
   validates :surname, presence: true

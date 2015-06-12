@@ -3,6 +3,24 @@ require 'rails_helper'
 RSpec.describe 'Completion' do # rubocop:disable RSpec/DescribeClass
   include PermittedDomainHelper
 
+  let(:completed_attributes) {
+    {
+      given_name: 'Bobby',
+      surname: 'Tables',
+      email: 'user.example@digital.justice.gov.uk',
+      primary_phone_number: '020 7946 0123',
+      location_in_building: '13.13',
+      building: '102 Petty France',
+      city: 'London',
+      description: 'I am a real person',
+      profile_photo_id: profile_photo.id
+    }
+  }
+
+  let(:profile_photo) {
+    create(:profile_photo)
+  }
+
   context '#completion score' do
     it 'returns 0 if all fields are empty' do
       person = Person.new
@@ -125,22 +143,8 @@ RSpec.describe 'Completion' do # rubocop:disable RSpec/DescribeClass
     end
 
     it 'returns the person when there is no image' do
-      Person.update_all 'image = null'
+      Person.update_all 'profile_photo_id = null'
       expect(subject).to include(person)
     end
-  end
-
-  def completed_attributes
-    {
-      given_name: 'Bobby',
-      surname: 'Tables',
-      email: 'user.example@digital.justice.gov.uk',
-      primary_phone_number: '020 7946 0123',
-      location_in_building: '13.13',
-      building: '102 Petty France',
-      city: 'London',
-      description: 'I am a real person',
-      image: Rack::Test::UploadedFile.new(sample_image)
-    }
   end
 end

@@ -28,7 +28,7 @@ class ImageUploader < CarrierWave::Uploader::Base
   end
 
   version :croppable do
-    process resize_to_limit: [1024, 1024]
+    # process resize_to_limit: [1024, 1024]
   end
 
   def crop

@@ -98,19 +98,6 @@ feature 'Audit trail' do
     end
   end
 
-  scenario 'Auditing the editing of a photo' do
-    with_versioning do
-      person = create(:person)
-      visit edit_person_path(person)
-      attach_file('person[image]', sample_image)
-      click_button 'Save', match: :first
-
-      visit '/audit_trail'
-      expect(page).to have_text('Person Edited')
-      expect(page).to have_text('Image changed from no_photo.png to placeholder.png')
-    end
-  end
-
   scenario 'Auditing the creation of a membership', js: true do
     with_versioning do
       create(:group, name: 'Digital Justice')

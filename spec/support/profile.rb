@@ -11,12 +11,16 @@ module SpecSupport
         building: '102 Petty France',
         city: 'London',
         description: 'Lorem ipsum dolor sit amet...',
-        image: Rack::Test::UploadedFile.new(sample_image)
       }
     end
 
     def complete_profile!(person)
-      person.update_attributes(person_attributes.except(:email))
+      profile_photo = create(:profile_photo)
+      person.update_attributes(
+        person_attributes.
+          except(:email).
+          merge(profile_photo_id: profile_photo.id)
+      )
       person.groups << create(:group)
     end
 
@@ -33,12 +37,9 @@ module SpecSupport
       fill_in 'Extra information', with: person_attributes[:description]
       uncheck('Monday')
       uncheck('Friday')
-      attach_file 'person[image]', sample_image
     end
 
     def check_creation_of_profile_details
-      click_button 'Update Image'
-
       name = "#{person_attributes[:given_name]} #{person_attributes[:surname]}"
 
       expect(page).to have_title("#{name} - #{ app_title }")
@@ -60,8 +61,6 @@ module SpecSupport
         expect(page).to_not have_selector("li.active[alt='Saturday']")
         expect(page).to_not have_selector("li.active[alt='Sunday']")
       end
-
-      expect(page).to have_css("img[src*='medium_placeholder.png']")
     end
   end
 end

@@ -93,16 +93,6 @@ RSpec.describe PeopleController, type: :controller do
       end
     end
 
-    describe 'with an attached image' do
-      before do
-        post :create, person: valid_attributes_with_image
-      end
-
-      it 'redirects to the cropping tool' do
-        expect(response).to redirect_to(edit_person_image_path(Person.last))
-      end
-    end
-
     describe 'with invalid params' do
       before do
         post :create, person: invalid_attributes
@@ -218,16 +208,6 @@ RSpec.describe PeopleController, type: :controller do
 
       it 'shows a notice about informing the person' do
         expect(flash[:notice]).to match(/We have let/)
-      end
-    end
-
-    describe 'with an attached image' do
-      before do
-        put :update, id: person.to_param, person: valid_attributes_with_image
-      end
-
-      it 'redirects to the cropping tool' do
-        expect(response).to redirect_to(edit_person_image_path(person))
       end
     end
 
