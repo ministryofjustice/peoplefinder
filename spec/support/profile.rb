@@ -10,7 +10,7 @@ module SpecSupport
         location_in_building: '10.999',
         building: '102 Petty France',
         city: 'London',
-        description: 'Lorem ipsum dolor sit amet...',
+        description: 'Lorem ipsum dolor sit amet...'
       }
     end
 

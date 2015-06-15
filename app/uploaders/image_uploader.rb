@@ -12,7 +12,7 @@ class ImageUploader < CarrierWave::Uploader::Base
     '%suploads/peoplefinder/%s/%s/%s' % [
       base_upload_dir,
       model.class.to_s.underscore,
-      mounted_as,
+      mounted_as_without_legacy_prefix,
       model.id
     ]
   end
@@ -27,9 +27,7 @@ class ImageUploader < CarrierWave::Uploader::Base
     process quality: 60
   end
 
-  version :croppable do
-    # process resize_to_limit: [1024, 1024]
-  end
+  version :croppable
 
   def crop
     if model.crop_x.present?
@@ -42,6 +40,10 @@ class ImageUploader < CarrierWave::Uploader::Base
         img
       end
     end
+  end
+
+  def mounted_as_without_legacy_prefix
+    mounted_as.to_s.sub(/^legacy_/, '')
   end
 
   # Add a white list of extensions which are allowed to be uploaded.

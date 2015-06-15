@@ -97,10 +97,6 @@ private
     ]
   end
 
-  def successful_redirect_path
-    @person
-  end
-
   def set_org_structure
     @org_structure = Group.arrange.to_h
   end
@@ -119,7 +115,7 @@ private
       creator = PersonCreator.new(@person, current_user)
       creator.create!
       notice :profile_created, person: @person
-      redirect_to successful_redirect_path
+      redirect_to @person
     end
   end
 
@@ -132,7 +128,7 @@ private
 
       type = @person == current_user ? :mine : :other
       notice :profile_updated, type, person: @person
-      redirect_to successful_redirect_path
+      redirect_to @person
     end
   end
 
