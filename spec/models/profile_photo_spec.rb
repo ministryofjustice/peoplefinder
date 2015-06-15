@@ -5,7 +5,7 @@ RSpec.describe ProfilePhoto, type: :model do
     create(:profile_photo)
   }
 
-  it 'should crop the image' do
+  it 'crops the image' do
     expect(subject.image).to receive(:recreate_versions!)
     subject.crop(1, 2, 3, 4)
     expect(subject.crop_x).to eq(1)

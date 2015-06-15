@@ -122,12 +122,9 @@ var PhotoUpload = (function (){
       var els = PhotoUpload.findElements(event.target);
       var cropData = els.$preview.data('new-crop-data');
       var previewBoxWidth  = els.$preview.closest('.preview-box').width();
-      var previewBoxHeight = els.$preview.closest('.preview-box').height();
       var naturalWidth  = els.$preview.naturalWidth();
-      var naturalHeight = els.$preview.naturalHeight();
 
       var xaspect = previewBoxWidth  / naturalWidth;
-      var yaspect = previewBoxHeight / naturalHeight;
 
       els.$crop_x.val(cropData.x);
       els.$crop_y.val(cropData.y);
