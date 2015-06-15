@@ -203,4 +203,28 @@ RSpec.describe Person, type: :model do
       end
     end
   end
+
+  describe 'profile_image' do
+    context 'when there is a profile photo' do
+      it 'delegates to the profile photo' do
+        profile_photo = create(:profile_photo)
+        person.profile_photo = profile_photo
+        expect(person.profile_image).to eq(profile_photo.image)
+      end
+    end
+
+    context 'when there is a legacy image but no profile photo' do
+      it 'returns the mounted uploader' do
+        person.assign_attributes image: 'cats.gif'
+        expect(person.profile_image).to be_kind_of(ImageUploader)
+      end
+    end
+
+    context 'when there is no image' do
+      it 'returns nil' do
+        person.assign_attributes image: nil
+        expect(person.profile_image).to be_nil
+      end
+    end
+  end
 end
