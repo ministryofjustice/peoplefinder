@@ -40,7 +40,13 @@ class Person < ActiveRecord::Base
     profile_photo.crop crop_x, crop_y, crop_w, crop_h if crop_x.present?
   end
 
-  delegate :image, to: :profile_photo, allow_nil: true
+  def profile_image
+    if profile_photo
+      profile_photo.image
+    else
+      nil
+    end
+  end
 
   validates :given_name, presence: true, on: :update
   validates :surname, presence: true
