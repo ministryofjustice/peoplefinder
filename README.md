@@ -2,6 +2,30 @@
 
 ![Build Status](https://circleci.com/gh/ministryofjustice/peoplefinder.png?circle-token=7af6dba1153f14c5e9b4ca7aec831720aeb00b1c)
 
+## Installing for development
+
+This is not how people finder is actually deployed but provides an environment to do development on the app.
+
+On a Ubuntu 12.04 LTE box:
+
+- install curl, git, postgresql, postgresql-dev-all, nodejs
+- install rails through rvm. One way is:
+  - `gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3`
+  - `\curl -L https://get.rvm.io | bash -s stable --ruby`
+- start a new shell
+- `rvm gemset use global`
+- `gem install bundler`
+- `gem install rails`
+- `clone this repository`
+- `cd peoplefinder`
+- `bundle install`
+- `sudo su postgres createuser ubuntu` (or the name of the user the application will be running as)
+- `createdb peoplefinder_development` (as the user the application will be running as)
+- `bin/rake db:migrate RAILS_ENV=development`
+- `bundle exec rails s -b 0.0.0.0`
+
+Point your browser to http://0.0.0.0:3000 and you should see the application's start page.
+
 ## Configuration
 
 These should be defined in the config/application.rb or in the enviroments/__environment__.rb files if the settings need to be
@@ -100,9 +124,13 @@ If using brew you can use the following command:
 
 ## Testing
 
-You'll need to install PhantomJS in order to run the headless browser tests.
+You'll need to install PhantomJS in order to run the headless browser tests and the smoke_test.
+
+On OSX:
 
 `brew install phantomjs`
+
+On a Linux box, you won't find a [pre-packaged headless phantomjs](http://phantomjs.org/download.html) as of this writing. You might need to recompile it from source (we have it in a private apt repository).
 
 Also, if you'd like test coverage for Javascript you'll need to have Node and Istanbul installed. The easiest way to do this is installing Node via nvm and then use npm to install Istanbul like so:
 
