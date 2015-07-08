@@ -50,9 +50,10 @@ class SmokeTest
 
   TIME_DRIFT_ALLOWANCE = 5
 
-  def initialize(email_address, imap)
+  def initialize(email_address, imap, host)
     @email_address = email_address
     @imap = imap
+    @host = host
     @start_time = Time.now.utc
   end
 
@@ -144,7 +145,8 @@ private
     }
     mails.reverse.find { |mail|
       mail.subject =~ /access request/i &&
-        mail.date.to_time >= (@start_time - TIME_DRIFT_ALLOWANCE)
+        mail.date.to_time >= (@start_time - TIME_DRIFT_ALLOWANCE) &&
+        mail.text_part.decoded.include?(@host)
     }
   end
 
@@ -180,6 +182,6 @@ end
 
 imap = Net::IMAP.new('imap.gmail.com', port: 993, ssl: true)
 imap.login email_address, email_password
-SmokeTest.new(email_address, imap).run
+SmokeTest.new(email_address, imap, host).run
 imap.logout
 imap.disconnect
