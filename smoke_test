@@ -39,6 +39,7 @@ require 'securerandom'
 host = ENV.fetch('HOST')
 email_address = ENV.fetch('EMAIL_ADDRESS')
 email_password = ENV.fetch('EMAIL_PASSWORD')
+search_name = ENV.fetch('SEARCH_NAME')
 
 Capybara.register_driver :poltergeist do |app|
   Capybara::Poltergeist::Driver.new(app, phantomjs_options: ['--ignore-ssl-errors=yes'])
@@ -53,10 +54,11 @@ class SmokeTest
 
   TIME_DRIFT_ALLOWANCE = 5
 
-  def initialize(email_address, imap, host)
+  def initialize(email_address, imap, host, search_name)
     @email_address = email_address
     @imap = imap
     @host = host
+    @search_name = search_name
     @start_time = Time.now.utc
   end
 
@@ -89,9 +91,14 @@ class SmokeTest
       update_profile my_name, unique_string
     end
 
-    step 'Search for profile' do
+    step 'Search for own changed profile' do
       found = with_retries { search_profile my_name, unique_string }
-      fail "couldn't find profile via search" unless found
+      fail "couldn't find own profile via search" unless found
+    end
+
+    step "Search for profile: #{@search_name}" do
+      found = with_retries { search_profile @search_name, @search_name }
+      fail "couldn't find profile for #{@search_name} via search" unless found
     end
 
   rescue => e
@@ -185,6 +192,6 @@ end
 
 imap = Net::IMAP.new('imap.gmail.com', port: 993, ssl: true)
 imap.login email_address, email_password
-SmokeTest.new(email_address, imap, host).run
+SmokeTest.new(email_address, imap, host, search_name).run
 imap.logout
 imap.disconnect
