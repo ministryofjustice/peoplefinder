@@ -2,9 +2,6 @@
 
 ROLE="${1:-app}"
 
-echo "1: ${1}"
-echo "ROLE: ${ROLE}"
-
 case ${DOCKER_STATE} in
 migrate)
     echo "running migrate"
