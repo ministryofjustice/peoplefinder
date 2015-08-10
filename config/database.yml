@@ -21,6 +21,9 @@ default: &default
   # http://guides.rubyonrails.org/configuring.html#database-pooling
   pool: 5
 
+assets:
+  <<: *default
+
 development:
   <<: *default
   database: peoplefinder_development
