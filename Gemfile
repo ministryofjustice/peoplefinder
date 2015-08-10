@@ -51,7 +51,6 @@ end
 group :development, :test do
   gem 'brakeman'
   gem 'capybara'
-  gem 'dotenv-rails'
   gem 'factory_girl_rails', '~> 4.5'
   gem 'jshint'
   gem 'launchy'
@@ -67,4 +66,8 @@ group :development, :test do
   gem 'site_prism'
   gem 'teaspoon'
   gem 'timecop'
+end
+
+group :development, :test, :assets do
+  gem 'dotenv-rails'
 end
