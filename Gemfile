@@ -40,6 +40,7 @@ gem 'omniauth-gplus',
   git: 'https://github.com/ministryofjustice/omniauth-gplus.git'
 
 group :production do
+  gem 'sentry-raven', :git => 'https://github.com/getsentry/raven-ruby.git'
   gem 'logstasher', '~> 0.6.2'
 end
 

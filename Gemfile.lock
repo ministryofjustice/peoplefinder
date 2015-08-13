@@ -10,6 +10,13 @@ GIT
       mime-types (>= 1.16)
 
 GIT
+  remote: https://github.com/getsentry/raven-ruby.git
+  revision: f64e7ec69621dc9108f8ab206de814584ad6164c
+  specs:
+    sentry-raven (0.14.0)
+      faraday (>= 0.7.6)
+
+GIT
   remote: https://github.com/ministryofjustice/omniauth-gplus.git
   revision: c9b013d10c6af55d9eb92d41191e7e0d036ef7c9
   specs:
@@ -542,6 +549,7 @@ DEPENDENCIES
   rubocop (~> 0.26.1)
   rubocop-rspec
   sass-rails (~> 4.0.3)
+  sentry-raven!
   shoulda-matchers (~> 2.8)
   simplecov (~> 0.7.1)
   simplecov-rcov
@@ -554,3 +562,6 @@ DEPENDENCIES
   useragent (~> 0.10.0)
   virtus
   will_paginate (~> 3.0)
+
+BUNDLED WITH
+   1.10.5
