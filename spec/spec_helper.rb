@@ -8,9 +8,8 @@ SimpleCov.minimum_coverage 100
 
 require "factory_girl"
 require "factory_girl_rails"
-
 require 'pry-rails'
-
+require 'devise'
 require 'timecop'
 
 Dir[File.expand_path('../../{lib,app/*}', __FILE__)].each do |path|
@@ -105,4 +104,5 @@ RSpec.configure do |config|
   config.include SpecSupport::Profile
   config.include SpecSupport::FeatureFlags
   config.include SpecSupport::AppConfig
+  config.include Devise::TestHelpers, :type => :controller
 end
