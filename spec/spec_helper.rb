@@ -8,9 +8,8 @@ SimpleCov.minimum_coverage 100
 
 require "factory_girl"
 require "factory_girl_rails"
-
 require 'pry-rails'
-
+require 'devise'
 require 'timecop'
 
 Dir[File.expand_path('../../{lib,app/*}', __FILE__)].each do |path|
