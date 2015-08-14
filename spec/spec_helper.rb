@@ -105,4 +105,5 @@ RSpec.configure do |config|
   config.include SpecSupport::Profile
   config.include SpecSupport::FeatureFlags
   config.include SpecSupport::AppConfig
+  config.include Devise::TestHelpers, :type => :controller
 end
