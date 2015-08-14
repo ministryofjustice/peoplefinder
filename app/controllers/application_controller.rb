@@ -9,7 +9,7 @@ class ApplicationController < ActionController::Base
 private
 
   def user_for_paper_trail
-    logged_in? ? current_user.id : nil
+    user_signed_in? ? current_user.id : nil
   end
 
   def info_for_paper_trail
@@ -28,18 +28,13 @@ private
   end
   helper_method :current_user
 
-  def logged_in?
-    current_user.present?
-  end
-  helper_method :logged_in?
-
   def super_admin?
-    logged_in? && current_user.super_admin?
+    user_signed_in? && current_user.super_admin?
   end
   helper_method :super_admin?
 
   def ensure_user
-    return true if logged_in?
+    return true if user_signed_in?
     session[:desired_path] = request.fullpath
     redirect_to new_sessions_path
   end
