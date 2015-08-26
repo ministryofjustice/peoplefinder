@@ -1,0 +1,38 @@
+es:
+  image: elasticsearch
+  ports:
+    - "9200"
+pg:
+  image: postgres:9.4
+  ports:
+    - "5432"
+
+app:
+  build: .
+  links:
+    - "es"
+    - "pg"
+  ports:
+    - "3000:3000"
+  command: app
+  environment:
+    DOCKER_STATE: migrate
+    RAILS_ENV: production
+    DATABASE_URL: postgres://postgres:@pg:5432/postgres
+    MOJ_PF_ES_URL: http://es:9200/
+    SUPPORT_EMAIL:
+    SECRET_KEY_BASE:
+
+worker:
+  build: .
+  links:
+    - "pg"
+  command: worker
+  environment:
+    RAILS_ENV: production
+    DATABASE_URL: postgres://postgres:@pg:5432/postgres
+    SUPPORT_EMAIL:
+    SECRET_KEY_BASE:
+    SENDGRID_USERNAME:
+    SENDGRID_PASSWORD:
+    ACTION_MAILER_DEFAULT_URL:
