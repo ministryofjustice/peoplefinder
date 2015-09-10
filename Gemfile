@@ -36,6 +36,7 @@ gem 'will_paginate', '~> 3.0'
 gem 'carrierwave',
   git: 'https://github.com/carrierwaveuploader/carrierwave.git',
   tag: 'cc39842e44edcb6187b2d379a606ec48a6b5e4a8'
+gem 'carrierwave-bombshelter'
 gem 'omniauth-gplus',
   git: 'https://github.com/ministryofjustice/omniauth-gplus.git'
 
@@ -71,4 +72,8 @@ end
 
 group :development, :test, :assets do
   gem 'dotenv-rails'
+end
+
+group :test do
+  gem 'fuubar'
 end
