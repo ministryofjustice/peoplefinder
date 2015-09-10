@@ -1,3 +1,4 @@
+require 'secure'
 class TokensController < ApplicationController
   skip_before_action :ensure_user
   before_action :set_desired_path, only: [:show]
@@ -13,7 +14,7 @@ class TokensController < ApplicationController
   end
 
   def show
-    token = Token.where(value: params[:id]).first
+    token = find_token_securly(params[:id])
     if token
       verify_active_token(token)
     else
@@ -51,6 +52,12 @@ protected
   end
 
 private
+
+  def find_token_securly(token)
+    Token.find_each do |t|
+      return t if Secure.compare(t.value, token)
+    end
+  end
 
   def send_token_and_render(token)
     TokenMailer.new_token_email(token).deliver_later
