@@ -2,6 +2,8 @@
 class ImageUploader < CarrierWave::Uploader::Base
   include CarrierWave::MiniMagick
   include CarrierWave::DirHelpers
+  include CarrierWave::BombShelter
+
 
   # Storage location is configured per-environment in
   # config/initializers/carrierwave.rb
