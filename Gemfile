@@ -76,4 +76,5 @@ end
 
 group :test do
   gem 'fuubar'
+  gem 'codeclimate-test-reporter', require: nil
 end
