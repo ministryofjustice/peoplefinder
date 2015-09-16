@@ -14,6 +14,17 @@ require 'capybara/rspec'
 require 'capybara/poltergeist'
 require 'site_prism'
 
+unless ENV['SKIP_SIMPLECOV']
+  require 'simplecov'
+  require 'simplecov-rcov'
+  SimpleCov.formatter = SimpleCov::Formatter::RcovFormatter
+  SimpleCov.start 'rails' do
+    add_filter '/gem/'
+    add_filter '.bundle'
+  end
+  SimpleCov.minimum_coverage 100
+end
+
 Capybara.javascript_driver = :poltergeist
 Capybara.default_max_wait_time = 3
 
