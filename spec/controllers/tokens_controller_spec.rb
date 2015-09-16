@@ -19,6 +19,15 @@ describe TokensController, type: :controller do
         end
       end
     end
+
+    context 'token usage' do
+      before { PermittedDomain.find_or_create_by(domain: 'digital.justice.gov.uk') }
+      let!(:token) { create(:token) }
+
+      it 'token gets removed after use' do
+        expect { get :show, id: token.value; }.to change{ Token.count }.by(-1)
+      end
+    end
   end
 end
 

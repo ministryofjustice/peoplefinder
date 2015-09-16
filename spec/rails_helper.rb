@@ -1,5 +1,11 @@
 require "codeclimate-test-reporter"
+require 'simplecov-rcov'
 CodeClimate::TestReporter.start
+SimpleCov.start 'rails' do
+  add_filter '/gem/'
+  add_filter '.bundle'
+end
+SimpleCov.minimum_coverage 100
 
 # This file is copied to spec/ when you run 'rails generate rspec:install'
 ENV['RAILS_ENV'] ||= 'test'
@@ -28,6 +34,8 @@ end
 Capybara.javascript_driver = :poltergeist
 Capybara.default_max_wait_time = 3
 
+require 'site_prism'
+require 'pry-byebug'
 Dir[File.expand_path('../../{lib,app/*}', __FILE__)].each do |path|
   $LOAD_PATH.unshift(path) unless $LOAD_PATH.include?(path)
 end
