@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 ruby '2.2.3'
-gem 'rails', '~> 4.2.1'
+gem 'rails', '~> 4.2.4'
 
 gem 'ancestry'
 gem 'delayed_job_active_record'
@@ -53,20 +53,17 @@ end
 group :development, :test do
   gem 'brakeman'
   gem 'capybara'
-  gem 'factory_girl_rails', '~> 4.5'
+  gem 'factory_girl_rails'
   gem 'jshint'
   gem 'launchy'
   gem 'minitest'
   gem 'poltergeist'
   gem 'pry-rails'
-  gem 'rspec-rails', '~> 3.2'
-  gem 'rubocop', '~> 0.26.1'
-  gem 'rubocop-rspec'
-  gem 'shoulda-matchers', '~> 2.8'
-  gem 'simplecov', '~> 0.7.1'
+  gem 'pry-byebug'
+  gem 'rspec-rails'
+  gem 'shoulda-matchers'
+  gem 'simplecov'
   gem 'simplecov-rcov'
-  gem 'site_prism'
-  gem 'teaspoon'
   gem 'timecop'
 end
 
@@ -75,6 +72,8 @@ group :development, :test, :assets do
 end
 
 group :test do
-  gem 'fuubar'
   gem 'codeclimate-test-reporter', require: nil
+  gem 'fuubar'
+  gem 'database_cleaner'
+  gem 'site_prism'
 end
