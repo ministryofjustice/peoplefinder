@@ -1,9 +1,11 @@
 require 'rails_helper'
+require_relative './token_user_email_shared'
 
 RSpec.shared_context "token_auth feature disabled" do
   extend FeatureFlagSpecHelper
   disable_feature :token_auth
 end
+
 
 feature 'Token Authentication' do
   include ActiveJobHelper
@@ -11,7 +13,10 @@ feature 'Token Authentication' do
 
   let(:login_page) { Pages::Login.new }
 
-  before { create(:group) }
+  before do
+    create(:group)
+    ActionMailer::Base.deliveries = []
+  end
 
   scenario 'trying to log in with an invalid email address' do
     visit '/'
@@ -20,30 +25,34 @@ feature 'Token Authentication' do
     expect(page).to have_text('Email address is not formatted correctly')
   end
 
-  scenario 'trying to log in with a non-whitelisted email address domain' do
-    visit '/'
-    fill_in 'token_user_email', with: 'james@abscond.org'
-    expect { click_button 'Request link' }.not_to change { ActionMailer::Base.deliveries.count }
-    expect(page).to have_text('Email address is not valid')
+  describe 'trying to log in with a non-whitelisted email address domain' do
+    describe 'does not leak username information' do
+      it_should_behave_like "it received a valid request from" do
+        let(:email) { 'james@abscond.com' }
+        let(:sent_to) { '' }
+      end
+    end
   end
 
-  scenario 'accurate email' do
-    visit '/'
-    fill_in 'token_user_email', with: 'james.darling@digital.justice.gov.uk'
-    expect { click_button 'Request link' }.to change { ActionMailer::Base.deliveries.count }.by(1)
-    expect(page).to have_text('We’re just emailing you a link to access People Finder')
-
-    expect(last_email.to).to eql(['james.darling@digital.justice.gov.uk'])
-    expect(last_email.body.encoded).to have_text(token_url(Token.last))
+  describe 'bad email from valid domain' do
+    it_should_behave_like "it received a valid request from" do
+      let(:email) { 'no.user.by.that.name@digital.justice.gov.uk' }
+      let(:sent_to) { 'no.user.by.that.name@digital.justice.gov.uk' }
+    end
   end
 
-  scenario 'copy-pasting an email with extraneous spaces' do
-    visit '/'
-    fill_in 'token_user_email', with: ' correct@digital.justice.gov.uk '
-    click_button 'Request link'
-    expect(page).to have_text('We’re just emailing you a link to access People Finder')
+  describe 'accurate email' do
+    it_should_behave_like "it received a valid request from" do
+      let(:email) { 'james.darling@digital.justice.gov.uk' }
+      let(:sent_to) { 'james.darling@digital.justice.gov.uk' }
+    end
+  end
 
-    expect(last_email.to).to include('correct@digital.justice.gov.uk')
+  describe 'copy-pasting an email with extraneous spaces' do
+    it_should_behave_like "it received a valid request from" do
+      let(:email) { ' correct@digital.justice.gov.uk' }
+      let(:sent_to) { 'correct@digital.justice.gov.uk' }
+    end
   end
 
   scenario 'following valid link from email and getting prompted to complete my profile' do
