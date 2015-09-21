@@ -3,36 +3,68 @@ require 'rails_helper'
 RSpec.describe Token, type: :model do
   include PermittedDomainHelper
 
+  let(:token) { build(:token) }
+  let(:person) { double(:person, email: 'text.user@digital.justice.gov.uk') }
+
   it 'generates a token' do
-    token = create(:token)
     expect(token.value).to match(/\A[a-z0-9\-]{36}\z/)
   end
 
   it 'preserves the same token after persisting' do
-    token = create(:token)
-    value = token.value
-    token.save!
-    token.reload
-    expect(token.value).to eql(value)
+    expect{ 2.times{ token.save }; token.reload }.not_to change{ token.value }
   end
 
   it 'will be valid with valid email address' do
-    token = build(:token)
     expect(token).to be_valid
   end
 
   it 'will be invalid with invalid email address' do
-    token = build(:token, user_email: 'bob')
+    token.user_email = 'bob'
     expect(token).not_to be_valid
   end
 
   it 'will be invalid with email address from wrong domain' do
-    token = build(:token, user_email: 'bob@example.com')
+    token.user_email = 'bob@example.com'
     expect(token).not_to be_valid
   end
 
+  context 'scopes' do
+    before do
+      # Seems like a smell, but if I don't then it kills all the expired records
+      # before the individual specs run.
+      allow_any_instance_of(described_class).to receive(:remove_expired_tokens)
+      token.save
+    end
+
+    let!(:spent) { create(:token, spent: true) }
+    let!(:half_hour_ago) { create(:token, created_at: 30.minutes.ago) }
+    let!(:expired) { create(:token, created_at: 1.month.ago) }
+
+    it { expect(described_class.spent).to match_array([spent]) }
+    it { expect(described_class.unspent).to match_array([token, expired, half_hour_ago]) }
+    it { expect(described_class.unexpired).to match_array([token, spent, half_hour_ago]) }
+    it { expect(described_class.expired).to match_array([expired]) }
+    it { expect(described_class.in_the_last_hour).to match_array([token, spent, half_hour_ago]) }
+  end
+
+  context 'maintenance' do
+    let!(:expiring_tokens) { create_list(:token, 3) }
+
+    it 'removes expired tokens' do
+      Timecop.travel(Time.now + described_class.ttl) do
+        expect{ token.save }.to change{ described_class.expired.count }.by(-3)
+      end
+    end
+
+    it 'raises errors if a ttl is set to an hour or less' do
+      expect(described_class).to receive(:ttl).and_return(60, 30, 1)
+      expect{ token.save }.to raise_error(Token::TTLRaceCondition)
+      expect{ token.save }.to raise_error(Token::TTLRaceCondition)
+      expect{ token.save }.to raise_error(Token::TTLRaceCondition)
+    end
+  end
+
   describe '#for_person' do
-    let(:person) { create(:person, email: 'text.user@digital.justice.gov.uk') }
     let(:token) { described_class.for_person(person) }
 
     it 'creates a token for that person\'s email' do
@@ -41,53 +73,47 @@ RSpec.describe Token, type: :model do
   end
 
   context 'time dependent tokens' do
-    let(:active_token) { create(:token) }
     describe '#ttl' do
       it 'defaults to 10800 seconds (3 hours)' do
-        expect(active_token.ttl).to eql(10_800)
+        expect(token.ttl).to eql(10_800)
       end
     end
 
     describe '#active?' do
+      before { token.save }
+
       it 'returns true if token is less than 10800 seconds old and not spent' do
-        expect(active_token).to be_active
-        expect(active_token).to_not be_spent
+        expect(token.active?).to be_truthy
+        expect(token.spent?).to be_falsey
       end
 
       it 'returns false if token is less than 10800 seconds old but already used' do
-        spent_token = create(:token, spent: true)
-        expect(spent_token).to_not be_active
+        expect{ token.spend!; token.reload }.to change{ token.spent? }.from(false).to(true)
       end
 
       it 'returns false if token is 10800 seconds or more old' do
-        inactive_token = create(:token)
         Timecop.freeze(4.hours.from_now) do
-          expect(inactive_token).to_not be_active
+          expect(token).not_to be_active
         end
       end
 
       context 'expiring tokens' do
-        let(:person) { create(:person, email: 'text.user@digital.justice.gov.uk') }
-        let(:old_token) { described_class.for_person(person) }
+        before { token.save }
+        let(:new_token) { build(:token, user_email: token.user_email) }
 
         describe '#save or #create for new tokens' do
-          it 'deactivates previously created tokens for that user' do
-            expect(old_token).to be_active
-            new_token = described_class.for_person(person)
-            old_token.reload
-            new_token.reload
-            expect(old_token).to_not be_active
-            expect(new_token).to be_active
+          it 'removes previously created tokens for that user' do
+            expect{ new_token.save; token.reload }.to change{ token.active? }.from(true).to(false)
           end
         end
 
         describe "#spend!" do
-          it 'sets spent to true and the token to inactive' do
-            token = create(:token)
-            expect(token).to be_active
-            token.spend!
-            expect(token.spent).to eql true
-            expect(token).to_not be_active
+          it 'sets spent to true' do
+            expect{ token.spend!; token.reload }.to change{ token.spent? }.from(false).to(true)
+          end
+
+          it 'makes the token inactive' do
+            expect{ token.spend!; token.reload }.to change{ token.active? }.from(true).to(false)
           end
         end
       end
@@ -95,8 +121,6 @@ RSpec.describe Token, type: :model do
   end
 
   context 'throttling token generation' do
-    let(:person) { create(:person, email: 'text.user1@digital.justice.gov.uk') }
-
     describe '#save or #create of a new token' do
       it 'throws and error if more than 8 tokens have been generated in the past hour for the same person' do
         8.times do
