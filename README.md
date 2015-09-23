@@ -54,14 +54,24 @@ defined on a per environment basis.
 ## Authentication
 
 Authentication requires two environment variables. You can obtain these by
-visiting the [Google Developers Console](https://console.developers.google.com/)
-and selecting **APIs & auth** from the sidebar, followed by **Credentials**,
-then **Create new Client ID**.
+visiting the [Google Developers Console](https://console.developers.google.com/).
+
+Create a project, and wait for the process to complete.
+
+Select **APIs & auth** from the sidebar, followed by **Credentials**, then
+**Add credentials**, then select **OAuth 2.0 client ID** and **Web
+application**.
+
+Set **Authorized JavaScript origins** to the root (e.g. `http://localhost:3000`)
+and **Authorized redirect URIs** to the OAuth redirect path, which will be
+something like `http://localhost:3000/auth/gplus/callback`.
 
 Set `GPLUS_CLIENT_ID` to the value of **Client ID** and `GPLUS_CLIENT_SECRET`
 to **Client secret**.
 
-You will also need to configure **Consent screen** below for logging in to work.
+You will also need to configure **OAuth consent screen** using the tab at the
+top of the page: entering the name and setting all the URLs to the root of your
+application is sufficient for logging in to work.
 
 For local development, you can use a `.env` file; see `.env.sample` for an
 example.
