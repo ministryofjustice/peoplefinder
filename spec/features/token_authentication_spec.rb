@@ -82,7 +82,7 @@ feature 'Token Authentication' do
     expect(page).to_not have_text('Signed in as')
     expect(page).to_not have_text('Start building your profile now')
 
-    expect(page).to have_text("The authentication token has expired and is more than 3 hours old")
+    expect(page).to have_text("The authentication token doesn’t exist and so isn’t valid")
   end
 
   scenario "requesting more than 8 tokens per hour isn't permitted" do

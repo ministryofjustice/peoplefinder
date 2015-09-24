@@ -1,8 +1,10 @@
 class Token < ActiveRecord::Base
+  class TTLRaceCondition < StandardError; end
+
   include Concerns::Sanitizable
 
   sanitize_fields :user_email, strip: true, downcase: true
-  after_create :deactivate_tokens
+  after_create :deactivate_tokens, :remove_expired_tokens
 
   after_initialize :generate_value
 
@@ -11,6 +13,13 @@ class Token < ActiveRecord::Base
 
   DEFAULT_TTL = 10_800
   DEFAULT_MAX_TOKENS_PER_HOUR = 8
+
+  scope :spent,            -> { where(spent: true)  }
+  scope :unspent,          -> { where(spent: false) }
+  scope :unexpired,        -> { where("created_at > ?", ttl.seconds.ago) }
+  scope :expired,          -> { where("created_at < ?", ttl.seconds.ago) }
+  scope :active,           -> { unspent.unexpired }
+  scope :in_the_last_hour, -> { where(created_at: 1.hour.ago..Time.now) }
 
   def to_param
     value
@@ -53,17 +62,20 @@ class Token < ActiveRecord::Base
   end
 
   def within_throttle_limit
-    if tokens_in_the_last_hour.count >= max_tokens_per_hour
+    raise TTLRaceCondition, "throttling will not work with TTLs of 1 hour or less" if ttl <= 60
+
+    if tokens_in_the_last_hour >= max_tokens_per_hour
       errors.add(:user_email, :token_throttle_limit, limit: max_tokens_per_hour)
     end
   end
 
 private
+  def remove_expired_tokens
+    self.class.expired.destroy_all
+  end
 
   def deactivate_tokens
-    Token.where(spent: false, user_email: user_email).each do |token|
-      token.spend! if token != self
-    end
+    self.class.unspent.where("user_email = ? AND id != ?", user_email, self.id).update_all(spent: true)
   end
 
   def generate_value
@@ -71,6 +83,6 @@ private
   end
 
   def tokens_in_the_last_hour
-    Token.where(user_email: user_email, created_at: 1.hour.ago..Time.now)
+    self.class.in_the_last_hour.where(user_email: user_email).count
   end
 end
