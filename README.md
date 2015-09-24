@@ -51,6 +51,16 @@ defined on a per environment basis.
 
 `config.support_email` e.g. 'peoplefinder-support@example.com'
 
+## Permitted domains
+
+The system allows logging in for emails which have domains from the whitelist. The whitelist is in the database, managed by `PermittedDomain` model. At least one domain has to be whitelisted before anyone can log in (that applies to development too). 
+
+In rails console:
+
+```ruby
+PermittedDomain.create(domain: 'some.domain.gov.uk')
+```
+
 ## Authentication
 
 Authentication requires two environment variables. You can obtain these by
@@ -88,6 +98,14 @@ Each time the user wishes to start a session, they need to generate an
 authentication token. This can be done by entering their email address on the
 login screen. They will be sent an email message containing a link with a
 unique random token. Clicking on the link will allow them to login.
+
+## E-mails
+
+People finder sends a few types of e-mail. E-mails are delivered using `delayed_job` adapter for `activejob`. Run `rake jobs:work` to activate the worker.
+
+### In Development
+
+E-mails in development environment are setup to be delivered using `mailcatcher` gem. For that `mailcatcher` has to be started and then accessed on `http://localhost:1080` to read the delivered e-mails. 
 
 ## Search
 
