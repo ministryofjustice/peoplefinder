@@ -331,7 +331,6 @@ GEM
       net-ssh (>= 2.6.5)
     net-ssh (2.9.2)
     netaddr (1.5.0)
-    newrelic_rpm (3.9.9.275)
     nokogiri (1.6.6.2)
       mini_portile (~> 0.6.0)
     oauth2 (1.0.0)
@@ -396,6 +395,11 @@ GEM
       rails-deprecated_sanitizer (>= 1.0.1)
     rails-html-sanitizer (1.0.2)
       loofah (~> 2.0)
+    rails_12factor (0.0.3)
+      rails_serve_static_assets
+      rails_stdout_logging
+    rails_serve_static_assets (0.0.4)
+    rails_stdout_logging (0.0.4)
     railties (4.2.4)
       actionpack (= 4.2.4)
       activesupport (= 4.2.4)
@@ -546,7 +550,6 @@ DEPENDENCIES
   minitest
   moj_internal_template (~> 0.1.7)
   netaddr
-  newrelic_rpm
   omniauth-gplus!
   paper_trail (~> 4.0.0.beta)
   pg
@@ -555,6 +558,7 @@ DEPENDENCIES
   pry-byebug
   pry-rails
   rails (~> 4.2.4)
+  rails_12factor
   recipient_interceptor (~> 0.1.2)
   rspec-rails
   sass-rails (~> 4.0.3)
