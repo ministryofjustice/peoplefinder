@@ -20,7 +20,7 @@ gem 'mail'
 gem 'mini_magick'
 gem 'moj_internal_template', '~> 0.1.7'
 gem 'netaddr'
-gem 'newrelic_rpm'
+# gem 'newrelic_rpm'
 gem 'paper_trail', '~> 4.0.0.beta'
 gem 'pg'
 gem 'premailer-rails'
@@ -43,6 +43,10 @@ gem 'omniauth-gplus',
 group :production do
   gem 'sentry-raven', :git => 'https://github.com/getsentry/raven-ruby.git'
   gem 'logstasher', '~> 0.6.2'
+end
+
+group :staging do
+  gem 'rails_12factor'
 end
 
 group :development do
