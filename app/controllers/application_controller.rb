@@ -21,8 +21,12 @@ private
   end
   helper_method :can_add_person_here?
 
+  def load_user
+    Login.current_user(session) || ReadonlyUser.from_request(request)
+  end
+
   def current_user
-    @current_user ||= Login.current_user(session)
+    @current_user ||= load_user
   rescue ActiveRecord::RecordNotFound
     session.destroy
   end
