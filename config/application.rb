@@ -34,6 +34,11 @@ module Peoplefinder
 
     config.support_email = ENV.fetch('SUPPORT_EMAIL')
 
+    config.readonly = {
+      header: ENV['READONLY_HEADER'],
+      value: ENV['READONLY_VALUE']
+    }
+
     config.action_mailer.default_options = {
       from:  config.support_email
     }
