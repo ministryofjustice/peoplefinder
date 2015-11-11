@@ -30,6 +30,20 @@ On a Ubuntu 12.04 LTE box:
 
 Point your browser to http://0.0.0.0:3000 and you should see the application's start page.
 
+On Mac OSX:
+
+    brew install imagemagick
+    brew install phantomjs
+    brew install elasticsearch17
+    ln -sfv /usr/local/opt/elasticsearch17/*.plist ~/Library/LaunchAgents
+    launchctl load ~/Library/LaunchAgents/homebrew.mxcl.elasticsearch17.plist
+    git clone git@github.com:ministryofjustice/peoplefinder.git
+    cd peoplefinder
+    bundle
+    bundle exec rake db:setup
+    bundle exec rake # runs tests
+    bundle exec rails s -b 0.0.0.0
+
 ## Configuration
 
 These should be defined in the config/application.rb or in the enviroments/__environment__.rb files if the settings need to be
@@ -105,20 +119,19 @@ People finder sends a few types of e-mail. E-mails are delivered using `delayed_
 
 ### In Development
 
-E-mails in development environment are setup to be delivered using `mailcatcher` gem. For that `mailcatcher` has to be started and then accessed on `http://localhost:1080` to read the delivered e-mails. 
+E-mails in development environment are setup to be delivered using `mailcatcher` gem. For that `mailcatcher` has to be started and then accessed on `http://localhost:1080` to read the delivered e-mails.
 
 ## Search
 
 To run the engine in production mode, `config.elastic_search_url` must be set in, for example, config/application.rb.
 See 'Configurable elements' above.
 
-
 Heroku provides [Bonsai Elasticsearch](https://devcenter.heroku.com/articles/bonsai)
 as an add-on.
 
-You can install a development version from [Elasticsearch downloads](http://www.elasticsearch.org/download/)
+You can install a development version from [Elasticsearch 1.7.3 downloads](https://www.elastic.co/downloads/past-releases/elasticsearch-1-7-3)
 or with a package manager.
-e.g. `brew install elasticsearch`.
+e.g. `brew install elasticsearch17`.
 
 Elasticsearch requires [jdk version 7 or greater](http://www.oracle.com/technetwork/java/javase/downloads/jdk7-downloads-1880260.html).
 
