@@ -48,6 +48,7 @@ end
 group :development do
   gem 'foreman'
   gem 'mailcatcher'
+  gem 'guard-rspec', require: false
 end
 
 group :development, :test do
