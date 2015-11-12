@@ -48,6 +48,7 @@ feature 'Report a problem', js: true do
       visit new_sessions_path
 
       find('a', text: 'Report a problem').trigger('click')
+      fill_in 'Your email', with: 'test@example.com'
       fill_in 'What were you trying to do?', with: 'Rhubarb'
       fill_in 'What went wrong?', with: 'Custard'
       click_button 'Report'
@@ -60,7 +61,7 @@ feature 'Report a problem', js: true do
       expect(body).to have_text('Rhubarb')
       expect(body).to have_text('Custard')
       expect(body).to match(/Browser: .*?PhantomJS/)
-      expect(body).to have_text('Email: unknown')
+      expect(body).to have_text('Email: test@example.com')
       expect(body).to have_text('Person ID: unknown')
       expect(body).to match(/Reported: 2014-09-09T21:27:..Z/)
     end

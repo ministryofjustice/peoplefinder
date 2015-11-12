@@ -11,7 +11,7 @@ private
 
   def problem_report_params
     params.require(:problem_report).
-      permit(:goal, :problem, :browser).
+      permit(:goal, :problem, :browser, :person_email).
       merge(current_user_params).
       merge(ip_address: request.remote_ip)
   end
