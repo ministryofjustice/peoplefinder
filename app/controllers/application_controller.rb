@@ -1,10 +1,13 @@
 class ApplicationController < ActionController::Base
+  include Pundit
   include FeatureHelper
 
   helper MojHelper
 
   protect_from_forgery with: :exception
   before_action :ensure_user
+
+  rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 
 private
 
@@ -42,6 +45,11 @@ private
   end
   helper_method :logged_in_regular?
 
+  def logged_in_readonly?
+    logged_in? && current_user.is_a?(ReadonlyUser)
+  end
+  helper_method :logged_in_readonly?
+
   def super_admin?
     logged_in? && current_user.super_admin?
   end
@@ -77,5 +85,12 @@ private
 
   def error(*partial_key, **options)
     i18n_flash :error, partial_key, options
+  end
+
+  def user_not_authorized
+    if logged_in_readonly?
+      session[:desired_path] = request.fullpath
+      redirect_to new_sessions_path
+    end
   end
 end
