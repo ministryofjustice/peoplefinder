@@ -1,4 +1,5 @@
 class Person < ActiveRecord::Base
+  include Concerns::Acquisition
   include Concerns::Completion
   include Concerns::WorkDays
   include Concerns::ExposeMandatoryFields
