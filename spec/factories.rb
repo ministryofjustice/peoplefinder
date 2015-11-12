@@ -58,4 +58,7 @@ FactoryGirl.define do
       File.join(Rails.root, 'spec', 'fixtures', 'placeholder.png')
     )
   end
+
+  factory :readonly_user do
+  end
 end
