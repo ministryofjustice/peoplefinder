@@ -51,7 +51,7 @@
         %p= @person.description
 
 - if @person.email.present? && !@preview
-  - if current_user.email == @person.email
+  - if logged_in_regular? && current_user.email == @person.email
     = render partial: "completeness", locals: { person: @person }
   - else
     = render partial: "request_information", locals: { person: @person }
