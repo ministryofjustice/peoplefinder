@@ -14,16 +14,21 @@ class PeopleController < ApplicationController
 
   # GET /people/1
   def show
+    authorize @person
   end
 
   # GET /people/new
   def new
     @person = Person.new
+    authorize @person
+
     @person.memberships.build
   end
 
   # GET /people/1/edit
   def edit
+    authorize @person
+
     @activity = params[:activity]
     @person.memberships.build if @person.memberships.empty?
   end
@@ -31,6 +36,7 @@ class PeopleController < ApplicationController
   # POST /people
   def create
     @person = Person.new(person_create_params)
+    authorize @person
 
     if @preview
       render :new
@@ -45,6 +51,7 @@ class PeopleController < ApplicationController
   # PATCH/PUT /people/1
   def update
     @person.assign_attributes(person_update_params)
+    authorize @person
 
     if @preview
       render :edit
@@ -57,6 +64,8 @@ class PeopleController < ApplicationController
 
   # DELETE /people/1
   def destroy
+    authorize @person
+
     destroyer = PersonDestroyer.new(@person, current_user)
     destroyer.destroy!
     notice :profile_deleted, person: @person
@@ -66,6 +75,8 @@ class PeopleController < ApplicationController
   def add_membership
     set_person if params[:id].present?
     @person ||= Person.new
+    authorize @person
+
     render 'add_membership', layout: false
   end
 
