@@ -1,6 +1,6 @@
 class ReadonlyUser
   def self.from_request(request)
-    header_name = Rails.configuration.readonly[:header]
+    header_name = "HTTP_#{Rails.configuration.readonly[:header].gsub('-', '_')}"
     header_value = Rails.configuration.readonly[:value]
 
     if request.headers[header_name] && request.headers[header_name] == header_value
