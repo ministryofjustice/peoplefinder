@@ -12,13 +12,13 @@ RSpec.describe ReadonlyUser, type: :model do
     # the header name and value is defined in .env for test
     context 'when readonly header is set' do
       context 'when the value is correct' do
-        let(:headers) { { 'RO' => 'ENABLED' } }
+        let(:headers) { { 'HTTP_RO' => 'ENABLED' } }
 
         it { is_expected.to be_a(ReadonlyUser) }
       end
 
       context 'for any other value' do
-        let(:headers) { { 'RO' => 'OTHER' } }
+        let(:headers) { { 'HTTP_RO' => 'OTHER' } }
 
         it { is_expected.to be nil }
       end
