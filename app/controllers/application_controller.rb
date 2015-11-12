@@ -37,6 +37,11 @@ private
   end
   helper_method :logged_in?
 
+  def logged_in_regular?
+    logged_in? && current_user.is_a?(Person)
+  end
+  helper_method :logged_in_regular?
+
   def super_admin?
     logged_in? && current_user.super_admin?
   end
