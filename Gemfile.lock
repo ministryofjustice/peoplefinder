@@ -394,6 +394,8 @@ GEM
       pry (~> 0.10)
     pry-rails (0.3.4)
       pry (>= 0.9.10)
+    pundit (1.0.1)
+      activesupport (>= 3.0.0)
     rack (1.6.4)
     rack-protection (1.5.3)
       rack
@@ -582,6 +584,7 @@ DEPENDENCIES
   premailer-rails
   pry-byebug
   pry-rails
+  pundit
   rails (~> 4.2.4)
   recipient_interceptor (~> 0.1.2)
   rspec-rails
