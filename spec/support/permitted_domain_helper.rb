@@ -1,3 +1,5 @@
+# TODO: This helper should automatically be included to all specs and therefore we can avoid
+#       having the extra line in all specs
 module PermittedDomainHelper
   extend ActiveSupport::Concern
 

@@ -1,5 +1,7 @@
 %h1.no-line= t('tokens.create.title')
 %div.login-email-info.grid-2-3
   %p= t('tokens.create.body_intro')
+  - if @unauthorised_login
+    %p= t('tokens.create.body_unauthorised')
   %p= t('tokens.create.body_informative_html')
   %p= t('tokens.create.body_dont_panic')

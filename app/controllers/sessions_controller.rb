@@ -14,6 +14,7 @@ class SessionsController < ApplicationController
   end
 
   def new
+    @unauthorised_login = session.delete(:unauthorised_login)
   end
 
   def destroy
