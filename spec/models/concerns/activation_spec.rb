@@ -59,5 +59,27 @@ RSpec.describe 'Activation' do
       create(:person, login_count: 0)
       expect(Person.activated_percentage).to eq(100)
     end
+
+    context 'when one person created yesterday who has logged in and completion score > 80%' do
+      before do
+        create(:person, completed_attributes.merge(login_count: 1, created_at: Date.yesterday.to_time))
+      end
+
+      it 'returns 0 when from date is today' do
+        expect(Person.activated_percentage(from: Date.today.to_s)).to eq(0)
+      end
+
+      it 'returns 100 when from date is yesterday' do
+        expect(Person.activated_percentage(from: Date.yesterday.to_s)).to eq(100)
+      end
+
+      it 'returns 0 when before date is yesterday' do
+        expect(Person.activated_percentage(before: Date.yesterday.to_s)).to eq(0)
+      end
+
+      it 'returns 100 when before date is today' do
+        expect(Person.activated_percentage(before: Date.today.to_s)).to eq(100)
+      end
+    end
   end
 end
