@@ -7,3 +7,7 @@
       %span.super-admin (S)
     %span.logout-link
       = link_to "Sign out", sessions_path, :method => :delete
+  - elsif logged_in_readonly? && !@login_screen
+    %span
+      To update People Finder,
+      #{link_to('sign in now', new_sessions_path)}.
