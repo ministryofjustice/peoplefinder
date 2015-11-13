@@ -90,6 +90,7 @@ private
   def user_not_authorized
     if logged_in_readonly?
       session[:desired_path] = request.fullpath
+      session[:unauthorised_login] = true
       redirect_to new_sessions_path
     end
   end

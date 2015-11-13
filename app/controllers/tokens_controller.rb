@@ -6,7 +6,9 @@ class TokensController < ApplicationController
   REPORT_EMAIL_ERROR_REGEXP = %r{(not formatted correctly|reached the limit)}
 
   def create
+    @unauthorised_login = params[:token][:unauthorised_login]
     @token = Token.new(token_params)
+
     if @token.save
       send_token_and_render(@token)
     elsif @token.errors[:user_email].first[REPORT_EMAIL_ERROR_REGEXP]
