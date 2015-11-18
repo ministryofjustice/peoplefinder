@@ -32,6 +32,7 @@ feature 'Make a suggestion about a profile', js: true do
   scenario 'Readonly user tries to improve profile', js: false, user: :readonly do
     click_link 'Help improve this profile'
     expect(Pages::Login.new).to be_displayed
+    expect(page).to have_text('Log in to edit People Finder')
   end
 
   scenario 'Ask a person to complete missing fields', user: :regular do

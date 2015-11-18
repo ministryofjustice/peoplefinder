@@ -1,7 +1,11 @@
 - @disable_logo_link  = true
 - @page_title = 'Log in'
 - content_for :body_classes, 'login-page'
-%h1.no-line= t('.heading')
+%h1.no-line<
+  - if @unauthorised_login
+    = t('.heading_unauthorised')
+  - else
+    = t('.heading')
 
 %div.description
   - if @unauthorised_login

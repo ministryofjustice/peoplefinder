@@ -26,6 +26,7 @@ en:
   sessions:
     login_page:
       heading: Request link to access People Finder
+      heading_unauthorised: Log in to edit People Finder
       intro: |
         We will email you a secure link so you can log in to People Finder and create or edit profiles. The link will be active for 3 hours.
       intro_unauthorised: |
