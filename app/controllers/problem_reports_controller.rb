@@ -17,7 +17,7 @@ private
   end
 
   def current_user_params
-    if logged_in?
+    if logged_in_regular?
       { person_email: current_user.email, person_id: current_user.id }
     else
       {}

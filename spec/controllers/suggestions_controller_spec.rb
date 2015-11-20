@@ -3,23 +3,24 @@ require 'rails_helper'
 RSpec.describe SuggestionsController, type: :controller do
   include PermittedDomainHelper
 
+  let(:person_id)  { 'person-id' }
+  let(:person)     { double('person') }
+  let(:friendly)   { double('friendly') }
+
   before do
     mock_logged_in_user
+    allow(Person).to receive(:friendly).and_return(friendly)
+    allow(friendly).to receive(:find).with(person_id).and_return(person)
+    allow(controller).to receive(:authorize).with(person)
   end
 
   describe 'GET new' do
-    let(:person_id)  { 'person-id' }
-    let(:person)     { double('person') }
     let(:suggestion) { double('suggestion') }
-    let(:friendly)   { double('friendly') }
 
     it 'assigns a new suggestion as @suggestion' do
       expect(Suggestion).to receive(:new).and_return(suggestion)
-      allow(Person).to receive(:friendly).and_return(friendly)
-      allow(friendly).to receive(:find).with(person_id).and_return(person)
 
       get :new, person_id: person_id
-
       expect(assigns(:suggestion)).to eq suggestion
     end
 
@@ -32,10 +33,17 @@ RSpec.describe SuggestionsController, type: :controller do
 
       expect(assigns(:person)).to eq person
     end
+
+    it 'checks whether authority to edit person exists' do
+      expect(controller).to receive(:authorize).with(person)
+
+      get :new, person_id: person_id
+    end
   end
 
   describe 'POST create' do
     let(:params)     { { foo: 'bar' } }
+
     describe 'invalid suggestion' do
       let(:suggestion) { double('suggestion', :'valid?' => false) }
 
@@ -47,9 +55,6 @@ RSpec.describe SuggestionsController, type: :controller do
     end
 
     describe 'valid suggestion' do
-      let(:person_id)  { 'person-id' }
-      let(:person)     { double('person') }
-      let(:friendly)   { double('friendly') }
       let(:suggestion) { double('suggestion', :'valid?' => true) }
 
       it 'delivers the suggestion' do
@@ -62,6 +67,15 @@ RSpec.describe SuggestionsController, type: :controller do
 
         expect(response).to render_template(:create)
       end
+
+      it 'checks whether authority to edit person exists' do
+        allow(Suggestion).to receive(:new).with(params).and_return(suggestion)
+        allow(SuggestionDelivery).to receive(:deliver).with(person, current_user, suggestion)
+
+        expect(controller).to receive(:authorize).with(person)
+        post :create, person_id: person_id, suggestion: params
+      end
+
     end
   end
 end

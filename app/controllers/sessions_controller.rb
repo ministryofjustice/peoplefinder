@@ -1,6 +1,8 @@
 class SessionsController < ApplicationController
   skip_before_action :ensure_user
 
+  before_action :set_login_screen_flag
+
   def create
     person = FindCreatePerson.from_auth_hash(auth_hash)
 
@@ -12,6 +14,7 @@ class SessionsController < ApplicationController
   end
 
   def new
+    @unauthorised_login = session.delete(:unauthorised_login)
   end
 
   def destroy
@@ -20,7 +23,13 @@ class SessionsController < ApplicationController
     redirect_to '/'
   end
 
-protected
+  private
+
+  def set_login_screen_flag
+    @login_screen = true
+  end
+
+  protected
 
   def auth_hash
     request.env['omniauth.auth']

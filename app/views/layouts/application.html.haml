@@ -10,7 +10,7 @@
       .inner-block
         %nav
           .breadcrumbs= yield :breadcrumbs
-      - if current_user && !@editing_mode
+      - if logged_in? && !@login_screen && !@editing_mode
         .grid-wrapper
           .grid.grid-2-3
             .inner-block= render 'shared/search'

@@ -1,10 +1,13 @@
 class ApplicationController < ActionController::Base
+  include Pundit
   include FeatureHelper
 
   helper MojHelper
 
   protect_from_forgery with: :exception
   before_action :ensure_user
+
+  rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 
 private
 
@@ -21,8 +24,12 @@ private
   end
   helper_method :can_add_person_here?
 
+  def load_user
+    Login.current_user(session) || ReadonlyUser.from_request(request)
+  end
+
   def current_user
-    @current_user ||= Login.current_user(session)
+    @current_user ||= load_user
   rescue ActiveRecord::RecordNotFound
     session.destroy
   end
@@ -32,6 +39,16 @@ private
     current_user.present?
   end
   helper_method :logged_in?
+
+  def logged_in_regular?
+    logged_in? && current_user.is_a?(Person)
+  end
+  helper_method :logged_in_regular?
+
+  def logged_in_readonly?
+    logged_in? && current_user.is_a?(ReadonlyUser)
+  end
+  helper_method :logged_in_readonly?
 
   def super_admin?
     logged_in? && current_user.super_admin?
@@ -68,5 +85,13 @@ private
 
   def error(*partial_key, **options)
     i18n_flash :error, partial_key, options
+  end
+
+  def user_not_authorized
+    if logged_in_readonly?
+      session[:desired_path] = request.fullpath
+      session[:unauthorised_login] = true
+      redirect_to new_sessions_path
+    end
   end
 end

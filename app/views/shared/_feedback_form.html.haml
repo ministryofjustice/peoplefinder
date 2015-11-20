@@ -12,7 +12,7 @@
           What went wrong?
         = f.text_area :problem, class: 'form-control'
 
-        - unless current_user
+        - unless logged_in_regular?
           = f.label :person_email do
             Your email
           = f.text_field :person_email, class: 'form-control'

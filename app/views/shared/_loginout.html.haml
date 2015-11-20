@@ -1,5 +1,5 @@
 .inner-block.login-bar
-  - if logged_in?
+  - if logged_in_regular?
     %span
       Signed in as
       = link_to current_user, person_path(current_user)
@@ -7,3 +7,7 @@
       %span.super-admin (S)
     %span.logout-link
       = link_to "Sign out", sessions_path, :method => :delete
+  - elsif logged_in_readonly? && !@login_screen
+    %span
+      To update People Finder,
+      #{link_to('sign in now', new_sessions_path)}.
