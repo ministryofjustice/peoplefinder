@@ -13,6 +13,18 @@
 @import "measurements";
 @import "elements/helpers";
 
+@media (min-width: 641px) {
+  .grid-2-3 {
+    float: left;
+    width: 100%;
+  }
+}
+
+@media (min-width: 980px) {
+  .grid-2-3 {
+    width: 66.666666667%;
+  }
+}
 
 *{
   box-sizing: border-box;
