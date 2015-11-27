@@ -61,6 +61,16 @@ class Group < ActiveRecord::Base
     Person.all_in_groups(subtree_ids)
   end
 
+  def completion_score
+    people = all_people
+    if people.blank?
+      0
+    else
+      total_score = people.map(&:completion_score).inject(0) {|s, total| total + s }
+      (total_score / people.length.to_f).round(0)
+    end
+  end
+
   def editable_parent?
     new_record? || parent.present? || children.empty?
   end

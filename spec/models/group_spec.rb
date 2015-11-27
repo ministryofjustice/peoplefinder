@@ -93,9 +93,13 @@ RSpec.describe Group, type: :model do
     let(:subteam) { create(:group, parent: team) }
 
     let(:alice) { create(:person, given_name: 'alice', surname: 'smith') }
-    let(:bob) { create(:person, given_name: 'bob', surname: 'smith') }
+    let(:bob) { create(:person, given_name: 'bob', surname: 'smith', city: 'Winchester') }
 
     subject { team.all_people }
+
+    it 'has team with completion_score equal to zero' do
+      expect(team.completion_score).to eq(0)
+    end
 
     context 'with bob in the team' do
       before { team.people << bob }
@@ -104,11 +108,20 @@ RSpec.describe Group, type: :model do
         expect(subject.length).to eq(1)
       end
 
+      it 'has team with completion_score equal to bob\'s completion_score' do
+        expect(team.completion_score).to eq(bob.completion_score)
+      end
+
       context 'and alice in the subteam' do
         before { subteam.people << alice }
 
         it 'has 2 membership' do
           expect(subject.length).to eq(2)
+        end
+
+        it 'has team with completion_score equal to average of bob and alice\'s completion_score' do
+          average_score = ( (bob.completion_score + alice.completion_score) / 2.0).round(0)
+          expect(team.completion_score).to eq(average_score)
         end
 
         context 'and bob also in the subteam' do
