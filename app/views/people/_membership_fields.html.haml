@@ -14,8 +14,9 @@
   .form-group
     = membership_f.label :leader, 'Team leader?', class: 'form-label-bold'
     = membership_f.check_box :leader
-    %span.hint= role_translate(membership.person, 'memberships.leader')
+    %span.hint= role_translate(membership.person, 'memberships.leader').html_safe
 
+  .form-group
     = membership_f.label :subscribed, 'Team updates', class: 'form-label-bold'
     = membership_f.check_box :subscribed, class: 'membership-subscribed-check-box'
     %span.hint= role_translate(membership.person, 'memberships.subscribed')

@@ -15,7 +15,14 @@ feature "Person maintenance" do
     fill_in 'Surname', with: 'Taylor'
     fill_in 'Main email', with: person_attributes[:email]
     fill_in 'Job title', with: 'Head Honcho'
+
+    expect(page).to have_selector('#team-led', text: 'Ministry of Justice team')
+    expect(page).to have_selector('.hint', text: 'This person leads the Ministry of Justice team. (More than one person can be selected as team leader.)')
+
     select_in_team_select 'Digital Justice'
+
+    expect(page).to have_selector('#team-led', text: 'Digital Justice [MOJ] team')
+    expect(page).to have_selector('.hint', text: 'This person leads the Digital Justice [MOJ] team. (More than one person can be selected as team leader.)')
     check 'leader'
     click_button 'Save', match: :first
 
@@ -31,6 +38,7 @@ feature "Person maintenance" do
 
     javascript_log_in
     visit edit_person_path(person)
+    expect(page).to have_selector('#team-led', text: 'Digital Justice [MOJ] team')
 
     fill_in 'Job title', with: 'Head Honcho'
     click_button 'Save', match: :first
@@ -100,7 +108,7 @@ feature "Person maintenance" do
 end
 
 def create_person_in_digital_justice
-  department = create(:department, name: 'Digital Justice')
+  department = create(:department, name: 'Ministry of Justice')
   group = create(:group, name: 'Digital Justice', parent: department)
   person = create(:person)
   person.memberships.create(group: group)

@@ -44,12 +44,28 @@ var TeamAutocomplete = (function (){
       });
     },
 
+    setTeamLedText: function(select, teamLed) {
+      if (teamLed != null) {
+        var team = select.find('option').filter(':selected');
+        if (team != null) {
+          teamLed.text(team.text() + ' team');
+        }
+      }
+    },
+
     enhance: function ( o ){
       TeamAutocomplete.runTransformations(o);
 
-      $(o).select2({
+      var teamSelect = $(o).select2({
         templateResult: TeamAutocomplete.formatResults
-      }).addClass('team-select-enhanced');
+      });
+      var teamLed = $('#team-led');
+
+      teamSelect.addClass('team-select-enhanced');
+      teamSelect.on('change', function (e) {
+        TeamAutocomplete.setTeamLedText(teamSelect, teamLed);
+      });
+      TeamAutocomplete.setTeamLedText(teamSelect, teamLed);
     }
   };
 
