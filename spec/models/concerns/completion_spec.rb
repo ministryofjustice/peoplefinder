@@ -54,6 +54,22 @@ RSpec.describe 'Completion' do # rubocop:disable RSpec/DescribeClass
         expect(person).not_to be_incomplete
       end
     end
+
+    context 'when legacy image field exists instead of profile photo and all other fields completed' do
+      let(:person) do
+        fields = completed_attributes
+        fields.delete(:profile_photo_id)
+        fields.merge!(image: 'profile_MoJ_small.jpg')
+        Person.new(completed_attributes)
+      end
+      before { person.groups << build(:group)  }
+
+      it 'returns 100' do
+        expect(person.completion_score).to eql(100)
+        expect(person).not_to be_incomplete
+      end
+    end
+
   end
 
   context '.overall_completion' do

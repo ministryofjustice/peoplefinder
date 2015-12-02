@@ -8,10 +8,10 @@ module Concerns::Completion
     city
     location_in_building
     primary_phone_number
-    profile_photo_id
   ]
 
   COMPLETION_FIELDS = ADEQUATE_FIELDS + %i[
+    profile_photo_present?
     email
     given_name
     groups
@@ -23,6 +23,8 @@ module Concerns::Completion
       criteria = ADEQUATE_FIELDS.map { |f|
         "coalesce(cast(#{f} AS text), '') = ''"
       }.join(' OR ')
+      profile_missing = "( coalesce(cast(profile_photo_id AS text), '') = '' AND coalesce(cast(image AS text), '') = '' )"
+      criteria += " OR #{profile_missing}"
       where(criteria).order(:email)
     end
 
@@ -46,6 +48,10 @@ module Concerns::Completion
       (100 * completed.select { |f| f }.length) / COMPLETION_FIELDS.length
     end
 
+    def profile_photo_present?
+      profile_photo_id || attributes['image']
+    end
+
     def incomplete?
       completion_score < 100
     end
@@ -55,7 +61,11 @@ module Concerns::Completion
     end
 
     def needed_for_completion?(field)
-      COMPLETION_FIELDS.include?(field) && send(field).blank?
+      if field == :profile_photo_id
+        !profile_photo_present?
+      else
+        COMPLETION_FIELDS.include?(field) && send(field).blank?
+      end
     end
   end
 end
