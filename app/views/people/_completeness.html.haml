@@ -6,6 +6,7 @@
   .score #{person.completion_score}%
   - unless @preview
     - if person.incomplete?
-      %p= link_to 'complete your profile', edit_person_path(person, activity: 'complete')
+      - complete_text = current_user.is?(person) ? 'complete your profile' : 'complete this profile'
+      %p= link_to complete_text, edit_person_path(person, activity: 'complete')
     - else
       %p Thanks for improving People Finder for everyone!

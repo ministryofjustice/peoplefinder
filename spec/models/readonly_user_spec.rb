@@ -40,4 +40,11 @@ RSpec.describe ReadonlyUser, type: :model do
       expect(subject).not_to be_super_admin
     end
   end
+
+  describe '#is?' do
+    it 'returns false' do
+      person = build(:person, email: 'test.user@digital.justice.gov.uk')
+      expect(subject.is?(person)).to be false
+    end
+  end
 end

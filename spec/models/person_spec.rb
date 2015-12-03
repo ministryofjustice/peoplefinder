@@ -227,4 +227,23 @@ RSpec.describe Person, type: :model do
       end
     end
   end
+
+  describe '#is?' do
+    context 'given another person' do
+      it 'returns false' do
+        other_person = create(:person, email: 'test.user@digital.justice.gov.uk')
+        expect(person.is?(other_person)).to be false
+      end
+    end
+
+    context 'given a person with matching email' do
+      it 'returns true' do
+        email = 'test.user@digital.justice.gov.uk'
+        person.email = email
+        other_person = create(:person, email: email)
+        expect(person.is?(other_person)).to be true
+      end
+    end
+  end
+
 end
