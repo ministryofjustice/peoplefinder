@@ -66,7 +66,7 @@ class Group < ActiveRecord::Base
     if people.blank?
       0
     else
-      total_score = people.map(&:completion_score).inject(0) {|s, total| total + s }
+      total_score = people.inject(0) { |total, person| total + person.completion_score }
       (total_score / people.length.to_f).round(0)
     end
   end
