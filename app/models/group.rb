@@ -62,12 +62,14 @@ class Group < ActiveRecord::Base
   end
 
   def completion_score
-    people = all_people
-    if people.blank?
-      0
-    else
-      total_score = people.inject(0) { |total, person| total + person.completion_score }
-      (total_score / people.length.to_f).round(0)
+    Rails.cache.fetch("#{id}-completion-score", expires_in: 1.hour) do
+      people = all_people
+      if people.blank?
+        0
+      else
+        total_score = people.inject(0) { |total, person| total + person.completion_score }
+        (total_score / people.length.to_f).round(0)
+      end
     end
   end
 
