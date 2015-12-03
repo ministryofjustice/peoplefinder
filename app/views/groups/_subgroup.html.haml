@@ -1,6 +1,9 @@
 %div.grid.grid-1-3.subgroup
   %a.subgroup-link-block.inner-block{ href: url_for(subgroup) }
     %h3= subgroup
+    .subgroup-completion
+      %span.score< #{subgroup.completion_score}%
+      of profile information completed
     %div.about-subgroup
       .formatted-text
         = govspeak(truncate(subgroup.with_placeholder_default(:description), length: 350))
