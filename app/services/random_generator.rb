@@ -32,6 +32,9 @@ private
     else
       @groups_per_level.times do
         new_group = create_group(group)
+        @people_per_group.times do
+          create_person(new_group)
+        end
         generate_level(new_group, level + 1)
       end
     end

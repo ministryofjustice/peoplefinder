@@ -37,7 +37,7 @@ RSpec.describe RandomGenerator do
       expect(group.descendants.count).to eq(6)
     end
     it 'generate people for the leaf groups' do
-      expect(Person.all_in_groups(group.descendants.pluck(:id)).count).to eq(12)
+      expect(Person.all_in_groups(group.descendants.pluck(:id)).count).to eq(30)
     end
   end
 end
