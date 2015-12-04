@@ -8,7 +8,7 @@
   %h2
     Teams within
     = @group.name
-    .view-all-people= link_to "View all people in #{ @group.name }", people_group_path(@group)
+    .view-all-people= link_to "View all #{ @group.all_people_count } people in #{ @group.name }", people_group_path(@group)
   .grid-wrapper
     = render partial: "subgroup", collection: @group.children
 

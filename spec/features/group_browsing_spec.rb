@@ -34,7 +34,7 @@ feature 'Group browsing' do
     visit group_path(current_group)
 
     expect(page).to have_text("Teams within #{ current_group.name }")
-    expect(page).to have_link("View all people in #{ current_group.name }")
+    expect(page).to have_link("View all 6 people in #{ current_group.name }")
     expect(page).to have_text("#{subteam.completion_score}% of profile information completed")
   end
 
@@ -69,7 +69,7 @@ feature 'Group browsing' do
     current_group = team
     add_people_to_group(names, current_group)
     visit group_path(current_group)
-    click_link("View all people in #{ current_group.name }")
+    click_link("View all 3 people in #{ current_group.name }")
 
     expect(page).to have_title("People in #{ current_group.name } - #{ app_title }")
     within('.breadcrumbs') do
