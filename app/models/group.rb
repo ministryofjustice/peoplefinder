@@ -61,6 +61,10 @@ class Group < ActiveRecord::Base
     Person.all_in_groups(subtree_ids)
   end
 
+  def all_people_count
+    Person.count_in_groups(subtree_ids)
+  end
+
   def completion_score
     Rails.cache.fetch("#{id}-completion-score", expires_in: 1.hour) do
       people = all_people

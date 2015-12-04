@@ -88,6 +88,15 @@ class Person < ActiveRecord::Base
     find_by_sql([query, group_ids])
   end
 
+  def self.count_in_groups(group_ids)
+    query = <<-SQL
+      SELECT COUNT(DISTINCT p.id)
+      FROM memberships m, people p
+      WHERE m.person_id = p.id AND group_id in (?)
+    SQL
+    Person.count_by_sql([query, group_ids])
+  end
+
   def to_s
     name
   end
