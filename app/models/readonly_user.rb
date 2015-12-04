@@ -16,7 +16,4 @@ class ReadonlyUser
     false
   end
 
-  def is? person
-    false
-  end
 end

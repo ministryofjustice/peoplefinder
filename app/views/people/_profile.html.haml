@@ -51,7 +51,7 @@
         %p= @person.description
 
 - if @person.email.present? && !@preview
-  - if current_user.is?(@person)
+  - if current_user == @person
     = render partial: "completeness", locals: { person: @person }
   - else
     - if @person.incomplete?

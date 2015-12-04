@@ -114,7 +114,4 @@ class Person < ActiveRecord::Base
     EmailAddress.new(email).valid_address? && person_responsible.try(:email) != email
   end
 
-  def is? person
-    person && person.email == self.email
-  end
 end
