@@ -1,6 +1,6 @@
 class GroupsController < ApplicationController
   before_action :set_group, only: [
-    :show, :edit, :update, :destroy, :all_people
+    :show, :edit, :update, :destroy, :all_people, :people_outside_subteams
   ]
   before_action :set_org_structure, only: [:new, :edit, :create, :update]
   before_action :load_versions, only: [:show]

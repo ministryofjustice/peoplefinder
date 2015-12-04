@@ -1,0 +1,6 @@
+- content_for :breadcrumbs do
+  = breadcrumbs(Home.path + @group.path + ['People outside of subteams'])
+
+%h1= @page_title = "People in #{ @group.name } outside of subteams"
+.grid-wrapper
+  = render partial: "people/summary", collection: @group.people_outside_subteams
