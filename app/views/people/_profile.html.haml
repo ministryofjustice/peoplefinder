@@ -54,9 +54,9 @@
   - if current_user == @person
     = render partial: "completeness", locals: { person: @person }
   - else
+    = render partial: "request_information", locals: { person: @person }
     - if @person.incomplete?
       = render partial: "completeness", locals: { person: @person }
-    = render partial: "request_information", locals: { person: @person }
 
 - unless @versions.nil?
   %h1 Audit Log
