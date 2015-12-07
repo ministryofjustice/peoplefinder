@@ -1,7 +1,7 @@
 class ProfilePhotosController < ApplicationController
   def create
     photo = ProfilePhoto.create(profile_photo_params)
-    render json: photo
+    render text: photo.to_json
   end
 
 private
