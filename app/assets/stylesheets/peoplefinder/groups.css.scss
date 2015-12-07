@@ -108,12 +108,18 @@ $focus-color: #FFBF47;
     clip: rect(0px, 300px, 300px, 0px);
   }
 }
-.view-all-people {
+
+.view-people-outside-subteams {
   float:right;
   font-size: 44.5%;
   font-weight: normal;
   margin-top: 1em;
-  text-decoration: underline;
+}
+
+@media (max-width: 640px) {
+  .view-people-outside-subteams {
+    font-size: 15px;
+  }
 }
 
 

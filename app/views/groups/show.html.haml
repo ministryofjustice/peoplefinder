@@ -5,12 +5,12 @@
 = render partial: 'detail'
 
 - unless @group.leaf_node?
-  %h2
+  .view-all-people
+    = link_to "View all #{ @group.all_people_count } people in #{ @group.name }", people_group_path(@group)
+  %h2#teams
     Teams within
     = @group.name
-    .view-all-people
-      = link_to "View all #{ @group.all_people_count } people in #{ @group.name }", people_group_path(@group)
-      %br
+    .view-people-outside-subteams
       = link_to "View #{ @group.people_outside_subteams_count } people outside of subteams", people_outside_subteams_group_path(@group)
   .grid-wrapper
     = render partial: "subgroup", collection: @group.children
