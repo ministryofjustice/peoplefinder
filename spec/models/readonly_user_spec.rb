@@ -40,4 +40,5 @@ RSpec.describe ReadonlyUser, type: :model do
       expect(subject).not_to be_super_admin
     end
   end
+
 end

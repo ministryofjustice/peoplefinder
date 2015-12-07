@@ -5,6 +5,7 @@ feature 'Person maintenance' do
   include ActiveJobHelper
 
   let(:person) { create(:person, email: 'test.user@digital.justice.gov.uk') }
+  let(:another_person) { create(:person, email: 'someone.else@digital.justice.gov.uk') }
 
   before(:each, user: :regular) do
     omni_auth_log_in_as person.email
@@ -209,10 +210,15 @@ feature 'Person maintenance' do
         expect(page).not_to have_text(completion_prompt_text)
       end
 
-      scenario 'Editing my own profile from a "complete this profile" link' do
+      scenario 'Editing my own profile from a "complete your profile" link' do
         visit person_path(person)
         click_link 'complete your profile'
         expect(page).to have_text(completion_prompt_text)
+      end
+
+      scenario 'Editing another person\'s profile from a "complete this profile" link' do
+        visit person_path(another_person)
+        click_link 'complete this profile'
         expect(page).to have_text(completion_prompt_text)
       end
 
@@ -326,23 +332,32 @@ feature 'Person maintenance' do
   end
 
   context 'Viewing another person\'s profile' do
-    context 'for the readonly user', user: :readonly do
-      let(:another_person) { create(:person, email: 'someone.else@digital.justice.gov.uk') }
 
+    context 'for the readonly user', user: :readonly do
       scenario 'when it is complete' do
         complete_profile!(another_person)
         visit person_path(another_person)
         expect(page).not_to have_text('Profile completeness')
       end
+
+      scenario 'when it is not complete' do
+        visit person_path(another_person)
+        expect(page).to have_text('Profile completeness')
+        click_link 'complete this profile'
+        expect(login_page).to be_displayed
+      end
     end
 
     context 'for a regular user', user: :regular do
-      let(:another_person) { create(:person, email: 'someone.else@digital.justice.gov.uk') }
-
       scenario 'when it is complete' do
         complete_profile!(another_person)
         visit person_path(another_person)
         expect(page).not_to have_text('Profile completeness')
+      end
+
+      scenario 'when it is not complete' do
+        visit person_path(another_person)
+        expect(page).to have_text('Profile completeness')
       end
     end
   end

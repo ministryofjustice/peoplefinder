@@ -15,4 +15,5 @@ class ReadonlyUser
   def super_admin?
     false
   end
+
 end

@@ -113,4 +113,5 @@ class Person < ActiveRecord::Base
   def notify_of_change?(person_responsible)
     EmailAddress.new(email).valid_address? && person_responsible.try(:email) != email
   end
+
 end
