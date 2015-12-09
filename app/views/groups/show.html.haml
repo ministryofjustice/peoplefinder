@@ -11,7 +11,7 @@
     Teams within
     = @group.name
     .view-people-outside-subteams
-      = link_to "View #{ @group.people_outside_subteams_count } people outside of subteams", people_outside_subteams_group_path(@group)
+      = link_to "View #{ @group.people_outside_subteams_count } people not assigned to a sub-team", people_outside_subteams_group_path(@group)
   .grid-wrapper
     = render partial: "subgroup", collection: @group.children
 

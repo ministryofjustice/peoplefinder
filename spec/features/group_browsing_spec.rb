@@ -65,7 +65,7 @@ feature 'Group browsing' do
       visit group_path(team)
       expect(page).to have_text("Teams within #{ team.name }")
       expect(page).to have_link("View all 6 people in #{ team.name }")
-      expect(page).to have_link("View 3 people outside of subteams")
+      expect(page).to have_link("View 3 people not assigned to a sub-team")
       expect(page).to have_text("#{subteam.completion_score}% of profile information completed")
     end
 
@@ -85,17 +85,17 @@ feature 'Group browsing' do
       end
     end
 
-    scenario 'following the view people outside of subteams link' do
+    scenario 'following link to view people not assigned to a sub-team' do
       visit group_path(team)
-      click_link("View 3 people outside of subteams")
+      click_link('View 3 people not assigned to a sub-team')
 
-      expect(page).to have_title("People in #{ team.name } outside of subteams - #{ app_title }")
+      expect(page).to have_title("People in #{ team.name } not assigned to a sub-team - #{ app_title }")
       within('.breadcrumbs') do
         expect(page).to have_link(team.name)
-        expect(page).to have_text('People outside of subteams')
+        expect(page).to have_text('People not assigned to a sub-team')
       end
 
-      expect(page).to have_text("People in #{ team.name } outside of subteams")
+      expect(page).to have_text("People in #{ team.name } not assigned to a sub-team")
       names.each do |name|
         expect(page).to have_link(name.join(' '))
       end
