@@ -90,12 +90,22 @@ RSpec.describe Group, type: :model do
 
   describe '.all_people' do
     let(:team) { create(:group) }
+    let(:cache_id) { "#{team.id}-completion-score" }
     let(:subteam) { create(:group, parent: team) }
 
     let(:alice) { create(:person, given_name: 'alice', surname: 'smith') }
     let(:bob) { create(:person, given_name: 'bob', surname: 'smith', city: 'Winchester') }
 
     subject { team.all_people }
+
+    before do
+      Rails.cache.delete(cache_id)
+    end
+
+    it 'is empty' do
+      expect(subject).to be_empty
+      expect(team.all_people_count).to be_zero
+    end
 
     it 'has team with completion_score equal to zero' do
       expect(team.completion_score).to eq(0)
@@ -106,24 +116,26 @@ RSpec.describe Group, type: :model do
 
       it 'has 1 membership' do
         expect(subject.length).to eq(1)
+        expect(team.all_people_count).to eq(1)
       end
 
       it 'has team with completion_score equal to bob\'s completion_score' do
         expect(team.completion_score).to eq(bob.completion_score)
-        expect(Rails.cache.read("#{team.id}-completion-score")).to eq(bob.completion_score)
+        expect(Rails.cache.read(cache_id)).to eq(bob.completion_score)
       end
 
       context 'and alice in the subteam' do
         before { subteam.people << alice }
 
-        it 'has 2 membership' do
+        it 'has 2 memberships' do
           expect(subject.length).to eq(2)
+          expect(team.all_people_count).to eq(2)
         end
 
         it 'has team with completion_score equal to average of bob and alice\'s completion_score' do
           average_score = ( (bob.completion_score + alice.completion_score) / 2.0).round(0)
           expect(team.completion_score).to eq(average_score)
-          expect(Rails.cache.read("#{team.id}-completion-score")).to eq(average_score)
+          expect(Rails.cache.read(cache_id)).to eq(average_score)
         end
 
         context 'and bob also in the subteam' do
@@ -131,6 +143,7 @@ RSpec.describe Group, type: :model do
 
           it 'still has 2 memberships' do
             expect(subject.length).to eq(2)
+            expect(team.all_people_count).to eq(2)
           end
 
           it 'returns alice and bob in alphabetical order' do
