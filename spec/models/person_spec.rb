@@ -32,14 +32,18 @@ RSpec.describe Person, type: :model do
     let(:groups) { create_list(:group, 3) }
     let(:people) { create_list(:person, 3) }
 
-    it 'returns all people in any listed groups' do
+    it 'returns all people in any listed groups and .count_in_groups returns correct count' do
       people.zip(groups).each do |person, group|
         create :membership, person: person, group: group
       end
-      result = described_class.all_in_groups(groups.take(2))
+      group_ids = groups.take(2)
+      result = described_class.all_in_groups(group_ids)
       expect(result).to include(people[0])
       expect(result).to include(people[1])
       expect(result).not_to include(people[2])
+
+      people_count = described_class.count_in_groups(group_ids)
+      expect(people_count).to eq(2)
     end
 
     it 'concatenates all roles alphabetically with commas' do
