@@ -18,6 +18,8 @@ class GroupsController < ApplicationController
   # GET /groups/1
   def show
     authorize @group
+    @all_people_count = @group.all_people_count
+    @people_outside_subteams_count = @group.people_outside_subteams_count
 
     respond_to do |format|
       format.html { session[:last_group_visited] = @group.id }

@@ -32,6 +32,8 @@ feature 'Group browsing' do
     visit group_path(current_group)
 
     expect(page).to have_text("0% of profile information completed")
+    expect(page).not_to have_link("View all 0 people in #{ current_group.name }")
+    expect(page).not_to have_link("View 0 people not assigned to a sub-team")
   end
 
   scenario 'A team with no subteams (leaf_node) and some people' do
@@ -51,7 +53,8 @@ feature 'Group browsing' do
     visit group_path(leaf_node)
 
     expect(page).not_to have_text("Teams within #{ current_group.name }")
-    expect(page).not_to have_link("View all 3 people in #{ current_group.name }")
+    expect(page).not_to have_link("View all 0 people in #{ current_group.name }")
+    expect(page).not_to have_link("View 0 people not assigned to a sub-team")
   end
 
   context 'A team with people and subteams with people' do
