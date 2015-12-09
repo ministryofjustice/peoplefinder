@@ -66,11 +66,11 @@ class Group < ActiveRecord::Base
   end
 
   def people_outside_subteams
-    Person.all_in_groups([self.id])
+    Person.all_in_groups([self.id]) - Person.all_in_groups(subteam_ids)
   end
 
   def people_outside_subteams_count
-    people.count
+    Person.count_in_groups([self.id], excluded_group_ids: subteam_ids)
   end
 
   def completion_score
@@ -103,5 +103,9 @@ private
 
   def check_deletability
     errors.add :base, :memberships_exist unless deletable?
+  end
+
+  def subteam_ids
+    subtree_ids - [self.id]
   end
 end

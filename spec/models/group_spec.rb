@@ -88,7 +88,7 @@ RSpec.describe Group, type: :model do
     end
   end
 
-  describe '.all_people' do
+  describe 'team with subteam' do
     let(:team) { create(:group) }
     let(:cache_id) { "#{team.id}-completion-score" }
     let(:subteam) { create(:group, parent: team) }
@@ -96,30 +96,60 @@ RSpec.describe Group, type: :model do
     let(:alice) { create(:person, given_name: 'alice', surname: 'smith') }
     let(:bob) { create(:person, given_name: 'bob', surname: 'smith', city: 'Winchester') }
 
-    subject { team.all_people }
-
     before do
       Rails.cache.delete(cache_id)
     end
 
-    it 'is empty' do
-      expect(subject).to be_empty
-      expect(team.all_people_count).to be_zero
-    end
+    context 'with no people in team or subteam' do
+      it 'has empty all_people' do
+        expect(team.all_people).to be_empty
+      end
 
-    it 'has team with completion_score equal to zero' do
-      expect(team.completion_score).to eq(0)
+      it 'has all_people_count of zero' do
+        expect(team.all_people_count).to eq(0)
+      end
+
+      it 'has empty people_outside_subteams' do
+        expect(team.people_outside_subteams).to be_empty
+      end
+
+      it 'has people_outside_subteams_count of zero' do
+        expect(team.people_outside_subteams_count).to eq(0)
+      end
+
+      it 'has completion_score equal to zero' do
+        expect(team.completion_score).to eq(0)
+      end
     end
 
     context 'with bob in the team' do
       before { team.people << bob }
 
-      it 'has 1 membership' do
-        expect(subject.length).to eq(1)
+      it 'has 1 in all_people array' do
+        expect(team.all_people.length).to eq(1)
+      end
+
+      it 'has items in all_people array that have role_names' do
+        expect(team.all_people.first.respond_to?(:role_names)).to be true
+      end
+
+      it "has all_people_count of 1" do
         expect(team.all_people_count).to eq(1)
       end
 
-      it 'has team with completion_score equal to bob\'s completion_score' do
+      it 'has 1 in people_outside_subteams array' do
+        expect(team.people_outside_subteams.length).to eq(1)
+      end
+
+      it 'has items in people_outside_subteams array that have role_names' do
+        expect(team.people_outside_subteams.first.respond_to?(:role_names)).to be true
+      end
+
+      it 'has people_outside_subteams_count of 1' do
+        expect(team.people_outside_subteams_count).to eq(1)
+      end
+
+      it 'has completion_score equal to bob\'s completion_score' do
         expect(team.completion_score).to eq(bob.completion_score)
         expect(Rails.cache.read(cache_id)).to eq(bob.completion_score)
       end
@@ -127,27 +157,55 @@ RSpec.describe Group, type: :model do
       context 'and alice in the subteam' do
         before { subteam.people << alice }
 
-        it 'has 2 memberships' do
-          expect(subject.length).to eq(2)
+        it 'has 2 in all_people array' do
+          expect(team.all_people.length).to eq(2)
+        end
+
+        it 'has all_people_count of 2' do
           expect(team.all_people_count).to eq(2)
         end
 
-        it 'has team with completion_score equal to average of bob and alice\'s completion_score' do
+        it 'has 1 in people_outside_subteams' do
+          expect(team.people_outside_subteams.length).to eq(1)
+        end
+
+        it 'has people_outside_subteams_count of 1' do
+          expect(team.people_outside_subteams_count).to eq(1)
+        end
+
+        it 'has completion_score equal to average of bob and alice\'s completion_score' do
           average_score = ( (bob.completion_score + alice.completion_score) / 2.0).round(0)
           expect(team.completion_score).to eq(average_score)
           expect(Rails.cache.read(cache_id)).to eq(average_score)
         end
 
         context 'and bob also in the subteam' do
-          before { subteam.people << alice }
+          before { subteam.people << bob }
 
-          it 'still has 2 memberships' do
-            expect(subject.length).to eq(2)
+          it 'has 2 in all_people array' do
+            expect(team.all_people.length).to eq(2)
+          end
+
+          it 'has all_people_count of 2' do
             expect(team.all_people_count).to eq(2)
           end
 
+          it 'has empty people_outside_subteams' do
+            expect(team.people_outside_subteams).to be_empty
+          end
+
+          it 'has people_outside_subteams_count of zero' do
+            expect(team.people_outside_subteams_count).to eq(0)
+          end
+
           it 'returns alice and bob in alphabetical order' do
-            expect(subject.map(&:name)).to eql(['alice smith', 'bob smith'])
+            expect(team.all_people.map(&:name)).to eql(['alice smith', 'bob smith'])
+          end
+
+          it 'has completion_score equal to average of bob and alice\'s completion_score' do
+            average_score = ( (bob.completion_score + alice.completion_score) / 2.0).round(0)
+            expect(team.completion_score).to eq(average_score)
+            expect(Rails.cache.read(cache_id)).to eq(average_score)
           end
         end
       end

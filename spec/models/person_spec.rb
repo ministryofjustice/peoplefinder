@@ -42,8 +42,11 @@ RSpec.describe Person, type: :model do
       expect(result).to include(people[1])
       expect(result).not_to include(people[2])
 
-      people_count = described_class.count_in_groups(group_ids)
-      expect(people_count).to eq(2)
+      count = described_class.count_in_groups(group_ids)
+      expect(count).to eq(2)
+
+      count = described_class.count_in_groups(group_ids, excluded_group_ids: groups.take(1))
+      expect(count).to eq(1)
     end
 
     it 'concatenates all roles alphabetically with commas' do

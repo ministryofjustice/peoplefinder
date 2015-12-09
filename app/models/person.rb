@@ -81,21 +81,31 @@ class Person < ActiveRecord::Base
       SELECT DISTINCT p.*,
         string_agg(CASE role WHEN '' THEN NULL ELSE role END, ', ' ORDER BY role) AS role_names
       FROM memberships m, people p
-      WHERE m.person_id = p.id AND group_id in (?)
+      WHERE m.person_id = p.id AND m.group_id in (?)
       GROUP BY p.id
       ORDER BY surname ASC, given_name ASC;
     SQL
     find_by_sql([query, group_ids])
   end
 
-  def self.count_in_groups(group_ids)
-    query = <<-SQL
-      SELECT COUNT(DISTINCT p.id)
-      FROM memberships m, people p
-      WHERE m.person_id = p.id AND group_id in (?)
-    SQL
-    Person.count_by_sql([query, group_ids])
+  def self.count_in_groups(group_ids, excluded_group_ids: [])
+    excluded_ids = if excluded_group_ids.present?
+                     Person.in_groups(excluded_group_ids).pluck(:id)
+                   else
+                     []
+                   end
+
+    Person.in_groups(group_ids).where.not(id: excluded_ids).count
   end
+
+  private
+
+  def self.in_groups(group_ids)
+    Person.includes(:memberships).
+        where("memberships.group_id": group_ids)
+  end
+
+  public
 
   def to_s
     name
