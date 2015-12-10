@@ -73,6 +73,10 @@ class Group < ActiveRecord::Base
     Person.count_in_groups([self.id], excluded_group_ids: subteam_ids)
   end
 
+  def leaderships_by_person
+    leaderships.group_by(&:person)
+  end
+
   def completion_score
     Rails.cache.fetch("#{id}-completion-score", expires_in: 1.hour) do
       people = all_people

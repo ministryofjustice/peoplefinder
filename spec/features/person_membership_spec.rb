@@ -31,6 +31,10 @@ feature "Person maintenance" do
     expect(membership.group).to eql(group)
     expect(membership.leader?).to be true
     expect(membership).to be_subscribed
+
+    visit group_path(group)
+    expect(page).to have_selector('.group-leader h4', text: 'Taylor')
+    expect(page).to have_selector('.group-leader .leader-role', text: 'Head Honcho')
   end
 
   scenario 'Editing a job title', js: true do
@@ -55,7 +59,7 @@ feature "Person maintenance" do
     visit edit_person_path(person)
 
     click_link('Add another role')
-    sleep 1
+    sleep 0.2
 
     within all('#memberships .membership').last do
       select_in_team_select 'Communications'
@@ -64,6 +68,30 @@ feature "Person maintenance" do
 
     click_button 'Save', match: :first
     expect(Person.last.memberships.length).to eql(2)
+  end
+
+  scenario 'Adding an additional leadership role in same team', js: true do
+    person = create_person_in_digital_justice
+    javascript_log_in
+    visit edit_person_path(person)
+    fill_in 'First name', with: 'Samantha'
+    fill_in 'Surname', with: 'Taylor'
+    fill_in 'Job title', with: 'Head Honcho'
+    check 'leader'
+
+    click_link('Add another role')
+    sleep 0.2
+
+    within all('#memberships .membership').last do
+      select_in_team_select 'Digital Justice'
+      fill_in 'Job title', with: 'Master of None'
+      check 'leader'
+    end
+    click_button 'Save', match: :first
+
+    visit group_path(Group.find_by_name('Digital Justice'))
+    expect(page).to have_selector('.group-leader h4', text: 'Samantha Taylor')
+    expect(page).to have_selector('.group-leader .leader-role', text: 'Head Honcho, Master of None')
   end
 
   scenario 'Unsubscribing from notifications', js: true do
