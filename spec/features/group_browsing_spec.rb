@@ -64,6 +64,14 @@ feature 'Group browsing' do
       add_people_to_group(subteam_names, subteam)
     end
 
+    scenario 'viewing top level group' do
+      add_people_to_group([%w[Perm Sec]], department)
+
+      visit group_path(department)
+      expect(page).not_to have_link("View all 7 people in #{ department.name }")
+      expect(page).to have_link("View 1 person not assigned to a sub-team")
+    end
+
     scenario 'viewing text on page' do
       visit group_path(team)
       expect(page).to have_text("Teams within #{ team.name }")
