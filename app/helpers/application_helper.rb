@@ -1,4 +1,9 @@
 module ApplicationHelper
+
+  def pluralize_with_delimiter number, text
+    "#{ number_with_delimiter(number) } #{ text.pluralize(number) }"
+  end
+
   def last_update
     current_object = @person || @group
     if current_object && current_object.updated_at.present?
