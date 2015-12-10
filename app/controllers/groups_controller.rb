@@ -1,6 +1,6 @@
 class GroupsController < ApplicationController
   before_action :set_group, only: [
-    :show, :edit, :update, :destroy, :all_people
+    :show, :edit, :update, :destroy, :all_people, :people_outside_subteams
   ]
   before_action :set_org_structure, only: [:new, :edit, :create, :update]
   before_action :load_versions, only: [:show]
@@ -18,6 +18,8 @@ class GroupsController < ApplicationController
   # GET /groups/1
   def show
     authorize @group
+    @all_people_count = @group.all_people_count
+    @people_outside_subteams_count = @group.people_outside_subteams_count
 
     respond_to do |format|
       format.html { session[:last_group_visited] = @group.id }

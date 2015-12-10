@@ -4,6 +4,16 @@ RSpec.describe ApplicationHelper, type: :helper do
   let(:stubbed_time) { Time.new(2012, 10, 31, 2, 2, 2, "+01:00") }
   let(:originator) { Version.public_user }
 
+  describe '#pluralize_with_delimiter' do
+    it 'handles singular correctly' do
+      expect(pluralize_with_delimiter(1, 'person')).to eq '1 person'
+    end
+
+    it 'handles plural correctly' do
+      expect(pluralize_with_delimiter(2000, 'person')).to eq '2,000 people'
+    end
+  end
+
   context '#last_update' do
     it 'shows last_update for a person by a system generated user' do
       @person = double(:person, updated_at: stubbed_time, originator: originator)

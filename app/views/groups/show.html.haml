@@ -5,10 +5,16 @@
 = render partial: 'detail'
 
 - unless @group.leaf_node?
-  %h2
+  .spacer-25
+  - if @all_people_count > 0 && @group.parent.present?
+    .view-all-people
+      = link_to "View #{ @all_people_count > 1 ? 'all' : '' } #{ pluralize_with_delimiter @all_people_count, 'person' } in #{ @group.name }", people_group_path(@group)
+  %h2#teams
     Teams within
     = @group.name
-    .view-all-people= link_to "View all people in #{ @group.name }", people_group_path(@group)
+    - if @people_outside_subteams_count > 0
+      .view-people-outside-subteams
+        = link_to "View #{ pluralize_with_delimiter @people_outside_subteams_count, 'person' } not assigned to a sub-team", people_outside_subteams_group_path(@group)
   .grid-wrapper
     = render partial: "subgroup", collection: @group.children
 

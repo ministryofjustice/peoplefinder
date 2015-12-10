@@ -27,22 +27,13 @@ feature 'Group browsing' do
     expect(page).to have_link('A Leaf Node')
   end
 
-  scenario 'A team with people and subteams with people' do
-    current_group = team
-    add_people_to_group(names, current_group)
-    add_people_to_group(names, subteam)
-    visit group_path(current_group)
-
-    expect(page).to have_text("Teams within #{ current_group.name }")
-    expect(page).to have_link("View all people in #{ current_group.name }")
-    expect(page).to have_text("#{subteam.completion_score}% of profile information completed")
-  end
-
   scenario 'A team and subteams without people' do
     current_group = team
     visit group_path(current_group)
 
     expect(page).to have_text("0% of profile information completed")
+    expect(page).not_to have_link("View all 0 people in #{ current_group.name }")
+    expect(page).not_to have_link("View 0 people not assigned to a sub-team")
   end
 
   scenario 'A team with no subteams (leaf_node) and some people' do
@@ -62,24 +53,63 @@ feature 'Group browsing' do
     visit group_path(leaf_node)
 
     expect(page).not_to have_text("Teams within #{ current_group.name }")
-    expect(page).not_to have_link("View all people in #{ current_group.name }")
+    expect(page).not_to have_link("View all 0 people in #{ current_group.name }")
+    expect(page).not_to have_link("View 0 people not assigned to a sub-team")
   end
 
-  scenario 'Following the view all people link' do
-    current_group = team
-    add_people_to_group(names, current_group)
-    visit group_path(current_group)
-    click_link("View all people in #{ current_group.name }")
-
-    expect(page).to have_title("People in #{ current_group.name } - #{ app_title }")
-    within('.breadcrumbs') do
-      expect(page).to have_link(current_group.name)
-      expect(page).to have_text('All people')
+  context 'A team with people and subteams with people' do
+    before do
+      current_group = team
+      add_people_to_group(names, current_group)
+      add_people_to_group(subteam_names, subteam)
     end
 
-    expect(page).to have_text("People in #{ current_group.name }")
-    names.each do |name|
-      expect(page).to have_link(name.join(' '))
+    scenario 'viewing top level group' do
+      add_people_to_group([%w[Perm Sec]], department)
+
+      visit group_path(department)
+      expect(page).not_to have_link("View all 7 people in #{ department.name }")
+      expect(page).to have_link("View 1 person not assigned to a sub-team")
+    end
+
+    scenario 'viewing text on page' do
+      visit group_path(team)
+      expect(page).to have_text("Teams within #{ team.name }")
+      expect(page).to have_link("View all 6 people in #{ team.name }")
+      expect(page).to have_link("View 3 people not assigned to a sub-team")
+      expect(page).to have_text("#{subteam.completion_score}% of profile information completed")
+    end
+
+    scenario 'following the view all people link' do
+      visit group_path(team)
+      click_link("View all 6 people in #{ team.name }")
+
+      expect(page).to have_title("People in #{ team.name } - #{ app_title }")
+      within('.breadcrumbs') do
+        expect(page).to have_link(team.name)
+        expect(page).to have_text('All people')
+      end
+
+      expect(page).to have_text("People in #{ team.name }")
+      names.each do |name|
+        expect(page).to have_link(name.join(' '))
+      end
+    end
+
+    scenario 'following link to view people not assigned to a sub-team' do
+      visit group_path(team)
+      click_link('View 3 people not assigned to a sub-team')
+
+      expect(page).to have_title("People in #{ team.name } not assigned to a sub-team - #{ app_title }")
+      within('.breadcrumbs') do
+        expect(page).to have_link(team.name)
+        expect(page).to have_text('People not assigned to a sub-team')
+      end
+
+      expect(page).to have_text("People in #{ team.name } not assigned to a sub-team")
+      names.each do |name|
+        expect(page).to have_link(name.join(' '))
+      end
     end
   end
 
@@ -110,4 +140,13 @@ feature 'Group browsing' do
       %w[ Merle Haggard ]
     ]
   end
+
+  def subteam_names
+    [
+      %w[ Cash Johnny ],
+      %w[ Parton Dolly ],
+      %w[ Haggard Merle ]
+    ]
+  end
+
 end

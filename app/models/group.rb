@@ -61,6 +61,18 @@ class Group < ActiveRecord::Base
     Person.all_in_groups(subtree_ids)
   end
 
+  def all_people_count
+    Person.count_in_groups(subtree_ids)
+  end
+
+  def people_outside_subteams
+    Person.all_in_groups([self.id]) - Person.all_in_groups(subteam_ids)
+  end
+
+  def people_outside_subteams_count
+    Person.count_in_groups([self.id], excluded_group_ids: subteam_ids)
+  end
+
   def completion_score
     Rails.cache.fetch("#{id}-completion-score", expires_in: 1.hour) do
       people = all_people
@@ -91,5 +103,9 @@ private
 
   def check_deletability
     errors.add :base, :memberships_exist unless deletable?
+  end
+
+  def subteam_ids
+    subtree_ids - [self.id]
   end
 end
