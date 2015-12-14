@@ -23,7 +23,7 @@ RSpec.describe ReminderMailer do
 
   shared_examples 'body contains' do |text|
     it 'includes body text' do
-      %w[plain html].each do |part_type|
+      %w(plain html).each do |part_type|
         expect(get_message_part(mail, part_type)).to have_text(text)
       end
     end
@@ -31,7 +31,7 @@ RSpec.describe ReminderMailer do
 
   shared_examples 'includes link to edit person' do
     it 'includes the person edit url' do
-      %w[plain html].each do |part_type|
+      %w(plain html).each do |part_type|
         expect(get_message_part(mail, part_type)).to have_text(edit_person_url(person))
       end
     end
@@ -39,7 +39,7 @@ RSpec.describe ReminderMailer do
 
   shared_examples 'includes link to token login' do
     it 'includes the token login url' do
-      %w[plain html].each do |part_type|
+      %w(plain html).each do |part_type|
         expect(get_message_part(mail, part_type)).to have_text('http://www.example.com/tokens/')
       end
     end
