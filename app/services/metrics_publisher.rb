@@ -13,7 +13,7 @@ class MetricsPublisher
   def profiles_report
     {
       'total' => Person.count,
-      'not_logged_in' => Person.where(login_count: 0).count
+      'not_logged_in' => Person.never_logged_in.count
     }
   end
 

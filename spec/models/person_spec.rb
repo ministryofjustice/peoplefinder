@@ -17,6 +17,33 @@ RSpec.describe Person, type: :model do
     end
   end
 
+  context 'who has never logged in' do
+    before { person.save }
+
+    it 'is returned by .never_logged_in' do
+      expect(described_class.never_logged_in).to include(person)
+    end
+
+    it 'is not returned by .logged_in_at_least_once' do
+      expect(described_class.logged_in_at_least_once).not_to include(person)
+    end
+  end
+
+  context 'who has logged in' do
+    before do
+      person.login_count = 1
+      person.save!
+    end
+
+    it 'is not returned by .never_logged_in' do
+      expect(described_class.never_logged_in).not_to include(person)
+    end
+
+    it 'is returned by .logged_in_at_least_once' do
+      expect(described_class.logged_in_at_least_once).to include(person)
+    end
+  end
+
   describe '.name' do
     context 'with a given_name and surname' do
       let(:person) { build(:person, given_name: 'Jon', surname: 'von Brown') }

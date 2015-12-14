@@ -1,5 +1,5 @@
 require 'spec_helper'
-require 'metrics_publisher'
+require_relative '../../app/services/metrics_publisher'
 
 RSpec.describe MetricsPublisher, type: :service do
   subject { described_class.new(recipient) }
@@ -12,6 +12,7 @@ RSpec.describe MetricsPublisher, type: :service do
       bucketed_completion: {}
     ).as_stubbed_const
     allow(pc).to receive(:where).and_return(pc)
+    allow(pc).to receive(:never_logged_in).and_return double(count: 0)
     pc
   end
 
@@ -48,7 +49,7 @@ RSpec.describe MetricsPublisher, type: :service do
 
   it 'sends the number of profiles that have not logged in' do
     scope = double(count: 42)
-    allow(person_class).to receive(:where).with(login_count: 0).
+    allow(person_class).to receive(:never_logged_in).
       and_return(scope)
     expect(recipient).to receive(:publish).
       with(:profiles, a_hash_including('not_logged_in' => 42))
