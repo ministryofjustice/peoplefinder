@@ -13,12 +13,13 @@
 
   .grid.grid-2-3
     .inner-block
-      - @person.memberships.each do |membership|
-        %h3= membership.role
-        - if membership.path.length > 1
+      - @person.memberships.group_by(&:group).each do |group, memberships|
+        %h3= memberships.map(&:role).select(&:present?).sort.join(', ')
+        - path = memberships.first.path
+        - if path.length > 1
           %dl.inline-labels.role-and-location
             %dt Team
-            %dd.breadcrumbs= breadcrumbs(membership.path.drop(1))
+            %dd.breadcrumbs= breadcrumbs(path.drop(1))
 
       %dl.inline-labels
         - if feature_enabled?(:communities)

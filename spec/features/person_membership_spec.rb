@@ -92,6 +92,9 @@ feature "Person maintenance" do
     visit group_path(Group.find_by_name('Digital Justice'))
     expect(page).to have_selector('.group-leader h4', text: 'Samantha Taylor')
     expect(page).to have_selector('.group-leader .leader-role', text: 'Head Honcho, Master of None')
+
+    visit person_path(person)
+    expect(page).to have_selector('h3', text: 'Head Honcho, Master of None')
   end
 
   scenario 'Unsubscribing from notifications', js: true do
