@@ -129,6 +129,10 @@ class Person < ActiveRecord::Base
   concatenated_field :location, :location_in_building, :building, :city, join_with: ', '
   concatenated_field :name, :given_name, :surname, join_with: ' '
 
+  def at_permitted_domain?
+    EmailAddress.new(email).permitted_domain?
+  end
+
   def notify_of_change?(person_responsible)
     person_responsible.try(:email) != email
   end

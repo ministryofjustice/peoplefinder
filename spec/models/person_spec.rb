@@ -215,6 +215,13 @@ RSpec.describe Person, type: :model do
     it 'is true when email valid with permitted domain' do
       person.email = 'test@digital.justice.gov.uk'
       expect(person.valid?).to be true
+      expect(person.at_permitted_domain?).to be true
+    end
+
+    it 'is false when email does not have permitted domain' do
+      person.email = 'test@example.com'
+      expect(person.valid?).to be false
+      expect(person.at_permitted_domain?).to be false
     end
   end
 
