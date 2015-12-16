@@ -205,6 +205,19 @@ RSpec.describe Person, type: :model do
     end
   end
 
+  describe 'valid?' do
+    it 'is false when email invalid' do
+      person.email = 'bad'
+      expect(person.valid?).to be false
+      expect(person.errors.messages[:email]).to eq ["isn’t valid"]
+    end
+
+    it 'is true when email valid with permitted domain' do
+      person.email = 'test@digital.justice.gov.uk'
+      expect(person.valid?).to be true
+    end
+  end
+
   describe '#notify_of_change?' do
     context 'when the email is invalid' do
       before do
