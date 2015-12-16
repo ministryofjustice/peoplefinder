@@ -29,16 +29,9 @@ namespace :peoplefinder do
 
     if STDIN.gets.chomp == 'Y'
       recipients.each do |recipient|
-
-        if EmailAddress.new(recipient.email).valid_address?
-          ReminderMailer.inadequate_profile(recipient).deliver
-          puts "Email sent to: #{ recipient.email }"
-
-        else
-          puts "Email *not* sent to: #{ recipient.email }"
-        end
+        ReminderMailer.inadequate_profile(recipient).deliver_now
+        puts "Email sent to: #{ recipient.email }"
       end
-
     end
   end
 end
