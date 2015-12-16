@@ -102,30 +102,26 @@ RSpec.describe Person, type: :model do
     end
   end
 
-  context 'with two roles in the same group' do
+  context 'with two memberships in the same group' do
     before do
       person.save!
       digital_services = create(:group, name: 'Digital Services')
       person.memberships.create(group: digital_services, role: 'Service Assessments Lead')
       person.memberships.create(group: digital_services, role: 'Head of Delivery')
+      person.reload
     end
 
-    it 'can be saved and updates can be saved' do
-      person.save!
-      person.reload
+    it 'allows updates to those memberships' do
       expect(person.memberships.first.leader).to be false
 
-      membership = person.memberships.first
-      membership.leader = true
-
-      person.assign_attributes({
+      membership_attributes = person.memberships.first.attributes
+      person.assign_attributes(
         memberships_attributes: {
-          membership.id => membership.attributes
+          membership_attributes[:id] => membership_attributes.merge(leader: true)
         }
-      })
+      )
       person.save!
-      person.reload
-      expect(person.memberships.first.leader).to be true
+      expect(person.reload.memberships.first.leader).to be true
     end
 
   end
