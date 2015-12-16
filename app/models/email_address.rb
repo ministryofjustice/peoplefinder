@@ -13,7 +13,7 @@ class EmailAddress
     @parsed_ok = false
   end
 
-  def valid_domain?
+  def permitted_domain?
     valid_login_domains.any? { |pattern| pattern === domain }
   end
 
@@ -22,7 +22,7 @@ class EmailAddress
   end
 
   def valid_address?
-    valid_format? && valid_domain?
+    valid_format? && permitted_domain?
   end
 
   def inferred_last_name

@@ -2,7 +2,7 @@ module FindCreatePerson
   class << self
     def from_auth_hash(auth_hash)
       email = EmailAddress.new(auth_hash['info']['email'])
-      return unless email.valid_domain?
+      return unless email.permitted_domain?
 
       find_or_create(email) do |person|
         person.given_name = auth_hash['info']['first_name']

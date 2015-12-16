@@ -28,7 +28,7 @@ class Token < ActiveRecord::Base
   def valid_email_address
     if !EmailAddress.new(user_email).valid_format?
       errors.add(:user_email, :invalid_address)
-    elsif !EmailAddress.new(user_email).valid_domain?
+    elsif !EmailAddress.new(user_email).permitted_domain?
       errors.add(:user_email, :invalid_domain)
     end
   end
