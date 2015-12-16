@@ -226,19 +226,36 @@ RSpec.describe Person, type: :model do
   end
 
   describe '#notify_of_change?' do
-    it 'is true if there is no reponsible person' do
-      rp = nil
-      expect(person.notify_of_change?(rp)).to be_truthy
+    context 'when the email is not at a permitted domain' do
+      before { allow(person).to receive(:at_permitted_domain?).and_return false }
+
+      it 'is false if there is no reponsible person' do
+        expect(person.notify_of_change?(nil)).to be false
+      end
+
+      it 'is false if the reponsible person is this person' do
+        expect(person.notify_of_change?(person)).to be false
+      end
+
+      it 'is false if the reponsible person is a third party' do
+        other_person = build(:person)
+        expect(person.notify_of_change?(other_person)).to be false
+      end
     end
 
-    it 'is false if the reponsible person is this person' do
-      rp = person
-      expect(person.notify_of_change?(rp)).to be_falsy
-    end
+    context 'when the email is at a permitted domain' do
+      it 'is true if there is no reponsible person' do
+        expect(person.notify_of_change?(nil)).to be true
+      end
 
-    it 'is true if the reponsible person is a third party' do
-      rp = build(:person)
-      expect(person.notify_of_change?(rp)).to be_truthy
+      it 'is false if the reponsible person is this person' do
+        expect(person.notify_of_change?(person)).to be false
+      end
+
+      it 'is true if the reponsible person is a third party' do
+        other_person = build(:person)
+        expect(person.notify_of_change?(other_person)).to be true
+      end
     end
   end
 
