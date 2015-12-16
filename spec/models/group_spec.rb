@@ -125,6 +125,22 @@ RSpec.describe Group, type: :model do
     context 'with bob in the team' do
       before { team.people << bob }
 
+
+      context 'and bob is a team leader' do
+
+        before do
+          bob.memberships.first.update(leader: true)
+        end
+
+        it 'has .leaderships return array containing bob\'s membership' do
+          expect(team.leaderships.to_a).to eq [bob.memberships.first]
+        end
+
+        it 'has .leaderships_by_person return hash containing bob and his membership' do
+          expect(team.leaderships_by_person[bob]).to eq [bob.memberships.first]
+        end
+      end
+
       it 'has 1 in all_people array' do
         expect(team.all_people.length).to eq(1)
       end

@@ -9,8 +9,8 @@
 %div.grid-wrapper.details
   %div.grid.grid-1-3
     %div.inner-block.group-leader
-      - @group.leaderships.each do |leadership|
-        = render partial: 'leadership', object: leadership
+      - @group.leaderships_by_person.each do |person, leaderships|
+        = render partial: 'leaderships', object: leaderships, locals: { person: person }
 
   %div.grid.grid-2-3
     %div.inner-block.about.text

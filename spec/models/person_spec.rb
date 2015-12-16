@@ -102,6 +102,30 @@ RSpec.describe Person, type: :model do
     end
   end
 
+  context 'with two memberships in the same group' do
+    before do
+      person.save!
+      digital_services = create(:group, name: 'Digital Services')
+      person.memberships.create(group: digital_services, role: 'Service Assessments Lead')
+      person.memberships.create(group: digital_services, role: 'Head of Delivery')
+      person.reload
+    end
+
+    it 'allows updates to those memberships' do
+      expect(person.memberships.first.leader).to be false
+
+      membership_attributes = person.memberships.first.attributes
+      person.assign_attributes(
+        memberships_attributes: {
+          membership_attributes[:id] => membership_attributes.merge(leader: true)
+        }
+      )
+      person.save!
+      expect(person.reload.memberships.first.leader).to be true
+    end
+
+  end
+
   context 'path' do
     let(:person) { described_class.new }
 
