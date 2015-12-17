@@ -132,4 +132,9 @@ class Person < ActiveRecord::Base
     at_permitted_domain? && person_responsible.try(:email) != email
   end
 
+  def reminder_email_sent? within_days:
+    last_reminder_email_at.present? &&
+      last_reminder_email_at.end_of_day >= within_days.day.ago
+  end
+
 end
