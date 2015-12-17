@@ -216,7 +216,8 @@ CREATE TABLE people (
     building text,
     city text,
     secondary_email text,
-    profile_photo_id integer
+    profile_photo_id integer,
+    last_reminder_email_at timestamp without time zone
 );
 
 
@@ -655,3 +656,6 @@ INSERT INTO schema_migrations (version) VALUES ('20150420132854');
 INSERT INTO schema_migrations (version) VALUES ('20150604110007');
 
 INSERT INTO schema_migrations (version) VALUES ('20150604110654');
+
+INSERT INTO schema_migrations (version) VALUES ('20151217094046');
+

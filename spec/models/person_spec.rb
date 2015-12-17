@@ -325,4 +325,16 @@ RSpec.describe Person, type: :model do
     end
   end
 
+  describe '.last_reminder_email_at' do
+    it 'is nil on create' do
+      expect(person.last_reminder_email_at).to be_nil
+    end
+
+    it 'can be set to a datetime' do
+      datetime = Time.now
+      person.last_reminder_email_at = datetime
+      expect(person.last_reminder_email_at).to eq(datetime)
+    end
+  end
+
 end
