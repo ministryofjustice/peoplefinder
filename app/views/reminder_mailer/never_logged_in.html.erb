@@ -1,0 +1,31 @@
+<table cellpadding="0" cellspacing="0" border="0" align="center" style="border-collapse:collapse;mso-table-lspace:0pt;mso-table-rspace:0pt;">
+  <tbody><tr>
+    <td width="20" style="min-width:10px;border-collapse:collapse;"></td>
+    <td width="560" align="center" valign="top" style="border-collapse:collapse;">
+      <table cellpadding="0" cellspacing="0" border="0" align="center" class="body" style="border-collapse:collapse;mso-table-lspace:0pt;mso-table-rspace:0pt;">
+        <tbody><tr>
+          <td width="560" align="left" valign="top" style="font-family:Arial, sans-serif;font-size:22px;font-weight:normal;line-height:normal;color:#434343;padding-bottom:30px;border-collapse:collapse;">
+            Log in to complete your People Finder profile
+          </td>
+        </tr>
+        <tr>
+          <td width="560" align="left" valign="top" style="font-family:Arial, sans-serif;font-size:16px;font-weight:normal;line-height:30px;color:#434343;padding-bottom:20px;border-collapse:collapse;">
+            Hello <%= @person.given_name %>,
+          </td>
+        </tr>
+        <tr>
+          <td width="560" align="left" valign="top" style="font-family:Arial, sans-serif;font-size:16px;font-weight:normal;line-height:30px;color:#434343;padding-bottom:20px;border-collapse:collapse;">
+            <p>It only takes a couple of minutes to complete your People Finder profile and adding up-to-date details will make it easier for colleagues to collaborate and communicate with you.</p>
+
+            <p>Use this secure link <%= link_to @token_url, @token_url, target: '_blank' %> to be taken to your ‘edit profile’ page. If you don’t use this link in the next 3 hours you’ll be asked to request a new one.</p>
+
+            <p>You’ll stop receiving emails once you’ve completed your profile.</p>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </td>
+    <td width="20" style="min-width:10px;border-collapse:collapse;"></td>
+  </tr>
+  </tbody>
+</table>
