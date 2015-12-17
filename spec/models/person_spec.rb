@@ -205,32 +205,56 @@ RSpec.describe Person, type: :model do
     end
   end
 
-  describe '#notify_of_change?' do
-    context 'when the email is invalid' do
-      before do
-        person.email = 'invalid'
-      end
-
-      it 'is false' do
-        expect(person.notify_of_change?(build(:person))).
-          to be_falsy
-      end
+  describe 'valid?' do
+    it 'is false when email invalid' do
+      person.email = 'bad'
+      expect(person.valid?).to be false
+      expect(person.errors.messages[:email]).to eq ["isn’t valid"]
     end
 
-    context 'when the email is valid' do
-      it 'is true if there is no reponsible person' do
-        rp = nil
-        expect(person.notify_of_change?(rp)).to be_truthy
+    it 'is true when email valid with permitted domain' do
+      person.email = 'test@digital.justice.gov.uk'
+      expect(person.valid?).to be true
+      expect(person.at_permitted_domain?).to be true
+    end
+
+    it 'is false when email does not have permitted domain' do
+      person.email = 'test@example.com'
+      expect(person.valid?).to be false
+      expect(person.at_permitted_domain?).to be false
+    end
+  end
+
+  describe '#notify_of_change?' do
+    context 'when the email is not at a permitted domain' do
+      before { allow(person).to receive(:at_permitted_domain?).and_return false }
+
+      it 'is false if there is no reponsible person' do
+        expect(person.notify_of_change?(nil)).to be false
       end
 
       it 'is false if the reponsible person is this person' do
-        rp = person
-        expect(person.notify_of_change?(rp)).to be_falsy
+        expect(person.notify_of_change?(person)).to be false
+      end
+
+      it 'is false if the reponsible person is a third party' do
+        other_person = build(:person)
+        expect(person.notify_of_change?(other_person)).to be false
+      end
+    end
+
+    context 'when the email is at a permitted domain' do
+      it 'is true if there is no reponsible person' do
+        expect(person.notify_of_change?(nil)).to be true
+      end
+
+      it 'is false if the reponsible person is this person' do
+        expect(person.notify_of_change?(person)).to be false
       end
 
       it 'is true if the reponsible person is a third party' do
-        rp = build(:person)
-        expect(person.notify_of_change?(rp)).to be_truthy
+        other_person = build(:person)
+        expect(person.notify_of_change?(other_person)).to be true
       end
     end
   end

@@ -4,16 +4,16 @@ class EmailAddress
   extend Forwardable
   def_delegators :@mail_address, :domain, :address, :local, :to_s
 
-  def initialize(string, valid_login_domains = nil)
+  def initialize(string)
     @raw_address = string
-    @valid_login_domains = valid_login_domains || default_valid_login_domains
+    @valid_login_domains = default_valid_login_domains
     @mail_address = Mail::Address.new(string)
     @parsed_ok = true
   rescue Mail::Field::ParseError
     @parsed_ok = false
   end
 
-  def valid_domain?
+  def permitted_domain?
     valid_login_domains.any? { |pattern| pattern === domain }
   end
 
@@ -22,7 +22,7 @@ class EmailAddress
   end
 
   def valid_address?
-    valid_format? && valid_domain?
+    valid_format? && permitted_domain?
   end
 
   def inferred_last_name
