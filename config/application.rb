@@ -64,6 +64,9 @@ module Peoplefinder
 
     config.action_mailer.asset_host = ENV['ACTION_MAILER_DEFAULT_URL']
 
+    # Note: ENV is set to 'staging' on staging environment
+    config.send_reminder_emails = (ENV['ENV'] == 'production')
+
     # The following values are required by the phase banner
     config.phase = 'live'
     config.feedback_url = 'https://docs.google.com/a/digital.justice.gov.uk/forms/d/1dJ9xQ66QFvk8K7raf60W4ZXfK4yTQ1U3EeO4OLLlq88/viewform'

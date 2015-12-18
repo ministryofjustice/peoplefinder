@@ -79,6 +79,8 @@ defined on a per environment basis.
 
 `config.support_email` e.g. 'peoplefinder-support@example.com'
 
+`config.send_reminder_emails` Set to true if reminder emails are to be sent by cronjobs
+
 ## Permitted domains
 
 The system allows logging in for emails which have domains from the whitelist. The whitelist is in the database, managed by `PermittedDomain` model. At least one domain has to be whitelisted before anyone can log in (that applies to development too).
