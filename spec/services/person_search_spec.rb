@@ -15,6 +15,9 @@ RSpec.describe PersonSearch, elastic: true do
            location_in_building: '10th floor', building: '102 Petty France',
            city: 'London', description: 'weekends only')
   }
+  let!(:andrew) {
+    create(:person, given_name: 'Andrew', surname: 'Alice')
+  }
   let!(:digital_services) { create(:group, name: 'Digital Services') }
   let!(:membership) { bob.memberships.create(group: digital_services, role: 'Cleaner') }
   let(:community) { create(:community, name: "Poetry") }
@@ -41,6 +44,16 @@ RSpec.describe PersonSearch, elastic: true do
       results = search_for('Bob Browning')
       expect(results).to_not include(alice)
       expect(results).to include(bob)
+    end
+
+    it 'puts exact match first for "Alice Andrews"' do
+      results = search_for('Alice Andrews')
+      expect(results).to eq([alice, andrew])
+    end
+
+    it 'puts exact match first for "Andrew Alice"' do
+      results = search_for('Andrew Alice')
+      expect(results).to eq([andrew, alice])
     end
 
     it 'searches by group name and membership role' do

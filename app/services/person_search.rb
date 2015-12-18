@@ -1,6 +1,7 @@
 class PersonSearch
   def fuzzy_search(query, max = 100)
-    Person.search(
+    exact_matches = Person.search(query).records.limit(max)
+    fuzzy_matches = Person.search(
       size: max,
       query: {
         fuzzy_like_this: {
@@ -12,5 +13,7 @@ class PersonSearch
         }
       }
     ).records.limit(max)
+
+    (exact_matches + fuzzy_matches).uniq
   end
 end
