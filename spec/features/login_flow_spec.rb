@@ -8,31 +8,23 @@ feature 'Login flow' do
   let(:current_time) { Time.now }
 
   let(:edit_profile_page) { Pages::EditProfile.new }
+  let(:profile_page) { Pages::Profile.new }
   let(:search_page) { Pages::Search.new }
   let(:base_page) { Pages::Base.new }
 
-  scenario 'When user logs in for the first time, they are prompted to fill in their profile' do
+  scenario 'When user logs in for the first time, they see their profile' do
     omni_auth_log_in_as(email)
 
-    expect(edit_profile_page).to be_displayed
+    expect(profile_page).to be_displayed
   end
 
-  scenario 'User is prompted to update their profile every 5 logins it their profile is incomplete' do
-    login_count = 4
-    create(:person_with_multiple_logins, email: email, login_count: login_count)
-
-    omni_auth_log_in_as(email)
-
-    expect(edit_profile_page).to be_displayed
-  end
-
-  scenario 'When user logs in other than 1st or every 5th time, the search page is displayed' do
+  scenario 'When user logs in, their profile page is displayed' do
     login_count = 5
     create(:person_with_multiple_logins, email: email, login_count: login_count)
 
     omni_auth_log_in_as(email)
 
-    expect(search_page).to be_displayed
+    expect(profile_page).to be_displayed
   end
 
   scenario 'Login counter is updated every time user logs in' do

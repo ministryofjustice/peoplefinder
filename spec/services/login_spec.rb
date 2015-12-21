@@ -35,46 +35,6 @@ RSpec.describe Login, type: :service do
     end
   end
 
-  describe '#edit_profile?' do
-
-    subject { service.edit_profile? }
-    before do
-      allow(person).to receive(:incomplete?).and_return(!is_complete)
-      person.login_count = login_count
-    end
-
-    context 'for complete profile' do
-      let(:is_complete) { true }
-      let(:login_count) { 1 }
-
-      it { is_expected.to be false }
-    end
-
-    context 'for incomplete profile' do
-      let(:is_complete) { false }
-
-      context 'for a first time login' do
-        let(:login_count) { 1 }
-
-        it { is_expected.to be true }
-      end
-
-      [5, 45].each do |count|
-        context "every #{count}th login" do
-          let(:login_count) { count }
-
-          it { is_expected.to be true }
-        end
-      end
-
-      context 'for not first or every fifth login' do
-        let(:login_count) { 4 }
-
-        it { is_expected.to be false }
-      end
-    end
-  end
-
   describe '.current_user' do
     subject { described_class.current_user(session) }
 

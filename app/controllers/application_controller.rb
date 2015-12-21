@@ -65,10 +65,8 @@ class ApplicationController < ActionController::Base
     login_service = Login.new(session, person)
     login_service.login
 
-    path = session.delete(:desired_path) || '/'
-    if path == '/' && login_service.edit_profile?
-      path = edit_person_path(person, prompt: :profile)
-    end
+    path = session.delete(:desired_path) || person_path(person, prompt: :profile)
+
     redirect_to path
   end
 
