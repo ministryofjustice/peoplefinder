@@ -10,6 +10,7 @@ RSpec.describe NeverLoggedInNotifier, type: :service do
 
   before do
     person.update(last_reminder_email_at: last_reminder_email_at)
+    person.update(created_at: Time.now - 31.days)
   end
 
   shared_examples 'sends email' do
@@ -32,7 +33,7 @@ RSpec.describe NeverLoggedInNotifier, type: :service do
   end
 
   describe 'send_reminders' do
-    context 'when never-logged-in person has' do
+    context 'when never-logged-in person created more than 30 days ago has' do
 
       context 'no reminder email sent' do
         let(:last_reminder_email_at) { nil }

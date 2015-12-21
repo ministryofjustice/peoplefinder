@@ -6,8 +6,7 @@ module NeverLoggedInNotifier
     Person.never_logged_in.each do |person|
       person.with_lock do # use db lock in case cronjob running on two instances
         person.reload
-        dont_send = person.reminder_email_sent?(within_days: 30) || person.login_count > 0
-        unless dont_send
+        if person.send_never_logged_in_reminder?
           ReminderMailer.never_logged_in(person).deliver_later
           person.update(last_reminder_email_at: Time.zone.now)
         end

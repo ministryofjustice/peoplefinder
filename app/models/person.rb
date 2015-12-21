@@ -137,4 +137,11 @@ class Person < ActiveRecord::Base
       last_reminder_email_at.end_of_day >= within_days.day.ago
   end
 
+  def send_never_logged_in_reminder?
+    within_days = 30
+    !reminder_email_sent?(within_days: within_days) &&
+      login_count == 0 &&
+      created_at.end_of_day < within_days.day.ago
+  end
+
 end
