@@ -11,6 +11,7 @@ esac
 
 case ${ROLE} in
 worker)
+    echo "running whenever"
     bundle exec whenever -w
     echo "running worker"
     bundle exec rake jobs:work
