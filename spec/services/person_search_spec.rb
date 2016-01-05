@@ -18,6 +18,13 @@ RSpec.describe PersonSearch, elastic: true do
   let!(:andrew) {
     create(:person, given_name: 'Andrew', surname: 'Alice')
   }
+  let!(:abraham_kiehn) {
+    create(:person, given_name: 'Abraham', surname: 'Kiehn')
+  }
+  let!(:abe) {
+    create(:person, given_name: 'Abe', surname: 'Predovic')
+  }
+
   let!(:digital_services) { create(:group, name: 'Digital Services') }
   let!(:membership) { bob.memberships.create(group: digital_services, role: 'Cleaner') }
   let(:community) { create(:community, name: "Poetry") }
@@ -34,13 +41,13 @@ RSpec.describe PersonSearch, elastic: true do
       expect(results).to_not include(bob)
     end
 
-    it 'searches by name' do
+    it 'searches by given name' do
       results = search_for('Alice')
       expect(results).to include(alice)
       expect(results).to_not include(bob)
     end
 
-    it 'searches by given_name' do
+    it 'searches by full name' do
       results = search_for('Bob Browning')
       expect(results).to_not include(alice)
       expect(results).to include(bob)
@@ -54,6 +61,11 @@ RSpec.describe PersonSearch, elastic: true do
     it 'puts exact match first for "Andrew Alice"' do
       results = search_for('Andrew Alice')
       expect(results).to eq([andrew, alice])
+    end
+
+    it 'puts name synonym matches in results' do
+      results = search_for('Abe Kiehn')
+      expect(results).to eq([abraham_kiehn, abe])
     end
 
     it 'searches by group name and membership role' do
