@@ -1,18 +1,26 @@
 module HealthCheck
   class Elasticsearch < Component
-    def accessible?
-      client.ping.tap { |ok| log_error unless ok }
+    def available?
+      client.ping.tap { |ok| log_error("Could not connect to #{hosts}") unless ok }
     rescue => err
       log_unknown_error err
       false
     end
 
-    alias_method :available?, :accessible?
+    def accessible?
+      return true if cluster_status?("green") 
+      log_error("Cluster status is #{client.cluster.health['status']}")
+      false
+    end
 
   private
 
-    def log_error
-      @errors = ["Elasticsearch Error: could not connect to #{hosts}"]
+    def cluster_status?(expected_status)
+      client.cluster.health["status"] == expected_status
+    end
+
+    def log_error(message)
+      @errors = ["Elasticsearch Error: #{message}"]
     end
 
     def hosts
