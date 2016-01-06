@@ -14,5 +14,27 @@ module Concerns::Searchable
     def self.delete_indexes
       __elasticsearch__.delete_index! index: index_name
     end
+
+    settings analysis: {
+      filter: {
+        name_synonyms_expand: {
+          type: "synonym",
+          synonyms: File.readlines(Rails.root.join("config", "initializers", "name_synonyms.csv")).map(&:chomp)
+        }
+      },
+      analyzer: {
+        name_synonyms_expand: {
+          tokenizer: "whitespace",
+          filter: [
+            "lowercase",
+            "name_synonyms_expand"
+          ]
+        }
+      }
+    } do
+      mapping do
+        indexes :name, search_analyzer: "name_synonyms_expand", type: "string"
+      end
+    end
   end
 end
