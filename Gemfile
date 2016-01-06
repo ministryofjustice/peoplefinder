@@ -67,6 +67,7 @@ group :development, :test do
   gem 'simplecov'
   gem 'simplecov-rcov'
   gem 'timecop'
+  gem 'guard-jasmine'
 end
 
 group :development, :test, :assets do

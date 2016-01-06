@@ -92,6 +92,8 @@ GEM
       activesupport (>= 3.2.0)
       carrierwave
       fastimage
+    childprocess (0.5.9)
+      ffi (~> 1.0, >= 1.0.11)
     cliver (0.3.2)
     codeclimate-test-reporter (0.4.8)
       simplecov (>= 0.7.1, < 1.0.0)
@@ -267,6 +269,14 @@ GEM
       shellany (~> 0.0)
       thor (>= 0.18.1)
     guard-compat (1.2.1)
+    guard-jasmine (2.0.6)
+      childprocess (~> 0.5)
+      guard (~> 2.8)
+      guard-compat (~> 1.2)
+      jasmine (~> 2.2)
+      multi_json (~> 1.1)
+      thor (~> 0.19)
+      tilt
     guard-rspec (4.6.4)
       guard (~> 2.1)
       guard-compat (~> 1.1)
@@ -292,6 +302,12 @@ GEM
     ice_nine (0.11.1)
     inflecto (0.0.2)
     ipaddress (0.8.0)
+    jasmine (2.4.0)
+      jasmine-core (~> 2.4)
+      phantomjs
+      rack (>= 1.2.1)
+      rake
+    jasmine-core (2.4.1)
     jbuilder (2.2.12)
       activesupport (>= 3.0.0, < 5)
       multi_json (~> 1.2)
@@ -374,6 +390,7 @@ GEM
       activerecord (>= 3.0, < 6.0)
       activesupport (>= 3.0, < 6.0)
     pg (0.18.1)
+    phantomjs (1.9.8.0)
     poltergeist (1.6.0)
       capybara (~> 2.1)
       cliver (~> 0.3.1)
@@ -562,6 +579,7 @@ DEPENDENCIES
   govspeak
   govuk_frontend_toolkit
   govuk_template
+  guard-jasmine
   guard-rspec
   haml-rails
   jbuilder (~> 2.0)
