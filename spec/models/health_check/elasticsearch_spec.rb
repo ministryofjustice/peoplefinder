@@ -15,14 +15,21 @@ describe HealthCheck::Elasticsearch do
   end
 
   context '#accessible?' do
-    it 'returns true if Elasticsearch responds to ping' do
+     it 'returns true if Elasticsearch cluster health is green' do
+      allow(subject).to receive(:cluster_status?).and_return(true)
       expect(subject).to be_accessible
     end
 
-    it 'returns false if Elasticsearch does not respond to ping' do
-      allow(Elasticsearch::Model.client).to receive(:ping).and_return(false)
+    it 'returns false if Elasticsearch cluster health is yellow' do
+      allow(subject).to receive(:cluster_status?).and_return(false)
       expect(subject).not_to be_accessible
     end
+
+    it 'returns false if Elasticsearch cluster health is red' do
+      allow(subject).to receive(:cluster_status?).and_return(false)
+      expect(subject).not_to be_accessible
+    end
+
   end
 
   context '#errors' do
@@ -31,7 +38,7 @@ describe HealthCheck::Elasticsearch do
       subject.available?
 
       expect(subject.errors.first).
-        to match(/could not connect to port \d+ on \S+ via \w+/)
+        to match(/Elasticsearch Error: Could not connect to port \d+ on \S+ via \w+/)
     end
 
     it 'returns an error an backtrace for errors not specific to a component' do
