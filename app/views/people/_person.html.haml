@@ -5,8 +5,12 @@
         .image-background
           = profile_image_tag person
         .details
-          - pageview_path = person_iteration.index < 3 ? '/top-3-search-result' : '/below-top-3-search-result'
-          %h3= link_to person.name, person, { data: { 'virtual-pageview': pageview_path } }
+          - index = person_iteration.index
+          - pageview_path = index < 3 ? '/top-3-search-result' : '/below-top-3-search-result'
+          %h3= link_to person.name, person,
+            { data: { 'virtual-pageview': pageview_path,
+            'event-category': 'Search result',
+            'event-action': "Click result #{index+1}" } }
           - if person.memberships.empty?
             .meta
           - else
