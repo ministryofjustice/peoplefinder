@@ -7,7 +7,7 @@ group :red_green_refactor, halt_on_fail: true do
     watch(%r{app/assets/javascripts/(.+?)\.(js\.coffee|js|coffee)(?:\.\w+)*$}) { |m| "spec/javascripts/#{ m[1] }_spec.#{ m[2] }" }
   end
 
-  guard :rspec, cmd: "bundle exec rspec", all_on_start: true do
+  guard :rspec, cmd: "bundle exec rspec", all_on_start: false, failed_mode: :focus do
     require "guard/rspec/dsl"
     dsl = Guard::RSpec::Dsl.new(self)
 

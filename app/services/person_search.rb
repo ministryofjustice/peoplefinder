@@ -1,5 +1,6 @@
 class PersonSearch
   def fuzzy_search(query, max = 100)
+    return [] if query.blank?
     @max = max
     name_matches = search "name:#{query}"
     exact_matches = search query

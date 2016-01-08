@@ -85,6 +85,11 @@ RSpec.describe PersonSearch, elastic: true do
       expect(results).to include(alice)
       expect(results).to_not include(bob)
     end
+
+    it 'returns [] for blank search' do
+      results = search_for('')
+      expect(results).to eq([])
+    end
   end
 
   def search_for(query)
