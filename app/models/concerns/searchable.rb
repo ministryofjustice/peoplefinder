@@ -15,6 +15,10 @@ module Concerns::Searchable
       __elasticsearch__.delete_index! index: index_name
     end
 
+    def self.search_results(query, limit:)
+      search(query).records.limit(limit)
+    end
+
     settings analysis: {
       filter: {
         name_synonyms_expand: {
