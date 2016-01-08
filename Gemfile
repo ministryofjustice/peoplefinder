@@ -41,6 +41,10 @@ gem 'carrierwave-bombshelter'
 gem 'omniauth-gplus',
   git: 'https://github.com/ministryofjustice/omniauth-gplus.git'
 
+group :assets do
+  gem 'coffee-rails'
+end
+
 group :production do
   gem 'sentry-raven', :git => 'https://github.com/getsentry/raven-ruby.git'
   gem 'logstasher', '~> 0.6.2'
@@ -67,6 +71,7 @@ group :development, :test do
   gem 'simplecov'
   gem 'simplecov-rcov'
   gem 'timecop'
+  gem 'jasmine-rails'
   gem 'guard-jasmine'
 end
 

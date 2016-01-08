@@ -1,0 +1,2 @@
+AnalyticsEvent.bindLinks()
+VirtualPageview.bindLinks()
