@@ -92,6 +92,19 @@ RSpec.describe PersonSearch, elastic: true do
     end
   end
 
+  context 'with name synonyms above exact match in results' do
+    let(:jonathan_smith) { build(:person, given_name: 'Jonathan', surname: 'Smith') }
+    let(:john_smith) { build(:person, given_name: 'John', surname: 'Smith') }
+
+    before do
+      allow(Person).to receive(:search_results).and_return [jonathan_smith, john_smith]
+    end
+
+    it 'sorts results to put exact match first' do
+      expect(described_class.new.fuzzy_search('John Smith')).to eq [john_smith, jonathan_smith]
+    end
+  end
+
   def search_for(query)
     described_class.new.fuzzy_search(query)
   end

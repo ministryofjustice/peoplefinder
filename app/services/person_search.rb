@@ -3,7 +3,7 @@ class PersonSearch
     return [] if query.blank?
     @max = max
     name_matches = search "name:#{query}"
-    exact_matches = search query
+    query_matches = search query
     fuzzy_matches = search(
       size: max,
       query: {
@@ -17,12 +17,13 @@ class PersonSearch
       }
     )
 
-    (name_matches + exact_matches + fuzzy_matches).uniq[0..max-1]
+    exact_matches = name_matches.select{|p| p.name == query }
+    (exact_matches + name_matches + query_matches + fuzzy_matches).uniq[0..max-1]
   end
 
   private
 
   def search query
-    Person.search(query).records.limit(@max)
+    Person.search_results(query, limit: @max)
   end
 end
