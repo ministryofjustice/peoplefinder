@@ -23,16 +23,16 @@ RSpec.describe "rendering locals in a partial" do
   end
 
   it "sets data-event-category correctly" do
-    expect(rendered).to have_selector('[data-event-category="Search result"]', text: people[0].name)
-    expect(rendered).to have_selector('[data-event-category="Search result"]', text: people[1].name)
-    expect(rendered).to have_selector('[data-event-category="Search result"]', text: people[2].name)
-    expect(rendered).to have_selector('[data-event-category="Search result"]', text: people[3].name)
+    expect(rendered).to have_selector('[data-event-category="Search result click"]', text: people[0].name)
+    expect(rendered).to have_selector('[data-event-category="Search result click"]', text: people[1].name)
+    expect(rendered).to have_selector('[data-event-category="Search result click"]', text: people[2].name)
+    expect(rendered).to have_selector('[data-event-category="Search result click"]', text: people[3].name)
   end
 
   it "sets data-event-action correctly" do
-    expect(rendered).to have_selector('[data-event-action="Click result 1"]', text: people[0].name)
-    expect(rendered).to have_selector('[data-event-action="Click result 2"]', text: people[1].name)
-    expect(rendered).to have_selector('[data-event-action="Click result 3"]', text: people[2].name)
-    expect(rendered).to have_selector('[data-event-action="Click result 4"]', text: people[3].name)
+    expect(rendered).to have_selector('[data-event-action="Click result 001"]', text: people[0].name)
+    expect(rendered).to have_selector('[data-event-action="Click result 002"]', text: people[1].name)
+    expect(rendered).to have_selector('[data-event-action="Click result 003"]', text: people[2].name)
+    expect(rendered).to have_selector('[data-event-action="Click result 004"]', text: people[3].name)
   end
 end
