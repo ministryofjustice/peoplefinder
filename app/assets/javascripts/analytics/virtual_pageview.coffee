@@ -9,8 +9,9 @@ root.VirtualPageview = (->
 
   onClick = (event) ->
     element = event.currentTarget
-    url = $(element).data('virtual-pageview')
-    root.dispatchPageView url
+    urls = $(element).data('virtual-pageview').split(',')
+    _.each urls, (url) ->
+      root.dispatchPageView url
     return true
 
   bindLinks: bindLinks
