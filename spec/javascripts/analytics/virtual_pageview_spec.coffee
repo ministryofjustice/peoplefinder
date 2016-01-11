@@ -5,9 +5,9 @@ describe 'VirtualPageview', ->
 
   describe 'given "data-virtual-pageview" anchor link', ->
 
-    beforeEach ->
+    setUpPage = (page_url) ->
       element = $('<body>' +
-        '<a id="a_link" data-virtual-pageview="/top-3-search-result" href="https://peoplefinder.service.gov.uk/people/john-smith">John Smith</a>' +
+        '<a id="a_link" data-virtual-pageview="' + page_url + '" href="https://peoplefinder.service.gov.uk/people/john-smith">John Smith</a>' +
         '</body>')
       $(document.body).append(element)
       new window.VirtualPageview.bindLinks()
@@ -16,9 +16,13 @@ describe 'VirtualPageview', ->
       element.remove()
       element = null
 
-    describe 'on first click', ->
-      it 'dispatches pageview', ->
-        spyOn window, 'dispatchPageView'
-        $('#a_link').trigger 'click'
+    describe 'with single page url', ->
+      beforeEach ->
+        setUpPage('/top-3-search-result')
 
-        expect(window.dispatchPageView).toHaveBeenCalledWith('/top-3-search-result')
+      describe 'on first click', ->
+        it 'dispatches pageview', ->
+          spyOn window, 'dispatchPageView'
+          $('#a_link').trigger 'click'
+
+          expect(window.dispatchPageView).toHaveBeenCalledWith('/top-3-search-result')
