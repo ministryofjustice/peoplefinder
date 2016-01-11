@@ -8,7 +8,7 @@
           - index = person_iteration.index
           - pageview_path = index < 3 ? '/top-3-search-result' : '/below-top-3-search-result'
           %h3= link_to person.name, person,
-            { data: { 'virtual-pageview': pageview_path,
+            { data: { 'virtual-pageview': "/search-result,#{pageview_path}",
             'event-category': 'Search result click',
             'event-action': "Click result #{'%03d' % (index+1)}" } }
           - if person.memberships.empty?

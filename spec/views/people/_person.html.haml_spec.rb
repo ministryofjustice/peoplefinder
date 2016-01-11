@@ -16,10 +16,10 @@ RSpec.describe "rendering locals in a partial" do
   end
 
   it "sets data-virtual-pageview correctly" do
-    expect(rendered).to have_selector('[data-virtual-pageview="/top-3-search-result"]', text: people[0].name)
-    expect(rendered).to have_selector('[data-virtual-pageview="/top-3-search-result"]', text: people[1].name)
-    expect(rendered).to have_selector('[data-virtual-pageview="/top-3-search-result"]', text: people[2].name)
-    expect(rendered).to have_selector('[data-virtual-pageview="/below-top-3-search-result"]', text: people[3].name)
+    expect(rendered).to have_selector('[data-virtual-pageview="/search-result,/top-3-search-result"]', text: people[0].name)
+    expect(rendered).to have_selector('[data-virtual-pageview="/search-result,/top-3-search-result"]', text: people[1].name)
+    expect(rendered).to have_selector('[data-virtual-pageview="/search-result,/top-3-search-result"]', text: people[2].name)
+    expect(rendered).to have_selector('[data-virtual-pageview="/search-result,/below-top-3-search-result"]', text: people[3].name)
   end
 
   it "sets data-event-category correctly" do
