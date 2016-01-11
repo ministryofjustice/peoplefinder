@@ -26,3 +26,15 @@ describe 'VirtualPageview', ->
           $('#a_link').trigger 'click'
 
           expect(window.dispatchPageView).toHaveBeenCalledWith('/top-3-search-result')
+
+    describe 'with comma list of page urls', ->
+      beforeEach ->
+        setUpPage('/search-result,/top-3-search-result')
+
+      describe 'on first click', ->
+        it 'dispatches pageview for each url', ->
+          spyOn window, 'dispatchPageView'
+          $('#a_link').trigger 'click'
+
+          expect(window.dispatchPageView).toHaveBeenCalledWith('/search-result')
+          expect(window.dispatchPageView).toHaveBeenCalledWith('/top-3-search-result')
