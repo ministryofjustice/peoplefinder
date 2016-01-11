@@ -17,7 +17,8 @@
             - person.memberships.each do |membership|
               .meta
                 = "#{ membership.role }, " if membership.role?
-                = link_to membership.group.short_name, membership.group
+                = link_to membership.group.short_name, membership.group,
+                  { data: { 'virtual-pageview': "/search-result,#{pageview_path}" } }
 
           - if feature_enabled?("communities") && person.community.present?
             .meta.community= link_to person.community, search_path(query: person.community.name)
