@@ -105,6 +105,16 @@ RSpec.describe PersonSearch, elastic: true do
     end
   end
 
+  context 'with commas in search query' do
+    it 'should perform search without commas' do
+      expect(Person).to receive(:search_results).with('name:Smith Bill', limit: 100).and_return []
+      expect(Person).to receive(:search_results).with('Smith Bill', limit: 100).and_return []
+      expect(Person).to receive(:search_results).with(hash_including(query: {fuzzy_like_this: hash_including(like_text: 'Smith Bill')}), limit: 100).and_return []
+
+      described_class.new.perform_search('Smith,Bill,')
+    end
+  end
+
   def search_for(query)
     described_class.new.perform_search(query)
   end
