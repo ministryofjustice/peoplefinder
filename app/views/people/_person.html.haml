@@ -6,11 +6,8 @@
           = profile_image_tag person
         .details
           - index = person_iteration.index
-          - pageview_path = index < 3 ? '/top-3-search-result' : '/below-top-3-search-result'
           %h3= link_to person.name, person,
-            { data: { 'virtual-pageview': "/search-result,#{pageview_path}",
-            'event-category': 'Search result click',
-            'event-action': "Click result #{'%03d' % (index+1)}" } }
+            { data: search_result_analytics_attributes(index) }
           - if person.memberships.empty?
             .meta
           - else
@@ -18,10 +15,10 @@
               .meta
                 = "#{ membership.role }, " if membership.role?
                 = link_to membership.group.short_name, membership.group,
-                  { data: { 'virtual-pageview': "/search-result,#{pageview_path}" } }
+                  { data: search_result_analytics_attributes(index) }
 
           - if feature_enabled?("communities") && person.community.present?
             .meta.community= link_to person.community, search_path(query: person.community.name)
           .meta= call_to(person.phone)
-          .meta= mail_to(person.email)
+          .meta= mail_to(person.email, nil, data: search_result_analytics_attributes(index) )
 

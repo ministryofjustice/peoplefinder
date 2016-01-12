@@ -27,31 +27,44 @@ RSpec.describe "rendering locals in a partial" do
     render partial: 'people/person', collection: people, locals: { edit_link: false }
   end
 
-  it "sets data-virtual-pageview correctly on people links" do
-    expect(rendered).to have_selector('[data-virtual-pageview="/search-result,/top-3-search-result"]', text: people[0].name)
-    expect(rendered).to have_selector('[data-virtual-pageview="/search-result,/top-3-search-result"]', text: people[1].name)
-    expect(rendered).to have_selector('[data-virtual-pageview="/search-result,/top-3-search-result"]', text: people[2].name)
-    expect(rendered).to have_selector('[data-virtual-pageview="/search-result,/below-top-3-search-result"]', text: people[3].name)
+  shared_examples 'sets analytics attributes' do
+    it "sets data-virtual-pageview correctly on links" do
+      expect(rendered).to have_selector('[data-virtual-pageview="/search-result,/top-3-search-result"]', text: list[0])
+      expect(rendered).to have_selector('[data-virtual-pageview="/search-result,/top-3-search-result"]', text: list[1])
+      expect(rendered).to have_selector('[data-virtual-pageview="/search-result,/top-3-search-result"]', text: list[2])
+      expect(rendered).to have_selector('[data-virtual-pageview="/search-result,/below-top-3-search-result"]', text: list[3])
+    end
+
+    it "sets data-event-category correctly on links" do
+      list.each do |item|
+        expect(rendered).to have_selector('[data-event-category="Search result click"]', text: item)
+      end
+    end
+
+    it "sets data-event-action correctly on links" do
+      expect(rendered).to have_selector('[data-event-action="Click result 001"]', text: list[0])
+      expect(rendered).to have_selector('[data-event-action="Click result 002"]', text: list[1])
+      expect(rendered).to have_selector('[data-event-action="Click result 003"]', text: list[2])
+      expect(rendered).to have_selector('[data-event-action="Click result 004"]', text: list[3])
+    end
   end
 
-  it "sets data-virtual-pageview correctly on team links" do
-    expect(rendered).to have_selector('[data-virtual-pageview="/search-result,/top-3-search-result"]', text: teams[0].name)
-    expect(rendered).to have_selector('[data-virtual-pageview="/search-result,/top-3-search-result"]', text: teams[1].name)
-    expect(rendered).to have_selector('[data-virtual-pageview="/search-result,/top-3-search-result"]', text: teams[2].name)
-    expect(rendered).to have_selector('[data-virtual-pageview="/search-result,/below-top-3-search-result"]', text: teams[3].name)
+  describe 'people links' do
+    let(:list) { people.map(&:name) }
+
+    include_examples 'sets analytics attributes'
   end
 
-  it "sets data-event-category correctly" do
-    expect(rendered).to have_selector('[data-event-category="Search result click"]', text: people[0].name)
-    expect(rendered).to have_selector('[data-event-category="Search result click"]', text: people[1].name)
-    expect(rendered).to have_selector('[data-event-category="Search result click"]', text: people[2].name)
-    expect(rendered).to have_selector('[data-event-category="Search result click"]', text: people[3].name)
+  describe 'team links' do
+    let(:list) { teams.map(&:name) }
+
+    include_examples 'sets analytics attributes'
   end
 
-  it "sets data-event-action correctly" do
-    expect(rendered).to have_selector('[data-event-action="Click result 001"]', text: people[0].name)
-    expect(rendered).to have_selector('[data-event-action="Click result 002"]', text: people[1].name)
-    expect(rendered).to have_selector('[data-event-action="Click result 003"]', text: people[2].name)
-    expect(rendered).to have_selector('[data-event-action="Click result 004"]', text: people[3].name)
+  describe 'email links' do
+    let(:list) { people.map(&:email) }
+
+    include_examples 'sets analytics attributes'
   end
+
 end
