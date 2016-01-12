@@ -53,4 +53,17 @@ RSpec.describe "rendering locals in a partial" do
     expect(rendered).to have_selector('[data-event-action="Click result 003"]', text: people[2].name)
     expect(rendered).to have_selector('[data-event-action="Click result 004"]', text: people[3].name)
   end
+
+  it "sets data-event-category correctly on team links" do
+    teams.each do |team|
+      expect(rendered).to have_selector('[data-event-category="Search result click"]', text: team.name)
+    end
+  end
+
+  it "sets data-event-action correctly on team links" do
+    expect(rendered).to have_selector('[data-event-action="Click result 001"]', text: teams[0].name)
+    expect(rendered).to have_selector('[data-event-action="Click result 002"]', text: teams[1].name)
+    expect(rendered).to have_selector('[data-event-action="Click result 003"]', text: teams[2].name)
+    expect(rendered).to have_selector('[data-event-action="Click result 004"]', text: teams[3].name)
+  end
 end
