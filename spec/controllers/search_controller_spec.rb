@@ -4,7 +4,7 @@ RSpec.describe SearchController, type: :controller do
   include PermittedDomainHelper
 
   let(:search) {
-    double(PersonSearch, fuzzy_search: search_result)
+    double(PersonSearch, perform_search: search_result)
   }
 
   let(:search_result) {
@@ -20,7 +20,7 @@ RSpec.describe SearchController, type: :controller do
     let(:query) { 'válïd ☺' }
 
     it 'searches for the query' do
-      expect(search).to receive(:fuzzy_search).with(query).
+      expect(search).to receive(:perform_search).with(query).
         and_return(search_result)
       get :index, query: query
     end
@@ -40,7 +40,7 @@ RSpec.describe SearchController, type: :controller do
     let(:query) { "\x99" }
 
     it 'searches for an empty string' do
-      expect(search).to receive(:fuzzy_search).with('').
+      expect(search).to receive(:perform_search).with('').
         and_return(search_result)
       get :index, query: query
     end

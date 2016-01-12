@@ -101,11 +101,11 @@ RSpec.describe PersonSearch, elastic: true do
     end
 
     it 'sorts results to put exact match first' do
-      expect(described_class.new.fuzzy_search('John Smith')).to eq [john_smith, jonathan_smith]
+      expect(described_class.new.perform_search('John Smith')).to eq [john_smith, jonathan_smith]
     end
   end
 
   def search_for(query)
-    described_class.new.fuzzy_search(query)
+    described_class.new.perform_search(query)
   end
 end
