@@ -15,20 +15,13 @@ AllCops:
     - 'lib/tasks/brakeman.rake'
     - 'lib/tasks/elasticsearch.rake'
     - 'spec/dummy/db/**/*'
+    - 'smoke_test'
   RunRailsCops: true
-
-# private/protected/public
-Style/AccessModifierIndentation:
-  EnforcedStyle: outdent
 
 # Just indent parameters by two spaces. It's less volatile if methods change,
 # and there's less busy work lining things up.
 Style/AlignParameters:
   EnforcedStyle: with_fixed_indentation
-
-# Allow ===. It's useful.
-Style/CaseEquality:
-  Enabled: false
 
 Style/CollectionMethods:
   PreferredMethods:
@@ -49,7 +42,7 @@ Style/GuardClause:
   Enabled: false
 
 Metrics/LineLength:
-  Max: 100
+  Max: 120
   Exclude:
     - 'spec/**/*'
 
@@ -68,32 +61,67 @@ Style/StringLiterals:
   Exclude:
     - 'spec/**/*'
 
-# Rubucop can't enforce Weirich style, so just turn this off.
-Blocks:
-  Enabled: false
-
 # Prefer sensible naming to comments everywhere.
-Documentation:
+Style/Documentation:
   Description: Document classes and non-namespace modules.
   Enabled: false
 
 # Would enforce do_y if x over if x / do y / end. As with GuardClause above,
 # this enforces code organisation that doesn't necesarily make things clearer.
-IfUnlessModifier:
+Style/IfUnlessModifier:
+  Enabled: false
+
+Style/CaseEquality:
   Enabled: false
 
 # Allow safe assignment in conditions.
 Lint/AssignmentInCondition:
   AllowSafeAssignment: false
 
-# Just a preference to use %w[] over %w()
-Style/PercentLiteralDelimiters:
-  PreferredDelimiters:
-    '%i': '[]'
-    '%w': '[]'
-    '%W': '[]'
-
-ClassAndModuleChildren:
+Style/ClassAndModuleChildren:
   Enabled: false
 
 require: rubocop-rspec
+
+Style/RegexpLiteral:
+  Enabled: false
+
+Style/EmptyLinesAroundBlockBody:
+  Enabled: false
+
+Style/EmptyLinesAroundClassBody:
+  Enabled: false
+
+Style/EmptyLinesAroundModuleBody:
+  Enabled: false
+
+Style/MethodDefParentheses:
+  Enabled: false
+
+Style/AlignHash:
+  Enabled: false
+
+Metrics/ClassLength:
+  Max: 105
+
+Metrics/ModuleLength:
+  Max: 105
+
+RSpec/DescribeClass:
+  Exclude:
+    - 'spec/views/**/*'
+
+Metrics/AbcSize:
+  Exclude:
+    - 'spec/support/profile.rb'
+
+Rails/TimeZone:
+  Exclude:
+    - 'spec/**/*'
+
+Rails/Date:
+  Exclude:
+    - 'spec/**/*'
+
+Style/SingleLineBlockParams:
+  Enabled: false
