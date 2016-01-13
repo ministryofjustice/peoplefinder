@@ -2,7 +2,7 @@ module Api
   class ApplicationController < ActionController::Base
     before_action :authenticate!
 
-  private
+    private
 
     def authenticate!
       token = Token.where(value: authorization_token).first

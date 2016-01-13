@@ -2,14 +2,14 @@ require 'spec_helper'
 require 'person_updater'
 
 RSpec.describe PersonUpdater, type: :service do
-  let(:person) {
+  let(:person) do
     double(
       'Person',
       save!: true,
       new_record?: false,
       notify_of_change?: false
     )
-  }
+  end
   let(:current_user) { double('Current User', email: 'user@example.com') }
   subject { described_class.new(person, current_user) }
 

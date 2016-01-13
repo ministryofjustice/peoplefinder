@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Suggestion, type: :model do
-  let(:default_suggestion)  { described_class.new }
+  let(:default_suggestion) { described_class.new }
 
   describe 'for_person?' do
     it 'returns false by default' do

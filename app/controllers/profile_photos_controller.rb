@@ -4,7 +4,7 @@ class ProfilePhotosController < ApplicationController
     render text: photo.to_json
   end
 
-private
+  private
 
   def profile_photo_params
     params.require(:profile_photo).permit(:image)

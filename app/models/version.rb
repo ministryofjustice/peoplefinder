@@ -26,13 +26,13 @@ class Version < PaperTrail::Version
 
   def event_description
     if creation?
-      "New #{ item_type }"
+      "New #{item_type}"
 
     elsif destruction?
-      "Deleted #{ item_type }"
+      "Deleted #{item_type}"
 
     elsif alteration?
-      "#{ item_type } Edited"
+      "#{item_type} Edited"
     end
   end
 

@@ -2,7 +2,7 @@ require 'spec_helper'
 require 'person_destroyer'
 
 RSpec.describe PersonDestroyer, type: :service do
-  let(:person) {
+  let(:person) do
     double(
       'Person',
       destroy!: true,
@@ -11,7 +11,7 @@ RSpec.describe PersonDestroyer, type: :service do
       email: 'user@example.com',
       given_name: 'Rupert'
     )
-  }
+  end
   let(:current_user) { double('Current User', email: 'user@example.com') }
   subject { described_class.new(person, current_user) }
 

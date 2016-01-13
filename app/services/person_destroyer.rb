@@ -21,7 +21,7 @@ class PersonDestroyer
     person.destroy!
   end
 
-private
+  private
 
   def send_destroy_email!
     if @person.notify_of_change?(@current_user)

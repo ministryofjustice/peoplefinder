@@ -20,13 +20,13 @@ RSpec.describe ReminderMailer do
     end
 
     it 'describes the profile completion score' do
-      %w[plain html].each do |part_type|
-        expect(get_message_part(mail, part_type)).to have_text("profile is #{ person.completion_score }% complete")
+      %w(plain html).each do |part_type|
+        expect(get_message_part(mail, part_type)).to have_text("profile is #{person.completion_score}% complete")
       end
     end
 
     it 'includes the the person edit url' do
-      %w[plain html].each do |part_type|
+      %w(plain html).each do |part_type|
         expect(get_message_part(mail, part_type)).to have_text(edit_person_url(person))
       end
     end

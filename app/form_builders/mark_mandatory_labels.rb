@@ -14,7 +14,7 @@ class MarkMandatoryLabels < SimpleDelegator
     __getobj__.label(method, text, options, &block)
   end
 
-private
+  private
 
   def presence_validated?(method)
     object.respond_to?(:mandates_presence_of?) &&

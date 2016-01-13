@@ -11,7 +11,7 @@ class FormGroups < SimpleDelegator
     template.content_tag(:div, class: classes.join(' '), &block)
   end
 
-private
+  private
 
   def errors?(method)
     object.errors.include?(method)

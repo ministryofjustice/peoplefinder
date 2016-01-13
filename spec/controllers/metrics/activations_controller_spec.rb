@@ -10,7 +10,7 @@ RSpec.describe Metrics::ActivationsController, type: :controller do
       allow(Person).to receive(:activated_percentage).with(from: date).and_return(20)
       allow(Person).to receive(:activated_percentage).with(before: date).and_return(10)
       expected = {
-        orientation:"horizontal",
+        orientation: "horizontal",
         item: [
           {
             label: "37% logged in at least once",
@@ -27,24 +27,24 @@ RSpec.describe Metrics::ActivationsController, type: :controller do
               current:   { start: 0, end: 37 },
               projected: { start: 0, end: 0 }
             },
-            comparative: { point:80}
+            comparative: { point: 80 }
           },
           {
             label: "20% of acquired users completed > 80%",
             sublabel: "users created from 2015-11-11",
             axis: {
-              point:[0, 20, 40, 60, 80, 100]
+              point: [0, 20, 40, 60, 80, 100]
             },
             range: {
-              red:   { start:0,  end:20 },
-              amber: { start:21, end:80 },
-              green: { start:81, end:100 }
+              red:   { start: 0,  end: 20 },
+              amber: { start: 21, end: 80 },
+              green: { start: 81, end: 100 }
             },
             measure: {
-              current:   { start:0, end:20 },
-              projected: { start:0, end:0 }
+              current:   { start: 0, end: 20 },
+              projected: { start: 0, end: 0 }
             },
-            comparative: { point:10 }
+            comparative: { point: 10 }
           }
         ]
       }

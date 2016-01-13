@@ -3,13 +3,13 @@ require 'mail'
 class EmailExtractor
   def extract(source)
     return nil unless source
-    candidates = [:full, :angled, :parenthesized].flat_map { |method|
+    candidates = [:full, :angled, :parenthesized].flat_map do |method|
       send(method, source)
-    }.map(&:strip)
+    end.map(&:strip)
     candidates.find { |c| valid?(c) } || source
   end
 
-private
+  private
 
   def full(str)
     str

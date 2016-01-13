@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe "rendering locals in a partial" do
+RSpec.describe 'people/person' do
   include PermittedDomainHelper
 
   let(:teams) do
@@ -19,7 +19,7 @@ RSpec.describe "rendering locals in a partial" do
       create(:person),
       create(:person)
     ]
-    people.each_with_index {|p, i| teams[i].people << p}
+    people.each_with_index { |p, i| teams[i].people << p }
     people
   end
 

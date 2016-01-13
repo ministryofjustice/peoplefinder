@@ -80,7 +80,7 @@ class GroupsController < ApplicationController
     redirect_to next_page
   end
 
-private
+  private
 
   # Use callbacks to share common setup or constraints between actions.
   def set_group

@@ -46,7 +46,7 @@ group :assets do
 end
 
 group :production do
-  gem 'sentry-raven', :git => 'https://github.com/getsentry/raven-ruby.git'
+  gem 'sentry-raven', git: 'https://github.com/getsentry/raven-ruby.git'
   gem 'logstasher', '~> 0.6.2'
 end
 
@@ -73,6 +73,8 @@ group :development, :test do
   gem 'timecop'
   gem 'jasmine-rails'
   gem 'guard-jasmine'
+  gem 'guard-rubocop', require: false
+  gem 'rubocop-rspec'
 end
 
 group :development, :test, :assets do

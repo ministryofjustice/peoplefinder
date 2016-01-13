@@ -43,7 +43,7 @@ class GroupLister
     index.values
   end
 
-private
+  private
 
   def scope_with_maximum_depth(max_depth)
     return Group unless max_depth

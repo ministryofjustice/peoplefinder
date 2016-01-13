@@ -36,6 +36,6 @@ Rails.application.configure do
   config.logstasher.suppress_app_log = true
   config.logstasher.log_level = Logger::INFO
   config.logstasher.logger_path =
-      "#{Rails.root}/log/logstash_#{Rails.env}.json"
+    "#{Rails.root}/log/logstash_#{Rails.env}.json"
   config.logstasher.source = 'logstasher'
 end

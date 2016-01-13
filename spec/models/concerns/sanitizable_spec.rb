@@ -18,14 +18,14 @@ RSpec.describe Concerns::Sanitizable do
     sanitize_fields :flavor, downcase: true, strip: true
   end
 
-  subject {
+  subject do
     TestModel.new(
       color: ' Orange ',
       shape: ' Square ',
       flavor: ' Strawberry ',
       smell: ' Rancid '
     )
-  }
+  end
 
   describe 'when model is validated' do
     before do

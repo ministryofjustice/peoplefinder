@@ -9,7 +9,7 @@ RSpec.describe AuditVersionPresenter, type: :presenter do
   let(:new_email)      { 'f.smith@digital.justice.gov.uk' }
   let(:new_given_name) { 'Fred' }
   let(:new_surname)    { 'Smith' }
-  let(:object_changes) {
+  let(:object_changes) do
     "--- !ruby/hash:ActiveSupport::HashWithIndifferentAccess
     email:
     - #{previous_email}
@@ -20,16 +20,16 @@ RSpec.describe AuditVersionPresenter, type: :presenter do
     surname:
     -
     - #{new_surname}"
-  }
+  end
 
-  let(:version) {
+  let(:version) do
     double('version',
       created_at: created_at,
       whodunnit: whodunnit,
       event: event,
       object_changes: object_changes
-    )
-  }
+          )
+  end
   let(:presenter)  { described_class.new(version) }
   let(:changes)    { presenter.changes }
 

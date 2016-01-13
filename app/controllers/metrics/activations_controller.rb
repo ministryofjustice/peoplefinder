@@ -7,7 +7,7 @@ module Metrics
       date = Date.parse(date).to_s
 
       bullet_graph = {
-        orientation: "horizontal",
+        orientation: 'horizontal',
         item: [
           aquisition_bullet_graph(date),
           activation_bullet_graph(date)
@@ -41,19 +41,21 @@ module Metrics
       {
         label: label,
         sublabel: sublabel,
-        axis: {
-          point: [0, 20, 40, 60, 80, 100]
-        },
-        range: {
-          red:   { start:  0, end:  20 },
-          amber: { start: 21, end:  80 },
-          green: { start: 81, end: 100 }
-        },
+        axis: { point: [0, 20, 40, 60, 80, 100] },
+        range: bullet_graph_range,
         measure: {
           current:   { start: 0, end: current_end },
           projected: { start: 0, end: 0 }
         },
         comparative: { point: comparative_point }
+      }
+    end
+
+    def bullet_graph_range
+      {
+        red:   { start:  0, end:  20 },
+        amber: { start: 21, end:  80 },
+        green: { start: 81, end: 100 }
       }
     end
   end

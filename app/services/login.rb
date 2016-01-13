@@ -8,7 +8,7 @@ class Login
 
   def login
     @person.login_count += 1
-    @person.last_login_at = Time.now
+    @person.last_login_at = Time.zone.now
     @person.save
 
     @session[SESSION_KEY] = @person.id
@@ -20,7 +20,7 @@ class Login
 
   def edit_profile?
     @person.incomplete? &&
-        ((@person.login_count == 1) || (@person.login_count % 5 == 0))
+      ((@person.login_count == 1) || (@person.login_count % 5 == 0))
   end
 
   def self.current_user(session)

@@ -22,7 +22,7 @@ class UserUpdateMailer < ActionMailer::Base
     mail to: recipient_email
   end
 
-private
+  private
 
   def profile_url(person)
     person_url(person)

@@ -11,12 +11,12 @@ RSpec.describe ProfilePhotosController, type: :controller do
     describe 'with valid params' do
       let(:valid_params) { { image: File.open(sample_image) } }
       it 'creates a new ProfilePhoto' do
-        expect {
+        expect do
           post :create, profile_photo: valid_params
-        }.to change(ProfilePhoto, :count).by(1)
+        end.to change(ProfilePhoto, :count).by(1)
       end
 
-      let(:photo_id)    { 123 }
+      let(:photo_id) { 123 }
       let(:photo) { double('photo', to_json: { id: photo_id }.to_json) }
 
       it 'renders json containing id of the new ProfilePhoto' do

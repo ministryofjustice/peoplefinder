@@ -42,10 +42,10 @@ RSpec.describe SuggestionsController, type: :controller do
   end
 
   describe 'POST create' do
-    let(:params)     { { foo: 'bar' } }
+    let(:params) { { foo: 'bar' } }
 
     describe 'invalid suggestion' do
-      let(:suggestion) { double('suggestion', :'valid?' => false) }
+      let(:suggestion) { double('suggestion', 'valid?': false) }
 
       it 'renders the form' do
         expect(Suggestion).to receive(:new).with(params).and_return(suggestion)
@@ -55,7 +55,7 @@ RSpec.describe SuggestionsController, type: :controller do
     end
 
     describe 'valid suggestion' do
-      let(:suggestion) { double('suggestion', :'valid?' => true) }
+      let(:suggestion) { double('suggestion', 'valid?': true) }
 
       it 'delivers the suggestion' do
         expect(Suggestion).to receive(:new).with(params).and_return(suggestion)

@@ -14,9 +14,9 @@ RSpec.describe SuggestionDelivery do
     describe 'for person' do
       let(:person)     { double('person') }
       let(:suggester)  { double('suggester') }
-      let(:suggestion) {
+      let(:suggestion) do
         double('suggestion', for_person?: true, for_admin?: false, to_hash: suggestion_hash)
-      }
+      end
 
       it 'is emailed to the person' do
         expect(mailer).to receive(:person_email).
@@ -42,9 +42,9 @@ RSpec.describe SuggestionDelivery do
       let(:groups)     { double('groups') }
       let(:person)     { double('person') }
       let(:suggester)  { double('suggester') }
-      let(:suggestion) {
+      let(:suggestion) do
         double('suggestion', for_admin?: true, for_person?: false, to_hash: suggestion_hash)
-      }
+      end
 
       it 'is emailed to all relevant team admins' do
         expect(person).to receive(:groups).and_return(groups)

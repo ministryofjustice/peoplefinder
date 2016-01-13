@@ -26,9 +26,9 @@ class Person < ActiveRecord::Base
                   ignore: [:updated_at, :created_at, :id, :slug, :login_count, :last_login_at]
 
   def changes_for_paper_trail
-    super.tap { |changes|
+    super.tap do |changes|
       changes['image'].map! { |img| img.url && File.basename(img.url) } if changes.key?('image')
-    }
+    end
   end
 
   include Concerns::Sanitizable
@@ -49,8 +49,6 @@ class Person < ActiveRecord::Base
       profile_photo.image
     elsif attributes['image']
       legacy_image
-    else
-      nil
     end
   end
 
@@ -98,11 +96,9 @@ class Person < ActiveRecord::Base
     Person.in_groups(group_ids).where.not(id: excluded_ids).count
   end
 
-  private
-
   def self.in_groups(group_ids)
     Person.includes(:memberships).
-        where("memberships.group_id": group_ids)
+      where("memberships.group_id": group_ids)
   end
 
   public

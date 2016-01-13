@@ -16,10 +16,10 @@ class Token < ActiveRecord::Base
 
   scope :spent,            -> { where(spent: true)  }
   scope :unspent,          -> { where(spent: false) }
-  scope :unexpired,        -> { where("created_at > ?", ttl.seconds.ago) }
-  scope :expired,          -> { where("created_at < ?", ttl.seconds.ago) }
+  scope :unexpired,        -> { where('created_at > ?', ttl.seconds.ago) }
+  scope :expired,          -> { where('created_at < ?', ttl.seconds.ago) }
   scope :active,           -> { unspent.unexpired }
-  scope :in_the_last_hour, -> { where(created_at: 1.hour.ago..Time.now) }
+  scope :in_the_last_hour, -> { where(created_at: 1.hour.ago..Time.zone.now) }
 
   def to_param
     value
@@ -62,20 +62,21 @@ class Token < ActiveRecord::Base
   end
 
   def within_throttle_limit
-    raise TTLRaceCondition, "throttling will not work with TTLs of 1 hour or less" if ttl <= 60
+    fail TTLRaceCondition, 'throttling will not work with TTLs of 1 hour or less' if ttl <= 60
 
     if tokens_in_the_last_hour >= max_tokens_per_hour
       errors.add(:user_email, :token_throttle_limit, limit: max_tokens_per_hour)
     end
   end
 
-private
+  private
+
   def remove_expired_tokens
     self.class.expired.destroy_all
   end
 
   def deactivate_tokens
-    self.class.unspent.where("user_email = ? AND id != ?", user_email, self.id).update_all(spent: true)
+    self.class.unspent.where('user_email = ? AND id != ?', user_email, id).update_all(spent: true)
   end
 
   def generate_value

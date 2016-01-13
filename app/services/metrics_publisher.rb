@@ -8,7 +8,7 @@ class MetricsPublisher
     @recipient.publish :profiles, profiles_report
   end
 
-private
+  private
 
   def profiles_report
     {

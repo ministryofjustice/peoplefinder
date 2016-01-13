@@ -19,9 +19,9 @@ feature 'Person maintenance' do
   let(:new_profile_page) { Pages::NewProfile.new }
   let(:login_page) { Pages::Login.new }
 
-  let(:completion_prompt_text) {
+  let(:completion_prompt_text) do
     'Fill in the highlighted fields to achieve 100% profile completion'
-  }
+  end
 
   context 'Creating a person' do
 
@@ -60,7 +60,7 @@ feature 'Person maintenance' do
 
         javascript_log_in
         visit new_person_path
-        expect(page).to have_title("New profile - #{ app_title }")
+        expect(page).to have_title("New profile - #{app_title}")
         expect(page).not_to have_text(completion_prompt_text)
         fill_in_complete_profile_details
 
@@ -75,15 +75,15 @@ feature 'Person maintenance' do
         fill_in 'Surname', with: 'Doe'
         fill_in 'Main email', with: person_attributes[:email]
 
-        expect {
+        expect do
           click_button 'Preview'
-        }.not_to change(Person, :count)
+        end.not_to change(Person, :count)
 
         expect(page).to have_selector('.preview h1', text: 'Jane Doe')
 
-        expect {
+        expect do
           click_button 'Save', match: :first
-        }.to change(Person, :count).by(1)
+        end.to change(Person, :count).by(1)
       end
 
       scenario 'Creating an invalid person' do
@@ -173,7 +173,7 @@ feature 'Person maintenance' do
         visit person_path(create(:person, person_attributes))
         click_link 'Edit this profile'
 
-        expect(page).to have_title("Edit profile - #{ app_title }")
+        expect(page).to have_title("Edit profile - #{app_title}")
         expect(page).not_to have_text(completion_prompt_text)
         fill_in 'First name', with: 'Jane'
         fill_in 'Surname', with: 'Doe'
@@ -264,7 +264,7 @@ feature 'Person maintenance' do
         fill_in 'Surname', with: person_attributes[:surname]
         click_button 'Save', match: :first
 
-        expect(page).to have_title("Duplicate names found - #{ app_title }")
+        expect(page).to have_title("Duplicate names found - #{app_title}")
         click_button 'Continue'
         expect(Person.where(surname: person_attributes[:surname]).count).to eql(2)
       end

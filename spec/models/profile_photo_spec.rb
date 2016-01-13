@@ -1,9 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe ProfilePhoto, type: :model do
-  subject {
+  subject do
     create(:profile_photo)
-  }
+  end
 
   it 'crops the image' do
     expect(subject.image).to receive(:recreate_versions!)

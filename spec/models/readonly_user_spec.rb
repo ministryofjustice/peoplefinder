@@ -14,7 +14,7 @@ RSpec.describe ReadonlyUser, type: :model do
       context 'when the value is correct' do
         let(:headers) { { 'HTTP_RO' => 'ENABLED' } }
 
-        it { is_expected.to be_a(ReadonlyUser) }
+        it { is_expected.to be_a(described_class) }
       end
 
       context 'for any other value' do

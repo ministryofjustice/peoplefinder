@@ -4,7 +4,6 @@ class ImageUploader < CarrierWave::Uploader::Base
   include CarrierWave::DirHelpers
   include CarrierWave::BombShelter
 
-
   # Storage location is configured per-environment in
   # config/initializers/carrierwave.rb
 
@@ -34,14 +33,19 @@ class ImageUploader < CarrierWave::Uploader::Base
   def crop
     if model.crop_x.present?
       manipulate! do |img|
-        x = model.crop_x.to_i
-        y = model.crop_y.to_i
-        w = model.crop_w.to_i
-        h = model.crop_h.to_i
-        img.crop "#{ w }x#{ h }+#{ x }+#{ y }"
+        x, y, w, h = dimensions model
+        img.crop "#{w}x#{h}+#{x}+#{y}"
         img
       end
     end
+  end
+
+  def dimensions model
+    x = model.crop_x.to_i
+    y = model.crop_y.to_i
+    w = model.crop_w.to_i
+    h = model.crop_h.to_i
+    [x, y, w, h]
   end
 
   def mounted_as_without_legacy_prefix
@@ -51,6 +55,6 @@ class ImageUploader < CarrierWave::Uploader::Base
   # Add a white list of extensions which are allowed to be uploaded.
   # For images you might use something like this:
   def extension_white_list
-    %w[ jpg jpeg gif png ]
+    %w( jpg jpeg gif png )
   end
 end

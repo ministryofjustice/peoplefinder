@@ -6,16 +6,16 @@ feature 'Make a suggestion about a profile', js: true do
 
   let(:me) { create(:person) }
   let(:leader) { create(:person) }
-  let(:group) {
-    create(:group).tap { |group|
+  let(:group) do
+    create(:group).tap do |group|
       create(:membership, person: leader, group: group, leader: true)
-    }
-  }
-  let(:subject) {
-    create(:person).tap { |subject|
+    end
+  end
+  let(:subject) do
+    create(:person).tap do |subject|
       create(:membership, person: subject, group: group)
-    }
-  }
+    end
+  end
 
   before(:each, user: :regular) do
     omni_auth_log_in_as(me.email)

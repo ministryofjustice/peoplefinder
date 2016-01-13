@@ -4,7 +4,7 @@ class SearchController < ApplicationController
     @people = PersonSearch.new.perform_search(@query)
   end
 
-private
+  private
 
   def can_add_person_here?
     true

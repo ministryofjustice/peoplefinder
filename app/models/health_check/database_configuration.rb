@@ -2,7 +2,7 @@ require 'uri'
 
 module HealthCheck
   class DatabaseConfiguration
-    SAFE = %w[ adapter database host port ]
+    SAFE = %w( adapter database host port )
 
     def initialize(hash)
       if hash.key?('url')
@@ -20,7 +20,7 @@ module HealthCheck
         join(' ')
     end
 
-  private
+    private
 
     def parse_out_uri(hash)
       uri = URI.parse(hash['url'])

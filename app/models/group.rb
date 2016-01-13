@@ -20,15 +20,12 @@ class Group < ActiveRecord::Base
   end
 
   has_many :memberships,
-    -> { includes(:person).order('people.surname')  },
+    -> { includes(:person).order('people.surname') },
     dependent: :destroy
   has_many :people, through: :memberships
   has_many :leaderships, -> { where(leader: true) }, class_name: 'Membership'
   has_many :non_leaderships,
-    lambda {
-      where(leader: false).includes(:person).
-        order('people.surname ASC, people.given_name ASC')
-    },
+    -> { where(leader: false).includes(:person).order('people.surname ASC, people.given_name ASC') },
     class_name: 'Membership'
   has_many :leaders, through: :leaderships, source: :person
   has_many :non_leaders, through: :non_leaderships, source: :person
@@ -66,11 +63,11 @@ class Group < ActiveRecord::Base
   end
 
   def people_outside_subteams
-    Person.all_in_groups([self.id]) - Person.all_in_groups(subteam_ids)
+    Person.all_in_groups([id]) - Person.all_in_groups(subteam_ids)
   end
 
   def people_outside_subteams_count
-    Person.count_in_groups([self.id], excluded_group_ids: subteam_ids)
+    Person.count_in_groups([id], excluded_group_ids: subteam_ids)
   end
 
   def leaderships_by_person
@@ -97,7 +94,7 @@ class Group < ActiveRecord::Base
     memberships.subscribing.joins(:person).map(&:person)
   end
 
-private
+  private
 
   def name_and_sequence
     slug = name.to_param
@@ -110,6 +107,6 @@ private
   end
 
   def subteam_ids
-    subtree_ids - [self.id]
+    subtree_ids - [id]
   end
 end

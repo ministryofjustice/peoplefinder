@@ -132,7 +132,7 @@ feature "Person maintenance" do
     within('#memberships') do
       click_link('Delete')
     end
-    expect(page).to have_content("Removed #{ person.name } from Digital Justice")
+    expect(page).to have_content("Removed #{person.name} from Digital Justice")
     expect(person.reload.memberships).to be_empty
     expect(current_path).to eql(edit_person_path(person))
   end
