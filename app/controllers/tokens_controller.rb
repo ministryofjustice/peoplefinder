@@ -34,7 +34,6 @@ class TokensController < ApplicationController
     if token.active?
       person = FindCreatePerson.from_token(token)
       login_person(person)
-      token.destroy!
     else
       error :expired_token, time: ttl_seconds_in_hours
       redirect_to new_sessions_path
