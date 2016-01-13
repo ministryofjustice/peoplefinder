@@ -9,7 +9,7 @@ class IpAddressMatcher
     @cidrs.any? { |cidr| cidr.matches?(other) }
   end
 
-private
+  private
 
   def cidrs(terms)
     terms.split(';').map { |s| cidr(s) }

@@ -22,19 +22,15 @@ class RandomGenerator
     generate_level(@group, 0)
   end
 
-private
+  private
 
   def generate_level(group, level)
     if level == @groups_levels
-      @people_per_group.times do
-        create_person(group)
-      end
+      @people_per_group.times { create_person(group) }
     else
       @groups_per_level.times do
         new_group = create_group(group)
-        @people_per_group.times do
-          create_person(new_group)
-        end
+        @people_per_group.times { create_person(new_group) }
         generate_level(new_group, level + 1)
       end
     end

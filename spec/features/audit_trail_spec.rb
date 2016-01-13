@@ -39,9 +39,9 @@ feature 'Audit trail' do
       expect(page).to have_text('Given name set to: Jon')
       expect(page).to have_text('Surname set to: Smith')
 
-      expect {
+      expect do
         click_button 'undo'
-      }.to change(Person, :count).by(-1)
+      end.to change(Person, :count).by(-1)
     end
   end
 
@@ -55,9 +55,9 @@ feature 'Audit trail' do
       expect(page).to have_text('Deleted Person')
       expect(page).to have_text('Name: Greg Dan')
 
-      expect {
+      expect do
         click_button 'undo'
-      }.to change(Person, :count).by(1)
+      end.to change(Person, :count).by(1)
     end
   end
 

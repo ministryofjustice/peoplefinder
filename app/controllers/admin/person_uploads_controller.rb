@@ -15,7 +15,7 @@ module Admin
       end
     end
 
-  private
+    private
 
     def filtered_params
       params.require(:person_upload).permit(:group_id, :file)

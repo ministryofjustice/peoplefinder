@@ -15,9 +15,9 @@ feature 'Person edit notifications' do
     fill_in 'First name', with: 'Bob'
     fill_in 'Surname', with: 'Smith'
     fill_in 'Main email', with: 'bob.smith@digital.justice.gov.uk'
-    expect {
+    expect do
       click_button 'Save', match: :first
-    }.to change { ActionMailer::Base.deliveries.count }.by(1)
+    end.to change { ActionMailer::Base.deliveries.count }.by(1)
 
     expect(last_email.subject).to eq('You’re on MOJ People Finder, check your profile today')
 
@@ -44,9 +44,9 @@ feature 'Person edit notifications' do
     visit person_path(person)
     click_link 'Edit this profile'
     fill_in 'Surname', with: 'Smelly Pants'
-    expect {
+    expect do
       click_button 'Save', match: :first
-    }.to change { ActionMailer::Base.deliveries.count }.by(1)
+    end.to change { ActionMailer::Base.deliveries.count }.by(1)
 
     expect(last_email.subject).to eq('Your profile on MOJ People Finder has been edited')
 
@@ -58,9 +58,9 @@ feature 'Person edit notifications' do
     visit person_path(person)
     click_link 'Edit this profile'
     fill_in 'Surname', with: 'Smelly Pants'
-    expect {
+    expect do
       click_button 'Save', match: :first
-    }.not_to change { ActionMailer::Base.deliveries.count }
+    end.not_to change { ActionMailer::Base.deliveries.count }
   end
 
   scenario 'Verifying the link to bob that is render in the emails' do

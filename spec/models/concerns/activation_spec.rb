@@ -1,9 +1,9 @@
 require 'rails_helper'
 
-RSpec.describe 'Activation' do
+RSpec.describe Concerns::Activation do
   include PermittedDomainHelper
 
-  let(:completed_attributes) {
+  let(:completed_attributes) do
     {
       given_name: 'Bobby',
       surname: 'Tables',
@@ -15,11 +15,11 @@ RSpec.describe 'Activation' do
       description: 'I am a real person',
       profile_photo_id: profile_photo.id
     }
-  }
+  end
 
-  let(:profile_photo) {
+  let(:profile_photo) do
     create(:profile_photo)
-  }
+  end
 
   context '.activated_percentage' do
     it 'returns 0 when no profiles' do

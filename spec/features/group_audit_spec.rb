@@ -2,11 +2,11 @@ require 'rails_helper'
 
 feature 'View group audit' do
   include PermittedDomainHelper
-  let(:super_admin_email)  { 'test.user@digital.justice.gov.uk' }
-  let!(:super_admin)  { create(:super_admin, email: super_admin_email) }
+  let(:super_admin_email) { 'test.user@digital.justice.gov.uk' }
+  let!(:super_admin) { create(:super_admin, email: super_admin_email) }
 
-  let(:name)  { 'The Kings of the Moon' }
-  let(:description)  { 'The best group' }
+  let(:name) { 'The Kings of the Moon' }
+  let(:description) { 'The best group' }
   let!(:person) { create(:person) }
   let(:author) { create(:person) }
   let(:group) { create(:group) }

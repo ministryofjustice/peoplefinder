@@ -4,7 +4,7 @@ require 'forwardable'
 class PersonCsvImporter
   extend Forwardable
 
-  COLUMNS = %i[given_name surname email]
+  COLUMNS = %i(given_name surname email)
 
   ErrorRow = Struct.new(:line_number, :raw, :messages) do
     def to_s
@@ -35,7 +35,7 @@ class PersonCsvImporter
     people.length
   end
 
-private
+  private
 
   def_delegators :@parser, :records, :header
 
@@ -48,9 +48,9 @@ private
   end
 
   def people
-    @people ||= records.map { |record|
+    @people ||= records.map do |record|
       Person.new(@creation_options.merge(clean_fields(record.fields)))
-    }
+    end
   end
 
   def missing_columns
@@ -58,7 +58,7 @@ private
   end
 
   def row_errors
-    people.zip(records).map { |person, record|
+    people.zip(records).map do |person, record|
       if person.valid?
         nil
       else
@@ -66,12 +66,12 @@ private
           record.line_number, record.original, person.errors.full_messages
         )
       end
-    }.compact
+    end.compact
   end
 
   def column_errors
-    missing_columns.map { |column|
+    missing_columns.map do |column|
       ErrorRow.new(1, header.original, ["#{column} column is missing"])
-    }
+    end
   end
 end

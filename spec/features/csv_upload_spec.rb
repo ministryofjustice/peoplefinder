@@ -13,20 +13,20 @@ feature 'Upload CSV' do
 
     visit new_admin_person_upload_path
 
-    expect {
+    expect do
       attach_file 'Upload CSV file', File.expand_path('../../fixtures/valid.csv', __FILE__)
       select group.name, from: 'Choose your team'
       click_button 'Upload'
-    }.to change(Person, :count).by(2)
+    end.to change(Person, :count).by(2)
 
     expect(current_path).to eql(new_admin_person_upload_path)
 
     expect(page).to have_text('Successfully uploaded 2 people')
 
-    %w[
+    %w(
       peter.bly@digital.justice.gov.uk
       jon.o.carey@digital.justice.gov.uk
-    ].each do |email|
+    ).each do |email|
       person = Person.find_by(email: email)
       expect(person.groups).to eq([group])
       check_new_user_notification_email(email)
@@ -38,11 +38,11 @@ feature 'Upload CSV' do
 
     visit new_admin_person_upload_path
 
-    expect {
+    expect do
       attach_file 'Upload CSV file', File.expand_path('../../fixtures/invalid.csv', __FILE__)
       select group.name, from: 'Choose your team'
       click_button 'Upload'
-    }.not_to change(Person, :count)
+    end.not_to change(Person, :count)
 
     expect(current_path).to eql(admin_person_uploads_path)
 

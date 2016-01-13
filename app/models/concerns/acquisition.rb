@@ -13,9 +13,9 @@ module Concerns::Acquisition
     end
 
     def self.acquired_count from: nil, before: nil
-      acquired = Person.where("people.login_count > 0")
-      acquired = acquired.where("created_at >= ?", from) if from
-      acquired = acquired.where("created_at < ?", before) if before
+      acquired = Person.where('people.login_count > 0')
+      acquired = acquired.where('created_at >= ?', from) if from
+      acquired = acquired.where('created_at < ?', before) if before
       acquired.count
     end
 

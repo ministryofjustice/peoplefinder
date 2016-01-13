@@ -8,7 +8,7 @@ class GroupUpdateService
     @group.update(params).tap { |ok| inform_subscribers if ok }
   end
 
-private
+  private
 
   def inform_subscribers
     @group.subscribers.each do |subscriber|

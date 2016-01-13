@@ -22,7 +22,7 @@ module HealthCheck
       result
     end
 
-  private
+    private
 
     def execute_simple_select_on_database
       ActiveRecord::Base.connection.execute('select 1 as result')

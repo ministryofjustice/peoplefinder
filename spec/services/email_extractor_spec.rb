@@ -2,9 +2,9 @@ require 'spec_helper'
 require 'email_extractor'
 
 RSpec.describe EmailExtractor, type: :service do
-  subject {
+  subject do
     described_class.new
-  }
+  end
 
   it 'returns the original email when supplied with a valid email address' do
     expect(subject.extract("user.o'postrophe@example.com")).

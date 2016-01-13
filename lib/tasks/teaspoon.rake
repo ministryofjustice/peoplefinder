@@ -1,4 +1,4 @@
-if %w[development test].include? Rails.env
+if %w(development test).include? Rails.env
   namespace :teaspoon do
     task :explain do
       puts 'Running JavaScript specs...'

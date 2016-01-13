@@ -21,7 +21,7 @@ class PersonUpdater
     send_update_email!
   end
 
-private
+  private
 
   def send_update_email!
     if @person.notify_of_change?(@current_user)

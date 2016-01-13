@@ -1,4 +1,4 @@
-Rails.application.config.assets.precompile += %w[
+Rails.application.config.assets.precompile += %w(
   gov-static/gov-goodbrowsers.css
   gov-static/gov-ie6.css
   gov-static/gov-ie7.css
@@ -12,11 +12,11 @@ Rails.application.config.assets.precompile += %w[
   gov-static/gov-ie.js
   Jcrop/css/jquery.Jcrop.min.css
   Jcrop/css/jquery.Jcrop.min.js
-]
+)
 
 unless Rails.env.production?
-  Rails.application.config.assets.precompile += %w[ teaspoon.css
+  Rails.application.config.assets.precompile += %w( teaspoon.css
                                                     teaspoon-teaspoon.js
                                                     mocha/1.17.1.js
-                                                    teaspoon-mocha.js ]
+                                                    teaspoon-mocha.js )
 end

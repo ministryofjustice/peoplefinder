@@ -12,9 +12,9 @@ RSpec.describe MembershipsController, type: :controller do
 
     it 'deletes the record' do
       delete :destroy, id: membership.to_param, referer: people_path
-      expect {
+      expect do
         Membership.find(membership.id)
-      }.to raise_error(ActiveRecord::RecordNotFound)
+      end.to raise_error(ActiveRecord::RecordNotFound)
     end
 
     it 'redirects to the referer' do

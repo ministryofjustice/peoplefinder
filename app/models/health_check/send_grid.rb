@@ -38,7 +38,7 @@ module HealthCheck
       end
     end
 
-  private
+    private
 
     def with_error_detection(desc)
       yield

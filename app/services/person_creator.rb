@@ -17,7 +17,7 @@ class PersonCreator
     send_create_email!
   end
 
-private
+  private
 
   def send_create_email!
     if person.notify_of_change?(@current_user)

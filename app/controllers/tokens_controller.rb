@@ -28,7 +28,7 @@ class TokensController < ApplicationController
     end
   end
 
-protected
+  protected
 
   def verify_active_token(token)
     if token.active?
@@ -57,7 +57,7 @@ protected
     end
   end
 
-private
+  private
 
   def find_token_securly(token)
     Token.find_each do |t|

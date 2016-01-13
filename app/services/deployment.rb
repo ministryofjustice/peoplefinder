@@ -16,7 +16,7 @@ class Deployment
     }
   end
 
-private
+  private
 
   def version_number
     lookup('APPVERSION')

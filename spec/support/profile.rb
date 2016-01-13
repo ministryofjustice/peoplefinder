@@ -42,7 +42,7 @@ module SpecSupport
     def check_creation_of_profile_details
       name = "#{person_attributes[:given_name]} #{person_attributes[:surname]}"
 
-      expect(page).to have_title("#{name} - #{ app_title }")
+      expect(page).to have_title("#{name} - #{app_title}")
       within('h1') { expect(page).to have_text(name) }
       expect(page).to have_text(person_attributes[:email])
       expect(page).to have_text(person_attributes[:primary_phone_number])

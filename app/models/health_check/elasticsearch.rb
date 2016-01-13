@@ -8,15 +8,15 @@ module HealthCheck
     end
 
     def accessible?
-      return true if cluster_status?("green") 
+      return true if cluster_status?('green')
       log_error("Cluster status is #{client.cluster.health['status']}")
       false
     end
 
-  private
+    private
 
     def cluster_status?(expected_status)
-      client.cluster.health["status"] == expected_status
+      client.cluster.health['status'] == expected_status
     end
 
     def log_error(message)
@@ -24,9 +24,9 @@ module HealthCheck
     end
 
     def hosts
-      client.transport.hosts.map { |h|
+      client.transport.hosts.map do |h|
         "port #{h[:port]} on #{h[:host]} via #{h[:protocol]}"
-      }.join('; ')
+      end.join('; ')
     end
 
     def client

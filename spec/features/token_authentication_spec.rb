@@ -6,7 +6,6 @@ RSpec.shared_context "token_auth feature disabled" do
   disable_feature :token_auth
 end
 
-
 feature 'Token Authentication' do
   include ActiveJobHelper
   include PermittedDomainHelper
@@ -121,7 +120,7 @@ feature 'Token Authentication' do
       given_name: 'Example',
       surname: 'User',
       email: 'example.user@digital.justice.gov.uk'
-    )
+          )
     token_log_in_as('Example.USER@digital.justice.gov.uk')
     expect(page).to have_text('Signed in as Example User')
   end

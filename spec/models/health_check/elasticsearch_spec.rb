@@ -15,7 +15,7 @@ describe HealthCheck::Elasticsearch do
   end
 
   context '#accessible?' do
-     it 'returns true if Elasticsearch cluster health is green' do
+    it 'returns true if Elasticsearch cluster health is green' do
       allow(subject).to receive(:cluster_status?).and_return(true)
       expect(subject).to be_accessible
     end

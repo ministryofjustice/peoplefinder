@@ -3,7 +3,6 @@ require 'rails_helper'
 feature 'Home page' do
   include PermittedDomainHelper
 
-
   context 'for a regular user' do
     before do
       create(:department)

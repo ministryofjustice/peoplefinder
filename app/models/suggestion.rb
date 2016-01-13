@@ -5,17 +5,17 @@ class Suggestion
   include ActiveModel::Conversion
   include ActiveModel::Validations
 
-  PROBLEMS = %i[
+  PROBLEMS = %i(
     missing_fields incorrect_fields duplicate_profile inappropriate_content
     person_left
-  ]
+  )
 
   attribute :missing_fields, Boolean, default: false
   attribute :missing_fields_info, String
 
   attribute :incorrect_fields, Boolean, default: false
 
-  POTENTIALLY_INCORRECT_FIELDS = %i[
+  POTENTIALLY_INCORRECT_FIELDS = %i(
     first_name
     last_name
     roles
@@ -23,7 +23,7 @@ class Suggestion
     working_days
     phone_number
     image
-  ]
+  )
 
   POTENTIALLY_INCORRECT_FIELDS.each do |field|
     attribute :"incorrect_#{field}", Boolean, default: false
@@ -60,7 +60,7 @@ class Suggestion
     duplicate_profile || inappropriate_content || person_left
   end
 
-private
+  private
 
   def must_select_problem
     problem_fields = PROBLEMS.map { |problem| send(problem) }

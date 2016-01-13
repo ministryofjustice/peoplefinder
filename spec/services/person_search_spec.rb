@@ -7,23 +7,23 @@ RSpec.describe PersonSearch, elastic: true do
     clean_up_indexes_and_tables
   end
 
-  let!(:alice) {
+  let!(:alice) do
     create(:person, given_name: 'Alice', surname: 'Andrews', community: community)
-  }
-  let!(:bob) {
+  end
+  let!(:bob) do
     create(:person, given_name: 'Bob', surname: 'Browning',
            location_in_building: '10th floor', building: '102 Petty France',
            city: 'London', description: 'weekends only')
-  }
-  let!(:andrew) {
+  end
+  let!(:andrew) do
     create(:person, given_name: 'Andrew', surname: 'Alice')
-  }
-  let!(:abraham_kiehn) {
+  end
+  let!(:abraham_kiehn) do
     create(:person, given_name: 'Abraham', surname: 'Kiehn')
-  }
-  let!(:abe) {
+  end
+  let!(:abe) do
     create(:person, given_name: 'Abe', surname: 'Predovic')
-  }
+  end
 
   let!(:digital_services) { create(:group, name: 'Digital Services') }
   let!(:membership) { bob.memberships.create(group: digital_services, role: 'Cleaner') }
@@ -106,10 +106,15 @@ RSpec.describe PersonSearch, elastic: true do
   end
 
   context 'with commas in search query' do
-    it 'should perform search without commas' do
+    it 'performs search without commas' do
       expect(Person).to receive(:search_results).with('name:Smith Bill', limit: 100).and_return []
       expect(Person).to receive(:search_results).with('Smith Bill', limit: 100).and_return []
-      expect(Person).to receive(:search_results).with(hash_including(query: {fuzzy_like_this: hash_including(like_text: 'Smith Bill')}), limit: 100).and_return []
+      expect(Person).to receive(:search_results).with(
+        hash_including(
+          query: {
+            fuzzy_like_this: hash_including(like_text: 'Smith Bill')
+          }
+        ), limit: 100).and_return []
 
       described_class.new.perform_search('Smith,Bill,')
     end

@@ -85,13 +85,13 @@ RSpec.describe PersonCsvImporter, type: :service do
 
   describe '#import' do
     context 'for a valid csv' do
-      let(:csv) {
+      let(:csv) do
         <<-CSV.strip_heredoc
           email,given_name,surname
           peter.bly@valid.gov.uk,Peter,Bly
           jon.con@valid.gov.uk,Jon,Con
         CSV
-      }
+      end
 
       it 'creates new records' do
         subject.import
@@ -123,13 +123,13 @@ RSpec.describe PersonCsvImporter, type: :service do
     end
 
     context 'for an invalid csv (including duplicates)' do
-      let(:csv) {
+      let(:csv) do
         <<-CSV.strip_heredoc
           email,given_name,surname
           peter.bly@valid.gov.uk,,Bly
           jon.o.carey@valid.gov.uk,Jon,O'Carey
         CSV
-      }
+      end
 
       before do
         create(:person, email: 'jon.o.carey@valid.gov.uk')
@@ -143,13 +143,13 @@ RSpec.describe PersonCsvImporter, type: :service do
 
   describe '#import' do
     context 'for a CSV exported by Estates' do
-      let(:csv) {
+      let(:csv) do
         <<-CSV.strip_heredoc
           First Name,Last Name,E-mail Display Name
           Reinhold,Denesik,"Denesik, Reinhold (Reinhold.Denesik@valid.gov.uk)"
           Lelah,Jerde,"Jerde, Lelah (Lelah.Jerde@valid.gov.uk)"
         CSV
-      }
+      end
 
       it 'creates records' do
         subject.import

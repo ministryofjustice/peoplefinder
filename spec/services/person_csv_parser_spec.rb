@@ -4,22 +4,22 @@ require 'active_support/core_ext/string/strip'
 
 RSpec.describe PersonCsvParser, type: :service do
 
-  subject {
+  subject do
     described_class.new(csv)
-  }
+  end
 
   context 'with a clean CSV' do
-    let(:csv) {
+    let(:csv) do
       <<-END.strip_heredoc
         email,given_name,surname
         peter.bly@valid.gov.uk,Peter,Bly
         jon.o.carey@valid.gov.uk,Jon,O'Carey
       END
-    }
+    end
 
-    subject {
+    subject do
       described_class.new(csv)
-    }
+    end
 
     it 'returns the line number of the header' do
       expect(subject.header.line_number).to eq(1)
@@ -53,13 +53,13 @@ RSpec.describe PersonCsvParser, type: :service do
   end
 
   context 'with dodgy headers' do
-    let(:csv) {
+    let(:csv) do
       <<-END.strip_heredoc
         First Name,Last Name,E-mail Display Name
         Peter,Bly,peter.bly@valid.gov.uk
         Jon,O'Carey,jon.o.carey@valid.gov.uk
       END
-    }
+    end
 
     it 'returns a hash of fields with cleaned keys' do
       expect(subject.records.map(&:fields)).to eq(
@@ -72,13 +72,13 @@ RSpec.describe PersonCsvParser, type: :service do
   end
 
   context 'with unidentifiable headers' do
-    let(:csv) {
+    let(:csv) do
       <<-END.strip_heredoc
         Foo,bar,BAZ
         Peter,Bly,peter.bly@valid.gov.uk
         Jon,O'Carey,jon.o.carey@valid.gov.uk
       END
-    }
+    end
 
     it 'returns an empty hash for the fields' do
       expect(subject.records.map(&:fields)).to eq([{}, {}])

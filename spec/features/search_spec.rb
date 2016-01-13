@@ -8,7 +8,7 @@ feature 'Search for people', elastic: true do
 
   describe 'with elasticsearch' do
     let(:community) { create(:community, name: 'Design') }
-    let!(:person) {
+    let!(:person) do
       create(:person,
         given_name: 'Jon',
         surname: 'Browne',
@@ -16,7 +16,7 @@ feature 'Search for people', elastic: true do
         primary_phone_number: '0711111111',
         tags: 'Cooking,Eating',
         community: community)
-    }
+    end
 
     before do
       create(:department)
@@ -33,7 +33,7 @@ feature 'Search for people', elastic: true do
       visit home_path
       fill_in 'query', with: 'Browne'
       click_button 'Submit search'
-      expect(page).to have_title("Search results - #{ app_title }")
+      expect(page).to have_title("Search results - #{app_title}")
       within('.breadcrumbs ol') do
         expect(page).to have_text('Search results')
       end
@@ -48,7 +48,7 @@ feature 'Search for people', elastic: true do
       visit home_path
       fill_in 'query', with: community.name
       click_button 'Submit search'
-      expect(page).to have_title("Search results - #{ app_title }")
+      expect(page).to have_title("Search results - #{app_title}")
       expect(page).to have_text('Jon Browne')
       expect(page).to have_text(community.name)
     end

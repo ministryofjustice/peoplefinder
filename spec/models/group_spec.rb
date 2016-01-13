@@ -125,7 +125,6 @@ RSpec.describe Group, type: :model do
     context 'with bob in the team' do
       before { team.people << bob }
 
-
       context 'and bob is a team leader' do
 
         before do
@@ -190,7 +189,7 @@ RSpec.describe Group, type: :model do
         end
 
         it 'has completion_score equal to average of bob and alice\'s completion_score' do
-          average_score = ( (bob.completion_score + alice.completion_score) / 2.0).round(0)
+          average_score = ((bob.completion_score + alice.completion_score) / 2.0).round(0)
           expect(team.completion_score).to eq(average_score)
           expect(Rails.cache.read(cache_id)).to eq(average_score)
         end
@@ -219,7 +218,7 @@ RSpec.describe Group, type: :model do
           end
 
           it 'has completion_score equal to average of bob and alice\'s completion_score' do
-            average_score = ( (bob.completion_score + alice.completion_score) / 2.0).round(0)
+            average_score = ((bob.completion_score + alice.completion_score) / 2.0).round(0)
             expect(team.completion_score).to eq(average_score)
             expect(Rails.cache.read(cache_id)).to eq(average_score)
           end
@@ -250,11 +249,11 @@ RSpec.describe Group, type: :model do
     let(:team) { create(:group, parent: department, name: 'CS') }
 
     it 'sets the department slug_candidate' do
-      expect(department.slug_candidates).to eql(%w[MOJ])
+      expect(department.slug_candidates).to eql(%w(MOJ))
     end
 
     it 'sets the team slug_candidate' do
-      expect(team.slug_candidates).to eql(['CS', %w[MOJ CS], %w[MOJ CS-2]])
+      expect(team.slug_candidates).to eql(['CS', %w(MOJ CS), %w(MOJ CS-2)])
     end
   end
 

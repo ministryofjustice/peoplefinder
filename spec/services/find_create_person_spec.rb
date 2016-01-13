@@ -11,7 +11,7 @@ shared_examples 'new person created' do
   end
 
   describe 'the person' do
-    it 'has correct e-mail address'  do
+    it 'has correct e-mail address' do
       expect(subject.email).to eql(expected_email)
     end
     it 'has correct name' do
@@ -35,7 +35,7 @@ RSpec.describe FindCreatePerson, type: :service do
   end
   let(:rogue_auth_hash) do
     valid_auth_hash.deep_merge(
-        'info' => { 'email' => 'rogue.user@example.com' }
+      'info' => { 'email' => 'rogue.user@example.com' }
     )
   end
 

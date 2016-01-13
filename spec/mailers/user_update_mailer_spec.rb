@@ -24,7 +24,7 @@ RSpec.describe UserUpdateMailer do
     subject(:mail) { described_class.new_profile_email(person).deliver_now }
 
     it 'includes the person show url' do
-      %w[plain html].each do |part_type|
+      %w(plain html).each do |part_type|
         expect(get_message_part(mail, part_type)).to have_text(person_url(person))
       end
     end
@@ -34,7 +34,7 @@ RSpec.describe UserUpdateMailer do
     subject(:mail) { described_class.updated_profile_email(person).deliver_now }
 
     it 'includes the person show url' do
-      %w[plain html].each do |part_type|
+      %w(plain html).each do |part_type|
         expect(get_message_part(mail, part_type)).to have_text(person_url(person))
       end
     end

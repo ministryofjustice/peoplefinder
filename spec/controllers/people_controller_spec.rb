@@ -10,17 +10,17 @@ RSpec.describe PeopleController, type: :controller do
   # This should return the minimal set of attributes required to create a valid
   # Person. As you add validations to Person, be sure to
   # adjust the attributes here as well.
-  let(:valid_attributes) {
+  let(:valid_attributes) do
     attributes_for(:person)
-  }
+  end
 
-  let(:invalid_attributes) {
+  let(:invalid_attributes) do
     { surname: '' }
-  }
+  end
 
-  let(:valid_attributes_with_image) {
+  let(:valid_attributes_with_image) do
     attributes_for(:person).merge(image: File.open(sample_image))
-  }
+  end
 
   let!(:group) { create(:group) }
 
@@ -76,9 +76,9 @@ RSpec.describe PeopleController, type: :controller do
   describe 'POST create' do
     describe 'with valid params' do
       it 'creates a new Person' do
-        expect {
+        expect do
           post :create, person: valid_attributes
-        }.to change(Person, :count).by(1)
+        end.to change(Person, :count).by(1)
       end
 
       it 'assigns a newly created person as @person' do
@@ -143,9 +143,9 @@ RSpec.describe PeopleController, type: :controller do
     end
 
     describe 'with valid params' do
-      let(:new_attributes) {
+      let(:new_attributes) do
         attributes_for(:person).merge(works_monday: true, works_tuesday: false)
-      }
+      end
 
       it 'shows no notice about informing the person' do
         expect(flash[:notice]).not_to match(/We have let/)
@@ -170,14 +170,14 @@ RSpec.describe PeopleController, type: :controller do
     let(:person) { create(:person, valid_attributes) }
 
     describe 'with valid params' do
-      let(:new_attributes) {
+      let(:new_attributes) do
         attributes_for(:person).merge(
           works_monday: true,
           works_tuesday: false,
           works_saturday: true,
           works_sunday: false
         )
-      }
+      end
 
       before do
         put :update, id: person.to_param, person: new_attributes
@@ -254,9 +254,9 @@ RSpec.describe PeopleController, type: :controller do
   describe 'DELETE destroy' do
     it 'destroys the requested person' do
       person = create(:person, valid_attributes)
-      expect {
+      expect do
         delete :destroy, id: person.to_param
-      }.to change(Person, :count).by(-1)
+      end.to change(Person, :count).by(-1)
     end
 
     it 'redirects to the people list' do

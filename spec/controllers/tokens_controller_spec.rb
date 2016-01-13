@@ -15,7 +15,7 @@ describe TokensController, type: :controller do
           expect(Token).to receive(:find_each).and_yield(double('token', value: 'some token value'))
           expect(Secure).to receive(:compare).with('some token value', 'some token value').and_return(true)
           expect(controller).to receive(:verify_active_token).and_return(double.as_null_object)
-          expect{ get :show, id: 'some token value' }.to raise_error{ ActionView::MissingTemplate }
+          expect { get :show, id: 'some token value' }.to raise_error { ActionView::MissingTemplate }
         end
       end
     end
@@ -25,9 +25,8 @@ describe TokensController, type: :controller do
       let!(:token) { create(:token) }
 
       it 'token gets removed after use' do
-        expect { get :show, id: token.value; }.to change{ Token.count }.by(-1)
+        expect { get :show, id: token.value; }.to change { Token.count }.by(-1)
       end
     end
   end
 end
-

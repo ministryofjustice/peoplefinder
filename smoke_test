@@ -106,14 +106,14 @@ class SmokeTest
     raise e
   end
 
-private
+  private
 
   attr_reader :imap, :email_address
 
   def find_own_name
-    page.text[/Signed in as (.*?) Sign out/, 1].tap { |name|
+    page.text[/Signed in as (.*?) Sign out/, 1].tap do |name|
       fail "couldn't find own name" unless name
-    }
+    end
   end
 
   def search_profile(name, search_term)
@@ -149,15 +149,15 @@ private
   def fetch_token_mail
     imap.examine 'INBOX'
     candidate_ids = imap.search(['SINCE', @start_time.strftime('%-d-%b-%Y')])
-    mails = candidate_ids.map { |id|
+    mails = candidate_ids.map do |id|
       msg = imap.fetch(id, 'RFC822')[0].attr['RFC822']
       Mail.read_from_string(msg)
-    }
-    mails.reverse.find { |mail|
+    end
+    mails.reverse.find do |mail|
       mail.subject =~ /access request/i &&
         mail.date.to_time >= (@start_time - TIME_DRIFT_ALLOWANCE) &&
         mail.text_part.decoded.include?(@host)
-    }
+    end
   end
 
   def sign_in(path)

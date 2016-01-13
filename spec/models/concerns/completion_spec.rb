@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe 'Completion' do # rubocop:disable RSpec/DescribeClass
   include PermittedDomainHelper
 
-  let(:completed_attributes) {
+  let(:completed_attributes) do
     {
       given_name: 'Bobby',
       surname: 'Tables',
@@ -15,11 +15,11 @@ RSpec.describe 'Completion' do # rubocop:disable RSpec/DescribeClass
       description: 'I am a real person',
       profile_photo_id: profile_photo.id
     }
-  }
+  end
 
-  let(:profile_photo) {
+  let(:profile_photo) do
     create(:profile_photo)
-  }
+  end
 
   context '#completion score' do
     it 'returns 0 if all fields are empty' do
@@ -47,7 +47,7 @@ RSpec.describe 'Completion' do # rubocop:disable RSpec/DescribeClass
 
     context 'when all the fields are completed' do
       let(:person) { Person.new(completed_attributes) }
-      before { person.groups << build(:group)  }
+      before { person.groups << build(:group) }
 
       it 'returns 100' do
         expect(person.completion_score).to eql(100)
@@ -62,7 +62,7 @@ RSpec.describe 'Completion' do # rubocop:disable RSpec/DescribeClass
         fields.merge!(image: 'profile_MoJ_small.jpg')
         Person.new(completed_attributes)
       end
-      before { person.groups << build(:group)  }
+      before { person.groups << build(:group) }
 
       it 'returns 100' do
         expect(person.completion_score).to eql(100)
@@ -87,21 +87,21 @@ RSpec.describe 'Completion' do # rubocop:disable RSpec/DescribeClass
           email: generate(:email),
           city: generate(:city),
           primary_phone_number: generate(:phone_number)
-        )
+              )
       end
       expect(Person.overall_completion).to be_within(1).of(55)
     end
 
     it 'includes membership in calculation' do
-      people = 2.times.map {
+      people = 2.times.map do
         create(:person,
           given_name: generate(:given_name),
           surname: generate(:surname),
           email: generate(:email),
           city: generate(:city),
           primary_phone_number: generate(:phone_number)
-        )
-      }
+              )
+      end
       2.times do
         create(:membership, person: people[0])
       end

@@ -6,17 +6,17 @@ RSpec.describe Api::PeopleController, type: :controller do
   # This should return the minimal set of attributes required to create a valid
   # Person. As you add validations to Person, be sure to
   # adjust the attributes here as well.
-  let(:valid_attributes) {
+  let(:valid_attributes) do
     attributes_for(:person)
-  }
+  end
 
-  let(:invalid_attributes) {
+  let(:invalid_attributes) do
     { surname: '' }
-  }
+  end
 
-  let(:valid_attributes_with_image) {
+  let(:valid_attributes_with_image) do
     attributes_for(:person).merge(image: File.open(sample_image))
-  }
+  end
 
   let!(:group) { create(:group) }
 

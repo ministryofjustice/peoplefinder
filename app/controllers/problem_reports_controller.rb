@@ -7,7 +7,7 @@ class ProblemReportsController < ApplicationController
     redirect_to :back
   end
 
-private
+  private
 
   def problem_report_params
     params.require(:problem_report).

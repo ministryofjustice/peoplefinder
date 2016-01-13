@@ -5,14 +5,14 @@ RSpec.describe Deployment, type: :service do
   subject { described_class.new(environment) }
 
   context 'when all environment variables are available' do
-    let(:environment) {
+    let(:environment) do
       {
         'APPVERSION' => '1.2.3',
         'APP_BUILD_DATE' => '2013-04-03',
         'APP_GIT_COMMIT' => '7cb26ffe8a2ead47837e28606743e4d31a31512d',
         'APP_BUILD_TAG' => '0.5.25'
       }
-    }
+    end
 
     it 'returns a hash of environment information' do
       expected = {

@@ -9,7 +9,7 @@ class ApplicationController < ActionController::Base
 
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 
-private
+  private
 
   def user_for_paper_trail
     logged_in? ? current_user.id : nil

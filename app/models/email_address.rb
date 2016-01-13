@@ -37,7 +37,7 @@ class EmailAddress
     local.split('.').length > 1
   end
 
-private
+  private
 
   attr_reader :valid_login_domains
 

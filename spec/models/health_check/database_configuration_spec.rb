@@ -6,14 +6,14 @@ describe HealthCheck::DatabaseConfiguration do
 
   describe 'to_s' do
     context 'with all safe fields' do
-      let(:config_hash) {
+      let(:config_hash) do
         {
           'adapter' => 'postgresql',
           'database' => 'foo_test',
           'host' => 'db.example.com',
           'port' => 1337
         }
-      }
+      end
 
       it 'lists all fields in alphabetical order' do
         expect(subject.to_s).
@@ -22,7 +22,7 @@ describe HealthCheck::DatabaseConfiguration do
     end
 
     context 'with unsafe fields' do
-      let(:config_hash) {
+      let(:config_hash) do
         {
           'adapter' => 'postgresql',
           'pool' => 5,
@@ -32,7 +32,7 @@ describe HealthCheck::DatabaseConfiguration do
           'username' => 'aoluser',
           'password' => 'SuperSecret'
         }
-      }
+      end
 
       it 'excludes password' do
         expect(subject.to_s).not_to match(/password|SuperSecret/)
@@ -44,12 +44,12 @@ describe HealthCheck::DatabaseConfiguration do
     end
 
     context 'with a comprehensive url' do
-      let(:config_hash) {
+      let(:config_hash) do
         {
           'adapter' => 'postgresql',
           'url' => 'postgresql://aoluser:SuperSecret@db.example.com:1337/foo_test'
         }
-      }
+      end
 
       it 'preserves non-url parameters' do
         expect(subject.to_s).to match(/adapter=postgresql/)
@@ -77,12 +77,12 @@ describe HealthCheck::DatabaseConfiguration do
     end
 
     context 'with a url without all fields' do
-      let(:config_hash) {
+      let(:config_hash) do
         {
           'adapter' => 'postgresql',
           'url' => 'postgresql://localhost/foo_test'
         }
-      }
+      end
 
       it 'excludes port' do
         expect(subject.to_s).not_to match(/port/)

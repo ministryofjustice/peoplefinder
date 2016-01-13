@@ -14,7 +14,7 @@ feature 'OmniAuth Authentication' do
 
     visit '/'
     expect(login_page).to be_displayed
-    expect(page).to have_title("Log in - #{ app_title }")
+    expect(page).to have_title("Log in - #{app_title}")
 
     click_link 'Log in'
     expect(page).to have_text('Signed in as John Doe')
@@ -30,7 +30,7 @@ feature 'OmniAuth Authentication' do
     expect(login_page).to be_displayed
 
     click_link 'Log in'
-    expect(page).to have_title("Login failure - #{ app_title }")
+    expect(page).to have_title("Login failure - #{app_title}")
     expect(page).to have_text(/log in with a MOJ or GDS email address/)
 
     click_link 'Return to the log in screen'

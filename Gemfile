@@ -46,7 +46,7 @@ group :assets do
 end
 
 group :production do
-  gem 'sentry-raven', :git => 'https://github.com/getsentry/raven-ruby.git'
+  gem 'sentry-raven', git: 'https://github.com/getsentry/raven-ruby.git'
   gem 'logstasher', '~> 0.6.2'
 end
 

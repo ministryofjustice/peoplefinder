@@ -9,11 +9,13 @@ group :red_green_refactor, halt_on_fail: true do
     watch(%r{spec/javascripts/spec\.(js\.coffee|js|coffee)$}) { 'spec/javascripts' }
     watch(%r{spec/javascripts/.+_spec\.(js\.coffee|js|coffee)$})
     watch(%r{spec/javascripts/fixtures/.+$})
-    watch(%r{app/assets/javascripts/(.+?)\.(js\.coffee|js|coffee)(?:\.\w+)*$}) { |m| "spec/javascripts/#{ m[1] }_spec.#{ m[2] }" }
+    watch(%r{app/assets/javascripts/(.+?)\.(js\.coffee|js|coffee)(?:\.\w+)*$}) do |m|
+      "spec/javascripts/#{m[1]}_spec.#{m[2]}"
+    end
   end
 
-  guard :rspec, cmd: "bundle exec rspec", all_on_start: false, failed_mode: :focus do
-    require "guard/rspec/dsl"
+  guard :rspec, cmd: 'bundle exec rspec', all_on_start: false, failed_mode: :focus do
+    require 'guard/rspec/dsl'
     dsl = Guard::RSpec::Dsl.new(self)
 
     # RSpec files
@@ -33,9 +35,9 @@ group :red_green_refactor, halt_on_fail: true do
 
     watch(rails.controllers) do |m|
       [
-        rspec.spec.("routing/#{m[1]}_routing"),
-        rspec.spec.("controllers/#{m[1]}_controller"),
-        rspec.spec.("acceptance/#{m[1]}")
+        rspec.spec.call("routing/#{m[1]}_routing"),
+        rspec.spec.call("controllers/#{m[1]}_controller"),
+        rspec.spec.call("acceptance/#{m[1]}")
       ]
     end
 
@@ -45,7 +47,7 @@ group :red_green_refactor, halt_on_fail: true do
     watch(rails.app_controller)  { "#{rspec.spec_dir}/controllers" }
 
     # Capybara features specs
-    watch(rails.view_dirs)     { |m| rspec.spec.("features/#{m[1]}") }
-    watch(rails.layouts)       { |m| rspec.spec.("features/#{m[1]}") }
+    watch(rails.view_dirs)     { |m| rspec.spec.call("features/#{m[1]}") }
+    watch(rails.layouts)       { |m| rspec.spec.call("features/#{m[1]}") }
   end
 end

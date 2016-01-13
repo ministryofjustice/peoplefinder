@@ -21,7 +21,7 @@ feature 'Group maintenance' do
       name = 'Ministry of Justice'
 
       visit new_group_path
-      expect(page).to have_title("New team - #{ app_title }")
+      expect(page).to have_title("New team - #{app_title}")
 
       fill_in 'Team name', with: name
       fill_in 'Team description', with: 'about my team'
@@ -111,7 +111,7 @@ feature 'Group maintenance' do
       visit group_path(group)
       click_link 'Edit'
 
-      expect(page).to have_title("Edit team - #{ app_title }")
+      expect(page).to have_title("Edit team - #{app_title}")
       expect(page).to have_text('You are currently editing this profile')
       new_name = 'Cyberdigital Cyberservices'
       fill_in 'Team name', with: new_name
@@ -202,7 +202,7 @@ feature 'Group maintenance' do
       expect(page).to have_link('Cancel', href: 'javascript:history.back()')
     end
 
-    scenario 'Not displaying an edit parent field for a department'  do
+    scenario 'Not displaying an edit parent field for a department' do
       dept = create(:group).parent
 
       visit edit_group_path(dept)

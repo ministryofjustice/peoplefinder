@@ -1,13 +1,13 @@
 module ApplicationHelper
 
   def pluralize_with_delimiter number, text
-    "#{ number_with_delimiter(number) } #{ text.pluralize(number) }"
+    "#{number_with_delimiter(number)} #{text.pluralize(number)}"
   end
 
   def last_update
     current_object = @person || @group
     if current_object && current_object.updated_at.present?
-      "#{ updated_at(current_object) }#{ updated_by(current_object) }."
+      "#{updated_at(current_object)}#{updated_by(current_object)}."
     end
   end
 
@@ -22,18 +22,18 @@ module ApplicationHelper
            locals: { items: items }
   end
 
-  FLASH_NOTICE_KEYS = %w[ error notice warning ]
+  FLASH_NOTICE_KEYS = %w(error notice warning)
 
   def flash_messages
     messages = flash.keys.map(&:to_s) & FLASH_NOTICE_KEYS
     return if messages.empty?
-    content_tag(:div, class: 'inner-block') {
-      content_tag(:div, id: 'flash-messages') {
-        messages.inject(ActiveSupport::SafeBuffer.new) { |html, type|
+    content_tag(:div, class: 'inner-block') do
+      content_tag(:div, id: 'flash-messages') do
+        messages.inject(ActiveSupport::SafeBuffer.new) do |html, type|
           html << flash_message(type)
-        }
-      }
-    }
+        end
+      end
+    end
   end
 
   def error_text(key)
@@ -90,11 +90,11 @@ module ApplicationHelper
     {
       'virtual-pageview': "/search-result,#{pageview_path}",
       'event-category': 'Search result click',
-      'event-action': "Click result #{'%03d' % (index+1)}"
+      'event-action': "Click result #{'%03d' % (index + 1)}"
     }
   end
 
-private
+  private
 
   def updated_at(obj)
     "Last updated: #{l(obj.updated_at)}"
@@ -102,14 +102,14 @@ private
 
   def updated_by(obj)
     unless obj.originator == Version.public_user
-      " by #{ obj.originator }"
+      " by #{obj.originator}"
     end
   end
 
   def flash_message(type)
-    content_tag(:div, class: "flash-message #{type}", role: 'alert') {
+    content_tag(:div, class: "flash-message #{type}", role: 'alert') do
       flash[type]
-    }
+    end
   end
 
   def editing_mode(building = false)

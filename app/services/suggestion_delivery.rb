@@ -18,7 +18,7 @@ class SuggestionDelivery
     self
   end
 
-private
+  private
 
   def deliver_for_person
     return unless @suggestion.for_person?

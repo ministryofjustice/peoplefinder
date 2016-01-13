@@ -9,10 +9,10 @@ module PeopleHelper
 
   def profile_image_tag(person, options = {})
     source = person.profile_image.try(:medium) || 'medium_no_photo.png'
-    content_tag(:div, class: 'maginot') {
-      image_tag(source, options.merge(alt: "Current photo of #{ person }")) +
-      content_tag(:div, class: 'barrier') {}
-    }
+    content_tag(:div, class: 'maginot') do
+      image_tag(source, options.merge(alt: "Current photo of #{person}")) +
+        content_tag(:div, class: 'barrier') {}
+    end
   end
 
   # Why do we need to go to this trouble to repeat new_person/edit_person? you
@@ -20,8 +20,8 @@ module PeopleHelper
   # augment it, and we rely on the default classes elsewhere.
   #
   def person_form_class(person, activity)
-    [person.new_record? ? 'new_person' : 'edit_person'].tap { |classes|
+    [person.new_record? ? 'new_person' : 'edit_person'].tap do |classes|
       classes << 'completing' if activity == 'complete'
-    }.join(' ')
+    end.join(' ')
   end
 end

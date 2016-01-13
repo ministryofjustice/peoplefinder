@@ -3,13 +3,9 @@ require 'rails_helper'
 RSpec.describe SearchController, type: :controller do
   include PermittedDomainHelper
 
-  let(:search) {
-    double(PersonSearch, perform_search: search_result)
-  }
+  let(:search) { double(PersonSearch, perform_search: search_result) }
 
-  let(:search_result) {
-    double('Elasticsearch result')
-  }
+  let(:search_result) { double('Elasticsearch result') }
 
   before do
     mock_logged_in_user

@@ -25,7 +25,7 @@ class PersonCsvParser
     end
   end
 
-private
+  private
 
   def infer_header(str)
     case str
@@ -35,8 +35,6 @@ private
       :surname
     when /email|e-mail/i
       :email
-    else
-      nil
     end
   end
 end

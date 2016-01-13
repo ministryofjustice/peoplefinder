@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'Acquisition' do
+RSpec.describe Concerns::Acquisition do
   include PermittedDomainHelper
 
   context '.acquired_percentage' do

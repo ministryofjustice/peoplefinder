@@ -11,7 +11,10 @@ RSpec.describe Token, type: :model do
   end
 
   it 'preserves the same token after persisting' do
-    expect{ 2.times{ token.save }; token.reload }.not_to change{ token.value }
+    expect do
+      2.times { token.save }
+      token.reload
+    end.not_to change { token.value }
   end
 
   it 'will be valid with valid email address' do
@@ -52,15 +55,15 @@ RSpec.describe Token, type: :model do
 
     it 'removes expired tokens' do
       Timecop.travel(Time.now + described_class.ttl) do
-        expect{ token.save }.to change{ described_class.expired.count }.by(-3)
+        expect { token.save }.to change { described_class.expired.count }.by(-3)
       end
     end
 
     it 'raises errors if a ttl is set to an hour or less' do
       expect(described_class).to receive(:ttl).and_return(60, 30, 1)
-      expect{ token.save }.to raise_error(Token::TTLRaceCondition)
-      expect{ token.save }.to raise_error(Token::TTLRaceCondition)
-      expect{ token.save }.to raise_error(Token::TTLRaceCondition)
+      expect { token.save }.to raise_error(Token::TTLRaceCondition)
+      expect { token.save }.to raise_error(Token::TTLRaceCondition)
+      expect { token.save }.to raise_error(Token::TTLRaceCondition)
     end
   end
 
@@ -88,7 +91,10 @@ RSpec.describe Token, type: :model do
       end
 
       it 'returns false if token is less than 10800 seconds old but already used' do
-        expect{ token.spend!; token.reload }.to change{ token.spent? }.from(false).to(true)
+        expect do
+          token.spend!
+          token.reload
+        end.to change { token.spent? }.from(false).to(true)
       end
 
       it 'returns false if token is 10800 seconds or more old' do
@@ -103,17 +109,26 @@ RSpec.describe Token, type: :model do
 
         describe '#save or #create for new tokens' do
           it 'removes previously created tokens for that user' do
-            expect{ new_token.save; token.reload }.to change{ token.active? }.from(true).to(false)
+            expect do
+              new_token.save
+              token.reload
+            end.to change { token.active? }.from(true).to(false)
           end
         end
 
         describe "#spend!" do
           it 'sets spent to true' do
-            expect{ token.spend!; token.reload }.to change{ token.spent? }.from(false).to(true)
+            expect do
+              token.spend!
+              token.reload
+            end.to change { token.spent? }.from(false).to(true)
           end
 
           it 'makes the token inactive' do
-            expect{ token.spend!; token.reload }.to change{ token.active? }.from(true).to(false)
+            expect do
+              token.spend!
+              token.reload
+            end.to change { token.active? }.from(true).to(false)
           end
         end
       end
