@@ -73,6 +73,8 @@ group :development, :test do
   gem 'timecop'
   gem 'jasmine-rails'
   gem 'guard-jasmine'
+  gem 'guard-rubocop', require: false
+  gem 'rubocop-rspec'
 end
 
 group :development, :test, :assets do

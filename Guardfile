@@ -1,5 +1,10 @@
 group :red_green_refactor, halt_on_fail: true do
 
+  guard :rubocop do
+    watch(%r{.+\.rb$})
+    watch(%r{(?:.+/)?\.rubocop\.yml$}) { |m| File.dirname(m[0]) }
+  end
+
   guard :jasmine do
     watch(%r{spec/javascripts/spec\.(js\.coffee|js|coffee)$}) { 'spec/javascripts' }
     watch(%r{spec/javascripts/.+_spec\.(js\.coffee|js|coffee)$})
