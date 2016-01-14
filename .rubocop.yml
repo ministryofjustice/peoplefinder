@@ -123,5 +123,9 @@ Rails/Date:
   Exclude:
     - 'spec/**/*'
 
+Lint/Debugger:
+  Exclude:
+    - 'spec/**/*'
+
 Style/SingleLineBlockParams:
   Enabled: false
