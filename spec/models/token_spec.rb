@@ -54,7 +54,7 @@ RSpec.describe Token, type: :model do
     let!(:expiring_tokens) { create_list(:token, 3) }
 
     it 'removes expired tokens' do
-      Timecop.travel(Time.now + described_class.ttl) do
+      Timecop.travel(Time.now + token.ttl) do
         expect { token.save }.to change { described_class.expired.count }.by(-3)
       end
     end

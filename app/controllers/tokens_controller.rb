@@ -3,15 +3,16 @@ class TokensController < ApplicationController
   skip_before_action :ensure_user
   before_action :set_desired_path, only: [:show]
   before_action :ensure_token_auth_enabled!
-  REPORT_EMAIL_ERROR_REGEXP = %r{(not formatted correctly|reached the limit)}
 
   def create
     @unauthorised_login = params[:token][:unauthorised_login]
-    @token = Token.new(token_params)
+    token_sender = TokenSender.new(token_params[:user_email])
+    @token = token_sender.token
 
-    if @token.save
+    if @token
       send_token_and_render(@token)
-    elsif @token.errors[:user_email].first[REPORT_EMAIL_ERROR_REGEXP]
+    elsif token_sender.report_user_email_error?
+      @user_email_error = token_sender.user_email_error
       render action: :new
     else
       render action: :create
