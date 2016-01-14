@@ -31,6 +31,25 @@ RSpec.describe Token, type: :model do
     expect(token).not_to be_valid
   end
 
+  describe 'create second token with same value as saved token' do
+    let(:new_token) do
+      described_class.new(user_email: token.user_email, value: token.value)
+    end
+
+    before do
+      token.save
+      new_token.save!
+    end
+
+    it 'sets spent true on previous token' do
+      expect(token.reload.spent?).to eq true
+    end
+
+    it 'allows new token to have the same value as original token' do
+      expect(new_token.value).to eq token.value
+    end
+  end
+
   context 'scopes' do
     before do
       # Seems like a smell, but if I don't then it kills all the expired records
@@ -54,7 +73,7 @@ RSpec.describe Token, type: :model do
     let!(:expiring_tokens) { create_list(:token, 3) }
 
     it 'removes expired tokens' do
-      Timecop.travel(Time.now + described_class.ttl) do
+      Timecop.travel(Time.now + token.ttl) do
         expect { token.save }.to change { described_class.expired.count }.by(-3)
       end
     end

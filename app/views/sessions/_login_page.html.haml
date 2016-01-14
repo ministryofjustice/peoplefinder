@@ -22,10 +22,10 @@
 
   = form_for (@token ||= Token.new) do |f|
 
-    .form-group{ :class => ('gov-uk-field-error' if @token.errors.include?(:user_email)) }
+    .form-group{ class: ('gov-uk-field-error' if @user_email_error) }
       = f.label :user_email, class: 'visuallyhidden'
-      - if @token.errors.include?(:user_email)
-        %span.error= @token.errors[:user_email].first
+      - if @user_email_error
+        %span.error= @user_email_error
       = f.text_field :user_email, class: 'form-control'
       = f.hidden_field(:unauthorised_login, value: @unauthorised_login)
 

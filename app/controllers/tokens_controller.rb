@@ -3,19 +3,22 @@ class TokensController < ApplicationController
   skip_before_action :ensure_user
   before_action :set_desired_path, only: [:show]
   before_action :ensure_token_auth_enabled!
-  REPORT_EMAIL_ERROR_REGEXP = %r{(not formatted correctly|reached the limit)}
 
   def create
-    @unauthorised_login = params[:token][:unauthorised_login]
-    @token = Token.new(token_params)
+    token_sender = TokenSender.new(token_params[:user_email])
+    token_sender.call(self)
+  end
 
-    if @token.save
-      send_token_and_render(@token)
-    elsif @token.errors[:user_email].first[REPORT_EMAIL_ERROR_REGEXP]
-      render action: :new
-    else
-      render action: :create
-    end
+  def render_new_view user_email_error:
+    @unauthorised_login = unauthorised_login
+    @user_email_error = user_email_error
+    render action: :new
+  end
+
+  def render_create_view token:
+    @unauthorised_login = unauthorised_login
+    @token = token
+    render action: :create
   end
 
   def show
@@ -59,15 +62,14 @@ class TokensController < ApplicationController
 
   private
 
+  def unauthorised_login
+    params[:token][:unauthorised_login]
+  end
+
   def find_token_securly(token)
     Token.find_each do |t|
       return t if Secure.compare(t.value, token)
     end
-  end
-
-  def send_token_and_render(token)
-    TokenMailer.new_token_email(token).deliver_later
-    render
   end
 
   def ttl_seconds_in_hours
