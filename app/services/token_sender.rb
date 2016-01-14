@@ -10,7 +10,19 @@ class TokenSender
     @user_email = user_email
   end
 
-  def token
+  def call view
+    token = obtain_token
+    if token
+      TokenMailer.new_token_email(token).deliver_later
+      view.render_create_view token: token
+    elsif report_user_email_error?
+      view.render_new_view user_email_error: user_email_error
+    else
+      view.render_create_view token: nil
+    end
+  end
+
+  def obtain_token
     token = Token.find_by_user_email(@user_email)
     if token && token.active?
       token
@@ -26,7 +38,7 @@ class TokenSender
   end
 
   def report_user_email_error?
-    @user_email_error[REPORT_EMAIL_ERROR_REGEXP]
+    user_email_error[REPORT_EMAIL_ERROR_REGEXP]
   end
 
 end

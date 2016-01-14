@@ -11,11 +11,11 @@ RSpec.describe TokenSender, type: :service do
     it 'returns new token' do
       new_token = double(save: true)
       allow(Token).to receive(:new).with(user_email: email).and_return new_token
-      expect(subject.token).to eq new_token
+      expect(subject.obtain_token).to eq new_token
     end
   end
 
-  describe '#token' do
+  describe '#obtain_token' do
     context 'when active token exists for given user_email' do
       let!(:token) { double(active?: true) }
       before do
@@ -23,7 +23,7 @@ RSpec.describe TokenSender, type: :service do
       end
 
       it 'returns that token' do
-        expect(subject.token).to eq token
+        expect(subject.obtain_token).to eq token
       end
     end
 
@@ -34,7 +34,7 @@ RSpec.describe TokenSender, type: :service do
       end
 
       it 'does not return existing token' do
-        expect(subject.token).not_to eq token
+        expect(subject.obtain_token).not_to eq token
       end
 
       include_examples 'generates token'
@@ -51,15 +51,65 @@ RSpec.describe TokenSender, type: :service do
         end
 
         it 'returns nil token' do
-          expect(subject.token).to eq nil
+          expect(subject.obtain_token).to eq nil
         end
 
         it 'sets user_email_error' do
-          subject.token
+          subject.obtain_token
           expect(subject.user_email_error).to eq error_message
         end
       end
     end
   end
 
+  describe '#call with view' do
+    let(:token) { double }
+    let(:view) { double }
+
+    context 'when no token obtained' do
+      before { allow(subject).to receive(:obtain_token).and_return nil }
+
+      context 'and report_user_email_error? true' do
+        it 'calls render_new_view with error' do
+          allow(subject).to receive(:report_user_email_error?).and_return true
+          allow(subject).to receive(:user_email_error).and_return 'error'
+
+          expect(view).to receive(:render_new_view).with(user_email_error: 'error')
+          subject.call(view)
+        end
+      end
+
+      context 'and report_user_email_error? false' do
+        it 'calls render_create_view with nil token' do
+          allow(subject).to receive(:report_user_email_error?).and_return false
+
+          expect(view).to receive(:render_create_view).with(token: nil)
+          subject.call(view)
+        end
+      end
+    end
+
+    context 'when token obtained' do
+      let(:mailer) { double }
+
+      before do
+        allow(subject).to receive(:obtain_token).and_return token
+        allow(TokenMailer).to receive(:new_token_email).and_return mailer
+        allow(mailer).to receive(:deliver_later)
+        allow(view).to receive(:render_create_view)
+      end
+
+      it 'calls render_create_view with token' do
+        expect(view).to receive(:render_create_view).with(token: token)
+        subject.call(view)
+      end
+
+      it 'sends token email' do
+        expect(TokenMailer).to receive(:new_token_email).with(token).and_return mailer
+        expect(mailer).to receive(:deliver_later)
+        subject.call(view)
+      end
+
+    end
+  end
 end
