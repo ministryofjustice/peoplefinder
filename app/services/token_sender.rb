@@ -41,10 +41,16 @@ class TokenSender
   def build_token
     token = Token.find_by_user_email(@user_email)
     if token && token.active?
-      Token.new(user_email: @user_email, value: token.value)
+      rebuild_token(token)
     else
       Token.new(user_email: @user_email)
     end
+  end
+
+  def rebuild_token original_token
+    new_token = Token.new(user_email: @user_email, value: original_token.value)
+    original_token.update_attribute(:value, SecureRandom.uuid) if new_token.valid?
+    new_token
   end
 
 end

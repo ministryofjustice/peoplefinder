@@ -18,13 +18,15 @@ RSpec.describe TokenSender, type: :service do
   describe '#obtain_token' do
     context 'when active token exists for given user_email' do
       let!(:token) { double(active?: true, value: 'xyz') }
-      let!(:new_token) { double(save: true) }
+      let!(:new_token) { double(save: true, valid?: true) }
       before do
         allow(Token).to receive(:find_by_user_email).and_return token
       end
 
-      it 'returns new token with same value' do
+      it 'returns new token with same value and changes value on original token' do
         expect(Token).to receive(:new).with(user_email: email, value: 'xyz').and_return new_token
+        allow(SecureRandom).to receive(:uuid).and_return 'abc'
+        expect(token).to receive(:update_attribute).with(:value, 'abc')
         expect(subject.obtain_token).to eq new_token
       end
     end
