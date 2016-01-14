@@ -23,22 +23,28 @@ class TokenSender
   end
 
   def obtain_token
-    token = Token.find_by_user_email(@user_email)
-    if token && token.active?
+    token = build_token
+    if token.save
       token
     else
-      token = Token.new(user_email: @user_email)
-      if token.save
-        token
-      else
-        @user_email_error = token.errors[:user_email].first
-        nil
-      end
+      @user_email_error = token.errors[:user_email].first
+      nil
     end
   end
 
+  private
+
   def report_user_email_error?
     user_email_error[REPORT_EMAIL_ERROR_REGEXP]
+  end
+
+  def build_token
+    token = Token.find_by_user_email(@user_email)
+    if token && token.active?
+      Token.new(user_email: @user_email, value: token.value)
+    else
+      Token.new(user_email: @user_email)
+    end
   end
 
 end
