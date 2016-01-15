@@ -45,6 +45,12 @@ class Token < ActiveRecord::Base
     Rails.configuration.try(:token_ttl) || DEFAULT_TTL
   end
 
+  def self.ttl_in_hours
+    minutes = ttl.div(60)
+    hours = minutes.div(60)
+    hours
+  end
+
   def ttl
     self.class.ttl
   end
