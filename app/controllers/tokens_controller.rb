@@ -35,13 +35,8 @@ class TokensController < ApplicationController
     login_person(person)
   end
 
-  def render_new_sessions_path_with_invalid_token
-    error :invalid_token
-    redirect_to new_sessions_path
-  end
-
-  def render_new_sessions_path_with_expired_token
-    error :expired_token, time: Token.ttl_in_hours
+  def render_new_sessions_path_with_expired_token_message
+    error :expired_token
     redirect_to new_sessions_path
   end
 

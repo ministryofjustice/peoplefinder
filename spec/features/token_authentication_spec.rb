@@ -71,7 +71,7 @@ feature 'Token Authentication' do
     expect(page).to_not have_text('Signed in as')
     expect(page).to_not have_text('Start building your profile now')
 
-    expect(page).to have_text("The authentication token doesn’t exist and so isn’t valid")
+    expect(page).to have_text("The authentication token has expired.")
   end
 
   scenario "logging in with a token that's more than 3 hours old" do
@@ -81,7 +81,7 @@ feature 'Token Authentication' do
     expect(page).to_not have_text('Signed in as')
     expect(page).to_not have_text('Start building your profile now')
 
-    expect(page).to have_text("The authentication token doesn’t exist and so isn’t valid")
+    expect(page).to have_text("The authentication token has expired.")
   end
 
   scenario "requesting token more than once within 3 hours sends same token url in email" do

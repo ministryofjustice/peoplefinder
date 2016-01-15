@@ -8,12 +8,10 @@ class TokenLogin
 
   def call view
     token = find_token_securely
-    if token.nil?
-      view.render_new_sessions_path_with_invalid_token
-    elsif token.active?
+    if token && token.active?
       login(view, token)
     else
-      view.render_new_sessions_path_with_expired_token
+      view.render_new_sessions_path_with_expired_token_message
     end
   end
 

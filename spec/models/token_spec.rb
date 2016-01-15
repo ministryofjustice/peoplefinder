@@ -101,12 +101,6 @@ RSpec.describe Token, type: :model do
       end
     end
 
-    describe '#ttl_in_hours' do
-      it 'defaults to 3 (hours)' do
-        expect(described_class.ttl_in_hours).to eql(3)
-      end
-    end
-
     describe '#active?' do
       before { token.save }
 

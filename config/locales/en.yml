@@ -64,9 +64,8 @@ en:
       member_removed: "Removed %{person} from %{group}"
     tokens:
       expired_token: |
-        The authentication token has expired and is more than %{time} hours old.
+        The authentication token has expired.
         Request a new link to log in.
-      invalid_token: "The authentication token doesn’t exist and so isn’t valid"
     admin/person_uploads:
         upload_succeeded: "Successfully uploaded %{count} people"
         upload_failed: "Upload failed"
