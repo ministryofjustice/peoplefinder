@@ -2,6 +2,27 @@ require 'rails_helper'
 
 describe TokensController, type: :controller do
   describe 'GET show' do
+    context 'user is logged in as a Person' do
+      include PermittedDomainHelper
+      let(:person) { create(:person) }
+      before do
+        allow(controller).to receive(:current_user).and_return person
+        allow(controller).to receive(:logged_in_regular?).and_return true
+      end
+
+      it 'redirects to person profile' do
+        get :show, id: 'token'
+        expect(response).to redirect_to(person_path(person))
+      end
+
+      context 'and desired path is set' do
+        it 'redirects to desired path' do
+          get :show, id: 'token', desired_path: '/search'
+          expect(response).to redirect_to('/search')
+        end
+      end
+    end
+
     context 'securly verifies that a token is valid and active' do
       describe 'avoiding a method with differning repsonse times for valid and invalid tokens' do
         it 'does not use Token.where(value: param[:id]).first' do
