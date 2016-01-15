@@ -12,9 +12,9 @@ describe TokensController, type: :controller do
 
       describe 'using a method that takes a constant time regardless of the validity of the token' do
         it 'loops over a block of tokens and finds the first match using Secure.compare' do
-          expect(Token).to receive(:find_each).and_yield(double('token', value: 'some token value'))
+          expect(Token).to receive(:find_each).and_yield(double('token', active?: false, value: 'some token value'))
           expect(Secure).to receive(:compare).with('some token value', 'some token value').and_return(true)
-          expect(controller).to receive(:verify_active_token).and_return(double.as_null_object)
+          expect(controller).to receive(:render_new_sessions_path_with_expired_token)
           expect { get :show, id: 'some token value' }.to raise_error { ActionView::MissingTemplate }
         end
       end
