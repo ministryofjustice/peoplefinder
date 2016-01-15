@@ -84,6 +84,45 @@ feature 'Token Authentication' do
     expect(page).to have_text("The authentication token doesn’t exist and so isn’t valid")
   end
 
+  scenario "requesting token more than once within 3 hours sends same token url in email" do
+    create(:person, given_name: 'Bob', surname: 'Smith', email: 'test.user@digital.justice.gov.uk')
+
+    first_token_url = nil
+    Timecop.freeze(Time.now - (2.hours + 59.minutes)) do
+      visit '/'
+      fill_in 'token_user_email', with: 'test.user@digital.justice.gov.uk'
+      expect { click_button 'Request link' }.to change { ActionMailer::Base.deliveries.count }.by(1)
+      first_token_url = token_url(Token.last)
+      expect(last_email.body.encoded).to have_text(first_token_url)
+    end
+
+    visit '/'
+    fill_in 'token_user_email', with: 'test.user@digital.justice.gov.uk'
+    expect { click_button 'Request link' }.to change { ActionMailer::Base.deliveries.count }.by(1)
+    expect(last_email.body.encoded).to have_text(first_token_url)
+
+    visit first_token_url
+    expect(page).to have_text('Signed in as Bob Smith')
+  end
+
+  scenario 'requesting token a second time after 3 hours sends different token url in email' do
+    first_token_url = nil
+    Timecop.freeze(Time.now - 3.hours) do
+      visit '/'
+      fill_in 'token_user_email', with: 'test.user@digital.justice.gov.uk'
+      expect { click_button 'Request link' }.to change { ActionMailer::Base.deliveries.count }.by(1)
+      first_token_url = token_url(Token.last)
+    end
+
+    visit '/'
+    fill_in 'token_user_email', with: 'test.user@digital.justice.gov.uk'
+    expect { click_button 'Request link' }.to change { ActionMailer::Base.deliveries.count }.by(1)
+
+    last_token_url = token_url(Token.last)
+    expect(last_token_url).not_to eq first_token_url
+    expect(last_email.body.encoded).to have_text(last_token_url)
+  end
+
   scenario "requesting more than 8 tokens per hour isn't permitted" do
     1.upto(9) do |count|
       visit '/'

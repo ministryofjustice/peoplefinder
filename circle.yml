@@ -26,6 +26,7 @@ test:
   override:
 
   post:
+    - bundle exec rubocop
     # - bundle exec rake
     #     environment:
     #       RAILS_ENV: test
