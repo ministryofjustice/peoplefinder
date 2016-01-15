@@ -28,7 +28,7 @@ class TokenLogin
   def login view, token
     person = FindCreatePerson.from_token(token)
     view.login_and_render(person)
-    token.destroy!
+    token.spend!
   end
 
 end
