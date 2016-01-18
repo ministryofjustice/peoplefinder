@@ -12,9 +12,28 @@ module Concerns::Sanitizable
     fields_to_sanitize.each do |field, options|
       value = send(field)
       next unless value
-      value.strip! if value.respond_to?(:strip!) && options[:strip]
-      value.downcase! if value.respond_to?(:downcase) && options[:downcase]
+      sanitize_value! value, options
     end
+  end
+
+  private
+
+  def sanitize_value! value, options
+    value.strip! if strip?(value, options)
+    value.downcase! if downcase?(value, options)
+    value.gsub!(/\d/, '') if remove_digits?(value, options)
+  end
+
+  def strip? value, options
+    value.respond_to?(:strip!) && options[:strip]
+  end
+
+  def downcase? value, options
+    value.respond_to?(:downcase!) && options[:downcase]
+  end
+
+  def remove_digits? value, options
+    value.respond_to?(:gsub!) && options[:remove_digits]
   end
 
   module ClassMethods

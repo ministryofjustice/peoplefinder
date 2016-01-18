@@ -88,15 +88,16 @@ RSpec.describe PersonCsvImporter, type: :service do
       let(:csv) do
         <<-CSV.strip_heredoc
           email,given_name,surname
-          peter.bly@valid.gov.uk,Peter,Bly
+          peter.bly2@valid.gov.uk,Peter,Bly2
           jon.con@valid.gov.uk,Jon,Con
         CSV
       end
 
       it 'creates new records' do
         subject.import
-        created = Person.where(email: 'peter.bly@valid.gov.uk')
-        expect(created.size).to be 1
+        created = Person.where(email: 'peter.bly2@valid.gov.uk').first
+        expect(created).not_to be nil
+        expect(created.name).to eq 'Peter Bly'
       end
 
       it 'uses the PersonCreator' do
@@ -116,7 +117,7 @@ RSpec.describe PersonCsvImporter, type: :service do
 
         it 'merges CSV fields into supplied parameters' do
           subject.import
-          person = Person.find_by(email: 'peter.bly@valid.gov.uk')
+          person = Person.find_by(email: 'peter.bly2@valid.gov.uk')
           expect(person.groups).to eq([group])
         end
       end

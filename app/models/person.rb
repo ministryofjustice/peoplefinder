@@ -32,7 +32,7 @@ class Person < ActiveRecord::Base
   end
 
   include Concerns::Sanitizable
-  sanitize_fields :given_name, :surname, strip: true
+  sanitize_fields :given_name, :surname, strip: true, remove_digits: true
   sanitize_fields :email, strip: true, downcase: true
 
   attr_accessor :crop_x, :crop_y, :crop_w, :crop_h
