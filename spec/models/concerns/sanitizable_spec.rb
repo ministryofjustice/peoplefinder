@@ -15,14 +15,14 @@ RSpec.describe Concerns::Sanitizable do
     include Concerns::Sanitizable
     sanitize_fields :color, strip: true
     sanitize_fields :shape, downcase: true
-    sanitize_fields :flavor, downcase: true, strip: true
+    sanitize_fields :flavor, downcase: true, strip: true, remove_digits: true
   end
 
   subject do
     TestModel.new(
-      color: ' Orange ',
+      color: ' Orange3 ',
       shape: ' Square ',
-      flavor: ' Strawberry ',
+      flavor: ' Strawberry2 ',
       smell: ' Rancid '
     )
   end
@@ -32,8 +32,13 @@ RSpec.describe Concerns::Sanitizable do
       subject.valid?
     end
 
+    it 'removes digits when requested' do
+      expect(subject.color).to match(/\AOrange3\z/i)
+      expect(subject.flavor).to match(/\AStrawberry\z/i)
+    end
+
     it 'strips white spaces when requested' do
-      expect(subject.color).to match(/\AOrange\z/i)
+      expect(subject.color).to match(/\AOrange3\z/i)
       expect(subject.flavor).to match(/\AStrawberry\z/i)
     end
 

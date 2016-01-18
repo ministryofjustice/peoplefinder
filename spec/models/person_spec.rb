@@ -26,6 +26,14 @@ RSpec.describe Person, type: :model do
         expect(person.name).to eql('von Brown')
       end
     end
+
+    context 'with surname containing digit' do
+      let(:person) { build(:person, given_name: 'John', surname: 'Smith2') }
+      it 'removes digit' do
+        person.valid?
+        expect(person.name).to eql('John Smith')
+      end
+    end
   end
 
   describe '.all_in_groups' do
