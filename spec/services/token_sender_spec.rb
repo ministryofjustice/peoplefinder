@@ -20,7 +20,7 @@ RSpec.describe TokenSender, type: :service do
       let!(:token) { double(active?: true, value: 'xyz') }
       let!(:new_token) { double(save: true, valid?: true) }
       before do
-        allow(Token).to receive(:find_by_user_email).and_return token
+        allow(Token).to receive(:find_unspent_by_user_email).and_return token
       end
 
       it 'returns new token with same value and changes value on original token' do
@@ -34,7 +34,7 @@ RSpec.describe TokenSender, type: :service do
     context 'when inactive token exists for given user_email' do
       let!(:token) { double(active?: false) }
       before do
-        allow(Token).to receive(:find_by_user_email).and_return token
+        allow(Token).to receive(:find_unspent_by_user_email).and_return token
       end
 
       it 'does not return existing token' do
