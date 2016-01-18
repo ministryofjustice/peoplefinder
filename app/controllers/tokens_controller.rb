@@ -1,12 +1,22 @@
 require 'secure'
 class TokensController < ApplicationController
   skip_before_action :ensure_user
-  before_action :set_desired_path, only: [:show]
   before_action :ensure_token_auth_enabled!
 
   def create
     token_sender = TokenSender.new(token_params[:user_email])
     token_sender.call(self)
+  end
+
+  def show
+    session[:desired_path] = params[:desired_path] if params[:desired_path]
+    if logged_in_regular?
+      render_desired_path_or_profile
+    else
+      token_value = params[:id]
+      token_login = TokenLogin.new(token_value)
+      token_login.call(self)
+    end
   end
 
   def render_new_view user_email_error:
@@ -21,27 +31,20 @@ class TokensController < ApplicationController
     render action: :create
   end
 
-  def show
-    token = find_token_securly(params[:id])
-    if token
-      verify_active_token(token)
-    else
-      error :invalid_token
-      redirect_to new_sessions_path
-    end
+  def login_and_render person
+    login_person(person)
   end
 
-  protected
+  def render_new_sessions_path_with_expired_token_message
+    error :expired_token
+    redirect_to new_sessions_path
+  end
 
-  def verify_active_token(token)
-    if token.active?
-      person = FindCreatePerson.from_token(token)
-      login_person(person)
-      token.destroy!
-    else
-      error :expired_token, time: ttl_seconds_in_hours
-      redirect_to new_sessions_path
-    end
+  private
+
+  def render_desired_path_or_profile
+    path = session.delete(:desired_path) || person_path(current_user)
+    redirect_to path
   end
 
   def ensure_token_auth_enabled!
@@ -54,27 +57,8 @@ class TokensController < ApplicationController
     params.require(:token).permit([:user_email])
   end
 
-  def set_desired_path
-    if params[:desired_path]
-      session[:desired_path] = params[:desired_path]
-    end
-  end
-
-  private
-
   def unauthorised_login
     params[:token][:unauthorised_login]
   end
 
-  def find_token_securly(token)
-    Token.find_each do |t|
-      return t if Secure.compare(t.value, token)
-    end
-  end
-
-  def ttl_seconds_in_hours
-    minutes = Token.ttl.div(60)
-    hours = minutes.div(60)
-    hours
-  end
 end
