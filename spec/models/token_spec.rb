@@ -67,6 +67,12 @@ RSpec.describe Token, type: :model do
     it { expect(described_class.unexpired).to match_array([token, spent, half_hour_ago]) }
     it { expect(described_class.expired).to match_array([expired]) }
     it { expect(described_class.in_the_last_hour).to match_array([token, spent, half_hour_ago]) }
+
+    it do
+      email = half_hour_ago.user_email
+      unspent = described_class.find_unspent_by_user_email(email)
+      expect(unspent).to eq(half_hour_ago)
+    end
   end
 
   context 'maintenance' do

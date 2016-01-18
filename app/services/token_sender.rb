@@ -39,7 +39,7 @@ class TokenSender
   end
 
   def build_token
-    token = Token.find_by_user_email(@user_email)
+    token = Token.find_unspent_by_user_email(@user_email)
     if token && token.active?
       rebuild_token(token)
     else

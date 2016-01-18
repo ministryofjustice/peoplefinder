@@ -21,6 +21,10 @@ class Token < ActiveRecord::Base
   scope :active,           -> { unspent.unexpired }
   scope :in_the_last_hour, -> { where(created_at: 1.hour.ago..Time.zone.now) }
 
+  def self.find_unspent_by_user_email user_email
+    unspent.find_by_user_email(user_email)
+  end
+
   def to_param
     value
   end
