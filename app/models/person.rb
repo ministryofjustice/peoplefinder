@@ -54,18 +54,14 @@ class Person < ActiveRecord::Base
 
   validates :given_name, presence: true, on: :update
   validates :surname, presence: true
-  validates :email,
-    presence: true, uniqueness: { case_sensitive: false }, email: true
+  validates :email, presence: true, uniqueness: { case_sensitive: false }, email: true
   validates :secondary_email, email: true, allow_blank: true
 
-  has_many :memberships,
-    -> { includes(:group).order('groups.name') },
-    dependent: :destroy
+  has_many :memberships, -> { includes(:group).order('groups.name') }, dependent: :destroy
   has_many :groups, through: :memberships
   belongs_to :community
 
-  accepts_nested_attributes_for :memberships,
-    allow_destroy: true,
+  accepts_nested_attributes_for :memberships, allow_destroy: true,
     reject_if: proc { |membership| membership['group_id'].blank? }
 
   default_scope { order(surname: :asc, given_name: :asc) }
