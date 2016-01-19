@@ -9,8 +9,13 @@ module PeopleHelper
 
   def profile_image_tag(person, options = {})
     source = person.profile_image.try(:medium) || 'medium_no_photo.png'
+    alt_text = "Current photo of #{person}"
+    profile_image_div source, alt_text, options
+  end
+
+  def profile_image_div source, alt_text, options
     content_tag(:div, class: 'maginot') do
-      image_tag(source, options.merge(alt: "Current photo of #{person}")) +
+      image_tag(source, options.merge(alt: alt_text)) +
         content_tag(:div, class: 'barrier') {}
     end
   end
