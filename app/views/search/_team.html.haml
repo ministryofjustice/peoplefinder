@@ -1,0 +1,14 @@
+.search-result
+  .grid-wrapper
+    .grid.grid-2-3
+      .inner-block
+        .image-background
+          = team_image_tag team
+        .details
+          - index = team_iteration.index
+          %h3= link_to team.name, team,
+            { data: search_result_analytics_attributes(index) }
+          .meta.breadcrumbs
+            = breadcrumbs(team.path[0..(team.path.size - 2)])
+          .meta
+          .meta
