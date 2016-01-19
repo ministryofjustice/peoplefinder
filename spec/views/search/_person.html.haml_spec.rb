@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'people/person' do
+RSpec.describe 'search/person' do
   include PermittedDomainHelper
 
   let(:teams) do
@@ -24,7 +24,7 @@ RSpec.describe 'people/person' do
   end
 
   before do
-    render partial: 'people/person', collection: people, locals: { edit_link: false }
+    render partial: 'search/person', collection: people, locals: { edit_link: false }
   end
 
   shared_examples 'sets analytics attributes' do
