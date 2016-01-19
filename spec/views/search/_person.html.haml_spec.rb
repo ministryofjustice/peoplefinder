@@ -24,7 +24,7 @@ RSpec.describe 'search/person' do
   end
 
   before do
-    render partial: 'search/person', collection: people, locals: { edit_link: false }
+    render partial: 'search/person', collection: people, locals: { search_result: true }
   end
 
   shared_examples 'sets analytics attributes' do
