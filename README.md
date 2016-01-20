@@ -50,6 +50,9 @@ On Mac OSX:
 
     git clone git@github.com:ministryofjustice/peoplefinder.git
     cd peoplefinder
+
+    gem install eventmachine -v 1.0.5 -- --with-cppflags=-I/usr/local/opt/openssl/include
+
     bundle
     bundle exec rake db:setup
     bundle exec rake # runs tests
