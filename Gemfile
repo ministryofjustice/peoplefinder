@@ -60,7 +60,6 @@ group :development, :test do
   gem 'brakeman'
   gem 'capybara'
   gem 'factory_girl_rails'
-  gem 'jshint'
   gem 'launchy'
   gem 'minitest'
   gem 'poltergeist'
