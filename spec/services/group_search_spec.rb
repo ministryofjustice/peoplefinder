@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe GroupSearch, elastic: true do
   let!(:department) { create(:department, name: 'Department name') }
   let!(:team) { create(:group, name: 'Team name', parent: department) }
-  let!(:civil_families_tribunal) { create(:group, name: 'Civil, Families & Tribunal', parent: department) }
+  let!(:civil_families_tribunal) { create(:group, name: 'Civil, Families & Tribunal', acronym: 'CFT', parent: department) }
 
   let!(:another_department) { create(:department, name: 'Another department name') }
   let!(:another_team) { create(:group, name: 'Team name', parent: another_department) }
@@ -14,6 +14,10 @@ RSpec.describe GroupSearch, elastic: true do
 
   it 'returns matches when query is exact match for group name' do
     expect(search('Team name')).to eq [team, another_team]
+  end
+
+  it 'returns matches when query is exact match for group acronym' do
+    expect(search('CFT')).to eq [civil_families_tribunal]
   end
 
   it 'returns empty array when query is not exact match for group name' do

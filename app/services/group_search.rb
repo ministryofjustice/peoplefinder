@@ -16,7 +16,7 @@ class GroupSearch
   end
 
   def exact_matches
-    Group.where(name: @query).to_a
+    Group.where('name = ? OR acronym = ?', @query, @query).to_a
   end
 
   def partial_matches
