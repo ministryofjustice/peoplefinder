@@ -10,6 +10,8 @@ Coverage](https://codeclimate.com/github/ministryofjustice/peoplefinder/badges/c
 
 This is not how people finder is actually deployed but provides an environment to do development on the app.
 
+### Ubuntu install
+
 On a Ubuntu 12.04 LTE box:
 
 - install curl, git, postgresql, postgresql-dev-all, nodejs
@@ -30,15 +32,27 @@ On a Ubuntu 12.04 LTE box:
 
 Point your browser to http://0.0.0.0:3000 and you should see the application's start page.
 
+### Mac OSX install
+
+[Install Java](https://www.java.com/en/download/mac_download.jsp) if it is not on your machine.
+
+[Install Homebrew](http://brew.sh/) if it is not on your machine.
+
 On Mac OSX:
 
+    brew install postgresql
     brew install imagemagick
     brew install phantomjs
-    brew install elasticsearch17
+
+    brew install homebrew/versions/elasticsearch17
     ln -sfv /usr/local/opt/elasticsearch17/*.plist ~/Library/LaunchAgents
     launchctl load ~/Library/LaunchAgents/homebrew.mxcl.elasticsearch17.plist
+
     git clone git@github.com:ministryofjustice/peoplefinder.git
     cd peoplefinder
+
+    gem install eventmachine -v 1.0.5 -- --with-cppflags=-I/usr/local/opt/openssl/include
+
     bundle
     bundle exec rake db:setup
     bundle exec rake # runs tests
@@ -67,7 +81,7 @@ defined on a per environment basis.
 
 ## Permitted domains
 
-The system allows logging in for emails which have domains from the whitelist. The whitelist is in the database, managed by `PermittedDomain` model. At least one domain has to be whitelisted before anyone can log in (that applies to development too). 
+The system allows logging in for emails which have domains from the whitelist. The whitelist is in the database, managed by `PermittedDomain` model. At least one domain has to be whitelisted before anyone can log in (that applies to development too).
 
 In rails console:
 
