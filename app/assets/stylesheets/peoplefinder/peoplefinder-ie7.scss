@@ -38,9 +38,8 @@ h1, h2 {
 
   ol {
     li {
-      display: block;
-      float: left;
-      padding-right: 1em;
+      display: inline;
+      // float: left;
       a{
         text-decoration: none;
       }
@@ -125,8 +124,9 @@ form #working-days ul,
 }
 .breadcrumbs {
   li {
-    padding-left: 16px;
-    background: image-url('peoplefinder/breadcrumb.gif') scroll no-repeat center left;
+    padding-left: 12px;
+    padding-right: 4px;
+    background: image-url('peoplefinder/breadcrumb.gif') scroll no-repeat left center;
   }
   li.breadcrumb-0{
     padding-left: 0;

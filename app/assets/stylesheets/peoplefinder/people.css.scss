@@ -70,9 +70,11 @@ ul.working_days {
   .search-result {
     margin: 15px 0 15px 0;
     border-top: 1px solid $grey-bg;
+    display: inline-block;
+    width: 100%;
     .grid-wrapper {
       margin-top: 15px;
-
+      width: 100%;
       .image-background {
         @media screen and (max-width: 320px) {
           width: 125px;
@@ -81,6 +83,7 @@ ul.working_days {
       }
       @include maginot(125px, 125px);
       .details {
+        min-height: 125px;
         @media screen and (max-width: 320px) {
           float: none;
           display: block;
@@ -89,9 +92,6 @@ ul.working_days {
 
         float: left;
         margin: -5px 0 0 140px;
-        .meta  {
-          word-break: break-word;
-        }
       }
       .edit-link {
         float: right;

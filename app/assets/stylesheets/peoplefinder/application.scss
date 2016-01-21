@@ -85,12 +85,12 @@ footer {
 .breadcrumbs {
   margin-top: 1em;
   margin-bottom: -9px;
-
   ol {
     li {
-      display: inline-block;
+      display: inline;
+      word-wrap: break-word;
     }
-    li::after {
+    li:after {
       content: ' > ';
     }
     li:last-child:after {
