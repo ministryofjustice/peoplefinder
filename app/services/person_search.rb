@@ -10,7 +10,12 @@ class PersonSearch
 
     name_matches, query_matches, fuzzy_matches = perform_searches
     exact_matches = name_matches.select { |p| p.name == @query }
-    (exact_matches + name_matches + query_matches + fuzzy_matches).uniq[0..@max - 1]
+
+    exact_matches.
+      push(*name_matches).
+      push(*query_matches).
+      push(*fuzzy_matches).
+      uniq[0..@max - 1]
   end
 
   private
