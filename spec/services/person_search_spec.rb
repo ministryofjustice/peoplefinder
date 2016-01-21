@@ -35,6 +35,11 @@ RSpec.describe PersonSearch, elastic: true do
       Person.__elasticsearch__.client.indices.refresh
     end
 
+    it 'searches by email' do
+      results = search_for(alice.email.upcase)
+      expect(results).to eq [alice]
+    end
+
     it 'searches by surname' do
       results = search_for('Andrews')
       expect(results).to include(alice)
