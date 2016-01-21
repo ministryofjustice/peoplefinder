@@ -1,5 +1,6 @@
 require 'spec_helper'
-require 'form_groups'
+# require 'form_groups'
+require_relative '../../app/form_builders/form_groups'
 
 describe FormGroups do
   let(:object) { double(errors: []) }

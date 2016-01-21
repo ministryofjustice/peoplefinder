@@ -102,8 +102,8 @@
       %p.form-hint= info_text('notes_field_hint')
     = f.text_area :description, class: 'form-control'
 
-  =f.form_group :image, class: 'line-above person-photo initial' do
-    = f.label :image, class: 'form-label-bold' do
+  =f.form_group :profile_photo_id, class: 'line-above person-photo initial' do
+    = f.label :profile_photo_id, class: 'form-label-bold' do
       Photo
     = f.hidden_field :profile_photo_id
     = f.hidden_field :crop_x
