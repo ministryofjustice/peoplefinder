@@ -90,11 +90,7 @@ ul.working_days {
         float: left;
         margin: -5px 0 0 140px;
         .meta  {
-          height: 30px;
-          width: 400px;
-          white-space: nowrap;
-          overflow: hidden;
-          text-overflow: ellipsis;
+          word-break: break-word;
         }
       }
       .edit-link {
