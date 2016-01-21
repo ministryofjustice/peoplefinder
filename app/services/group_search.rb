@@ -6,7 +6,7 @@ class GroupSearch
   def perform_search
     return [] if @query.blank?
 
-    (exact_matches + partial_matches).uniq
+    exact_matches.push(*partial_matches).uniq
   end
 
   private

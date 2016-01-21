@@ -13,7 +13,9 @@ RSpec.describe GroupSearch, elastic: true do
   end
 
   it 'returns matches when query is exact match for group name' do
-    expect(search('Team name')).to eq [team, another_team]
+    results = search('Team name')
+    expect(results).to include(team)
+    expect(results).to include(another_team)
   end
 
   it 'returns matches when query is exact match for group acronym' do
