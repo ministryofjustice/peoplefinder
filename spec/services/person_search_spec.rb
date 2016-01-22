@@ -35,6 +35,11 @@ RSpec.describe PersonSearch, elastic: true do
       Person.__elasticsearch__.client.indices.refresh
     end
 
+    it 'searches by email' do
+      results = search_for(alice.email.upcase)
+      expect(results).to eq [alice]
+    end
+
     it 'searches by surname' do
       results = search_for('Andrews')
       expect(results).to include(alice)
@@ -101,7 +106,7 @@ RSpec.describe PersonSearch, elastic: true do
     end
 
     it 'sorts results to put exact match first' do
-      expect(described_class.new.perform_search('John Smith')).to eq [john_smith, jonathan_smith]
+      expect(described_class.new('John Smith').perform_search).to eq [john_smith, jonathan_smith]
     end
   end
 
@@ -116,11 +121,11 @@ RSpec.describe PersonSearch, elastic: true do
           }
         ), limit: 100).and_return []
 
-      described_class.new.perform_search('Smith,Bill,')
+      described_class.new('Smith,Bill,').perform_search
     end
   end
 
   def search_for(query)
-    described_class.new.perform_search(query)
+    described_class.new(query).perform_search
   end
 end

@@ -16,8 +16,7 @@ RSpec.describe SearchController, type: :controller do
     let(:query) { 'válïd ☺' }
 
     it 'searches for the query' do
-      expect(search).to receive(:perform_search).with(query).
-        and_return(search_result)
+      expect(PersonSearch).to receive(:new).with(query).and_return(search)
       get :index, query: query
     end
 
@@ -36,8 +35,7 @@ RSpec.describe SearchController, type: :controller do
     let(:query) { "\x99" }
 
     it 'searches for an empty string' do
-      expect(search).to receive(:perform_search).with('').
-        and_return(search_result)
+      expect(PersonSearch).to receive(:new).with('').and_return(search)
       get :index, query: query
     end
 

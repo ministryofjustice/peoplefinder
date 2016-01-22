@@ -1,7 +1,7 @@
 class SearchController < ApplicationController
   def index
     @query = query
-    @people = PersonSearch.new.perform_search(@query)
+    @people = PersonSearch.new(@query).perform_search
   end
 
   private

@@ -10,6 +10,13 @@ RSpec.describe Person, type: :model do
   it { should validate_uniqueness_of(:email).case_insensitive }
   it { should have_many(:groups) }
 
+  describe '.email' do
+    it 'is converted to lower case' do
+      person = create(:person, email: 'User.Example@digital.justice.gov.uk')
+      expect(person.email).to eq 'user.example@digital.justice.gov.uk'
+    end
+  end
+
   describe '.name' do
     context 'with a given_name and surname' do
       let(:person) { build(:person, given_name: 'Jon', surname: 'von Brown') }
