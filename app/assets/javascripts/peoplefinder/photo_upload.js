@@ -239,5 +239,19 @@ $(function (){
   var photoBlocks = $('.person-photo');
   if(photoBlocks.length > 0){
     _.each(photoBlocks, PhotoUpload.enhance);
+    
+    var saveBtn = $('.save-cancel-actions input[name="commit"]'),
+      cropButton = PhotoUpload.findElements(photoBlocks).$cropButton,
+      editForm = $('form.edit_person');
+    
+    saveBtn.click(function(e){
+      e.preventDefault();
+      if(cropButton.is(':visible')){
+        cropButton.trigger('click');
+        editForm.submit();
+      } else {
+        editForm.submit();
+      }
+    });
   }
 });
