@@ -91,6 +91,16 @@ ul.working_days {
           display: block;
           margin: 0;
         }
+        .breadcrumbs {
+          margin: 0;
+        }
+        .meta {
+          height: 30px;
+          width: 100%;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
       }
       .edit-link {
         float: right;
