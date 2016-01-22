@@ -93,6 +93,9 @@ ul.working_days {
         }
         .breadcrumbs {
           margin: 0;
+          ol {
+            margin: 0;
+          }
         }
         .meta {
           height: 30px;
