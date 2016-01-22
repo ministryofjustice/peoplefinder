@@ -6,7 +6,7 @@
 
   .pagination= pluralize(@people.length, "result") + ' found'
 
-  = render partial: 'person', collection: @people, locals: { edit_link: true }
+  = render partial: 'search/person', collection: @people, locals: { search_result: false }
 
   = form_for @person, :html => {:multipart => true} do |f|
 

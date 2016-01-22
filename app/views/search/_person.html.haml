@@ -1,13 +1,13 @@
 .search-result
   .grid-wrapper
-    .grid.grid-2-3
+    .grid
       .inner-block
         .image-background
           = profile_image_tag person
         .details
           - index = person_iteration.index
           %h3= link_to person.name, person,
-            { data: search_result_analytics_attributes(index) }
+            search_result ? { data: search_result_analytics_attributes(index) } : {}
           - if person.memberships.empty?
             .meta
           - else
@@ -15,7 +15,7 @@
               .meta
                 = "#{ membership.role }, " if membership.role?
                 = link_to membership.group.short_name, membership.group,
-                  { data: search_result_analytics_attributes(index) }
+                  search_result ? { data: search_result_analytics_attributes(index) } : {}
 
           - if feature_enabled?("communities") && person.community.present?
             .meta.community= link_to person.community, search_path(query: person.community.name)

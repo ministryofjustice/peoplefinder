@@ -1,6 +1,7 @@
 class SearchController < ApplicationController
   def index
     @query = query
+    @teams = GroupSearch.new(@query).perform_search
     @people = PersonSearch.new(@query).perform_search
   end
 
