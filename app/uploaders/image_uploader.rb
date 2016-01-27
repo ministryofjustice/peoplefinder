@@ -22,6 +22,14 @@ class ImageUploader < CarrierWave::Uploader::Base
     [version_name, 'no_photo.png'].compact.join('_')
   end
 
+  process :auto_orient # this should go before all other "process" steps
+
+  def auto_orient
+    manipulate! do |image|
+      image.tap(&:auto_orient)
+    end
+  end
+
   version :medium, from_version: :croppable do
     process :crop
     process resize_to_limit: [512, 512]
