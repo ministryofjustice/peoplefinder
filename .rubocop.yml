@@ -129,3 +129,8 @@ Lint/Debugger:
 
 Style/SingleLineBlockParams:
   Enabled: false
+
+Style/ClassVars:
+  Exclude:
+    - 'spec/**/*'
+
