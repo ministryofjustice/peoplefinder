@@ -5,10 +5,17 @@ $(function (){
 
   var $content = $('#content');
 
-  var animateScroll = function ($orgBrowser){
-    var visibles = $orgBrowser.find('.visible');
-    var offset = visibles.length * visibles.width();
+  var findVisible = function($orgBrowser){
+    var visible = $orgBrowser.find('.visible');
+    return {
+      el: visible,
+      width: visible.width()
+    }
+  };
 
+  var animateScroll = function ($orgBrowser, direction){
+    var visible = findVisible($orgBrowser);
+    var offset = direction === 'left'? (visible.el.length - 2) * visible.width : visible.el.length * visible.width;
     $orgBrowser.animate({ scrollLeft: offset }, 400);
   };
 
@@ -16,6 +23,10 @@ $(function (){
     $target.parents('li').addClass('expanded');
     $orgBrowser.find('.team').removeClass('visible');
     $subteam.children().parents('.team').addClass('visible');
+  };
+
+  var selectVisibleInput = function($orgBrowser){
+    $orgBrowser.find('.visible > h3 > input').prop('checked', 'checked');
   };
 
   if( $('.org-browser.has-form').length > 0 ){
@@ -30,6 +41,7 @@ $(function (){
                         .closest('.editable-summary')
                         .siblings('.editable-fields')
                         .find('.org-browser');
+    $orgBrowser.find('.visible').parents('li').addClass('expanded');
     setTimeout(function (){ animateScroll($orgBrowser); }, 0);
   });
 
@@ -47,10 +59,14 @@ $(function (){
     }
   });
 
-  $content.on('click', '.org-browser .subteam-link', function(e){
+  $content.on('click', '.org-browser li:not(.disabled) .subteam-link', function(e){
     var $target = $(e.target);
     var $orgBrowser = $(e.target).closest('.org-browser');
-
+    
+    if($target.closest('li').hasClass('disabled')){
+      console.log('DISABLED');
+      return false;
+    }
 
     if( $target.closest('li').hasClass('has-subteams') === false ){
       if( $orgBrowser.hasClass('has-form') ){
@@ -70,8 +86,29 @@ $(function (){
 
     var $subteam = $target.closest('p').siblings('.team');
     revealSubteam($orgBrowser, $target, $subteam);
-
-    animateScroll($orgBrowser);
+    selectVisibleInput($orgBrowser);
+    animateScroll($orgBrowser, 'right');
   });
+
+  // back link
+  $content.on('click', '.org-browser .team-back', function(e){
+    var $target = $(e.target);
+    var $orgBrowser = $(e.target).closest('.org-browser');
+
+    e.preventDefault();
+    e.stopPropagation();
+
+    var $subteam = $target.parent('.team');
+    $target.children('li').removeClass('expanded');
+    animateScroll($orgBrowser, 'left');
+
+    // Wait for the scroll back to complete
+    setTimeout(function (){
+      $subteam.removeClass('visible');
+      selectVisibleInput($orgBrowser);
+    }, 400);
+
+  });
+
 });
 
