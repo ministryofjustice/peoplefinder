@@ -26,12 +26,6 @@ Rails.application.configure do
     :given_name, :surname, :email, :primary_phone_number,
     :secondary_phone_number, :location, :email
   ]
-  if ENV['INTERCEPTED_EMAIL_RECIPIENT'].present?
-    Mail.register_interceptor RecipientInterceptor.new(
-      ENV['INTERCEPTED_EMAIL_RECIPIENT'],
-      subject_prefix: '[STAGING]'
-    )
-  end
   config.logstasher.enabled = true
   config.logstasher.suppress_app_log = true
   config.logstasher.log_level = Logger::INFO

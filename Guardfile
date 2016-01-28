@@ -1,15 +1,6 @@
 group :red_green_refactor, halt_on_fail: true do
 
-  guard :jasmine do
-    watch(%r{spec/javascripts/spec\.(js\.coffee|js|coffee)$}) { 'spec/javascripts' }
-    watch(%r{spec/javascripts/.+_spec\.(js\.coffee|js|coffee)$})
-    watch(%r{spec/javascripts/fixtures/.+$})
-    watch(%r{app/assets/javascripts/(.+?)\.(js\.coffee|js|coffee)(?:\.\w+)*$}) do |m|
-      "spec/javascripts/#{m[1]}_spec.#{m[2]}"
-    end
-  end
-
-  guard :rspec, cmd: 'bundle exec rspec', all_on_start: false, failed_mode: :focus do
+  guard :rspec, cmd: 'bundle exec rspec --fail-fast', all_on_start: false, failed_mode: :focus do
     require 'guard/rspec/dsl'
     dsl = Guard::RSpec::Dsl.new(self)
 
@@ -44,6 +35,15 @@ group :red_green_refactor, halt_on_fail: true do
     # Capybara features specs
     watch(rails.view_dirs)     { |m| rspec.spec.call("features/#{m[1]}") }
     watch(rails.layouts)       { |m| rspec.spec.call("features/#{m[1]}") }
+  end
+
+  guard :jasmine do
+    watch(%r{spec/javascripts/spec\.(js\.coffee|js|coffee)$}) { 'spec/javascripts' }
+    watch(%r{spec/javascripts/.+_spec\.(js\.coffee|js|coffee)$})
+    watch(%r{spec/javascripts/fixtures/.+$})
+    watch(%r{app/assets/javascripts/(.+?)\.(js\.coffee|js|coffee)(?:\.\w+)*$}) do |m|
+      "spec/javascripts/#{m[1]}_spec.#{m[2]}"
+    end
   end
 
   guard :rubocop, cli: ['--fail-fast', '--display-cop-names'] do
