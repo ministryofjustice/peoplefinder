@@ -1,5 +1,7 @@
 - group_disabled = (@group && @group.id == group.id)
 
+%a{href:'#', :class => 'team-back'} Back
+
 %h3{class: (group_disabled ? 'disabled' : '')}
   - if form && !group_disabled
     = form.radio_button(field_name, group.id)
