@@ -2,7 +2,7 @@
 - field_name ||= :group_id
 
 - org_structure.each do |group, subgroups|
-  %div.team{:class => ('root-node' if level == 0)}
+  %div.team{ class: ('root-node visible' if level == 0)}
     = render 'shared/org_browser_level_heading', group: group, form: form, field_name: field_name, level: level
 
     = render 'shared/org_browser_level_subgroups', subgroups: subgroups, form: form, field_name: field_name, level: level
