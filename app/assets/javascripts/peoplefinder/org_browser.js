@@ -27,11 +27,13 @@ $(function (){
 
   var selectVisibleInput = function($orgBrowser){
     $orgBrowser.find('.visible > h3 > input').prop('checked', 'checked');
+    $orgBrowser.find('.visible > h3 > a').show();
   };
 
   var addExpanded = function($orgBrowser){
     $orgBrowser.find('.team').removeClass('selected');
     $orgBrowser.find('.visible').last().addClass('selected');
+    $orgBrowser.find('.selected > h3 > a').show();
   };
 
   if( $('.org-browser.has-form').length > 0 ){
@@ -47,6 +49,7 @@ $(function (){
                         .siblings('.editable-fields')
                         .find('.org-browser');
     $orgBrowser.find('.visible').parents('li').addClass('expanded');
+    $orgBrowser.find('h3 > a').hide();
     addExpanded($orgBrowser);
     setTimeout(function (){ animateScroll($orgBrowser); }, 0);
   });
@@ -68,7 +71,7 @@ $(function (){
   $content.on('click', '.org-browser li:not(.disabled) .subteam-link', function(e){
     var $target = $(e.target);
     var $orgBrowser = $(e.target).closest('.org-browser');
-    
+
     if($target.closest('li').hasClass('disabled')){
       console.log('DISABLED');
       return false;
@@ -111,6 +114,7 @@ $(function (){
 
     // Wait for the scroll back to complete
     setTimeout(function (){
+      $orgBrowser.find('.visible > h3 > a').hide();
       $subteam.removeClass('visible');
       addExpanded($orgBrowser);
       selectVisibleInput($orgBrowser);
