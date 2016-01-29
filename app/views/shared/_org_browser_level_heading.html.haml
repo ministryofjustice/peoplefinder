@@ -6,5 +6,5 @@
   - if form && !group_disabled
     = form.radio_button(field_name, group.id)
 
-  %a{href: group_path(group['id']), :class => 'team-link', title: group.name }
+  %a{href: group_path(group['id']), :class => 'team-link', title: group.name }<
     = group['name']
