@@ -29,6 +29,11 @@ $(function (){
     $orgBrowser.find('.visible > h3 > input').prop('checked', 'checked');
   };
 
+  var addExpanded = function($orgBrowser){
+    $orgBrowser.find('.team').removeClass('selected');
+    $orgBrowser.find('.visible').last().addClass('selected');
+  };
+
   if( $('.org-browser.has-form').length > 0 ){
     var $checked = $('.org-browser.has-form').find('input:checked');
     if( $checked.length > 0 ){
@@ -42,6 +47,7 @@ $(function (){
                         .siblings('.editable-fields')
                         .find('.org-browser');
     $orgBrowser.find('.visible').parents('li').addClass('expanded');
+    addExpanded($orgBrowser);
     setTimeout(function (){ animateScroll($orgBrowser); }, 0);
   });
 
@@ -86,6 +92,7 @@ $(function (){
 
     var $subteam = $target.closest('p').siblings('.team');
     revealSubteam($orgBrowser, $target, $subteam);
+    addExpanded($orgBrowser);
     selectVisibleInput($orgBrowser);
     animateScroll($orgBrowser, 'right');
   });
@@ -105,6 +112,7 @@ $(function (){
     // Wait for the scroll back to complete
     setTimeout(function (){
       $subteam.removeClass('visible');
+      addExpanded($orgBrowser);
       selectVisibleInput($orgBrowser);
     }, 400);
 

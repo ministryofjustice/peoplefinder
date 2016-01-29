@@ -67,7 +67,7 @@
         = f.hidden_field :parent_id
       - else
         %label.form-label-bold Team parent
-        %p.form-hint Use this to change where in the organisation this team is located. If your team doesnt exist, you'll need to save your changes and add a new sub team.
+        %p.form-hint Use this to change where in the organisation this team is located.
 
         .editable-fields{ style: ('display:none' unless @group.new_record?) }
           - if @org_structure
