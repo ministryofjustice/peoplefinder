@@ -18,6 +18,14 @@ $grey-2: #BFC1C3;
 $grey-3: #DEE0E2;
 $grey-4: #F8F8F8;
 
+.editable-container {
+  display: inline-block;
+  width: 100%;
+}
+
+.editable-summary {
+
+}
 
 .org-browser {
   $browser-width: 100%;
