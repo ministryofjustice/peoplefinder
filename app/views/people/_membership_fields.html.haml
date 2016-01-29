@@ -11,16 +11,18 @@
   /     GroupLister.new.list.sort_by { |g| g.path.map(&:to_s) },
   /     :id, :name_with_path, {}, class: 'form-control select-autocomplete team-select'
 
-  .editable-container
-    .editable-fields{ style: ('display:none' unless membership.group.try(:new_record?)) }
-      - if @org_structure
-        = render 'shared/org_browser', org_structure: @org_structure, form: membership_f, field_name: :group_id
+  .form-group
+    = membership_f.label :group_id, 'Team', class: 'form-label-bold'
+    .editable-container
+      .editable-fields{ style: ('display:none' unless membership.new_record?) }
+        - if @org_structure
+          = render 'shared/org_browser', org_structure: @org_structure, form: membership_f, field_name: :group_id
 
-    -unless membership.group.try(:new_record?)
-      .editable-summary.parent-summary
-        - if membership.group.try(:parent)
-          .title= breadcrumbs(membership.path)
-        .cta= link_to 'Edit', '#', class: 'show-editable-fields'
+      - unless membership.new_record?
+        .editable-summary.parent-summary
+          - if membership.group.parent
+            .title= breadcrumbs(membership.path)
+          .cta= link_to 'Edit', '#', class: 'show-editable-fields'
 
   .form-group
     = membership_f.label :leader, 'Team leader?', class: 'form-label-bold'
