@@ -5,17 +5,9 @@ $(function (){
 
   var $content = $('#content');
 
-  var findVisible = function($orgBrowser){
-    var visible = $orgBrowser.find('.visible');
-    return {
-      el: visible,
-      width: visible.width()
-    }
-  };
-
   var animateScroll = function ($orgBrowser, direction){
-    var visible = findVisible($orgBrowser);
-    var offset = direction === 'left'? (visible.el.length - 2) * visible.width : visible.el.length * visible.width;
+    var visible = $orgBrowser.find('.visible');
+    var offset = direction === 'left'? (visible.length - 2) * visible.width() : visible.length * visible.width();
     $orgBrowser.animate({ scrollLeft: offset }, 400);
   };
 
@@ -25,15 +17,23 @@ $(function (){
     $subteam.children().parents('.team').addClass('visible');
   };
 
-  var selectVisibleInput = function($orgBrowser){
-    $orgBrowser.find('.visible > h3 > input').prop('checked', 'checked');
-    $orgBrowser.find('.visible > h3 > a').show();
+  var selectCurrent = function($orgBrowser){
+    var teamText, $current;
+    $orgBrowser.find('.team').removeClass('selected');
+    $current = $orgBrowser.find('.visible').last().addClass('selected');
+    $current.find('> h3 > input').prop('checked', 'checked');
+    teamText = $current.find('> h3 > a').show().text();
+    if (teamText != null) {
+      setTeamName($orgBrowser, teamText);
+    }
   };
 
-  var addExpanded = function($orgBrowser){
-    $orgBrowser.find('.team').removeClass('selected');
-    $orgBrowser.find('.visible').last().addClass('selected');
-    $orgBrowser.find('.selected > h3 > a').show();
+  var getTeamName = function(input){
+    return input.next('a').text();
+  };
+
+  var setTeamName = function($orgBrowser, teamName){
+    var $teamLed = $orgBrowser.closest('.membership').find('#team-led').text(teamName + ' team');
   };
 
   if( $('.org-browser.has-form').length > 0 ){
@@ -50,8 +50,15 @@ $(function (){
                         .find('.org-browser');
     $orgBrowser.find('.visible').parents('li').addClass('expanded');
     $orgBrowser.find('h3 > a').hide();
-    addExpanded($orgBrowser);
+    selectCurrent($orgBrowser);
     setTimeout(function (){ animateScroll($orgBrowser); }, 0);
+  });
+
+  // radio input
+  $content.on('change', 'input[type=radio]', function(e){
+    var $target = $(e.target);
+    var $orgBrowser = $(e.target).closest('.org-browser');
+    setTeamName($orgBrowser, getTeamName($target));
   });
 
   // title link
@@ -65,6 +72,7 @@ $(function (){
         e.stopPropagation();
 
         $target.closest('h3').children('input').prop('checked', 'checked');
+        // setTeamName($orgBrowser, getTeamName($target.closest('h3').children('input').prop('checked', 'checked')));
     }
   });
 
@@ -73,7 +81,6 @@ $(function (){
     var $orgBrowser = $(e.target).closest('.org-browser');
 
     if($target.closest('li').hasClass('disabled')){
-      console.log('DISABLED');
       return false;
     }
 
@@ -83,7 +90,8 @@ $(function (){
         e.preventDefault();
         e.stopPropagation();
 
-        $target.closest('p').children('input').prop('checked', 'checked');
+        var input = $target.closest('p').children('input').prop('checked', 'checked');
+        setTeamName($orgBrowser, getTeamName(input));
       }
 
       // if this is a leaf-node, we let the link work as it normally would
@@ -95,8 +103,9 @@ $(function (){
 
     var $subteam = $target.closest('p').siblings('.team');
     revealSubteam($orgBrowser, $target, $subteam);
-    addExpanded($orgBrowser);
-    selectVisibleInput($orgBrowser);
+    // addExpanded($orgBrowser);
+    // selectVisibleInput($orgBrowser);
+    selectCurrent($orgBrowser);
     animateScroll($orgBrowser, 'right');
   });
 
@@ -116,8 +125,9 @@ $(function (){
     setTimeout(function (){
       $orgBrowser.find('.visible > h3 > a').hide();
       $subteam.removeClass('visible');
-      addExpanded($orgBrowser);
-      selectVisibleInput($orgBrowser);
+      // addExpanded($orgBrowser);
+      // selectVisibleInput($orgBrowser);
+      selectCurrent($orgBrowser);
     }, 400);
 
   });

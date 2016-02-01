@@ -45,6 +45,24 @@ feature "Person maintenance" do
     expect(membership.role).to eql('Head Honcho')
   end
 
+  scenario 'Changing team membership via clicking "Back"', js: true do
+    group = setup_three_level_team
+    setup_team_member group
+    expect(dept.name).to eq 'Ministry of Justice'
+    visit_edit_view(group)
+
+    expect(page).to have_selector('.editable-fields', visible: :hidden)
+    within('.group-parent') { click_link 'Edit' }
+    expect(page).to have_selector('.editable-fields', visible: :visible)
+
+    within('.team.selected') { click_link 'Back' }
+    expect(page).to have_selector('a.team-link', text: /#{dept.name}/, visible: :visible)
+    click_button 'Save'
+
+    group.reload
+    expect(group.parent).to eql(dept)
+  end
+
   scenario 'Adding an additional role', js: true do
     person = create_person_in_digital_justice
     create(:group, name: 'Communications')
@@ -142,4 +160,23 @@ def create_person_in_digital_justice
   person = create(:person)
   person.memberships.create(group: group)
   person
+end
+
+def setup_three_level_team
+  dept = create(:department, name: 'Ministry of Justice')
+  parent_group = create(:group, name: 'CSG', parent: dept)
+  @technology = create(:group, name: 'Technology', parent: parent_group)
+  create(:group, name: 'Digital Services', parent: parent_group)
+end
+
+def setup_team_member group
+  subscriber = create(:person)
+  create :membership, person: subscriber, group: group, subscribed: true
+  subscriber
+end
+
+def visit_edit_view group
+  javascript_log_in
+  visit group_path(group)
+  click_link 'Edit'
 end
