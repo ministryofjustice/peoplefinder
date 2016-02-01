@@ -1,4 +1,12 @@
 GIT
+  remote: git@github.com:collectiveidea/delayed_job.git
+  revision: 5f914105c1c38ca73a486d63de8ad62f254b3d72
+  ref: 5f914105c1c38ca73a486d63de8ad62f254b3d72
+  specs:
+    delayed_job (4.1.1)
+      activesupport (>= 3.0, < 5.0)
+
+GIT
   remote: https://github.com/carrierwaveuploader/carrierwave.git
   revision: cc39842e44edcb6187b2d379a606ec48a6b5e4a8
   tag: cc39842e44edcb6187b2d379a606ec48a6b5e4a8
@@ -114,11 +122,9 @@ GEM
       addressable
     daemons (1.1.9)
     database_cleaner (1.5.1)
-    delayed_job (4.0.6)
-      activesupport (>= 3.0, < 5.0)
-    delayed_job_active_record (4.0.3)
-      activerecord (>= 3.0, < 5.0)
-      delayed_job (>= 3.0, < 4.1)
+    delayed_job_active_record (4.1.0)
+      activerecord (>= 3.0, < 5)
+      delayed_job (>= 3.0, < 5)
     descendants_tracker (0.0.4)
       thread_safe (~> 0.3, >= 0.3.1)
     diff-lcs (1.2.5)
@@ -589,6 +595,7 @@ DEPENDENCIES
   codeclimate-test-reporter
   coffee-rails
   database_cleaner
+  delayed_job!
   delayed_job_active_record
   dotenv-rails
   elasticsearch-model (~> 0.1.4)
