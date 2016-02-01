@@ -3,7 +3,7 @@ ruby '2.2.3'
 gem 'rails', '~> 4.2.4'
 
 gem 'ancestry'
-gem 'delayed_job', git: 'git@github.com:collectiveidea/delayed_job.git',
+gem 'delayed_job', git: 'https://github.com/collectiveidea/delayed_job.git',
     ref: '5f914105c1c38ca73a486d63de8ad62f254b3d72' # needed for queue_attributes configuration
 gem 'delayed_job_active_record'
 gem 'elasticsearch-model', '~> 0.1.4'
