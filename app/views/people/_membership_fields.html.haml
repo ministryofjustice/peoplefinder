@@ -25,7 +25,7 @@
           .cta= link_to 'Edit', '#', class: 'show-editable-fields'
 
   .form-group
-    = membership_f.label :leader, 'Team leader?', class: 'form-label-bold'
+    = membership_f.label :leader, '<span class="team-led">Team</span> leader?'.html_safe, class: 'form-label-bold'
     = membership_f.check_box :leader
     %span.hint= role_translate(membership.person, 'memberships.leader').html_safe
 
