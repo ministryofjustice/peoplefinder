@@ -107,21 +107,24 @@ feature 'Group maintenance' do
       expect(page).to have_text('deletion is only possible if there are no people')
     end
 
+    let(:parent_group) { create(:group, name: 'CSG', parent: dept) }
+    let(:sibling_group) { create(:group, name: 'Technology', parent: parent_group) }
+    let(:group_three_deep) { create(:group, name: 'Digital Services', parent: parent_group) }
+
     def setup_three_level_team
-      parent_group = create(:group, name: 'CSG', parent: dept)
-      @technology = create(:group, name: 'Technology', parent: parent_group)
-      create(:group, name: 'Digital Services', parent: parent_group)
+      sibling_group
+      group_three_deep
     end
 
     def setup_team_member group
-      subscriber = create(:person)
-      create :membership, person: subscriber, group: group, subscribed: true
-      subscriber
+      user = create(:person)
+      create :membership, person: user, group: group, subscribed: true
+      user
     end
 
     scenario 'Editing a team name', js: true do
       group = setup_three_level_team
-      subscriber = setup_team_member group
+      user = setup_team_member group
       visit_edit_view(group)
 
       expect(page).to have_title("Edit team - #{app_title}")
@@ -136,7 +139,7 @@ feature 'Group maintenance' do
       group.reload
       expect(group.name).to eql(new_name)
 
-      expect(last_email.to).to include(subscriber.email)
+      expect(last_email.to).to include(user.email)
       expect(last_email.subject).to eq('People Finder team updated')
       expect(page).to have_text(new_name)
       expect(last_email.body.encoded).to match(group_url(group))
@@ -166,26 +169,38 @@ feature 'Group maintenance' do
       visit_edit_view(group)
 
       within('.group-parent') { click_link 'Edit' }
-      within('.team.selected') { click_link 'Technology' }
+      within('.team.selected') do
+        expect(page).to have_link(sibling_group.name)
+        click_link sibling_group.name
+      end
+
       click_button 'Save'
 
       group.reload
-      expect(group.parent).to eql(@technology)
+      expect(group.parent).to eql(sibling_group)
     end
 
     scenario 'Changing a team parent via clicking sibling team\'s subteam name', js: true do
       group = setup_three_level_team
-      testing = create(:group, name: 'Testing', parent: @technology)
+      subteam_group = create(:group, name: 'Test team', parent: sibling_group)
       setup_team_member group
       visit_edit_view(group)
 
       within('.group-parent') { click_link 'Edit' }
-      within('.team.selected') { click_link 'Technology' }
-      within('.team.selected') { click_link 'Testing' }
+      within('.team.selected') do
+        expect(page).to have_link("#{sibling_group.name} 1 sub-team")
+        click_link "#{sibling_group.name} 1 sub-team"
+      end
+
+      within('.team.selected') do
+        expect(page).to have_link(subteam_group.name)
+        click_link subteam_group.name
+      end
+
       click_button 'Save'
 
       group.reload
-      expect(group.parent).to eql(testing)
+      expect(group.parent).to eql(subteam_group)
     end
 
     scenario 'Showing the acronym', js: true do
