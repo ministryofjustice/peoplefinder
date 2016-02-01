@@ -33,7 +33,7 @@ $(function (){
   };
 
   var setTeamName = function($orgBrowser, teamName){
-    var $teamLed = $orgBrowser.closest('.membership').find('#team-led').text(teamName + ' team');
+    var $teamLed = $orgBrowser.closest('.membership').find('.team-led').text(teamName + ' team');
   };
 
   if( $('.org-browser.has-form').length > 0 ){
@@ -72,7 +72,6 @@ $(function (){
         e.stopPropagation();
 
         $target.closest('h3').children('input').prop('checked', 'checked');
-        // setTeamName($orgBrowser, getTeamName($target.closest('h3').children('input').prop('checked', 'checked')));
     }
   });
 
@@ -103,8 +102,6 @@ $(function (){
 
     var $subteam = $target.closest('p').siblings('.team');
     revealSubteam($orgBrowser, $target, $subteam);
-    // addExpanded($orgBrowser);
-    // selectVisibleInput($orgBrowser);
     selectCurrent($orgBrowser);
     animateScroll($orgBrowser, 'right');
   });
@@ -125,8 +122,6 @@ $(function (){
     setTimeout(function (){
       $orgBrowser.find('.visible > h3 > a').hide();
       $subteam.removeClass('visible');
-      // addExpanded($orgBrowser);
-      // selectVisibleInput($orgBrowser);
       selectCurrent($orgBrowser);
     }, 400);
 
