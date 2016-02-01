@@ -110,7 +110,7 @@ RSpec.describe TokenSender, type: :service do
 
       it 'sends token email' do
         expect(TokenMailer).to receive(:new_token_email).with(token).and_return mailer
-        expect(mailer).to receive(:deliver_later)
+        expect(mailer).to receive(:deliver_later).with(queue: :high_priority)
         subject.call(view)
       end
 

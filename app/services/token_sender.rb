@@ -13,7 +13,7 @@ class TokenSender
   def call view
     token = obtain_token
     if token
-      TokenMailer.new_token_email(token).deliver_later
+      TokenMailer.new_token_email(token).deliver_later queue: :high_priority
       view.render_create_view token: token
     elsif report_user_email_error?
       view.render_new_view user_email_error: user_email_error
