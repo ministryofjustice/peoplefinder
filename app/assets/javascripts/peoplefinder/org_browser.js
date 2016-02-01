@@ -127,5 +127,11 @@ $(function (){
 
   });
 
+  $('#memberships .membership').each(function(){
+    var _this = $(this),
+      teamName = _this.find('.editable-summary ol li:last-child').text();
+    _this.find('.team-led').text(teamName + ' team');
+  });
+
 });
 
