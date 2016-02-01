@@ -5,6 +5,8 @@ $(function (){
 
   var $content = $('#content');
 
+  var $editPerson = $('form.edit_person').length === 1? true : false;
+
   var animateScroll = function ($orgBrowser, direction){
     var visible = $orgBrowser.find('.visible');
     var offset = direction === 'left'? (visible.length - 2) * visible.width() : visible.length * visible.width();
@@ -33,7 +35,9 @@ $(function (){
   };
 
   var setTeamName = function($orgBrowser, teamName){
-    var $teamLed = $orgBrowser.closest('.membership').find('.team-led').text(teamName + ' team');
+    if($editPerson){
+      var $teamLed = $orgBrowser.closest('.membership').find('.team-led').text(teamName + ' team');
+    }
   };
 
   if( $('.org-browser.has-form').length > 0 ){
