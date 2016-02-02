@@ -89,7 +89,7 @@ class GroupsController < ApplicationController
   end
 
   def set_org_structure
-    @org_structure = Group.arrange.to_h
+    @org_structure = Group.hierarchy_hash
   end
 
   # Never trust parameters from the scary internet, only allow the white list
