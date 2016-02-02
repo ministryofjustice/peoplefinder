@@ -95,7 +95,7 @@ $grey-4: #F8F8F8;
     ul {
       list-style: none;
       margin: 0;
-      overflow-y: auto;
+      overflow-y: scroll;
       height: $org-browser-height - ($row-height * 2) - 5;
     }
 
