@@ -109,7 +109,7 @@ class PeopleController < ApplicationController
   end
 
   def set_org_structure
-    @org_structure = Group.arrange.to_h
+    @org_structure = Group.hierarchy_hash
   end
 
   def namesakes?
