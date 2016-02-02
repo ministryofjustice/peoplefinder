@@ -88,7 +88,7 @@ en:
     leader:
       mine: |
         Tick this box if you lead the <span class="team-led">team above</span>.
-        (More than one person can be selected as team leader.)
+        More than one person can be selected as team leader.
       other: |
         This person leads the <span class="team-led">team above</span>.
         (More than one person can be selected as team leader.)
