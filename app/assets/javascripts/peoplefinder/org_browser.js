@@ -5,7 +5,7 @@ $(function (){
 
   var $content = $('#content');
 
-  var $editPerson = $('form.edit_person').length === 1? true : false;
+  var $hasMemberships = $('#memberships').length === 1? true : false;
 
   var animateScroll = function ($orgBrowser, direction){
     var visible = $orgBrowser.find('.visible');
@@ -35,7 +35,7 @@ $(function (){
   };
 
   var setTeamName = function($orgBrowser, teamName){
-    if($editPerson){
+    if($hasMemberships){
       var $teamLed = $orgBrowser.closest('.membership').find('.team-led').text(teamName + ' team');
     }
   };
