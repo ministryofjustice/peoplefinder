@@ -42,7 +42,7 @@ feature "Person maintenance" do
 
     javascript_log_in
     visit edit_person_path(person)
-    # expect(page).to have_selector('#team-led', text: 'Digital Justice [MOJ] team')
+    expect(page).to have_selector('.team-led', text: 'Digital Justice team')
 
     fill_in 'Job title', with: 'Head Honcho'
     click_button 'Save', match: :first
