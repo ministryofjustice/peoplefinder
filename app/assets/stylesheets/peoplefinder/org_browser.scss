@@ -96,7 +96,7 @@ $grey-4: #F8F8F8;
       list-style: none;
       margin: 0;
       overflow-y: auto;
-      height: $org-browser-height - $row-height - 20;
+      height: $org-browser-height - ($row-height * 2) - 5;
     }
 
     h3, ul li {
