@@ -1,6 +1,3 @@
-LANG='en_GB.UTF-8'
-LC_ALL='en_GB.UTF-8'
-
 source 'https://rubygems.org'
 ruby '2.2.3'
 gem 'rails', '~> 4.2.4'
