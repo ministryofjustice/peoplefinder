@@ -41,11 +41,11 @@
 
     .remove-link
       - if membership.new_record?
-        = link_to 'Delete', '#', class: 'remove-new-membership'
+        = link_to 'Delete role', '#', class: 'remove-new-membership button-secondary'
 
       - else
-        = link_to 'Delete', membership_path(membership,
-          referer: request.path),
+        = link_to 'Delete role', membership_path(membership, referer: request.path),
           method: :delete,
+          class: 'button-secondary',
           data: {confirm: "Are you sure you want to remove #{ membership.person} from #{ membership.group }? " }
 
