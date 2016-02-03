@@ -47,7 +47,7 @@ $(function (){
     }
   }
 
-  $content.on('click', '.show-editable-fields', function (e){
+  $content.on('click', '.show-editable-fields, .editable-summary', function (e){
     var $orgBrowser = $(e.target)
                         .closest('.editable-summary')
                         .siblings('.editable-fields')
