@@ -22,7 +22,7 @@ feature "Person maintenance" do
     select_in_team_select 'Digital Justice'
 
     expect(page).to have_selector('.team-led', text: 'Digital Justice team')
-    expect(page).to have_selector('.hint', text: 'This person leads the Digital Justice team. (More than one person can be selected as team leader.)')
+    expect(page).to have_selector('.hint', text: 'Tick this box if this person leads the Digital Justice team. More than one person can be selected as team leader.')
     check 'leader'
     click_button 'Save', match: :first
 

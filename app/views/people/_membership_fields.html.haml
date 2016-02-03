@@ -1,4 +1,5 @@
 - membership = membership_f.object
+- person = membership.person
 .membership
   .form-group
     = membership_f.label :role, 'Job title', class: 'form-label-bold'
@@ -6,8 +7,10 @@
 
   .form-group
     = membership_f.label :group_id, 'Team', class: 'form-label-bold'
-    %p.form-hint Use this to select the team you are in in the organisation.
-    %p.form-hint  If your team doesnt exist, you'll need to save your changes and add a new sub team when viewing a team on People Finder.
+    %p.form-hint
+      = role_translate(person, 'memberships.team_hint')
+    %p.form-hint
+      = role_translate(person, 'memberships.team_creation_hint')
     .editable-container
       .editable-fields{ style: ('display:none' unless membership.new_record?) }
         - if @org_structure
@@ -20,14 +23,15 @@
           = link_to 'Edit team membership', '#', class: 'show-editable-fields button-secondary'
 
   .form-group
-    = membership_f.label :leader, 'Are you the leader of the <span class="team-led">above team</span>?'.html_safe, class: 'form-label-bold'
+    = membership_f.label :leader,
+      role_translate(person, 'memberships.leader_question').html_safe, class: 'form-label-bold'
     = membership_f.check_box :leader
-    %span.hint= role_translate(membership.person, 'memberships.leader').html_safe
+    %span.hint= role_translate(person, 'memberships.leader').html_safe
 
   .form-group
     = membership_f.label :subscribed, 'Team updates', class: 'form-label-bold'
     = membership_f.check_box :subscribed, class: 'membership-subscribed-check-box'
-    %span.hint= role_translate(membership.person, 'memberships.subscribed')
+    %span.hint= role_translate(person, 'memberships.subscribed')
 
     .remove-link
       - if membership.new_record?
@@ -37,5 +41,5 @@
         = link_to 'Delete role', membership_path(membership, referer: request.path),
           method: :delete,
           class: 'button-secondary',
-          data: {confirm: "Are you sure you want to remove #{ membership.person} from #{ membership.group }? " }
+          data: {confirm: "Are you sure you want to remove #{person} from #{membership.group}? " }
 
