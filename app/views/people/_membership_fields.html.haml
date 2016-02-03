@@ -12,15 +12,17 @@
     %p.form-hint
       = role_translate(person, 'memberships.team_creation_hint')
     .editable-container
-      .editable-fields{ style: ('display:none' unless membership.new_record?) }
-        - if @org_structure
-          = render 'shared/org_browser', org_structure: @org_structure, form: membership_f, field_name: :group_id
 
       - unless membership.new_record?
         .editable-summary.parent-summary
           - if membership.group
             .title= breadcrumbs(membership.path, show_links: false)
           = link_to 'Edit team membership', '#', class: 'show-editable-fields button-secondary'
+      
+      .editable-fields{ style: ('display:none' unless membership.new_record?) }
+        - if @org_structure
+          = render 'shared/org_browser', org_structure: @org_structure, form: membership_f, field_name: :group_id
+          = link_to 'Done', '#', class: 'hide-editable-fields button-secondary', style: 'margin-top:20px;'
 
   .form-group.team-leader
     %fieldset.inline
