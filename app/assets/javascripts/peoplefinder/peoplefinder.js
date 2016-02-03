@@ -20,7 +20,7 @@ $(function() {
     $(this).parents('.membership').remove();
   });
 
-  $(document).on('click', 'a.show-editable-fields', function(e) {
+  $(document).on('click', 'a.show-editable-fields, .editable-summary', function(e) {
     e.preventDefault();
     $(this).closest('.editable-summary').hide();
     $(this).closest('.editable-container').children('.editable-fields').show();
