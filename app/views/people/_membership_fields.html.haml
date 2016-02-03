@@ -17,7 +17,7 @@
         .editable-summary.parent-summary
           - if membership.group
             .title= breadcrumbs(membership.path, show_links: false)
-          .cta= link_to 'Edit team membership', '#', class: 'show-editable-fields button-secondary'
+          = link_to 'Edit team membership', '#', class: 'show-editable-fields button-secondary'
 
   .form-group
     = membership_f.label :leader, 'Are you the leader of the <span class="team-led">above team</span>?'.html_safe, class: 'form-label-bold'
