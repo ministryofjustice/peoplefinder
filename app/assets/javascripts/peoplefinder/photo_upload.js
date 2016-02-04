@@ -204,7 +204,7 @@ var PhotoUpload = (function (){
         $crop_w:    $el.find('#person_crop_w'),
         $crop_h:    $el.find('#person_crop_h')
       };
-    }),
+    })
 
   };
 

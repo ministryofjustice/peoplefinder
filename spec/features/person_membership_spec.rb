@@ -50,20 +50,26 @@ feature "Person maintenance" do
 
   scenario 'Changing team membership via clicking "Back"', js: true do
     group = setup_three_level_team
-    setup_team_member group
-    expect(Group.department.name).to eq 'Ministry of Justice'
-    visit_edit_view(group)
+    person = setup_team_member group
+
+    javascript_log_in
+    visit edit_person_path(person)
 
     expect(page).to have_selector('.editable-fields', visible: :hidden)
-    within('.group-parent') { click_link 'Edit' }
+    within('.editable-container') { click_link 'Edit team membership' }
     expect(page).to have_selector('.editable-fields', visible: :visible)
+    expect(page).to have_selector('.hide-editable-fields', visible: :visible)
 
     within('.team.selected') { click_link 'Back' }
     expect(page).to have_selector('a.team-link', text: /#{Group.department.name}/, visible: :visible)
-    click_button 'Save'
 
-    group.reload
-    expect(group.parent).to eql(Group.department)
+    click_link 'Done'
+    expect(page).to have_selector('.editable-fields', visible: :hidden)
+
+    click_button 'Save', match: :first
+
+    person.reload
+    expect(person.memberships.last.group).to eql(Group.department)
   end
 
   scenario 'Adding an additional role', js: true do

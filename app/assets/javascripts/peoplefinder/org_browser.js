@@ -25,10 +25,6 @@ $(function (){
     $current = $orgBrowser.find('.visible').last().addClass('selected');
     $current.find('> h3 > input').prop('checked', 'checked').trigger('change');
     $current.find('> h3 > a').show()
-    // teamText = $current.find('> h3 > a').show().text();
-    // if (teamText != null) {
-    //   setTeamName($orgBrowser, teamText);
-    // }
   };
 
   var getTeamName = function(input){
@@ -41,12 +37,12 @@ $(function (){
     }
   };
 
-  var getBreadcrumb = function($orgBrowser, teamName){
-    var arr = [];
-    $orgBrowser.find('.team.visible:not(.selected)').each(function(i,obj){
+  var getBreadcrumb = function($orgBrowser, teamName, isSubTeam){
+    var arr = [],
+      selector = isSubTeam? '.team.visible' : '.team.visible:not(.selected)';
+    $orgBrowser.find(selector).each(function(i,obj){
       var text = $(obj).find('>h3>a').text();
       arr.push(text);
-      console.log(text);
     });
     arr.push(teamName);
     setBreadcrumb($orgBrowser, createBreadcrumb($orgBrowser, arr));
@@ -55,7 +51,7 @@ $(function (){
   var createBreadcrumb = function($orgBrowser, arr){
     var ol = $('<ol/>');
     $(arr).each(function(i, crumb){
-      var li = $('<li/>').text(crumb);
+      var li = $('<li/>').addClass('breadcrumb-'+i).text($.trim(crumb));
       ol.append(li);
     });
     return $(ol);
@@ -79,7 +75,9 @@ $(function (){
                         .find('.org-browser');
     $orgBrowser.find('.visible').parents('li').addClass('expanded');
     $orgBrowser.find('h3 > a').hide();
-    selectCurrent($orgBrowser);
+    $orgBrowser.find('.team').removeClass('selected');
+    var $current = $orgBrowser.find('.visible').last().addClass('selected');
+    $current.find('> h3 > a').show()
     setTimeout(function (){ animateScroll($orgBrowser); }, 0);
   });
 
@@ -90,7 +88,8 @@ $(function (){
     if($target.is(':checked')){
       setTeamName($orgBrowser, getTeamName($target));
     }
-    getBreadcrumb($orgBrowser, getTeamName($target));
+    var isSubTeam = $target.next('a').hasClass('subteam-link')? true : false;
+    getBreadcrumb($orgBrowser, getTeamName($target), isSubTeam);
   });
 
   // title link
@@ -122,7 +121,6 @@ $(function (){
         e.stopPropagation();
 
         var input = $target.closest('p').children('input').prop('checked', 'checked').trigger('change');
-        // setTeamName($orgBrowser, getTeamName(input));
       }
 
       // if this is a leaf-node, we let the link work as it normally would
