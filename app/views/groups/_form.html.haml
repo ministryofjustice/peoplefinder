@@ -69,15 +69,15 @@
         %label.form-label-bold Team parent
         %p.form-hint Use this to change where in the organisation this team is located.
 
-        .editable-fields{ style: ('display:none' unless @group.new_record?) }
-          - if @org_structure
-            = render 'shared/org_browser', org_structure: @org_structure, form: f, field_name: :parent_id
-
         -unless @group.new_record?
           .editable-summary.parent-summary
             - if @group.parent
               .title= breadcrumbs(@group.parent.path, show_links: false)
             = link_to 'Edit team membership', '#', class: 'show-editable-fields button-secondary'
+
+        .editable-fields{ style: ('display:none' unless @group.new_record?) }
+          - if @org_structure
+            = render 'shared/org_browser', org_structure: @org_structure, form: f, field_name: :parent_id
 
   .form-group
     = f.submit class: 'button'

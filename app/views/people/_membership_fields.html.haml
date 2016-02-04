@@ -13,16 +13,24 @@
       = role_translate(person, 'memberships.team_creation_hint')
     .editable-container
 
-      - unless membership.new_record?
-        .editable-summary.parent-summary
-          - if membership.group
-            .title= breadcrumbs(membership.path, show_links: false)
+      / - unless membership.new_record?
+      .editable-summary.parent-summary
+        - if membership.group
+          .title.breadcrumbs= breadcrumbs(membership.path, show_links: false)
+        - unless membership.new_record?
           = link_to 'Edit team membership', '#', class: 'show-editable-fields button-secondary'
       
       .editable-fields{ style: ('display:none' unless membership.new_record?) }
         - if @org_structure
           = render 'shared/org_browser', org_structure: @org_structure, form: membership_f, field_name: :group_id
-          = link_to 'Done', '#', class: 'hide-editable-fields button-secondary', style: 'margin-top:20px;'
+          - unless membership.new_record?
+            = link_to 'Done', '#', class: 'hide-editable-fields button-secondary'
+
+  %noscript
+    .form-group
+      = membership_f.collection_select :group_id,
+        GroupLister.new.list.sort_by { |g| g.path.map(&:to_s) },
+        :id, :name_with_path, {}, class: 'form-control select-autocomplete team-select'
 
   .form-group
     = membership_f.label :leader,

@@ -32,4 +32,5 @@ $(function() {
     $(this).closest('.editable-container').find('a.show-editable-fields').show();
     $(this).closest('.editable-container').children('.editable-fields').hide();
   });
+
 });
