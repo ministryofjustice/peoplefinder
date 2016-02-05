@@ -43,6 +43,9 @@ WORKDIR /usr/src/app
 COPY Gemfile /usr/src/app/
 COPY Gemfile.lock /usr/src/app/
 
+# Don't install documentation with gems
+RUN echo ':verbose: true' > $HOME/.gemrc && echo 'install: --no-document' >> $HOME/.gemrc && echo 'update: --no-document' >> $HOME/.gemrc
+
 # Hack to install private gems
 RUN socat UNIX-LISTEN:$SSH_AUTH_SOCK,fork TCP4:$(ip route|awk '/default/ {print $3}'):$SSH_AUTH_PROXY_PORT & bundle install
 
