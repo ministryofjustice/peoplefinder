@@ -385,7 +385,6 @@ GEM
       net-ssh (>= 2.6.5)
     net-ssh (2.9.2)
     netaddr (1.5.0)
-    newrelic_rpm (3.9.9.275)
     nokogiri (1.6.7.2)
       mini_portile2 (~> 2.0.0.rc2)
     notiffany (0.0.8)
@@ -625,7 +624,6 @@ DEPENDENCIES
   minitest
   moj_internal_template (~> 0.1.7)
   netaddr
-  newrelic_rpm
   omniauth-gplus!
   paper_trail (~> 4.0.0.beta)
   pg
@@ -653,4 +651,4 @@ DEPENDENCIES
   will_paginate (~> 3.0)
 
 BUNDLED WITH
-   1.10.6
+   1.11.2
