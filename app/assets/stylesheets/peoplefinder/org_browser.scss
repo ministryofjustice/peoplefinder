@@ -73,7 +73,7 @@ $grey-4: #F8F8F8;
     }
   }
   a:focus {
-    background: none;
+    background-color: transparent;
     outline: none;
   }
 
@@ -274,5 +274,23 @@ form .org-browser {
 .lte-ie8 {
   li.has-subteams > p {
     background-position: 295px 12px!important;
+  }
+}
+
+.add-team {
+  padding: 0 1.8em;
+  a {
+    background: url(/assets/icon_add_person.png) no-repeat 0 10px;
+    display: block;
+    font-size: 16px;
+    line-height: 45px;
+    padding-left: 2em;
+  }
+}
+.new-team {
+  padding: 1em 2em;
+  .button {
+    color: #ffffff;
+    margin-top: 10px;
   }
 }
