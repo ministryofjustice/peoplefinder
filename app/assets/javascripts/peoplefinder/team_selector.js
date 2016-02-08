@@ -9,7 +9,6 @@ var teamSelector = function teamSelector(isPerson, obj){
 	var submit = $('<input type="button" name="addTeam" id="addTeam" value="Create" class="button">');
 	this.teamInput.append(input).append(submit);
 
-
 	this.enhance = function(){
 		if( this.orgBrowser.hasClass('has-form') ){
 	    var $checked = this.getCheckedInput();
@@ -96,7 +95,7 @@ var teamSelector = function teamSelector(isPerson, obj){
 	};
 
 	/*
-	Set the visible class on the team with the selected radio button
+	Set the 'selected' class on the last visible team
 	*/
 	this.init = function(){
 		var self = this;
@@ -226,46 +225,49 @@ var teamSelector = function teamSelector(isPerson, obj){
   };
 
   this.showTeamLink = function(){
-  	this.orgBrowser.find('.new-team').hide();
+  	this.teamInput.hide();
   	this.orgBrowser.find('.add-team').show();
   };
 
   this.showTeamInput= function(){
   	var el = this.currentTarget.hide().parent();
   	el.append(this.teamInput.show());
-  	$('#newTeamName').val('').focus();
-  };
-
-  this.hideTeamInput= function(){
-  	this.teamInput.hide();
-  	this.showTeamLink();
+  	this.orgBrowser.find('#newTeamName').val('').focus();
   };
 
   this.createNewTeam = function(){
   	var self = this,
   		teamID = this.orgBrowser.find('.selected>h3>input').val(),
-  		teamName = $('#newTeamName').val();
+  		teamName = this.orgBrowser.find('#newTeamName').val();
   	$.ajax({
   		url: 'test',
   		data: {id: teamID, name: teamName},
   		success: function(data){
-		  	data = {id:999,name:teamName};
+		  	data = {id:999,name:teamName,parentID:teamID};
 		  	self.addTeamToList(data);
 		  	
   		},
   		error: function(){
   			console.log('error');
-  			data = {id:999,name:teamName};
+  			data = {id:999,name:teamName,parentID:teamID};
   			self.addTeamToList(data);
   		}
   	});
   };
 
   this.addTeamToList = function(data){
-  	var list = this.orgBrowser.find('.team.selected>ul');
-  	var item = $('<li class="leaf-node"><p><input type="radio" value="'+data.id+'" name="person[memberships_attributes][0][group_id]" id="person_memberships_attributes_0_group_id_'+data.id+'"><a class="subteam-link" href="/teams/industrial-jewelery-grocery" title="'+data.name+'"><span class="subteam-name">'+data.name+'</span></a></p></li>');
-  	list.find('>.add-team').before(item);
-  	this.hideTeamInput();
+  	var list = $('input[value="'+data.parentID+'"]').parent('h3').next('ul');
+  	$.each(list, function(i, obj){
+	  	var item = $('<p> \
+	  			<input type="radio" value="'+data.id+'" name="person[memberships_attributes]['+i+'][group_id]" id="person_memberships_attributes_0_group_id_'+data.id+'"> \
+	  			<a class="subteam-link" href="/teams/industrial-jewelery-grocery" title="'+data.name+'"> \
+	  				<span class="subteam-name">'+data.name+'</span> \
+	  			</a> \
+	  		</p>');
+	  	var li = $('<li/>').addClass('leaf-node').html(item);
+	  	$(obj).find('>.add-team').before(li);
+  	});
+  	this.showTeamLink();
   };
 
 };
