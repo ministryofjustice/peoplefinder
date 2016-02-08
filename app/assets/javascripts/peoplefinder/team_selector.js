@@ -4,7 +4,12 @@ var teamSelector = function teamSelector(isPerson, obj){
 	this.selector = $(obj);
 	this.orgBrowser = this.selector.find('.org-browser');
 	this.editButton = this.selector.find('a.show-editable-fields');
-	
+	this.teamInput = $('<div/>').addClass('new-team');
+	var input = $('<fieldset><input type="text class="form-control" id="newTeamName" /></fieldset>');
+	var submit = $('<input type="button" name="addTeam" id="addTeam" value="Create" class="button">');
+	this.teamInput.append(input).append(submit);
+
+
 	this.enhance = function(){
 		if( this.orgBrowser.hasClass('has-form') ){
 	    var $checked = this.getCheckedInput();
@@ -66,6 +71,28 @@ var teamSelector = function teamSelector(isPerson, obj){
 	    var isSubTeam = self.currentTarget.next('a').hasClass('subteam-link')? true : false;
   		self.getBreadcrumb(isSubTeam);
 	  });
+
+	  this.orgBrowser.on('click', '.add-team', function (e){
+			e.preventDefault();
+  		e.stopPropagation();
+			self.currentTarget = $(e.currentTarget);
+			self.showTeamInput();
+	  });
+
+	  this.orgBrowser.on('click', '#addTeam', function (e){
+			e.preventDefault();
+  		e.stopPropagation();
+			self.currentTarget = $(e.currentTarget);
+			self.createNewTeam();
+	  });
+
+	  this.orgBrowser.on('keypress', '#newTeamName', function(e){
+  		if(e.keyCode === 13){
+		  	e.preventDefault();
+	  		e.stopPropagation();
+  			self.createNewTeam();
+  		}
+	  });
 	};
 
 	/*
@@ -74,7 +101,8 @@ var teamSelector = function teamSelector(isPerson, obj){
 	this.init = function(){
 		var self = this;
 	  this.setExpanded();
-	  this.hideHeadings();
+	  // Hide all team headings (for testing purposes)
+	  this.orgBrowser.find('h3 > a').hide();
 	  this.removeSelected();
 	  var visible = this.getLastVisible().addClass('selected').find('> h3 > a').show();
 	  setTimeout(function (){ self.animateScroll(); }, 0);
@@ -121,7 +149,7 @@ var teamSelector = function teamSelector(isPerson, obj){
       arr.push(text);
     });
     arr.push(this.getTeamName(this.currentTarget));
-    this.setBreadcrumb(this.createBreadcrumb(arr));
+    this.orgBrowser.closest('.editable-container').find('.editable-summary .title').html(this.createBreadcrumb(arr));
   };
 
   this.createBreadcrumb = function(arr){
@@ -131,10 +159,6 @@ var teamSelector = function teamSelector(isPerson, obj){
       ol.append(li);
     });
     return $(ol);
-  };
-
-  this.setBreadcrumb = function(str){
-    this.orgBrowser.closest('.editable-container').find('.editable-summary .title').html(str);
   };
 
 	// Return the input element that is check
@@ -159,11 +183,6 @@ var teamSelector = function teamSelector(isPerson, obj){
   	this.orgBrowser.find('.team').removeClass('selected');
   };
 
-  // Remove the 'visible' class from all teams
-  this.removeVisible = function(){
-  	this.orgBrowser.find('.team').removeClass('visible');
-  };
-
   // Return the last 'visible' team element
   this.getLastVisible = function(){
   	return this.orgBrowser.find('.visible').last();
@@ -174,15 +193,11 @@ var teamSelector = function teamSelector(isPerson, obj){
   	this.orgBrowser.find('.visible').parents('li').addClass('expanded');
   };
 
-  // Hide all team headings (for testing purposes)
-  this.hideHeadings = function(){
-  	this.orgBrowser.find('h3 > a').hide();
-  };
-
   // When moving forward down the subteams
   this.revealSubteam = function (team){
     this.setExpanded();
-    this.removeVisible();
+    // Remove the 'visible' class from all teams
+    this.orgBrowser.find('.team').removeClass('visible');
     team.children().parents('.team').addClass('visible');
   };
 
@@ -200,6 +215,57 @@ var teamSelector = function teamSelector(isPerson, obj){
     var visible = this.orgBrowser.find('.visible');
     var offset = direction === 'left'? (visible.length - 2) * visible.width() : visible.length * visible.width();
     this.orgBrowser.animate({ scrollLeft: offset }, 400);
+    this.showTeamLink();
+  };
+
+  this.createNewTeamLink = function(){
+  	this.orgBrowser.find('.team ul').each(function(i, obj){
+	  	var link = $('<li/>').addClass('add-team').html('<a href="#">Create new team</>');
+  		$(obj).append(link);
+  	});
+  };
+
+  this.showTeamLink = function(){
+  	this.orgBrowser.find('.new-team').hide();
+  	this.orgBrowser.find('.add-team').show();
+  };
+
+  this.showTeamInput= function(){
+  	var el = this.currentTarget.hide().parent();
+  	el.append(this.teamInput.show());
+  	$('#newTeamName').val('').focus();
+  };
+
+  this.hideTeamInput= function(){
+  	this.teamInput.hide();
+  	this.showTeamLink();
+  };
+
+  this.createNewTeam = function(){
+  	var self = this,
+  		teamID = this.orgBrowser.find('.selected>h3>input').val(),
+  		teamName = $('#newTeamName').val();
+  	$.ajax({
+  		url: 'test',
+  		data: {id: teamID, name: teamName},
+  		success: function(data){
+		  	data = {id:999,name:teamName};
+		  	self.addTeamToList(data);
+		  	
+  		},
+  		error: function(){
+  			console.log('error');
+  			data = {id:999,name:teamName};
+  			self.addTeamToList(data);
+  		}
+  	});
+  };
+
+  this.addTeamToList = function(data){
+  	var list = this.orgBrowser.find('.team.selected>ul');
+  	var item = $('<li class="leaf-node"><p><input type="radio" value="'+data.id+'" name="person[memberships_attributes][0][group_id]" id="person_memberships_attributes_0_group_id_'+data.id+'"><a class="subteam-link" href="/teams/industrial-jewelery-grocery" title="'+data.name+'"><span class="subteam-name">'+data.name+'</span></a></p></li>');
+  	list.find('>.add-team').before(item);
+  	this.hideTeamInput();
   };
 
 };
@@ -218,5 +284,6 @@ $(function (){
     }
     var team = new teamSelector(isPerson, obj);
     team.enhance();
+    team.createNewTeamLink();
   });
 });
