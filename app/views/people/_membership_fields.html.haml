@@ -19,12 +19,17 @@
           .title.breadcrumbs= breadcrumbs(membership.path, show_links: false)
         - unless membership.new_record?
           = link_to 'Edit team membership', '#', class: 'show-editable-fields button-secondary'
-      
+
       .editable-fields{ style: ('display:none' unless membership.new_record?) }
         - if @org_structure
           = render 'shared/org_browser', org_structure: @org_structure, form: membership_f, field_name: :group_id
           - unless membership.new_record?
             = link_to 'Done', '#', class: 'hide-editable-fields button-secondary'
+            = link_to 'Add new sub-team to <span class="team-led"></span>'.html_safe, '#', class: 'button-add-team'
+          %div.new-team
+            = membership_f.label 'addteam', 'Add new sub-team to <span class="team-led"></span>'.html_safe, class: 'form-label-bold'
+            %input.form-control
+            = link_to 'Create', '#', class: 'button'
 
   %noscript
     .form-group
