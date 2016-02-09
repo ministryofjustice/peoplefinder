@@ -7,7 +7,7 @@ $org-node-image: image-url('icon_group.png');
 $arrow-image-left: image-url('icon_arrow_left.png');
 $arrow-image-right: image-url('icon_arrow.png');
 
-$org-browser-column-width: 330px;
+$org-browser-column-width: 480px;
 $org-browser-height: 480px;
 $row-height: 45px;
 
@@ -216,7 +216,8 @@ form .org-browser {
 
   .team > ul > li.leaf-node {
       background: none;
-      padding-left: 1.4em;
+      padding: 0 3em 0 1.4em;
+      position: relative;
 
       > p > input {
         float: left;
@@ -288,9 +289,8 @@ form .org-browser {
   }
 }
 .new-team {
-  padding: 1em 2em;
+  display: none;
   .button {
-    color: #ffffff;
-    margin-top: 10px;
+    // color: #ffffff;
   }
 }
