@@ -78,6 +78,7 @@
         .editable-fields{ style: ('display:none' unless @group.new_record?) }
           - if @org_structure
             = render 'shared/org_browser', org_structure: @org_structure, form: f, field_name: :parent_id
+            = link_to 'Done', '#', class: 'hide-editable-fields button-secondary'
 
   .form-group
     = f.submit class: 'button'

@@ -4,6 +4,8 @@ var teamSelector = function teamSelector(isPerson, obj){
 	this.selector = $(obj);
 	this.orgBrowser = this.selector.find('.org-browser');
 	this.editButton = this.selector.find('a.show-editable-fields');
+	this.newTeam = this.selector.find('.new-team');
+	this.newTeamInput = this.newTeam.find('.new-team-name');
 
 	/* Listen for events */
 	this.initEvents = function(){
@@ -55,6 +57,25 @@ var teamSelector = function teamSelector(isPerson, obj){
 	    self.setTeamName(self.getTeamName(self.currentTarget));
 	    var isSubTeam = self.currentTarget.next('a').hasClass('subteam-link')? true : false;
   		self.getBreadcrumb(isSubTeam);
+	  });
+
+	  /* Add New Team */
+	  this.selector.on('click', '.button-add-team', function(e){
+			e.preventDefault();
+			e.stopPropagation();
+			self.toggleTeamInput(true);
+		});
+		this.newTeam.on('click', '.button', function (e){
+			e.preventDefault();
+  		e.stopPropagation();
+			self.createNewTeam();
+	  });
+	  this.newTeamInput.on('keypress', function(e){
+  		if(e.keyCode === 13){
+		  	e.preventDefault();
+	  		e.stopPropagation();
+  			self.createNewTeam();
+  		}
 	  });
 	};
 
@@ -181,38 +202,7 @@ var teamSelector = function teamSelector(isPerson, obj){
     this.orgBrowser.animate({ scrollLeft: offset }, 400);
   };
 
-};
-
-var addTeam = function addTeam(obj){
-	
-	this.selector = $(obj);
-	this.orgBrowser = this.selector.find('.org-browser');
-	this.newTeam = this.selector.find('.new-team');
-	this.newTeamInput = this.newTeam.find('.new-team-name');
-
-	this.init = function(){
-		var self = this;
-		this.selector.on('click', '.button-add-team', function(e){
-			e.preventDefault();
-			e.stopPropagation();
-			self.toggleTeamInput(true);
-		});
-		this.newTeam.on('click', '.button', function (e){
-			e.preventDefault();
-  		e.stopPropagation();
-			self.currentTarget = $(e.currentTarget);
-			self.createNewTeam();
-	  });
-	  this.newTeamInput.on('keypress', function(e){
-  		if(e.keyCode === 13){
-		  	e.preventDefault();
-	  		e.stopPropagation();
-  			self.createNewTeam();
-  		}
-	  });
-	};
-
-	this.toggleTeamInput = function(focus){
+  this.toggleTeamInput = function(focus){
 		this.newTeam.toggle();
 		if(focus)
 			this.newTeamInput.val('').focus();
@@ -275,9 +265,11 @@ var addTeam = function addTeam(obj){
 
   	$.each(input, function(i, obj){
 	  	if(isSubteam){
+	  		self.currentTarget = self.orgBrowser.find('input:checked').next('.subteam-link');
 	  		var el = self.createTeamList(i, data);
 	  		$(obj).find('.subteam-link').append('<span class="subteam-count">1 sub-team</span>');
 	  		$(obj).attr('class', 'has-subteams').append(el);
+	  		self.forward();
 	  	} else {
 	  		var el = '<p>' +
 	  			self.createInput(i, data.id)
@@ -288,6 +280,7 @@ var addTeam = function addTeam(obj){
 	  	}
   	});
   	this.toggleTeamInput();
+  	console.log(this);
   };
 
 };
@@ -303,8 +296,6 @@ $(function (){
     if(isPerson){
     	teamName = $(obj).find('.editable-summary ol li:last-child').text();
     	$(obj).find('.team-led').text(teamName + ' team');
-    	var add = new addTeam(obj);
-    	add.init();
     }
     var team = new teamSelector(isPerson, obj);
     team.initEvents();
