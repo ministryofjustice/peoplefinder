@@ -12,37 +12,32 @@ var teamSelector = function teamSelector(isPerson, obj){
 		var self = this;
 		/* Clicking the 'Edit' link to show the team selector */
 		this.selector.on('click', '.show-editable-fields, .editable-summary .title', function (e){
-			e.preventDefault();
-  		e.stopPropagation();
+			self.onClick(e);
   		self.editButton.hide();
     	self.selector.find('.editable-fields').show();
 			self.init();
 		});
 		/* Clicking the 'Done' button to hide the team selector */
 		this.selector.on('click', '.hide-editable-fields', function (e){
-			e.preventDefault();
-  		e.stopPropagation();
+			self.onClick(e);
   		self.editButton.show();
     	self.selector.find('.editable-fields').hide();
 		});
 		/* Clicking on the 'Back' link */
 		this.orgBrowser.on('click', '.team-back', function (e){
-			e.preventDefault();
-  		e.stopPropagation();
+			self.onClick(e);
 			self.currentTarget = $(e.currentTarget);
 			self.back();
 		});
 		/* Clicking on a team with subteams */
 		this.orgBrowser.on('click', 'li:not(.disabled) .subteam-link', function (e){
-			e.preventDefault();
-  		e.stopPropagation();
+			self.onClick(e);
 			self.currentTarget = $(e.currentTarget);
 			self.forward();
 		});
 		/* Clicking on a team with no subteams */
 		this.orgBrowser.on('click', '.team-link', function (e){
-			e.preventDefault();
-  		e.stopPropagation();
+			self.onClick(e);
 			self.currentTarget = $(e.currentTarget);
 			// if it's a form
 	    if( self.orgBrowser.hasClass('has-form') ){
@@ -61,27 +56,28 @@ var teamSelector = function teamSelector(isPerson, obj){
 
 	  /* Add New Team */
 	  this.selector.on('click', '.button-add-team', function(e){
-			e.preventDefault();
-			e.stopPropagation();
+			self.onClick(e);
 			self.toggleTeamInput(true);
 		});
 		this.newTeam.on('click', '.button', function (e){
-			e.preventDefault();
-  		e.stopPropagation();
+			self.onClick(e);
 			self.createNewTeam();
 	  });
 	  this.newTeamInput.on('keypress', function(e){
   		if(e.keyCode === 13){
-		  	e.preventDefault();
-	  		e.stopPropagation();
+		  	self.onClick(e);
   			self.createNewTeam();
   		}
 	  });
 	};
 
-	/*
-	Set the 'selected' class on the last visible team
-	*/
+	/* Handle clicks and preventDefault and stopPropagation */
+	this.onClick = function(e){
+		e.preventDefault();
+		e.stopPropagation();
+	};
+
+	/* Set the 'selected' class on the last visible team */
 	this.init = function(){
 		var self = this;
 		if( this.orgBrowser.hasClass('has-form') ){
@@ -151,34 +147,34 @@ var teamSelector = function teamSelector(isPerson, obj){
     return $(ol);
   };
 
-	// Return the text of the given input element
+	/* Return the text of the given input element */
 	this.getTeamName = function(input){
     return input.next('a').text();
   };
 
-  // Set the Team leader heading and hint spans with the given team name
+  /* Set the Team leader heading and hint spans with the given team name */
 	this.setTeamName = function(teamName){
     if(this.isPerson){
       this.selector.find('.team-led').text(teamName + ' team');
     }
   };
 
-  // Remove the 'selected' class from all teams
+  /* Remove the 'selected' class from all teams */
   this.removeSelected = function(){
   	this.orgBrowser.find('.team').removeClass('selected');
   };
 
-  // Return the last 'visible' team element
+  /* Return the last 'visible' team element */
   this.getLastVisible = function(){
   	return this.orgBrowser.find('.visible').last();
   };
 
-  // Set the last 'visible' elements parent li to have the 'expanded' class
+  /* Set the last 'visible' elements parent li to have the 'expanded' class */
   this.setExpanded = function(){
   	this.orgBrowser.find('.visible').parents('li').addClass('expanded');
   };
 
-  // When moving forward down the subteams
+  /* When moving forward down the subteams */
   this.revealSubteam = function (team){
     this.setExpanded();
     // Remove the 'visible' class from all teams
@@ -186,7 +182,7 @@ var teamSelector = function teamSelector(isPerson, obj){
     team.children().parents('.team').addClass('visible');
   };
 
-  // Set the last 'visible' element to be 'selected' and check the radio button, then set the team name
+  /* Set the last 'visible' element to be 'selected' and check the radio button, then set the team name */
   this.selectCurrent = function(){
     var teamText, $current;
     this.removeSelected();
@@ -195,7 +191,7 @@ var teamSelector = function teamSelector(isPerson, obj){
     visible.find('> h3 > a').show();
   };
 
-  // Animate the team selector to scroll left or right
+  /* Animate the team selector to scroll left or right */
   this.animateScroll = function(direction){
     var visible = this.orgBrowser.find('.visible');
     var offset = direction === 'left'? (visible.length - 2) * visible.width() : visible.length * visible.width();
