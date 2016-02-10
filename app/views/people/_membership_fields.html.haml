@@ -25,10 +25,10 @@
           = render 'shared/org_browser', org_structure: @org_structure, form: membership_f, field_name: :group_id
           - unless membership.new_record?
             = link_to 'Done', '#', class: 'hide-editable-fields button-secondary'
-            = link_to 'Add new sub-team to <span class="team-led"></span>'.html_safe, '#', class: 'button-add-team'
+            = link_to 'Add new sub-team to the <span class="team-led"></span>'.html_safe, '#', class: 'button-add-team'
           %div.new-team
-            = membership_f.label 'addteam', 'Add new sub-team to <span class="team-led"></span>'.html_safe, class: 'form-label-bold'
-            %input.form-control
+            = membership_f.label 'addteam', 'Add new sub-team to the <span class="team-led"></span>'.html_safe, class: 'form-label-bold'
+            %input.form-control.new-team-name
             = link_to 'Create', '#', class: 'button'
 
   %noscript
