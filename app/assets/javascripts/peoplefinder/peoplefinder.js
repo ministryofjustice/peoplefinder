@@ -22,7 +22,6 @@ $(function() {
 
   $(document).on('click', 'a.show-editable-fields, .editable-summary', function(e) {
     e.preventDefault();
-    // $(this).closest('.editable-summary').hide();
     $(this).closest('.editable-container').find('a.show-editable-fields').hide();
     $(this).closest('.editable-container').children('.editable-fields').show();
   });
