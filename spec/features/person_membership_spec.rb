@@ -75,6 +75,26 @@ feature "Person maintenance" do
     expect(person.memberships.last.group).to eql(Group.department)
   end
 
+  scenario 'Adding a new team', js: true do
+    group = setup_three_level_team
+    person = setup_team_member group
+
+    javascript_log_in
+    visit edit_person_path(person)
+
+    expect(page).to have_selector('.editable-fields', visible: :hidden)
+    within('.editable-container') { click_link 'Edit team membership' }
+    expect(page).to have_selector('.editable-fields', visible: :visible)
+    expect(page).to have_selector('.button-add-team', visible: :visible)
+
+    find('a.button-add-team').trigger('click')
+    expect(page).to have_selector('.new-team', visible: :visible)
+    within('.new-team') do
+      fill_in 'AddTeam', with: 'New team'
+    end
+
+  end
+
   scenario 'Adding an additional role', js: true do
     person = create_person_in_digital_justice
     create(:group, name: 'Communications', parent: Group.department)
