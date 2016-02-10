@@ -4,20 +4,6 @@ var teamSelector = function teamSelector(isPerson, obj){
 	this.selector = $(obj);
 	this.orgBrowser = this.selector.find('.org-browser');
 	this.editButton = this.selector.find('a.show-editable-fields');
-	this.teamInput = $('<div/>').addClass('new-team');
-	var input = $('<fieldset><input type="text class="form-control" id="newTeamName" /></fieldset>');
-	var submit = $('<input type="button" name="addTeam" id="addTeam" value="Create" class="button">');
-	this.teamInput.append(input).append(submit);
-
-	this.enhance = function(){
-		if( this.orgBrowser.hasClass('has-form') ){
-	    var $checked = this.getCheckedInput();
-	    if( $checked.length > 0 ){
-	      $checked.parents('.team').addClass('visible');
-	    }
-	  }
-	  this.initEvents();
-	};
 
 	/* Listen for events */
 	this.initEvents = function(){
@@ -70,28 +56,6 @@ var teamSelector = function teamSelector(isPerson, obj){
 	    var isSubTeam = self.currentTarget.next('a').hasClass('subteam-link')? true : false;
   		self.getBreadcrumb(isSubTeam);
 	  });
-
-	  this.orgBrowser.on('click', '.add-team', function (e){
-			e.preventDefault();
-  		e.stopPropagation();
-			self.currentTarget = $(e.currentTarget);
-			self.showTeamInput();
-	  });
-
-	  this.orgBrowser.on('click', '#addTeam', function (e){
-			e.preventDefault();
-  		e.stopPropagation();
-			self.currentTarget = $(e.currentTarget);
-			self.createNewTeam();
-	  });
-
-	  this.orgBrowser.on('keypress', '#newTeamName', function(e){
-  		if(e.keyCode === 13){
-		  	e.preventDefault();
-	  		e.stopPropagation();
-  			self.createNewTeam();
-  		}
-	  });
 	};
 
 	/*
@@ -99,6 +63,12 @@ var teamSelector = function teamSelector(isPerson, obj){
 	*/
 	this.init = function(){
 		var self = this;
+		if( this.orgBrowser.hasClass('has-form') ){
+	    var $checked = this.orgBrowser.find('input:checked');
+	    if( $checked.length > 0 ){
+	      $checked.parents('.team').addClass('visible');
+	    }
+	  }
 	  this.setExpanded();
 	  // Hide all team headings (for testing purposes)
 	  this.orgBrowser.find('h3 > a').hide();
@@ -160,11 +130,6 @@ var teamSelector = function teamSelector(isPerson, obj){
     return $(ol);
   };
 
-	// Return the input element that is check
-	this.getCheckedInput = function(){
-		return this.orgBrowser.find('input:checked')
-	};
-
 	// Return the text of the given input element
 	this.getTeamName = function(input){
     return input.next('a').text();
@@ -214,61 +179,6 @@ var teamSelector = function teamSelector(isPerson, obj){
     var visible = this.orgBrowser.find('.visible');
     var offset = direction === 'left'? (visible.length - 2) * visible.width() : visible.length * visible.width();
     this.orgBrowser.animate({ scrollLeft: offset }, 400);
-    this.showTeamLink();
-  };
-
-  this.createNewTeamLink = function(){
-  	this.orgBrowser.find('.team ul').each(function(i, obj){
-	  	var link = $('<li/>').addClass('add-team').html('<a href="#">Create new team</>');
-  		$(obj).append(link);
-  	});
-  };
-
-  this.showTeamLink = function(){
-  	this.teamInput.hide();
-  	this.orgBrowser.find('.add-team').show();
-  };
-
-  this.showTeamInput= function(){
-  	var el = this.currentTarget.hide().parent();
-  	el.append(this.teamInput.show());
-  	this.orgBrowser.find('#newTeamName').val('').focus();
-  };
-
-  this.createNewTeam = function(){
-  	var self = this,
-  		teamId = this.orgBrowser.find('.selected>h3>input').val(),
-  		teamName = this.orgBrowser.find('#newTeamName').val();
-  	$.ajax({
-  		url: 'test',
-  		data: {id: teamId, name: teamName},
-  		success: function(data){
-		  	data = {id:999,name:teamName,parentId:teamId};
-		  	self.addTeamToList(data);
-		  	
-  		},
-  		error: function(){
-  			console.log('error');
-  			data = {id:999,name:teamName,parentId:teamId};
-  			self.addTeamToList(data);
-  		}
-  	});
-  };
-
-  this.addTeamToList = function(data){
-  	var list = $('input[value="'+data.parentId+'"]').parent('h3').next('ul');
-  	$.each(list, function(i, obj){
-	  	var item = $('<p> \
-	  			<input type="radio" value="'+data.id+'" name="person[memberships_attributes]['+i+'][group_id]" id="person_memberships_attributes_0_group_id_'+data.id+'"> \
-	  			<a class="subteam-link" href="/teams/industrial-jewelery-grocery" title="'+data.name+'"> \
-	  				<span class="subteam-name">'+data.name+'</span> \
-	  			</a> \
-	  		</p> \
-	  		<span class="add-subteam"></span>');
-	  	var li = $('<li/>').addClass('leaf-node').html(item);
-	  	$(obj).find('>.add-team').before(li);
-  	});
-  	this.showTeamLink();
   };
 
 };
@@ -278,7 +188,7 @@ var addTeam = function addTeam(obj){
 	this.selector = $(obj);
 	this.orgBrowser = this.selector.find('.org-browser');
 	this.newTeam = this.selector.find('.new-team');
-	this.newTeamInput = this.newTeam.find('input');
+	this.newTeamInput = this.newTeam.find('.new-team-name');
 
 	this.init = function(){
 		var self = this;
@@ -293,7 +203,7 @@ var addTeam = function addTeam(obj){
 			self.currentTarget = $(e.currentTarget);
 			self.createNewTeam();
 	  });
-	  this.newTeam.on('keypress', '.new-team-name', function(e){
+	  this.newTeamInput.on('keypress', function(e){
   		if(e.keyCode === 13){
 		  	e.preventDefault();
 	  		e.stopPropagation();
@@ -310,8 +220,9 @@ var addTeam = function addTeam(obj){
 
 	this.createNewTeam = function(){
   	var self = this,
-  		teamId = this.orgBrowser.find('input:checked').val(),
-  		teamName = this.orgBrowser.find('input:checked').next('a').text(),
+  	input = this.orgBrowser.find('input:checked'),
+  		teamId = input.val(),
+  		teamName = input.next('a').text(),
   		newTeamName = this.newTeamInput.val();
   	$.ajax({
   		url: 'test',
@@ -396,7 +307,6 @@ $(function (){
     	add.init();
     }
     var team = new teamSelector(isPerson, obj);
-    team.enhance();
-    // team.createNewTeamLink();
+    team.initEvents();
   });
 });
