@@ -293,6 +293,13 @@ var addTeam = function addTeam(obj){
 			self.currentTarget = $(e.currentTarget);
 			self.createNewTeam();
 	  });
+	  this.newTeam.on('keypress', '.new-team-name', function(e){
+  		if(e.keyCode === 13){
+		  	e.preventDefault();
+	  		e.stopPropagation();
+  			self.createNewTeam();
+  		}
+	  });
 	};
 
 	this.toggleTeamInput = function(focus){
@@ -327,15 +334,13 @@ var addTeam = function addTeam(obj){
   };
 
   this.createInput = function(i, id){
-  	return '<input type="radio" value="'+id+'" name="person[memberships_attributes]['+i+'][group_id]" id="person_memberships_attributes_0_group_id_'+id+'">';
+  	return '<input type="radio" value="'+id+'" name="person[memberships_attributes]['+i+'][group_id]" id="person_memberships_attributes_'+i+'_group_id_'+id+'">';
   };
 
-  this.createTeamName = function(data, showCount){
-  	var el = '<a class="subteam-link" href="#" title="'+data.name+'"> \
-			<span class="subteam-name">'+data.name+'</span>';
-		el += showCount? '<span class="subteam-count">1 sub-team</span>' : '';
-		el +='</a>';
-		return el;
+  this.createTeamName = function(data){
+  	return '<a class="subteam-link" href="#" title="'+data.name+'"> \
+			<span class="subteam-name">'+data.name+'</span> \
+		</a>';
   };
 
   this.createTeamList = function(i, data){
@@ -348,8 +353,8 @@ var addTeam = function addTeam(obj){
       <ul> \
         <li class="leaf-node"> \
           <p> \
-            <input type="radio" value="'+data.id+'" name="person[memberships_attributes]['+i+'][group_id]" id="person_memberships_attributes_0_group_id_'+data.id+'">'+
-            this.createTeamName(data, false)
+            <input type="radio" value="'+data.id+'" name="person[memberships_attributes]['+i+'][group_id]" id="person_memberships_attributes_'+i+'_group_id_'+data.id+'">'+
+            this.createTeamName(data)
           + '</p> \
         </li> \
       </ul> \
@@ -358,21 +363,19 @@ var addTeam = function addTeam(obj){
 
 	this.addTeamToList = function(data){
   	var self = this,
-  		input = this.orgBrowser.find('input:checked'),
+  		input = $('input[value="'+data.parentId+'"]'), //this.orgBrowser.find('input:checked'),
   		listItem = input.closest('li'),
-  		teamList = input.closest('.team').find('>ul'),
   		isSubteam = input.next().hasClass('subteam-link')? true : false;
 
-  	$.each(teamList, function(i, obj){
-	  	var el;
+  	$.each(listItem, function(i, obj){
 	  	if(isSubteam){
-	  		el = self.createTeamList(i, data);
-	  		listItem.find('.subteam-link').append('<span class="subteam-count">1 sub-team</span>');
-	  		listItem.attr('class', 'has-subteams').append(el);
+	  		var el = self.createTeamList(i, data);
+	  		$(obj).find('.subteam-link').append('<span class="subteam-count">1 sub-team</span>');
+	  		$(obj).attr('class', 'has-subteams').append(el);
 	  	} else {
-	  		el = '<p>' +
+	  		var el = '<p>' +
 	  			self.createInput(i, data.id)
-	  			+ self.createTeamName(data, false)
+	  			+ self.createTeamName(data)
 	  		+ '</p> \
 	  		<span class="add-subteam"></span>'; 
 		  	var li = $('<li/>').addClass('leaf-node').html(el);
