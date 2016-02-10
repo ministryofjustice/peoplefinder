@@ -1,8 +1,5 @@
-LANG='en_GB.UTF-8'
-LC_ALL='en_GB.UTF-8'
-
 source 'https://rubygems.org'
-ruby '2.2.3'
+ruby '2.2.4'
 gem 'rails', '~> 4.2.4'
 
 gem 'ancestry'
@@ -25,7 +22,6 @@ gem 'mail'
 gem 'mini_magick'
 gem 'moj_internal_template', '~> 0.1.7'
 gem 'netaddr'
-gem 'newrelic_rpm'
 gem 'paper_trail', '~> 4.0.0.beta'
 gem 'pg'
 gem 'premailer-rails'
