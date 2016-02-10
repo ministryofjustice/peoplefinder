@@ -329,10 +329,6 @@ var addTeam = function addTeam(obj){
   	});
   };
 
-  this.isSubteam = function(input){
-  	return input.next().hasClass('subteam-link')? true : false;
-  };
-
   this.createInput = function(i, id){
   	return '<input type="radio" value="'+id+'" name="person[memberships_attributes]['+i+'][group_id]" id="person_memberships_attributes_'+i+'_group_id_'+id+'">';
   };
@@ -363,11 +359,10 @@ var addTeam = function addTeam(obj){
 
 	this.addTeamToList = function(data){
   	var self = this,
-  		input = $('input[value="'+data.parentId+'"]'), //this.orgBrowser.find('input:checked'),
-  		listItem = input.closest('li'),
-  		isSubteam = input.next().hasClass('subteam-link')? true : false;
+  		isSubteam = this.orgBrowser.find('input:checked').next().hasClass('subteam-link')? true : false,
+  		input = isSubteam? $('input[value="'+data.parentId+'"]').closest('li') : $('input[value="'+data.parentId+'"]').parent('h3').next('ul');
 
-  	$.each(listItem, function(i, obj){
+  	$.each(input, function(i, obj){
 	  	if(isSubteam){
 	  		var el = self.createTeamList(i, data);
 	  		$(obj).find('.subteam-link').append('<span class="subteam-count">1 sub-team</span>');
@@ -376,8 +371,7 @@ var addTeam = function addTeam(obj){
 	  		var el = '<p>' +
 	  			self.createInput(i, data.id)
 	  			+ self.createTeamName(data)
-	  		+ '</p> \
-	  		<span class="add-subteam"></span>'; 
+	  		+ '</p>'; 
 		  	var li = $('<li/>').addClass('leaf-node').html(el);
 		  	$(obj).append(li);
 	  	}
