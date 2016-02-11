@@ -89,6 +89,8 @@ feature "Person maintenance" do
     within('.new-team') do
       fill_in 'AddTeam', with: 'New team'
     end
+    # click_link 'Create'
+    # expect(page).to have_selector('.subteam-name', text: 'New team', visible: :visible)
 
   end
 
