@@ -276,7 +276,6 @@ var teamSelector = function teamSelector(isPerson, obj){
 	  	}
   	});
   	this.toggleTeamInput();
-  	console.log(this);
   };
 
 };
