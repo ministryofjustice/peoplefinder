@@ -45,12 +45,12 @@ class GroupsController < ApplicationController
     @group = collection.new(group_params)
     authorize @group
 
-    if @group.save
-      notice :group_created, group: @group
-      redirect_to @group
-    else
-      error :create_error
-      render :new
+    respond_to do |format|
+      if @group.save
+        create_success_response(format)
+      else
+        create_failure_response(format)
+      end
     end
   end
 
@@ -81,6 +81,26 @@ class GroupsController < ApplicationController
   end
 
   private
+
+  def create_success_response format
+    format.html do
+      notice :group_created, group: @group
+      redirect_to @group
+    end
+    format.json do
+      render json: @group.as_json(methods: :parent_id), status: :created, location: @group
+    end
+  end
+
+  def create_failure_response format
+    format.html do
+      error :create_error
+      render :new
+    end
+    format.json do
+      render json: @group.errors, status: :unprocessable_entity
+    end
+  end
 
   # Use callbacks to share common setup or constraints between actions.
   def set_group
