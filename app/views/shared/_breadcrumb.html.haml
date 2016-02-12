@@ -1,5 +1,5 @@
-%li{ class: "breadcrumb-#{breadcrumb_counter}" }
-  - if breadcrumb.is_a?(String)
+%li{ class: "breadcrumb-#{breadcrumb_counter}" }<
+  - if breadcrumb.is_a?(String) || !(show_links)
     = breadcrumb
   - else
     = link_to_short_name_unless_current breadcrumb

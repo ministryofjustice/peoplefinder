@@ -17,9 +17,9 @@ module ApplicationHelper
     doc.to_sanitized_html.html_safe
   end
 
-  def breadcrumbs(items)
+  def breadcrumbs(items, show_links: true)
     render partial: 'shared/breadcrumbs',
-           locals: { items: items }
+           locals: { items: items, show_links: show_links }
   end
 
   FLASH_NOTICE_KEYS = %w(error notice warning)

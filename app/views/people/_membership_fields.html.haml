@@ -1,4 +1,5 @@
 - membership = membership_f.object
+- person = membership.person
 .membership
   .form-group
     = membership_f.label :role, 'Job title', class: 'form-label-bold'
@@ -6,28 +7,49 @@
 
   .form-group
     = membership_f.label :group_id, 'Team', class: 'form-label-bold'
-    %p.form-hint= info_text('hint_add_person_to_team')
-    = membership_f.collection_select :group_id,
-      GroupLister.new.list.sort_by { |g| g.path.map(&:to_s) },
-      :id, :name_with_path, {}, class: 'form-control select-autocomplete team-select'
+    %p.form-hint
+      = role_translate(person, 'memberships.team_hint')
+    %p.form-hint
+      = role_translate(person, 'memberships.team_creation_hint')
+    .editable-container
+
+      / - unless membership.new_record?
+      .editable-summary.parent-summary
+        - if membership.group
+          .title.breadcrumbs= breadcrumbs(membership.path, show_links: false)
+        - unless membership.new_record?
+          = link_to 'Edit team membership', '#', class: 'show-editable-fields button-secondary'
+      
+      .editable-fields{ style: ('display:none' unless membership.new_record?) }
+        - if @org_structure
+          = render 'shared/org_browser', org_structure: @org_structure, form: membership_f, field_name: :group_id
+          - unless membership.new_record?
+            = link_to 'Done', '#', class: 'hide-editable-fields button-secondary'
+
+  %noscript
+    .form-group
+      = membership_f.collection_select :group_id,
+        GroupLister.new.list.sort_by { |g| g.path.map(&:to_s) },
+        :id, :name_with_path, {}, class: 'form-control select-autocomplete team-select'
 
   .form-group
-    = membership_f.label :leader, 'Team leader?', class: 'form-label-bold'
+    = membership_f.label :leader,
+      role_translate(person, 'memberships.leader_question').html_safe, class: 'form-label-bold'
     = membership_f.check_box :leader
-    %span.hint= role_translate(membership.person, 'memberships.leader').html_safe
+    %span.hint= role_translate(person, 'memberships.leader').html_safe
 
   .form-group
     = membership_f.label :subscribed, 'Team updates', class: 'form-label-bold'
     = membership_f.check_box :subscribed, class: 'membership-subscribed-check-box'
-    %span.hint= role_translate(membership.person, 'memberships.subscribed')
+    %span.hint= role_translate(person, 'memberships.subscribed')
 
     .remove-link
       - if membership.new_record?
-        = link_to 'Delete', '#', class: 'remove-new-membership'
+        = link_to 'Delete role', '#', class: 'remove-new-membership button-secondary'
 
       - else
-        = link_to 'Delete', membership_path(membership,
-          referer: request.path),
+        = link_to 'Delete role', membership_path(membership, referer: request.path),
           method: :delete,
-          data: {confirm: "Are you sure you want to remove #{ membership.person} from #{ membership.group }? " }
+          class: 'button-secondary',
+          data: {confirm: "Are you sure you want to remove #{person} from #{membership.group}? " }
 

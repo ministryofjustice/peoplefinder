@@ -42,6 +42,10 @@ class Group < ActiveRecord::Base
     roots.first
   end
 
+  def self.hierarchy_hash
+    arrange(order: :name)
+  end
+
   def to_s
     name
   end
