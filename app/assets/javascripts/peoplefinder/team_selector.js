@@ -211,12 +211,13 @@ var teamSelector = function teamSelector(isPerson, obj){
       teamName = input.next('a').text(),
       newTeamName = this.newTeamInput.val();
     $.ajax({
-      url: 'test',
-      data: {id: teamId, name: newTeamName},
+      type: 'POST',
+      dataType: 'json',
+      url: '/teams',
+      data: { group: { parent_id: teamId, name: newTeamName} },
       success: function(data){
-        data = {id:999, name: newTeamName, parentId: teamId, parentName: teamName};
+        data = { id: data.id, name: data.name, parentId: data.parent_id, parentName: 'n/a' };
         self.addTeamToList(data);
-
       },
       error: function(){
         console.log('error');
