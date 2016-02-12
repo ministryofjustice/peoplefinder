@@ -1,106 +1,106 @@
 
 var teamSelector = function teamSelector(isPerson, obj){
-	this.isPerson = isPerson;
-	this.selector = $(obj);
-	this.orgBrowser = this.selector.find('.org-browser');
-	this.editButton = this.selector.find('a.show-editable-fields');
-	this.newTeam = this.selector.find('.new-team');
-	this.newTeamInput = this.newTeam.find('.new-team-name');
+  this.isPerson = isPerson;
+  this.selector = $(obj);
+  this.orgBrowser = this.selector.find('.org-browser');
+  this.editButton = this.selector.find('a.show-editable-fields');
+  this.newTeam = this.selector.find('.new-team');
+  this.newTeamInput = this.newTeam.find('.new-team-name');
 
-	/* Listen for events */
-	this.initEvents = function(){
-		var self = this;
-		/* Clicking the 'Edit' link to show the team selector */
-		this.selector.on('click', '.show-editable-fields, .editable-summary .title', function (e){
-			self.onClick(e);
-  		self.editButton.hide();
-    	self.selector.find('.editable-fields').show();
-			self.init();
-		});
-		/* Clicking the 'Done' button to hide the team selector */
-		this.selector.on('click', '.hide-editable-fields', function (e){
-			self.onClick(e);
-  		self.editButton.show();
-    	self.selector.find('.editable-fields').hide();
-		});
-		/* Clicking on the 'Back' link */
-		this.orgBrowser.on('click', '.team-back', function (e){
-			self.onClick(e);
-			self.currentTarget = $(e.currentTarget);
-			self.back();
-		});
-		/* Clicking on a team with subteams */
-		this.orgBrowser.on('click', 'li:not(.disabled) .subteam-link', function (e){
-			self.onClick(e);
-			self.currentTarget = $(e.currentTarget);
-			self.forward();
-		});
-		/* Clicking on a team with no subteams */
-		this.orgBrowser.on('click', '.team-link', function (e){
-			self.onClick(e);
-			self.currentTarget = $(e.currentTarget);
-			// if it's a form
-	    if( self.orgBrowser.hasClass('has-form') ){
+  /* Listen for events */
+  this.initEvents = function(){
+    var self = this;
+    /* Clicking the 'Edit' link to show the team selector */
+    this.selector.on('click', '.show-editable-fields, .editable-summary .title', function (e){
+      self.onClick(e);
+      self.editButton.hide();
+      self.selector.find('.editable-fields').show();
+      self.init();
+    });
+    /* Clicking the 'Done' button to hide the team selector */
+    this.selector.on('click', '.hide-editable-fields', function (e){
+      self.onClick(e);
+      self.editButton.show();
+      self.selector.find('.editable-fields').hide();
+    });
+    /* Clicking on the 'Back' link */
+    this.orgBrowser.on('click', '.team-back', function (e){
+      self.onClick(e);
+      self.currentTarget = $(e.currentTarget);
+      self.back();
+    });
+    /* Clicking on a team with subteams */
+    this.orgBrowser.on('click', 'li:not(.disabled) .subteam-link', function (e){
+      self.onClick(e);
+      self.currentTarget = $(e.currentTarget);
+      self.forward();
+    });
+    /* Clicking on a team with no subteams */
+    this.orgBrowser.on('click', '.team-link', function (e){
+      self.onClick(e);
+      self.currentTarget = $(e.currentTarget);
+      // if it's a form
+      if( self.orgBrowser.hasClass('has-form') ){
         e.preventDefault();
         e.stopPropagation();
         self.currentTarget.closest('h3').children('input').prop('checked', 'checked').trigger('change');
-	    }
-		});
-		/* Clicking directly on a radio button */
-		this.orgBrowser.on('change', 'input[type=radio]', function(e){
-	    self.currentTarget = $(e.currentTarget);
-	    self.setTeamName(self.getTeamName(self.currentTarget));
-	    var isSubTeam = self.currentTarget.next('a').hasClass('subteam-link')? true : false;
-  		self.getBreadcrumb(isSubTeam);
-	  });
+      }
+    });
+    /* Clicking directly on a radio button */
+    this.orgBrowser.on('change', 'input[type=radio]', function(e){
+      self.currentTarget = $(e.currentTarget);
+      self.setTeamName(self.getTeamName(self.currentTarget));
+      var isSubTeam = self.currentTarget.next('a').hasClass('subteam-link')? true : false;
+      self.getBreadcrumb(isSubTeam);
+    });
 
-	  /* Add New Team */
-	  this.selector.on('click', '.button-add-team', function(e){
-			self.onClick(e);
-			self.toggleTeamInput(true);
-		});
-		this.newTeam.on('click', '.button', function (e){
-			self.onClick(e);
-			self.createNewTeam();
-	  });
-	  this.newTeamInput.on('keypress', function(e){
-  		if(e.keyCode === 13){
-		  	self.onClick(e);
-  			self.createNewTeam();
-  		}
-	  });
-	};
+    /* Add New Team */
+    this.selector.on('click', '.button-add-team', function(e){
+      self.onClick(e);
+      self.toggleTeamInput(true);
+    });
+    this.newTeam.on('click', '.button', function (e){
+      self.onClick(e);
+      self.createNewTeam();
+    });
+    this.newTeamInput.on('keypress', function(e){
+      if(e.keyCode === 13){
+        self.onClick(e);
+        self.createNewTeam();
+      }
+    });
+  };
 
-	/* Handle clicks and preventDefault and stopPropagation */
-	this.onClick = function(e){
-		e.preventDefault();
-		e.stopPropagation();
-	};
+  /* Handle clicks and preventDefault and stopPropagation */
+  this.onClick = function(e){
+    e.preventDefault();
+    e.stopPropagation();
+  };
 
-	/* Set the 'selected' class on the last visible team */
-	this.init = function(){
-		var self = this;
-		if( this.orgBrowser.hasClass('has-form') ){
-	    var $checked = this.orgBrowser.find('input:checked');
-	    if( $checked.length > 0 ){
-	      $checked.parents('.team').addClass('visible');
-	    }
-	  }
-	  this.setExpanded();
-	  // Hide all team headings (for testing purposes)
-	  this.orgBrowser.find('h3 > a').hide();
-	  this.removeSelected();
-	  var visible = this.getLastVisible().addClass('selected').find('> h3 > a').show();
-	  setTimeout(function (){ self.animateScroll(); }, 0);
-	};
+  /* Set the 'selected' class on the last visible team */
+  this.init = function(){
+    var self = this;
+    if( this.orgBrowser.hasClass('has-form') ){
+      var $checked = this.orgBrowser.find('input:checked');
+      if( $checked.length > 0 ){
+        $checked.parents('.team').addClass('visible');
+      }
+    }
+    this.setExpanded();
+    // Hide all team headings (for testing purposes)
+    this.orgBrowser.find('h3 > a').hide();
+    this.removeSelected();
+    var visible = this.getLastVisible().addClass('selected').find('> h3 > a').show();
+    setTimeout(function (){ self.animateScroll(); }, 0);
+  };
 
-	/* 
-	Remove the 'expanded' class from current subteams
-	Scroll backwards and wait before removing the 'visible' class
-	*/ 
-	this.back = function(){
-		var self = this, 
-			team = this.currentTarget.parent('.team');
+  /*
+  Remove the 'expanded' class from current subteams
+  Scroll backwards and wait before removing the 'visible' class
+  */
+  this.back = function(){
+    var self = this,
+      team = this.currentTarget.parent('.team');
     this.currentTarget.children('li').removeClass('expanded');
     this.animateScroll('left');
     // Wait for the scroll back to complete
@@ -109,11 +109,11 @@ var teamSelector = function teamSelector(isPerson, obj){
       team.removeClass('visible');
       self.selectCurrent();
     }, 400);
-	};
+  };
 
-	/* If the team has subteams, find the next team */
-	this.forward = function(){
-		if( this.currentTarget.closest('li').hasClass('has-subteams') === false ){
+  /* If the team has subteams, find the next team */
+  this.forward = function(){
+    if( this.currentTarget.closest('li').hasClass('has-subteams') === false ){
       if( this.orgBrowser.hasClass('has-form') ){
         var input = this.currentTarget.closest('p').children('input').prop('checked', 'checked').trigger('change');
         this.setTeamName(this.getTeamName(input));
@@ -125,9 +125,9 @@ var teamSelector = function teamSelector(isPerson, obj){
     this.revealSubteam(team);
     this.selectCurrent();
     this.animateScroll('right');
-	};
+  };
 
-	this.getBreadcrumb = function(isSubTeam){
+  this.getBreadcrumb = function(isSubTeam){
     var arr = [],
       selector = isSubTeam? '.team.visible' : '.team.visible:not(.selected)';
     this.orgBrowser.find(selector).each(function(i,obj){
@@ -147,13 +147,13 @@ var teamSelector = function teamSelector(isPerson, obj){
     return $(ol);
   };
 
-	/* Return the text of the given input element */
-	this.getTeamName = function(input){
+  /* Return the text of the given input element */
+  this.getTeamName = function(input){
     return input.next('a').text();
   };
 
   /* Set the Team leader heading and hint spans with the given team name */
-	this.setTeamName = function(teamName){
+  this.setTeamName = function(teamName){
     if(this.isPerson){
       this.selector.find('.team-led').text(teamName + ' team');
     }
@@ -161,17 +161,17 @@ var teamSelector = function teamSelector(isPerson, obj){
 
   /* Remove the 'selected' class from all teams */
   this.removeSelected = function(){
-  	this.orgBrowser.find('.team').removeClass('selected');
+    this.orgBrowser.find('.team').removeClass('selected');
   };
 
   /* Return the last 'visible' team element */
   this.getLastVisible = function(){
-  	return this.orgBrowser.find('.visible').last();
+    return this.orgBrowser.find('.visible').last();
   };
 
   /* Set the last 'visible' elements parent li to have the 'expanded' class */
   this.setExpanded = function(){
-  	this.orgBrowser.find('.visible').parents('li').addClass('expanded');
+    this.orgBrowser.find('.visible').parents('li').addClass('expanded');
   };
 
   /* When moving forward down the subteams */
@@ -199,45 +199,45 @@ var teamSelector = function teamSelector(isPerson, obj){
   };
 
   this.toggleTeamInput = function(focus){
-		this.newTeam.toggle();
-		if(focus)
-			this.newTeamInput.val('').focus();
-	};
+    this.newTeam.toggle();
+    if(focus)
+      this.newTeamInput.val('').focus();
+  };
 
-	this.createNewTeam = function(){
-  	var self = this,
-  	input = this.orgBrowser.find('input:checked'),
-  		teamId = input.val(),
-  		teamName = input.next('a').text(),
-  		newTeamName = this.newTeamInput.val();
-  	$.ajax({
-  		url: 'test',
-  		data: {id: teamId, name: newTeamName},
-  		success: function(data){
-		  	data = {id:999, name: newTeamName, parentId: teamId, parentName: teamName};
-		  	self.addTeamToList(data);
-		  	
-  		},
-  		error: function(){
-  			console.log('error');
-  			data = {id:999, name: newTeamName, parentId: teamId, parentName: teamName};
-  			self.addTeamToList(data);
-  		}
-  	});
+  this.createNewTeam = function(){
+    var self = this,
+    input = this.orgBrowser.find('input:checked'),
+      teamId = input.val(),
+      teamName = input.next('a').text(),
+      newTeamName = this.newTeamInput.val();
+    $.ajax({
+      url: 'test',
+      data: {id: teamId, name: newTeamName},
+      success: function(data){
+        data = {id:999, name: newTeamName, parentId: teamId, parentName: teamName};
+        self.addTeamToList(data);
+
+      },
+      error: function(){
+        console.log('error');
+        data = {id:999, name: newTeamName, parentId: teamId, parentName: teamName};
+        self.addTeamToList(data);
+      }
+    });
   };
 
   this.createInput = function(i, id){
-  	return '<input type="radio" value="'+id+'" name="person[memberships_attributes]['+i+'][group_id]" id="person_memberships_attributes_'+i+'_group_id_'+id+'">';
+    return '<input type="radio" value="'+id+'" name="person[memberships_attributes]['+i+'][group_id]" id="person_memberships_attributes_'+i+'_group_id_'+id+'">';
   };
 
   this.createTeamName = function(data){
-  	return '<a class="subteam-link" href="#" title="'+data.name+'"> \
-			<span class="subteam-name">'+data.name+'</span> \
-		</a>';
+    return '<a class="subteam-link" href="#" title="'+data.name+'"> \
+      <span class="subteam-name">'+data.name+'</span> \
+    </a>';
   };
 
   this.createTeamList = function(i, data){
-  	return '<div class="team"> \
+    return '<div class="team"> \
       <a class="team-back" href="#">Back</a> \
       <h3 class="">'+
         this.createInput(i, data.parentId)
@@ -254,28 +254,28 @@ var teamSelector = function teamSelector(isPerson, obj){
      </div>';
   };
 
-	this.addTeamToList = function(data){
-  	var self = this,
-  		isSubteam = this.orgBrowser.find('input:checked').next().hasClass('subteam-link')? true : false,
-  		input = isSubteam? $('input[value="'+data.parentId+'"]').closest('li') : $('input[value="'+data.parentId+'"]').parent('h3').next('ul');
+  this.addTeamToList = function(data){
+    var self = this,
+      isSubteam = this.orgBrowser.find('input:checked').next().hasClass('subteam-link')? true : false,
+      input = isSubteam? $('input[value="'+data.parentId+'"]').closest('li') : $('input[value="'+data.parentId+'"]').parent('h3').next('ul');
 
-  	$.each(input, function(i, obj){
-	  	if(isSubteam){
-	  		self.currentTarget = self.orgBrowser.find('input:checked').next('.subteam-link');
-	  		var el = self.createTeamList(i, data);
-	  		$(obj).find('.subteam-link').append('<span class="subteam-count">1 sub-team</span>');
-	  		$(obj).attr('class', 'has-subteams').append(el);
-	  		self.forward();
-	  	} else {
-	  		var el = '<p>' +
-	  			self.createInput(i, data.id)
-	  			+ self.createTeamName(data)
-	  		+ '</p>'; 
-		  	var li = $('<li/>').addClass('leaf-node').html(el);
-		  	$(obj).append(li);
-	  	}
-  	});
-  	this.toggleTeamInput();
+    $.each(input, function(i, obj){
+      if(isSubteam){
+        self.currentTarget = self.orgBrowser.find('input:checked').next('.subteam-link');
+        var el = self.createTeamList(i, data);
+        $(obj).find('.subteam-link').append('<span class="subteam-count">1 sub-team</span>');
+        $(obj).attr('class', 'has-subteams').append(el);
+        self.forward();
+      } else {
+        var el = '<p>' +
+          self.createInput(i, data.id)
+          + self.createTeamName(data)
+        + '</p>';
+        var li = $('<li/>').addClass('leaf-node').html(el);
+        $(obj).append(li);
+      }
+    });
+    this.toggleTeamInput();
   };
 
 };
@@ -289,8 +289,8 @@ $(function (){
   $(selector).each(function (i, obj){
     $(obj).addClass('index'+i);
     if(isPerson){
-    	teamName = $(obj).find('.editable-summary ol li:last-child').text();
-    	$(obj).find('.team-led').text(teamName + ' team');
+      teamName = $(obj).find('.editable-summary ol li:last-child').text();
+      $(obj).find('.team-led').text(teamName + ' team');
     }
     var team = new teamSelector(isPerson, obj);
     team.initEvents();
