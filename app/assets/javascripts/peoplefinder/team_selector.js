@@ -217,7 +217,7 @@ var teamSelector = function teamSelector(isPerson, obj){
   /* Set the Team leader heading and hint spans with the given team name */
   this.setTeamName = function(teamName){
     if(this.isPerson){
-      this.selector.find('.team-led').text(teamName + ' team');
+      this.selector.find('.team-led').text($.trim(teamName) + ' team');
     }
   };
 
@@ -273,17 +273,16 @@ var teamSelector = function teamSelector(isPerson, obj){
       teamName = input.next('a').text(),
       newTeamName = this.newTeamInput.val();
     $.ajax({
-      url: 'test',
-      data: {id: teamId, name: newTeamName},
+      type: 'POST',
+      dataType: 'json',
+      url: '/teams',
+      data: { group: { parent_id: teamId, name: newTeamName} },
       success: function(data){
-        data = {id:999, name: newTeamName, parentId: teamId, parentName: teamName};
+        data = { id: data.id, name: data.name, parentId: data.parent_id, parentName: teamName };
         self.addTeamToList(data);
-        
       },
       error: function(){
         console.log('error');
-        data = {id:999, name: newTeamName, parentId: teamId, parentName: teamName};
-        self.addTeamToList(data);
       }
     });
   };
