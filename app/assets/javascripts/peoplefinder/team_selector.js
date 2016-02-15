@@ -49,9 +49,68 @@ var teamSelector = function teamSelector(isPerson, obj){
     /* Clicking directly on a radio button */
     this.orgBrowser.on('change', 'input[type=radio]', function(e){
       self.currentTarget = $(e.currentTarget);
+      self.currentTarget.focus();
       self.setTeamName(self.getTeamName(self.currentTarget));
       var isSubTeam = self.currentTarget.next('a').hasClass('subteam-link')? true : false;
       self.getBreadcrumb(isSubTeam);
+    });
+
+    this.orgBrowser.on('keypress, keydown', function(e){
+      var keyCode = e.keyCode || e.which;
+      console.log(e);
+      var target = $(e.target),
+        top = target.parent().prev().hasClass('team-back');
+        // top = target.closest('li').hasClass('has-subteams');
+
+      switch(keyCode) {
+        case 13:
+        case 9:
+          console.log('13 or 9');
+          self.selector.find('.hide-editable-fields').focus();
+          break;
+        case 37:
+        case 38:
+          console.log('up');
+          if(top){
+            console.log('we can go back');
+            self.currentTarget = target.parent().prev();
+            self.back();
+            return false;
+          }
+          if(target.closest('li').hasClass('has-subteams')){
+            target.closest('li.has-subteams').prev('li.has-subteams').find('.subteam-link').focus();
+          }
+          break;
+        case 40:
+          if(top){
+            console.log('down', target);
+            var subTeam = target.parent().next('ul');
+            if(subTeam.length > 0){
+              console.log('is subTeam');
+              subTeam.find('li:not(.leaf-node)').first().find('.subteam-link').focus();
+              return false;
+            }
+          } else {
+            console.log('down again', target);
+            if(target.closest('li').hasClass('leaf-node')){
+              return;
+            } else {
+              target.closest('li.has-subteams').next('li.has-subteams').find('.subteam-link').focus();
+            }
+            return false;
+          }
+          break;
+        case 39:
+          console.log('right');
+          if(target.hasClass('subteam-link')){
+            self.currentTarget = target;
+            self.forward();
+          }
+          return false;
+          break;
+        default:
+          null;
+      }
     });
 
     /* Add New Team */
@@ -64,7 +123,8 @@ var teamSelector = function teamSelector(isPerson, obj){
       self.createNewTeam();
     });
     this.newTeamInput.on('keypress', function(e){
-      if(e.keyCode === 13){
+      var keyCode = e.keyCode || e.which;
+      if(keyCode === 13){
         self.onClick(e);
         self.createNewTeam();
       }
@@ -80,10 +140,12 @@ var teamSelector = function teamSelector(isPerson, obj){
   /* Set the 'selected' class on the last visible team */
   this.init = function(){
     var self = this;
+    this.orgBrowser.find('.team-back').first().remove();
     if( this.orgBrowser.hasClass('has-form') ){
       var $checked = this.orgBrowser.find('input:checked');
       if( $checked.length > 0 ){
         $checked.parents('.team').addClass('visible');
+        $checked.focus();
       }
     }
     this.setExpanded();
