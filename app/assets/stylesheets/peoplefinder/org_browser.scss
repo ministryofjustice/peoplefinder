@@ -154,6 +154,9 @@ $grey-4: #F8F8F8;
         overflow: hidden;
         height: 45px;
         padding-left: 2.1em;
+        &:focus {
+          background-color: #ffbf47;
+        }
       }
 
       .subteam-name, .subteam-count {
