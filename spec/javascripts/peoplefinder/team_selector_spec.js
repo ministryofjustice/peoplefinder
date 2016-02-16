@@ -92,9 +92,9 @@ describe("Team Selector", function() {
       beforeEach(function(){
         obj.find('#addTeamLink').trigger('click');
       });
-      it("should display the new team input field", function(){
-        expect(obj.find('.new-team').is(':visible')).toBe(true);
-      });
+      // it("should display the new team input field", function(){
+      //   expect(obj.find('.new-team').is(':visible')).toBe(true);
+      // });
     });
 
     beforeEach(function(){
