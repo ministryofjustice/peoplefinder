@@ -56,52 +56,56 @@ var teamSelector = function teamSelector(isPerson, obj){
     });
 
     this.orgBrowser.on('keypress, keydown', function(e){
-      var keyCode = e.keyCode || e.which;
-      console.log(e);
-      var target = $(e.target),
+      var keyCode = e.keyCode || e.which,
+        target = $(e.target),
         top = target.parent().prev().hasClass('team-back');
-        // top = target.closest('li').hasClass('has-subteams');
 
       switch(keyCode) {
-        case 13:
-        case 9:
-          console.log('13 or 9');
+        case 9: //Tab
+        case 13: // Enter
           self.selector.find('.hide-editable-fields').focus();
           break;
-        case 37:
-        case 38:
-          console.log('up');
+        case 37: //Left
+        case 38: // Up
           if(top){
-            console.log('we can go back');
             self.currentTarget = target.parent().prev();
             self.back();
             return false;
-          }
-          if(target.closest('li').hasClass('has-subteams')){
-            target.closest('li.has-subteams').prev('li.has-subteams').find('.subteam-link').focus();
+          } else {
+            var li = target.closest('li').prev('li');
+            if(li.hasClass('has-subteams')){
+              li.find('> p > .subteam-link').focus();
+              return false;
+            } else {
+              li.find('>p>input').prop('checked', 'checked').trigger('change').focus();
+
+            }
           }
           break;
-        case 40:
+        case 40: // Down
           if(top){
-            console.log('down', target);
             var subTeam = target.parent().next('ul');
             if(subTeam.length > 0){
-              console.log('is subTeam');
-              subTeam.find('li:not(.leaf-node)').first().find('.subteam-link').focus();
+              var li = subTeam.find('li').first();
+              if(li.hasClass('leaf-node')){
+                li.find('>p>input').prop('checked', 'checked').trigger('change').focus();
+                return;
+              } else {
+                li.find('> p > .subteam-link').focus();
+              }
               return false;
             }
           } else {
-            console.log('down again', target);
-            if(target.closest('li').hasClass('leaf-node')){
-              return;
+            var li = target.closest('li').next('li');
+            if(li.hasClass('leaf-node')){
+              li.find('>p>input').prop('checked', 'checked').trigger('change').focus();
             } else {
-              target.closest('li.has-subteams').next('li.has-subteams').find('.subteam-link').focus();
+              li.find('.subteam-link').focus();
+              return false;
             }
-            return false;
           }
           break;
-        case 39:
-          console.log('right');
+        case 39: // Right
           if(target.hasClass('subteam-link')){
             self.currentTarget = target;
             self.forward();
