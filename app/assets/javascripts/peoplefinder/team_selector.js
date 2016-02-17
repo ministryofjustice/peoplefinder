@@ -276,19 +276,21 @@ var teamSelector = function teamSelector(isPerson, obj){
       teamId = input.val(),
       teamName = input.next('a').text(),
       newTeamName = this.newTeamInput.val();
-    $.ajax({
-      type: 'POST',
-      dataType: 'json',
-      url: '/teams',
-      data: { group: { parent_id: teamId, name: newTeamName} },
-      success: function(data){
-        data = { id: data.id, name: data.name, parentId: data.parent_id, parentName: teamName };
-        self.addTeamToList(data);
-      },
-      error: function(){
-        console.log('error');
-      }
-    });
+    if(teamId && newTeamName){
+      $.ajax({
+        type: 'POST',
+        dataType: 'json',
+        url: '/teams',
+        data: { group: { parent_id: teamId, name: newTeamName} },
+        success: function(data){
+          data = { id: data.id, name: data.name, parentId: data.parent_id, parentName: teamName };
+          self.addTeamToList(data);
+        },
+        error: function(){
+          console.log('error');
+        }
+      });
+    }
   };
 
   this.createInput = function(i, id){
