@@ -287,7 +287,7 @@ var teamSelector = function teamSelector(isPerson, obj){
           self.addTeamToList(data);
         },
         error: function(){
-          console.log('error');
+          self.orgBrowser.before('<div id="flash-messages"><div class="flash-message error" role="alert">There was an error adding the team. Please try again later.</div></div>');
         }
       });
     }

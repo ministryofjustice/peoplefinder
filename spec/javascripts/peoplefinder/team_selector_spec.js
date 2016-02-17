@@ -123,6 +123,9 @@ describe("Team Selector", function() {
         it("should create a new radio input", function(){
           expect(orgBrowser.find('input[value="4"]')).toExist();
         });
+        it("should hide the new team input field", function(){
+          expect(obj.find('.new-team').is(':visible')).toBe(false);
+        });
       }, 500);
     });
 
