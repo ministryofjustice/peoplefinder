@@ -129,6 +129,18 @@ RSpec.describe GroupsController, type: :controller do
       end
     end
 
+    describe 'with valid params excluding parent_id and format json' do
+      it 'returns errors as json' do
+        create(:department)
+
+        attributes = valid_attributes.merge(parent_id: nil)
+        post :create, { group: attributes, format: :json }, valid_session
+
+        expect(response.code).to eq '422'
+        expect(response.body).to eq '{"parent_id":["is required"]}'
+      end
+    end
+
     describe 'with invalid params' do
       before do
         post :create, { group: invalid_attributes }, valid_session

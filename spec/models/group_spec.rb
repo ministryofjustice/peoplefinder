@@ -12,6 +12,14 @@ RSpec.describe Group, type: :model do
     expect(described_class.department).to eql(parent)
   end
 
+  it "only allows creation of one group with no parent" do
+    create(:department)
+    group = build(:group, parent: nil)
+    expect(group.valid?).to eq false
+    expect(group.errors[:parent_id]).to eq ['is required']
+    expect { group.save! }.to raise_error(Exception)
+  end
+
   it "knows about its ancestors" do
     grandparent = create(:group, parent: nil)
     parent = create(:group, parent: grandparent)
