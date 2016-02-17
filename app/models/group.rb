@@ -34,6 +34,8 @@ class Group < ActiveRecord::Base
   validates :slug, uniqueness: true
   validates :description, length: { maximum: MAX_DESCRIPTION }
 
+  validate :not_second_root_group
+
   before_destroy :check_deletability
 
   default_scope { order(name: :asc) }
@@ -99,6 +101,14 @@ class Group < ActiveRecord::Base
   end
 
   private
+
+  def not_second_root_group
+    if parent_id.nil?
+      department = Group.department
+      root_group_exists = department.present? && self != department
+      errors.add(:parent_id, 'is required') if root_group_exists
+    end
+  end
 
   def name_and_sequence
     slug = name.to_param
