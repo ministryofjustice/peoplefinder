@@ -56,10 +56,9 @@ var teamSelector = function teamSelector(isPerson, obj){
     });
 
     this.orgBrowser.on('keypress, keydown', function(e){
-      var keyCode = e.keyCode || e.which,
+      var keyCode = e.keyCode || e.which || e.charCode,
         target = $(e.target),
         top = target.parent().prev().hasClass('team-back');
-
       switch(keyCode) {
         case 9: //Tab
         case 13: // Enter
@@ -76,9 +75,9 @@ var teamSelector = function teamSelector(isPerson, obj){
             if(li.hasClass('has-subteams')){
               li.find('> p > .subteam-link').focus();
               return false;
-            } else {
+            } else if(li.hasClass('leaf-node')) {
               li.find('>p>input').prop('checked', 'checked').trigger('change').focus();
-
+              return false;
             }
           }
           break;
@@ -89,7 +88,7 @@ var teamSelector = function teamSelector(isPerson, obj){
               var li = subTeam.find('li').first();
               if(li.hasClass('leaf-node')){
                 li.find('>p>input').prop('checked', 'checked').trigger('change').focus();
-                return;
+                return false;
               } else {
                 li.find('> p > .subteam-link').focus();
               }
@@ -99,6 +98,7 @@ var teamSelector = function teamSelector(isPerson, obj){
             var li = target.closest('li').next('li');
             if(li.hasClass('leaf-node')){
               li.find('>p>input').prop('checked', 'checked').trigger('change').focus();
+              return false;
             } else {
               li.find('.subteam-link').focus();
               return false;
