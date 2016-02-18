@@ -11,28 +11,25 @@
       GroupLister.new.list.sort_by { |g| g.path.map(&:to_s) },
       :id, :name_with_path, {}, class: 'form-control select-autocomplete team-select'
 
-  .form-group
-    = membership_f.label :leader, role_translate(membership.person, 'memberships.leader').html_safe, class: 'form-label-bold'
+  .form-group.team-leader
     %fieldset.inline
-      = membership_f.label :leader, class: 'block-label' do
-        = membership_f.radio_button :leader, 'yes'
+      %legend.form-label-bold= role_translate(membership.person, 'memberships.leader').html_safe
+      = membership_f.label :leader, value: true, class: 'block-label' do
+        = membership_f.radio_button :leader, true
         Yes
-      = membership_f.label :leader, class: 'block-label' do
-        = membership_f.radio_button :leader, 'no'
+      = membership_f.label :leader, value: false, class: 'block-label' do
+        = membership_f.radio_button :leader, false
         No
 
-  .form-group
-    = membership_f.label :subscribed, role_translate(membership.person, 'memberships.subscribed'), class: 'form-label-bold'
+  .form-group.team-subscribed
     %fieldset.inline
-      = membership_f.label :subscribed, class: 'block-label' do
-        = membership_f.radio_button :subscribed, 'yes'
+      %legend.form-label-bold= role_translate(membership.person, 'memberships.subscribed')
+      = membership_f.label :subscribed, value: true, class: 'block-label' do
+        = membership_f.radio_button :subscribed, true
         Yes
-      = membership_f.label :subscribed, class: 'block-label' do
-        = membership_f.radio_button :subscribed, 'no'
+      = membership_f.label :subscribed, value: false, class: 'block-label' do
+        = membership_f.radio_button :subscribed, false
         No
-
-    / = membership_f.check_box :subscribed, class: 'membership-subscribed-check-box'
-    / %span.hint= role_translate(membership.person, 'memberships.subscribed')
 
     .remove-link
       - if membership.new_record?
