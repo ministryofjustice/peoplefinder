@@ -16,14 +16,9 @@ feature "Person maintenance" do
     fill_in 'Main email', with: person_attributes[:email]
     fill_in 'Job title', with: 'Head Honcho'
 
-    expect(page).to have_selector('#team-led', text: 'Ministry of Justice team')
-    expect(page).to have_selector('.hint', text: 'This person leads the Ministry of Justice team. (More than one person can be selected as team leader.)')
-
     select_in_team_select 'Digital Justice'
+    check_leader
 
-    expect(page).to have_selector('#team-led', text: 'Digital Justice [MOJ] team')
-    expect(page).to have_selector('.hint', text: 'This person leads the Digital Justice [MOJ] team. (More than one person can be selected as team leader.)')
-    check 'leader'
     click_button 'Save', match: :first
 
     membership = Person.last.memberships.last
@@ -42,7 +37,6 @@ feature "Person maintenance" do
 
     javascript_log_in
     visit edit_person_path(person)
-    expect(page).to have_selector('#team-led', text: 'Digital Justice [MOJ] team')
 
     fill_in 'Job title', with: 'Head Honcho'
     click_button 'Save', match: :first
@@ -70,6 +64,10 @@ feature "Person maintenance" do
     expect(Person.last.memberships.length).to eql(2)
   end
 
+  def check_leader
+    within('.team-leader') { choose('Yes') }
+  end
+
   scenario 'Adding an additional leadership role in same team', js: true do
     person = create_person_in_digital_justice
     javascript_log_in
@@ -77,7 +75,7 @@ feature "Person maintenance" do
     fill_in 'First name', with: 'Samantha'
     fill_in 'Surname', with: 'Taylor'
     fill_in 'Job title', with: 'Head Honcho'
-    check 'leader'
+    check_leader
 
     click_link('Add another role')
     sleep 0.2
@@ -85,7 +83,7 @@ feature "Person maintenance" do
     within all('#memberships .membership').last do
       select_in_team_select 'Digital Justice'
       fill_in 'Job title', with: 'Master of None'
-      check 'leader'
+      check_leader
     end
     click_button 'Save', match: :first
 
@@ -104,7 +102,7 @@ feature "Person maintenance" do
     visit edit_person_path(person)
 
     fill_in 'Job title', with: 'Head Honcho'
-    uncheck 'Team updates'
+    within('.team-subscribed') { choose('No') }
     click_button 'Save', match: :first
 
     membership = Person.last.memberships.last

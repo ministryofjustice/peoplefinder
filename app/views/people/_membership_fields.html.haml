@@ -11,15 +11,25 @@
       GroupLister.new.list.sort_by { |g| g.path.map(&:to_s) },
       :id, :name_with_path, {}, class: 'form-control select-autocomplete team-select'
 
-  .form-group
-    = membership_f.label :leader, 'Team leader?', class: 'form-label-bold'
-    = membership_f.check_box :leader
-    %span.hint= role_translate(membership.person, 'memberships.leader').html_safe
+  .form-group.team-leader
+    %fieldset.inline
+      %legend.form-label-bold= role_translate(membership.person, 'memberships.leader').html_safe
+      = membership_f.label :leader, value: true, class: 'block-label' do
+        = membership_f.radio_button :leader, true
+        Yes
+      = membership_f.label :leader, value: false, class: 'block-label' do
+        = membership_f.radio_button :leader, false
+        No
 
-  .form-group
-    = membership_f.label :subscribed, 'Team updates', class: 'form-label-bold'
-    = membership_f.check_box :subscribed, class: 'membership-subscribed-check-box'
-    %span.hint= role_translate(membership.person, 'memberships.subscribed')
+  .form-group.team-subscribed
+    %fieldset.inline
+      %legend.form-label-bold= role_translate(membership.person, 'memberships.subscribed')
+      = membership_f.label :subscribed, value: true, class: 'block-label' do
+        = membership_f.radio_button :subscribed, true
+        Yes
+      = membership_f.label :subscribed, value: false, class: 'block-label' do
+        = membership_f.radio_button :subscribed, false
+        No
 
     .remove-link
       - if membership.new_record?

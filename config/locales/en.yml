@@ -87,18 +87,14 @@ en:
   memberships:
     leader:
       mine: |
-        Tick this box if you lead the <span id="team-led">team above</span>.
-        (More than one person can be selected as team leader.)
+        Are you a leader of the <span class="team-led">team above</span>?
       other: |
-        This person leads the <span id="team-led">team above</span>.
-        (More than one person can be selected as team leader.)
+        Is this person a leader of the <span class="team-led">team above</span>?
     subscribed:
       mine: |
-        Tick this box if you want to be alerted by email whenever anyone
-        edits team details.
+        Do you want to be notified by email when changes are made to the team above?
       other: |
-        Tick this box to alert this person by email whenever anyone edits
-        team details.
+        Do you want this person to be notified by email when changes are made to the team above?
   people:
     form:
       notes:
