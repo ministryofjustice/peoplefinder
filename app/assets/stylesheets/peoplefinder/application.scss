@@ -87,8 +87,6 @@ footer {
   margin-bottom: -9px;
   ol {
     li {
-      // display: inline;
-      // word-wrap: break-word;
       display: inline-block;
     }
     li:after {
@@ -289,7 +287,6 @@ form input[readonly] {
   }
   .cta {
     padding: 8px;
-    // float: left;
   }
 }
 
