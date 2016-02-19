@@ -1,6 +1,7 @@
 - @person = Person.new
 - @person.memberships.build
+- @person.memberships.last.group = Group.department
 
-= form_for @person, :authenticity_token => false do |f|
+= form_for @person, authenticity_token: false do |f|
   = f.fields_for :memberships, child_index: @person.object_id do |membership_f|
     = render 'membership_fields', org_structure: @org_structure, membership_f: membership_f

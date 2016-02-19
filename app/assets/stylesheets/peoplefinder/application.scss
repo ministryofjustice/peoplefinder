@@ -87,8 +87,9 @@ footer {
   margin-bottom: -9px;
   ol {
     li {
-      display: inline;
-      word-wrap: break-word;
+      // display: inline;
+      // word-wrap: break-word;
+      display: inline-block;
     }
     li:after {
       content: ' > ';
@@ -273,17 +274,22 @@ form input[readonly] {
   clear: both;
   .title {
     background-color: $paleblue;
-    float: left;
+    cursor: pointer;
     padding: 8px 15px 8px 8px;
-    margin-right: 15px;
-    max-width: 70%;
+    margin-right: 0;
+    margin-bottom: 20px;
+    width: 50%;
     strong {
       padding-right: 15px;
+    }
+    @media (max-width: 980px) {
+      margin-right: 0;
+      width: 100%;
     }
   }
   .cta {
     padding: 8px;
-    float: left;
+    // float: left;
   }
 }
 

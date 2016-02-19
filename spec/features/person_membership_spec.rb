@@ -16,13 +16,13 @@ feature "Person maintenance" do
     fill_in 'Main email', with: person_attributes[:email]
     fill_in 'Job title', with: 'Head Honcho'
 
-    expect(page).to have_selector('#team-led', text: 'Ministry of Justice team')
-    expect(page).to have_selector('.hint', text: 'This person leads the Ministry of Justice team. (More than one person can be selected as team leader.)')
+    # expect(page).to have_selector('.team-led', text: 'Ministry of Justice team')
+    # expect(page).to have_selector('.hint', text: 'This person leads the Ministry of Justice team. (More than one person can be selected as team leader.)')
 
     select_in_team_select 'Digital Justice'
 
-    expect(page).to have_selector('#team-led', text: 'Digital Justice [MOJ] team')
-    expect(page).to have_selector('.hint', text: 'This person leads the Digital Justice [MOJ] team. (More than one person can be selected as team leader.)')
+    expect(page).to have_selector('.team-led', text: 'Digital Justice team')
+    expect(page).to have_selector('.hint', text: 'Tick this box if this person leads the Digital Justice team. More than one person can be selected as team leader.')
     check 'leader'
     click_button 'Save', match: :first
 
@@ -42,7 +42,7 @@ feature "Person maintenance" do
 
     javascript_log_in
     visit edit_person_path(person)
-    expect(page).to have_selector('#team-led', text: 'Digital Justice [MOJ] team')
+    expect(page).to have_selector('.team-led', text: 'Digital Justice team')
 
     fill_in 'Job title', with: 'Head Honcho'
     click_button 'Save', match: :first
@@ -51,18 +51,64 @@ feature "Person maintenance" do
     expect(membership.role).to eql('Head Honcho')
   end
 
+  scenario 'Changing team membership via clicking "Back"', js: true do
+    group = setup_three_level_team
+    person = setup_team_member group
+
+    javascript_log_in
+    visit edit_person_path(person)
+
+    expect(page).to have_selector('.editable-fields', visible: :hidden)
+    within('.editable-container') { click_link 'Edit team membership' }
+    expect(page).to have_selector('.editable-fields', visible: :visible)
+    expect(page).to have_selector('.hide-editable-fields', visible: :visible)
+
+    within('.team.selected') { click_link 'Back' }
+    expect(page).to have_selector('a.team-link', text: /#{Group.department.name}/, visible: :visible)
+
+    click_link 'Done'
+    expect(page).to have_selector('.editable-fields', visible: :hidden)
+
+    click_button 'Save', match: :first
+
+    person.reload
+    expect(person.memberships.last.group).to eql(Group.department)
+  end
+
+  scenario 'Adding a new team', js: true do
+    group = setup_three_level_team
+    person = setup_team_member group
+
+    javascript_log_in
+    visit edit_person_path(person)
+
+    expect(page).to have_selector('.editable-fields', visible: :hidden)
+    within('.editable-container') { click_link 'Edit team membership' }
+    expect(page).to have_selector('.editable-fields', visible: :visible)
+    expect(page).to have_selector('.button-add-team', visible: :visible)
+
+    find('a.button-add-team').trigger('click')
+    expect(page).to have_selector('.new-team', visible: :visible)
+    within('.new-team') do
+      fill_in 'AddTeam', with: 'New team'
+    end
+    # click_link 'Create'
+    # expect(page).to have_selector('.subteam-name', text: 'New team', visible: :visible)
+
+  end
+
   scenario 'Adding an additional role', js: true do
     person = create_person_in_digital_justice
-    create(:group, name: 'Communications')
+    create(:group, name: 'Communications', parent: Group.department)
 
     javascript_log_in
     visit edit_person_path(person)
 
     click_link('Add another role')
-    sleep 0.2
+    expect(page).to have_selector('.editable-fields', visible: :visible)
 
     within all('#memberships .membership').last do
-      select_in_team_select 'Communications'
+      click_link 'Communications'
       fill_in 'Job title', with: 'Talker'
     end
 
@@ -80,10 +126,10 @@ feature "Person maintenance" do
     check 'leader'
 
     click_link('Add another role')
-    sleep 0.2
+    expect(page).to have_selector('.editable-fields', visible: :visible)
 
     within all('#memberships .membership').last do
-      select_in_team_select 'Digital Justice'
+      click_link 'Digital Justice'
       fill_in 'Job title', with: 'Master of None'
       check 'leader'
     end
@@ -144,4 +190,23 @@ def create_person_in_digital_justice
   person = create(:person)
   person.memberships.create(group: group)
   person
+end
+
+def setup_three_level_team
+  dept = create(:department, name: 'Ministry of Justice')
+  parent_group = create(:group, name: 'CSG', parent: dept)
+  @technology = create(:group, name: 'Technology', parent: parent_group)
+  create(:group, name: 'Digital Services', parent: parent_group)
+end
+
+def setup_team_member group
+  subscriber = create(:person)
+  create :membership, person: subscriber, group: group, subscribed: true
+  subscriber
+end
+
+def visit_edit_view group
+  javascript_log_in
+  visit group_path(group)
+  click_link 'Edit'
 end

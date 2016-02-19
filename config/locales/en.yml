@@ -85,13 +85,30 @@ en:
     reported_profiles:
       message_sent: "Your message has been sent"
   memberships:
+    team_hint:
+      mine: |
+        Use this to select the team you are in in the organisation.
+      other: |
+        Use this to select the team this person is in in the organisation.
+    team_creation_hint:
+      mine: |
+        If your team doesn’t exist, you’ll need to save your changes and add a new
+        sub-team when viewing a team on People Finder.
+      other: |
+        If this person’s team doesn’t exist, you’ll need to save your changes and
+        add a new sub-team when viewing a team on People Finder.
     leader:
       mine: |
-        Tick this box if you lead the <span id="team-led">team above</span>.
-        (More than one person can be selected as team leader.)
+        Tick this box if you lead the <span class="team-led">team above</span>.
+        More than one person can be selected as team leader.
       other: |
-        This person leads the <span id="team-led">team above</span>.
-        (More than one person can be selected as team leader.)
+        Tick this box if this person leads the <span class="team-led">team above</span>.
+        More than one person can be selected as team leader.
+    leader_question:
+      mine: |
+        Are you the leader of the <span class="team-led">above team</span>?
+      other: |
+        Is this person the leader of the <span class="team-led">above team</span>?
     subscribed:
       mine: |
         Tick this box if you want to be alerted by email whenever anyone

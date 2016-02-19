@@ -74,7 +74,7 @@ $focus-color: #FFBF47;
       background: -o-linear-gradient(top, $top-color 0%, $bottom-color 70%); /* Opera 11.10+ */
       background: -ms-linear-gradient(top, $top-color 0%, $bottom-color 70%); /* IE10+ */
       background: linear-gradient(to bottom,  $top-color 0%, $bottom-color 70%); /* W3C */
-      filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#{$top-color}', endColorstr='#{$bottom-color}', GradientType=0); /* IE6-8 */
+      filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#{$top-color}, endColorstr=#{$bottom-color}, GradientType=0); /* IE6-8 */
     }
 
     // fadeout at the bottom
