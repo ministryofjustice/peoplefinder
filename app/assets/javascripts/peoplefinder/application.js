@@ -17,4 +17,5 @@
 //= require select2/select2
 //= require lodash
 //= require_tree .
+//= require bind
 //= require selection-buttons
