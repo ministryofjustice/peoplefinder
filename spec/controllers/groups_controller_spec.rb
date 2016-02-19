@@ -111,6 +111,36 @@ RSpec.describe GroupsController, type: :controller do
       end
     end
 
+    describe 'with valid params including parent_id and format json' do
+      it 'returns group as json' do
+        parent_group = create(:group, attributes_for(:group))
+
+        attributes = valid_attributes.merge(parent_id: parent_group.id)
+        post :create, { group: attributes, format: :json }, valid_session
+        expect(response.code).to eq '201'
+
+        group = Group.find_by_name(attributes[:name])
+
+        result = JSON.parse(response.body)
+        expect(result['id']).to eq group.id
+        expect(result['name']).to eq group.name
+        expect(result['slug']).to eq group.slug
+        expect(result['parent_id']).to eq group.parent_id
+      end
+    end
+
+    describe 'with valid params excluding parent_id and format json' do
+      it 'returns errors as json' do
+        create(:department)
+
+        attributes = valid_attributes.merge(parent_id: nil)
+        post :create, { group: attributes, format: :json }, valid_session
+
+        expect(response.code).to eq '422'
+        expect(response.body).to eq '{"parent_id":["is required"]}'
+      end
+    end
+
     describe 'with invalid params' do
       before do
         post :create, { group: invalid_attributes }, valid_session
@@ -126,6 +156,17 @@ RSpec.describe GroupsController, type: :controller do
 
       it 'shows an error message' do
         expect(flash[:error]).to match(/created/)
+      end
+    end
+
+    describe 'with invalid params including parent_id and format json' do
+      before do
+        post :create, { group: invalid_attributes, format: :json }, valid_session
+      end
+
+      it 'returns errors as json' do
+        expect(response.code).to eq '422'
+        expect(response.body).to eq '{"name":["is required"]}'
       end
     end
   end

@@ -6,6 +6,6 @@ class HomeController < ApplicationController
       redirect_to new_group_path
     end
 
-    @org_structure = Group.arrange.to_h
+    @org_structure = Group.hierarchy_hash
   end
 end

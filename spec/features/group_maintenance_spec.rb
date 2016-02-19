@@ -16,6 +16,12 @@ feature 'Group maintenance' do
     page.driver.browser.header('RO', 'ENABLED')
   end
 
+  def visit_edit_view group
+    javascript_log_in
+    visit group_path(group)
+    click_link 'Edit'
+  end
+
   context 'for a regular user', user: :regular do
     scenario 'Creating a top-level department' do
       name = 'Ministry of Justice'
@@ -101,38 +107,100 @@ feature 'Group maintenance' do
       expect(page).to have_text('deletion is only possible if there are no people')
     end
 
-    scenario 'Editing a team', js: true do
-      org = create(:group, name: 'CSG', parent: dept)
-      group = create(:group, name: 'Digital Services', parent: org)
-      subscriber = create(:person)
-      create :membership, person: subscriber, group: group, subscribed: true
+    let(:parent_group) { create(:group, name: 'CSG', parent: dept) }
+    let(:sibling_group) { create(:group, name: 'Technology', parent: parent_group) }
+    let(:group_three_deep) { create(:group, name: 'Digital Services', parent: parent_group) }
 
-      javascript_log_in
-      visit group_path(group)
-      click_link 'Edit'
+    def setup_three_level_team
+      sibling_group
+      group_three_deep
+    end
+
+    def setup_team_member group
+      user = create(:person)
+      create :membership, person: user, group: group, subscribed: true
+      user
+    end
+
+    scenario 'Editing a team name', js: true do
+      group = setup_three_level_team
+      user = setup_team_member group
+      visit_edit_view(group)
 
       expect(page).to have_title("Edit team - #{app_title}")
       expect(page).to have_text('You are currently editing this profile')
       new_name = 'Cyberdigital Cyberservices'
       fill_in 'Team name', with: new_name
 
-      within('.group-parent') do
-        click_link 'Edit'
-      end
-
-      click_on_team_in_org_browser 'Ministry of Justice'
       click_button 'Save'
 
       expect(page).to have_content('Updated Cyberdigital Cyberservices')
       expect(page).not_to have_text('You are currently editing this profile')
       group.reload
       expect(group.name).to eql(new_name)
-      expect(group.parent).to eql(dept)
 
-      expect(last_email.to).to include(subscriber.email)
+      expect(last_email.to).to include(user.email)
       expect(last_email.subject).to eq('People Finder team updated')
       expect(page).to have_text(new_name)
       expect(last_email.body.encoded).to match(group_url(group))
+    end
+
+    scenario 'Changing a team parent via clicking "Back"', js: true do
+      group = setup_three_level_team
+      setup_team_member group
+      expect(dept.name).to eq 'Ministry of Justice'
+      visit_edit_view(group)
+
+      expect(page).to have_selector('.editable-fields', visible: :hidden)
+      within('.group-parent') { click_link 'Edit' }
+      expect(page).to have_selector('.editable-fields', visible: :visible)
+
+      within('.team.selected') { click_link 'Back' }
+      expect(page).to have_selector('a.team-link', text: /#{dept.name}/, visible: :visible)
+      click_button 'Save'
+
+      group.reload
+      expect(group.parent).to eql(dept)
+    end
+
+    scenario 'Changing a team parent via clicking sibling team name', js: true do
+      group = setup_three_level_team
+      setup_team_member group
+      visit_edit_view(group)
+
+      within('.group-parent') { click_link 'Edit' }
+      within('.team.selected') do
+        expect(page).to have_link(sibling_group.name)
+        click_link sibling_group.name
+      end
+
+      click_button 'Save'
+
+      group.reload
+      expect(group.parent).to eql(sibling_group)
+    end
+
+    scenario 'Changing a team parent via clicking sibling team\'s subteam name', js: true do
+      group = setup_three_level_team
+      subteam_group = create(:group, name: 'Test team', parent: sibling_group)
+      setup_team_member group
+      visit_edit_view(group)
+
+      within('.group-parent') { click_link 'Edit' }
+      within('.team.selected') do
+        expect(page).to have_link("#{sibling_group.name} 1 sub-team")
+        click_link "#{sibling_group.name} 1 sub-team"
+      end
+
+      within('.team.selected') do
+        expect(page).to have_link(subteam_group.name)
+        click_link subteam_group.name
+      end
+
+      click_button 'Save'
+
+      group.reload
+      expect(group.parent).to eql(subteam_group)
     end
 
     scenario 'Showing the acronym', js: true do
@@ -154,12 +222,9 @@ feature 'Group maintenance' do
     end
 
     scenario 'Not responding to the selection of impossible parent nodes', js: true do
-      org = create(:group, name: 'CSG', parent: dept)
-      group = create(:group, name: 'Digital Services', parent: org)
-
-      javascript_log_in
-      visit group_path(group)
-      click_link 'Edit'
+      parent_group = create(:group, name: 'CSG', parent: dept)
+      group = create(:group, name: 'Digital Services', parent: parent_group)
+      visit_edit_view(group)
 
       new_name = 'Cyberdigital Cyberservices'
       fill_in 'Team name', with: new_name
@@ -173,7 +238,7 @@ feature 'Group maintenance' do
 
       group.reload
       expect(group.name).to eql(new_name)
-      expect(group.parent).to eql(org)
+      expect(group.parent).to eql(parent_group)
     end
 
     scenario 'UI elements on the new/edit pages' do

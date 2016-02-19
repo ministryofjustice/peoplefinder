@@ -4,42 +4,110 @@
 
 $leaf-node-image: image-url('icon_team.png');
 $org-node-image: image-url('icon_group.png');
-$arrow-image: image-url('icon_arrow.png');
+$arrow-image-left: image-url('icon_arrow_left.png');
+$arrow-image-right: image-url('icon_arrow.png');
 
-$org-browser-column-width: 330px;
+$org-browser-column-width: 480px;
 $org-browser-height: 480px;
 $row-height: 45px;
+
+//Colours
+$link-colour: #005ea5;
+$link-hover-colour: #2E8ACA;
+$grey-2: #BFC1C3;
+$grey-3: #DEE0E2;
+$grey-4: #F8F8F8;
+
+.editable-container {
+  display: none;
+  width: 100%;
+}
+
+.js-enabled {
+  .editable-container {
+    display: inline-block;
+  }
+}
+
+.editable-summary {
+  ol {
+    height: auto;
+    margin-bottom: 0;
+    overflow: hidden;
+    li {
+      display: inline-block;
+      float: left;
+      &:after {
+        content: '>';
+        padding: 0 4px;
+      }
+      &:last-child:after {
+        content: '';
+      }
+    }
+  }
+}
 
 .org-browser {
   $browser-width: 100%;
   $line-height: 25px;
 
-  font-size: 19px;
-  line-height: $line-height;
-
-  width: $browser-width;
-  height: 480px;
   border: 1px solid $darkblue;
+  font-size: 19px;
+  height: 480px;
+  line-height: $line-height;
   margin-top: 15px;
-  overflow-x: auto;
+  margin-bottom: 20px;
+  overflow: hidden;
   position: relative;
+  width: $org-browser-column-width;
+
+  @media (max-width: 980px) {
+    width: $browser-width;
+  }
+
+  a, a:visited {
+    color: $link-colour;
+    &:hover {
+      color: $link-hover-colour;
+    }
+  }
+  a:focus {
+    background-color: transparent;
+    outline: none;
+  }
 
   .team {
-    width: $org-browser-column-width;
-    border-right: 2px solid $border-colour;
-    position: relative;
     height: 100%;
+    position: relative;
+    width: $org-browser-column-width;
+
+    @media (max-width: 980px) {
+      width: $browser-width;
+    }
 
     display: none;
     &.visible, &.root-node {
       display: block;
     }
 
+    .team-back {
+      background-color: $grey-2;
+      background-image: $arrow-image-left;
+      background-repeat: no-repeat;
+      background-position: 10px 12px;
+      background-size: 12px 20px;
+      display: block;
+      font-size: 1.1em;
+      line-height: 2.3em;
+      padding-left: 1.8em;
+    }
+
     ul {
       list-style: none;
       margin: 0;
-      overflow-y: auto;
-      height: $org-browser-height - $row-height - 20;
+      overflow-y: scroll;
+      height: $org-browser-height - ($row-height * 2) - 5;
     }
 
     h3, ul li {
@@ -49,24 +117,24 @@ $row-height: 45px;
     }
 
     h3 {
-      background-color: #d6d8d9;
-      font-size: 1.1em;
-      line-height: 2.1em;
-      padding-left: 0.9em;
+      background-color: $grey-3;
+      font-size: 0.9em;
+      font-weight: normal;
+      line-height: 2.2em;
 
       a {
         white-space: nowrap;
         display: block;
         margin-right: 0.5em;
         overflow: hidden;
+        font-weight: bold;
       }
     }
 
     > ul > li {
-      background-color: #f8f8f8;
 
       &.expanded {
-        background-color: #ebeced;
+        background-color: $grey-4;
       }
 
       p {
@@ -75,9 +143,9 @@ $row-height: 45px;
       }
 
       &.has-subteams > p {
-        background-image: $arrow-image;
+        background-image: $arrow-image-right;
         background-repeat: no-repeat;
-        background-position: 310px 12px;
+        background-position: 97% 12px;
         background-size: 12px 20px;
       }
 
@@ -85,7 +153,10 @@ $row-height: 45px;
         display: block;
         overflow: hidden;
         height: 45px;
-        padding-left: 44px;
+        padding-left: 2.1em;
+        &:focus {
+          background-color: #ffbf47;
+        }
       }
 
       .subteam-name, .subteam-count {
@@ -105,30 +176,31 @@ $row-height: 45px;
         line-height: 0.8em;
       }
 
-
-      background-image: $leaf-node-image;
-      background-repeat: no-repeat;
-      background-position: 10px 10px;
-      background-size: 23px 23px;
-
       .subteam-name {
         line-height: 2.5em;
       }
 
       &.has-subteams {
-        background-image: $org-node-image;
-
         > p .subteam-name {
           line-height: 1.6em;
         }
       }
 
       > .team {
-        margin-left: $org-browser-column-width + 2;
+        margin-left: $org-browser-column-width;
         position: absolute;
         top: 0;
+
+        @media (max-width: 980px) {
+          margin-left: $browser-width;
+        }
       }
     }
+
+  }
+
+  .root-node > .team-back {
+    display: none;
   }
 
 }
@@ -136,24 +208,23 @@ $row-height: 45px;
 form .org-browser {
 
   .team h3 {
-    padding-left: 0.45em;
 
     input {
       float: left;
-      margin-top: 0.65em;
+      margin: 0.65em 0.7em 0 0.78em;
+      padding: 0;
     }
 
-    a {
-      padding-left: 0.45em;
-    }
   }
 
   .team > ul > li.leaf-node {
       background: none;
+      padding: 0 3em 0 1.4em;
+      position: relative;
 
       > p > input {
         float: left;
-        margin: 0.8em 0.7em 0 0.78em;
+        margin: 0.8em 0.7em 0 0.7em;
       }
 
       > p > a {
@@ -179,13 +250,27 @@ form .org-browser {
       > a, > p > a {
         color: #a2a2a2; // nicked from gov.uk colour palette, TODO: replace with a variable
         text-decoration: none;
+        padding-left: 2.2em;
       }
     }
 
-
-    ul li.disabled > p > a {
-      padding-left: 44px;
+    li.disabled .leaf-node {
+      input {
+        display: none;
+      }
+      a {
+        padding-left: 2em;
+      }
     }
+
+    li.disabled .subteam-link {
+      color: grey;
+      cursor: text;
+      &:hover {
+        text-decoration: none;
+      }
+    }
+
   }
 
 }
@@ -193,5 +278,22 @@ form .org-browser {
 .lte-ie8 {
   li.has-subteams > p {
     background-position: 295px 12px!important;
+  }
+}
+
+.add-team {
+  padding: 0 1.8em;
+  a {
+    background: url(/assets/icon_add_person.png) no-repeat 0 10px;
+    display: block;
+    font-size: 16px;
+    line-height: 45px;
+    padding-left: 2em;
+  }
+}
+.new-team {
+  display: none;
+  .button {
+    // color: #ffffff;
   }
 }

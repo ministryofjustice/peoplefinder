@@ -169,9 +169,6 @@ form {
   .remove-link {
     margin-top: 45px;
   }
-  #add_membership {
-    margin-top: 60px;
-  }
   .text #information_request_message {
     margin-top: 10px;
     height: 200px;
@@ -196,7 +193,7 @@ form {
 
 
   .parent-summary {
-    padding: 12px 0 69px 0;
+    padding: 12px 0 0;
   }
 
   .person-photo {
@@ -316,5 +313,11 @@ ul.tags {
       float: none!important;
       margin: 0.3em 0 0.5em 0;
     }
+  }
+}
+
+.js-enabled {
+  label.focused {
+    outline: 3px solid #ffbf47;
   }
 }

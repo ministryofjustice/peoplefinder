@@ -1,4 +1,4 @@
-/* global $, document, TeamAutocomplete */
+/* global $, document, teamSelector */
 
 $(function() {
   $(document).on('click', '#add_membership', function(e) {
@@ -8,9 +8,8 @@ $(function() {
       success: function(data) {
         var el_to_add = $(data).html();
         $('#memberships').append(el_to_add);
-        TeamAutocomplete
-          .enhance( $('.team-select')
-          .not('.team-select-enhanced')[0]);
+        var team = new teamSelector(true, $('#memberships').find('.membership').last());
+        team.initEvents();
       }
     });
   });
@@ -18,11 +17,5 @@ $(function() {
   $(document).on('click', 'a.remove-new-membership', function(e) {
     e.preventDefault();
     $(this).parents('.membership').remove();
-  });
-
-  $(document).on('click', 'a.show-editable-fields', function(e) {
-    e.preventDefault();
-    $(this).closest('.editable-summary').hide();
-    $(this).closest('.editable-container').children('.editable-fields').show();
   });
 });
