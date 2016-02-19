@@ -22,6 +22,7 @@ var teamSelector = function teamSelector(isPerson, obj){
       self.onClick(e);
       self.editButton.show();
       self.selector.find('.editable-fields').hide();
+      self.selector.find('.team-leader label:first').focus();
     });
     /* Clicking on the 'Back' link */
     this.orgBrowser.on('click', '.team-back', function (e){
@@ -348,6 +349,8 @@ var teamSelector = function teamSelector(isPerson, obj){
 };
 
 $(function (){
+  var $buttons = $("label input[type='radio'], label input[type='checkbox']");
+  var selectionButtons = new GOVUK.SelectionButtons($buttons);
   // Is this the person profile page?
   var isPerson = $('#memberships').length === 1? true : false;
   // Which element should we be targeting?
