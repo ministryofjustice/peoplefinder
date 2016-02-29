@@ -58,8 +58,6 @@ ENV UNICORN_PORT 3000
 
 EXPOSE $UNICORN_PORT
 
-RUN apt-get update
-RUN apt-get install -y cron
 RUN bundle exec rake assets:precompile RAILS_ENV=assets
 
 ENTRYPOINT ["./run.sh"]
