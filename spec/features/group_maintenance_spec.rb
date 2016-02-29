@@ -173,6 +173,9 @@ feature 'Group maintenance' do
         expect(page).to have_link(sibling_group.name)
         click_link sibling_group.name
       end
+      within('.editable-fields') do
+        click_link 'Done'
+      end
 
       click_button 'Save'
 
@@ -195,6 +198,9 @@ feature 'Group maintenance' do
       within('.team.selected') do
         expect(page).to have_link(subteam_group.name)
         click_link subteam_group.name
+      end
+      within('.editable-fields') do
+        click_link 'Done'
       end
 
       click_button 'Save'
