@@ -66,7 +66,12 @@ class Person < ActiveRecord::Base
 
   default_scope { order(surname: :asc, given_name: :asc) }
 
-  scope :never_logged_in, -> { where(login_count: 0) }
+  scope :never_logged_in, lambda { |limit = nil|
+    users = unscoped.where(login_count: 0).order('RANDOM()')
+    users = users.limit(limit) if limit
+    users
+  }
+
   scope :logged_in_at_least_once, -> { where('people.login_count > 0') }
 
   def self.namesakes(person)

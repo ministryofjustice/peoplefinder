@@ -102,7 +102,7 @@ Style/AlignHash:
   Enabled: false
 
 Metrics/ClassLength:
-  Max: 115
+  Max: 120
 
 Metrics/ModuleLength:
   Max: 115
