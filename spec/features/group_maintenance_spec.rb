@@ -111,20 +111,20 @@ feature 'Group maintenance' do
     let(:sibling_group) { create(:group, name: 'Technology', parent: parent_group) }
     let(:group_three_deep) { create(:group, name: 'Digital Services', parent: parent_group) }
 
-    def setup_three_level_team
+    def setup_three_level_group
       sibling_group
       group_three_deep
     end
 
-    def setup_team_member group
+    def setup_group_member group
       user = create(:person)
       create :membership, person: user, group: group, subscribed: true
       user
     end
 
     scenario 'Editing a team name', js: true do
-      group = setup_three_level_team
-      user = setup_team_member group
+      group = setup_three_level_group
+      user = setup_group_member group
       visit_edit_view(group)
 
       expect(page).to have_title("Edit team - #{app_title}")
@@ -146,8 +146,8 @@ feature 'Group maintenance' do
     end
 
     scenario 'Changing a team parent via clicking "Back"', js: true do
-      group = setup_three_level_team
-      setup_team_member group
+      group = setup_three_level_group
+      setup_group_member group
       expect(dept.name).to eq 'Ministry of Justice'
       visit_edit_view(group)
 
@@ -164,8 +164,8 @@ feature 'Group maintenance' do
     end
 
     scenario 'Changing a team parent via clicking sibling team name', js: true do
-      group = setup_three_level_team
-      setup_team_member group
+      group = setup_three_level_group
+      setup_group_member group
       visit_edit_view(group)
 
       within('.group-parent') { click_link 'Edit' }
@@ -184,9 +184,9 @@ feature 'Group maintenance' do
     end
 
     scenario 'Changing a team parent via clicking sibling team\'s subteam name', js: true do
-      group = setup_three_level_team
+      group = setup_three_level_group
       subteam_group = create(:group, name: 'Test team', parent: sibling_group)
-      setup_team_member group
+      setup_group_member group
       visit_edit_view(group)
 
       within('.group-parent') { click_link 'Edit' }
