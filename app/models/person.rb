@@ -105,8 +105,6 @@ class Person < ActiveRecord::Base
       where("memberships.group_id": group_ids)
   end
 
-  public
-
   def to_s
     name
   end
@@ -147,6 +145,12 @@ class Person < ActiveRecord::Base
     !reminder_email_sent?(within_days: within_days) &&
       login_count == 0 &&
       created_at.end_of_day < within_days.day.ago
+  end
+
+  def email_address_with_name
+    address = Mail::Address.new email
+    address.display_name = name
+    address.format
   end
 
 end

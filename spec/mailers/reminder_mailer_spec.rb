@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe ReminderMailer do
   include PermittedDomainHelper
 
-  let(:person) { create(:person, given_name: 'John', email: 'test.user@digital.justice.gov.uk') }
+  let(:person) { create(:person, given_name: 'John', surname: 'Coe', email: 'test.user@digital.justice.gov.uk') }
 
   shared_examples 'sets email to and from correctly' do
     it 'sets the sender' do

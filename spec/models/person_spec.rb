@@ -17,6 +17,13 @@ RSpec.describe Person, type: :model do
     end
   end
 
+  describe '.email_address_with_name' do
+    it 'returns name and email' do
+      person = create(:person, given_name: 'Sue', surname: 'Boe', email: 'User.Example@digital.justice.gov.uk')
+      expect(person.email_address_with_name).to eq 'Sue Boe <user.example@digital.justice.gov.uk>'
+    end
+  end
+
   context 'who has never logged in' do
     before { person.save }
 
