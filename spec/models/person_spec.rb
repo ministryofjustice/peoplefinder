@@ -17,6 +17,44 @@ RSpec.describe Person, type: :model do
     end
   end
 
+  describe '.email_address_with_name' do
+    it 'returns name and email' do
+      person = create(:person, given_name: 'Sue', surname: 'Boe', email: 'User.Example@digital.justice.gov.uk')
+      expect(person.email_address_with_name).to eq 'Sue Boe <user.example@digital.justice.gov.uk>'
+    end
+  end
+
+  context 'who has never logged in' do
+    before { person.save }
+
+    it 'is returned by .never_logged_in' do
+      expect(described_class.never_logged_in).to include(person)
+    end
+
+    it 'is not returned by .never_logged_in with limit set to 0' do
+      expect(described_class.never_logged_in(0)).to be_empty
+    end
+
+    it 'is not returned by .logged_in_at_least_once' do
+      expect(described_class.logged_in_at_least_once).not_to include(person)
+    end
+  end
+
+  context 'who has logged in' do
+    before do
+      person.login_count = 1
+      person.save!
+    end
+
+    it 'is not returned by .never_logged_in' do
+      expect(described_class.never_logged_in).not_to include(person)
+    end
+
+    it 'is returned by .logged_in_at_least_once' do
+      expect(described_class.logged_in_at_least_once).to include(person)
+    end
+  end
+
   describe '.name' do
     context 'with a given_name and surname' do
       let(:person) { build(:person, given_name: 'Jon', surname: 'von Brown') }
@@ -294,6 +332,68 @@ RSpec.describe Person, type: :model do
       it 'returns nil' do
         person.assign_attributes image: nil
         expect(person.profile_image).to be_nil
+      end
+    end
+  end
+
+  describe '.last_reminder_email_at' do
+    it 'is nil on create' do
+      expect(person.last_reminder_email_at).to be_nil
+    end
+
+    it 'can be set to a datetime' do
+      datetime = Time.now
+      person.last_reminder_email_at = datetime
+      expect(person.last_reminder_email_at).to eq(datetime)
+    end
+  end
+
+  describe 'reminder_email_sent? within 30 days' do
+    it 'is false on create' do
+      expect(person.reminder_email_sent?(within_days: 30)).to be false
+    end
+
+    it 'is true when last_reminder_email_at is today' do
+      person.last_reminder_email_at = Time.now
+      expect(person.reminder_email_sent?(within_days: 30)).to be true
+    end
+
+    it 'is true when last_reminder_email_at is 30 days ago' do
+      person.last_reminder_email_at = Time.now - 30.days
+      expect(person.reminder_email_sent?(within_days: 30)).to be true
+    end
+
+    it 'is false when last_reminder_email_at is 31 days ago' do
+      person.last_reminder_email_at = Time.now - 31.days
+      expect(person.reminder_email_sent?(within_days: 30)).to be false
+    end
+  end
+
+  describe 'send_never_logged_in_reminder?' do
+    context 'when person created within last 30 days' do
+      before { person.update(created_at: Time.now - 30.days) }
+      it 'returns false' do
+        expect(person.send_never_logged_in_reminder?).to be false
+      end
+    end
+
+    context 'when person created more than 30 days ago' do
+      before { person.update(created_at: Time.now - 31.days) }
+
+      it 'returns true when never logged in and no reminder sent within last 30 days' do
+        allow(person).to receive(:reminder_email_sent?).and_return false
+        expect(person.send_never_logged_in_reminder?).to be true
+      end
+
+      it 'returns false when logged in before' do
+        allow(person).to receive(:reminder_email_sent?).and_return false
+        person.login_count = 1
+        expect(person.send_never_logged_in_reminder?).to be false
+      end
+
+      it 'returns false when reminder sent within last 30 days' do
+        allow(person).to receive(:reminder_email_sent?).and_return true
+        expect(person.send_never_logged_in_reminder?).to be false
       end
     end
   end

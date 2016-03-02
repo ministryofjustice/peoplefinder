@@ -18,11 +18,6 @@ class Login
     @session.delete(SESSION_KEY)
   end
 
-  def edit_profile?
-    @person.incomplete? &&
-      ((@person.login_count == 1) || (@person.login_count % 5 == 0))
-  end
-
   def self.current_user(session)
     Person.find(session[SESSION_KEY]) if session[SESSION_KEY].present?
   end

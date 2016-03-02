@@ -102,10 +102,10 @@ Style/AlignHash:
   Enabled: false
 
 Metrics/ClassLength:
-  Max: 110
+  Max: 120
 
 Metrics/ModuleLength:
-  Max: 105
+  Max: 115
 
 RSpec/DescribeClass:
   Exclude:
@@ -133,4 +133,3 @@ Style/SingleLineBlockParams:
 Style/ClassVars:
   Exclude:
     - 'spec/**/*'
-

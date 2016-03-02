@@ -33,6 +33,7 @@ gem 'unf'
 gem 'unicorn', '~> 4.8.3'
 gem 'useragent', '~> 0.10.0'
 gem 'virtus'
+gem 'whenever'
 gem 'will_paginate', '~> 3.0'
 
 gem 'carrierwave',

@@ -54,21 +54,25 @@ class Person < ActiveRecord::Base
 
   validates :given_name, presence: true, on: :update
   validates :surname, presence: true
-  validates :email,
-    presence: true, uniqueness: { case_sensitive: false }, email: true
+  validates :email, presence: true, uniqueness: { case_sensitive: false }, email: true
   validates :secondary_email, email: true, allow_blank: true
 
-  has_many :memberships,
-    -> { includes(:group).order('groups.name') },
-    dependent: :destroy
+  has_many :memberships, -> { includes(:group).order('groups.name') }, dependent: :destroy
   has_many :groups, through: :memberships
   belongs_to :community
 
-  accepts_nested_attributes_for :memberships,
-    allow_destroy: true,
+  accepts_nested_attributes_for :memberships, allow_destroy: true,
     reject_if: proc { |membership| membership['group_id'].blank? }
 
   default_scope { order(surname: :asc, given_name: :asc) }
+
+  scope :never_logged_in, lambda { |limit = nil|
+    users = unscoped.where(login_count: 0).order('RANDOM()')
+    users = users.limit(limit) if limit
+    users
+  }
+
+  scope :logged_in_at_least_once, -> { where('people.login_count > 0') }
 
   def self.namesakes(person)
     where(surname: person.surname, given_name: person.given_name).where.not(id: person.id)
@@ -101,8 +105,6 @@ class Person < ActiveRecord::Base
       where("memberships.group_id": group_ids)
   end
 
-  public
-
   def to_s
     name
   end
@@ -131,6 +133,24 @@ class Person < ActiveRecord::Base
 
   def notify_of_change?(person_responsible)
     at_permitted_domain? && person_responsible.try(:email) != email
+  end
+
+  def reminder_email_sent? within_days:
+    last_reminder_email_at.present? &&
+      last_reminder_email_at.end_of_day >= within_days.day.ago
+  end
+
+  def send_never_logged_in_reminder?
+    within_days = 30
+    !reminder_email_sent?(within_days: within_days) &&
+      login_count == 0 &&
+      created_at.end_of_day < within_days.day.ago
+  end
+
+  def email_address_with_name
+    address = Mail::Address.new email
+    address.display_name = name
+    address.format
   end
 
 end

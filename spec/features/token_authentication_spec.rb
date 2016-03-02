@@ -54,15 +54,12 @@ feature 'Token Authentication' do
     end
   end
 
-  scenario 'following valid link from email and getting prompted to complete my profile' do
+  scenario 'following valid link from email and seeing my profile' do
     token = create(:token)
     visit token_path(token)
 
     expect(page).to have_text('Signed in as')
-    expect(page).to have_text('Start building your profile now')
-    within('h1') do
-      expect(page).to have_text('Edit profile')
-    end
+    expect(page).to have_text('Edit this profile')
   end
 
   scenario "logging in with a fake token" do
