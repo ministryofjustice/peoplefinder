@@ -88,8 +88,10 @@ RSpec.describe PeopleController, type: :controller do
       end
 
       it 'redirects to the created person' do
-        post :create, person: valid_attributes
-        expect(response).to redirect_to(Person.last)
+        attributes = valid_attributes
+        email = attributes[:email]
+        post :create, person: attributes
+        expect(response).to redirect_to(Person.find_by_email(email))
       end
     end
 
