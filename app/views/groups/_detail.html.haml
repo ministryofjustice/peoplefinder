@@ -2,9 +2,15 @@
 .group-title
   - if @group.acronym?
     %h1= @group.acronym
-    %h2= @group.name
+    %h2
+      = @group.name
+      - if @group.children.count > 0
+        = link_to "view #{pluralize_with_delimiter @group.children.count, 'team'}", '#teams', class: 'small'
   - else
-    %h1= @group.name
+    %h1
+      = @group.name
+      - if @group.children.count > 0
+        = link_to "view #{pluralize_with_delimiter @group.children.count, 'team'}", '#teams', class: 'small'
 
 %div.grid-wrapper.details
   %div.grid.grid-1-3

@@ -169,7 +169,9 @@ strong {
   h1 {
     border: 0 !important;
     margin: 30px 0 0 0;
-    max-width: 50%;
+  }
+  .small {
+    font-size: 14px;
   }
 }
 
@@ -420,6 +422,7 @@ textarea.form-control {
   background: $grey-3;
 
   span {
+    font-size: 18px;
     margin: 0.4em;
   }
 
