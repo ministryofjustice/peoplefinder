@@ -39,6 +39,7 @@ Rails.application.routes.draw do
     resources :activations, only: [:index]
     resources :completions, only: [:index]
     resources :profiles, only: [:index]
+    resources :team_descriptions, only: [:index]
   end
 
   resources :problem_reports, only: [:create]

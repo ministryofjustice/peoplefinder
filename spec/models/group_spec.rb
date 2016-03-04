@@ -332,4 +332,17 @@ RSpec.describe Group, type: :model do
     end
   end
 
+  describe '.percentage_with_description' do
+    it 'is correct' do
+      expect(described_class.percentage_with_description).to eq 0
+
+      parent = create(:department)
+      create(:group, parent: parent)
+      expect(described_class.percentage_with_description).to eq 0
+
+      create(:group, parent: parent, description: 'We do this')
+      expect(described_class.percentage_with_description).to eq 33
+    end
+  end
+
 end

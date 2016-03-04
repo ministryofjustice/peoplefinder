@@ -40,12 +40,22 @@ class Group < ActiveRecord::Base
 
   default_scope { order(name: :asc) }
 
+  scope :without_description, -> { unscoped.where(description: ['', nil]) }
+
   def self.department
     roots.first
   end
 
   def self.hierarchy_hash
     arrange(order: :name)
+  end
+
+  def self.percentage_with_description
+    if count == 0
+      0
+    else
+      100 - (without_description.count / count.to_f * 100).round(0)
+    end
   end
 
   def to_s
