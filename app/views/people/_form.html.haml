@@ -87,8 +87,16 @@
       id: 'add_membership', class: 'button-secondary'
 
   .form-group.line-above
+    %fieldset
+      %label.form-label-bold Current project
+      %p.form-hint
+        Enter the name of the project you're currently working on
+      %input.form-control
+
+  .form-group.line-above
     %fieldset#working-days
       %legend.form-label-bold Working days
+
       %ul
         - Person::DAYS_WORKED.each do |day|
           %li
