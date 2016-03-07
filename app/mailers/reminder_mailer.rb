@@ -14,4 +14,10 @@ class ReminderMailer < ActionMailer::Base
     @token_url = token_url(token)
     mail to: @person.email_address_with_name
   end
+
+  def team_description_missing(person, group)
+    @group = group
+    @person = person
+    mail to: @person.email_address_with_name
+  end
 end

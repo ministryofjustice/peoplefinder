@@ -4,7 +4,7 @@ module NeverLoggedInNotifier
     return unless Rails.configuration.send_reminder_emails
 
     Person.never_logged_in(25).each do |person|
-      person.with_lock do # use db lock in case cronjob running on two instances
+      person.with_lock do # use db lock to allow cronjob to run on more than one instance
         send_reminder person
       end
     end

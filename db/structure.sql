@@ -126,7 +126,8 @@ CREATE TABLE groups (
     description text,
     ancestry text,
     ancestry_depth integer DEFAULT 0 NOT NULL,
-    acronym text
+    acronym text,
+    description_reminder_email_at timestamp without time zone
 );
 
 
@@ -658,4 +659,6 @@ INSERT INTO schema_migrations (version) VALUES ('20150604110007');
 INSERT INTO schema_migrations (version) VALUES ('20150604110654');
 
 INSERT INTO schema_migrations (version) VALUES ('20151217094046');
+
+INSERT INTO schema_migrations (version) VALUES ('20160304155510');
 
