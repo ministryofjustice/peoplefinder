@@ -218,7 +218,8 @@ CREATE TABLE people (
     city text,
     secondary_email text,
     profile_photo_id integer,
-    last_reminder_email_at timestamp without time zone
+    last_reminder_email_at timestamp without time zone,
+    current_project character varying
 );
 
 
@@ -662,3 +663,4 @@ INSERT INTO schema_migrations (version) VALUES ('20151217094046');
 
 INSERT INTO schema_migrations (version) VALUES ('20160304155510');
 
+INSERT INTO schema_migrations (version) VALUES ('20160308105233');
