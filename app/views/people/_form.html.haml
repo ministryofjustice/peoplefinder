@@ -91,7 +91,7 @@
       %label.form-label-bold Current project
       %p.form-hint
         Enter the name of the project you're currently working on
-      %input.form-control
+      = f.text_field :current_project, class: 'form-control'
 
   .form-group.line-above
     %fieldset#working-days
