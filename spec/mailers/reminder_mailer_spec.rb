@@ -5,6 +5,13 @@ RSpec.describe ReminderMailer do
 
   let(:person) { create(:person, given_name: 'John', surname: 'Coe', email: 'test.user@digital.justice.gov.uk') }
 
+  let(:group)  do
+    team = create(:group)
+    team.people << person
+    person.memberships.first.update(leader: true)
+    team
+  end
+
   shared_examples 'sets email to and from correctly' do
     it 'sets the sender' do
       expect(mail.from).to include(Rails.configuration.support_email)
@@ -34,6 +41,18 @@ RSpec.describe ReminderMailer do
       %w(plain html).each do |part_type|
         expect(get_message_part(mail, part_type)).to have_text(edit_person_url(person))
       end
+    end
+  end
+
+  shared_examples 'includes link to edit group' do
+    it 'includes the person edit url' do
+      edit_url = edit_group_url(group)
+      html = get_message_part(mail, 'html')
+      expect(html).to have_link('your team’s profile', href: edit_url)
+      expect(html).to have_link('Edit this team link', href: edit_url)
+
+      plain_text = get_message_part(mail, 'plain')
+      expect(plain_text).to have_text(edit_url)
     end
   end
 
@@ -67,6 +86,18 @@ RSpec.describe ReminderMailer do
     include_examples 'body contains', 'Hello John'
 
     include_examples 'includes link to token login'
+  end
+
+  describe '.team_description_missing' do
+    let(:mail) { described_class.team_description_missing(person, group).deliver_now }
+
+    include_examples 'sets email to and from correctly'
+
+    include_examples 'subject contains', 'Improve your team’s profile on People Finder'
+
+    include_examples 'body contains', 'Hello John'
+
+    include_examples 'includes link to edit group'
   end
 
 end

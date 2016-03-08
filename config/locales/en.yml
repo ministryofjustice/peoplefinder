@@ -161,6 +161,8 @@ en:
       subject: 'Reminder: update your profile today'
     reported_profile:
       subject: "A People Finder profile has been reported"
+    team_description_missing:
+      subject: 'Improve your team’s profile on People Finder'
   suggestion_mailer:
     person_email:
       subject: "Your People Finder profile"

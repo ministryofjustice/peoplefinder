@@ -110,6 +110,15 @@ class Group < ActiveRecord::Base
     memberships.subscribing.joins(:person).map(&:person)
   end
 
+  def description_reminder_email_sent? within_days:
+    description_reminder_email_at.present? &&
+      description_reminder_email_at.end_of_day >= within_days.day.ago
+  end
+
+  def send_description_reminder?
+    !description_reminder_email_sent?(within_days: 30)
+  end
+
   private
 
   def not_second_root_group
