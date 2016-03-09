@@ -136,3 +136,20 @@ Style/SingleLineBlockParams:
 Style/ClassVars:
   Exclude:
     - 'spec/**/*'
+
+Style/IndentArray:
+  Exclude:
+    - 'spec/**/*'
+
+Style/SpaceAroundOperators:
+  Enabled: false
+
+Performance/TimesMap:
+  Exclude:
+    - 'spec/**/*'
+
+RSpec/NotToNot:
+  Enabled: false
+
+RSpec/AnyInstance:
+  Enabled: false
