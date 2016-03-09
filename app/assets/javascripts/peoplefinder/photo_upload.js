@@ -28,22 +28,21 @@ var PhotoUpload = (function (){
       var els = PhotoUpload.findElements(event.target);
 
       var iframeId = 'photo-upload-iframe-' + ~new Date();
-      var iframe = $('<iframe id="' + iframeId + '" name="' + iframeId + '">');
+      var iframe = $('<iframe id="' + iframeId + '" name="' + iframeId + '"></iframe>');
       iframe.hide();
+      $(els.$el).append(iframe);
       iframe.load(PhotoUpload.photoUploaded);
 
       var form = $('<form target="' +
         iframeId +
         '" method="POST" action="/profile_photos" ' +
-        'enctype="multipart/form-data">');
+        'enctype="multipart/form-data"></form>');
 
       form.append(els.$input);
       form.append($('input[name="authenticity_token"]').clone());
-      $(els.$el).append(iframe);
       $(els.$el).append(form);
       PhotoUpload.setState(els, 'uploading');
       form.submit();
-
       els.$label.after(els.$input);
       form.remove();
 
@@ -55,23 +54,25 @@ var PhotoUpload = (function (){
     photoUploaded: function ( event ){
       var $iframe = $(event.target);
       var jsonText = $iframe.contents().text();
-      var uploadData = $.parseJSON(jsonText);
+      if(jsonText.length>1){
+        var uploadData = $.parseJSON(jsonText);
 
-      var els = PhotoUpload.findElements($iframe);
-      els.$preview.attr('src', uploadData.image.croppable.url);
-      els.$preview.css({clip: ''});
-      PhotoUpload.setState(els, 'cropping');
-      setTimeout(_.bind(function (){
-        PhotoUpload.setupCrop(els);
-      }, this), 1000);
+        var els = PhotoUpload.findElements($iframe);
+        els.$preview.attr('src', uploadData.image.croppable.url);
+        els.$preview.css({clip: ''});
+        PhotoUpload.setState(els, 'cropping');
+        setTimeout(_.bind(function (){
+          PhotoUpload.setupCrop(els);
+        }, this), 1000);
 
-      els.$photo_id.data('old-id', els.$photo_id.val());
-      els.$photo_id.val(uploadData.id);
+        els.$photo_id.data('old-id', els.$photo_id.val());
+        els.$photo_id.val(uploadData.id);
 
-      els.$input.val('');
-      els.$uploadButton.addClass('hidden');
+        els.$input.val('');
+        els.$uploadButton.addClass('hidden');
 
-      $iframe.remove();
+        $iframe.remove();
+      }
     },
 
     preview: function ( event ){
