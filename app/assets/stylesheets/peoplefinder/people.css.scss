@@ -188,6 +188,9 @@ form {
       background-color: $grey-bg;
       padding: 0.4em 0.8em 0.5em 0.4em;
       margin: 0.4em 0.4em 0 0;
+      label.selected {
+        background-color: transparent;
+      }
     }
   }
 
