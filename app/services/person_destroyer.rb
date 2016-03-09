@@ -10,7 +10,7 @@ class PersonDestroyer
 
   def initialize(person, current_user)
     if person.new_record?
-      fail NewRecordError, 'cannot destroy a new Person record'
+      raise NewRecordError, 'cannot destroy a new Person record'
     end
     @person = person
     @current_user = current_user

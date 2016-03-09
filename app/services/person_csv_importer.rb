@@ -4,7 +4,7 @@ require 'forwardable'
 class PersonCsvImporter
   extend Forwardable
 
-  COLUMNS = %i(given_name surname email)
+  COLUMNS = %i(given_name surname email).freeze
 
   ErrorRow = Struct.new(:line_number, :raw, :messages) do
     def to_s

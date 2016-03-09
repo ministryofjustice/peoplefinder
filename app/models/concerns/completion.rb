@@ -8,7 +8,7 @@ module Concerns::Completion
     city
     location_in_building
     primary_phone_number
-  )
+  ).freeze
 
   COMPLETION_FIELDS = ADEQUATE_FIELDS + %i(
     profile_photo_present?
@@ -33,7 +33,7 @@ module Concerns::Completion
       all.map(&:completion_score).inject(0.0, &:+) / count
     end
 
-    BUCKETS = [0...20, 20...50, 50...80, 80..100]
+    BUCKETS = [0...20, 20...50, 50...80, 80..100].freeze
 
     def self.bucketed_completion
       results = Hash[BUCKETS.map { |r| [r, 0] }]

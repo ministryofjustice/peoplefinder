@@ -22,7 +22,7 @@ module ApplicationHelper
            locals: { items: items, show_links: show_links }
   end
 
-  FLASH_NOTICE_KEYS = %w(error notice warning)
+  FLASH_NOTICE_KEYS = %w(error notice warning).freeze
 
   def flash_messages
     messages = flash.keys.map(&:to_s) & FLASH_NOTICE_KEYS
@@ -47,11 +47,11 @@ module ApplicationHelper
   def link_to_short_name_unless_current(obj)
     full_name = obj.name
 
-    if obj.respond_to?(:short_name) && obj.short_name.present?
-      link_text = obj.short_name
-    else
-      link_text = full_name
-    end
+    link_text = if obj.respond_to?(:short_name) && obj.short_name.present?
+                  obj.short_name
+                else
+                  full_name
+                end
 
     html_options = (full_name == link_text) ? {} : { title: full_name }
 

@@ -66,7 +66,7 @@ class Token < ActiveRecord::Base
   end
 
   def within_throttle_limit
-    fail TTLRaceCondition, 'throttling will not work with TTLs of 1 hour or less' if ttl <= 60
+    raise TTLRaceCondition, 'throttling will not work with TTLs of 1 hour or less' if ttl <= 60
 
     if tokens_in_the_last_hour >= max_tokens_per_hour
       errors.add(:user_email, :token_throttle_limit, limit: max_tokens_per_hour)

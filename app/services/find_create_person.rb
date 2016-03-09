@@ -21,12 +21,12 @@ module FindCreatePerson
 
     private
 
-    def find_or_create(email, &on_create)
+    def find_or_create(email, &_on_create)
       person = Person.
                where(email: email.to_s).first_or_initialize
 
       if person.new_record?
-        on_create.call(person)
+        yield(person)
         person.save!
       end
 

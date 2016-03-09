@@ -2,14 +2,14 @@ require 'uri'
 
 module HealthCheck
   class DatabaseConfiguration
-    SAFE = %w( adapter database host port )
+    SAFE = %w( adapter database host port ).freeze
 
     def initialize(hash)
-      if hash.key?('url')
-        @hash = parse_out_uri(hash)
-      else
-        @hash = hash
-      end
+      @hash = if hash.key?('url')
+                parse_out_uri(hash)
+              else
+                hash
+              end
     end
 
     def to_s

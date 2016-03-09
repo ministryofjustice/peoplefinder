@@ -10,7 +10,7 @@ class PersonUpdater
 
   def initialize(person, current_user)
     if person.new_record?
-      fail NewRecordError, 'cannot update a new Person record'
+      raise NewRecordError, 'cannot update a new Person record'
     end
     @person = person
     @current_user = current_user
