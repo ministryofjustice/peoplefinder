@@ -59,7 +59,7 @@ RSpec.describe 'Completion' do # rubocop:disable RSpec/DescribeClass
       let(:person) do
         fields = completed_attributes
         fields.delete(:profile_photo_id)
-        fields.merge!(image: 'profile_MoJ_small.jpg')
+        fields[:image] = 'profile_MoJ_small.jpg'
         Person.new(completed_attributes)
       end
       before { person.groups << build(:group) }

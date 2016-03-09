@@ -1,5 +1,5 @@
 class Login
-  SESSION_KEY = 'current_user_id'
+  SESSION_KEY = 'current_user_id'.freeze
 
   def initialize(session, person)
     @session = session

@@ -16,7 +16,10 @@ AllCops:
     - 'lib/tasks/elasticsearch.rake'
     - 'spec/dummy/db/**/*'
     - 'smoke_test'
-  RunRailsCops: true
+  TargetRubyVersion: 2.2
+
+Rails:
+  Enabled: true
 
 # Just indent parameters by two spaces. It's less volatile if methods change,
 # and there's less busy work lining things up.
@@ -133,3 +136,20 @@ Style/SingleLineBlockParams:
 Style/ClassVars:
   Exclude:
     - 'spec/**/*'
+
+Style/IndentArray:
+  Exclude:
+    - 'spec/**/*'
+
+Style/SpaceAroundOperators:
+  Enabled: false
+
+Performance/TimesMap:
+  Exclude:
+    - 'spec/**/*'
+
+RSpec/NotToNot:
+  Enabled: false
+
+RSpec/AnyInstance:
+  Enabled: false

@@ -63,7 +63,7 @@ class EmailAddress
 
   def capitalise(word)
     word.downcase.to_s.gsub(/\b('?\S)/u) do
-      (Regexp.last_match[1]).upcase
+      Regexp.last_match[1].upcase
     end
   end
 end

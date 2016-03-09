@@ -1,17 +1,17 @@
 module HealthCheck
   class SendGrid < Component
     ERRS_TO_CATCH =
-    [
-      SocketError,
-      Net::SMTPAuthenticationError,
-      Net::SMTPServerBusy,
-      Net::SMTPSyntaxError,
-      Net::SMTPFatalError,
-      Net::SMTPUnknownError,
-      Net::OpenTimeout,
-      Net::ReadTimeout,
-      IOError
-    ]
+      [
+        SocketError,
+        Net::SMTPAuthenticationError,
+        Net::SMTPServerBusy,
+        Net::SMTPSyntaxError,
+        Net::SMTPFatalError,
+        Net::SMTPUnknownError,
+        Net::OpenTimeout,
+        Net::ReadTimeout,
+        IOError
+      ].freeze
 
     def initialize
       @config = OpenStruct.new(ActionMailer::Base.smtp_settings)

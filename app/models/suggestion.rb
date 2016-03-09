@@ -8,7 +8,7 @@ class Suggestion
   PROBLEMS = %i(
     missing_fields incorrect_fields duplicate_profile inappropriate_content
     person_left
-  )
+  ).freeze
 
   attribute :missing_fields, Boolean, default: false
   attribute :missing_fields_info, String
@@ -23,7 +23,7 @@ class Suggestion
     working_days
     phone_number
     image
-  )
+  ).freeze
 
   POTENTIALLY_INCORRECT_FIELDS.each do |field|
     attribute :"incorrect_#{field}", Boolean, default: false
