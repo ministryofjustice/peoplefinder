@@ -242,7 +242,7 @@ $(function (){
     
     var saveBtn = $('.save-cancel-actions input[name="commit"]'),
       cropButton = PhotoUpload.findElements(photoBlocks).$cropButton,
-      editForm = $('form.edit_person');
+      editForm = $('form.edit_person, form.new_person');
     
     saveBtn.click(function(e){
       e.preventDefault();
