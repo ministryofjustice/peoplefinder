@@ -88,9 +88,9 @@
 
   .form-group.line-above
     %fieldset
-      %label.form-label-bold Current project
-      %p.form-hint
-        Enter the name of the project you're currently working on
+      = f.label :current_project, class: 'form-label-bold' do
+        Current project
+        %p.form-hint= role_translate(@person, 'views.info_text.current_project_hint')
       = f.text_field :current_project, class: 'form-control'
 
   .form-group.line-above
