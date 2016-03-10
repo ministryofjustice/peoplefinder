@@ -49,15 +49,15 @@
         = f.form_group :email do
           = f.label :email, class: 'form-label-bold' do
             = t(:email, scope: 'activerecord.attributes.person')
+            - if @person.persisted?
+              %p.form-hint
+                =t('.notes.email')
             - if @person.errors.include?(:email)
               %span.error= @person.errors[:email].first
           = f.text_field :email, class: 'form-control', readonly: @person.persisted?
-          - if @person.persisted?
-            %p.form-hint
-              =t('.notes.email')
-          = f.form_group :secondary_email do
-            = f.label :secondary_email, class: 'form-label-bold'
-            = f.text_field :secondary_email, class: 'form-control'
+        = f.form_group :secondary_email do
+          = f.label :secondary_email, class: 'form-label-bold'
+          = f.text_field :secondary_email, class: 'form-control'
 
       = f.form_group :location_in_building do
         = f.label :location_in_building, class: 'form-label-bold' do
