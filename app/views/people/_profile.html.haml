@@ -46,10 +46,10 @@
         - if @person.secondary_phone_number.present?
           %dt Other phone number
           %dd= call_to(@person.secondary_phone_number)
-      
+
       %dl.inline-labels
         - if @person.current_project.present?
-          %dt Current project
+          %dt Current project(s)
           %dd= @person.current_project
 
       - if @person.description.present?

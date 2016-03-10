@@ -36,7 +36,7 @@ module SpecSupport
       fill_in 'Building', with: person_attributes[:building]
       fill_in 'City', with: person_attributes[:city]
       fill_in 'Extra information', with: person_attributes[:description]
-      fill_in 'Current project', with: person_attributes[:current_project]
+      fill_in 'Current project(s)', with: person_attributes[:current_project]
       uncheck('Monday')
       uncheck('Friday')
     end
