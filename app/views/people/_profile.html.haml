@@ -7,14 +7,22 @@
       .image-background
         = profile_image_tag @person, class: 'profile-page'
       .spacer-15
-      %h4 Days worked
-      %ul.working_days
-        = render 'working_days'
+      / %h4 Days worked
+      / %ul.working_days
+      /   = render 'working_days'
 
+      - if @person.email.present? && !@preview
+        - if current_user == @person
+          = render partial: "completeness", locals: { person: @person }
+        - else
+          = render partial: "request_information", locals: { person: @person }
+          - if @person.incomplete?
+            = render partial: "completeness", locals: { person: @person }
+            
   .grid.grid-2-3
     .inner-block
       - @person.memberships.group_by(&:group).each do |group, memberships|
-        %h3= memberships.map(&:role).select(&:present?).sort.join(', ')
+        %h3 Role: #{memberships.map(&:role).select(&:present?).sort.join(', ')}
         - path = memberships.first.path
         - if path.length > 1
           %dl.inline-labels.role-and-location
@@ -30,7 +38,7 @@
           %dt Location
           %dd= @person.location
 
-      %dl.inline-labels
+      %dl.inline-labels.line-above
         - if @person.email.present?
           %dt= t(:email, scope: 'activerecord.attributes.person')
           %dd= mail_to(@person.email)
@@ -56,13 +64,11 @@
         %h5 Extra information:
         %p= @person.description
 
-- if @person.email.present? && !@preview
-  - if current_user == @person
-    = render partial: "completeness", locals: { person: @person }
-  - else
-    = render partial: "request_information", locals: { person: @person }
-    - if @person.incomplete?
-      = render partial: "completeness", locals: { person: @person }
+      %h4 Days worked
+      %ul.working_days
+        = render 'working_days'
+
+
 
 - unless @versions.nil?
   %h1 Audit Log
