@@ -18,8 +18,12 @@ module ApplicationHelper
   end
 
   def breadcrumbs(items, show_links: true)
+    starts_with_home = items.first == Home.instance
+    starts_with_root_team = items.first == Group.department
     render partial: 'shared/breadcrumbs',
-           locals: { items: items, show_links: show_links }
+           locals: { items: items, show_links: show_links,
+             starts_with_home: starts_with_home,
+            starts_with_root_team: starts_with_root_team }
   end
 
   FLASH_NOTICE_KEYS = %w(error notice warning).freeze
@@ -44,18 +48,26 @@ module ApplicationHelper
     t(key, scope: 'views.info_text')
   end
 
-  def link_to_short_name_unless_current(obj)
-    full_name = obj.name
-
-    link_text = if obj.respond_to?(:short_name) && obj.short_name.present?
+  def link_to_breadcrumb_name_unless_current(obj, index, starts_with_home: nil, starts_with_root_team: nil)
+    index = adjust_breadcrumb_index(index, starts_with_home, starts_with_root_team)
+    link_text = if index < 3 && obj.respond_to?(:short_name) && obj.short_name.present?
                   obj.short_name
                 else
-                  full_name
+                  obj.name
                 end
 
-    html_options = (full_name == link_text) ? {} : { title: full_name }
-
+    html_options = (obj.name == link_text) ? {} : { title: obj.name }
     link_to_unless_current link_text, obj, html_options
+  end
+
+  def adjust_breadcrumb_index index, starts_with_home, starts_with_root_team
+    if starts_with_home
+      index - 1
+    elsif starts_with_root_team
+      index
+    else
+      index + 1
+    end
   end
 
   def app_title
@@ -101,9 +113,7 @@ module ApplicationHelper
   end
 
   def updated_by(obj)
-    unless obj.originator == Version.public_user
-      " by #{obj.originator}"
-    end
+    " by #{obj.originator}" unless obj.originator == Version.public_user
   end
 
   def flash_message(type)
