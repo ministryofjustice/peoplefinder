@@ -1,1 +1,4 @@
-%ol= render partial: "shared/breadcrumb", collection: items, locals: { show_links: show_links }
+%ol= render partial: "shared/breadcrumb", collection: items,
+  locals: { show_links: show_links,
+    starts_with_home: starts_with_home,
+    starts_with_root_team: starts_with_root_team }
