@@ -135,16 +135,16 @@ class Person < ActiveRecord::Base
     at_permitted_domain? && person_responsible.try(:email) != email
   end
 
-  def reminder_email_sent? within_days:
+  def reminder_email_sent? within:
     last_reminder_email_at.present? &&
-      last_reminder_email_at.end_of_day >= within_days.day.ago
+      last_reminder_email_at.end_of_day >= within.ago
   end
 
   def send_never_logged_in_reminder?
-    within_days = 30
-    !reminder_email_sent?(within_days: within_days) &&
+    within = 30.days
+    !reminder_email_sent?(within: within) &&
       login_count == 0 &&
-      created_at.end_of_day < within_days.day.ago
+      created_at.end_of_day < within.ago
   end
 
   def email_address_with_name

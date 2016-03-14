@@ -350,22 +350,22 @@ RSpec.describe Person, type: :model do
 
   describe 'reminder_email_sent? within 30 days' do
     it 'is false on create' do
-      expect(person.reminder_email_sent?(within_days: 30)).to be false
+      expect(person.reminder_email_sent?(within: 30.days)).to be false
     end
 
     it 'is true when last_reminder_email_at is today' do
       person.last_reminder_email_at = Time.now
-      expect(person.reminder_email_sent?(within_days: 30)).to be true
+      expect(person.reminder_email_sent?(within: 30.days)).to be true
     end
 
     it 'is true when last_reminder_email_at is 30 days ago' do
       person.last_reminder_email_at = Time.now - 30.days
-      expect(person.reminder_email_sent?(within_days: 30)).to be true
+      expect(person.reminder_email_sent?(within: 30.days)).to be true
     end
 
     it 'is false when last_reminder_email_at is 31 days ago' do
       person.last_reminder_email_at = Time.now - 31.days
-      expect(person.reminder_email_sent?(within_days: 30)).to be false
+      expect(person.reminder_email_sent?(within: 30.days)).to be false
     end
   end
 
