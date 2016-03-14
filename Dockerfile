@@ -1,7 +1,6 @@
 FROM ruby:2.2
 
-# install socat to proxy SSH traffic for private repos
-RUN apt-get update && apt-get install -y socat apt-transport-https && \
+RUN apt-get update && apt-get install -y apt-transport-https && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* && rm -fr *Release* *Sources* *Packages* && \
     truncate -s 0 /var/log/*log
@@ -32,10 +31,6 @@ RUN apt-get update && apt-get install -y runit nodejs && \
     rm -rf /var/lib/apt/lists/* && rm -fr *Release* *Sources* *Packages* && \
     truncate -s 0 /var/log/*log
 
-# SSH proxy settings
-ENV SSH_AUTH_SOCK /tmp/ssh-auth
-ENV SSH_AUTH_PROXY_PORT 1234
-
 RUN mkdir -p /usr/src/app
 RUN bundle config --global without test:development
 WORKDIR /usr/src/app
@@ -47,7 +42,7 @@ COPY Gemfile.lock /usr/src/app/
 RUN echo ':verbose: true' > $HOME/.gemrc && echo 'install: --no-document' >> $HOME/.gemrc && echo 'update: --no-document' >> $HOME/.gemrc
 
 # Hack to install private gems
-RUN socat UNIX-LISTEN:$SSH_AUTH_SOCK,fork TCP4:$(ip route|awk '/default/ {print $3}'):$SSH_AUTH_PROXY_PORT & bundle install
+RUN bundle install
 
 COPY . /usr/src/app
 RUN mkdir -p /usr/src/app/public/assets
