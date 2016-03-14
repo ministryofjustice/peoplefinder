@@ -57,7 +57,7 @@ group :development do
   gem 'mailcatcher'
   gem 'spring-commands-rspec'
   gem 'guard-rspec', require: false
-  gem 'rb-fsevent' if `uname` =~ /Darwin/
+  gem 'rb-fsevent', require: RUBY_PLATFORM[/darwin/i].to_s.size > 0
 end
 
 group :development, :test do
