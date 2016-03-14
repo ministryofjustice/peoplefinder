@@ -22,7 +22,9 @@
   .grid.grid-2-3
     .inner-block
       - @person.memberships.group_by(&:group).each do |group, memberships|
-        %h3 #{memberships.map(&:role).select(&:present?).sort.join(', ')}
+        %h3 
+          #{memberships.map(&:role).select(&:present?).sort.join(', ')}
+          %small in #{group}
         - path = memberships.first.path
         - if path.length > 1
           %dl.inline-labels.role-and-location
