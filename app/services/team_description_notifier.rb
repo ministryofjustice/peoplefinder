@@ -3,7 +3,7 @@ module TeamDescriptionNotifier
   def self.send_reminders
     return unless Rails.configuration.send_reminder_emails
 
-    Group.without_description.each do |group|
+    Group.without_description.find_each do |group|
       group.with_lock do # use db lock to allow cronjob to run on more than one instance
         send_reminder group
       end
