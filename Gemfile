@@ -55,7 +55,9 @@ end
 group :development do
   gem 'foreman'
   gem 'mailcatcher'
+  gem 'spring-commands-rspec'
   gem 'guard-rspec', require: false
+  gem 'rb-fsevent' if `uname` =~ /Darwin/
 end
 
 group :development, :test do
