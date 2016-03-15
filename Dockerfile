@@ -56,8 +56,6 @@ RUN bundle install
 
 COPY . /usr/src/app
 
-CMD ["bundle", "exec"]
-
 RUN bundle exec rake assets:precompile RAILS_ENV=assets
 
 ENTRYPOINT ["./run.sh"]
