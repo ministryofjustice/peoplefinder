@@ -1,0 +1,17 @@
+.bowerrc
+.env
+.env.example
+.git
+.gitignore
+.rspec
+.rubocop.yml
+Guardfile
+LICENCE.txt
+Procfile
+README.md
+bower.json
+circle.yml
+log/*
+smoke_test
+spec
+tmp/*
