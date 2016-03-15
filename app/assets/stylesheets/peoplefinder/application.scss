@@ -145,6 +145,9 @@ h2.line-above, h2.h3.line-above, h3.line-above, .line-above {
   border-top: 1px solid $blackish;
   border-bottom: 0;
 }
+.line-below {
+  border-bottom: 1px solid $blackish;
+}
 
 h1.h3, h2.h3 {
   font-size: 24px;
@@ -164,11 +167,13 @@ strong {
 }
 
 .group-title {
-  margin-bottom: 30px;
-
+  margin: 30px 0;
+  .lede {
+    color: $grey-1;
+  }
   h1 {
-    border: 0 !important;
-    margin: 30px 0 0 0;
+    // border: 0 !important;
+    margin: 0;
   }
   .small {
     font-size: 14px;
