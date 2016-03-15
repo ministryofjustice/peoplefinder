@@ -54,8 +54,15 @@ COPY Gemfile.lock /usr/src/app/
 
 RUN bundle install
 
-COPY . /usr/src/app
+# Copy files for assets precompile
+COPY config/application.rb config/boot.rb config/environment.rb config/database.yml /usr/src/app/config/
+COPY config/environments/assets.rb /usr/src/app/config/environments/
+COPY app/assets/ /usr/src/app/app/assets/
+COPY vendor/assets/ /usr/src/app/vendor/assets/
+COPY Rakefile /usr/src/app/
 
-RUN bundle exec rake assets:precompile RAILS_ENV=assets
+RUN bundle exec rake assets:precompile RAILS_ENV=assets SUPPORT_EMAIL=''
+
+COPY . /usr/src/app
 
 ENTRYPOINT ["./run.sh"]
