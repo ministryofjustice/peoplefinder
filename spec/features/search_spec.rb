@@ -14,6 +14,7 @@ feature 'Search for people', elastic: true do
         surname: 'Browne',
         email: 'jon.browne@digital.justice.gov.uk',
         primary_phone_number: '0711111111',
+        current_project: 'Digital justice',
         tags: 'Cooking,Eating',
         community: community)
     end
@@ -40,6 +41,7 @@ feature 'Search for people', elastic: true do
       expect(page).to have_text('Jon Browne')
       expect(page).to have_text('jon.browne@digital.justice.gov.uk')
       expect(page).to have_text('0711111111')
+      expect(page).to have_text('Digital justice')
       expect(page).to have_text(community.name)
       expect(page).to have_link('add them', href: new_person_path)
     end

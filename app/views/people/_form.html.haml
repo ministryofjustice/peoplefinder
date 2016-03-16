@@ -87,8 +87,15 @@
       id: 'add_membership', class: 'button-secondary'
 
   .form-group.line-above
+    = f.label :current_project, class: 'form-label-bold' do
+      Current project(s)
+      %p.form-hint= role_translate(@person, 'views.info_text.current_project_hint')
+    = f.text_field :current_project, class: 'form-control'
+
+  .form-group
     %fieldset#working-days
       %legend.form-label-bold Working days
+
       %ul
         - Person::DAYS_WORKED.each do |day|
           %li
@@ -100,7 +107,7 @@
   =f.form_group :description do
     = f.label :description, class: 'form-label-bold' do
       Extra information
-      %p.form-hint= info_text('notes_field_hint')
+      %p.form-hint= role_translate(@person, 'views.info_text.notes_field_hint')
     = f.text_area :description, class: 'form-control'
 
   =f.form_group :profile_photo_id, class: 'line-above person-photo initial' do

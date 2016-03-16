@@ -10,7 +10,8 @@ module SpecSupport
         location_in_building: '10.999',
         building: '102 Petty France',
         city: 'London',
-        description: 'Lorem ipsum dolor sit amet...'
+        description: 'Lorem ipsum dolor sit amet...',
+        current_project: 'Donec tincidunt luctus ullamcorper.'
       }
     end
 
@@ -35,6 +36,7 @@ module SpecSupport
       fill_in 'Building', with: person_attributes[:building]
       fill_in 'City', with: person_attributes[:city]
       fill_in 'Extra information', with: person_attributes[:description]
+      fill_in 'Current project(s)', with: person_attributes[:current_project]
       uncheck('Monday')
       uncheck('Friday')
     end
@@ -51,6 +53,7 @@ module SpecSupport
       expect(page).to have_text(person_attributes[:building])
       expect(page).to have_text(person_attributes[:city])
       expect(page).to have_text(person_attributes[:description])
+      expect(page).to have_text(person_attributes[:current_project])
 
       within('ul.working_days') do
         expect(page).to_not have_selector("li.active[alt='Monday']")

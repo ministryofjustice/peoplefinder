@@ -263,7 +263,17 @@ en:
       location_in_building_hint: "(eg 10.30)"
       building_hint: "(eg 102 Petty France)"
       city_hint: "(eg London)"
-      notes_field_hint: "Include details about where you work on different days, any days out of the office and if you start early or late."
+      current_project_hint:
+        mine: |
+          List the names of current projects you’re working on. Use a comma to separate project names.
+        other: |
+          List the names of current projects this person is working on. Use a comma to separate project names.
+      notes_field_hint:
+        mine: |
+          Include details about where you work on different days, any days out of the office and if you start early or late.
+        other: |
+          Include details about where this person works on different days, any days out of the office, and if this person starts early or late.
+
       photo_upload_hint: "Add or replace an image (no files over 3MB.)"
       photo_crop_hint: "Move and resize the box to crop your profile image."
       profile_deletable: "(Note that deleting a profile cannot be undone.)"

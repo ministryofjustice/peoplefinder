@@ -7,13 +7,16 @@ RSpec.describe PersonSearch, elastic: true do
     clean_up_indexes_and_tables
   end
 
+  let(:current_project) { 'Current project' }
+
   let!(:alice) do
     create(:person, given_name: 'Alice', surname: 'Andrews', community: community)
   end
   let!(:bob) do
     create(:person, given_name: 'Bob', surname: 'Browning',
            location_in_building: '10th floor', building: '102 Petty France',
-           city: 'London', description: 'weekends only')
+           city: 'London', description: 'weekends only',
+           current_project: current_project)
   end
   let!(:andrew) do
     create(:person, given_name: 'Andrew', surname: 'Alice')
@@ -89,6 +92,12 @@ RSpec.describe PersonSearch, elastic: true do
       results = search_for(community.name)
       expect(results).to include(alice)
       expect(results).to_not include(bob)
+    end
+
+    it 'searches by current project' do
+      results = search_for(current_project)
+      expect(results).to include(bob)
+      expect(results).not_to include(alice)
     end
 
     it 'returns [] for blank search' do
