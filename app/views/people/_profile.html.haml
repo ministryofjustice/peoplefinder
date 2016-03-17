@@ -1,5 +1,9 @@
 .title
-  %h1= @page_title = @person
+  %h1
+    = @page_title 
+    = @person
+    %div.heading-links
+      = link_to 'Edit this profile', edit_person_path(@person), class: 'small'
 
 .grid-wrapper.profile
   .grid.grid-1-3
