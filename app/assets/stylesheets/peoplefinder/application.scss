@@ -181,6 +181,16 @@ strong {
     float: right;
     margin-top: 2em;
   }
+  @media screen and (max-width: 640px) {
+    .edit-this-team {
+      margin: 0;
+      float: none;
+    }
+    .small {
+      display: block;
+      margin-top: 1em;
+    }
+  }
 }
 
 hr {
@@ -416,36 +426,49 @@ textarea.form-control {
 }
 #global-header .header-wrapper .header-global {
   .header-app-name {
-    margin: 0 ;
+    margin: 15px 0 0 15px;
+    text-align: left;
+    width: 100%;
     a {
       color: $white;
       &:hover {
         text-decoration: none;
       }
     }
+    .login-bar {
+      font-weight: normal;
+      span {
+        font-size: 18px;
+        
+        width: 100%;
+      }
+      .logout-link {
+        margin: 0;
+        display: block;
+      }
+    }
     @media (min-width: 641px) {
+      margin: 0;
+      text-align: center;
       width: 66.66%;
+      .login-bar {
+        float: right;
+        text-align: right;
+        span {
+          margin: 0.4em;
+          width: auto;
+        }
+        .logout-link {
+          border-left: 1px solid $white;
+          display: inline-block;
+          padding-left: 0.4em;
+        }
+      }
     }
   }
 }
 
-.login-bar {
-  float: right;
-  text-align: right;
-  // padding: 0.5em 1em;
-  // background: $grey-3;
 
-  span {
-    font-size: 18px;
-    margin: 0.4em;
-  }
-
-  .logout-link {
-    border-left: 1px solid $white;
-    padding-left: 0.4em;
-    margin-left: 0;
-  }
-}
 
 .edit-links {
   background: $grey-3;
