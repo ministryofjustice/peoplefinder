@@ -1,12 +1,12 @@
 = render partial: 'layouts/shared'
 - content_for :header_app_name do
   =link_to app_title, home_path
+  = render "shared/loginout"
 - content_for :content do
   #wrapper
     %main#content{role: 'main'}
       = yield :editing_alert
       = flash_messages
-      = render "shared/loginout"
       .inner-block
         %nav
           .breadcrumbs= yield :breadcrumbs
