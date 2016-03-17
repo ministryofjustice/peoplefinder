@@ -20,7 +20,7 @@
 
 %div.grid-wrapper.details
   %div.grid.grid-1-3
-    %div.inner-block.group-leader
+    %div.inner-block.group-leader{ class: (@group.leaderships.count > 1) ? 'multiple-leaders' : '' }
       - if @group.leaderships.count > 0
         %h3 Team #{'leader'.pluralize(@group.leaderships.count)}
         - @group.leaderships_by_person.each do |person, leaderships|
