@@ -179,7 +179,7 @@ strong {
 .heading-links {
   float: right;
   font-weight: normal;
-  margin-top: 0.55em;
+  margin-top: 0.6em;
   .small {
     float: left;
     font-size: 14px;
@@ -440,6 +440,9 @@ textarea.form-control {
     color: $error-colour;
   }
 }
+#global-header #log-in-out {
+  display: none;
+}
 #global-header .header-wrapper .header-global {
   .header-app-name {
     margin: 15px 0 0 15px;
@@ -455,12 +458,17 @@ textarea.form-control {
       font-weight: normal;
       span {
         font-size: 18px;
-        
         width: 100%;
+      }
+      a {
+        text-decoration: underline;
       }
       .logout-link {
         margin: 0;
         display: block;
+        a {
+          text-decoration: none;
+        }
       }
     }
     @media (min-width: 641px) {
