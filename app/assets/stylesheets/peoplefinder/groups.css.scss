@@ -2,15 +2,25 @@
 $focus-color: #FFBF47;
 
 .group-leader {
-  .image-background {
-    height: 217px;
+  h3 {
+    padding-bottom: 0.3em;
+    padding-top: 0;
+    line-height: 1em;
   }
-  @include maginot(217px, 217px);
+  .team-leader {
+    width: 50%;
+    float: left;
+  }
+  .image-background {
+    height: 100px;
+  }
+  @include maginot(100px, 100px, 50%);
 }
 
 .group-title {
   h1 {
     padding-bottom: 6px;
+    padding-top: 0;
   }
 
   h2 {

@@ -7,9 +7,6 @@
       .image-background
         = profile_image_tag @person, class: 'profile-page'
       .spacer-15
-      / %h4 Days worked
-      / %ul.working_days
-      /   = render 'working_days'
 
       - if @person.email.present? && !@preview
         - if current_user == @person
@@ -22,7 +19,7 @@
   .grid.grid-2-3
     .inner-block
       - @person.memberships.group_by(&:group).each do |group, memberships|
-        %h3 
+        %h3.job-title 
           #{memberships.map(&:role).select(&:present?).sort.join(', ')}
           %small in #{group}
         - path = memberships.first.path
