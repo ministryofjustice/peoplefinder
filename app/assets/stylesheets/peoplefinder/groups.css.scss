@@ -2,6 +2,8 @@
 $focus-color: #FFBF47;
 
 .group-leader {
+  height: auto;
+  overflow: hidden;
   h3 {
     padding-bottom: 0.3em;
     padding-top: 0;
@@ -53,6 +55,9 @@ $focus-color: #FFBF47;
     padding-bottom: 0.3em;
     line-height: 1em;
   }
+}
+.view-all-people {
+  margin-top: 20px;
 }
 .subgroup {
   margin-bottom: 20px;

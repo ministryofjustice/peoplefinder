@@ -11,10 +11,7 @@
       = @group.name
       - if @group.children.count > 0
         = link_to "view #{pluralize_with_delimiter @group.children.count, 'sub-team'}", '#teams', class: 'small'
-      - unless @group.leaf_node?
-        - if @all_people_count > 0 && @group.parent.present?
-          .view-all-people.small
-            = link_to "View #{ @all_people_count > 1 ? 'all' : '' } #{ pluralize_with_delimiter @all_people_count, 'person' } in #{ @group.name }", people_group_path(@group)
+      
 
 %div.grid-wrapper.details
   %div.grid.grid-1-3
@@ -24,6 +21,10 @@
         - @group.leaderships_by_person.each do |person, leaderships|
           = render partial: 'leaderships', object: leaderships, locals: { person: person }
     %div.inner-block
+      - unless @group.leaf_node?
+        - if @all_people_count > 0 && @group.parent.present?
+          .view-all-people.small
+            = link_to "View #{ @all_people_count > 1 ? 'all' : '' } people", people_group_path(@group)
       
 
   %div.grid.grid-2-3
