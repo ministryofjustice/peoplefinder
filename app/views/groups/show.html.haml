@@ -5,10 +5,6 @@
 = render partial: 'detail'
 
 - unless @group.leaf_node?
-  .spacer-25
-  - if @all_people_count > 0 && @group.parent.present?
-    .view-all-people
-      = link_to "View #{ @all_people_count > 1 ? 'all' : '' } #{ pluralize_with_delimiter @all_people_count, 'person' } in #{ @group.name }", people_group_path(@group)
   %h2#teams
     Teams within
     = @group.name

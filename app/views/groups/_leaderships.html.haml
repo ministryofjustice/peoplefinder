@@ -1,4 +1,5 @@
-.image-background
-  = profile_image_tag person
-%h4= link_to person, person
-.leader-role= leaderships.map(&:role).select(&:present?).sort.join(', ')
+.team-leader
+  .image-background
+    = profile_image_tag person
+  %h4= link_to person, person
+  .leader-role= leaderships.map(&:role).select(&:present?).sort.join(', ')
