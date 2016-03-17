@@ -12,10 +12,17 @@ module NeverLoggedInNotifier
 
   def self.send_reminder person
     person.reload
-    if person.send_never_logged_in_reminder?
+    if NeverLoggedInNotifier.send_never_logged_in_reminder? person
       ReminderMailer.never_logged_in(person).deliver_later
       person.update(last_reminder_email_at: Time.zone.now)
     end
+  end
+
+  def self.send_never_logged_in_reminder? person
+    within = 30.days
+    !person.reminder_email_sent?(within: within) &&
+      person.login_count == 0 &&
+      person.created_at.end_of_day < within.ago
   end
 
   private_class_method :send_reminder

@@ -369,33 +369,4 @@ RSpec.describe Person, type: :model do
     end
   end
 
-  describe 'send_never_logged_in_reminder?' do
-    context 'when person created within last 30 days' do
-      before { person.update(created_at: Time.now - 30.days) }
-      it 'returns false' do
-        expect(person.send_never_logged_in_reminder?).to be false
-      end
-    end
-
-    context 'when person created more than 30 days ago' do
-      before { person.update(created_at: Time.now - 31.days) }
-
-      it 'returns true when never logged in and no reminder sent within last 30 days' do
-        allow(person).to receive(:reminder_email_sent?).and_return false
-        expect(person.send_never_logged_in_reminder?).to be true
-      end
-
-      it 'returns false when logged in before' do
-        allow(person).to receive(:reminder_email_sent?).and_return false
-        person.login_count = 1
-        expect(person.send_never_logged_in_reminder?).to be false
-      end
-
-      it 'returns false when reminder sent within last 30 days' do
-        allow(person).to receive(:reminder_email_sent?).and_return true
-        expect(person.send_never_logged_in_reminder?).to be false
-      end
-    end
-  end
-
 end
