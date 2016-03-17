@@ -5,7 +5,7 @@ $focus-color: #FFBF47;
   height: auto;
   overflow: hidden;
   h3 {
-    padding-bottom: 0.3em;
+    padding-bottom: 0.7em;
     padding-top: 0;
     line-height: 1em;
   }
@@ -14,9 +14,15 @@ $focus-color: #FFBF47;
     float: left;
   }
   .image-background {
-    height: 100px;
+    height: 217px;
   }
-  @include maginot(100px, 100px, 50%);
+  @include maginot(217px, 217px);
+  &.multiple-leaders {
+    .image-background {
+      height: 135px;
+    }
+    @include maginot(135px, 135px);
+  }
 }
 
 .group-title {
@@ -33,6 +39,7 @@ $focus-color: #FFBF47;
   }
   .team-links {
     float: right;
+    font-weight: normal;
   }
 }
 
@@ -60,7 +67,7 @@ $focus-color: #FFBF47;
   }
 }
 .view-all-people {
-  margin-top: 20px;
+  margin: 1em 0;
 }
 .subgroup {
   margin-bottom: 20px;
