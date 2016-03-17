@@ -172,14 +172,10 @@ strong {
     color: $grey-1;
   }
   h1 {
-    // border: 0 !important;
     margin: 0;
   }
   .small {
     font-size: 14px;
-  }
-  .view-all-people {
-    float: right;
   }
 }
 
@@ -414,20 +410,26 @@ textarea.form-control {
     color: $error-colour;
   }
 }
-
-.header-app-name {
-  a {
-    color: $white;
-    &:hover {
-      text-decoration: none;
+#global-header .header-wrapper .header-global {
+  .header-app-name {
+    margin: 0 ;
+    a {
+      color: $white;
+      &:hover {
+        text-decoration: none;
+      }
+    }
+    @media (min-width: 641px) {
+      width: 66.66%;
     }
   }
 }
 
 .login-bar {
+  float: right;
   text-align: right;
-  padding: 0.5em 1em;
-  background: $grey-3;
+  // padding: 0.5em 1em;
+  // background: $grey-3;
 
   span {
     font-size: 18px;
@@ -435,7 +437,7 @@ textarea.form-control {
   }
 
   .logout-link {
-    border-left: 1px solid $black;
+    border-left: 1px solid $white;
     padding-left: 0.4em;
     margin-left: 0;
   }
