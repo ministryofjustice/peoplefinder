@@ -5,15 +5,17 @@
     %h2
       = @group.name
       - if @group.children.count > 0
-        = link_to "view #{pluralize_with_delimiter @group.children.count, 'sub-team'}", '#teams', class: 'small'
-        = link_to 'Edit this team', edit_group_path(@group), class: 'edit-this-team small'
+        %div.team-links
+          = link_to "View #{pluralize_with_delimiter @group.children.count, 'sub-team'}", '#teams', class: 'small'
+          = link_to 'Edit this team', edit_group_path(@group), class: 'edit-this-team small'
 
   - else
     %h1.no-line
       = @group.name
       - if @group.children.count > 0
-        = link_to "view #{pluralize_with_delimiter @group.children.count, 'sub-team'}", '#teams', class: 'small'
-        = link_to 'Edit this team', edit_group_path(@group), class: 'edit-this-team small'
+        %div.team-links
+          = link_to "View #{pluralize_with_delimiter @group.children.count, 'sub-team'}", '#teams', class: 'small'
+          = link_to 'Edit this team', edit_group_path(@group), class: 'edit-this-team small'
       
 
 %div.grid-wrapper.details

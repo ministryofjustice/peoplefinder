@@ -175,20 +175,17 @@ strong {
     margin: 0;
   }
   .small {
+    float: left;
     font-size: 14px;
+    margin: 1em 0.4em 0 0;
   }
   .edit-this-team {
-    float: right;
-    margin-top: 2em;
+    border-left: 1px solid;
+    padding-left: 0.4em;
   }
-  @media screen and (max-width: 640px) {
-    .edit-this-team {
-      margin: 0;
-      float: none;
-    }
+  @media screen and (min-width: 641px) {
     .small {
-      display: block;
-      margin-top: 1em;
+      margin-top: 2em;
     }
   }
 }
