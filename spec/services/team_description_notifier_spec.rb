@@ -1,4 +1,5 @@
 require 'rails_helper'
+require_relative 'shared_examples_for_notifiers'
 
 RSpec.describe TeamDescriptionNotifier, type: :service do
   include PermittedDomainHelper
@@ -14,28 +15,10 @@ RSpec.describe TeamDescriptionNotifier, type: :service do
   end
 
   let(:mailer) { double(ReminderMailer) }
+  let(:mailer_params) { [person, group] }
 
   before do
     group.update(description_reminder_email_at: description_reminder_email_at)
-  end
-
-  shared_examples 'sends email' do
-    context 'when config.send_reminder_emails true' do
-      it 'sends email to team leaders of group' do
-        allow(Rails.configuration).to receive(:send_reminder_emails).and_return true
-        mail = double
-        expect(ReminderMailer).to receive(:team_description_missing).with(person, group).and_return mail
-        expect(mail).to receive(:deliver_later)
-        subject.send_reminders
-      end
-    end
-    context 'when config.send_reminder_emails false' do
-      it 'does not send email' do
-        allow(Rails.configuration).to receive(:send_reminder_emails).and_return false
-        expect(ReminderMailer).not_to receive(:team_description_missing)
-        subject.send_reminders
-      end
-    end
   end
 
   describe 'send_reminders' do
@@ -43,12 +26,12 @@ RSpec.describe TeamDescriptionNotifier, type: :service do
 
       context 'no reminder email sent' do
         let(:description_reminder_email_at) { nil }
-        include_examples 'sends email'
+        include_examples 'sends reminder email', :team_description_missing
       end
 
       context 'reminder email sent over 30 days ago' do
         let(:description_reminder_email_at) { 31.days.ago }
-        include_examples 'sends email'
+        include_examples 'sends reminder email', :team_description_missing
       end
 
       context 'reminder email sent within last 30 days' do
