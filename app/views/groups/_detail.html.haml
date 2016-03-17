@@ -19,17 +19,19 @@
       
 
 %div.grid-wrapper.details
-  %div.grid.grid-1-3
-    %div.inner-block.group-leader{ class: (@group.leaderships.count > 1) ? 'multiple-leaders' : '' }
-      - if @group.leaderships.count > 0
+  - if @group.leaderships.count > 0
+    %div.grid.grid-1-3
+      
+      %div.inner-block.group-leader{ class: (@group.leaderships.count > 1) ? 'multiple-leaders' : '' }
+        
         %h3 Team #{'leader'.pluralize(@group.leaderships.count)}
         - @group.leaderships_by_person.each do |person, leaderships|
           = render partial: 'leaderships', object: leaderships, locals: { person: person }
-    %div.inner-block
-      - unless @group.leaf_node?
-        - if @all_people_count > 0 && @group.parent.present?
-          .view-all-people.small
-            = link_to "View #{ @all_people_count > 1 ? 'all' : '' } people", people_group_path(@group)
+      %div.inner-block
+        - unless @group.leaf_node?
+          - if @all_people_count > 0 && @group.parent.present?
+            .view-all-people.small
+              = link_to "View #{ @all_people_count > 1 ? 'all' : '' } people", people_group_path(@group)
       
 
   %div.grid.grid-2-3
@@ -37,4 +39,9 @@
       %h3 About the team
       .formatted-text
         = govspeak(@group.with_placeholder_default(:description))
-
+    - if @group.leaderships.count < 1
+      %div.inner-block
+        - unless @group.leaf_node?
+          - if @all_people_count > 0 && @group.parent.present?
+            .view-all-people.small
+              = link_to "View #{ @all_people_count > 1 ? 'all' : '' } people", people_group_path(@group)
