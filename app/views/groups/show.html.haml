@@ -8,9 +8,10 @@
   %h2#teams
     Teams within
     = @group.name
-    - if @people_outside_subteams_count > 0
-      .view-people-outside-subteams
-        = link_to "View #{ pluralize_with_delimiter @people_outside_subteams_count, 'person' } not assigned to a sub-team", people_outside_subteams_group_path(@group)
+    %div.heading-links.subheading-links
+      - if @people_outside_subteams_count > 0
+        = link_to "View #{ pluralize_with_delimiter @people_outside_subteams_count, 'person' } not assigned to a sub-team", people_outside_subteams_group_path(@group), class: 'small link-left'
+      = link_to 'Add new sub-team', new_group_group_path(@group), class: 'small'
   .grid-wrapper
     = render partial: "subgroup", collection: @group.children
 
