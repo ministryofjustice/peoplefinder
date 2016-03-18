@@ -25,7 +25,9 @@
       - @person.memberships.group_by(&:group).each do |group, memberships|
         %h3.job-title 
           #{memberships.map(&:role).select(&:present?).sort.join(', ')}
-          %small in #{group}
+          %small 
+            in 
+            = link_to "#{group}"
         - path = memberships.first.path
         - if path.length > 1
           %dl.inline-labels.role-and-location

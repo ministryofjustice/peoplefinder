@@ -30,6 +30,12 @@
   box-sizing: border-box;
 }
 
+#wrapper {
+  @media (min-width: 641px) {
+    padding-bottom: 40px;
+  }
+}
+
 footer {
   .footer-meta-inner {
     width: 100%!important;
@@ -77,7 +83,7 @@ footer {
 #last_update {
   float: right;
   @media screen and (min-width: 768px){
-    top: 75px;
+    top: 25px;
     position: relative;
   }
 }
@@ -204,9 +210,6 @@ strong {
       padding: 0.5em 0;
     }
   }
-}
-.subheading-links {
-
 }
 
 hr {
