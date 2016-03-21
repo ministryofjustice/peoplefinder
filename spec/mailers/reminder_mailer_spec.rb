@@ -64,18 +64,6 @@ RSpec.describe ReminderMailer do
     end
   end
 
-  describe '.inadequate_profile' do
-    let(:mail) { described_class.inadequate_profile(person).deliver_now }
-
-    include_examples 'sets email to and from correctly'
-
-    include_examples 'subject contains', 'Reminder: update your profile today'
-
-    include_examples 'body contains', "profile is 33% complete"
-
-    include_examples 'includes link to edit person'
-  end
-
   describe '.never_logged_in' do
     let(:mail) { described_class.never_logged_in(person).deliver_now }
 
