@@ -4,18 +4,18 @@
     %h1.no-line= @group.acronym
     %h2
       = @group.name
-      - if @group.children.count > 0
-        %div.heading-links
-          = link_to "View #{pluralize_with_delimiter @group.children.count, 'sub-team'}", '#teams', class: 'small'
-          = link_to 'Edit this team', edit_group_path(@group), class: 'small link-right'
+      %div.heading-links
+        - if @group.children.count > 0
+          = link_to "View #{pluralize_with_delimiter @group.children.count, 'sub-team'}", '#teams', class: 'small link-left'
+        = link_to 'Edit this team', edit_group_path(@group), class: 'small'
 
   - else
     %h1.no-line
       = @group.name
-      - if @group.children.count > 0
-        %div.heading-links
-          = link_to "View #{pluralize_with_delimiter @group.children.count, 'sub-team'}", '#teams', class: 'small'
-          = link_to 'Edit this team', edit_group_path(@group), class: 'small link-right'
+      %div.heading-links
+        - if @group.children.count > 0
+          = link_to "View #{pluralize_with_delimiter @group.children.count, 'sub-team'}", '#teams', class: 'small link-left'
+        = link_to 'Edit this team', edit_group_path(@group), class: 'small'
       
 
 %div.grid-wrapper.details

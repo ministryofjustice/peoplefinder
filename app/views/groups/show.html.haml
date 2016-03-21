@@ -7,7 +7,10 @@
 - unless @group.leaf_node?
   %h2#teams
     Teams within
-    = @group.name
+    - if @group.acronym?
+      = @group.acronym
+    - else
+      = @group.name
     %div.heading-links.subheading-links
       - if @people_outside_subteams_count > 0
         = link_to "View #{ pluralize_with_delimiter @people_outside_subteams_count, 'person' } not assigned to a sub-team", people_outside_subteams_group_path(@group), class: 'small link-left'
@@ -17,7 +20,10 @@
 
 - if @group.leaf_node?
   .title_with_edit
-    %h2 People in #{ @group.short_name }
+    %h2 
+      People in #{ @group.short_name }
+      %div.heading-links.subheading-links
+        = link_to 'Add new sub-team', new_group_group_path(@group), class: 'small'
   .grid-wrapper
     = render partial: "memberships/summary", collection: @group.non_leaderships
 
