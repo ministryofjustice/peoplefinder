@@ -543,6 +543,7 @@ textarea.form-control {
 }
 
 .formatted-text {
+  word-wrap: break-word;
   ul li {
     list-style-type: disc;
     margin-left: 20px;
@@ -559,3 +560,14 @@ textarea.form-control {
 }
 
 @import 'retinal_images';
+
+.no-desk {
+  @media screen and (min-width: 980px){
+    display: none;
+  }
+}
+.no-mobile {
+  @media screen and (max-width: 979px){
+    display: none;
+  }
+}

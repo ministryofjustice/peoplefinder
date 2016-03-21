@@ -11,14 +11,14 @@
       .image-background
         = profile_image_tag @person, class: 'profile-page'
       .spacer-15
-
-      - if @person.email.present? && !@preview
-        - if current_user == @person
-          = render partial: "completeness", locals: { person: @person }
-        - else
-          = render partial: "request_information", locals: { person: @person }
-          - if @person.incomplete?
+      .no-mobile
+        - if @person.email.present? && !@preview
+          - if current_user == @person
             = render partial: "completeness", locals: { person: @person }
+          - else
+            = render partial: "request_information", locals: { person: @person }
+            - if @person.incomplete?
+              = render partial: "completeness", locals: { person: @person }
             
   .grid.grid-2-3
     .inner-block
@@ -73,6 +73,15 @@
       %ul.working_days
         = render 'working_days'
 
+  .grid.grid-1-3.no-desk
+    .inner-block
+      - if @person.email.present? && !@preview
+        - if current_user == @person
+          = render partial: "completeness", locals: { person: @person }
+        - else
+          = render partial: "request_information", locals: { person: @person }
+          - if @person.incomplete?
+            = render partial: "completeness", locals: { person: @person }
 
 
 - unless @versions.nil?
