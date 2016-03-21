@@ -249,16 +249,6 @@ Software metrics by [Code Climate](https://codeclimate.com/github/ministryofjust
 
 If the Peoplefinder is to be successful, profiles need to be populated and maintained.
 
-### Inadequate profiles
-
-To view a list of people whose profiles are deemed to be 'inadequate' (not having a phone number, location and photo):
-
-`rake peoplefinder:inadequate_profiles`
-
-To send emails prompting people to complete their profiles:
-
-`rake peoplefinder:inadequate_profile_reminders`
-
 ##Environment Variables
 
 ###Support
