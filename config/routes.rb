@@ -13,6 +13,7 @@ Rails.application.routes.draw do
     resources :groups, only: [:new]
     get :people, on: :member, action: 'all_people'
     get :"people-outside-subteams", on: :member, action: 'people_outside_subteams'
+    get :organogram, on: :member, action: 'organogram'
   end
 
   resources :people do
