@@ -21,7 +21,7 @@ feature 'Make a suggestion about a profile', js: true do
     omni_auth_log_in_as(me.email)
     javascript_log_in
     visit person_path(subject)
-    click_link 'Help improve this profile'
+    click_link 'Help improve this profile', match: :first
   end
 
   before(:each, user: :readonly) do
@@ -30,7 +30,7 @@ feature 'Make a suggestion about a profile', js: true do
   end
 
   scenario 'Readonly user tries to improve profile', js: false, user: :readonly do
-    click_link 'Help improve this profile'
+    click_link 'Help improve this profile', match: :first
     expect(Pages::Login.new).to be_displayed
     expect(page).to have_text('Log in to edit People Finder')
   end
