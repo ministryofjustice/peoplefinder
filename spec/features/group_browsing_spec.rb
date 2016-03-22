@@ -75,14 +75,14 @@ feature 'Group browsing' do
     scenario 'viewing text on page' do
       visit group_path(team)
       expect(page).to have_text("Teams within #{team.name}")
-      expect(page).to have_link("View all 6 people in #{team.name}")
+      expect(page).to have_link("View all people")
       expect(page).to have_link("View 3 people not assigned to a sub-team")
       expect(page).to have_text("#{subteam.completion_score}% of profile information completed")
     end
 
     scenario 'following the view all people link' do
       visit group_path(team)
-      click_link("View all 6 people in #{team.name}")
+      click_link("View all people")
 
       expect(page).to have_title("People in #{team.name} - #{app_title}")
       within('.breadcrumbs') do
