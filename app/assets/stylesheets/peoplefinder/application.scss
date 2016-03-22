@@ -188,15 +188,15 @@ strong {
   margin-top: 0.6em;
   .small {
     float: left;
-    font-size: 14px;
+    font-size: 16px;
     margin: 0 0.4em 0 0;
   }
   .link-left {
-    border-right: 1px solid;
+    border-right: 1px solid #000;
     padding-right: 0.4em;
   }
   .link-right {
-    border-left: 1px solid;
+    border-left: 1px solid #000;
     padding-left: 0.4em;
   }
   @media screen and (max-width: 641px) {
