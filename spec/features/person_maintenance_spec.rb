@@ -212,13 +212,13 @@ feature 'Person maintenance' do
 
       scenario 'Editing my own profile from a "complete your profile" link' do
         visit person_path(person)
-        click_link 'complete your profile'
+        click_link 'complete your profile', match: :first
         expect(page).to have_text(completion_prompt_text)
       end
 
       scenario 'Editing another person\'s profile from a "complete this profile" link' do
         visit person_path(another_person)
-        click_link 'complete this profile'
+        click_link 'complete this profile', match: :first
         expect(page).to have_text(completion_prompt_text)
       end
 
@@ -343,7 +343,7 @@ feature 'Person maintenance' do
       scenario 'when it is not complete' do
         visit person_path(another_person)
         expect(page).to have_text('Profile completeness')
-        click_link 'complete this profile'
+        click_link 'complete this profile', match: :first
         expect(login_page).to be_displayed
       end
     end
