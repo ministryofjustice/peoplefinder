@@ -42,10 +42,27 @@ feature "Person maintenance" do
     expect(page).to have_selector('.team-led', text: 'Digital Justice team')
 
     fill_in 'Job title', with: 'Head Honcho'
+
     click_button 'Save', match: :first
 
     membership = Person.last.memberships.last
     expect(membership.role).to eql('Head Honcho')
+    expect(page).to have_selector('.job-title', text: 'Head Honcho in Digital Justice')
+  end
+
+  scenario 'Leaving the job title blank', js: true do
+    person = create_person_in_digital_justice
+
+    javascript_log_in
+    visit edit_person_path(person)
+    expect(page).to have_selector('.team-led', text: 'Digital Justice team')
+
+    fill_in 'Job title', with: ''
+
+    click_button 'Save', match: :first
+
+    membership = Person.last.memberships.last
+    within('.profile') { expect(page).not_to have_selector('.job-title') }
   end
 
   scenario 'Changing team membership via clicking "Back"', js: true do
