@@ -12,6 +12,9 @@ $focus-color: #FFBF47;
   .team-leader {
     width: 50%;
     float: left;
+    &:nth-child(2n+0){
+      clear: left;
+    }
   }
   .image-background {
     height: 217px;
