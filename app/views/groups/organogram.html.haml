@@ -1,5 +1,47 @@
-%h1 Organogram
+- content_for :breadcrumbs do
+  = breadcrumbs(Home.path + @group.path + ['Organogram'])
 
+- @page_title = @group
+.organogram
+  .group-title
+    - if @group.acronym?
+      %h1
+        = @group.acronym 
+        team organogram
+    - else
+      %h1
+        = @group.name 
+        team organogram
 
-.grid-wrapper
-  = render partial: "people/summary", collection: @group.people_outside_subteams
+  - if @group.leaderships.present?
+    %div.inner-block
+      %div.grid-wrapper.leaders
+        %h2 Team leaders
+        - @group.leaderships_by_person.each do |person, leaderships|
+          %div.leader= render partial: 'leaderships', object: leaderships, locals: { person: person }
+
+  - if @group.all_people.present?
+    %div.inner-block
+      %div.grid-wrapper.people
+        %h2 People
+        - @group.all_people.each do |person, summary|
+          %div.person
+            .image-background
+              = profile_image_tag person
+            %h4= link_to person, person
+            .role= person.role_names
+            .tel= person.primary_phone_number
+
+  - if @group.children.present?
+    %div.inner-block
+      %div.grid-wrapper.teams
+        %h2 Teams
+        - @group.children.each do |subgroup|
+          %div.team
+            .image-background
+              .maginot
+                =image_tag ('medium_team.png')
+            %h3
+              = link_to subgroup
+
+  

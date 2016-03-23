@@ -38,3 +38,4 @@
         - if @all_people_count > 0 && @group.parent.present?
           .view-all-people.small
             = link_to "View #{ @all_people_count > 1 ? 'all' : '' } people", people_group_path(@group)
+      = link_to "View organogram", organogram_group_path(@group)
