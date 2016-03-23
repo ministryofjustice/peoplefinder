@@ -1,7 +1,6 @@
 .title
   %h1
-    = @page_title 
-    = @person
+    = @page_title = @person
     %div.heading-links
       = link_to 'Edit this profile', edit_person_path(@person), class: 'small'
 
