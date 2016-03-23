@@ -4,6 +4,7 @@ RSpec.describe GroupSearch, elastic: true do
   let!(:department) { create(:department, name: 'Department name') }
   let!(:team) { create(:group, name: 'Team name', parent: department) }
   let!(:civil_families_tribunal) { create(:group, name: 'Civil, Families & Tribunal', acronym: 'CFT', parent: department) }
+  let!(:civil_families_court) { create(:group, name: 'Civil and Families Court', acronym: 'CFT', parent: team) }
 
   let!(:another_department) { create(:department, name: 'Another department name') }
   let!(:another_team) { create(:group, name: 'Team name', parent: another_department) }
@@ -18,17 +19,17 @@ RSpec.describe GroupSearch, elastic: true do
     expect(results).to include(another_team)
   end
 
-  it 'returns matches when query is exact match for group acronym' do
-    expect(search('CFT')).to eq [civil_families_tribunal]
+  it 'returns hierarchy ordered matches when query is exact match for group acronym' do
+    expect(search('CFT')).to eq [civil_families_tribunal, civil_families_court]
   end
 
   it 'returns empty array when query is not exact match for group name' do
     expect(search('Team number one')).to eq []
   end
 
-  it 'returns matches when all words in query are in a group name' do
-    expect(search('civil')).to eq [civil_families_tribunal]
-    expect(search('civil families')).to eq [civil_families_tribunal]
+  it 'returns hierarchy ordered matches when all words in query are in a group name' do
+    expect(search('civil')).to eq [civil_families_tribunal, civil_families_court]
+    expect(search('civil families')).to eq [civil_families_tribunal, civil_families_court]
     expect(search('civil tribunal')).to eq [civil_families_tribunal]
   end
 
