@@ -1,8 +1,9 @@
 .title
   %h1
     = @page_title = @person
-    %div.heading-links
-      = link_to 'Edit this profile', edit_person_path(@person), class: 'small'
+    - if @person.persisted?
+      %div.heading-links
+        = link_to 'Edit this profile', edit_person_path(@person), class: 'small'
 
 .grid-wrapper.profile
   .grid.grid-1-3
@@ -18,14 +19,14 @@
             = render partial: "request_information", locals: { person: @person }
             - if @person.incomplete?
               = render partial: "completeness", locals: { person: @person }
-            
+
   .grid.grid-2-3
     .inner-block
       - @person.memberships.group_by(&:group).each do |group, memberships|
-        %h3.job-title 
+        %h3.job-title
           #{memberships.map(&:role).select(&:present?).sort.join(', ')}
-          %small 
-            in 
+          %small
+            in
             = link_to "#{group}"
         - path = memberships.first.path
         - if path.length > 1
