@@ -148,6 +148,10 @@ Performance/TimesMap:
   Exclude:
     - 'spec/**/*'
 
+Style/ZeroLengthPredicate:
+  Exclude:
+    - 'Gemfile'
+
 RSpec/NotToNot:
   Enabled: false
 
