@@ -54,6 +54,7 @@ class PersonSearch
 
   def clean_query query
     query.
+      gsub(/[^[[:alnum:]]’\']/, ' ').
       tr(',', ' ').
       squeeze(' ').
       strip
