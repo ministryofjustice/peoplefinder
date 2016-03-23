@@ -61,7 +61,6 @@ feature "Person maintenance" do
 
     click_button 'Save', match: :first
 
-    membership = Person.last.memberships.last
     within('.profile') { expect(page).not_to have_selector('.job-title') }
   end
 
