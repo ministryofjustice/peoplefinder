@@ -23,11 +23,12 @@
   .grid.grid-2-3
     .inner-block
       - @person.memberships.group_by(&:group).each do |group, memberships|
-        %h3.job-title
-          #{memberships.map(&:role).select(&:present?).sort.join(', ')}
-          %small
-            in
-            = link_to "#{group}"
+        -if memberships.first.role.length > 1
+          %h3.job-title 
+            #{memberships.map(&:role).select(&:present?).sort.join(', ')}
+            %small 
+              in 
+              = link_to "#{group}"
         - path = memberships.first.path
         - if path.length > 1
           %dl.inline-labels.role-and-location
@@ -43,7 +44,7 @@
           %dt Location
           %dd= @person.location
 
-      %dl.inline-labels.line-above
+      %dl.inline-labels
         - if @person.email.present?
           %dt= t(:email, scope: 'activerecord.attributes.person')
           %dd= mail_to(@person.email)
