@@ -16,16 +16,20 @@ class GroupSearch
   end
 
   def exact_matches
-    Group.where('name = ? OR acronym = ?', @query, @query).to_a
+    results = Group.where('name = ? OR acronym = ?', @query, @query)
+    hierarchy_ordered results
   end
 
   def partial_matches
     words = words(@query)
-    search = Group
-    words.each do |word|
-      search = search.where('name ILIKE ?', "%#{word}%")
+    results = words.inject(Group) do |search, word|
+      search.where('name ILIKE ?', "%#{word}%")
     end
-    search
+    hierarchy_ordered results
+  end
+
+  def hierarchy_ordered results
+    results.sort_by(&:ancestry_depth)
   end
 
 end
