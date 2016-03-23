@@ -23,7 +23,7 @@
   .grid.grid-2-3
     .inner-block
       - @person.memberships.group_by(&:group).each do |group, memberships|
-        -if memberships.first.role.length > 1
+        -if memberships.first.role.present?
           %h3.job-title 
             #{memberships.map(&:role).select(&:present?).sort.join(', ')}
             %small 
