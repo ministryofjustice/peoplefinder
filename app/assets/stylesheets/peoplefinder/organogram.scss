@@ -1,0 +1,40 @@
+.organogram {
+  text-align: center;
+  h2 {
+    margin-top: 0;
+  }
+  .leader, .person, .team {
+    display: inline-block;
+    margin: 0 10px 30px;
+    padding: 0;
+    vertical-align: top;
+    width: auto;
+    @include maginot(80px, 80px, 50%);
+    .grid {
+      display: inline-block;
+      float: none;
+      width: auto;
+    }
+  }
+  .team-member {
+    min-height: 0;
+  }
+  .image-background {
+    height: 80px;
+    .maginot {
+      margin: 0 auto;
+    }
+  }
+  .leader {
+    .image-background {
+      height: 150px;
+    }
+    @include maginot(150px, 150px, 50%);
+  }
+  .person, .team {
+    width: 130px;
+    h3 {
+      font-size: 19px;
+    }
+  }
+}

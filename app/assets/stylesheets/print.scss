@@ -1,0 +1,41 @@
+.login-bar, .breadcrumbs, .search-box, .edit-links, #footer, #last_update {
+  display: none;
+}
+
+.organogram {
+  .leaders {
+    .person {
+      .image-background {
+        height: 80px;
+      }
+      .maginot {
+        width: 80px;
+        .barrier, img {
+          width: 80px;
+          height: 80px;
+        }
+        img {
+          clip: rect(0px, 80px, 80px, 0px);
+        }
+      }
+    }
+  }
+  .person, .team {
+    .image-background {
+      height: 50px;
+    }
+    .maginot {
+      width: 50px;
+      .barrier, img {
+        width: 50px;
+        height: 50px;
+      }
+      img {
+        clip: rect(0px, 50px, 50px, 0px);
+      }
+    }
+  }
+  .team {
+    width: 80px;
+  }
+}
