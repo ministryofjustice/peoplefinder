@@ -34,7 +34,10 @@
 
                   - @person.memberships.group_by(&:group).each do |group, memberships|
                     %dt Team
-                    %dd= group.name
+                    %dd
+                      = group.name
+                      - if memberships.any?(&:leader)
+                        = '- you are a team leader'
 
                     - roles = memberships.map(&:role).select(&:present?).sort.join(', ')
                     %dt Role

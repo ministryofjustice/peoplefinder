@@ -89,13 +89,11 @@ RSpec.describe ReminderMailer do
     include_examples 'includes link to token login'
 
     it 'includes profile details' do
-      team_name = group.name
-
+      team_name = group.name # also creates group
       %w(html plain).each do |type|
         text = get_message_part(mail, type)
-        expect(text).to have_text(team_name)
         expect(text).to have_text('Name John Coe')
-        expect(text).to have_text('Team Group-0001')
+        expect(text).to have_text("Team #{team_name} - you are a team leader")
         expect(text).to have_text('Role -')
         expect(text).to have_text('Location -')
         expect(text).to have_text('Primary phone number -')
