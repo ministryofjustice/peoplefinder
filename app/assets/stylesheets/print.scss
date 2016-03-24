@@ -1,22 +1,30 @@
-.login-bar, .breadcrumbs, .search-box, .edit-links, #footer, #last_update {
+#global-header, .login-bar, .breadcrumbs, .search-box, .edit-links, #footer, #last_update {
   display: none;
 }
 
 .organogram {
-  .leaders {
-    .person {
-      .image-background {
+  .group-title {
+    margin: 0;
+  }
+  .leader, .person, .team {
+    font-size: 12px;
+    margin-bottom: 10px;
+    h3 {
+      font-size: 12px;
+    }
+  }
+  .leader {
+    .image-background {
+      height: 80px;
+    }
+    .maginot {
+      width: 80px;
+      .barrier, img {
+        width: 80px;
         height: 80px;
       }
-      .maginot {
-        width: 80px;
-        .barrier, img {
-          width: 80px;
-          height: 80px;
-        }
-        img {
-          clip: rect(0px, 80px, 80px, 0px);
-        }
+      img {
+        clip: rect(0px, 80px, 80px, 0px);
       }
     }
   }
