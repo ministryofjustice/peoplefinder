@@ -1,5 +1,16 @@
 .organogram {
+  .search-box, .new-profile, #last_update {
+    display: none;
+  }
+}
+.organogram-content {
+  #print {
+    float: right;
+  }
   text-align: center;
+  .group-title h1 {
+    border: none;
+  }
   h2 {
     margin-top: 0;
   }

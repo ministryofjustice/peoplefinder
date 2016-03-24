@@ -1,8 +1,13 @@
-#global-header, .login-bar, .breadcrumbs, .search-box, .edit-links, #footer, #last_update {
-  display: none;
+.organogram {
+  #global-header, .login-bar, .breadcrumbs, .search-box, .edit-links, #footer, #last_update, .new-profile {
+    display: none;
+  }
 }
 
-.organogram {
+.organogram-content {
+  #print {
+    display: none;
+  }
   .group-title {
     margin: 0;
   }
