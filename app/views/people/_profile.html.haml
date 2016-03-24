@@ -1,5 +1,9 @@
 .title
-  %h1= @page_title = @person
+  %h1
+    = @page_title = @person
+    - if @person.persisted?
+      %div.heading-links
+        = link_to 'Edit this profile', edit_person_path(@person), class: 'small'
 
 .grid-wrapper.profile
   .grid.grid-1-3
@@ -7,14 +11,24 @@
       .image-background
         = profile_image_tag @person, class: 'profile-page'
       .spacer-15
-      %h4 Days worked
-      %ul.working_days
-        = render 'working_days'
+      .no-mobile
+        - if @person.email.present? && !@preview
+          - if current_user == @person
+            = render partial: "completeness", locals: { person: @person }
+          - else
+            - if @person.incomplete?
+              = render partial: "completeness", locals: { person: @person }
+            = render partial: "request_information", locals: { person: @person }
 
   .grid.grid-2-3
     .inner-block
       - @person.memberships.group_by(&:group).each do |group, memberships|
-        %h3= memberships.map(&:role).select(&:present?).sort.join(', ')
+        -if memberships.first.role.present?
+          %h3.job-title 
+            #{memberships.map(&:role).select(&:present?).sort.join(', ')}
+            %small 
+              in 
+              = link_to "#{group}"
         - path = memberships.first.path
         - if path.length > 1
           %dl.inline-labels.role-and-location
@@ -56,13 +70,20 @@
         %h5 Extra information:
         %p= @person.description
 
-- if @person.email.present? && !@preview
-  - if current_user == @person
-    = render partial: "completeness", locals: { person: @person }
-  - else
-    = render partial: "request_information", locals: { person: @person }
-    - if @person.incomplete?
-      = render partial: "completeness", locals: { person: @person }
+      %h4 Days worked
+      %ul.working_days
+        = render 'working_days'
+
+  .grid.grid-1-3.no-desk
+    .inner-block
+      - if @person.email.present? && !@preview
+        - if current_user == @person
+          = render partial: "completeness", locals: { person: @person }
+        - else
+          = render partial: "request_information", locals: { person: @person }
+          - if @person.incomplete?
+            = render partial: "completeness", locals: { person: @person }
+
 
 - unless @versions.nil?
   %h1 Audit Log

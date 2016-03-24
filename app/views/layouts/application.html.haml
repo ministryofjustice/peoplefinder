@@ -1,21 +1,25 @@
 = render partial: 'layouts/shared'
 - content_for :header_app_name do
   =link_to app_title, home_path
+  = render "shared/loginout"
 - content_for :content do
   #wrapper
     %main#content{role: 'main'}
       = yield :editing_alert
       = flash_messages
-      = render "shared/loginout"
-      .inner-block
-        %nav
-          .breadcrumbs= yield :breadcrumbs
+      .grid-wrapper
+        .grid.grid-3-3
+          .inner-block
+            %nav
+              .breadcrumbs= yield :breadcrumbs
       - if logged_in? && !@login_screen && !@editing_mode
         .grid-wrapper
           .grid.grid-2-3
             .inner-block= render 'shared/search'
-          .grid.grid-1-3
-            .inner-block= render 'shared/edit_links'
+          .grid.grid-1-3.new-profile
+            .inner-block
+              - if can_add_person_here?
+                = link_to 'Create a new profile', new_person_path, class: 'add-new-person'
       .inner-block
         = yield
         #report_link

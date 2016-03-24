@@ -30,6 +30,12 @@
   box-sizing: border-box;
 }
 
+#wrapper {
+  @media (min-width: 641px) {
+    padding-bottom: 40px;
+  }
+}
+
 footer {
   .footer-meta-inner {
     width: 100%!important;
@@ -77,7 +83,7 @@ footer {
 #last_update {
   float: right;
   @media screen and (min-width: 768px){
-    top: 75px;
+    top: 25px;
     position: relative;
   }
 }
@@ -145,6 +151,9 @@ h2.line-above, h2.h3.line-above, h3.line-above, .line-above {
   border-top: 1px solid $blackish;
   border-bottom: 0;
 }
+.line-below {
+  border-bottom: 1px solid $blackish;
+}
 
 h1.h3, h2.h3 {
   font-size: 24px;
@@ -164,14 +173,42 @@ strong {
 }
 
 .group-title {
-  margin-bottom: 30px;
-
-  h1 {
-    border: 0 !important;
-    margin: 30px 0 0 0;
+  margin: 30px 0;
+  .lede {
+    color: $grey-1;
   }
+  h1 {
+    margin: 0;
+  }
+}
+
+.heading-links {
+  float: right;
+  font-weight: normal;
+  margin-top: 0.6em;
   .small {
-    font-size: 14px;
+    float: left;
+    font-size: 16px;
+    margin: 0 0.4em 0 0;
+  }
+  .link-left {
+    border-right: 1px solid #000;
+    padding-right: 0.4em;
+  }
+  .link-right {
+    border-left: 1px solid #000;
+    padding-left: 0.4em;
+  }
+  @media screen and (max-width: 641px) {
+    display: block;
+    margin: 1em 0;
+    width: 100%;
+    .small {
+      display: block;
+      width: 100%;
+      border: none;
+      padding: 0.5em 0;
+    }
   }
 }
 
@@ -406,30 +443,69 @@ textarea.form-control {
     color: $error-colour;
   }
 }
-
-.header-app-name {
-  a {
-    color: $white;
-    &:hover {
-      text-decoration: none;
+#global-header #log-in-out {
+  display: none;
+}
+#global-header .header-wrapper .header-global {
+  .header-app-name {
+    margin: 15px 0 0 15px;
+    text-align: left;
+    width: 100%;
+    a {
+      color: $white;
+      &:hover {
+        text-decoration: none;
+      }
+    }
+    .login-bar {
+      font-weight: normal;
+      span {
+        font-size: 18px;
+        width: 100%;
+      }
+      a {
+        text-decoration: underline;
+      }
+      .logout-link {
+        margin: 0;
+        display: block;
+        a {
+          text-decoration: none;
+        }
+      }
+    }
+    @media (min-width: 641px) {
+      margin: 0;
+      text-align: center;
+      width: 66.66%;
+      .login-bar {
+        float: right;
+        text-align: right;
+        span {
+          margin: 0.4em;
+          width: auto;
+        }
+        .logout-link {
+          border-left: 1px solid $white;
+          display: inline-block;
+          padding-left: 0.4em;
+        }
+      }
     }
   }
 }
 
-.login-bar {
+
+.new-profile {
   text-align: right;
-  padding: 0.5em 1em;
-  background: $grey-3;
-
-  span {
-    font-size: 18px;
-    margin: 0.4em;
-  }
-
-  .logout-link {
-    border-left: 1px solid $black;
-    padding-left: 0.4em;
-    margin-left: 0;
+  float: right;
+  a {
+    display: inline-block;
+    margin-top: 13px;
+    padding: 2px 0 10px 30px;
+    &.add-new-person {
+      background: image-url('icon_add_person.png') scroll no-repeat 0 0;
+    }
   }
 }
 
@@ -467,6 +543,7 @@ textarea.form-control {
 }
 
 .formatted-text {
+  word-wrap: break-word;
   ul li {
     list-style-type: disc;
     margin-left: 20px;
@@ -483,3 +560,14 @@ textarea.form-control {
 }
 
 @import 'retinal_images';
+
+.no-desk {
+  @media screen and (min-width: 980px){
+    display: none;
+  }
+}
+.no-mobile {
+  @media screen and (max-width: 979px){
+    display: none;
+  }
+}

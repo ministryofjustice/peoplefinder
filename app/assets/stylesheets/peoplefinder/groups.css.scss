@@ -2,15 +2,36 @@
 $focus-color: #FFBF47;
 
 .group-leader {
-  .image-background {
-    height: 300px;
+  height: auto;
+  overflow: hidden;
+  h3 {
+    padding-bottom: 0.7em;
+    padding-top: 0;
+    line-height: 1em;
   }
-  @include maginot(300px, 300px);
+  .team-leader {
+    width: 50%;
+    float: left;
+    &:nth-child(2n+0){
+      clear: left;
+    }
+  }
+  .image-background {
+    height: 217px;
+  }
+  @include maginot(217px, 217px);
+  &.multiple-leaders {
+    .image-background {
+      height: 135px;
+    }
+    @include maginot(135px, 135px);
+  }
 }
 
 .group-title {
   h1 {
     padding-bottom: 6px;
+    padding-top: 0;
   }
 
   h2 {
@@ -43,6 +64,9 @@ $focus-color: #FFBF47;
     padding-bottom: 0.3em;
     line-height: 1em;
   }
+}
+.view-all-people {
+  margin: 1em 0;
 }
 .subgroup {
   margin-bottom: 20px;

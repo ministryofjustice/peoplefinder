@@ -1,5 +1,5 @@
 = form_tag '/search', method: :get, class: 'search-box' do
-  %h2.search= t('home.search_heading')
+  / %h2.search= t('home.search_heading')
   %label.visuallyhidden{ for: :query }= t('shared.search.label')
   = text_field_tag :query, @query, placeholder: t('shared.search.placeholder'), class: 'form-control'
   = submit_tag 'Submit search', class: 'submit-button'

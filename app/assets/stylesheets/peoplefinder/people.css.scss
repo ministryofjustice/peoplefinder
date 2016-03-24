@@ -21,6 +21,12 @@ ul.working_days {
   }
 }
 
+.title {
+  h1 {
+    padding: 0;
+  }
+}
+
 .profile {
   min-height: 300px;
   .image-background {
@@ -50,6 +56,11 @@ ul.working_days {
   .role-and-location {
     dd, dt {
       margin-bottom: 0.4em;
+    }
+  }
+  .job-title {
+    small {
+      font-size: 16px;
     }
   }
 }
