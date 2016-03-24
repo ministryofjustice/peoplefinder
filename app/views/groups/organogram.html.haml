@@ -1,7 +1,7 @@
 - content_for :breadcrumbs do
   = breadcrumbs(Home.path + @group.path + ['Organogram'])
 
-- @page_title = @group
+- @page_title = "#{ @group.name } Organogram"
 .organogram
   .group-title
     - if @group.acronym?
@@ -41,5 +41,5 @@
             .image-background
               .maginot
                 =image_tag ('medium_team.png')
-            %h3
-              = link_to subgroup
+            %a{ href: url_for(subgroup) }
+              %h3= subgroup
