@@ -3,6 +3,7 @@
 
 - @page_title = "#{ @group.name } Organogram"
 - content_for :body_classes, 'organogram'
+
 .organogram-content
   #print
     %a{ href: 'javascript:window.print();' } Print
@@ -48,3 +49,4 @@
                 =image_tag ('medium_team.png')
             %a{ href: url_for(subgroup) }
               %h3= subgroup
+
