@@ -2,6 +2,7 @@ class PersonSearch
 
   def initialize query
     @query = clean_query query
+    @email_query = query.strip.downcase
     @max = 100
   end
 
@@ -24,7 +25,7 @@ class PersonSearch
   private
 
   def email_search
-    Person.find_by_email(@query.downcase)
+    Person.find_by_email(@email_query)
   end
 
   def perform_searches
@@ -53,6 +54,7 @@ class PersonSearch
 
   def clean_query query
     query.
+      gsub(/[^[[:alnum:]]’\']/, ' ').
       tr(',', ' ').
       squeeze(' ').
       strip

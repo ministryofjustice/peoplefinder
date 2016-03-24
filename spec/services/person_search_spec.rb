@@ -27,6 +27,12 @@ RSpec.describe PersonSearch, elastic: true do
   let!(:abe) do
     create(:person, given_name: 'Abe', surname: 'Predovic')
   end
+  let!(:oleary) do
+    create(:person, given_name: 'Denis', surname: "O'Leary")
+  end
+  let!(:oleary2) do
+    create(:person, given_name: 'Denis', surname: "O’Leary")
+  end
 
   let!(:digital_services) { create(:group, name: 'Digital Services') }
   let!(:membership) { bob.memberships.create(group: digital_services, role: 'Cleaner') }
@@ -86,6 +92,34 @@ RSpec.describe PersonSearch, elastic: true do
       results = search_for('weekends at petty france office')
       expect(results).to_not include(alice)
       expect(results).to include(bob)
+    end
+
+    it 'searches ignoring * in search term' do
+      results = search_for('Alice *')
+      expect(results).to include(alice)
+    end
+
+    it 'searches ignoring " at start of search term' do
+      results = search_for('"Alice ')
+      expect(results).to include(alice)
+    end
+
+    it 'searches ignoring " at end of search term' do
+      results = search_for('Alice"')
+      expect(results).to include(alice)
+    end
+
+    it 'searches ignoring " in middle of search term' do
+      results = search_for('Alice" Andrews')
+      expect(results).to include(alice)
+    end
+
+    it 'searches apostrophe in name' do
+      results = search_for("O'Leary")
+      expect(results).to include(oleary)
+
+      results = search_for("O’Leary")
+      expect(results).to include(oleary2)
     end
 
     it 'searches by community' do
