@@ -249,8 +249,6 @@ Software metrics by [Code Climate](https://codeclimate.com/github/ministryofjust
 
 If the Peoplefinder is to be successful, profiles need to be populated and maintained.
 
-##Environment Variables
-
 ###Support
 
 A support email address is set as SUPPORT_EMAIL.
