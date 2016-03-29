@@ -28,7 +28,8 @@
             #{memberships.map(&:role).select(&:present?).sort.join(', ')}
             %small 
               in 
-              = link_to "#{group}"
+              %a{ href: url_for(group) } 
+                = group
         - path = memberships.first.path
         - if path.length > 1
           %dl.inline-labels.role-and-location
