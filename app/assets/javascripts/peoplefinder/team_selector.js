@@ -6,6 +6,7 @@ var teamSelector = function teamSelector(isPerson, obj){
   this.editButton = this.selector.find('a.show-editable-fields');
   this.newTeam = this.selector.find('.new-team');
   this.newTeamInput = this.newTeam.find('.new-team-name');
+  this.originalTeamLedQuestion = null;
 
   /* Listen for events */
   this.initEvents = function(){
@@ -222,7 +223,20 @@ var teamSelector = function teamSelector(isPerson, obj){
   /* Set the Team leader heading and hint spans with the given team name */
   this.setTeamName = function(teamName){
     if(this.isPerson){
+      if(this.originalTeamLedQuestion) {
+        this.selector.find('.team-leader legend').html(this.originalTeamLedQuestion);
+        this.originalTeamLedQuestion = null;
+      }
       this.selector.find('.team-led').text(teamName + ' team');
+      if(teamName === 'Ministry of Justice'){
+        var legend = this.selector.find('.team-leader legend');
+        this.originalTeamLedQuestion = legend.html();
+        if(legend.text().indexOf('you')) {
+          legend.text('Are you the Permanent Secretary?');
+        } else {
+          legend.text('Is this person the Permanent Secretary?');
+        }
+      }
     }
   };
 
@@ -358,11 +372,11 @@ $(function (){
   // For each element, set the team name on team leader text and create a new teamSelector
   $(selector).each(function (i, obj){
     $(obj).addClass('index'+i);
+    var team = new teamSelector(isPerson, obj);
     if(isPerson){
       teamName = $(obj).find('.editable-summary ol li:last-child').text();
-      $(obj).find('.team-led').text(teamName + ' team');
+      team.setTeamName(teamName);
     }
-    var team = new teamSelector(isPerson, obj);
     team.initEvents();
   });
 });
