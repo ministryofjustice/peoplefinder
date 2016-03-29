@@ -1,4 +1,4 @@
-@mixin maginot($width, $height, $border-radius:"") {
+@mixin maginot($width, $height) {
   .maginot {
     position: relative;
     width: $width;
@@ -8,9 +8,6 @@
       height: $height;
       top: 0;
       left: 0;
-      -webkit-border-radius: $border-radius;
-      -moz-border-radius: $border-radius;
-      border-radius: $border-radius;
     }
     img {
       clip: rect(0px, $width, $height, 0px);
