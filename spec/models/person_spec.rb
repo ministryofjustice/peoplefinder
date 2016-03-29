@@ -50,6 +50,10 @@ RSpec.describe Person, type: :model do
       expect(described_class.never_logged_in).not_to include(person)
     end
 
+    it 'is not returned by .logged_in_at_least_once with limit set to 0' do
+      expect(described_class.logged_in_at_least_once(0)).to be_empty
+    end
+
     it 'is returned by .logged_in_at_least_once' do
       expect(described_class.logged_in_at_least_once).to include(person)
     end
