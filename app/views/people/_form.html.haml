@@ -81,7 +81,7 @@
     #memberships
       %h2.line-above Role
       = f.fields_for :memberships do |membership_f|
-        = render 'membership_fields', membership_f: membership_f, org_structure: @org_structure
+        = render 'membership_fields', membership_f: membership_f, org_structure: @org_structure, person: @person
 
     = link_to 'Add another role', add_membership_people_path(id: @person.to_param),
       id: 'add_membership', class: 'button-secondary'
