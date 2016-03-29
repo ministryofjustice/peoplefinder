@@ -50,6 +50,10 @@ RSpec.describe Person, type: :model do
       expect(described_class.never_logged_in).not_to include(person)
     end
 
+    it 'is not returned by .logged_in_at_least_once with limit set to 0' do
+      expect(described_class.logged_in_at_least_once(0)).to be_empty
+    end
+
     it 'is returned by .logged_in_at_least_once' do
       expect(described_class.logged_in_at_least_once).to include(person)
     end
@@ -350,51 +354,22 @@ RSpec.describe Person, type: :model do
 
   describe 'reminder_email_sent? within 30 days' do
     it 'is false on create' do
-      expect(person.reminder_email_sent?(within_days: 30)).to be false
+      expect(person.reminder_email_sent?(within: 30.days)).to be false
     end
 
     it 'is true when last_reminder_email_at is today' do
       person.last_reminder_email_at = Time.now
-      expect(person.reminder_email_sent?(within_days: 30)).to be true
+      expect(person.reminder_email_sent?(within: 30.days)).to be true
     end
 
     it 'is true when last_reminder_email_at is 30 days ago' do
       person.last_reminder_email_at = Time.now - 30.days
-      expect(person.reminder_email_sent?(within_days: 30)).to be true
+      expect(person.reminder_email_sent?(within: 30.days)).to be true
     end
 
     it 'is false when last_reminder_email_at is 31 days ago' do
       person.last_reminder_email_at = Time.now - 31.days
-      expect(person.reminder_email_sent?(within_days: 30)).to be false
-    end
-  end
-
-  describe 'send_never_logged_in_reminder?' do
-    context 'when person created within last 30 days' do
-      before { person.update(created_at: Time.now - 30.days) }
-      it 'returns false' do
-        expect(person.send_never_logged_in_reminder?).to be false
-      end
-    end
-
-    context 'when person created more than 30 days ago' do
-      before { person.update(created_at: Time.now - 31.days) }
-
-      it 'returns true when never logged in and no reminder sent within last 30 days' do
-        allow(person).to receive(:reminder_email_sent?).and_return false
-        expect(person.send_never_logged_in_reminder?).to be true
-      end
-
-      it 'returns false when logged in before' do
-        allow(person).to receive(:reminder_email_sent?).and_return false
-        person.login_count = 1
-        expect(person.send_never_logged_in_reminder?).to be false
-      end
-
-      it 'returns false when reminder sent within last 30 days' do
-        allow(person).to receive(:reminder_email_sent?).and_return true
-        expect(person.send_never_logged_in_reminder?).to be false
-      end
+      expect(person.reminder_email_sent?(within: 30.days)).to be false
     end
   end
 

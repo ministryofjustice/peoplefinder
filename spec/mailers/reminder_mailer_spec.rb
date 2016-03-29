@@ -58,9 +58,7 @@ RSpec.describe ReminderMailer do
 
   shared_examples 'includes link to token login' do
     it 'includes the token login url' do
-      %w(plain html).each do |part_type|
-        expect(get_message_part(mail, part_type)).to have_text('http://www.example.com/tokens/')
-      end
+      expect(get_message_part(mail, 'text')).to have_text('http://www.example.com/tokens/')
     end
   end
 
@@ -68,11 +66,8 @@ RSpec.describe ReminderMailer do
     let(:mail) { described_class.never_logged_in(person).deliver_now }
 
     include_examples 'sets email to and from correctly'
-
-    include_examples 'subject contains', 'Reminder: update your profile today'
-
+    include_examples 'subject contains', 'Are your People Finder details up to date?'
     include_examples 'body contains', 'Hello John'
-
     include_examples 'includes link to token login'
   end
 
@@ -80,12 +75,31 @@ RSpec.describe ReminderMailer do
     let(:mail) { described_class.team_description_missing(person, group).deliver_now }
 
     include_examples 'sets email to and from correctly'
-
     include_examples 'subject contains', 'Improve your team’s profile on People Finder'
-
     include_examples 'body contains', 'Hello John'
-
     include_examples 'includes link to edit group'
+  end
+
+  describe '.person_profile_update' do
+    let(:mail) { described_class.person_profile_update(person).deliver_now }
+
+    include_examples 'sets email to and from correctly'
+    include_examples 'subject contains', 'Are your People Finder details up to date?'
+    include_examples 'body contains', 'Hello John'
+    include_examples 'includes link to token login'
+
+    it 'includes profile details' do
+      team_name = group.name # also creates group
+      %w(html plain).each do |type|
+        text = get_message_part(mail, type)
+        expect(text).to have_text('Name John Coe')
+        expect(text).to have_text("Team #{team_name} - you are a team leader")
+        expect(text).to have_text('Role -')
+        expect(text).to have_text('Location -')
+        expect(text).to have_text('Primary phone number -')
+        expect(text).to have_text('Current project(s) -')
+      end
+    end
   end
 
 end

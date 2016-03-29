@@ -1,4 +1,13 @@
 module PeopleHelper
+
+  def days_worked person
+    days = []
+    Person::DAYS_WORKED.each do |day|
+      days.push day_name(day) if person.send(day)
+    end
+    days.to_sentence
+  end
+
   def day_name(symbol)
     I18n.t(symbol, scope: [:people, :day_names])
   end

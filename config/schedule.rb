@@ -9,3 +9,7 @@ end
 every :weekday, at: '8:10am' do
   rails_script 'TeamDescriptionNotifier.send_reminders'
 end
+
+every :weekday, at: '8:15am' do
+  rails_script 'PersonUpdateNotifier.send_reminders'
+end

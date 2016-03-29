@@ -156,9 +156,9 @@ en:
     information_request:
       subject: "Request to update your People Finder profile"
     never_logged_in:
-      subject: 'Reminder: update your profile today'
-    reported_profile:
-      subject: "A People Finder profile has been reported"
+      subject: 'Are your People Finder details up to date?'
+    person_profile_update:
+      subject: 'Are your People Finder details up to date?'
     team_description_missing:
       subject: 'Improve your team’s profile on People Finder'
   suggestion_mailer:

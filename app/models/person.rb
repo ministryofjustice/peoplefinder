@@ -72,7 +72,11 @@ class Person < ActiveRecord::Base
     users
   }
 
-  scope :logged_in_at_least_once, -> { where('people.login_count > 0') }
+  scope :logged_in_at_least_once, lambda { |limit = nil|
+    users = unscoped.where('people.login_count > 0').order('RANDOM()')
+    users = users.limit(limit) if limit
+    users
+  }
 
   def self.namesakes(person)
     where(surname: person.surname, given_name: person.given_name).where.not(id: person.id)
@@ -135,16 +139,9 @@ class Person < ActiveRecord::Base
     at_permitted_domain? && person_responsible.try(:email) != email
   end
 
-  def reminder_email_sent? within_days:
+  def reminder_email_sent? within:
     last_reminder_email_at.present? &&
-      last_reminder_email_at.end_of_day >= within_days.day.ago
-  end
-
-  def send_never_logged_in_reminder?
-    within_days = 30
-    !reminder_email_sent?(within_days: within_days) &&
-      login_count == 0 &&
-      created_at.end_of_day < within_days.day.ago
+      last_reminder_email_at.end_of_day >= within.ago
   end
 
   def email_address_with_name
