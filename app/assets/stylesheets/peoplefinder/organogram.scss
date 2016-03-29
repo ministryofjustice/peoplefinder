@@ -20,7 +20,7 @@
     padding: 0;
     vertical-align: top;
     width: auto;
-    @include maginot(80px, 80px, 50%);
+    @include maginot(80px, 80px);
     .grid {
       display: inline-block;
       float: none;
@@ -32,6 +32,12 @@
   }
   .image-background {
     height: 80px;
+    margin: 0 auto;
+    overflow: hidden;
+    width: 80px;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
     .maginot {
       margin: 0 auto;
     }
@@ -39,8 +45,9 @@
   .leader {
     .image-background {
       height: 150px;
+      width: 150px;
     }
-    @include maginot(150px, 150px, 50%);
+    @include maginot(150px, 150px);
   }
   .person, .team {
     width: 130px;
@@ -74,6 +81,7 @@
     .leader {
       .image-background {
         height: 80px;
+        width: 80px;
       }
       .maginot {
         width: 80px;
@@ -89,6 +97,7 @@
     .person, .team {
       .image-background {
         height: 50px;
+        width: 50px;
       }
       .maginot {
         width: 50px;
