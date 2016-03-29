@@ -49,6 +49,11 @@
     .image-background {
       height: 150px;
       width: 150px;
+      .maginot {
+        img {
+          height: auto;
+        }
+      }
     }
     @include maginot(150px, 150px);
   }
