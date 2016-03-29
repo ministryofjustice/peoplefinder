@@ -65,8 +65,16 @@ $focus-color: #FFBF47;
     line-height: 1em;
   }
 }
-.view-all-people {
-  margin: 1em 0;
+.team-links {
+  a {
+    float: left;
+    line-height: 1;
+  }
+  .view-all-people {
+    border-left: 1px solid #000;
+    margin-left: 0.4em;
+    padding-left: 0.4em;
+  }
 }
 .subgroup {
   margin-bottom: 20px;
