@@ -7,19 +7,25 @@
   #print {
     float: right;
   }
-  text-align: center;
+  // text-align: center;
   .group-title h1 {
     border: none;
   }
-  h2 {
+  h1, h2 {
     margin-top: 0;
+    text-align: center;
+  }
+  .leaders {
+    text-align: center;
   }
   .leader, .person, .team {
     display: inline-block;
     margin: 0 10px 30px;
     padding: 0;
     vertical-align: top;
+    text-align: center;
     width: auto;
+    word-wrap: break-word;
     @include maginot(80px, 80px);
     .grid {
       display: inline-block;
