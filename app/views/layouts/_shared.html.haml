@@ -1,7 +1,6 @@
 - content_for(:page_title, page_title)
 - content_for :head do
   = stylesheet_link_tag "application", media: "all"
-  = stylesheet_link_tag "print", media: "print"
   = csrf_meta_tag
   %meta{name: "format-detection", content: "telephone=no"}
   <!--[if lt IE 9]>

@@ -49,3 +49,60 @@
     }
   }
 }
+
+@media print {
+  .organogram {
+    #global-header, .login-bar, .breadcrumbs, .search-box, .edit-links, #footer, #last_update, .new-profile {
+      display: none;
+    }
+  }
+
+  .organogram-content {
+    #print {
+      display: none;
+    }
+    .group-title {
+      margin: 0;
+    }
+    .leader, .person, .team {
+      font-size: 12px;
+      margin-bottom: 10px;
+      h3 {
+        font-size: 12px;
+      }
+    }
+    .leader {
+      .image-background {
+        height: 80px;
+      }
+      .maginot {
+        width: 80px;
+        .barrier, img {
+          width: 80px;
+          height: 80px;
+        }
+        img {
+          clip: rect(0px, 80px, 80px, 0px);
+        }
+      }
+    }
+    .person, .team {
+      .image-background {
+        height: 50px;
+      }
+      .maginot {
+        width: 50px;
+        .barrier, img {
+          width: 50px;
+          height: 50px;
+        }
+        img {
+          clip: rect(0px, 50px, 50px, 0px);
+        }
+      }
+    }
+    .team {
+      width: 80px;
+    }
+  }
+}
