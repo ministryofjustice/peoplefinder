@@ -202,6 +202,8 @@ feature 'Group maintenance' do
       within('.editable-fields') do
         click_link 'Done'
       end
+      expect(page).to have_selector('.show-editable-fields', visible: :visible)
+      expect(page).to have_selector('.parent-summary', text: /Test team/)
 
       click_button 'Save'
 
