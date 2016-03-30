@@ -12,7 +12,6 @@ Rails.application.config.assets.precompile += %w(
   gov-static/gov-ie.js
   Jcrop/css/jquery.Jcrop.min.css
   Jcrop/css/jquery.Jcrop.min.js
-  print.css
 )
 
 unless Rails.env.production?
