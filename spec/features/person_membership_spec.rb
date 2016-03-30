@@ -146,6 +146,7 @@ feature "Person maintenance" do
     expect(page).to have_selector('.editable-fields', visible: :visible)
 
     within all('#memberships .membership').last do
+      expect(find('.team-leader fieldset legend').text).to eq('Are you the Permanent Secretary?')
       click_link 'Digital Justice'
       fill_in 'Job title', with: 'Master of None'
       check_leader
