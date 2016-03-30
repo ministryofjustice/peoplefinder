@@ -61,8 +61,9 @@ RSpec.describe Concerns::Activation do
     end
 
     context 'when one person created yesterday who has logged in and completion score > 80%' do
+      let(:yesterday) { Date.today - 1.day }
       before do
-        create(:person, completed_attributes.merge(login_count: 1, created_at: Date.yesterday.to_time))
+        create(:person, completed_attributes.merge(login_count: 1, created_at: yesterday.to_time))
       end
 
       it 'returns 0 when from date is today' do
@@ -70,11 +71,11 @@ RSpec.describe Concerns::Activation do
       end
 
       it 'returns 100 when from date is yesterday' do
-        expect(Person.activated_percentage(from: Date.yesterday.to_s)).to eq(100)
+        expect(Person.activated_percentage(from: (yesterday - 1.hour).to_s)).to eq(100)
       end
 
       it 'returns 0 when before date is yesterday' do
-        expect(Person.activated_percentage(before: Date.yesterday.to_s)).to eq(0)
+        expect(Person.activated_percentage(before: (yesterday - 1.hour).to_s)).to eq(0)
       end
 
       it 'returns 100 when before date is today' do
