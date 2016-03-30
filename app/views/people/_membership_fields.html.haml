@@ -38,7 +38,7 @@
 
   .form-group.team-leader
     %fieldset.inline
-      %legend.form-label-bold= role_translate(membership.person, 'memberships.leader').html_safe
+      %legend.form-label-bold= role_translate(person, 'memberships.leader').html_safe
       = membership_f.label :leader, value: true, class: 'block-label' do
         = membership_f.radio_button :leader, true
         Yes
@@ -48,7 +48,7 @@
 
   .form-group.team-subscribed
     %fieldset.inline
-      %legend.form-label-bold= role_translate(membership.person, 'memberships.subscribed')
+      %legend.form-label-bold= role_translate(person, 'memberships.subscribed')
       = membership_f.label :subscribed, value: true, class: 'block-label' do
         = membership_f.radio_button :subscribed, true
         Yes
