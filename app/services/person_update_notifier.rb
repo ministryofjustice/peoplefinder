@@ -23,7 +23,7 @@ module PersonUpdateNotifier
       false
     else
       !person.reminder_email_sent?(within: 6.months) &&
-        person.updated_at.end_of_day > 6.months.ago
+        person.updated_at.end_of_day < 6.months.ago
     end
   end
 

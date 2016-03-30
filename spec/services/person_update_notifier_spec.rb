@@ -42,32 +42,53 @@ RSpec.describe PersonUpdateNotifier, type: :service do
 
     context 'when person has logged in before' do
 
+      let(:more_than_six_months_ago) { Time.now - (6.months + 1.day) }
+      let(:less_than_six_months_ago) { Time.now - (6.months - 1.day) }
+
       before do
         allow(person).to receive(:login_count).and_return 1
       end
 
-      it 'returns false when last login more than 6 months ago' do
-        person.update(updated_at: Time.now - (6.months + 1.day))
-        expect(described_class.send_update_reminder?(person)).to be false
+      def check_send_update_reminder expected
+        expect(described_class.send_update_reminder?(person)).to be expected
       end
 
-      it 'returns false when last login within last 6 months and last reminder sent within 6 months' do
-        person.update(created_at: Time.now - 6.months)
-        person.update(last_reminder_email_at: Time.now - 6.months)
-        expect(described_class.send_update_reminder?(person)).to be false
+      context 'when no last reminder sent' do
+        before { person.update(last_reminder_email_at: nil) }
+        it 'returns true when last update more than 6 months ago' do
+          person.update(updated_at: more_than_six_months_ago)
+          check_send_update_reminder true
+        end
+        it 'returns false when last update less than 6 months ago' do
+          person.update(updated_at: less_than_six_months_ago)
+          check_send_update_reminder false
+        end
       end
 
-      it 'returns true when last login within last 6 months and last reminder sent more than 6 months ago' do
-        person.update(created_at: Time.now - 6.months)
-        person.update(last_reminder_email_at: Time.now - (6.months + 1.day))
-        expect(described_class.send_update_reminder?(person)).to be true
+      context 'when last reminder sent more than 6 months ago' do
+        before { person.update(last_reminder_email_at: more_than_six_months_ago) }
+        it 'returns true when last update more than 6 months ago' do
+          person.update(updated_at: more_than_six_months_ago)
+          check_send_update_reminder true
+        end
+        it 'returns false when last update less than 6 months ago' do
+          person.update(updated_at: less_than_six_months_ago)
+          check_send_update_reminder false
+        end
       end
 
-      it 'returns true when last login within last 6 months and no last reminder sent' do
-        person.update(created_at: Time.now - 6.months)
-        person.update(last_reminder_email_at: nil)
-        expect(described_class.send_update_reminder?(person)).to be true
+      context 'when last reminder sent less than 6 months ago' do
+        before { person.update(last_reminder_email_at: less_than_six_months_ago) }
+        it 'returns false when last update more than 6 months ago' do
+          person.update(updated_at: more_than_six_months_ago)
+          check_send_update_reminder false
+        end
+        it 'returns false when last update less than 6 months ago' do
+          person.update(updated_at: less_than_six_months_ago)
+          check_send_update_reminder false
+        end
       end
+
     end
   end
 
