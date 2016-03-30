@@ -11,6 +11,12 @@ var teamSelector = function teamSelector(isPerson, obj){
   /* Listen for events */
   this.initEvents = function(){
     var self = this;
+
+    if(this.isPerson){
+      teamName = this.selector.find('.editable-summary ol li:last-child').text();
+      self.setTeamName(teamName);
+    }
+
     /* Clicking the 'Edit' link to show the team selector */
     this.selector.on('click', '.show-editable-fields, .editable-summary .title', function (e){
       self.onClick(e);
@@ -373,10 +379,6 @@ $(function (){
   $(selector).each(function (i, obj){
     $(obj).addClass('index'+i);
     var team = new teamSelector(isPerson, obj);
-    if(isPerson){
-      teamName = $(obj).find('.editable-summary ol li:last-child').text();
-      team.setTeamName(teamName);
-    }
     team.initEvents();
   });
 });
