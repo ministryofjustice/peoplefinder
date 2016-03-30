@@ -1,0 +1,51 @@
+- content_for :breadcrumbs do
+  = breadcrumbs(Home.path + @group.path + ['Organogram'])
+
+- @page_title = "#{ @group.name } Organogram"
+- content_for :body_classes, 'organogram'
+
+.organogram-content
+  #print
+    %a{ href: 'javascript:window.print();' } Print
+  .group-title
+    - if @group.acronym?
+      %h1
+        = @group.acronym 
+        team organogram
+    - else
+      %h1
+        = @group.name 
+        team organogram
+
+  - if @group.leaderships.present?
+    %div.inner-block
+      %div.grid-wrapper.leaders
+        %h2 Team leaders
+        - @group.leaderships_by_person.each do |person, leaderships|
+          %div.leader
+            = render partial: 'leaderships', object: leaderships, locals: { person: person }
+            .tel= person.primary_phone_number
+
+  - if @group.people_outside_subteams.present?
+    %div.inner-block
+      %div.grid-wrapper.people
+        %h2 People
+        - @group.people_outside_subteams.each do |person, summary|
+          %div.person
+            .image-background
+              = profile_image_tag person
+            %h4= link_to person, person
+            .role= person.role_names
+            .tel= person.primary_phone_number
+
+  - if @group.children.present?
+    %div.inner-block
+      %div.grid-wrapper.teams
+        %h2 Teams
+        - @group.children.each do |subgroup|
+          %div.team
+            .image-background
+              .maginot
+                =image_tag ('medium_team.png')
+            %a{ href: url_for(subgroup) }
+              %h3= subgroup
