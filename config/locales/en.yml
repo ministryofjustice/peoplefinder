@@ -82,6 +82,8 @@ en:
       no_image_uploaded: "No image has been uploaded for %{person}"
       image_cropped: "Cropped %{person}’s image"
       update_error: "There was an error updating the image"
+    problem_reports:
+      report_sent: Your report has been sent. Thank you for reporting a problem.
     reported_profiles:
       message_sent: "Your message has been sent"
   memberships:
