@@ -94,12 +94,10 @@ class Person < ActiveRecord::Base
     find_by_sql([query, group_ids])
   end
 
-  def self.count_in_groups(group_ids, excluded_group_ids: [])
-    excluded_ids = if excluded_group_ids.present?
-                     Person.in_groups(excluded_group_ids).pluck(:id)
-                   else
-                     []
-                   end
+  def self.count_in_groups(group_ids, excluded_group_ids: [], excluded_ids: [])
+    if excluded_group_ids.present?
+      excluded_ids += Person.in_groups(excluded_group_ids).pluck(:id)
+    end
 
     Person.in_groups(group_ids).where.not(id: excluded_ids).count
   end
