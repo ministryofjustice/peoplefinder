@@ -13,8 +13,8 @@ class PersonSearch
     if email_match
       [email_match]
     else
-      exact_matches, name_matches, query_matches, fuzzy_matches = perform_searches
-      exact_matches.
+      exact_name_matches, name_matches, query_matches, fuzzy_matches = perform_searches
+      exact_name_matches.
         push(*name_matches).
         push(*query_matches).
         push(*fuzzy_matches).
@@ -32,9 +32,9 @@ class PersonSearch
     name_matches = search "name:#{@query}"
     query_matches = search @query
     fuzzy_matches = fuzziness_search
-    exact_matches = name_matches.select { |p| p.name == @query }
+    exact_name_matches = name_matches.select { |p| p.name == @query }
 
-    [exact_matches, name_matches, query_matches, fuzzy_matches]
+    [exact_name_matches, name_matches, query_matches, fuzzy_matches]
   end
 
   def fuzziness_search
