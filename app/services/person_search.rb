@@ -10,16 +10,15 @@ class PersonSearch
     return [] if @query.blank?
 
     email_match = email_search
-    if email_match
-      [email_match]
-    else
-      exact_name_matches, name_matches, query_matches, fuzzy_matches = perform_searches
-      exact_name_matches.
-        push(*name_matches).
-        push(*query_matches).
-        push(*fuzzy_matches).
-        uniq[0..@max - 1]
-    end
+    return [email_match] if email_match
+
+    exact_name_matches, name_matches, exact_matches, query_matches, fuzzy_matches = perform_searches
+    exact_name_matches.
+      push(*name_matches).
+      push(*exact_matches).
+      push(*query_matches).
+      push(*fuzzy_matches).
+      uniq[0..@max - 1]
   end
 
   private
@@ -29,12 +28,23 @@ class PersonSearch
   end
 
   def perform_searches
-    name_matches = search "name:#{@query}"
+    name_matches = name_search
+    exact_matches = search %("#{@query}")
     query_matches = search @query
     fuzzy_matches = fuzziness_search
     exact_name_matches = name_matches.select { |p| p.name == @query }
 
-    [exact_name_matches, name_matches, query_matches, fuzzy_matches]
+    [exact_name_matches, name_matches, exact_matches, query_matches, fuzzy_matches]
+  end
+
+  def name_search
+    search(
+      query: {
+        match: {
+          name: @query
+        }
+      }
+    )
   end
 
   def fuzziness_search
