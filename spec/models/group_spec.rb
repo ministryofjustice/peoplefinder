@@ -146,6 +146,14 @@ RSpec.describe Group, type: :model do
         it 'has .leaderships_by_person return hash containing bob and his membership' do
           expect(team.leaderships_by_person[bob]).to eq [bob.memberships.first]
         end
+
+        it 'has people_outside_subteams_count of zero' do
+          expect(team.people_outside_subteams_count).to eq(0)
+        end
+
+        it 'has zero length people_outside_subteams array' do
+          expect(team.people_outside_subteams.length).to eq(0)
+        end
       end
 
       it 'has 1 in all_people array' do
