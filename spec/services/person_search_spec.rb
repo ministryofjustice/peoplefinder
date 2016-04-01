@@ -10,7 +10,7 @@ RSpec.describe PersonSearch, elastic: true do
   let(:current_project) { 'Current project' }
 
   let!(:alice) do
-    create(:person, given_name: 'Alice', surname: 'Andrews', community: community)
+    create(:person, given_name: 'Alice', surname: 'Andrews')
   end
   let!(:bob) do
     create(:person, given_name: 'Bob', surname: 'Browning',
@@ -36,7 +36,6 @@ RSpec.describe PersonSearch, elastic: true do
 
   let!(:digital_services) { create(:group, name: 'Digital Services') }
   let!(:membership) { bob.memberships.create(group: digital_services, role: 'Cleaner') }
-  let(:community) { create(:community, name: "Poetry") }
 
   context 'with some people' do
     before do
@@ -120,12 +119,6 @@ RSpec.describe PersonSearch, elastic: true do
 
       results = search_for("O’Leary")
       expect(results).to include(oleary2)
-    end
-
-    it 'searches by community' do
-      results = search_for(community.name)
-      expect(results).to include(alice)
-      expect(results).to_not include(bob)
     end
 
     it 'searches by current project' do

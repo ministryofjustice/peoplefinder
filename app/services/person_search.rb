@@ -51,8 +51,8 @@ class PersonSearch
 
   def fields_to_search
     [
-      :name, :tags, :description, :location_in_building, :building,
-      :city, :role_and_group, :community_name, :current_project
+      :name, :description, :location_in_building, :building,
+      :city, :role_and_group, :current_project
     ]
   end
 
