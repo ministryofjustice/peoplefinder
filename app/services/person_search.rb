@@ -33,8 +33,15 @@ class PersonSearch
     query_matches = search @query
     fuzzy_matches = fuzziness_search
     exact_name_matches = name_matches.select { |p| p.name == @query }
+    if single_word_query?
+      exact_name_matches += name_matches.select { |p| p.name[/^#{@query} /i] }.sort_by(&:name)
+    end
 
     [exact_name_matches, name_matches, exact_matches, query_matches, fuzzy_matches]
+  end
+
+  def single_word_query?
+    !@query[/\s/]
   end
 
   def name_search

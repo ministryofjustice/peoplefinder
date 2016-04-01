@@ -87,6 +87,16 @@ RSpec.describe PersonSearch, elastic: true do
       expect(results).to eq([abraham_kiehn, abe])
     end
 
+    it 'puts single name match at top of results when name synonym' do
+      results = search_for('Abe')
+      expect(results).to eq([abe, abraham_kiehn])
+    end
+
+    it 'puts single name match at top of results when first name match' do
+      results = search_for('Andrew')
+      expect(results).to eq([andrew, alice])
+    end
+
     it 'searches by group name and membership role' do
       results = search_for('Director at digiTAL Services')
       expect(results).to eq([bob, alice])
@@ -152,7 +162,7 @@ RSpec.describe PersonSearch, elastic: true do
 
   context 'with commas in search query' do
     it 'performs search without commas' do
-      expect(Person).to receive(:search_results).with({ query: { match: { name: "Smith Bill"}}}, limit: 100).and_return []
+      expect(Person).to receive(:search_results).with({ query: { match: { name: "Smith Bill" } } }, limit: 100).and_return []
       expect(Person).to receive(:search_results).with('"Smith Bill"', limit: 100).and_return []
       expect(Person).to receive(:search_results).with('Smith Bill', limit: 100).and_return []
       expect(Person).to receive(:search_results).with(
