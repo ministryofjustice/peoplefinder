@@ -160,7 +160,7 @@ RSpec.describe PersonSearch, elastic: true do
       expect(Person).to receive(:search_results).with(
         hash_including(
           query: {
-            fuzzy_like_this: hash_including(like_text: 'Smith Bill')
+            multi_match: hash_including(query: 'Smith Bill')
           }
         ), limit: 100).and_return []
 
