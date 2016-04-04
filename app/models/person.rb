@@ -74,7 +74,7 @@ class Person < ActiveRecord::Base
     where('last_reminder_email_at IS ? OR last_reminder_email_at < ?', nil, within)
   }
 
-  scope :updated_older_than, -> (within) { where('updated_at < ?', within) }
+  scope :updated_at_older_than, -> (within) { where('updated_at < ?', within) }
 
   scope :created_at_older_than, -> (within) { where('created_at < ?', within) }
 

@@ -14,7 +14,7 @@ module PersonUpdateNotifier
     Person.
       logged_in_at_least_once.
       last_reminder_email_older_than(within.ago).
-      updated_older_than(within.ago)
+      updated_at_older_than(within.ago)
   end
 
   def self.send_reminder person, within
