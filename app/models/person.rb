@@ -78,6 +78,14 @@ class Person < ActiveRecord::Base
     users
   }
 
+  scope :last_reminder_email_older_than, lambda { |within|
+    where('last_reminder_email_at IS ? OR last_reminder_email_at < ?', nil, within)
+  }
+
+  scope :updated_older_than, lambda { |within|
+    where('updated_at < ?', within)
+  }
+
   def self.namesakes(person)
     where(surname: person.surname, given_name: person.given_name).where.not(id: person.id)
   end

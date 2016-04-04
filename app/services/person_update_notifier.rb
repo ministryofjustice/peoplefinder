@@ -13,8 +13,8 @@ module PersonUpdateNotifier
   def self.people_to_remind within
     Person.
       logged_in_at_least_once.
-      where('last_reminder_email_at IS ? OR last_reminder_email_at < ?', nil, within.ago).
-      where('updated_at < ?', within.ago)
+      last_reminder_email_older_than(within.ago).
+      updated_older_than(within.ago)
   end
 
   def self.send_reminder person, within
