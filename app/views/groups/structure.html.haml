@@ -1,0 +1,79 @@
+- content_for :breadcrumbs do
+  = breadcrumbs(Home.path + @group.path + ['Structure'])
+
+- @page_title = "#{ @group.name } Structure"
+- content_for :body_classes, 'structure'
+
+.structure-content
+  #print
+    %a{ href: 'javascript:window.print();' } Print
+  
+  - if @group.parent
+    %a.team-card-parent{ href: url_for(@group.parent) + '/structure' }
+      Up to #{@group.parent}
+
+  .team-card
+    .team-card-name
+      = @group.name
+    - if @group.leaderships.present?
+      - @group.leaderships_by_person.first(2).each do |person, leaderships|
+        .team-card-leader
+          .team-card-leader-image
+            = profile_image_tag person
+          .team-card-leader-details
+            %div= link_to person, person
+            %div= leaderships.map(&:role).select(&:present?).sort.join(', ')
+            - if person.email.present?
+              %div= mail_to(person.email)
+            .tel= person.primary_phone_number
+    - if @group.leaderships_by_person.count > 2
+      .team-card-more
+        and #{@group.leaderships_by_person.count - 2} more team #{'leader'.pluralize(@group.leaderships_by_person.count - 2)}
+    .team-card-details
+      - if @group.children.count > 0
+        .team-card-subteams
+          %a{ href: url_for(@group) + '#teams' }
+            = @group.children.count
+            #{'team'.pluralize(@group.children.count)}
+      - if @group.all_people.count > 0
+        .team-card-people
+          = link_to people_group_path(@group) do
+            = @group.all_people.count
+            #{'person'.pluralize(@group.all_people.count)}
+
+  - if @group.children.present?
+    .teams
+      - @group.children.each do |subgroup|
+        .team-card.team-card-small
+          .team-card-inner
+            .team-card-name
+              %a{ href: url_for(subgroup) + '/structure' }
+                - if subgroup.acronym?
+                  = subgroup.acronym
+                - else
+                  = subgroup
+            - if subgroup.leaderships.present?
+              - subgroup.leaderships_by_person.first(2).each do |person, leaderships|
+                .team-card-leader
+                  .team-card-leader-image
+                    = profile_image_tag person
+                  .team-card-leader-details
+                    %div= link_to person, person
+                    / %div= leaderships.map(&:role).select(&:present?).sort.join(', ')
+                    - if person.email.present?
+                      %div= mail_to(person.email)
+                    .tel= person.primary_phone_number
+            - if subgroup.leaderships_by_person.count > 2
+              .team-card-more
+                and #{subgroup.leaderships_by_person.count - 2} more team #{'leader'.pluralize(subgroup.leaderships_by_person.count - 2)}
+            .team-card-details
+              - if subgroup.children.count > 0
+                .team-card-subteams
+                  %a{ href: url_for(subgroup) + '#teams' }
+                    = subgroup.children.count
+                    #{'team'.pluralize(subgroup.children.count)}
+              - if subgroup.all_people.count > 0
+                .team-card-people
+                  = link_to people_group_path(subgroup) do
+                    = subgroup.all_people.count
+                    #{'person'.pluralize(subgroup.all_people.count)}
