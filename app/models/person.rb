@@ -66,17 +66,17 @@ class Person < ActiveRecord::Base
 
   default_scope { order(surname: :asc, given_name: :asc) }
 
-  scope :never_logged_in, lambda { |limit = nil|
-    users = unscoped.where(login_count: 0).order('RANDOM()')
-    users = users.limit(limit) if limit
-    users
+  scope :never_logged_in, -> { where(login_count: 0) }
+
+  scope :logged_in_at_least_once, -> { where('people.login_count > 0') }
+
+  scope :last_reminder_email_older_than, lambda { |within|
+    where('last_reminder_email_at IS ? OR last_reminder_email_at < ?', nil, within)
   }
 
-  scope :logged_in_at_least_once, lambda { |limit = nil|
-    users = unscoped.where('people.login_count > 0').order('RANDOM()')
-    users = users.limit(limit) if limit
-    users
-  }
+  scope :updated_at_older_than, -> (within) { where('updated_at < ?', within) }
+
+  scope :created_at_older_than, -> (within) { where('created_at < ?', within) }
 
   def self.namesakes(person)
     where(surname: person.surname, given_name: person.given_name).where.not(id: person.id)

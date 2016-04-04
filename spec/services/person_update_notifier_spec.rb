@@ -9,11 +9,15 @@ RSpec.describe PersonUpdateNotifier, type: :service do
   let(:person) { create(:person, login_count: 1) }
   let(:mailer) { double(ReminderMailer) }
   let(:mailer_params) { [person] }
+  let(:more_than_six_months_ago) { Time.now - (6.months + 1.day) }
+  let(:less_than_six_months_ago) { Time.now - (6.months - 1.day) }
 
   describe 'send_reminders' do
     before do
+      person.update(last_reminder_email_at: more_than_six_months_ago)
+      person.update(updated_at: more_than_six_months_ago)
       allow(described_class).to receive(:send_update_reminder?).
-        with(person).and_return can_send
+        with(person, 6.months).and_return can_send
     end
 
     context 'when send_update_reminder?(person) is true' do
@@ -36,21 +40,18 @@ RSpec.describe PersonUpdateNotifier, type: :service do
     context 'when person has never logged in' do
       it 'returns false' do
         allow(person).to receive(:login_count).and_return 0
-        expect(described_class.send_update_reminder?(person)).to be false
+        expect(described_class.send_update_reminder?(person, 6.months)).to be false
       end
     end
 
     context 'when person has logged in before' do
-
-      let(:more_than_six_months_ago) { Time.now - (6.months + 1.day) }
-      let(:less_than_six_months_ago) { Time.now - (6.months - 1.day) }
 
       before do
         allow(person).to receive(:login_count).and_return 1
       end
 
       def check_send_update_reminder expected
-        expect(described_class.send_update_reminder?(person)).to be expected
+        expect(described_class.send_update_reminder?(person, 6.months)).to be expected
       end
 
       context 'when no last reminder sent' do
