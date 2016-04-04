@@ -60,7 +60,9 @@ class PersonSearch
       query: {
         multi_match: {
           fields: fields_to_search,
-          query: @query, fuzziness: 'AUTO'
+          fuzziness: 1, # maximum allowed Levenshtein Edit Distance
+          prefix_length: 1, # number of initial characters which won't be "fuzzified"
+          query: @query
         }
       }
     )
