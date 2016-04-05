@@ -1,8 +1,5 @@
 .structure-content {
   margin-top: 30px;
-  #print {
-    float: right;
-  }
 }
 .team-card {
   border: 1px solid $grey-1;
@@ -94,12 +91,33 @@
       background-size: 100%;
     }
   }
+  .team-card-link {
+    bottom: 17px;
+    position: absolute;
+    left: 15px;
+    a {
+      display: block;
+      &:before {
+        background: url("/assets/icon_plus_retina.png") no-repeat 0 0;
+        background-size: 100%;
+        content: "";
+        display: inline-block;
+        height: 15px;
+        width: 15px;
+      }
+      &:focus {
+        background-color: transparent;
+        outline: none;
+      }
+    }
+  }
 
 .structure .teams {
-  border: 1px solid $grey-1;
+  background-color: #fff;
+  border-top: 1px solid $grey-1;
   display: inline-block;
   margin-top: 50px;
-  padding: 15px;
+  // padding: 15px;
   position: relative;
   width: 100%;
   &:before {
@@ -111,6 +129,25 @@
     position: absolute;
     top: -51px;
   }
+  .team-card {
+    background-color: #fff;
+  }
+  &.expanded {
+    background-color: transparent;
+    border-top: none;
+    &:before {
+      height: 67px;
+    }
+    .teams {
+      &:before {
+        height: 81px;
+        top: -66px;
+      }
+    }
+    >.team-card {
+      background-color: transparent;
+    }
+  }
 }
 
 .team-card-small {
@@ -120,11 +157,20 @@
   height: 310px;
   padding: 15px;
   width: 33.33%;
+
   @media (max-width: 980px) {
     width: 100%;
   }
   * {
     font-size: 12px;
+  }
+  &.hide {
+    display: none;
+  }
+  &.selected {
+    display: block;
+    float: none;
+    margin: 0 auto;
   }
   &:nth-child(3n+0){
     border-right: none;

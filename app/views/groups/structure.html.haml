@@ -5,8 +5,6 @@
 - content_for :body_classes, 'structure'
 
 .structure-content
-  #print
-    %a{ href: 'javascript:window.print();' } Print
   
   - if @group.parent
     %a.team-card-parent{ href: url_for(@group.parent) + '/structure' }
@@ -42,9 +40,9 @@
             #{'person'.pluralize(@group.all_people.count)}
 
   - if @group.children.present?
-    .teams
+    .teams#teams
       - @group.children.each do |subgroup|
-        .team-card.team-card-small
+        .team-card.team-card-small{'id': "team-#{subgroup.id}", 'data-id': subgroup.slug}
           .team-card-inner
             .team-card-name
               %a{ href: url_for(subgroup) + '/structure' }
@@ -77,3 +75,5 @@
                   = link_to people_group_path(subgroup) do
                     = subgroup.all_people.count
                     #{'person'.pluralize(subgroup.all_people.count)}
+              .team-card-link
+                %a{href: "#", 'title': 'Expand this team'}
