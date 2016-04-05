@@ -67,7 +67,6 @@
     line-height: 30px;
     padding-left: 20px;
     &:before {
-      // border: 1px solid $grey-2;
       content: "";
       display: inline-block;
       float: left;
@@ -109,6 +108,11 @@
         background-color: transparent;
         outline: none;
       }
+      &.expanded {
+        &:before {
+          background-image: url("/assets/icon_delete_retina.png");
+        }
+      }
     }
   }
 
@@ -117,7 +121,6 @@
   border-top: 1px solid $grey-1;
   display: inline-block;
   margin-top: 50px;
-  // padding: 15px;
   position: relative;
   width: 100%;
   &:before {
@@ -198,6 +201,6 @@
     @include maginot(40px, 40px);
   }
   .team-card-leader-details {
-    padding-left: 52px;
+    padding-left: 0;
   }
 }

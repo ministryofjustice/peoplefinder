@@ -133,6 +133,7 @@ var selectTeam = (function (){
       $('.team-card-link a').on('click', function(e){
         e.preventDefault();
         e.stopPropagation();
+        $(e.currentTarget).addClass('expanded');
         self.selectParents(e);
       });
     },
