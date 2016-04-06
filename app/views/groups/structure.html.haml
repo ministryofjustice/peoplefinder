@@ -46,10 +46,10 @@
           .team-card-inner
             .team-card-name
               %a{ href: url_for(subgroup) }
-                - if subgroup.acronym?
-                  = subgroup.acronym
-                - else
-                  = subgroup
+                / - if subgroup.acronym?
+                /   = subgroup.acronym
+                / - else
+                = subgroup
             - if subgroup.leaderships.present?
               - subgroup.leaderships_by_person.first(2).each do |person, leaderships|
                 .team-card-leader

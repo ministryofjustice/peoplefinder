@@ -189,19 +189,22 @@
   }
   .team-card-name {
     font-size: 16px;
+    line-height: 1;
     padding-bottom: 0;
     text-align: left;
   }
   .team-card-leader {
-    padding-bottom: 0;
+    min-height: 69px;
+    padding: 15px 15px 0;
     width: 100%;
   }
   .team-card-leader-image {
     height: 40px;
+    position: absolute;
     width: 40px;
     @include maginot(40px, 40px);
   }
   .team-card-leader-details {
-    padding-left: 0;
+    padding-left: 52px;
   }
 }
