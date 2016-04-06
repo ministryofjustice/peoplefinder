@@ -18,7 +18,7 @@ var template =
 '<div class="team-card team-card-small" data-id="<% this.slug %>">' +
   '<div class="team-card-inner">' +
     '<div class="team-card-name">' +
-      '<a href="#">' +
+      '<a href="/teams/<% this.slug %>">' +
         '<%this.name%>' +
       '</a>' +
     '</div>' +
@@ -55,9 +55,11 @@ var template =
           '<a href="/teams/digital/people"><%this.all_people.length%> people</a>' +
         '</div>' +
       '<%}%>' +
-      '<div class="team-card-link">' +
-        '<a href="#"></a>' +
-      '</div>' +
+      '<%if(this.children.length) {%>' +
+        '<div class="team-card-link">' +
+          '<a href="#"></a>' +
+        '</div>' +
+      '<%}%>' +
     '</div>' +
   '</div>' +
 '</div>';
@@ -133,7 +135,7 @@ var selectTeam = (function (){
       $('.team-card-link a').on('click', function(e){
         e.preventDefault();
         e.stopPropagation();
-        $(e.currentTarget).addClass('expanded');
+        $(e.currentTarget).toggleClass('expand');
         self.selectParents(e);
       });
     },
@@ -145,10 +147,28 @@ var selectTeam = (function (){
       });
     },
     selectParents: function(e){
-      this.parent = $(e.currentTarget).closest('.team-card');
+      var $this = $(e.currentTarget);
+      this.parent = $this.closest('.team-card');
       this.teams = this.parent.closest('.teams');
       this.id = this.parent.data('id');
+      if($this.hasClass('expand')){
+        this.expand();
+      } else {
+        this.collapse();
+      }
+    },
+    expand: function(){
       this.getData();
+    },
+    collapse: function(){
+      this.removeTeams();
+      this.showOtherTeams();
+    },
+    showOtherTeams: function(){
+      this.teams.removeClass('expanded').find('.team-card').removeClass('hide selected');
+    },
+    removeTeams: function(){
+      this.teams.find('.teams').remove();
     },
     hideOtherTeams: function(teamEl){
       var self = this;
@@ -172,6 +192,7 @@ var selectTeam = (function (){
       newTeams.on('click', '.team-card-link a', function(e){
         e.preventDefault();
         e.stopPropagation();
+        $(e.currentTarget).toggleClass('expand');
         self.selectParents(e);
       });
     }

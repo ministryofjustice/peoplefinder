@@ -45,7 +45,7 @@
         .team-card.team-card-small{'id': "team-#{subgroup.id}", 'data-id': subgroup.slug}
           .team-card-inner
             .team-card-name
-              %a{ href: url_for(subgroup) + '/structure' }
+              %a{ href: url_for(subgroup) }
                 - if subgroup.acronym?
                   = subgroup.acronym
                 - else
