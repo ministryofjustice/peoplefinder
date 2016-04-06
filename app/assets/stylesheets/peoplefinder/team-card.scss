@@ -63,9 +63,9 @@
     width: 100%;
   }
   .team-card-subteams, .team-card-people {
-    float: right;
+    float: left;
     line-height: 30px;
-    padding-left: 20px;
+    padding-right: 20px;
     &:before {
       content: "";
       display: inline-block;
@@ -91,9 +91,9 @@
     }
   }
   .team-card-link {
-    bottom: 17px;
+    bottom: 0;
     position: absolute;
-    left: 15px;
+    right: 5px;
     a {
       display: block;
       &:before {
@@ -139,12 +139,12 @@
     background-color: transparent;
     border-top: none;
     &:before {
-      height: 67px;
+      height: 66px !important;
     }
     .teams {
       &:before {
-        height: 81px;
-        top: -66px;
+        height: 50px;
+        top: -51px;
       }
     }
     >.team-card {
@@ -174,6 +174,7 @@
     display: block;
     float: none;
     margin: 0 auto;
+    padding-bottom: 0;
   }
   &:nth-child(3n+0){
     border-right: none;

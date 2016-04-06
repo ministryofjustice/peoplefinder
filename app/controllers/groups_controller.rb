@@ -23,7 +23,7 @@ class GroupsController < ApplicationController
 
     respond_to do |format|
       format.html { session[:last_group_visited] = @group.id }
-      format.js { render :json => @group.to_json(:include => [{:children => {:include => [:all_people, :children, {:leaderships => {:include => :person}}]}}, {:leaderships => {:include => :person}}]) }
+      format.js { render :json => @group.to_json(:include => [{:children => {:include => [:all_people, :children, {:leaderships => {:include => :person}}]}}]) }
     end
   end
 

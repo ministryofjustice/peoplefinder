@@ -75,5 +75,6 @@
                   = link_to people_group_path(subgroup) do
                     = subgroup.all_people.count
                     #{'person'.pluralize(subgroup.all_people.count)}
-              .team-card-link
-                %a{href: "#", 'title': 'Expand this team'}
+              - if subgroup.children.count > 0
+                .team-card-link
+                  %a{href: "#", 'title': 'Expand this team'}
