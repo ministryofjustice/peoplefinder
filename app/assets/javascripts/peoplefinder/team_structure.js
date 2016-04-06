@@ -27,7 +27,7 @@ var template =
         '<div class="team-card-leader">' +
           '<div class="team-card-leader-image">' +
             '<div class="maginot">' +
-              '<img alt="Current photo of Test User" src="/uploads/peoplefinder/profile_photo/image/261/medium_medium_Caroline_Ajala.jpg">' +
+              '<img alt="Current photo of Test User" src="<% this.leaderships[index].person.image %>">' +
               '<div class="barrier"></div>' +
             '</div>' +
           '</div>' +
@@ -41,18 +41,18 @@ var template =
     '<%}%>' +
     '<%if(this.leaderCount) {%>' +
       '<div class="team-card-more">' +
-        'and <%this.leaderCount%> more team leader' +
+        '<%this.leaderCount%>' +
       '</div>' +
     '<%}%>' +
     '<div class="team-card-details">' +
       '<%if(this.children.length) {%>' +
         '<div class="team-card-subteams">' +
-          '<a href="/teams/digital#teams"><%this.children.length%> teams</a>' +
+          '<a href="/teams/<%this.slug%>#teams"><%this.children.length%> teams</a>' +
         '</div>' +
       '<%}%>' +
-      '<%if(this.all_people.length) {%>' +
+      '<%if(this.all_people_count) {%>' +
         '<div class="team-card-people">' +
-          '<a href="/teams/digital/people"><%this.all_people.length%> people</a>' +
+          '<a href="/teams/<%this.slug%>/people"><%this.all_people_count%> people</a>' +
         '</div>' +
       '<%}%>' +
       '<%if(this.children.length) {%>' +
@@ -64,69 +64,6 @@ var template =
   '</div>' +
 '</div>';
 
-var data = {
-  "name": "Digital",
-  "teams": [
-    {
-      "id": 1,
-      "name": "Books & Toys",
-      "leaders": [
-        {
-          "name": "Test User",
-          "email": "dsa@digital.justice.gov.uk",
-          "role": "Programme Manager / Team Lead",
-          "tel": "0207111222"
-        }
-      ],
-      "leaderCount": 3,
-      "people": 1,
-      "teams": 0
-    },
-    {
-      "id": 2,
-      "name": "Hardbacks",
-      "leaders": [
-        {
-          "name": "David Jones",
-          "email": "dave@digital.justice.gov.uk",
-          "role": "Another role"
-        }
-      ],
-      "people": 1,
-      "teams": 5
-    },
-    {
-      "id": 3,
-      "name": "Industrial, Clothing & Baby",
-      "people": 0,
-      "teams": 3
-    },
-    {
-      "id": 4,
-      "name": "Industrial, Jewelery & Grocery",
-      "people": 0,
-      "teams": 0
-    },
-    {
-      "id": 5,
-      "name": "Movies, Outdoors & Grocery",
-      "people": 0,
-      "teams": 0
-    },
-    {
-      "id": 6,
-      "name": "New Team",
-      "people": 0,
-      "teams": 2
-    },
-    {
-      "id": 7,
-      "name": "Paperbacks",
-      "people": 0,
-      "teams": 1
-    }
-  ]
-};
 var selectTeam = (function (){
   
   var selectTeam = {
@@ -163,6 +100,10 @@ var selectTeam = (function (){
     collapse: function(){
       this.removeTeams();
       this.showOtherTeams();
+      var parent = this.teams.parent();
+      if(parent){
+        $('html, body').animate({ scrollTop: $(parent).offset().top }, 'slow');
+      }
     },
     showOtherTeams: function(){
       this.teams.removeClass('expanded').find('.team-card').removeClass('hide selected');
@@ -184,10 +125,26 @@ var selectTeam = (function (){
       var self = this;
       var newTeams = $('<div/>').addClass('teams');
       this.teams.addClass('expanded').append(newTeams);
-      for(var i=0;i<this.data.children.length;i++){
-        var newTeam = TemplateEngine(template, this.data.children[i]);
+
+      $.each(this.data.children, function(i,team){
+        if(team.leaderships.length > 2){
+          var moreLeaders = team.leaderships.length - 2;
+          var message = moreLeaders > 1? 'and '+moreLeaders+' more team leaders' : 'and '+moreLeaders+' more team leader';
+          team.leaderCount = message;
+          team.leaderships.splice(2,2);
+        }
+        if(team.leaderships.length){
+          $.each(team.leaderships, function(i,leader){
+            if(leader.person.profile_photo){
+              leader.person.image = leader.person.profile_photo.image.url;
+            } else {
+              leader.person.image = '/assets/'+leader.person.legacy_image.medium.url;
+            }
+          });
+        }
+        var newTeam = TemplateEngine(template, team);
         newTeams.append(newTeam);
-      }
+      });
       $('html, body').animate({ scrollTop: $(this.teams).offset().top }, 'slow');
       newTeams.on('click', '.team-card-link a', function(e){
         e.preventDefault();

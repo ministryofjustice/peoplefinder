@@ -23,7 +23,7 @@ class GroupsController < ApplicationController
 
     respond_to do |format|
       format.html { session[:last_group_visited] = @group.id }
-      format.js { render :json => @group.to_json(:include => [{:children => {:include => [:all_people, :children, {:leaderships => {:include => :person}}]}}]) }
+      format.js { render :json => @group.as_json(:include => [{:children => {methods: [:all_people_count], :include => [:children, {:leaderships => {:include => {:person => {:include => :profile_photo}}}}]}}]) }
     end
   end
 
@@ -150,5 +150,9 @@ class GroupsController < ApplicationController
 
   def can_add_person_here?
     @group && @group.ancestry_depth > 1
+  end
+
+  def as_json(options={})
+      super.as_json(options).merge({test: "test"})
   end
 end
