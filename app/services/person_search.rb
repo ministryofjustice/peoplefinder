@@ -14,9 +14,9 @@ class PersonSearch
     email_match = email_search
     return [email_match] if email_match
 
-    @exact_name_matches, @name_matches, @exact_matches, @query_matches, @fuzzy_matches = perform_searches
-    @exact_name_matches.
-      push(*@name_matches).
+    @exact_name_matches, @exact_matches, @query_matches, @fuzzy_matches = perform_searches
+
+    [].push(*@exact_name_matches).
       push(*@exact_matches).
       push(*@query_matches).
       push(*@fuzzy_matches).
@@ -28,16 +28,15 @@ class PersonSearch
   end
 
   def perform_searches
-    name_matches = name_search
     exact_matches = exact_search
     query_matches = query_search
     fuzzy_matches = fuzziness_search
-    exact_name_matches = name_matches.select { |p| p.name == @query }
+    exact_name_matches = exact_matches.select { |p| p.name == @query }
     if single_word_query?
-      exact_name_matches += name_matches.select { |p| p.name[/^#{@query} /i] }.sort_by(&:name)
+      exact_name_matches += query_matches.select { |p| p.name[/^#{@query} /i] }.sort_by(&:name)
     end
 
-    [exact_name_matches, name_matches, exact_matches, query_matches, fuzzy_matches]
+    [exact_name_matches, exact_matches, query_matches, fuzzy_matches]
   end
 
   def exact_search
@@ -50,16 +49,6 @@ class PersonSearch
 
   def single_word_query?
     !@query[/\s/]
-  end
-
-  def name_search
-    search(
-      query: {
-        match: {
-          name: @query
-        }
-      }
-    )
   end
 
   def fuzziness_search

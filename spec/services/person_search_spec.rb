@@ -162,7 +162,6 @@ RSpec.describe PersonSearch, elastic: true do
 
   context 'with commas in search query' do
     it 'performs search without commas' do
-      expect(Person).to receive(:search_results).with({ query: { match: { name: "Smith Bill" } } }, limit: 100).and_return []
       expect(Person).to receive(:search_results).with('"Smith Bill"', limit: 100).and_return []
       expect(Person).to receive(:search_results).with('Smith Bill', limit: 100).and_return []
       expect(Person).to receive(:search_results).with(
