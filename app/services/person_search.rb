@@ -1,5 +1,7 @@
 class PersonSearch
 
+  attr_reader :exact_name_matches, :name_matches, :exact_matches, :query_matches, :fuzzy_matches
+
   def initialize query
     @query = clean_query query
     @email_query = query.strip.downcase
@@ -12,16 +14,14 @@ class PersonSearch
     email_match = email_search
     return [email_match] if email_match
 
-    exact_name_matches, name_matches, exact_matches, query_matches, fuzzy_matches = perform_searches
-    exact_name_matches.
-      push(*name_matches).
-      push(*exact_matches).
-      push(*query_matches).
-      push(*fuzzy_matches).
+    @exact_name_matches, @name_matches, @exact_matches, @query_matches, @fuzzy_matches = perform_searches
+    @exact_name_matches.
+      push(*@name_matches).
+      push(*@exact_matches).
+      push(*@query_matches).
+      push(*@fuzzy_matches).
       uniq[0..@max - 1]
   end
-
-  private
 
   def email_search
     Person.find_by_email(@email_query)
@@ -29,8 +29,8 @@ class PersonSearch
 
   def perform_searches
     name_matches = name_search
-    exact_matches = search %("#{@query}")
-    query_matches = search @query
+    exact_matches = exact_search
+    query_matches = query_search
     fuzzy_matches = fuzziness_search
     exact_name_matches = name_matches.select { |p| p.name == @query }
     if single_word_query?
@@ -38,6 +38,14 @@ class PersonSearch
     end
 
     [exact_name_matches, name_matches, exact_matches, query_matches, fuzzy_matches]
+  end
+
+  def exact_search
+    search %("#{@query}")
+  end
+
+  def query_search
+    search @query
   end
 
   def single_word_query?
@@ -84,6 +92,6 @@ class PersonSearch
   end
 
   def search query
-    Person.search_results(query, limit: @max)
+    Person.search_results(query, limit: @max).to_a
   end
 end
