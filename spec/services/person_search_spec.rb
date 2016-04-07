@@ -89,7 +89,7 @@ RSpec.describe PersonSearch, elastic: true do
 
     it 'puts single name match at top of results when name synonym' do
       results = search_for('Abe')
-      expect(results).to eq([abe, abraham_kiehn])
+      expect(results.first).to eq(abe)
     end
 
     it 'puts single name match at top of results when first name match' do
