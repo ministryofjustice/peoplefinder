@@ -15,7 +15,6 @@ feature 'Search for people', elastic: true do
         email: 'jon.browne@digital.justice.gov.uk',
         primary_phone_number: '0711111111',
         current_project: 'Digital justice',
-        tags: 'Cooking,Eating',
         community: community)
     end
 

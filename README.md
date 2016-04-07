@@ -67,8 +67,6 @@ defined on a per environment basis.
 
 `config.default_url_options` e.g. { host: mail.peoplefinder.example.com }
 
-`config.disable_profile_tags` Hide the tagging (Skills and expertise) functionality from the edit profile page
-
 `config.disable_token_auth` Disable the 'token-based authentication' feature
 
 `config.disable_communities` Disable the 'communities' feature

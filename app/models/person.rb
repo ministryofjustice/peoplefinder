@@ -17,7 +17,7 @@ class Person < ActiveRecord::Base
 
   def as_indexed_json(_options = {})
     as_json(
-      only: [:tags, :description, :location_in_building, :building, :city, :current_project],
+      only: [:description, :location_in_building, :building, :city, :current_project],
       methods: [:name, :role_and_group, :community_name]
     )
   end

@@ -306,20 +306,6 @@ form {
   }
 }
 
-
-ul.tags {
-  h4 {
-    margin-bottom: 10px;
-  }
-  li {
-    display: inline-block;
-    background-color: $grey-bg;
-    margin: 15px 15px 0 0;
-    padding: 6px 15px 9px 15px;
-    border-radius: 5px;
-  }
-}
-
 .title-with-edit {
   .edit-this-link, .edit-this-link a {
     @media screen and (max-width: 320px) {

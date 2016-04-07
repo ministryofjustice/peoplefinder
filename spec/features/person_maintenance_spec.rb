@@ -378,10 +378,4 @@ feature 'Person maintenance' do
     expect(page).to have_text('You are currently editing this profile')
   end
 
-  scenario 'Tagging is disabled', user: :regular do
-    without_feature("profile_tags") do
-      visit new_person_path
-      expect(page).not_to have_field('person_tags')
-    end
-  end
 end
