@@ -101,7 +101,7 @@ class PeopleController < ApplicationController
       :given_name, :surname, :location_in_building, :building, :city,
       :primary_phone_number, :secondary_phone_number, :email, :secondary_email,
       :profile_photo_id, :crop_x, :crop_y, :crop_w, :crop_h,
-      :description, :tags, :community_id, :current_project,
+      :description, :community_id, :current_project,
       *Person::DAYS_WORKED,
       memberships_attributes: [:id, :role, :group_id, :leader, :subscribed]
     ]
