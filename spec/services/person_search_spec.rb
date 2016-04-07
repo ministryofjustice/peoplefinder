@@ -10,7 +10,8 @@ RSpec.describe PersonSearch, elastic: true do
   let(:current_project) { 'Current project' }
 
   let!(:alice) do
-    create(:person, given_name: 'Alice', surname: 'Andrews', community: community)
+    create(:person, given_name: 'Alice', surname: 'Andrews',
+      description: 'digital project')
   end
   let!(:bob) do
     create(:person, given_name: 'Bob', surname: 'Browning',
@@ -35,8 +36,7 @@ RSpec.describe PersonSearch, elastic: true do
   end
 
   let!(:digital_services) { create(:group, name: 'Digital Services') }
-  let!(:membership) { bob.memberships.create(group: digital_services, role: 'Cleaner') }
-  let(:community) { create(:community, name: "Poetry") }
+  let!(:membership) { bob.memberships.create(group: digital_services, role: 'Digital Director') }
 
   context 'with some people' do
     before do
@@ -67,6 +67,11 @@ RSpec.describe PersonSearch, elastic: true do
       expect(results).to include(bob)
     end
 
+    it 'puts exact match first for phrase "Assisted digital"' do
+      results = search_for('Digital Project')
+      expect(results).to eq([alice, bob])
+    end
+
     it 'puts exact match first for "Alice Andrews"' do
       results = search_for('Alice Andrews')
       expect(results).to eq([alice, andrew])
@@ -82,10 +87,19 @@ RSpec.describe PersonSearch, elastic: true do
       expect(results).to eq([abraham_kiehn, abe])
     end
 
+    it 'puts single name match at top of results when name synonym' do
+      results = search_for('Abe')
+      expect(results.first).to eq(abe)
+    end
+
+    it 'puts single name match at top of results when first name match' do
+      results = search_for('Andrew')
+      expect(results).to eq([andrew, alice])
+    end
+
     it 'searches by group name and membership role' do
-      results = search_for('Cleaner at digiTAL Services')
-      expect(results).to_not include(alice)
-      expect(results).to include(bob)
+      results = search_for('Director at digiTAL Services')
+      expect(results).to eq([bob, alice])
     end
 
     it 'searches by description and location' do
@@ -122,16 +136,9 @@ RSpec.describe PersonSearch, elastic: true do
       expect(results).to include(oleary2)
     end
 
-    it 'searches by community' do
-      results = search_for(community.name)
-      expect(results).to include(alice)
-      expect(results).to_not include(bob)
-    end
-
     it 'searches by current project' do
       results = search_for(current_project)
-      expect(results).to include(bob)
-      expect(results).not_to include(alice)
+      expect(results).to eq([bob, alice])
     end
 
     it 'returns [] for blank search' do
@@ -155,12 +162,13 @@ RSpec.describe PersonSearch, elastic: true do
 
   context 'with commas in search query' do
     it 'performs search without commas' do
-      expect(Person).to receive(:search_results).with('name:Smith Bill', limit: 100).and_return []
+      expect(Person).to receive(:search_results).with({ query: { match: { name: "Smith Bill" } } }, limit: 100).and_return []
+      expect(Person).to receive(:search_results).with('"Smith Bill"', limit: 100).and_return []
       expect(Person).to receive(:search_results).with('Smith Bill', limit: 100).and_return []
       expect(Person).to receive(:search_results).with(
         hash_including(
           query: {
-            fuzzy_like_this: hash_including(like_text: 'Smith Bill')
+            multi_match: hash_including(query: 'Smith Bill')
           }
         ), limit: 100).and_return []
 

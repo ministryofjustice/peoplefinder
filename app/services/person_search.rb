@@ -1,5 +1,7 @@
 class PersonSearch
 
+  attr_reader :exact_name_matches, :name_matches, :exact_matches, :query_matches, :fuzzy_matches
+
   def initialize query
     @query = clean_query query
     @email_query = query.strip.downcase
@@ -10,46 +12,75 @@ class PersonSearch
     return [] if @query.blank?
 
     email_match = email_search
-    if email_match
-      [email_match]
-    else
-      exact_matches, name_matches, query_matches, fuzzy_matches = perform_searches
-      exact_matches.
-        push(*name_matches).
-        push(*query_matches).
-        push(*fuzzy_matches).
-        uniq[0..@max - 1]
-    end
-  end
+    return [email_match] if email_match
 
-  private
+    @exact_name_matches, @name_matches, @exact_matches, @query_matches, @fuzzy_matches = perform_searches
+    @exact_name_matches.
+      push(*@name_matches).
+      push(*@exact_matches).
+      push(*@query_matches).
+      push(*@fuzzy_matches).
+      uniq[0..@max - 1]
+  end
 
   def email_search
     Person.find_by_email(@email_query)
   end
 
   def perform_searches
-    name_matches = search "name:#{@query}"
-    query_matches = search @query
-    fuzzy_matches = fuzzy_search
-    exact_matches = name_matches.select { |p| p.name == @query }
+    name_matches = name_search
+    exact_matches = exact_search
+    query_matches = query_search
+    fuzzy_matches = fuzziness_search
+    exact_name_matches = name_matches.select { |p| p.name == @query }
+    if single_word_query?
+      exact_name_matches += name_matches.select { |p| p.name[/^#{@query} /i] }.sort_by(&:name)
+    end
 
-    [exact_matches, name_matches, query_matches, fuzzy_matches]
+    [exact_name_matches, name_matches, exact_matches, query_matches, fuzzy_matches]
   end
 
-  def fuzzy_search
+  def exact_search
+    search %("#{@query}")
+  end
+
+  def query_search
+    search @query
+  end
+
+  def single_word_query?
+    !@query[/\s/]
+  end
+
+  def name_search
     search(
-      size: @max,
       query: {
-        fuzzy_like_this: {
-          fields: [
-            :name, :tags, :description, :location_in_building, :building,
-            :city, :role_and_group, :community_name, :current_project
-          ],
-          like_text: @query, prefix_length: 3, ignore_tf: true
+        match: {
+          name: @query
         }
       }
     )
+  end
+
+  def fuzziness_search
+    search(
+      size: @max,
+      query: {
+        multi_match: {
+          fields: fields_to_search,
+          fuzziness: 1, # maximum allowed Levenshtein Edit Distance
+          prefix_length: 1, # number of initial characters which won't be "fuzzified"
+          query: @query
+        }
+      }
+    )
+  end
+
+  def fields_to_search
+    [
+      :name, :description, :location_in_building, :building,
+      :city, :role_and_group, :current_project
+    ]
   end
 
   def clean_query query
@@ -61,6 +92,6 @@ class PersonSearch
   end
 
   def search query
-    Person.search_results(query, limit: @max)
+    Person.search_results(query, limit: @max).to_a
   end
 end
