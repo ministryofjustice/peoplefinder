@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 ruby '2.2.4'
 gem 'rails', '~> 4.2.4'
-
+gem 'text'
 gem 'ancestry'
 gem 'delayed_job', git: 'https://github.com/collectiveidea/delayed_job.git',
     ref: '5f914105c1c38ca73a486d63de8ad62f254b3d72' # needed for queue_attributes configuration

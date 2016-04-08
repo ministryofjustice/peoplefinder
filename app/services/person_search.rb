@@ -44,7 +44,7 @@ class PersonSearch
   end
 
   def query_search
-    search @query
+    sort_by_edit_distance search(@query)
   end
 
   def single_word_query?
@@ -52,7 +52,7 @@ class PersonSearch
   end
 
   def fuzziness_search
-    search(
+    sort_by_edit_distance search(
       size: @max,
       query: {
         multi_match: {
@@ -63,6 +63,19 @@ class PersonSearch
         }
       }
     )
+  end
+
+  def sort_by_edit_distance results
+    if any_close_by_edit_distance? results
+      results.sort_by { |x| Text::Levenshtein.distance(x.name, @query) }
+    else
+      results
+    end
+  end
+
+  def any_close_by_edit_distance? results
+    edit_distances = results.map { |x| Text::Levenshtein.distance(x.name, @query) }
+    edit_distances.any? { |e| e > 0 && e < 4 }
   end
 
   def fields_to_search

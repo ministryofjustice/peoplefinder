@@ -35,6 +35,16 @@ RSpec.describe PersonSearch, elastic: true do
     create(:person, given_name: 'Denis', surname: "O’Leary")
   end
 
+  let!(:collier) do
+    create(:person, given_name: 'John', surname: "Collier")
+  end
+  let!(:miller) do
+    create(:person, given_name: 'John', surname: "Miller")
+  end
+  let!(:scotti) do
+    create(:person, given_name: 'John', surname: "Scotti")
+  end
+
   let!(:digital_services) { create(:group, name: 'Digital Services') }
   let!(:membership) { bob.memberships.create(group: digital_services, role: 'Digital Director') }
 
@@ -84,7 +94,8 @@ RSpec.describe PersonSearch, elastic: true do
 
     it 'puts name synonym matches in results' do
       results = search_for('Abe Kiehn')
-      expect(results).to eq([abraham_kiehn, abe])
+      expect(results).to include(abraham_kiehn)
+      expect(results).to include(abe)
     end
 
     it 'puts single name match at top of results when name synonym' do
@@ -139,6 +150,21 @@ RSpec.describe PersonSearch, elastic: true do
     it 'searches by current project' do
       results = search_for(current_project)
       expect(results).to eq([bob, alice])
+    end
+
+    it 'searches by partial match and orders by edit distance if edit distance 1 exists' do
+      results = search_for("John Collie")
+      expect(results).to eq([collier, miller, scotti])
+    end
+
+    it 'searches by partial match and orders by edit distance if edit distance 2 exists' do
+      results = search_for("John Colli")
+      expect(results).to eq([collier, miller, scotti])
+    end
+
+    it 'searches by partial match and orders by edit distance if edit distance 3 exists' do
+      results = search_for("John Coll")
+      expect(results).to eq([collier, miller, scotti])
     end
 
     it 'returns [] for blank search' do
