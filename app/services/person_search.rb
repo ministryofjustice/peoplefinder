@@ -21,22 +21,30 @@ class PersonSearch
   # PersonSearch.new('John Zoolander').perform_search
   # #=> [ [#<Person given_name: "John", surname: "Smith"], false ]
   def perform_search
-    return [[], @exact_match = false] if @query.blank?
+    if @query.blank?
+      [@results = [], @exact_match = false]
+    else
+      email_match = email_search
+      if email_match
+        [@results = [email_match], @exact_match = true]
+      else
+        @results = do_searches
+        [@results, exact_match_exists?]
+      end
+    end
+  end
 
-    email_match = email_search
-    return [[email_match], @exact_match = true] if email_match
-
+  def do_searches
     @exact_name_matches, @exact_matches, @query_matches, @fuzzy_matches = perform_searches
 
-    @results = [].
+    results = [].
               push(*@exact_name_matches).
               push(*@exact_matches).
               push(*@query_matches).
               push(*@fuzzy_matches).
               uniq[0..@max - 1]
 
-    @results = sort_by_edit_distance @results
-    [@results, exact_match_exists?]
+    sort_by_edit_distance results
   end
 
   def exact_match_exists?
@@ -59,16 +67,15 @@ class PersonSearch
     person.send(field) && person.send(field)[@query_regexp]
   end
 
+  def any_partial_match? person
+    [:description, :role_and_group, :location_in_building, :building, :city, :current_project].any? do |field|
+      any_partial_match_for?(person, field)
+    end
+  end
+
   def any_exact_matches?
-    downcase_query = @query.downcase
     @results.any? do |p|
-      (p.name.downcase == downcase_query) ||
-      any_partial_match_for?(p, :description) ||
-      any_partial_match_for?(p, :role_and_group) ||
-      any_partial_match_for?(p, :location_in_building) ||
-      any_partial_match_for?(p, :building) ||
-      any_partial_match_for?(p, :city) ||
-      any_partial_match_for?(p, :current_project)
+      (p.name.casecmp(@query) == 0) || any_partial_match?(p)
     end
   end
 
