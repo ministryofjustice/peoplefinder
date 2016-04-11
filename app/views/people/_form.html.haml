@@ -27,12 +27,6 @@
         %span.error= @person.errors[:surname].first
     = f.text_field :surname, class: 'form-control'
 
-
-  - if feature_enabled?("communities")
-    = f.form_group :community_id do
-      %label.form-label-bold{ for: :person_community_id } Community
-      = f.select(:community_id, Community.all.map { |c| [c.name, c.id] }, { include_blank: true} )
-
   .form-group
     #contact-details
       %h2.line-above Contact details

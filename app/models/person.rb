@@ -18,7 +18,7 @@ class Person < ActiveRecord::Base
   def as_indexed_json(_options = {})
     as_json(
       only: [:description, :location_in_building, :building, :city, :current_project],
-      methods: [:name, :role_and_group, :community_name]
+      methods: [:name, :role_and_group]
     )
   end
 
@@ -59,7 +59,6 @@ class Person < ActiveRecord::Base
 
   has_many :memberships, -> { includes(:group).order('groups.name') }, dependent: :destroy
   has_many :groups, through: :memberships
-  belongs_to :community
 
   accepts_nested_attributes_for :memberships, allow_destroy: true,
     reject_if: proc { |membership| membership['group_id'].blank? }
@@ -122,8 +121,6 @@ class Person < ActiveRecord::Base
   def phone
     [primary_phone_number, secondary_phone_number].find(&:present?)
   end
-
-  delegate :name, to: :community, prefix: true, allow_nil: true
 
   include Concerns::ConcatenatedFields
   concatenated_field :location, :location_in_building, :building, :city, join_with: ', '

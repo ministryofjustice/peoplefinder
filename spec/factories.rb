@@ -34,12 +34,6 @@ FactoryGirl.define do
     end
   end
 
-  factory :community do
-    sequence :name do |n|
-      'Community-%04d' % n
-    end
-  end
-
   factory :information_request do
     message "This is the information request message body"
   end

@@ -50,8 +50,6 @@ module Peoplefinder
 
     config.elastic_search_url = ENV['MOJ_PF_ES_URL']
 
-    config.disable_communities = true
-
     config.ga_tracking_id = (ENV['GA_TRACKING_ID'] || '')
 
     config.rack_timeout = (ENV['RACK_TIMEOUT'] || 14)

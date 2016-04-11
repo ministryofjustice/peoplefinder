@@ -6,7 +6,8 @@ module Concerns::Searchable
     include Elasticsearch::Model::Callbacks
 
     # Force a full re-index after update, the ActiveModel::Dirty tracking
-    # doesn't detect changes to community_name
+    # doesn't detect changes to community_name.
+    # Don't know if we still need this, as we have removed community feature.
     after_commit -> { __elasticsearch__.index_document }, on: :update
 
     index_name [Rails.env, model_name.collection.gsub(/\//, '-')].join('_')

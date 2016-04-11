@@ -17,8 +17,6 @@
                 = link_to membership.group.name, membership.group,
                   search_result ? { data: search_result_analytics_attributes(index) } : {}
 
-          - if feature_enabled?("communities") && person.community.present?
-            .meta.community= link_to person.community, search_path(query: person.community.name)
           .meta= call_to(person.phone)
           .meta= mail_to(person.email, nil, data: search_result_analytics_attributes(index) )
           - if person.current_project.present?

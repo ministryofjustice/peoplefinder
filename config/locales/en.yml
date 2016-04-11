@@ -129,9 +129,6 @@ en:
       works_friday: "F"
       works_saturday: "S"
       works_sunday: "S"
-    show:
-      community: Community
-      community_unset: Not specified
   person_uploads:
     header: Upload people’s details
     add_new_team: Add new team
