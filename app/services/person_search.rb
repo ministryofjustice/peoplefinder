@@ -1,9 +1,10 @@
 class PersonSearch
 
-  attr_reader :exact_name_matches, :name_matches, :exact_matches, :query_matches, :fuzzy_matches
+  attr_reader :query, :results, :exact_name_matches, :name_matches, :exact_matches, :query_matches, :fuzzy_matches
 
   def initialize query
     @query = clean_query query
+    @query_regexp = /#{@query.downcase}/i
     @email_query = query.strip.downcase
     @max = 100
   end
@@ -20,21 +21,55 @@ class PersonSearch
   # PersonSearch.new('John Zoolander').perform_search
   # #=> [ [#<Person given_name: "John", surname: "Smith"], false ]
   def perform_search
-    return [[], false] if @query.blank?
+    return [[], @exact_match = false] if @query.blank?
 
     email_match = email_search
-    return [[email_match], true] if email_match
+    return [[email_match], @exact_match = true] if email_match
 
     @exact_name_matches, @exact_matches, @query_matches, @fuzzy_matches = perform_searches
 
-    results = [].
+    @results = [].
               push(*@exact_name_matches).
               push(*@exact_matches).
               push(*@query_matches).
               push(*@fuzzy_matches).
               uniq[0..@max - 1]
 
-    [results, false]
+    @results = sort_by_edit_distance @results
+    [@results, exact_match_exists?]
+  end
+
+  def exact_match_exists?
+    @exact_match ||= if single_word_query?
+                       @exact_name_matches.present? ||
+                         @exact_matches.present? ||
+                         any_partial_name_matches?(@query_matches) ||
+                         any_partial_name_matches?(@fuzzy_matches) ||
+                         any_exact_matches?
+                     else
+                       any_exact_matches?
+                     end
+  end
+
+  def any_partial_name_matches? results
+    results.any? { |m| m.name[@query_regexp] }
+  end
+
+  def any_partial_match_for? person, field
+    person.send(field) && person.send(field)[@query_regexp]
+  end
+
+  def any_exact_matches?
+    downcase_query = @query.downcase
+    @results.any? do |p|
+      (p.name.downcase == downcase_query) ||
+      any_partial_match_for?(p, :description) ||
+      any_partial_match_for?(p, :role_and_group) ||
+      any_partial_match_for?(p, :location_in_building) ||
+      any_partial_match_for?(p, :building) ||
+      any_partial_match_for?(p, :city) ||
+      any_partial_match_for?(p, :current_project)
+    end
   end
 
   def email_search
@@ -58,7 +93,7 @@ class PersonSearch
   end
 
   def query_search
-    sort_by_edit_distance search(@query)
+    search(@query)
   end
 
   def single_word_query?
@@ -66,7 +101,7 @@ class PersonSearch
   end
 
   def fuzziness_search
-    sort_by_edit_distance search(
+    search(
       size: @max,
       query: {
         multi_match: {
