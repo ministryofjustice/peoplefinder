@@ -44,37 +44,6 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
--- Name: communities; Type: TABLE; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE TABLE communities (
-    id integer NOT NULL,
-    name character varying,
-    created_at timestamp without time zone,
-    updated_at timestamp without time zone
-);
-
-
---
--- Name: communities_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE communities_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: communities_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE communities_id_seq OWNED BY communities.id;
-
-
---
 -- Name: delayed_jobs; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -209,7 +178,6 @@ CREATE TABLE people (
     slug character varying,
     works_saturday boolean DEFAULT false,
     works_sunday boolean DEFAULT false,
-    community_id integer,
     login_count integer DEFAULT 0 NOT NULL,
     last_login_at timestamp without time zone,
     super_admin boolean DEFAULT false,
@@ -386,13 +354,6 @@ ALTER SEQUENCE versions_id_seq OWNED BY versions.id;
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY communities ALTER COLUMN id SET DEFAULT nextval('communities_id_seq'::regclass);
-
-
---
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
---
-
 ALTER TABLE ONLY delayed_jobs ALTER COLUMN id SET DEFAULT nextval('delayed_jobs_id_seq'::regclass);
 
 
@@ -443,14 +404,6 @@ ALTER TABLE ONLY tokens ALTER COLUMN id SET DEFAULT nextval('tokens_id_seq'::reg
 --
 
 ALTER TABLE ONLY versions ALTER COLUMN id SET DEFAULT nextval('versions_id_seq'::regclass);
-
-
---
--- Name: communities_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
---
-
-ALTER TABLE ONLY communities
-    ADD CONSTRAINT communities_pkey PRIMARY KEY (id);
 
 
 --
@@ -665,4 +618,6 @@ INSERT INTO schema_migrations (version) VALUES ('20160304155510');
 INSERT INTO schema_migrations (version) VALUES ('20160308105233');
 
 INSERT INTO schema_migrations (version) VALUES ('20160407145602');
+
+INSERT INTO schema_migrations (version) VALUES ('20160411134824');
 
