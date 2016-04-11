@@ -89,7 +89,8 @@ RSpec.describe PersonSearch, elastic: true do
 
     it 'searches by single word non-name match' do
       results, exact_match = search_for('Digital')
-      expect(results).to eq([alice, bob])
+      expect(results).to include(alice)
+      expect(results).to include(bob)
       expect(exact_match).to eq true
     end
 
