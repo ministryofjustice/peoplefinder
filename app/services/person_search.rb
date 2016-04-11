@@ -8,19 +8,33 @@ class PersonSearch
     @max = 100
   end
 
+  # Returns a two element array, first element is the list of results, second
+  # element is a boolean which is true when the results contain an exact match
+  # for supplied query term and false otherwise.
+  #
+  # Example:
+  #
+  # PersonSearch.new('John Smith').perform_search
+  # #=> [ [#<Person given_name: "John", surname: "Smith"], true ]
+  #
+  # PersonSearch.new('John Zoolander').perform_search
+  # #=> [ [#<Person given_name: "John", surname: "Smith"], false ]
   def perform_search
-    return [] if @query.blank?
+    return [[], false] if @query.blank?
 
     email_match = email_search
-    return [email_match] if email_match
+    return [[email_match], true] if email_match
 
     @exact_name_matches, @exact_matches, @query_matches, @fuzzy_matches = perform_searches
 
-    [].push(*@exact_name_matches).
-      push(*@exact_matches).
-      push(*@query_matches).
-      push(*@fuzzy_matches).
-      uniq[0..@max - 1]
+    results = [].
+              push(*@exact_name_matches).
+              push(*@exact_matches).
+              push(*@query_matches).
+              push(*@fuzzy_matches).
+              uniq[0..@max - 1]
+
+    [results, false]
   end
 
   def email_search
@@ -96,4 +110,5 @@ class PersonSearch
   def search query
     Person.search_results(query, limit: @max).to_a
   end
+
 end

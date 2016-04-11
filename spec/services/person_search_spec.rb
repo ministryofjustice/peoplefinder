@@ -182,7 +182,8 @@ RSpec.describe PersonSearch, elastic: true do
     end
 
     it 'sorts results to put exact match first' do
-      expect(described_class.new('John Smith').perform_search).to eq [john_smith, jonathan_smith]
+      results = search_for('John Smith')
+      expect(results).to eq [john_smith, jonathan_smith]
     end
   end
 
@@ -201,7 +202,16 @@ RSpec.describe PersonSearch, elastic: true do
     end
   end
 
-  def search_for(query)
+  def perform_search(query)
     described_class.new(query).perform_search
   end
+
+  def search_for(query)
+    perform_search(query)[0]
+  end
+
+  def exact_match_exists(query)
+    perform_search(query)[1]
+  end
+
 end
