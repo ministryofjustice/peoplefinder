@@ -1,26 +1,82 @@
 class PersonSearch
 
-  attr_reader :exact_name_matches, :name_matches, :exact_matches, :query_matches, :fuzzy_matches
+  attr_reader :query, :results, :exact_name_matches, :name_matches, :exact_matches, :query_matches, :fuzzy_matches
 
   def initialize query
     @query = clean_query query
+    @query_regexp = /#{@query.downcase}/i
     @email_query = query.strip.downcase
     @max = 100
   end
 
+  # Returns a two element array, first element is the list of results, second
+  # element is a boolean which is true when the results contain an exact match
+  # for supplied query term and false otherwise.
+  #
+  # Example:
+  #
+  # PersonSearch.new('John Smith').perform_search
+  # #=> [ [#<Person given_name: "John", surname: "Smith"], true ]
+  #
+  # PersonSearch.new('John Zoolander').perform_search
+  # #=> [ [#<Person given_name: "John", surname: "Smith"], false ]
   def perform_search
-    return [] if @query.blank?
+    if @query.blank?
+      [@results = [], @exact_match = false]
+    else
+      email_match = email_search
+      if email_match
+        [@results = [email_match], @exact_match = true]
+      else
+        @results = do_searches
+        [@results, exact_match_exists?]
+      end
+    end
+  end
 
-    email_match = email_search
-    return [email_match] if email_match
-
+  def do_searches
     @exact_name_matches, @exact_matches, @query_matches, @fuzzy_matches = perform_searches
 
-    [].push(*@exact_name_matches).
-      push(*@exact_matches).
-      push(*@query_matches).
-      push(*@fuzzy_matches).
-      uniq[0..@max - 1]
+    results = [].
+              push(*@exact_name_matches).
+              push(*@exact_matches).
+              push(*@query_matches).
+              push(*@fuzzy_matches).
+              uniq[0..@max - 1]
+
+    sort_by_edit_distance results
+  end
+
+  def exact_match_exists?
+    @exact_match ||= if single_word_query?
+                       @exact_name_matches.present? ||
+                         @exact_matches.present? ||
+                         any_partial_name_matches?(@query_matches) ||
+                         any_partial_name_matches?(@fuzzy_matches) ||
+                         any_exact_matches?
+                     else
+                       any_exact_matches?
+                     end
+  end
+
+  def any_partial_name_matches? results
+    results.any? { |m| m.name[@query_regexp] }
+  end
+
+  def any_partial_match_for? person, field
+    person.send(field) && person.send(field)[@query_regexp]
+  end
+
+  def any_partial_match? person
+    [:description, :role_and_group, :location_in_building, :building, :city, :current_project].any? do |field|
+      any_partial_match_for?(person, field)
+    end
+  end
+
+  def any_exact_matches?
+    @results.any? do |p|
+      (p.name.casecmp(@query) == 0) || any_partial_match?(p)
+    end
   end
 
   def email_search
@@ -44,7 +100,7 @@ class PersonSearch
   end
 
   def query_search
-    sort_by_edit_distance search(@query)
+    search(@query)
   end
 
   def single_word_query?
@@ -52,7 +108,7 @@ class PersonSearch
   end
 
   def fuzziness_search
-    sort_by_edit_distance search(
+    search(
       size: @max,
       query: {
         multi_match: {
@@ -96,4 +152,5 @@ class PersonSearch
   def search query
     Person.search_results(query, limit: @max).to_a
   end
+
 end
