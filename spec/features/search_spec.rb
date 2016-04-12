@@ -4,18 +4,14 @@ feature 'Search for people', elastic: true do
   extend FeatureFlagSpecHelper
   include PermittedDomainHelper
 
-  enable_feature :communities
-
   describe 'with elasticsearch' do
-    let(:community) { create(:community, name: 'Design') }
     let!(:person) do
       create(:person,
         given_name: 'Jon',
         surname: 'Browne',
         email: 'jon.browne@digital.justice.gov.uk',
         primary_phone_number: '0711111111',
-        current_project: 'Digital justice',
-        community: community)
+        current_project: 'Digital justice')
     end
 
     before do
@@ -41,17 +37,8 @@ feature 'Search for people', elastic: true do
       expect(page).to have_text('jon.browne@digital.justice.gov.uk')
       expect(page).to have_text('0711111111')
       expect(page).to have_text('Digital justice')
-      expect(page).to have_text(community.name)
       expect(page).to have_link('add them', href: new_person_path)
     end
 
-    scenario 'searching by community' do
-      visit home_path
-      fill_in 'query', with: community.name
-      click_button 'Submit search'
-      expect(page).to have_title("Search results - #{app_title}")
-      expect(page).to have_text('Jon Browne')
-      expect(page).to have_text(community.name)
-    end
   end
 end
