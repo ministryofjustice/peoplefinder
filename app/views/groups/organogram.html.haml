@@ -10,8 +10,7 @@
   .group-title
     - if @group.acronym?
       %h1
-        = @group.acronym
-        team organogram
+        == #{@group.acronym}'s organogram
     - else
       %h1
         = @group.name
