@@ -55,7 +55,7 @@ feature 'Group browsing' do
     expect(page).not_to have_text("Teams within #{current_group.name}")
     expect(page).not_to have_link("View all 0 people in #{current_group.name}")
     expect(page).not_to have_link("View 0 people not assigned to a sub-team")
-    expect(page).not_to have_link("View organogram")
+    expect(page).not_to have_link("View printable organogram")
   end
 
   context 'A team with people and subteams with people' do
@@ -71,7 +71,7 @@ feature 'Group browsing' do
       visit group_path(department)
       expect(page).not_to have_link("View all 7 people in #{department.name}")
       expect(page).to have_link("View 1 person not assigned to a sub-team")
-      expect(page).to have_link("View organogram")
+      expect(page).to have_link("View printable organogram")
     end
 
     scenario 'viewing text on page' do
@@ -114,9 +114,9 @@ feature 'Group browsing' do
       end
     end
 
-    scenario 'following the view organogram link' do
+    scenario 'following the view printable organogram link' do
       visit group_path(team)
-      click_link("View organogram")
+      click_link("View printable organogram")
 
       expect(page).to have_title("#{team.name} Organogram - #{app_title}")
       within('.breadcrumbs') do

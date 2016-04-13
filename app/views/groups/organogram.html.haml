@@ -10,17 +10,16 @@
   .group-title
     - if @group.acronym?
       %h1
-        = @group.acronym 
-        team organogram
+        == #{@group.acronym}'s organogram
     - else
       %h1
-        = @group.name 
+        = @group.name
         team organogram
 
   - if @group.leaderships.present?
     %div.inner-block
       %div.grid-wrapper.leaders
-        %h2 Team leaders
+        %h2 Team #{'leader'.pluralize(@group.leaderships_by_person.size)}
         - @group.leaderships_by_person.each do |person, leaderships|
           %div.leader
             = render partial: 'leaderships', object: leaderships, locals: { person: person }
