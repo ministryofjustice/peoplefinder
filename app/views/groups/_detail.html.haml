@@ -16,14 +16,14 @@
         - if @group.children.count > 0
           = link_to "View #{pluralize_with_delimiter @group.children.count, 'sub-team'}", '#teams', class: 'small link-left'
         = link_to 'Edit this team', edit_group_path(@group), class: 'small'
-      
+
 
 %div.grid-wrapper.details
   - if @group.leaderships.count > 0
     %div.grid.grid-1-3
-      
+
       %div.inner-block.group-leader{ class: (@group.leaderships.count > 1) ? 'multiple-leaders' : '' }
-        
+
         %h3 Team #{'leader'.pluralize(@group.leaderships.count)}
         - @group.leaderships_by_person.each do |person, leaderships|
           = render partial: 'leaderships', object: leaderships, locals: { person: person }
@@ -36,7 +36,7 @@
     %div.inner-block
       .team-links
         - if @all_people_count > 0 || @group.children.present?
-          = link_to "View organogram", organogram_group_path(@group)
+          = link_to "View printable organogram", organogram_group_path(@group)
         - unless @group.leaf_node?
           - if @all_people_count > 0 && @group.parent.present?
             = link_to "View #{ @all_people_count > 1 ? 'all' : '' } people", people_group_path(@group), class: 'view-all-people'
