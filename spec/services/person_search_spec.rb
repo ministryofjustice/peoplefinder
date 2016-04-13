@@ -186,7 +186,9 @@ RSpec.describe PersonSearch, elastic: true do
 
     it 'searches by partial match and orders by edit distance if edit distance 2 exists' do
       results, exact_match = search_for("John Colli")
-      expect(results).to eq([collier, miller, scotti])
+      expect(results.first).to eq(collier)
+      expect(results).to include(miller) # has edit distance of 4 from query term
+      expect(results).to include(scotti) # also has edit distance of 4 from query term
       expect(exact_match).to eq false
     end
 
