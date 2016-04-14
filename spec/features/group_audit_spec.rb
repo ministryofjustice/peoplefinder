@@ -31,8 +31,8 @@ feature 'View group audit' do
 
       expect(group_page).to have_audit
       group_page.audit.versions.tap do |v|
-        expect(v[0]).to have_text "description => #{description}"
-        expect(v[1]).to have_text "name => #{name}"
+        expect(v[0]).to have_text "description: #{description}"
+        expect(v[1]).to have_text "name: #{name}"
       end
     end
 

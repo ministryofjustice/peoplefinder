@@ -1,26 +1,34 @@
 %table.audit
   %thead
     %tr
-      %th Event
-      %th By
+      %th{ style: 'width: 150px' } Event at
+      %th{ style: 'width: 150px' } By
       %th IP address
       %th Browser
-      %th At
       %th Change
   %tbody
     -versions.reverse.each do |v|
       %tr
-        %td= v.event
+        %td
+          = l(v.created_at)
         -if v.whodunnit.is_a?(Person)
           %td= link_to v.whodunnit.to_s, v.whodunnit
         - else
           %td= v.whodunnit
         %td= v.ip_address
         %td{title: v.user_agent}=v.user_agent_summary
-        %td= v.created_at
         %td
           %ul
             - v.changes.each do |change|
-              %li=change
+              - field = change[/^(\w+) =>/, 1]
+              - value = change[/^\w+ => (.+)$/, 1]
+              %li
+                = succeed ':' do
+                  %strong<
+                    = field
+                - if value.blank?
+                  (deleted)
+                - else
+                  = value
 
 
