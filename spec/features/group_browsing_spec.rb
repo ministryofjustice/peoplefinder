@@ -124,7 +124,7 @@ feature 'Group browsing' do
         expect(page).to have_text('Organogram')
       end
 
-      expect(page).to have_text("#{team.name} team organogram")
+      expect(page).to have_text("#{team.name}’s organogram")
       names.each do |name|
         expect(page).to have_link(name.join(' '))
       end

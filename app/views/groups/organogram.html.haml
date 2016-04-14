@@ -8,13 +8,7 @@
   #print
     %a{ href: 'javascript:window.print();' } Print
   .group-title
-    - if @group.acronym?
-      %h1
-        == #{@group.acronym}'s organogram
-    - else
-      %h1
-        = @group.name
-        team organogram
+    %h1 #{@group.short_name}’s organogram
 
   - if @group.leaderships.present?
     %div.inner-block
