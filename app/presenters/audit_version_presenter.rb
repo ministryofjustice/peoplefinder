@@ -13,7 +13,8 @@ class AuditVersionPresenter
 
   def changes
     YAML.load(@version.object_changes).map do |field, (_, new)|
-      "#{field} => #{new}"
+      value = new.blank? ? '(deleted)' : new
+      [field, value]
     end
   end
 

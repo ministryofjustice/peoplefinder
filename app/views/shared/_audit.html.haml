@@ -7,7 +7,7 @@
       %th Browser
       %th Change
   %tbody
-    -versions.reverse.each do |v|
+    - versions.reverse.each do |v|
       %tr
         %td
           = l(v.created_at)
@@ -19,16 +19,9 @@
         %td{title: v.user_agent}=v.user_agent_summary
         %td
           %ul
-            - v.changes.each do |change|
-              - field = change[/^(\w+) =>/, 1]
-              - value = change[/^\w+ => (.+)$/, 1]
+            - v.changes.each do |field, value|
               %li
                 = succeed ':' do
                   %strong<
                     = field
-                - if value.blank?
-                  (deleted)
-                - else
-                  = value
-
-
+                = value
