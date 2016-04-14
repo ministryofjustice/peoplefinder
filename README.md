@@ -40,23 +40,39 @@ Point your browser to http://0.0.0.0:3000 and you should see the application's s
 
 On Mac OSX:
 
-    brew install postgresql
-    brew install imagemagick
-    brew install phantomjs
+```cmd
+brew install postgresql
+brew install imagemagick
+brew install phantomjs
 
-    brew install homebrew/versions/elasticsearch17
-    ln -sfv /usr/local/opt/elasticsearch17/*.plist ~/Library/LaunchAgents
-    launchctl load ~/Library/LaunchAgents/homebrew.mxcl.elasticsearch17.plist
+brew install homebrew/versions/elasticsearch17
+ln -sfv /usr/local/opt/elasticsearch17/*.plist ~/Library/LaunchAgents
+launchctl load ~/Library/LaunchAgents/homebrew.mxcl.elasticsearch17.plist
 
-    git clone git@github.com:ministryofjustice/peoplefinder.git
-    cd peoplefinder
+git clone git@github.com:ministryofjustice/peoplefinder.git
+cd peoplefinder
 
-    gem install eventmachine -v 1.0.5 -- --with-cppflags=-I/usr/local/opt/openssl/include
+gem install eventmachine -v 1.0.5 -- --with-cppflags=-I/usr/local/opt/openssl/include
 
-    bundle
-    bundle exec rake db:setup
-    bundle exec rake # runs tests
-    bundle exec rails s -b 0.0.0.0
+bundle
+bundle exec rake db:setup
+bundle exec rake # runs tests
+bundle exec rails s -b 0.0.0.0
+```
+
+In a separate terminal, run job worker for sending emails:
+
+```cmd
+cd peoplefinder
+bundle exec rake jobs:work
+```
+
+To catch emails in development, in a separate terminal, run `mailcatcher` and view emails at `http://localhost:1080`:
+
+```cmd
+cd peoplefinder
+mailcatcher
+```
 
 ## Configuration
 
@@ -127,7 +143,9 @@ unique random token. Clicking on the link will allow them to login.
 
 ## E-mails
 
-People finder sends a few types of e-mail. E-mails are delivered using `delayed_job` adapter for `activejob`. Run `rake jobs:work` to activate the worker.
+People finder sends a few types of e-mail. E-mails are delivered using `delayed_job` adapter for `activejob`.
+
+Run `bundle exec rake jobs:work` to activate the worker.
 
 ### In Development
 
