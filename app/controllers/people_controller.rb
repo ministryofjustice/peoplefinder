@@ -143,8 +143,10 @@ class PeopleController < ApplicationController
   end
 
   def load_versions
+    versions = @person.versions
+    @last_updated_at = versions.last ? versions.last.created_at : nil
     if super_admin?
-      @versions = AuditVersionPresenter.wrap(@person.versions)
+      @versions = AuditVersionPresenter.wrap(versions)
     end
   end
 
