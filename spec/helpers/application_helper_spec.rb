@@ -15,23 +15,28 @@ RSpec.describe ApplicationHelper, type: :helper do
   end
 
   context '#last_update' do
+    before do
+      @last_updated_at = stubbed_time
+    end
+
     it 'shows last_update for a person by a system generated user' do
-      @person = double(:person, updated_at: stubbed_time, originator: originator)
+      @person = double(:person, originator: originator)
       expect(last_update).to eql('Last updated: 31 Oct 2012 02:02.')
     end
 
     it 'shows last_update for a person by someone who is not the system user' do
-      @person = double(:person, updated_at: stubbed_time, originator: 'Bob')
+      @person = double(:person, originator: 'Bob')
       expect(last_update).to eql('Last updated: 31 Oct 2012 02:02 by Bob.')
     end
 
     it 'shows last_update for a group' do
-      @group = double(:group, updated_at: stubbed_time, originator: originator)
+      @group = double(:group, originator: originator)
       expect(last_update).to eql('Last updated: 31 Oct 2012 02:02.')
     end
 
     it 'does not show last_update for a new person' do
-      @person = double(:group, updated_at: nil, originator: originator)
+      @person = double(:group, originator: originator)
+      @last_updated_at = nil
       expect(last_update).to be_blank
     end
   end

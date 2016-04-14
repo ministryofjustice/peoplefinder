@@ -35,10 +35,10 @@ feature 'View person audit' do
 
         expect(profile_page).to have_audit
         profile_page.audit.versions.tap do |v|
-          expect(v[0]).to have_text "profile_photo_id => #{profile_photo.id}"
-          expect(v[1]).to have_text "primary_phone_number => #{phone_number}"
-          expect(v[2]).to have_text "description => #{description}"
-          expect(v[3]).to have_text "email => #{person.email}"
+          expect(v[0]).to have_text "profile_photo_id: #{profile_photo.id}"
+          expect(v[1]).to have_text "primary_phone_number: #{phone_number}"
+          expect(v[2]).to have_text "description: #{description}"
+          expect(v[3]).to have_text "email: #{person.email}"
         end
       end
 

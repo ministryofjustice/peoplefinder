@@ -6,8 +6,8 @@ module ApplicationHelper
 
   def last_update
     current_object = @person || @group
-    if current_object && current_object.updated_at.present?
-      "#{updated_at(current_object)}#{updated_by(current_object)}."
+    if current_object && @last_updated_at.present?
+      "#{updated_at(@last_updated_at)}#{updated_by(current_object)}."
     end
   end
 
@@ -108,8 +108,8 @@ module ApplicationHelper
 
   private
 
-  def updated_at(obj)
-    "Last updated: #{l(obj.updated_at)}"
+  def updated_at(datetime)
+    "Last updated: #{l(datetime)}"
   end
 
   def updated_by(obj)

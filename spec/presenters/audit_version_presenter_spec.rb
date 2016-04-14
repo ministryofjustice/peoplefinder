@@ -53,9 +53,9 @@ RSpec.describe AuditVersionPresenter, type: :presenter do
 
   describe '#changes' do
     it 'contains expected strings' do
-      expect(changes).to include("email => #{new_email}")
-      expect(changes).to include("given_name => #{new_given_name}")
-      expect(changes).to include("surname => #{new_surname}")
+      expect(changes).to include(['email', new_email])
+      expect(changes).to include(['given_name', new_given_name])
+      expect(changes).to include(['surname', new_surname])
     end
   end
 
