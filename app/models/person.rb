@@ -23,7 +23,8 @@ class Person < ActiveRecord::Base
   end
 
   has_paper_trail class_name: 'Version',
-                  ignore: [:updated_at, :created_at, :id, :slug, :login_count, :last_login_at]
+                  ignore: [:updated_at, :created_at, :id, :slug, :login_count, :last_login_at,
+                           :last_reminder_email_at]
 
   def changes_for_paper_trail
     super.tap do |changes|

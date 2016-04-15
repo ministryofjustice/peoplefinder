@@ -113,7 +113,7 @@ module ApplicationHelper
   end
 
   def updated_by(obj)
-    " by #{obj.originator}" unless obj.originator == Version.public_user
+    " by #{obj.paper_trail_originator}" unless obj.paper_trail_originator == Version.public_user
   end
 
   def flash_message(type)
