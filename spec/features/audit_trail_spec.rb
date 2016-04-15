@@ -18,7 +18,7 @@ feature 'Audit trail' do
       expect(page).to have_text('Person Edited')
       expect(page).to have_text('Surname changed from original surname to something else')
 
-      click_button 'undo'
+      click_button 'undo', match: :first
 
       person.reload
       expect(person.surname).to eq('original surname')
@@ -40,7 +40,7 @@ feature 'Audit trail' do
       expect(page).to have_text('Surname set to: Smith')
 
       expect do
-        click_button 'undo'
+        click_button 'undo', match: :first
       end.to change(Person, :count).by(-1)
     end
   end
@@ -56,7 +56,7 @@ feature 'Audit trail' do
       expect(page).to have_text('Name: Greg Dan')
 
       expect do
-        click_button 'undo'
+        click_button 'undo', match: :first
       end.to change(Person, :count).by(1)
     end
   end
