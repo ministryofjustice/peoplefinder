@@ -5,7 +5,8 @@ class Group < ActiveRecord::Base
   MAX_DESCRIPTION = 1000
 
   has_paper_trail class_name: 'Version',
-                  ignore: [:updated_at, :created_at, :slug, :id]
+                  ignore: [:updated_at, :created_at, :slug, :id,
+                           :description_reminder_email_at]
 
   extend FriendlyId
   friendly_id :slug_candidates, use: :slugged
