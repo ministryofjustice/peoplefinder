@@ -267,6 +267,19 @@ RSpec.describe PeopleController, type: :controller do
       expect(response).to redirect_to(home_path)
     end
 
+    context 'when person member of teams' do
+      it 'redirects to first team page' do
+        person = create(:person, valid_attributes)
+        groups = create_list(:group, 2)
+        groups.each do |group|
+          create :membership, person: person, group: group
+        end
+
+        delete :destroy, id: person.to_param
+        expect(response).to redirect_to(group_path(groups.first))
+      end
+    end
+
     it 'sets a flash message' do
       person = create(:person, valid_attributes)
       delete :destroy, id: person.to_param

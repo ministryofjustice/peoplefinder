@@ -68,7 +68,9 @@ class PeopleController < ApplicationController
     destroyer = PersonDestroyer.new(@person, current_user)
     destroyer.destroy!
     notice :profile_deleted, person: @person
-    redirect_to home_path
+    group = @person.groups.first
+
+    redirect_to group ? group_path(group) : home_path
   end
 
   def add_membership
