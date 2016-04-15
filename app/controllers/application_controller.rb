@@ -12,7 +12,7 @@ class ApplicationController < ActionController::Base
   private
 
   def user_for_paper_trail
-    logged_in? ? current_user.id : nil
+    logged_in_regular? ? current_user.id : nil
   end
 
   def info_for_paper_trail
