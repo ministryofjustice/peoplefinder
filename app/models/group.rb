@@ -6,7 +6,8 @@ class Group < ActiveRecord::Base
 
   has_paper_trail class_name: 'Version',
                   ignore: [:updated_at, :created_at, :slug, :id,
-                           :description_reminder_email_at]
+                           :description_reminder_email_at,
+                           :members_completion_score]
 
   extend FriendlyId
   friendly_id :slug_candidates, use: :slugged
