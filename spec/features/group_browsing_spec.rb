@@ -4,8 +4,16 @@ feature 'Group browsing' do
   include PermittedDomainHelper
 
   let!(:department) { create(:department) }
-  let!(:team) { create(:group, name: 'A Team', parent: department) }
-  let!(:subteam) { create(:group, name: 'A Subteam', parent: team) }
+  let!(:team) do
+    team = create(:group, name: 'A Team', parent: department)
+    team.update_members_completion_score!
+    team
+  end
+  let!(:subteam) do
+    subteam = create(:group, name: 'A Subteam', parent: team)
+    subteam.update_members_completion_score!
+    subteam
+  end
   let!(:leaf_node) { create(:group, name: 'A Leaf Node', parent: subteam) }
 
   before do
@@ -79,7 +87,7 @@ feature 'Group browsing' do
       expect(page).to have_text("Teams within #{team.name}")
       expect(page).to have_link("View all people")
       expect(page).to have_link("View 3 people not assigned to a sub-team")
-      expect(page).to have_text("#{subteam.completion_score}% of profile information completed")
+      expect(page).to have_text("#{subteam.members_completion_score}% of profile information completed")
     end
 
     scenario 'following the view all people link' do

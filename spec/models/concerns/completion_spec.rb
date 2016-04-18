@@ -102,9 +102,11 @@ RSpec.describe 'Completion' do # rubocop:disable RSpec/DescribeClass
           primary_phone_number: generate(:phone_number)
               )
       end
+      expect(UpdateGroupMembersCompletionScoreJob).to receive(:perform_later).exactly(5).times
       2.times do
         create(:membership, person: people[0])
       end
+      people.each(&:reload)
       expect(people[0].completion_score).to eq(66)
       expect(people[1].completion_score).to eq(55)
       expect(Person.overall_completion).to be_within(1).of(61)

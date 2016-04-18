@@ -20,6 +20,12 @@ RSpec.describe Group, type: :model do
     expect { group.save! }.to raise_error(Exception)
   end
 
+  it 'fires UpdateGroupMembersCompletionScoreJob after save' do
+    group = build(:group, parent: nil)
+    expect(UpdateGroupMembersCompletionScoreJob).to receive(:perform_later).with(group)
+    group.save
+  end
+
   it "knows about its ancestors" do
     grandparent = create(:group, parent: nil)
     parent = create(:group, parent: grandparent)
@@ -125,13 +131,19 @@ RSpec.describe Group, type: :model do
         expect(team.people_outside_subteams_count).to eq(0)
       end
 
-      it 'has completion_score equal to zero' do
-        expect(team.completion_score).to eq(0)
+      context 'after update_members_completion_score! called' do
+        it 'has members_completion_score equal to zero' do
+          team.update_members_completion_score!
+          expect(team.members_completion_score).to eq(0)
+        end
       end
     end
 
     context 'with bob in the team' do
-      before { team.people << bob }
+      before do
+        team.people << bob
+        bob.reload
+      end
 
       context 'and bob is a team leader' do
 
@@ -180,13 +192,18 @@ RSpec.describe Group, type: :model do
         expect(team.people_outside_subteams_count).to eq(1)
       end
 
-      it 'has completion_score equal to bob\'s completion_score' do
-        expect(team.completion_score).to eq(bob.completion_score)
-        expect(Rails.cache.read(cache_id)).to eq(bob.completion_score)
+      context 'after update_members_completion_score! called' do
+        it 'has members_completion_score equal to bob\'s completion_score' do
+          team.update_members_completion_score!
+          expect(team.members_completion_score).to eq(bob.completion_score)
+        end
       end
 
       context 'and alice in the subteam' do
-        before { subteam.people << alice }
+        before do
+          subteam.people << alice
+          alice.reload
+        end
 
         it 'has 2 in all_people array' do
           expect(team.all_people.length).to eq(2)
@@ -204,10 +221,12 @@ RSpec.describe Group, type: :model do
           expect(team.people_outside_subteams_count).to eq(1)
         end
 
-        it 'has completion_score equal to average of bob and alice\'s completion_score' do
-          average_score = ((bob.completion_score + alice.completion_score) / 2.0).round(0)
-          expect(team.completion_score).to eq(average_score)
-          expect(Rails.cache.read(cache_id)).to eq(average_score)
+        context 'after update_members_completion_score! called' do
+          it 'has members_completion_score equal to average of bob and alice\'s completion_score' do
+            team.update_members_completion_score!
+            average_score = ((bob.completion_score + alice.completion_score) / 2.0).round(0)
+            expect(team.members_completion_score).to eq(average_score)
+          end
         end
 
         context 'and bob also in the subteam' do
@@ -233,10 +252,12 @@ RSpec.describe Group, type: :model do
             expect(team.all_people.map(&:name)).to eql(['alice smith', 'bob smith'])
           end
 
-          it 'has completion_score equal to average of bob and alice\'s completion_score' do
-            average_score = ((bob.completion_score + alice.completion_score) / 2.0).round(0)
-            expect(team.completion_score).to eq(average_score)
-            expect(Rails.cache.read(cache_id)).to eq(average_score)
+          context 'after update_members_completion_score! called' do
+            it 'has members_completion_score equal to average of bob and alice\'s completion_score' do
+              team.update_members_completion_score!
+              average_score = ((bob.completion_score + alice.completion_score) / 2.0).round(0)
+              expect(team.members_completion_score).to eq(average_score)
+            end
           end
         end
       end

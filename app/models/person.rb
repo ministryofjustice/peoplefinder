@@ -39,6 +39,16 @@ class Person < ActiveRecord::Base
   attr_accessor :crop_x, :crop_y, :crop_w, :crop_h
   after_save :crop_profile_photo
 
+  after_save do |person|
+    groups_prior = person.groups
+    person.reload # updates groups
+    groups_present = person.groups
+
+    (groups_prior + groups_present).uniq.each do |group|
+      UpdateGroupMembersCompletionScoreJob.perform_later(group)
+    end
+  end
+
   def crop_profile_photo
     profile_photo.crop crop_x, crop_y, crop_w, crop_h if crop_x.present?
   end

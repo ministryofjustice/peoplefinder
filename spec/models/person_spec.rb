@@ -173,6 +173,10 @@ RSpec.describe Person, type: :model do
       expect(person.reload.memberships.first.leader).to be true
     end
 
+    it 'fires UpdateGroupMembersCompletionScoreJob for group on save' do
+      expect(UpdateGroupMembersCompletionScoreJob).to receive(:perform_later).with(person.groups.first)
+      person.save
+    end
   end
 
   context 'path' do
