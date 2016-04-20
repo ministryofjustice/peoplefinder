@@ -16,7 +16,8 @@ RSpec.describe Login, type: :service do
     end
     it 'stores the current time of login' do
       Timecop.freeze(current_time) do
-        expect { subject }.to change { person.last_login_at }.to(current_time)
+        expect { subject }.to change { person.last_login_at }
+        expect(person.last_login_at.change(usec: 0)).to eq(current_time.change(usec: 0))
       end
     end
     it 'stores the person id in the session' do
