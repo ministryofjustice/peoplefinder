@@ -6,7 +6,8 @@ class Group < ActiveRecord::Base
 
   has_paper_trail class_name: 'Version',
                   ignore: [:updated_at, :created_at, :slug, :id,
-                           :description_reminder_email_at]
+                           :description_reminder_email_at,
+                           :members_completion_score]
 
   extend FriendlyId
   friendly_id :slug_candidates, use: :slugged
@@ -42,6 +43,8 @@ class Group < ActiveRecord::Base
   default_scope { order(name: :asc) }
 
   scope :without_description, -> { unscoped.where(description: ['', nil]) }
+
+  after_save { |group| UpdateGroupMembersCompletionScoreJob.perform_later(group) }
 
   def self.department
     roots.first
@@ -91,16 +94,17 @@ class Group < ActiveRecord::Base
     leaderships.group_by(&:person)
   end
 
-  def completion_score
-    Rails.cache.fetch("#{id}-completion-score", expires_in: 1.hour) do
-      people = all_people
-      if people.blank?
-        0
-      else
-        total_score = people.inject(0) { |total, person| total + person.completion_score }
-        (total_score / people.length.to_f).round(0)
-      end
-    end
+  def update_members_completion_score!
+    people = all_people
+    score = if people.blank?
+              0
+            else
+              total_score = people.inject(0) do |total, person|
+                total + person.completion_score
+              end
+              (total_score / people.length.to_f).round(0)
+            end
+    update_columns(members_completion_score: score)
   end
 
   def editable_parent?
