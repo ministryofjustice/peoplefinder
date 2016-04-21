@@ -81,6 +81,8 @@ var selectTeam = (function (){
       $.getJSON('/teams/'+this.id, function(data){
         self.data = data;
         self.hideOtherTeams(self.teams);
+        self.addTeams(data, self.teams);
+        self.animate();
       });
     },
     selectParents: function(e){
@@ -119,14 +121,14 @@ var selectTeam = (function (){
         team.toggleClass('hide', hide);
         team.toggleClass('selected', !hide);
       });
-      this.addTeams();
+
     },
-    addTeams: function(){
+    addTeams: function(data, teamEl){
       var self = this;
       var newTeams = $('<div/>').addClass('teams');
-      this.teams.addClass('expanded').append(newTeams);
+      teamEl.addClass('expanded').append(newTeams);
 
-      $.each(this.data.children, function(i,team){
+      $.each(data.children, function(i,team){
         if(team.leaderships.length > 2){
           var moreLeaders = team.leaderships.length - 2;
           var message = moreLeaders > 1? 'and '+moreLeaders+' more team leaders' : 'and '+moreLeaders+' more team leader';
@@ -145,13 +147,16 @@ var selectTeam = (function (){
         var newTeam = TemplateEngine(template, team);
         newTeams.append(newTeam);
       });
-      $('html, body').animate({ scrollTop: $(this.teams).offset().top }, 'slow');
       newTeams.on('click', '.team-card-link a', function(e){
         e.preventDefault();
         e.stopPropagation();
         $(e.currentTarget).toggleClass('expand');
         self.selectParents(e);
       });
+
+    },
+    animate: function(){
+      $('html, body').animate({ scrollTop: $(this.teams).offset().top }, 'slow');
     }
   };
   return selectTeam;

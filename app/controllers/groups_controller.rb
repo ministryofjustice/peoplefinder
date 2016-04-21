@@ -151,8 +151,4 @@ class GroupsController < ApplicationController
   def can_add_person_here?
     @group && @group.ancestry_depth > 1
   end
-
-  def as_json(options={})
-      super.as_json(options).merge({test: "test"})
-  end
 end
