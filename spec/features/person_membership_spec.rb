@@ -72,7 +72,7 @@ feature "Person maintenance" do
     visit edit_person_path(person)
 
     expect(page).to have_selector('.editable-fields', visible: :hidden)
-    within('.editable-container') { click_link 'Edit team membership' }
+    within('.editable-container') { click_link 'Edit team parent' }
     expect(page).to have_selector('.editable-fields', visible: :visible)
     expect(page).to have_selector('.hide-editable-fields', visible: :visible)
 
@@ -96,7 +96,7 @@ feature "Person maintenance" do
     visit edit_person_path(person)
 
     expect(page).to have_selector('.editable-fields', visible: :hidden)
-    within('.editable-container') { click_link 'Edit team membership' }
+    within('.editable-container') { click_link 'Edit team parent' }
     expect(page).to have_selector('.editable-fields', visible: :visible)
     expect(page).to have_selector('.button-add-team', visible: :visible)
 
