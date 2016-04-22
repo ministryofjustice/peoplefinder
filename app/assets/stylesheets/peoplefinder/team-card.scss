@@ -80,29 +80,28 @@
   }
   .team-card-subteams {
     &:before {
-      background: image-url("icon_group.png") no-repeat 0 0;
+      background: image-url("icon_team.png") no-repeat 0 0;
       background-size: 100%;
     }
   }
   .team-card-people {
     &:before {
-      background: image-url("icon_team.png") no-repeat 0 0;
+      background: image-url("icon_person.png") no-repeat 0 0;
       background-size: 100%;
     }
   }
   .team-card-link {
-    bottom: 0;
     position: absolute;
-    right: 5px;
+    right: 15px;
     a {
       display: block;
       &:before {
-        background: image-url("icon_plus.png") no-repeat 0 0;
+        background: image-url("icon_group.png") no-repeat 0 0;
         background-size: 100%;
         content: "";
         display: inline-block;
-        height: 15px;
-        width: 15px;
+        height: 30px;
+        width: 30px;
       }
       &:focus {
         background-color: transparent;
@@ -110,7 +109,7 @@
       }
       &.expand {
         &:before {
-          background-image: image-url("icon_delete.png");
+          background-image: image-url("icon_group.png");
         }
       }
     }
