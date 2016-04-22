@@ -73,7 +73,7 @@
           .editable-summary.parent-summary
             - if @group.parent
               .title= breadcrumbs(@group.parent.path, show_links: false)
-            = link_to 'Edit team membership', '#', class: 'show-editable-fields button-secondary'
+            = link_to 'Edit team parent', '#', class: 'show-editable-fields button-secondary'
 
         .editable-fields{ style: ('display:none' unless @group.new_record?) }
           - if @org_structure
