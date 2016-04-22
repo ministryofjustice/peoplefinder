@@ -14,7 +14,7 @@ var TemplateEngine = function(html, options) {
     return new Function(code.replace(/[\r\t\n]/g, '')).apply(options);
 };
 
-var template = 
+var template =
 '<div class="team-card team-card-small" data-id="<% this.slug %>">' +
   '<div class="team-card-inner">' +
     '<div class="team-card-name">' +
@@ -23,7 +23,7 @@ var template =
       '</a>' +
     '</div>' +
     '<%if(this.leaderships) {%>' +
-      '<%for(var index in this.leaderships) {%>' + 
+      '<%for(var index in this.leaderships) {%>' +
         '<div class="team-card-leader">' +
           '<div class="team-card-leader-image">' +
             '<div class="maginot">' +
@@ -45,19 +45,16 @@ var template =
       '</div>' +
     '<%}%>' +
     '<div class="team-card-details">' +
-      '<%if(this.children.length) {%>' +
-        '<div class="team-card-subteams">' +
-          '<a href="/teams/<%this.slug%>#teams"><%this.children.length%> teams</a>' +
-        '</div>' +
-      '<%}%>' +
+
       '<%if(this.all_people_count) {%>' +
         '<div class="team-card-people">' +
           '<a href="/teams/<%this.slug%>/people"><%this.all_people_count%> people</a>' +
         '</div>' +
       '<%}%>' +
+
       '<%if(this.children.length) {%>' +
-        '<div class="team-card-link">' +
-          '<a href="#"></a>' +
+        '<div class="team-card-subteams">' +
+          '<a href="/teams/<%this.slug%>#teams"><%this.children.length%> teams</a>' +
         '</div>' +
       '<%}%>' +
     '</div>' +
@@ -65,11 +62,11 @@ var template =
 '</div>';
 
 var selectTeam = (function (){
-  
+
   var selectTeam = {
     enhance: function(){
       var self = this;
-      $('.team-card-link a').on('click', function(e){
+      $('.team-card-subteams a').on('click', function(e){
         e.preventDefault();
         e.stopPropagation();
         $(e.currentTarget).toggleClass('expand');
@@ -147,7 +144,7 @@ var selectTeam = (function (){
         var newTeam = TemplateEngine(template, team);
         newTeams.append(newTeam);
       });
-      newTeams.on('click', '.team-card-link a', function(e){
+      newTeams.on('click', '.team-card-subteams a', function(e){
         e.preventDefault();
         e.stopPropagation();
         $(e.currentTarget).toggleClass('expand');

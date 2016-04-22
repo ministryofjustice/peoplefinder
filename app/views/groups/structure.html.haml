@@ -65,16 +65,18 @@
               .team-card-more
                 and #{subgroup.leaderships_by_person.count - 2} more team #{'leader'.pluralize(subgroup.leaderships_by_person.count - 2)}
             .team-card-details
-              - if subgroup.children.count > 0
-                .team-card-subteams
-                  %a{ href: url_for(subgroup) + '#teams' }
-                    = subgroup.children.count
-                    #{'team'.pluralize(subgroup.children.count)}
               - if subgroup.all_people.count > 0
                 .team-card-people
                   = link_to people_group_path(subgroup) do
                     = subgroup.all_people.count
                     #{'person'.pluralize(subgroup.all_people.count)}
               - if subgroup.children.count > 0
-                .team-card-link
-                  %a{href: "#", 'title': 'Expand this team'}
+                .team-card-subteams
+                  %a{ href: url_for(subgroup) + '#teams', 'title': 'Expand this team' }
+                    = subgroup.children.count
+                    #{'team'.pluralize(subgroup.children.count)}
+              / - if subgroup.children.count > 0
+              /   .team-card-link
+              /     %a{href: "#", 'title': 'Expand this team'}
+              /       = subgroup.children.count
+              /       #{'team'.pluralize(subgroup.children.count)}

@@ -56,64 +56,76 @@
     background-color: $panel-colour;
     border-top: 1px solid $grey-2;
     bottom: 0;
-    height: 62px;
+    height: 72px;
     padding: 15px;
     position: absolute;
     text-align: right;
     width: 100%;
   }
   .team-card-subteams, .team-card-people {
-    float: left;
-    line-height: 30px;
-    padding-right: 20px;
-    &:before {
-      content: "";
-      display: inline-block;
-      float: left;
-      height: 30px;
-      margin-right: 5px;
-      width: 30px;
-      -webkit-border-radius: 50%;
-      -moz-border-radius: 50%;
-      border-radius: 50%;
-    }
-  }
-  .team-card-subteams {
-    &:before {
-      background: image-url("icon_team.png") no-repeat 0 0;
-      background-size: 100%;
-    }
-  }
-  .team-card-people {
-    &:before {
-      background: image-url("icon_person.png") no-repeat 0 0;
-      background-size: 100%;
-    }
-  }
-  .team-card-link {
-    position: absolute;
-    right: 15px;
+    
+    // line-height: 30px;
+    // padding-right: 20px;
     a {
-      display: block;
+      float: left;
       &:before {
-        background: image-url("icon_group.png") no-repeat 0 0;
-        background-size: 100%;
         content: "";
-        display: inline-block;
+        display: block;
+        // float: left;
         height: 30px;
+        margin: 0 auto;
+        // margin-right: 5px;
         width: 30px;
+        -webkit-border-radius: 50%;
+        -moz-border-radius: 50%;
+        border-radius: 50%;
       }
       &:focus {
         background-color: transparent;
         outline: none;
       }
-      &.expand {
-        &:before {
-          background-image: image-url("icon_group.png");
-        }
+    }
+  }
+  .team-card-subteams {
+    position: absolute;
+    right: 15px;
+    a {
+      &:before {
+        background: image-url("icon_group.png") no-repeat 0 0;
+        background-size: 100%;
       }
     }
   }
+  .team-card-people a {
+    &:before {
+      background: image-url("icon_team.png") no-repeat 0 0;
+      background-size: 100%;
+    }
+  }
+  // .team-card-link {
+  //   position: absolute;
+  //   right: 15px;
+  //   a {
+  //     display: block;
+  //     &:before {
+  //       background: image-url("icon_group.png") no-repeat 0 0;
+  //       background-size: 100%;
+  //       content: "";
+  //       display: inline-block;
+  //       height: 30px;
+  //       width: 30px;
+  //     }
+  //     &:focus {
+  //       background-color: transparent;
+  //       outline: none;
+  //     }
+  //     &.expand {
+  //       &:before {
+  //         background-image: image-url("icon_group.png");
+  //       }
+  //     }
+  //   }
+  // }
 
 .structure .teams {
   background-color: #fff;
