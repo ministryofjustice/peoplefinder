@@ -27,6 +27,17 @@ ul.working_days {
   }
 }
 
+.membership {
+  height: auto;
+  overflow: hidden;
+}
+.panel {
+  border-left: 5px solid $border-colour;
+  clear: both;
+  padding-left: 15px;
+  margin-bottom: 60px;
+}
+
 .profile {
   min-height: 300px;
   .image-background {
