@@ -147,6 +147,14 @@ People finder sends a few types of e-mail. E-mails are delivered using `delayed_
 
 Run `bundle exec rake jobs:work` to activate the worker.
 
+In production, periodic emails are sent to users that have:
+- never logged in before;
+- not updated their profile for a period of time; and
+- not added a team description when they are a team leader.
+
+Cronjobs are created to daily check for users matching these conditions and send emails. Cronjobs are created via the
+`whenever` gem and configured here: https://github.com/ministryofjustice/peoplefinder/blob/master/config/schedule.rb
+
 ### In Development
 
 E-mails in development environment are setup to be delivered using `mailcatcher` gem. For that `mailcatcher` has to be started and then accessed on `http://localhost:1080` to read the delivered e-mails.
