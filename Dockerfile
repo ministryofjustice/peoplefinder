@@ -38,6 +38,11 @@ RUN apt-get update && apt-get install -y \
     echo 'install: --no-document' >> $HOME/.gemrc && \
     echo 'update: --no-document' >> $HOME/.gemrc
 
+# Override imagemagick policy with recommended
+# mitagation policy for imagetragick bug
+# CVE-2016–3714 https://imagetragick.com/ 
+COPY policy.xml /etc/ImageMagick-6/policy.xml
+
 # Pre-install gems with native code to reduce build times
 # Note these versions need to be in sync with gem versions in Gemfile.lock
 RUN gem install --conservative kgio -v 2.9.3 && \
