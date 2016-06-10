@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-ruby '2.2.5'
+ruby '2.3.1'
 gem 'rails', '~> 4.2.4'
 gem 'text'
 gem 'ancestry'
@@ -78,6 +78,7 @@ group :development, :test do
   gem 'guard-jasmine'
   gem 'guard-rubocop', require: false
   gem 'rubocop-rspec'
+  gem 'awesome_print'
 end
 
 group :development, :test, :assets do
