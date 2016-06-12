@@ -44,6 +44,7 @@ gem 'omniauth-gplus',
   git: 'https://github.com/ministryofjustice/omniauth-gplus.git'
 
 group :assets do
+  gem 'dotenv-rails'
   gem 'coffee-rails'
 end
 
@@ -61,6 +62,8 @@ group :development do
 end
 
 group :development, :test do
+  gem 'dotenv-rails'
+  gem 'byebug'
   gem 'brakeman'
   gem 'capybara'
   gem 'factory_girl_rails'
@@ -79,10 +82,6 @@ group :development, :test do
   gem 'guard-rubocop', require: false
   gem 'rubocop-rspec'
   gem 'awesome_print'
-end
-
-group :development, :test, :assets do
-  gem 'dotenv-rails'
 end
 
 group :test do

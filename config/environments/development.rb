@@ -1,4 +1,12 @@
 Rails.application.configure do
+
+  #
+  # Used primarily to set Google+ API client ID and secret to
+  # allow log in authentication for local development.
+  config.before_configuration do
+    Dotenv.load Rails.root.join('.env.local')
+  end
+
   config.cache_classes = false
   config.eager_load = false
   config.consider_all_requests_local       = true
