@@ -1,3 +1,6 @@
+inherit_from:
+  - .rubocop_todo.yml
+
 AllCops:
   # Exclude anything that isn't really part of our code.
   # rails_helper is excluded because it's full of solecisms, but it's mostly
