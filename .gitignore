@@ -19,3 +19,5 @@
 # ignore osx .DS_Store
 *.DS_Store
 .idea
+
+/.byebug_history
