@@ -1,10 +1,12 @@
 .bowerrc
 .env
 .env.example
+.env.local
 .git
 .gitignore
 .rspec
 .rubocop.yml
+.rubocop_todo.yml
 Guardfile
 LICENCE.txt
 Procfile
