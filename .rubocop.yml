@@ -1,3 +1,6 @@
+inherit_from:
+  - .rubocop_todo.yml
+
 AllCops:
   # Exclude anything that isn't really part of our code.
   # rails_helper is excluded because it's full of solecisms, but it's mostly
@@ -16,7 +19,7 @@ AllCops:
     - 'lib/tasks/elasticsearch.rake'
     - 'spec/dummy/db/**/*'
     - 'smoke_test'
-  TargetRubyVersion: 2.2
+  TargetRubyVersion: 2.3
 
 Rails:
   Enabled: true
