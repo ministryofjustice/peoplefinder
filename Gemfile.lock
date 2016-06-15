@@ -599,6 +599,7 @@ DEPENDENCIES
   ancestry
   awesome_print
   brakeman
+  byebug
   capybara
   carrierwave!
   carrierwave-bombshelter
@@ -665,5 +666,8 @@ DEPENDENCIES
   whenever
   will_paginate (~> 3.0)
 
+RUBY VERSION
+   ruby 2.3.1p112
+
 BUNDLED WITH
-   1.11.2
+   1.12.5
