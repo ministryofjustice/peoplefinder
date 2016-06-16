@@ -4,13 +4,8 @@ feature 'Report a problem', js: true do
   include ActiveJobHelper
   include PermittedDomainHelper
 
-  let(:current_time) { Time.at(1_410_298_020) }
-
-  around do |example|
-    Timecop.travel(current_time)
-    example.run
-    Timecop.return
-  end
+  before(:all) { Timecop.travel(Time.at(1_410_298_020)) }
+  after(:all) { Timecop.return }
 
   context 'When logged in' do
     let(:me) { create(:person) }
