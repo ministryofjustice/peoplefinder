@@ -44,7 +44,6 @@ gem 'omniauth-gplus',
   git: 'https://github.com/ministryofjustice/omniauth-gplus.git'
 
 group :assets do
-  gem 'dotenv-rails'
   gem 'coffee-rails'
 end
 
@@ -61,8 +60,14 @@ group :development do
   gem 'rb-fsevent', require: RUBY_PLATFORM[/darwin/i].to_s.size > 0
 end
 
+group :test do
+  gem 'codeclimate-test-reporter', require: nil
+  gem 'fuubar'
+  gem 'database_cleaner'
+  gem 'site_prism'
+end
+
 group :development, :test do
-  gem 'dotenv-rails'
   gem 'byebug'
   gem 'brakeman'
   gem 'capybara'
@@ -84,9 +89,6 @@ group :development, :test do
   gem 'awesome_print'
 end
 
-group :test do
-  gem 'codeclimate-test-reporter', require: nil
-  gem 'fuubar'
-  gem 'database_cleaner'
-  gem 'site_prism'
+group :development, :test, :assets do
+  gem 'dotenv-rails'
 end
