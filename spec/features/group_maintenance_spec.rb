@@ -187,24 +187,24 @@ feature 'Group maintenance' do
       group = setup_three_level_group
       subteam_group = create(:group, name: 'Test team', parent: sibling_group)
       setup_group_member group
+      group.memberships.reload # seems to help flicker
       visit_edit_view(group)
 
       within('.group-parent') { click_link 'Edit' }
+
       within('.team.selected') do
         expect(page).to have_link("#{sibling_group.name} 1 sub-team")
-        click_link "#{sibling_group.name} 1 sub-team"
-      end
-
-      within('.team.selected') do
+        click_link "#{sibling_group.name} 1 sub-team", wait: 6
         expect(page).to have_link(subteam_group.name)
-        click_link subteam_group.name
-      end
-      within('.editable-fields') do
-        click_link 'Done'
+        click_link subteam_group.name, wait: 6
       end
 
-      expect(page).to have_selector('.show-editable-fields', visible: :visible)
+      within('.editable-fields') do
+        click_link 'Done', wait: 6
+      end
+
       using_wait_time 6 do
+        expect(page).to have_selector('.show-editable-fields', visible: :visible)
         expect(page).to have_selector('.parent-summary', text: /Test team/)
       end
 
