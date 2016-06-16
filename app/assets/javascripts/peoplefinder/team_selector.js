@@ -203,7 +203,7 @@ var teamSelector = function teamSelector(isPerson, obj){
 
   this.getBreadcrumb = function(isSubTeam){
     var arr = [],
-      selector = isSubTeam? '.team.visible' : '.team.visible:not(.selected)';
+        selector = isSubTeam? '.team.visible' : '.team.visible:not(.selected)';
     this.orgBrowser.find(selector).each(function(i,obj){
       var text = $(obj).find('>h3>a').text();
       arr.push(text);
