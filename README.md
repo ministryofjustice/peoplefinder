@@ -56,6 +56,7 @@ gem install eventmachine -v 1.0.5 -- --with-cppflags=-I/usr/local/opt/openssl/in
 
 bundle
 bundle exec rake db:setup
+bundle exec rake peoplefinder:db:reload # includes demo data
 bundle exec rake # runs tests
 bundle exec rails s -b 0.0.0.0
 ```
@@ -265,6 +266,20 @@ Usage:
   generator.generate(groups_levels, groups_per_level, people_per_group, domain)
 ```
 
+You can also generate semi-random data using the rake task `peoplefinder:data:demo` which is called as part of `peoplefinder:db:reload`. Repeatedly running `peoplefinder:demo:data` will add members to the example groups it creates.
+
+### Useful rake tasks
+
+Run `rake -T | grep people` for latest list:
+
+```
+rake peoplefinder:data:demo                    # create basic demonstration data
+rake peoplefinder:db:clear                     # drop all tables
+rake peoplefinder:db:reload                    # clear DB and repopulate with basic data for development purposes
+rake peoplefinder:db:reset_column_information  # reset all column information
+rake peoplefinder:import:csv_check[path]       # Check validity of CSV file before import
+rake peoplefinder:import:csv_import[path]      # Import valid CSV file
+```
 ### Development tools
 
 CI by [Travis](https://travis-ci.org/ministryofjustice/peoplefinder).

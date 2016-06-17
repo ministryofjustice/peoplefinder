@@ -2,7 +2,8 @@ source 'https://rubygems.org'
 ruby '2.3.1'
 gem 'rails', '~> 4.2.4'
 gem 'text'
-gem 'ancestry'
+gem 'ancestry', '~> 2.1'
+gem 'awesome_print'
 gem 'delayed_job', git: 'https://github.com/collectiveidea/delayed_job.git',
     ref: '5f914105c1c38ca73a486d63de8ad62f254b3d72' # needed for queue_attributes configuration
 gem 'delayed_job_active_record'
@@ -86,7 +87,7 @@ group :development, :test do
   gem 'guard-jasmine'
   gem 'guard-rubocop', require: false
   gem 'rubocop-rspec'
-  gem 'awesome_print'
+  gem 'annotate'
 end
 
 group :development, :test, :assets do

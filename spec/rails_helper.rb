@@ -13,6 +13,7 @@ require 'shoulda-matchers'
 require 'capybara/rspec'
 require 'capybara/poltergeist'
 require 'site_prism'
+require 'awesome_print'
 
 unless ENV['SKIP_SIMPLECOV']
   require 'simplecov'
