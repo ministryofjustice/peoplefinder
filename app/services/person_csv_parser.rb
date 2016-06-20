@@ -28,13 +28,18 @@ class PersonCsvParser
   private
 
   def infer_header(str)
-    case str
-    when /given|first/i
-      :given_name
-    when /surname|last|family/i
-      :surname
-    when /email|e-mail/i
-      :email
-    end
+    header_matches.select { |_k, v| v =~ str }.keys.first
+  end
+
+  def header_matches
+    {
+      given_name: /given|first/i,
+      surname: /surname|last|family/i,
+      email: /email|e-mail/i,
+      primary_phone_number: /primary_phone_number|phone/i,
+      building: /^building$|^location1$|^address$|^address1$/i,
+      location_in_building: /location_in_building|location2|address2|room/i,
+      city: /city|town/i
+    }
   end
 end
