@@ -33,22 +33,22 @@ RSpec.describe RandomGenerator do
       subject.generate(groups_levels, groups_per_level, people_per_group, domain)
     end
 
-    it 'should add permitted domain' do
+    it 'adds permitted domain' do
       expect(PermittedDomain.pluck(:domain)).to include domain
     end
 
-    it 'should generate all levels of groups' do
+    it 'generates all levels of groups' do
       expect(group.descendants.count).to eq(6)
     end
 
-    it 'should generate people for the leaf groups' do
+    it 'generates people for the leaf groups' do
       expect(Person.all_in_groups(group.descendants.pluck(:id)).count).to eq(30)
     end
   end
 
   describe '#generate_members' do
     it 'generates people for the specified leaf group' do
-      expect{ subject.generate_members(3) }.to change(group.people,:count).by 3
+      expect { subject.generate_members(3) }.to change(group.people, :count).by 3
     end
   end
 

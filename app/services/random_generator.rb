@@ -13,8 +13,7 @@ class RandomGenerator
     @group.descendants.each(&:delete)
   end
 
-  def generate(groups_levels=1, groups_per_level=2, people_per_group=3, domain=Faker::Internet.domain_name)
-
+  def generate(groups_levels = 1, groups_per_level = 2, people_per_group = 3, domain = Faker::Internet.domain_name)
     @groups_levels = groups_levels
     @groups_per_level = groups_per_level
     @people_per_group = people_per_group
@@ -24,7 +23,7 @@ class RandomGenerator
     generate_level(@group, 0)
   end
 
-  def generate_members(no_of_people=3, domain=Faker::Internet.domain_name)
+  def generate_members(no_of_people = 3, domain = Faker::Internet.domain_name)
     @domain = domain
     permit_domain(@domain)
     no_of_people.times { create_person @group }
