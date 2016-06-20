@@ -13,16 +13,27 @@ class RandomGenerator
     @group.descendants.each(&:delete)
   end
 
-  def generate(groups_levels, groups_per_level, people_per_group, domain)
+  def generate(groups_levels = 1, groups_per_level = 2, people_per_group = 3, domain = Faker::Internet.domain_name)
     @groups_levels = groups_levels
     @groups_per_level = groups_per_level
     @people_per_group = people_per_group
     @domain = domain
 
+    permit_domain(@domain)
     generate_level(@group, 0)
   end
 
+  def generate_members(no_of_people = 3, domain = Faker::Internet.domain_name)
+    @domain = domain
+    permit_domain(@domain)
+    no_of_people.times { create_person @group }
+  end
+
   private
+
+  def permit_domain(domain)
+    PermittedDomain.find_or_create_by!(domain: domain)
+  end
 
   def generate_level(group, level)
     if level == @groups_levels
@@ -37,14 +48,14 @@ class RandomGenerator
   end
 
   def create_group(parent)
-    parent.children.create(
+    parent.children.create!(
       name: Faker::Commerce.department,
       description: Faker::Lorem.paragraph
     )
   end
 
   def create_person(group)
-    group.people.create(
+    group.people.create!(
       person_attributes.merge(work_days_attributes).merge(location_attributes)
     )
   end
@@ -70,8 +81,8 @@ class RandomGenerator
       works_wednesday: [true, false].sample,
       works_thursday: [true, false].sample,
       works_friday: [true, false].sample,
-      works_saturday: [true, false].sample,
-      works_sunday: [true, false].sample
+      works_saturday: [true, false, false, false].sample,
+      works_sunday: [true, false, false, false].sample
     }
   end
 

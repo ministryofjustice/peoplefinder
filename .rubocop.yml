@@ -15,8 +15,7 @@ AllCops:
     - 'config/initializers/simple_form.rb'
     - 'config/unicorn.rb'
     - 'spec/rails_helper.rb'
-    - 'lib/tasks/brakeman.rake'
-    - 'lib/tasks/elasticsearch.rake'
+    - 'lib/tasks/**/*'
     - 'spec/dummy/db/**/*'
     - 'smoke_test'
   TargetRubyVersion: 2.3
