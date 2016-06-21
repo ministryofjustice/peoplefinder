@@ -79,7 +79,7 @@ RSpec.describe PersonCsvParser, type: :service do
     end
   end
 
-  context 'with dodgy headers' do
+  context 'with misordered and inferable headers' do
     let(:csv) do
       <<-END.strip_heredoc
         First Name,Last Name,E-mail Display Name,Address2,Address1,town,phone
@@ -148,7 +148,7 @@ RSpec.describe PersonCsvParser, type: :service do
     end
   end
 
-  context 'with unidentifiable headers' do
+  context 'with entirely unidentifiable headers' do
     let(:csv) do
       <<-END.strip_heredoc
         Foo,bar,BAZ
@@ -161,4 +161,19 @@ RSpec.describe PersonCsvParser, type: :service do
       expect(subject.records.map(&:fields)).to eq([{}, {}])
     end
   end
+
+  context 'with some unrecognizable header column' do
+    let(:csv) do
+      <<-END.strip_heredoc
+        email,givesn_name,surname,primary_phone_number,building,locations_in_building,city
+        Peter,Bly,peter.bly@valid.gov.uk
+        Jon,O'Carey,jon.o.carey@valid.gov.uk
+      END
+    end
+
+    it 'populates @unrecognized_columns for use by importer' do
+      expect(subject.header.unrecognized_columns).to match_array ['givesn_name','locations_in_building']
+    end
+  end
+
 end

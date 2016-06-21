@@ -68,17 +68,66 @@ RSpec.describe PersonCsvImporter, type: :service do
         CSV
       end
 
+      let(:errors) do
+        [
+          PersonCsvImporter::ErrorRow.new(1, "email", ['given_name column is missing']),
+          PersonCsvImporter::ErrorRow.new(1, "email", ['surname column is missing'])
+        ]
+      end
+
       it { is_expected.to be false }
 
       it 'errors contain missing columns' do
-        expect(importer.errors).to match_array([
-          PersonCsvImporter::ErrorRow.new(
-            1, "email", ['given_name column is missing']
-          ),
-          PersonCsvImporter::ErrorRow.new(
-            1, "email", ['surname column is missing']
-          )
-        ])
+        expect(importer.errors).to match_array errors
+      end
+    end
+
+    context 'when the csv has columns that cannot be infered' do
+      context 'for required columns' do
+        let(:csv) do
+          <<-CSV.strip_heredoc
+            email,wrong_name,wrongname
+            peter.bly@valid.gov.uk,Tom,Mason-Buggs
+          CSV
+        end
+
+        let(:errors) do
+          [
+            PersonCsvImporter::ErrorRow.new(1, "email,wrong_name,wrongname", ['given_name column is missing']),
+            PersonCsvImporter::ErrorRow.new(1, "email,wrong_name,wrongname", ['surname column is missing']),
+            PersonCsvImporter::ErrorRow.new(1, "email,wrong_name,wrongname", ['wrong_name column is not recognized']),
+            PersonCsvImporter::ErrorRow.new(1, "email,wrong_name,wrongname", ['wrongname column is not recognized'])
+          ]
+        end
+
+        it { is_expected.to be false }
+
+        it 'errors contain missing columns' do
+          expect(importer.errors).to match_array errors
+        end
+      end
+
+      context 'for optional columns' do
+        let(:csv) do
+          <<-CSV.strip_heredoc
+            email,given_name,surname,primary_phome_number,builming location
+            peter.bly@valid.gov.uk,Tom,Mason-Buggs,020 7947 6638,"102 Petty France"
+          CSV
+        end
+
+        let(:errors) do
+          [
+            PersonCsvImporter::ErrorRow.new(1, "email,given_name,surname,primary_phome_number,builming location", ['primary_phome_number column is not recognized']),
+            PersonCsvImporter::ErrorRow.new(1, "email,given_name,surname,primary_phome_number,builming location", ['builming location column is not recognized'])
+          ]
+        end
+
+        it { is_expected.to be false }
+
+        it 'errors contain unrecognized columns' do
+          expect(importer.errors).to match_array errors
+        end
+
       end
     end
   end
@@ -106,7 +155,7 @@ RSpec.describe PersonCsvImporter, type: :service do
         subject.import
       end
 
-      it 'returns number of imported  records' do
+      it 'returns number of imported records' do
         expect(subject.import).to eql 2
       end
 
@@ -164,6 +213,24 @@ RSpec.describe PersonCsvImporter, type: :service do
           surname: 'Jerde',
           email: 'lelah.jerde@valid.gov.uk'
         ).count).to eq(1)
+      end
+    end
+  end
+
+  describe '#import' do
+    context 'for a valid CSV with optional headers' do
+      let(:csv) do
+        <<-END.strip_heredoc
+          given_name,surname,email,primary_phone_number,building,location_in_building,city
+          Tom,O'Carey,tom.o.carey@valid.gov.uk
+          Tom,Mason-Buggs,tom.mason-buggs@valid.gov.uk,020 7947 6743,"102, Petty France","Room 5.02, 5th Floor, Orange Core","London, England"
+        END
+      end
+
+      it 'creates records with and without optional fields' do
+        expect { subject.import }.to change(Person, :count).by 2
+        expect(Person.pluck(:email)).to match_array ['tom.o.carey@valid.gov.uk', 'tom.mason-buggs@valid.gov.uk']
+        expect(Person.pluck(:location_in_building)).to include 'Room 5.02, 5th Floor, Orange Core'
       end
     end
   end

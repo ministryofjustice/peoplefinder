@@ -4,7 +4,8 @@ require 'forwardable'
 class PersonCsvImporter
   extend Forwardable
 
-  COLUMNS = %i(given_name surname email).freeze
+  REQUIRED_COLUMNS = %i(given_name surname email).freeze
+  # OPTIONAL_COLUMNS = %i(primary_phone_number building location_in_building city).freeze
 
   ErrorRow = Struct.new(:line_number, :raw, :messages) do
     def to_s
@@ -22,7 +23,7 @@ class PersonCsvImporter
 
   def valid?
     return @valid unless @valid.nil?
-    @errors = missing_columns.any? ? column_errors : row_errors
+    @errors = column_errors.any? ? column_errors : row_errors
     @valid = @errors.empty?
   end
 
@@ -54,7 +55,23 @@ class PersonCsvImporter
   end
 
   def missing_columns
-    COLUMNS - header.columns
+    REQUIRED_COLUMNS - header.columns
+  end
+
+  def missing_column_errors
+    missing_columns.map do |column|
+      ErrorRow.new(1, header.original, ["#{column} column is missing"])
+    end
+  end
+
+  def unrecognized_column_errors
+    header.unrecognized_columns.map do |column|
+      ErrorRow.new(1, header.original, ["#{column} column is not recognized"])
+    end
+  end
+
+  def column_errors
+    missing_column_errors + unrecognized_column_errors
   end
 
   def row_errors
@@ -69,9 +86,4 @@ class PersonCsvImporter
     end.compact
   end
 
-  def column_errors
-    missing_columns.map do |column|
-      ErrorRow.new(1, header.original, ["#{column} column is missing"])
-    end
-  end
 end
