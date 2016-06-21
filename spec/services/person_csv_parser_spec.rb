@@ -172,7 +172,7 @@ RSpec.describe PersonCsvParser, type: :service do
     end
 
     it 'populates @unrecognized_columns for use by importer' do
-      expect(subject.header.unrecognized_columns).to match_array ['givesn_name','locations_in_building']
+      expect(subject.header.unrecognized_columns).to match_array %w(givesn_name locations_in_building)
     end
   end
 
