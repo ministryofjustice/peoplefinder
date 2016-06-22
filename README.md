@@ -274,8 +274,9 @@ Run `rake -T | grep people` for latest list:
 
 ```
 rake peoplefinder:data:demo                    # create basic demonstration data
+rake peoplefinder:data:demo_csv[count,file]    # create a valid csv for load testing, [count: number of records=500], [file: path to file=spec/fixtures/]
 rake peoplefinder:db:clear                     # drop all tables
-rake peoplefinder:db:reload                    # clear DB and repopulate with basic data for development purposes
+rake peoplefinder:db:reload                    # drop tables, migrate, seed and populate with demonstration data for development purposes
 rake peoplefinder:db:reset_column_information  # reset all column information
 rake peoplefinder:import:csv_check[path]       # Check validity of CSV file before import
 rake peoplefinder:import:csv_import[path]      # Import valid CSV file

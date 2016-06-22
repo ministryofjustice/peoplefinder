@@ -1,5 +1,6 @@
 namespace :peoplefinder do
   namespace :data do
+    require Rails.root.join('app','services','person_csv_importer')
 
     # peoplefinder:data:demo
     #
@@ -35,6 +36,33 @@ namespace :peoplefinder do
       group_membership.each do |group, member_count|
         RandomGenerator.new(group).generate_members(member_count, DOMAIN)
       end
+    end
+
+    desc 'create a valid csv for load testing, [count: number of records=500], [file: path to file=spec/fixtures/]'
+    task :demo_csv, [:count, :file] => :environment do |_task, args|
+      require 'csv'
+
+      file = args[:file] || Rails.root.join('spec','fixtures','csv_load_tester.csv').to_path
+      count = args[:count].to_i || 500
+      CSV.open(file,'w') do |csv|
+        csv << csv_header
+        count.times do |i|
+          csv << csv_record
+        end
+      end
+    end
+
+    def csv_header
+      PersonCsvImporter::REQUIRED_COLUMNS + PersonCsvImporter::OPTIONAL_COLUMNS
+    end
+
+    def csv_record
+      person = FactoryGirl.build(:person, :with_details)
+      record = []
+      csv_header.each do |attribute|
+        record += [person.__send__(attribute)]
+      end
+      record
     end
 
   end
