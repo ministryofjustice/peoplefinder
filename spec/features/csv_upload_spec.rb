@@ -39,7 +39,7 @@ feature 'Upload CSV' do
     visit new_admin_person_upload_path
 
     expect do
-      attach_file 'Upload CSV file', File.expand_path('../../fixtures/invalid.csv', __FILE__)
+      attach_file 'Upload CSV file', File.expand_path('../../fixtures/invalid_rows.csv', __FILE__)
       select group.name, from: 'Choose your team'
       click_button 'Upload'
     end.not_to change(Person, :count)

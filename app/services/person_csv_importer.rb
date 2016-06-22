@@ -5,7 +5,7 @@ class PersonCsvImporter
   extend Forwardable
 
   REQUIRED_COLUMNS = %i(given_name surname email).freeze
-  # OPTIONAL_COLUMNS = %i(primary_phone_number building location_in_building city).freeze
+  OPTIONAL_COLUMNS = %i(primary_phone_number building location_in_building city).freeze
 
   ErrorRow = Struct.new(:line_number, :raw, :messages) do
     def to_s
@@ -70,8 +70,17 @@ class PersonCsvImporter
     end
   end
 
+  def too_many_columns?
+    original_header_size = CSV.new(header.original).to_a.first.size
+    original_header_size > REQUIRED_COLUMNS.size + OPTIONAL_COLUMNS.size
+  end
+
+  def too_many_columns_error
+    too_many_columns? ? [ErrorRow.new(1, header.original, ['There are more columns than expected'])] : []
+  end
+
   def column_errors
-    missing_column_errors + unrecognized_column_errors
+    too_many_columns_error + missing_column_errors + unrecognized_column_errors
   end
 
   def row_errors
