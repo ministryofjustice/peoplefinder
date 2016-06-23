@@ -21,7 +21,7 @@
       - if f.object.errors.include?(:file)
         %span.error= f.object.errors[:file].first
     %p.form-hint
-      =info_text('hint_person_upload_file_html')
+      = render partial: 'hint'
     = f.file_field :file
 
   %fieldset

@@ -1,0 +1,20 @@
+.panel.panel-border-wide.form-hint
+  %p
+    Row 1 of file must have comma separated column names following the naming below:
+    %br/
+  %ul.list.list-bullet
+    %li
+      required:
+      = required_headers
+    %li
+      optional:
+      = optional_headers
+  example:
+  %div.csv-formatted-text
+    %pre
+      %code
+        %span.csv-header
+          = csv_headers
+        %br
+        %span
+          Tom,O'Conner,tom.o.conner@example.gov.uk,020 7947 6666,102 Petty France,"Room 5.05, 5th Floor, Blue Core",London
