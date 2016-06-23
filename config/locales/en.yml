@@ -253,18 +253,6 @@ en:
       hint_team_email_address: "Enter an email for people to get in touch with the team"
       hint_person_upload_group: |
         You can only upload people’s details to an existing team.
-      hint_person_upload_file_html: |
-        <div class="panel panel-border-wide form-hint">
-          <p>
-            Row 1 of file must have comma separated column names following the naming below: <br>
-            <ul class="list list-bullet">
-            <li>required: <code>given_name</code> <code>surname</code> <code>email</code></li>
-            <li>optional: <code>primary_phone_number</code> <code>building</code> <code>location_in_building</code> <code>city</code> </li>
-            </ul>
-            e.g. <br>
-            <code>given_name,surname,email,primary_phone_number,building,location_in_building,city</code>
-          </p>
-        </div>
       information_request_label: "Enter your message"
       location_in_building_hint: "(eg 10.30)"
       building_hint: "(eg 102 Petty France)"
