@@ -43,7 +43,7 @@ namespace :peoplefinder do
       require 'csv'
 
       file = args[:file] || Rails.root.join('spec','fixtures','csv_load_tester.csv').to_path
-      count = args[:count].to_i || 500
+      count = (args[:count] || '500').to_i
       CSV.open(file,'w') do |csv|
         csv << csv_header
         count.times do |i|
