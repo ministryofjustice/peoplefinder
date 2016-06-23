@@ -3,7 +3,9 @@ FactoryGirl.define do
   sequence(:given_name) { |n| "First name #{('a'.ord + (n % 25)).chr}" }
   sequence(:surname) { |n| "Surname #{('a'.ord + (n % 25)).chr}" }
   sequence(:building) { |n| '%d High Street' % n }
+  sequence(:location_in_building) { |n| "Room #{n}, #{n.ordinalize}" }
   sequence(:city) { |n| 'Megacity %d' % n }
+  sequence(:primary_phone_number) { |n| '07708 %06d' % (900_000 + n) }
   sequence(:phone_number) { |n| '07700 %06d' % (900_000 + n) }
 
   factory :department, class: 'Group' do
@@ -23,6 +25,13 @@ FactoryGirl.define do
     given_name
     surname
     email
+
+    trait :with_details do
+      primary_phone_number
+      building
+      location_in_building
+      city
+    end
 
     factory :person_with_multiple_logins do
       login_count 10

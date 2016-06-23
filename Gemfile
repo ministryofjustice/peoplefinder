@@ -59,6 +59,7 @@ group :development do
   gem 'spring-commands-rspec'
   gem 'guard-rspec', require: false
   gem 'rb-fsevent', require: RUBY_PLATFORM[/darwin/i].to_s.size > 0
+  gem 'meta_request'
 end
 
 group :test do
