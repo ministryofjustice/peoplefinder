@@ -12,7 +12,7 @@ class GroupSearch
   private
 
   def words query
-    query.gsub(/\W/, ' ').split.select { |x| x.length > 1 }
+    query.gsub(/\W/, ' ').split.select(&:present?)
   end
 
   def exact_matches
