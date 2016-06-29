@@ -6,7 +6,9 @@ RSpec.describe PersonCsvImporter, type: :service do
     allow(PermittedDomain).to receive(:pluck).with(:domain).and_return(['valid.gov.uk'])
   end
 
-  subject(:importer) { described_class.new(csv) }
+  subject(:importer) do
+    described_class.new(csv)
+  end
 
   describe '#valid?' do
     subject { importer.valid? }
@@ -149,6 +151,33 @@ RSpec.describe PersonCsvImporter, type: :service do
 
       it 'errors contain too many columns' do
         expect(importer.errors).to match_array errors
+      end
+    end
+
+    context 'when the CSV has too many rows' do
+      let(:csv) do
+        <<-END.strip_heredoc
+          given_name,surname,email,primary_phone_number,building,location_in_building,city
+          Tom,O'Carey,tom.o.carey@valid.gov.uk
+          Tom,Mason-Buggs,tom.mason-buggs@valid.gov.uk,020 7947 6743,"102, Petty France","Room 5.02, 5th Floor, Orange Core","London, England"
+        END
+      end
+
+      let(:errors) do
+        [
+          PersonCsvImporter::ErrorRow.new('-', '-', ['Too many rows - a maximum of 1 rows can be processed'])
+        ]
+      end
+
+      let(:local_importer) { described_class.new(csv) }
+
+      before do
+        allow_any_instance_of(described_class).to receive(:max_row_upload).and_return 1
+      end
+
+      it 'errors include too many rows' do
+        expect(local_importer.valid?).to be false
+        expect(local_importer.errors).to match_array errors
       end
     end
 
