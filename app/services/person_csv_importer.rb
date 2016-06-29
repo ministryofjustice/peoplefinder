@@ -83,7 +83,27 @@ class PersonCsvImporter
     too_many_columns_error + missing_column_errors + unrecognized_column_errors
   end
 
+  def too_many_rows_error
+    if too_many_rows?
+      [ErrorRow.new('-', '-', ["Too many rows - a maximum of #{max_row_upload} rows can be processed"])]
+    else
+      []
+    end
+  end
+
+  def max_row_upload
+    150
+  end
+
+  def too_many_rows?
+    people.size > max_row_upload
+  end
+
   def row_errors
+    too_many_rows_error + people_record_errors
+  end
+
+  def people_record_errors
     people.zip(records).map do |person, record|
       if person.valid?
         nil
