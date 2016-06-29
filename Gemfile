@@ -60,6 +60,7 @@ group :development do
   gem 'guard-rspec', require: false
   gem 'rb-fsevent', require: RUBY_PLATFORM[/darwin/i].to_s.size > 0
   gem 'meta_request'
+  gem 'better_errors'
 end
 
 group :test do

@@ -13,11 +13,12 @@ class PersonCsvImporter
     end
   end
 
-  attr_reader :errors
+  attr_reader :errors, :serialized_records
 
   def initialize(serialized, creation_options = {})
-    @parser = parse_csv(serialized)
+    @serialized_records = serialized
     @creation_options = creation_options
+    @parser = PersonCsvParser.new(serialized)
     @valid = nil
   end
 
@@ -30,10 +31,19 @@ class PersonCsvImporter
   def import
     return nil unless valid?
 
-    people.each do |person|
-      PersonCreator.new(person, nil).create!
+    # enqueue job if it is likely to trigger a server timeout (14 secs)
+    # note, serialized data required for jobs
+    if people.length > max_synchronous_record_limit
+      PersonImportJob.perform_later(serialized_records)
+    else
+      PersonImportJob.perform_now(serialized_records)
     end
+
     people.length
+  end
+
+  def max_synchronous_record_limit
+    150
   end
 
   private
@@ -42,10 +52,6 @@ class PersonCsvImporter
 
   def clean_fields(hash)
     hash.merge(email: EmailExtractor.new.extract(hash[:email]))
-  end
-
-  def parse_csv(serialized)
-    PersonCsvParser.new(serialized)
   end
 
   def people
@@ -92,7 +98,7 @@ class PersonCsvImporter
   end
 
   def max_row_upload
-    150
+    1000
   end
 
   def too_many_rows?
