@@ -1,5 +1,6 @@
 require 'csv'
 require 'forwardable'
+require 'yaml'
 
 class PersonCsvImporter
   extend Forwardable
@@ -30,20 +31,17 @@ class PersonCsvImporter
 
   def import
     return nil unless valid?
-
-    # enqueue job if it is likely to trigger a server timeout (14 secs)
-    # note, serialized data required for jobs
-    if people.length > max_synchronous_record_limit
-      PersonImportJob.perform_later(serialized_records)
-    else
-      PersonImportJob.perform_now(serialized_records)
-    end
-
+    PersonImportJob.perform_later(serialized_records, serialized_group_ids)
     people.length
   end
 
-  def max_synchronous_record_limit
-    150
+  def serialized_group_ids
+    YAML.dump(@creation_options[:groups].map(&:id))
+  end
+
+  def self.deserialize_group_ids(serialized_group_ids)
+    group_ids = YAML.load(serialized_group_ids)
+    Group.where(id: group_ids)
   end
 
   private
@@ -98,7 +96,7 @@ class PersonCsvImporter
   end
 
   def max_row_upload
-    1000
+    2000
   end
 
   def too_many_rows?

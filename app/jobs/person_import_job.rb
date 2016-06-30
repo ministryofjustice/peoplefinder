@@ -1,3 +1,5 @@
+require 'yaml'
+
 class PersonImportJob < ActiveJob::Base
 
   #
@@ -7,41 +9,41 @@ class PersonImportJob < ActiveJob::Base
   # to be performed asynchronously
   #
 
-  queue_as :high_priority
-
-  def queue_name
-    'person_import'
-  end
-
-  attr_reader :serialized_people
-
-  def perform(serialized_people, creation_options={})
+  def perform(serialized_people, serialized_group_ids)
     @serialized_people = serialized_people
-    @creation_options = creation_options
+    @serialized_group_ids = serialized_group_ids
     people.each do |person|
       PersonCreator.new(person, nil).create!
     end
     people.length
   end
 
-  def max_run_time
-    20.minutes
+  def queue_name
+    'person_import'
   end
 
   def max_attempts
     3
   end
 
+  def max_run_time
+    10.minutes
+  end
+
   def destroy_failed_jobs?
     false
   end
 
-private
+  private
+
+  def creation_options
+    { groups: PersonCsvImporter.deserialize_group_ids(@serialized_group_ids) }
+  end
 
   def people
-    records = PersonCsvParser.new(serialized_people).records
+    records = PersonCsvParser.new(@serialized_people).records
     @people ||= records.map do |record|
-      Person.new(@creation_options.merge(clean_fields(record.fields)))
+      Person.new(creation_options.merge(clean_fields(record.fields)))
     end
   end
 

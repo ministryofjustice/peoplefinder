@@ -6,8 +6,26 @@ RSpec.describe PersonCsvImporter, type: :service do
     allow(PermittedDomain).to receive(:pluck).with(:domain).and_return(['valid.gov.uk'])
   end
 
+  let(:group) { create(:group) }
+  let(:creation_options) { { groups: [group] } }
+
   subject(:importer) do
-    described_class.new(csv)
+    described_class.new(csv, creation_options)
+  end
+
+  describe '.deserialize_group_ids' do
+    let(:groups) do
+      create_list(:group, 2)
+    end
+
+    let(:serialized_group_ids) do
+      YAML.dump(groups.map(&:id))
+    end
+
+    it 'returns an array of Group objects' do
+      expect(groups.first.class).to eq Group
+      expect(described_class.deserialize_group_ids(serialized_group_ids)).to eq groups
+    end
   end
 
   describe '#valid?' do
@@ -185,6 +203,8 @@ RSpec.describe PersonCsvImporter, type: :service do
 
   describe '#import' do
     context 'for a valid csv' do
+      before { ActiveJob::Base.queue_adapter.enqueued_jobs.clear }
+
       let(:csv) do
         <<-CSV.strip_heredoc
           email,given_name,surname
@@ -193,34 +213,21 @@ RSpec.describe PersonCsvImporter, type: :service do
         CSV
       end
 
-      it 'creates new records' do
-        subject.import
-        created = Person.where(email: 'peter.bly2@valid.gov.uk').first
-        expect(created).not_to be nil
-        expect(created.name).to eq 'Peter Bly'
-      end
+      let(:serialized_group_ids) { YAML::dump([group.id]) }
 
-      it 'uses the PersonCreator' do
-        expect(PersonCreator).to receive(:new).
-          with(instance_of(Person), nil).twice.and_call_original
+      it 'calls PersonImportJob' do
+        expect(class_double('PersonImportJob').as_stubbed_const).
+          to receive(:perform_later).
+          with(csv, serialized_group_ids).
+          once
         subject.import
       end
 
-      it 'returns number of imported records' do
-        expect(subject.import).to eql 2
+      it 'enqueues the person import job' do
+        subject.import
+        expect(PersonImportJob).to have_been_enqueued.once
       end
 
-      context 'with extra parameters' do
-        subject { described_class.new(csv, extra_params) }
-        let(:extra_params) { { groups: [group] } }
-        let(:group) { create(:group) }
-
-        it 'merges CSV fields into supplied parameters' do
-          subject.import
-          person = Person.find_by(email: 'peter.bly2@valid.gov.uk')
-          expect(person.groups).to eq([group])
-        end
-      end
     end
 
     context 'for an invalid csv (including duplicates)' do
@@ -238,50 +245,6 @@ RSpec.describe PersonCsvImporter, type: :service do
 
       it 'returns nil on import' do
         expect(subject.import).to be_nil
-      end
-    end
-  end
-
-  describe '#import' do
-    context 'for a CSV exported by Estates' do
-      let(:csv) do
-        <<-CSV.strip_heredoc
-          First Name,Last Name,E-mail Display Name
-          Reinhold,Denesik,"Denesik, Reinhold (Reinhold.Denesik@valid.gov.uk)"
-          Lelah,Jerde,"Jerde, Lelah (Lelah.Jerde@valid.gov.uk)"
-        CSV
-      end
-
-      it 'creates records' do
-        subject.import
-        expect(Person.where(
-          given_name: 'Reinhold',
-          surname: 'Denesik',
-          email: 'reinhold.denesik@valid.gov.uk'
-        ).count).to eq(1)
-        expect(Person.where(
-          given_name: 'Lelah',
-          surname: 'Jerde',
-          email: 'lelah.jerde@valid.gov.uk'
-        ).count).to eq(1)
-      end
-    end
-  end
-
-  describe '#import' do
-    context 'for a valid CSV with optional headers' do
-      let(:csv) do
-        <<-END.strip_heredoc
-          given_name,surname,email,primary_phone_number,building,location_in_building,city
-          Tom,O'Carey,tom.o.carey@valid.gov.uk
-          Tom,Mason-Buggs,tom.mason-buggs@valid.gov.uk,020 7947 6743,"102, Petty France","Room 5.02, 5th Floor, Orange Core","London, England"
-        END
-      end
-
-      it 'creates records with and without optional fields' do
-        expect { subject.import }.to change(Person, :count).by 2
-        expect(Person.pluck(:email)).to match_array ['tom.o.carey@valid.gov.uk', 'tom.mason-buggs@valid.gov.uk']
-        expect(Person.pluck(:location_in_building)).to include 'Room 5.02, 5th Floor, Orange Core'
       end
     end
   end

@@ -155,6 +155,10 @@ Style/ZeroLengthPredicate:
   Exclude:
     - 'Gemfile'
 
+Style/ColonMethodCall:
+  Enabled: false
+
+
 RSpec/NotToNot:
   Enabled: false
 
