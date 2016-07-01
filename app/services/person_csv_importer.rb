@@ -44,17 +44,17 @@ class PersonCsvImporter
     Group.where(id: group_ids)
   end
 
+  def self.clean_fields(hash)
+    hash.merge(email: EmailExtractor.new.extract(hash[:email]))
+  end
+
   private
 
   def_delegators :@parser, :records, :header
 
-  def clean_fields(hash)
-    hash.merge(email: EmailExtractor.new.extract(hash[:email]))
-  end
-
   def people
     @people ||= records.map do |record|
-      Person.new(@creation_options.merge(clean_fields(record.fields)))
+      Person.new(@creation_options.merge(self.class.clean_fields(record.fields)))
     end
   end
 

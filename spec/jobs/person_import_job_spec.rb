@@ -21,12 +21,13 @@ RSpec.describe PersonImportJob, type: :job do
 
   subject(:perform_later) { described_class.perform_later(serialized_people, serialized_group_ids) }
   subject(:perform_now)   { described_class.perform_now(serialized_people, serialized_group_ids) }
+  subject(:job) { described_class.new }
 
   it "enqueues with appropriate config settings" do
-    expect(described_class.new.queue_name).to eq 'person_import'
-    expect(described_class.new.max_run_time).to eq 10.minutes
-    expect(described_class.new.max_attempts).to eq 3
-    expect(described_class.new.destroy_failed_jobs?).to eq false
+    expect(job.queue_name).to eq 'person_import'
+    expect(job.max_run_time).to eq 10.minutes
+    expect(job.max_attempts).to eq 3
+    expect(job.destroy_failed_jobs?).to eq false
   end
 
   it 'enqueues job with expected arguments' do

@@ -1,7 +1,6 @@
 require File.expand_path('../boot', __FILE__)
 
 require 'rails/all'
-require File.expand_path('../../config/initializers/host_env.rb', __FILE__)
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
@@ -45,7 +44,6 @@ module Peoplefinder
     }
 
     config.active_job.queue_adapter = :delayed_job
-    config.active_job.queue_name_prefix = Rails.host.env
 
     config.active_record.raise_in_transactional_callbacks = true
     config.active_record.schema_format = :sql
@@ -65,7 +63,7 @@ module Peoplefinder
     config.action_mailer.asset_host = ENV['ACTION_MAILER_DEFAULT_URL']
 
     # Note: ENV is set to 'dev','staging','production' on dev,staging, production respectively
-    config.send_reminder_emails = Rails.host.production?
+    config.send_reminder_emails = (ENV['ENV'] == 'production')
 
     # The following values are required by the phase banner
     config.phase = 'live'

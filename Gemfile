@@ -60,7 +60,7 @@ group :development do
   gem 'rb-fsevent', require: RUBY_PLATFORM[/darwin/i].to_s.size > 0
   gem 'meta_request'
   gem 'better_errors'
-  gem 'daemon' # for delayed job process manangement
+  gem 'daemon'
 end
 
 group :test do

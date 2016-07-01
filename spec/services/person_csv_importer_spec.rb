@@ -213,7 +213,7 @@ RSpec.describe PersonCsvImporter, type: :service do
         CSV
       end
 
-      let(:serialized_group_ids) { YAML::dump([group.id]) }
+      let(:serialized_group_ids) { YAML.dump([group.id]) }
 
       it 'calls PersonImportJob' do
         expect(class_double('PersonImportJob').as_stubbed_const).
