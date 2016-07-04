@@ -14,11 +14,7 @@ class PersonImportJob < ActiveJob::Base
   def perform(serialized_people, serialized_group_ids)
     @serialized_people = serialized_people
     @serialized_group_ids = serialized_group_ids
-    people.each do |person|
-      PersonCreator.new(person, nil).create!
-    end
-
-    people.length
+    create_people!
   end
 
   def max_attempts
@@ -35,15 +31,32 @@ class PersonImportJob < ActiveJob::Base
 
   private
 
+  # NOTE: if job fails part way through we do not want subsequent attempts
+  # to create people already created as this hides the original error
+  def create_people!
+    people.each do |person|
+      if Person.find_by(email: person.email)
+        Rails.logger.warn "Person identified by email #{person.email} already exists. Skipping!"
+      else
+        Rails.logger.info "Creating new person with email #{person.email}"
+        PersonCreator.new(person, nil).create!
+      end
+    end
+    people.length
+  end
+
   def creation_options
     { groups: PersonCsvImporter.deserialize_group_ids(@serialized_group_ids) }
   end
 
   def people
-    records = PersonCsvParser.new(@serialized_people).records
     @people ||= records.map do |record|
       Person.new(creation_options.merge(PersonCsvImporter.clean_fields(record.fields)))
     end
+  end
+
+  def records
+    PersonCsvParser.new(@serialized_people).records
   end
 
 end
