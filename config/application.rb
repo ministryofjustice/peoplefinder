@@ -62,7 +62,7 @@ module Peoplefinder
 
     config.action_mailer.asset_host = ENV['ACTION_MAILER_DEFAULT_URL']
 
-    # Note: ENV is set to 'staging' on staging environment
+    # Note: ENV is set to 'dev','staging','production' on dev,staging, production respectively
     config.send_reminder_emails = (ENV['ENV'] == 'production')
 
     # The following values are required by the phase banner

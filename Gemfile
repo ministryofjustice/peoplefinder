@@ -57,14 +57,14 @@ group :development do
   gem 'foreman'
   gem 'mailcatcher'
   gem 'spring-commands-rspec'
-  gem 'guard-rspec', require: false
   gem 'rb-fsevent', require: RUBY_PLATFORM[/darwin/i].to_s.size > 0
   gem 'meta_request'
+  gem 'better_errors'
+  gem 'daemon'
 end
 
 group :test do
   gem 'codeclimate-test-reporter', require: nil
-  gem 'fuubar'
   gem 'database_cleaner'
   gem 'site_prism'
 end
@@ -79,15 +79,16 @@ group :development, :test do
   gem 'poltergeist'
   gem 'pry-rails'
   gem 'pry-byebug'
-  gem 'rspec-rails'
+  gem 'rspec-rails', '>= 3.4'
   gem 'shoulda-matchers'
   gem 'simplecov'
   gem 'simplecov-rcov'
   gem 'timecop'
-  gem 'jasmine-rails'
   gem 'guard-jasmine'
-  gem 'guard-rubocop', require: false
+  gem 'jasmine-rails'
+  gem 'rubocop'
   gem 'rubocop-rspec'
+  gem 'rspec-activejob'
   gem 'annotate'
 end
 

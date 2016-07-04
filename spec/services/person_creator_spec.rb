@@ -1,10 +1,10 @@
-require 'spec_helper'
-require 'person_creator'
+require 'rails_helper'
 
 RSpec.describe PersonCreator, type: :service do
   let(:person) do
     double(
       'Person',
+      email: 'example.user.1@digital.justice.gov.uk',
       save!: true,
       new_record?: false,
       notify_of_change?: false

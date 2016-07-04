@@ -14,4 +14,5 @@ Rails.application.configure do
     host: 'www.example.com',
     protocol: 'http'
   }
+  config.active_job.queue_adapter = :test
 end

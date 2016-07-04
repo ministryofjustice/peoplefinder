@@ -1,5 +1,6 @@
 require 'csv'
 require 'forwardable'
+require 'yaml'
 
 class PersonCsvImporter
   extend Forwardable
@@ -13,11 +14,12 @@ class PersonCsvImporter
     end
   end
 
-  attr_reader :errors
+  attr_reader :errors, :serialized_records
 
   def initialize(serialized, creation_options = {})
-    @parser = parse_csv(serialized)
+    @serialized_records = serialized
     @creation_options = creation_options
+    @parser = PersonCsvParser.new(serialized)
     @valid = nil
   end
 
@@ -29,28 +31,30 @@ class PersonCsvImporter
 
   def import
     return nil unless valid?
-
-    people.each do |person|
-      PersonCreator.new(person, nil).create!
-    end
+    PersonImportJob.perform_later(serialized_records, serialized_group_ids)
     people.length
+  end
+
+  def serialized_group_ids
+    YAML.dump(@creation_options[:groups].map(&:id))
+  end
+
+  def self.deserialize_group_ids(serialized_group_ids)
+    group_ids = YAML.load(serialized_group_ids)
+    Group.where(id: group_ids)
+  end
+
+  def self.clean_fields(hash)
+    hash.merge(email: EmailExtractor.new.extract(hash[:email]))
   end
 
   private
 
   def_delegators :@parser, :records, :header
 
-  def clean_fields(hash)
-    hash.merge(email: EmailExtractor.new.extract(hash[:email]))
-  end
-
-  def parse_csv(serialized)
-    PersonCsvParser.new(serialized)
-  end
-
   def people
     @people ||= records.map do |record|
-      Person.new(@creation_options.merge(clean_fields(record.fields)))
+      Person.new(@creation_options.merge(self.class.clean_fields(record.fields)))
     end
   end
 
@@ -92,7 +96,7 @@ class PersonCsvImporter
   end
 
   def max_row_upload
-    150
+    2000
   end
 
   def too_many_rows?

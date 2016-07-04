@@ -13,6 +13,7 @@ class PersonCreator
   end
 
   def create!
+    Rails.logger.info "Creating new person with email #{person.email}"
     person.save!
     send_create_email!
   end

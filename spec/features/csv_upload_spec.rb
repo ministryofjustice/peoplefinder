@@ -45,6 +45,7 @@ feature 'Upload CSV' do
       tom.mason-buggs@digital.justice.gov.uk
     ).each do |email|
       person = Person.find_by(email: email)
+      expect(person.groups).to eq([group])
       expect(person.location).to eq "Room 5.02, 5th Floor, Blue Core, 102, Petty France, London"
       check_new_user_notification_email(email)
     end

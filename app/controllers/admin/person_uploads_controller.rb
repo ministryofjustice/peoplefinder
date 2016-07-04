@@ -5,7 +5,7 @@ module Admin
     end
 
     def create
-      @upload = PersonUpload.new(filtered_params)
+      @upload = PersonUpload.new(person_upload_params)
       if @upload.save
         notice :upload_succeeded, count: @upload.import_count
         redirect_to action: :new
@@ -17,7 +17,7 @@ module Admin
 
     private
 
-    def filtered_params
+    def person_upload_params
       params.require(:person_upload).permit(:group_id, :file)
     end
   end
