@@ -51,6 +51,12 @@ RSpec.describe PersonImportJob, type: :job do
         perform_now
       end
 
+      # to avoid job retry and multi-worker instance errors
+      it 'double-checks person does not already exist' do
+        expect(Person).to receive(:find_by).thrice
+        perform_now
+      end
+
       it 'creates new people from the seralized data' do
         perform_now
         expect(Person.pluck(:email)).to include('peter.bly@valid.gov.uk', 'jon.o.carey@valid.gov.uk')
