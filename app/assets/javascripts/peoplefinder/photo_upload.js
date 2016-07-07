@@ -5,7 +5,7 @@ var PhotoUpload = (function (){
 
   var PhotoUpload = {
 
-    defaultImage: '/assets/medium_no_photo.png',
+    defaultImage: '/medium_no_photo.png',
 
     enhance: function ( el ){
       var els = PhotoUpload.findElements(el);
@@ -20,6 +20,7 @@ var PhotoUpload = (function (){
 
     photoSelected: function ( event ){
       var els = PhotoUpload.findElements(event.target);
+      PhotoUpload.clearError(els);
       els.$uploadButton.removeClass('hidden');
     },
 
@@ -52,27 +53,42 @@ var PhotoUpload = (function (){
     },
 
     photoUploaded: function ( event ){
+
       var $iframe = $(event.target);
       var jsonText = $iframe.contents().text();
       if(jsonText.length>1){
         var uploadData = $.parseJSON(jsonText);
-
         var els = PhotoUpload.findElements($iframe);
-        els.$preview.attr('src', uploadData.image.croppable.url);
-        els.$preview.css({clip: ''});
-        PhotoUpload.setState(els, 'cropping');
-        setTimeout(_.bind(function (){
-          PhotoUpload.setupCrop(els);
-        }, this), 1000);
 
-        els.$photo_id.data('old-id', els.$photo_id.val());
-        els.$photo_id.val(uploadData.id);
+        if (uploadData.error) {
+          // e.g. carrierwave whitelist errors
+          PhotoUpload.showError(els, uploadData.error);
+          PhotoUpload.setState(els, 'cropped');
+        } else {
+          els.$preview.attr('src', uploadData.image.croppable.url);
+          els.$preview.css({clip: ''});
+          PhotoUpload.setState(els, 'cropping');
+          setTimeout(_.bind(function (){
+            PhotoUpload.setupCrop(els);
+          }, this), 1000);
+
+          els.$photo_id.data('old-id', els.$photo_id.val());
+          els.$photo_id.val(uploadData.id);
+        }
 
         els.$input.val('');
         els.$uploadButton.addClass('hidden');
-
         $iframe.remove();
       }
+    },
+
+    showError: function ( els, error_messages ){
+      els.$uploadError.removeClass('hidden');
+      els.$uploadError.text(error_messages);
+    },
+
+    clearError: function ( els ) {
+      els.$uploadError.addClass('hidden');
     },
 
     preview: function ( event ){
@@ -163,6 +179,8 @@ var PhotoUpload = (function (){
       event.preventDefault();
 
       var els = PhotoUpload.findElements(event.target);
+      PhotoUpload.clearError(els);
+      els.$uploadButton.addClass('hidden');
 
       els.$preview.attr('src', PhotoUpload.defaultImage);
       els.$preview.attr('style', '');
@@ -194,6 +212,7 @@ var PhotoUpload = (function (){
         $label:   $label,
         $preview: $preview,
 
+        $uploadError:     $el.find('.js-photo-upload-error'),
         $uploadButton:    $el.find('.upload-button-bar .photo-upload-button'),
         $cropButton:      $el.find('.upload-button-bar .crop-finished-button'),
         $cropAgainButton: $el.find('.crop-again-button'),
