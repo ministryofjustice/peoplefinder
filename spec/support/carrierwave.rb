@@ -9,5 +9,10 @@ module SpecSupport
     def sample_image
       File.join(Rails.root, 'spec', 'fixtures', 'placeholder.png')
     end
+
+    def non_white_list_image
+      File.join(Rails.root, 'spec', 'fixtures', 'placeholder.bmp')
+    end
+
   end
 end
