@@ -5,7 +5,7 @@ var PhotoUpload = (function (){
 
   var PhotoUpload = {
 
-    defaultImage: '/medium_no_photo.png',
+    defaultImage:    "<%= asset_path('medium_no_photo.png') %>",
 
     enhance: function ( el ){
       var els = PhotoUpload.findElements(el);
