@@ -67,6 +67,11 @@ RSpec.describe ProfilePhotosController, type: :controller do
       expected = { error: "not a real error, nor is this" }.to_json
       expect(response.body).to eql expected
     end
+
+    it 'renders JSON error as text for compatability with IE' do
+      post :create, profile_photo: invalid_params
+      expect(response.header['Content-Type']).to include 'text/html'
+    end
   end
 
 end
