@@ -2,11 +2,11 @@ class ProfilePhotosController < ApplicationController
 
   def create
     photo = ProfilePhoto.create(profile_photo_params)
-    # see carrier wave errors such as image_integrity_error
+    # NOTE: IE requires JSON as text
     if photo.valid?
       render text: photo.to_json
     else
-      render json: { error: photo.errors.full_messages.join(', ') }, status: :unprocessable_entity
+      render text: { error: photo.errors.full_messages.join(', ') }.to_json, status: :unprocessable_entity
     end
   end
 
