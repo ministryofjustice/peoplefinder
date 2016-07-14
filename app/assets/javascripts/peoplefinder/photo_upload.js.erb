@@ -43,7 +43,7 @@ var PhotoUpload = (function (){
       var fileSize = 0;
       if (window.FileReader) {
         if (el.files.length > 0) {
-          fileSize = el.files[0].size / 1048576
+          fileSize = el.files[0].size / 1048576;
         }
       }
       return fileSize;
