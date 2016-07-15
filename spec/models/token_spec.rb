@@ -110,21 +110,48 @@ RSpec.describe Token, type: :model do
     describe '#active?' do
       before { token.save }
 
-      it 'returns true if token is less than 10800 seconds old and not spent' do
-        expect(token.active?).to be_truthy
-        expect(token.spent?).to be_falsey
+      context 'in production environment' do
+        it 'returns true if token is less than 10800 seconds old and not spent' do
+          expect(token.active?).to be_truthy
+          expect(token.spent?).to be_falsey
+          Timecop.freeze(10_790.seconds.from_now) do
+            expect(token).to be_active
+          end
+        end
+
+        it 'returns false if token is less than 10800 seconds old but already used' do
+          expect do
+            token.spend!
+            token.reload
+          end.to change { token.spent? }.from(false).to(true)
+        end
+
+        it 'returns false if token is 10800 seconds or more old' do
+          Timecop.freeze(4.hours.from_now) do
+            expect(token).not_to be_active
+          end
+        end
       end
 
-      it 'returns false if token is less than 10800 seconds old but already used' do
-        expect do
+      context 'on dev and staging - to avoid virus scanner link followers spending the token prematurely' do
+        before do
+          allow(Rails).to receive_message_chain(:host, :dev?).and_return false
+          allow(Rails).to receive_message_chain(:host, :staging?).and_return true
+          token.save
           token.spend!
           token.reload
-        end.to change { token.spent? }.from(false).to(true)
-      end
+        end
 
-      it 'returns false if token is 10800 seconds or more old' do
-        Timecop.freeze(4.hours.from_now) do
-          expect(token).not_to be_active
+        it 'returns true if token is spent but created less than 10 minutes ago' do
+          Timecop.freeze(9.minutes.from_now) do
+            expect(token).to be_active
+          end
+        end
+
+        it 'returns false if token is spent and created more than 10 minutes ago' do
+          Timecop.freeze(11.minutes.from_now) do
+            expect(token).not_to be_active
+          end
         end
       end
 

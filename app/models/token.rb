@@ -42,7 +42,8 @@ class Token < ActiveRecord::Base
   end
 
   def active?
-    (created_at > ttl.seconds.ago) && !spent?
+    return scanned_token_active? if Rails.host.dev? || Rails.host.staging?
+    token_active?
   end
 
   def self.ttl
@@ -74,6 +75,16 @@ class Token < ActiveRecord::Base
   end
 
   private
+
+  # NOTE: dev and staging mails are scanned (possibly because they are not gov.uk)
+  # and this will spend them so
+  def scanned_token_active?
+    token_active? || (spent? && created_at > 10.minutes.ago)
+  end
+
+  def token_active?
+    (created_at > ttl.seconds.ago) && !spent?
+  end
 
   def remove_expired_tokens
     self.class.expired.destroy_all
