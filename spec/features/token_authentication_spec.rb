@@ -24,13 +24,23 @@ feature 'Token Authentication' do
     expect(page).to have_text('Email address is not formatted correctly')
   end
 
-  describe 'trying to log in with a non-whitelisted email address domain' do
-    describe 'does not leak username information' do
-      it_should_behave_like "it received a valid request from" do
-        let(:email) { 'james@abscond.com' }
-        let(:sent_to) { '' }
-      end
+  describe 'trying to log in more than 8 times per hour' do
+    before do
+      allow_any_instance_of(Token). to receive(:tokens_in_the_last_hour).and_return 8
     end
+    scenario 'is not permitted' do
+      visit '/'
+      fill_in 'token_user_email', with: 'valid.email@digital.justice.gov.uk '
+      expect { click_button 'Request link' }.not_to change { ActionMailer::Base.deliveries.count }
+      expect(page).to have_text('You’ve reached the limit of 8 tokens requested within an hour')
+    end
+  end
+
+  scenario 'trying to log in with a non white-listed email address domain' do
+    visit '/'
+    fill_in 'token_user_email', with: 'bob@abscond.com'
+    expect { click_button 'Request link' }.not_to change { ActionMailer::Base.deliveries.count }
+    expect(page).to have_text('Email address can’t be used to access People Finder')
   end
 
   describe 'bad email from valid domain' do

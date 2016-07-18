@@ -4,7 +4,7 @@ class TokenSender
 
   attr_reader :user_email_error
 
-  REPORT_EMAIL_ERROR_REGEXP = %r{(not formatted correctly|reached the limit)}
+  REPORT_EMAIL_ERROR_REGEXP = %r{(not formatted correctly|reached the limit|access People)}
 
   def initialize(user_email)
     @user_email = user_email

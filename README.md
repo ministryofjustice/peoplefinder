@@ -142,9 +142,11 @@ token authentication method relies upon the users access to their email
 account to authenticate them.
 
 Each time the user wishes to start a session, they need to generate an
-authentication token. This can be done by entering their email address on the
-login screen. They will be sent an email message containing a link with a
-unique random token. Clicking on the link will allow them to login.
+authentication token. This can be done by entering their email address
+(from a permitted domain) on the login screen. They will be sent an email
+message containing a link with a unique random token. Clicking on the link
+will allow them to login.
+
 
 ## E-mails
 

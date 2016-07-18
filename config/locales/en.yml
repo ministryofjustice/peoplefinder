@@ -196,7 +196,7 @@ en:
     models:
       token:
         invalid_address: "Email address is not formatted correctly"
-        invalid_domain: "Email address is not valid"
+        invalid_domain: "Email address can’t be used to access People Finder"
         token_throttle_limit: "You’ve reached the limit of %{limit} tokens requested within an hour"
       group:
         attributes:
