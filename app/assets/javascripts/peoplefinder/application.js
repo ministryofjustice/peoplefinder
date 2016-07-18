@@ -23,8 +23,8 @@
 (function() {
 
   // Prevent form submission caused by pressing 'Enter' key in text fields
-  // NOTE: we still want buttons and textareas to respond to CR/NL as expected
-  $('input:text').on('keypress', function(e) {
+  // NOTE: we still want buttons and textareas to respond to CR/NL as expected and the search form
+  $('.new_person input:text, .edit_person input:text, .new_group input:text, .edit_group input:text').on('keypress', function(e) {
     if (e.keyCode === 13) {
       return false;
     }
