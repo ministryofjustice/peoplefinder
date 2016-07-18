@@ -69,7 +69,7 @@ describe("Team Selector", function() {
         last = obj.find('.visible').last().html();
       expect(el).toEqual(last);
     });
-    describe("should set '.exapnded' class", function(){
+    describe("should set '.expanded' class", function(){
       beforeEach(function(){
         ts.setExpanded();
       });

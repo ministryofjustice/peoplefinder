@@ -19,3 +19,15 @@
 //= require_tree .
 //= require bind
 //= require selection-buttons
+
+(function() {
+
+  // Prevent form submission caused by pressing 'Enter' key in text fields
+  // NOTE: we still want buttons and textareas to respond to CR/NL as expected
+  $('input:text').on('keypress', function(e) {
+    if (e.keyCode === 13) {
+      return false;
+    }
+  });
+
+}());
