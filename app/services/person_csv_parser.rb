@@ -45,6 +45,7 @@ class PersonCsvParser
       surname: /surname|last|family/i,
       email: /email|e-mail/i,
       primary_phone_number: /primary_phone_number|phone/i,
+      pager_number: /pager_number|pager/i,
       building: /^building$|^location1$|^address$|^address1$/i,
       location_in_building: /location_in_building|location2|address2|room/i,
       city: /city|town/i

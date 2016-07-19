@@ -15,6 +15,7 @@ RSpec.describe UploadHelper, type: :helper do
   describe 'optional_headers' do
     let(:html) do
       '<code>primary_phone_number</code> ' \
+      '<code>pager_number</code> ' \
       '<code>building</code> ' \
       '<code>location_in_building</code> ' \
       '<code>city</code>'
