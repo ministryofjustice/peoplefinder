@@ -50,14 +50,12 @@ RSpec.describe Suggestion, type: :model do
   end
 
   describe '#incorrect_fields_info' do
+    let(:fields) { %w( first_name last_name roles location_of_work working_days phone_number pager_number image ) }
     let(:suggestion) do
-      described_class.new(
-        incorrect_first_name: true,
-        incorrect_location_of_work: true
-      )
+      incorrect_fields = fields.each_with_object({}) { |v, h| h["incorrect_#{v}".to_sym] = true }
+      described_class.new(incorrect_fields)
     end
-
-    let(:expected_incorrect_fields) { ['First name', 'Location of work'] }
+    let(:expected_incorrect_fields) { fields.map(&:humanize) }
 
     it 'lists names of incorrect fields' do
       expect(suggestion.incorrect_fields_info).to eql expected_incorrect_fields
