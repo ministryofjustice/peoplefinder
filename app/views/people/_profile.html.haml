@@ -58,6 +58,10 @@
           %dt Other phone number
           %dd= call_to(@person.secondary_phone_number)
 
+        - if @person.pager_number.present?
+          %dt Pager number
+          %dd= call_to(@person.pager_number)
+
       %dl.inline-labels
         - if @person.current_project.present?
           %dt Current project(s)
