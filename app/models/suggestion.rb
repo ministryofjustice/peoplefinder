@@ -22,6 +22,7 @@ class Suggestion
     location_of_work
     working_days
     phone_number
+    pager_number
     image
   ).freeze
 
