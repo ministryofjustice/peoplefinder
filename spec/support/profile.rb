@@ -7,6 +7,7 @@ module SpecSupport
         email: 'marco.polo@digital.justice.gov.uk',
         primary_phone_number: '+44-208-123-4567',
         secondary_phone_number: '07777777777',
+        pager_number: '07666666666',
         location_in_building: '10.999',
         building: '102 Petty France',
         city: 'London',
@@ -32,6 +33,7 @@ module SpecSupport
       fill_in 'Main email', with: person_attributes[:email]
       fill_in 'Main phone number', with: person_attributes[:primary_phone_number]
       fill_in 'Alternative phone number', with: person_attributes[:secondary_phone_number]
+      fill_in 'Pager number', with: person_attributes[:pager_number]
       fill_in 'Location in building', with: person_attributes[:location_in_building]
       fill_in 'Building', with: person_attributes[:building]
       fill_in 'City', with: person_attributes[:city]
@@ -49,6 +51,7 @@ module SpecSupport
       expect(page).to have_text(person_attributes[:email])
       expect(page).to have_text(person_attributes[:primary_phone_number])
       expect(page).to have_text(person_attributes[:secondary_phone_number])
+      expect(page).to have_text(person_attributes[:pager_number])
       expect(page).to have_text(person_attributes[:location_in_building])
       expect(page).to have_text(person_attributes[:building])
       expect(page).to have_text(person_attributes[:city])

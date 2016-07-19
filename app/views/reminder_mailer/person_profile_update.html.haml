@@ -57,6 +57,10 @@
                     %dt Other phone number
                     %dd= @person.secondary_phone_number
 
+                  - if @person.pager_number.present?
+                    %dt Pager number
+                    %dd= @person.pager_number
+
                   %dt Current project(s)
                   %dd= @person.current_project.presence || '-'
 
