@@ -70,6 +70,7 @@ class RandomGenerator
       email: "#{given_name}.#{surname}@#{@domain}",
       primary_phone_number: Faker::PhoneNumber.phone_number,
       secondary_phone_number: Faker::PhoneNumber.phone_number,
+      pager_number: [Faker::PhoneNumber.phone_number, nil].sample,
       description: Faker::Lorem.sentence
     }
   end
@@ -93,4 +94,5 @@ class RandomGenerator
       city: Faker::Address.city
     }
   end
+
 end
