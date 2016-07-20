@@ -1,6 +1,8 @@
 module Admin
   class PersonUploadsController < ApplicationController
     def new
+      Rails.logger.ap "File: #{File.basename(__FILE__)}, Method: #{__method__}", :warn
+      ap "File: #{File.basename(__FILE__)}, Method: #{__method__}"
       @upload = PersonUpload.new
     end
 
