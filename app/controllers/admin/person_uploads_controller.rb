@@ -1,11 +1,14 @@
 module Admin
   class PersonUploadsController < ApplicationController
+
     def new
       @upload = PersonUpload.new
+      authorize @upload
     end
 
     def create
       @upload = PersonUpload.new(person_upload_params)
+      authorize @upload
       if @upload.save
         notice :upload_succeeded, count: @upload.import_count
         redirect_to action: :new

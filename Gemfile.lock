@@ -439,7 +439,7 @@ GEM
       pry (~> 0.10)
     pry-rails (0.3.4)
       pry (>= 0.9.10)
-    pundit (1.0.1)
+    pundit (1.1.0)
       activesupport (>= 3.0.0)
     rack (1.6.4)
     rack-contrib (1.4.0)
@@ -654,7 +654,7 @@ DEPENDENCIES
   premailer-rails
   pry-byebug
   pry-rails
-  pundit
+  pundit (~> 1.1)
   rails (~> 4.2.4)
   rb-fsevent
   recipient_interceptor (~> 0.1.2)
