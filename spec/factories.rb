@@ -6,6 +6,7 @@ FactoryGirl.define do
   sequence(:location_in_building) { |n| "Room #{n}, #{n.ordinalize}" }
   sequence(:city) { |n| 'Megacity %d' % n }
   sequence(:primary_phone_number) { |n| '07708 %06d' % (900_000 + n) }
+  sequence(:pager_number) { |n| '07600 %06d' % (900_000 + n) }
   sequence(:phone_number) { |n| '07700 %06d' % (900_000 + n) }
 
   factory :department, class: 'Group' do
@@ -28,6 +29,7 @@ FactoryGirl.define do
 
     trait :with_details do
       primary_phone_number
+      pager_number
       building
       location_in_building
       city

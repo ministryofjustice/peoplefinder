@@ -153,7 +153,7 @@ RSpec.describe PersonCsvImporter, type: :service do
     context 'when the CSV has too many header columns' do
       let(:csv) do
         <<-END.strip_heredoc
-          email,given_name,surname,primary_phone_number,building,location_in_building,city,city
+          email,given_name,surname,primary_phone_number,pager_number,building,location_in_building,city,city
           tom.o.carey@digital.justice.gov.uk,Jon,O'Carey
           tom.mason-buggs@digital.justice.gov.uk,Tom,Mason-Buggs,020 7947 76738,"102, Petty France","Room 5.02, 5th Floor, Blue Core",London
         END
@@ -161,7 +161,7 @@ RSpec.describe PersonCsvImporter, type: :service do
 
       let(:errors) do
         [
-          PersonCsvImporter::ErrorRow.new(1, "email,given_name,surname,primary_phone_number,building,location_in_building,city,city", ['There are more columns than expected'])
+          PersonCsvImporter::ErrorRow.new(1, "email,given_name,surname,primary_phone_number,pager_number,building,location_in_building,city,city", ['There are more columns than expected'])
         ]
       end
 
