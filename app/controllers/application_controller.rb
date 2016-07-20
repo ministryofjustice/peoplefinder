@@ -36,9 +36,6 @@ class ApplicationController < ActionController::Base
   helper_method :current_user
 
   def logged_in?
-    Rails.logger.ap "File: #{File.basename(__FILE__)}, Method: #{__method__}", :warn
-    Rails.logger.ap "current_user : #{current_user}", :warn
-    Rails.logger.ap "current_user.present? : #{current_user.present?}", :warn
     current_user.present?
   end
   helper_method :logged_in?
@@ -59,11 +56,6 @@ class ApplicationController < ActionController::Base
   helper_method :super_admin?
 
   def ensure_user
-    Rails.logger.ap "File: #{File.basename(__FILE__)}, Method: #{__method__}", :warn
-    ap "File: #{File.basename(__FILE__)}, Method: #{__method__}"
-    Rails.logger.ap "logged_in? : #{logged_in?}", :warn
-    ap "logged_in? : #{logged_in?}"
-
     return true if logged_in?
     session[:desired_path] = request.fullpath
     redirect_to new_sessions_path
@@ -94,9 +86,6 @@ class ApplicationController < ActionController::Base
   end
 
   def user_not_authorized
-    Rails.logger.ap "File: #{File.basename(__FILE__)}, Method: #{__method__}", :warn
-    ap "File: #{File.basename(__FILE__)}, Method: #{__method__}"
-
     if logged_in_readonly?
       session[:desired_path] = request.fullpath
       session[:unauthorised_login] = true

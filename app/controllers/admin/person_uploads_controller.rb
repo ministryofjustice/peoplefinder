@@ -1,13 +1,14 @@
 module Admin
   class PersonUploadsController < ApplicationController
+
     def new
-      Rails.logger.ap "File: #{File.basename(__FILE__)}, Method: #{__method__}", :warn
-      ap "File: #{File.basename(__FILE__)}, Method: #{__method__}"
       @upload = PersonUpload.new
+      authorize @upload
     end
 
     def create
       @upload = PersonUpload.new(person_upload_params)
+      authorize @upload
       if @upload.save
         notice :upload_succeeded, count: @upload.import_count
         redirect_to action: :new

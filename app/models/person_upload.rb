@@ -11,6 +11,10 @@ class PersonUpload
   validates :file, presence: true
   validates :group_id, presence: true
 
+  def self.policy_class
+    Admin::PersonUploadPolicy
+  end
+
   def initialize(*)
     @csv_errors = []
     super
