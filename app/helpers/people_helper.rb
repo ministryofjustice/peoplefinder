@@ -17,13 +17,19 @@ module PeopleHelper
   end
 
   def profile_image_tag(person, options = {})
-    source = person.profile_image.try(:medium) || 'medium_no_photo.png'
+    ap "File: #{File.basename(__FILE__)}, Method: #{__method__}"
+    source = profile_image_source(person, options.fetch(:version, :medium))
+    options.delete(:version)
     alt_text = "Current photo of #{person}"
     profile_image_div source, alt_text, options
   end
 
   def team_image_tag team, options = {}
     profile_image_div 'medium_team.png', "Team icon for #{team.name}", options
+  end
+
+  def profile_image_source(person, version=:medium)
+    person.profile_image.try(version) || 'medium_no_photo.png'
   end
 
   def profile_image_div source, alt_text, options

@@ -38,6 +38,7 @@ class PeopleController < ApplicationController
     authorize @person
 
     if @preview
+      @person.crop_profile_photo :preview
       render :new
     elsif @person.valid?
       confirm_or_create
@@ -49,10 +50,12 @@ class PeopleController < ApplicationController
 
   # PATCH/PUT /people/1
   def update
+
+# called by preview and save
     @person.assign_attributes(person_update_params)
     authorize @person
-
     if @preview
+      @person.crop_profile_photo :preview
       render :edit
     elsif @person.valid?
       confirm_or_update
