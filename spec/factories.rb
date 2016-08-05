@@ -35,6 +35,10 @@ FactoryGirl.define do
       city
     end
 
+    trait :with_photo do
+      association :profile_photo, factory: :profile_photo
+    end
+
     factory :person_with_multiple_logins do
       login_count 10
       last_login_at { 1.day.ago }
@@ -43,6 +47,7 @@ FactoryGirl.define do
     factory :super_admin do
       super_admin true
     end
+
   end
 
   factory :information_request do

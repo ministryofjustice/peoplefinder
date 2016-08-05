@@ -17,19 +17,13 @@ module PeopleHelper
   end
 
   def profile_image_tag(person, options = {})
-    ap "File: #{File.basename(__FILE__)}, Method: #{__method__}"
-    source = profile_image_source(person, options.fetch(:version, :medium))
-    options.delete(:version)
+    source = profile_image_source(person, options)
     alt_text = "Current photo of #{person}"
     profile_image_div source, alt_text, options
   end
 
   def team_image_tag team, options = {}
     profile_image_div 'medium_team.png', "Team icon for #{team.name}", options
-  end
-
-  def profile_image_source(person, version=:medium)
-    person.profile_image.try(version) || 'medium_no_photo.png'
   end
 
   def profile_image_div source, alt_text, options
@@ -48,4 +42,13 @@ module PeopleHelper
       classes << 'completing' if activity == 'complete'
     end.join(' ')
   end
+
+  private
+
+  def profile_image_source(person, options)
+    version = options.fetch(:version, :medium)
+    options.delete(:version)
+    person.profile_image.try(version) || 'medium_no_photo.png'
+  end
+
 end

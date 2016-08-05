@@ -49,7 +49,7 @@ class Person < ActiveRecord::Base
     end
   end
 
-  def crop_profile_photo versions=[]
+  def crop_profile_photo(versions = [])
     profile_photo.crop crop_x, crop_y, crop_w, crop_h, versions if crop_x.present?
   end
 
