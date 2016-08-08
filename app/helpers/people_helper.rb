@@ -17,7 +17,7 @@ module PeopleHelper
   end
 
   def profile_image_tag(person, options = {})
-    source = person.profile_image.try(:medium) || 'medium_no_photo.png'
+    source = profile_image_source(person, options)
     alt_text = "Current photo of #{person}"
     profile_image_div source, alt_text, options
   end
@@ -42,4 +42,13 @@ module PeopleHelper
       classes << 'completing' if activity == 'complete'
     end.join(' ')
   end
+
+  private
+
+  def profile_image_source(person, options)
+    version = options.fetch(:version, :medium)
+    options.delete(:version)
+    person.profile_image.try(version) || 'medium_no_photo.png'
+  end
+
 end

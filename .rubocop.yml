@@ -108,6 +108,7 @@ Style/AlignHash:
   Enabled: false
 
 Metrics/ClassLength:
+  CountComments: false
   Max: 120
 
 Metrics/ModuleLength:

@@ -32,4 +32,32 @@ RSpec.describe PeopleHelper, type: :helper do
       expect(person_form_class(person, 'complete')).to match(/\bcompleting\b/)
     end
   end
+
+  describe 'person_image_tag' do
+    let(:person)  { build(:person, :with_photo) }
+    let(:options) { { class: 'my-class', version: :preview } }
+
+    it 'test builds person with photo' do
+      expect(person.profile_photo.image).not_to be_nil
+    end
+
+    it 'uses the specified image version' do
+      expect(profile_image_tag(person, options)).to match(/.*profile_photo.*\/preview_.*/)
+    end
+
+    it 'removes the version element from options hash' do
+      expect { profile_image_tag(person, options) }.to change(options, :size).by(-1)
+    end
+
+    it 'defaults to using the medium image version' do
+      options.delete(:version)
+      expect(profile_image_tag(person, options)).to match(/.*profile_photo.*\/medium_.*/)
+    end
+
+    it 'fallsback to using medium_no_photo.png' do
+      person.profile_photo_id = nil
+      expect(profile_image_tag(person, options)).to match(/.*\/medium_no_photo.png.*/)
+    end
+
+  end
 end

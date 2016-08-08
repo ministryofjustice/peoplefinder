@@ -6,12 +6,12 @@ class ProfilePhoto < ActiveRecord::Base
 
   attr_accessor :crop_x, :crop_y, :crop_w, :crop_h
 
-  def crop(x, y, w, h)
+  def crop(x, y, w, h, versions = [])
     self.crop_x = x
     self.crop_y = y
     self.crop_w = w
     self.crop_h = h
-    image.recreate_versions!
+    image.recreate_versions!(*versions)
   end
 
 end

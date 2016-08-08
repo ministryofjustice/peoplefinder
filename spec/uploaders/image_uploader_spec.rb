@@ -19,6 +19,7 @@ RSpec.describe ImageUploader, type: :uploader do
     it 'creates default image sizes' do
       expect(subject.croppable).to be_no_larger_than(1024, 1024)
       expect(subject.medium).to be_no_larger_than(512, 512)
+      expect(subject.preview).to be_no_larger_than(512, 512)
     end
 
     it 'crops the medium image and leaves the croppable version intact' do

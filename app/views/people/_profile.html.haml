@@ -9,7 +9,10 @@
   .grid.grid-1-3
     .inner-block
       .image-background
-        = profile_image_tag @person, class: 'profile-page'
+        - if @preview
+          = profile_image_tag @person, class: 'profile-page', version: :preview
+        - else
+          = profile_image_tag @person, class: 'profile-page'
       .spacer-15
       .no-mobile
         - if @person.email.present? && !@preview
