@@ -183,13 +183,18 @@ var PhotoUpload = (function (){
       els.$crop_h.val(cropData.h);
 
       var zoomRatio = previewBoxWidth / cropData.w / xaspect;
+      var transformOriginX = xaspect * cropData.x;
+      var transformOriginY = xaspect * cropData.y;
+      var transformOrigin = " " + Math.floor(transformOriginX) + "px " + Math.floor(transformOriginY) + "px ";
 
       els.$preview.data('jcrop').destroy();
+
       els.$preview.css({
-        marginLeft: -1 * xaspect * cropData.x,
-        marginTop:  -1 * xaspect * cropData.y,
+        marginLeft: -1 * transformOriginX,
+        marginTop:  -1 * transformOriginY,
         zoom: zoomRatio,
-        '-moz-transform': 'scale('+ zoomRatio +')'
+        '-moz-transform': 'scale('+ zoomRatio +')',
+        '-moz-transform-origin': transformOrigin
       });
 
       PhotoUpload.setState(els, 'cropped');
