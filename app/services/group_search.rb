@@ -8,7 +8,7 @@ class GroupSearch
   end
 
   def perform_search
-    return [[],false] if @query.blank?
+    return [[], false] if @query.blank?
 
     [exact_matches.push(*partial_matches).uniq, exact_match_exists?]
   end
