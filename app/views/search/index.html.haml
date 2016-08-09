@@ -6,11 +6,11 @@
   %h1.noborder= @page_title = 'Search results'
   .search-hint Select a team or person's name to view more details.
   .pagination
-    - if @exact_match_exists
-      = pluralize(@people.length, "result") + ' found'
+    - if matches_exist?
+      = pluralize(@teams.size + @people.size, "result") + ' found'
     - else
       == <span class="query-term">#{@query}</span> not found —
-      == found #{pluralize(@people.length, "similiar result")}
+      == found #{pluralize(@people.size + @teams.size, "similiar result")}
 
   = render partial: 'search/team', collection: @teams
   = render partial: 'search/person', collection: @people, locals: { search_result: true }

@@ -33,6 +33,9 @@ feature 'Search for people', elastic: true do
       within('.breadcrumbs ol') do
         expect(page).to have_text('Search results')
       end
+      within('.pagination') do
+        expect(page).to have_text(/\d+ result(s)? found/)
+      end
       expect(page).to have_text('Jon Browne')
       expect(page).to have_text('jon.browne@digital.justice.gov.uk')
       expect(page).to have_text('0711111111')

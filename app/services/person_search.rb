@@ -74,6 +74,7 @@ class PersonSearch
   end
 
   def any_exact_matches?
+    ap "File: #{File.basename(__FILE__)}, Method: #{__method__}"
     @results.any? do |p|
       (p.name.casecmp(@query) == 0) || any_partial_match?(p)
     end
