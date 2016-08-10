@@ -1,7 +1,5 @@
 class GroupSearch
 
-  attr_reader :results
-
   def initialize query, results
     @query = query
     @exact_match_found = false
