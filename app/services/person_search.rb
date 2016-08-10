@@ -2,10 +2,11 @@ class PersonSearch
 
   attr_reader :query, :results, :exact_name_matches, :name_matches, :exact_matches, :query_matches, :fuzzy_matches
 
-  def initialize query
+  def initialize query, results
     @query = clean_query query
     @query_regexp = /#{@query.downcase}/i
     @email_query = query.strip.downcase
+    @results = results
     @max = 100
   end
 
@@ -21,17 +22,26 @@ class PersonSearch
   # PersonSearch.new('John Zoolander').perform_search
   # #=> [ [#<Person given_name: "John", surname: "Smith"], false ]
   def perform_search
+
     if @query.blank?
-      [@results = [], @exact_match = false]
+      nil
+      # @results
+      # [@results = [], @exact_match = false]
     else
       email_match = email_search
       if email_match
-        [@results = [email_match], @exact_match = true]
+        # [@results = [email_match], @exact_match = true]
+        @results.set = [email_match]
+        @results.contains_exact_match = true
       else
-        @results = do_searches
-        [@results, exact_match_exists?]
+        result_set = do_searches
+        @results.set = result_set
+        @results.contains_exact_match = exact_match_exists?
+        # [@results, exact_match_exists?]
       end
     end
+
+    @results
   end
 
   def do_searches
@@ -74,7 +84,7 @@ class PersonSearch
   end
 
   def any_exact_matches?
-    @results.any? do |p|
+    @results.set.any? do |p|
       (p.name.casecmp(@query) == 0) || any_partial_match?(p)
     end
   end

@@ -2,7 +2,7 @@ shared_examples 'a search' do
   let(:observer) { SearchResults.new }
 
   it 'returns the supplied search results instance' do
-    expect(described_class.new(nil, observer).__send__(:perform_search)).to be observer
+    expect(described_class.new('', observer).__send__(:perform_search)).to be observer
   end
 
   it 'returns empty result set and false when query is blank' do
