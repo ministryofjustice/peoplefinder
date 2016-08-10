@@ -1,12 +1,16 @@
 class GroupSearch
+
+  attr_reader :exact_match_found
+
   def initialize query
     @query = query
+    @exact_match_found = false
   end
 
   def perform_search
-    return [] if @query.blank?
+    return [[], false] if @query.blank?
 
-    exact_matches.push(*partial_matches).uniq
+    [exact_matches.push(*partial_matches).uniq, exact_match_exists?]
   end
 
   private
@@ -17,7 +21,12 @@ class GroupSearch
 
   def exact_matches
     results = Group.where('name = ? OR acronym = ?', @query, @query)
+    @exact_match_found = results.present?
     hierarchy_ordered results
+  end
+
+  def exact_match_exists?
+    exact_match_found
   end
 
   def partial_matches

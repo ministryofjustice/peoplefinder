@@ -9,28 +9,50 @@ RSpec.describe GroupSearch, elastic: true do
   let!(:another_department) { create(:department, name: 'Another department name') }
   let!(:another_team) { create(:group, name: 'Team name', parent: another_department) }
 
-  it 'returns empty array when query is blank' do
-    expect(search('')).to eq []
+  describe '#perform_search' do
+
+    it 'returns empty result set and false when query is blank' do
+      expect(search('')).to eq results_struct
+    end
+
+    it 'returns exact_match as true if there is a group with exact name or acronym' do
+      _results, exact_match = search('Team name')
+      expect(exact_match).to eq true
+    end
+
+    it 'returns exact_match as false if there is NOT a group with exact name or acronym' do
+      _results, exact_match = search('Team name not')
+      expect(exact_match).to eq false
+    end
+
+    it 'returns matches when query is exact match for group name' do
+      results = search_results('Team name')
+      expect(results).to include(team)
+      expect(results).to include(another_team)
+    end
+
+    it 'returns hierarchy ordered matches when query is exact match for group acronym' do
+      expect(search_results('CFT')).to eq [civil_families_tribunal, civil_families_court]
+    end
+
+    it 'returns empty array when any words in query do not exist in group name' do
+      expect(search_results('Team number one')).to eq []
+    end
+
+    it 'returns hierarchy ordered matches when all words in query are in a group name' do
+      expect(search_results('civil')).to eq [civil_families_tribunal, civil_families_court]
+      expect(search_results('civil families')).to eq [civil_families_tribunal, civil_families_court]
+      expect(search_results('civil tribunal')).to eq [civil_families_tribunal]
+    end
   end
 
-  it 'returns matches when query is exact match for group name' do
-    results = search('Team name')
-    expect(results).to include(team)
-    expect(results).to include(another_team)
+  def results_struct
+    [[], false]
   end
 
-  it 'returns hierarchy ordered matches when query is exact match for group acronym' do
-    expect(search('CFT')).to eq [civil_families_tribunal, civil_families_court]
-  end
-
-  it 'returns empty array when query is not exact match for group name' do
-    expect(search('Team number one')).to eq []
-  end
-
-  it 'returns hierarchy ordered matches when all words in query are in a group name' do
-    expect(search('civil')).to eq [civil_families_tribunal, civil_families_court]
-    expect(search('civil families')).to eq [civil_families_tribunal, civil_families_court]
-    expect(search('civil tribunal')).to eq [civil_families_tribunal]
+  def search_results query
+    results, _exact_match = search query
+    results
   end
 
   def search query
