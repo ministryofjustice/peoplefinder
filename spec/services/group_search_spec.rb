@@ -20,6 +20,11 @@ RSpec.describe GroupSearch, elastic: true do
       expect(exact_match).to eq true
     end
 
+    it 'exact matches are case-insensitive' do
+      _results, exact_match = search('team name')
+      expect(exact_match).to eq true
+    end
+
     it 'returns exact_match as false if there is NOT a group with exact name or acronym' do
       _results, exact_match = search('Team name not')
       expect(exact_match).to eq false
