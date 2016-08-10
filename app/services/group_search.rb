@@ -8,15 +8,15 @@ class GroupSearch
 
   def perform_search
     return @results if @query.blank?
-    @results.set = exact_matches.push(*partial_matches).uniq
-    @results.contains_exact_match = @exact_match_found
-    @results
+    fetch_results
   end
 
   private
 
-  def words query
-    query.gsub(/\W/, ' ').split.select(&:present?)
+  def fetch_results
+    @results.set = exact_matches.push(*partial_matches).uniq
+    @results.contains_exact_match = @exact_match_found
+    @results
   end
 
   def exact_matches
@@ -31,6 +31,10 @@ class GroupSearch
       search.where('name ILIKE ?', "%#{word}%")
     end
     hierarchy_ordered results
+  end
+
+  def words query
+    query.gsub(/\W/, ' ').split.select(&:present?)
   end
 
   def hierarchy_ordered results
