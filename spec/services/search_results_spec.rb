@@ -18,7 +18,7 @@ RSpec.describe SearchResults, type: :service do
 
   describe '#clear' do
 
-    subject { described_class.new([1,2], false) }
+    subject { described_class.new([1, 2], false) }
 
     it 'returns self' do
       expect(subject.clear).to be subject

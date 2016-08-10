@@ -10,8 +10,8 @@ class SearchController < ApplicationController
 
   private
 
-  def search_teams query
-    search = GroupSearch.new(@query, SearchResults.new)
+  def search_teams(query)
+    search = GroupSearch.new(query, SearchResults.new)
     search.perform_search
   end
 
