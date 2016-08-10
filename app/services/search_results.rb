@@ -10,10 +10,4 @@ class SearchResults
     @set = set
     @contains_exact_match = contains_exact_match
   end
-
-  def clear
-    @set = []
-    @contains_exact_match = false
-    self
-  end
 end

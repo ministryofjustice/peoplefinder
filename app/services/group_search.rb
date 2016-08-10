@@ -7,7 +7,7 @@ class GroupSearch
   end
 
   def perform_search
-    return @results.clear if @query.blank?
+    return @results if @query.blank?
     @results.set = exact_matches.push(*partial_matches).uniq
     @results.contains_exact_match = @exact_match_found
     @results
