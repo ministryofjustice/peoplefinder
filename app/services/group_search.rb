@@ -20,7 +20,7 @@ class GroupSearch
   end
 
   def exact_matches
-    results = Group.where('name = ? OR acronym = ?', @query, @query)
+    results = Group.where('lower(name) = :query OR lower(acronym) = :query', query: @query.downcase)
     @exact_match_found = results.present?
     hierarchy_ordered results
   end
