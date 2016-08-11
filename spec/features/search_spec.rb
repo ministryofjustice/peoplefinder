@@ -4,7 +4,7 @@ feature 'Searching feature', elastic: true do
   extend FeatureFlagSpecHelper
   include PermittedDomainHelper
 
-  let!(:group)      { create(:group, name: 'Technology') }
+  let!(:group) { create(:group, name: 'Technology') }
   let!(:person) do
     person = create(:person,
       given_name: 'Jon',

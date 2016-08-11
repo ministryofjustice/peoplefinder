@@ -2,7 +2,7 @@ require 'forwardable'
 
 class SearchResults
   extend Forwardable
-  def_delegators :set, :size, :each
+  def_delegators :set, :size, :each, :present?
 
   attr_accessor :set, :contains_exact_match
 

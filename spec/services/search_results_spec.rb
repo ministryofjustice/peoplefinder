@@ -8,6 +8,7 @@ RSpec.describe SearchResults, type: :service do
 
   it { should delegate_method(:size).to(:set) }
   it { should delegate_method(:each).to(:set) }
+  it { should delegate_method(:present?).to(:set) }
 
   it 'defaults to empty set and false' do
     expect(subject.set).to be_empty
