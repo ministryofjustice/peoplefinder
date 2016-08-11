@@ -30,6 +30,7 @@ class PersonCsvImporter
   end
 
   def import
+    ap "File: #{File.basename(__FILE__)}, Method: #{__method__}"
     return nil unless valid?
     PersonImportJob.perform_later(serialized_records, serialized_group_ids)
     people.length

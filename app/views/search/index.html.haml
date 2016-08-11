@@ -7,13 +7,13 @@
   .search-hint Select a team or person's name to view more details.
   .pagination
     - if matches_exist?
-      = pluralize(@team_results.size + @people.size, "result") + ' found'
+      = pluralize(@team_results.size + @people_results.size, "result") + ' found'
     - else
       == <span class="query-term">#{@query}</span> not found —
-      == found #{pluralize(@people.size + @team_results.size, "similiar result")}
+      == found #{pluralize(@people_results.size + @team_results.size, "similiar result")}
 
   = render partial: 'search/team', collection: @team_results.set
-  = render partial: 'search/person', collection: @people, locals: { search_result: true }
+  = render partial: 'search/person', collection: @people_results.set, locals: { search_result: true }
 
   .add-new-person
     Can't find the person you're looking for? Why not

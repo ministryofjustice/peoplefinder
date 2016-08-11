@@ -20,13 +20,13 @@ RSpec.describe SearchController, type: :controller do
 
     it 'searches for the query' do
       expect(GroupSearch).to receive(:new).with(query, an_instance_of(SearchResults)).and_return(group_search)
-      expect(PersonSearch).to receive(:new).with(query).and_return(person_search)
+      expect(PersonSearch).to receive(:new).with(query, an_instance_of(SearchResults)).and_return(person_search)
       get :index, query: query
     end
 
     it 'assigns people search result to @people' do
       get :index, query: query
-      expect(assigns(:people)).to eq(people_results)
+      expect(assigns(:people_results)).to eq(people_results)
     end
 
     it 'assigns team search result to @teams' do
@@ -45,13 +45,13 @@ RSpec.describe SearchController, type: :controller do
 
     it 'searches for an empty string' do
       expect(GroupSearch).to receive(:new).with('', an_instance_of(SearchResults)).and_return(group_search)
-      expect(PersonSearch).to receive(:new).with('').and_return(person_search)
+      expect(PersonSearch).to receive(:new).with('', an_instance_of(SearchResults)).and_return(person_search)
       get :index, query: query
     end
 
     it 'assigns the search result to @people' do
       get :index, query: query
-      expect(assigns(:people)).to eq(people_results)
+      expect(assigns(:people_results)).to eq(people_results)
     end
 
     it 'assigns team search result to @teams' do
@@ -63,5 +63,9 @@ RSpec.describe SearchController, type: :controller do
       get :index, query: query
       expect(assigns(:query)).to eq('')
     end
+  end
+
+  describe '#matches_exist?' do
+    pending 'returns true when a group or person matches "exactly"'
   end
 end
