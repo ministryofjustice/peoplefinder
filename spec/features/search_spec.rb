@@ -38,6 +38,9 @@ feature 'Searching feature', elastic: true do
       within('.pagination') do
         expect(page).to have_text(/\d+ result(s)? found/)
       end
+      within('.search-box') do
+        expect(page).to have_selector("input[value='Browne']")
+      end
       expect(page).to have_text('Jon Browne')
       expect(page).to have_text('jon.browne@digital.justice.gov.uk')
       expect(page).to have_text('0711111111')
