@@ -1,22 +1,22 @@
 class GroupSearch
 
-  attr_reader :exact_match_found
-
-  def initialize query
+  def initialize query, results
     @query = query
     @exact_match_found = false
+    @results = results
   end
 
   def perform_search
-    return [[], false] if @query.blank?
-
-    [exact_matches.push(*partial_matches).uniq, exact_match_exists?]
+    return @results if @query.blank?
+    fetch_results
   end
 
   private
 
-  def words query
-    query.gsub(/\W/, ' ').split.select(&:present?)
+  def fetch_results
+    @results.set = exact_matches.push(*partial_matches).uniq
+    @results.contains_exact_match = @exact_match_found
+    @results
   end
 
   def exact_matches
@@ -25,16 +25,16 @@ class GroupSearch
     hierarchy_ordered results
   end
 
-  def exact_match_exists?
-    exact_match_found
-  end
-
   def partial_matches
     words = words(@query)
     results = words.inject(Group) do |search, word|
       search.where('name ILIKE ?', "%#{word}%")
     end
     hierarchy_ordered results
+  end
+
+  def words query
+    query.gsub(/\W/, ' ').split.select(&:present?)
   end
 
   def hierarchy_ordered results

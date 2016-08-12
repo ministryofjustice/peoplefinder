@@ -2,10 +2,11 @@ class PersonSearch
 
   attr_reader :query, :results, :exact_name_matches, :name_matches, :exact_matches, :query_matches, :fuzzy_matches
 
-  def initialize query
+  def initialize query, results
     @query = clean_query query
     @query_regexp = /#{@query.downcase}/i
     @email_query = query.strip.downcase
+    @results = results
     @max = 100
   end
 
@@ -15,23 +16,25 @@ class PersonSearch
   #
   # Example:
   #
-  # PersonSearch.new('John Smith').perform_search
+  # PersonSearch.new('John Smith', SearchResults.new).perform_search
   # #=> [ [#<Person given_name: "John", surname: "Smith"], true ]
   #
-  # PersonSearch.new('John Zoolander').perform_search
+  # PersonSearch.new('John Zoolander', SearchResults.new).perform_search
   # #=> [ [#<Person given_name: "John", surname: "Smith"], false ]
   def perform_search
-    if @query.blank?
-      [@results = [], @exact_match = false]
-    else
-      email_match = email_search
-      if email_match
-        [@results = [email_match], @exact_match = true]
-      else
-        @results = do_searches
-        [@results, exact_match_exists?]
-      end
+    if @query.present?
+      do_searches unless email_found(@email_query)
     end
+    @results
+  end
+
+  def email_found(email)
+    person = Person.find_by_email(email)
+    if person
+      @results.set = [person]
+      @results.contains_exact_match = true
+    end
+    @results.present?
   end
 
   def do_searches
@@ -44,7 +47,8 @@ class PersonSearch
               push(*@fuzzy_matches).
               uniq[0..@max - 1]
 
-    sort_by_edit_distance results
+    @results.set = sort_by_edit_distance results
+    @results.contains_exact_match = exact_match_exists?
   end
 
   def exact_match_exists?
@@ -74,13 +78,9 @@ class PersonSearch
   end
 
   def any_exact_matches?
-    @results.any? do |p|
+    @results.set.any? do |p|
       (p.name.casecmp(@query) == 0) || any_partial_match?(p)
     end
-  end
-
-  def email_search
-    Person.find_by_email(@email_query)
   end
 
   def perform_searches
