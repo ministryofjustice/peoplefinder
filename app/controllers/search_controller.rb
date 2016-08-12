@@ -3,6 +3,7 @@ class SearchController < ApplicationController
   helper_method :matches_exist?
 
   def index
+    @query = query
     @team_results = search(GroupSearch)
     @people_results = search(PersonSearch)
   end
@@ -10,7 +11,7 @@ class SearchController < ApplicationController
   private
 
   def search(klass)
-    search = klass.new(query, SearchResults.new)
+    search = klass.new(@query, SearchResults.new)
     search.perform_search
   end
 

@@ -35,6 +35,11 @@ RSpec.describe SearchController, type: :controller do
       expect(controller).to receive(:matches_exist?)
       subject
     end
+
+    it 'assigns @query for use in view' do
+      subject
+      expect(assigns(:team_results)).to eq(team_results)
+    end
   end
 
   describe 'GET #index' do
