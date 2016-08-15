@@ -66,8 +66,11 @@ COPY app/assets/ /usr/src/app/app/assets/
 COPY vendor/assets/ /usr/src/app/vendor/assets/
 COPY Rakefile /usr/src/app/
 
-RUN bundle exec rake assets:precompile RAILS_ENV=assets SUPPORT_EMAIL=''
 
+RUN ls -l /usr/src/app/app/assets/stylesheets/peoplefinder
+RUN bundle exec rake assets:precompile RAILS_ENV=assets SUPPORT_EMAIL='' HELLO=1
+RUN bundle exec rake assets:precompile RAILS_ENV=assets SUPPORT_EMAIL='' --verbose
+RUN ls -l /usr/src/app/public/assets/peoplefinder
 COPY . /usr/src/app
 
 ENTRYPOINT ["./run.sh"]
