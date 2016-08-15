@@ -4,6 +4,6 @@
   = csrf_meta_tag
   %meta{name: "format-detection", content: "telephone=no"}
   /[if lt IE 9]
-    %link{ rel: "stylesheet", media: "screen", href: "/assets/peoplefinder/peoplefinder-lt-ie9.css?body=1" }
+    = stylesheet_link_tag "peoplefinder/peoplefinder-lt-ie9"
   /[if IE 7]
-    %link{ rel: "stylesheet", media: "screen", href: "/assets/peoplefinder/peoplefinder-ie7.css?body=1" }
+    = stylesheet_link_tag "peoplefinder/peoplefinder-ie7"
