@@ -67,7 +67,7 @@ COPY vendor/assets/ /usr/src/app/vendor/assets/
 COPY Rakefile /usr/src/app/
 
 #RUN bundle exec rake assets:precompile RAILS_ENV=assets SUPPORT_EMAIL=''
-RUN bundle exec rake assets:precompile
+RUN bundle exec rake assets:precompile RAILS_ENV=production
 
 COPY . /usr/src/app
 
