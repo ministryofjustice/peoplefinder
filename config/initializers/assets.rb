@@ -1,13 +1,4 @@
-STDOUT.sync = true
-$stdout.puts "CALLING stdout from initializer"
-
-Rails.application.config.assets.paths << Rails.root.join('vendor', 'assets', 'components')
-
-# add any peoplefinder subdirectories to assets pipeline
-Dir.glob("#{Rails.root}/app/assets/**/").each do |path|
-  Rails.application.config.assets.paths << path if path =~ /peoplefinder/
-end
-
+# Do the gov-static, moj-base even exist?? docker output indicates not
 Rails.application.config.assets.precompile += %w(
   gov-static/gov-goodbrowsers.css
   gov-static/gov-ie6.css
