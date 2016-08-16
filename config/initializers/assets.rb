@@ -1,3 +1,4 @@
+# Do the gov-static, moj-base even exist?? docker output indicates not
 Rails.application.config.assets.precompile += %w(
   gov-static/gov-goodbrowsers.css
   gov-static/gov-ie6.css

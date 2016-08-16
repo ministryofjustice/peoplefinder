@@ -3,10 +3,7 @@
   = stylesheet_link_tag "application", media: "all"
   = csrf_meta_tag
   %meta{name: "format-detection", content: "telephone=no"}
-  <!--[if lt IE 9]>
-  = stylesheet_link_tag "peoplefinder/peoplefinder-lt-ie9"
-  <![endif]-->
-  <!--[if IE 7]>
-  = stylesheet_link_tag "peoplefinder/peoplefinder-ie7"
-  <![endif]-->
-
+  /[if lt IE 9]
+    = stylesheet_link_tag "peoplefinder/peoplefinder-lt-ie9", media: "all"
+  /[if IE 7]
+    = stylesheet_link_tag "peoplefinder/peoplefinder-ie7", media: "all"
