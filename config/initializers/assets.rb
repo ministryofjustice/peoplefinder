@@ -2,7 +2,7 @@ Rails.application.config.assets.paths << Rails.root.join('vendor', 'assets', 'co
 
 # add any peoplefinder subdirectories to assets pipeline
 Dir.glob("#{Rails.root}/app/assets/**/").each do |path|
-  config.assets.paths << path if path.match /peoplefinder/
+  Rails.application.config.assets.paths << path if path =~ /peoplefinder/
 end
 
 Rails.application.config.assets.precompile += %w(
