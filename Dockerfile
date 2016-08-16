@@ -69,6 +69,7 @@ COPY Rakefile /usr/src/app/
 
 RUN ls -l /usr/src/app/app/assets/stylesheets/peoplefinder
 RUN bundle exec rake assets:precompile RAILS_ENV=assets SUPPORT_EMAIL='' --verbose
+RUN bundle exec rake assets:precompile RAILS_ENV=assets SUPPORT_EMAIL='' --verbose
 RUN ls -l /usr/src/app/public/assets/peoplefinder
 COPY . /usr/src/app
 
