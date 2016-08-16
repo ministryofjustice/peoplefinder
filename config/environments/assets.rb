@@ -1,4 +1,7 @@
 Rails.application.configure do
+$stdout.puts "CALLING stdout from environment/assets.rb"
+STDOUT.sync = true
+
   config.eager_load = false
 
   # Generate digests for assets URLs.

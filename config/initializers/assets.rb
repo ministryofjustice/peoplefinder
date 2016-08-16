@@ -1,5 +1,8 @@
 puts "File: #{File.basename(__FILE__)}"
 
+$stdout.puts "CALLING stdout from initializer"
+STDOUT.sync = true
+
 Rails.application.config.assets.paths << Rails.root.join('vendor', 'assets', 'components')
 
 # add any peoplefinder subdirectories to assets pipeline
