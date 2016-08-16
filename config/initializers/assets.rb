@@ -1,7 +1,18 @@
+puts "File: #{File.basename(__FILE__)}"
+
 Rails.application.config.assets.paths << Rails.root.join('vendor', 'assets', 'components')
 
 # add any peoplefinder subdirectories to assets pipeline
+
+puts "rails root is #{Rails.root}"
+
 Dir.glob("#{Rails.root}/app/assets/**/").each do |path|
+  if path =~ /peoplefinder/
+    puts "people finder dir found in #{path}"
+  else
+    puts "not found in #{path}"
+  end
+
   Rails.application.config.assets.paths << path if path =~ /peoplefinder/
 end
 
