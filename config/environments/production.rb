@@ -7,7 +7,7 @@ Rails.application.configure do
   config.serve_static_files = true
   config.assets.compile = false
   config.assets.digest = true
-  config.assets.version = '1.0.4'
+  config.assets.version = '1.0.5'
   config.log_level = :info
   config.i18n.fallbacks = true
   config.active_support.deprecation = :notify
