@@ -62,6 +62,7 @@ RUN bundle install
 # Copy files for assets precompile
 COPY config/application.rb config/boot.rb config/environment.rb config/database.yml /usr/src/app/config/
 COPY config/environments/assets.rb /usr/src/app/config/environments/
+COPY config/initializers/assets.rb /usr/src/app/config/initializers/
 COPY app/assets/ /usr/src/app/app/assets/
 COPY vendor/assets/ /usr/src/app/vendor/assets/
 COPY Rakefile /usr/src/app/
