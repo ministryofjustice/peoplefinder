@@ -1,19 +1,18 @@
-puts "File: #{File.basename(__FILE__)}"
-
-$stdout.puts "CALLING stdout from initializer"
 STDOUT.sync = true
+$stdout.puts "File: #{File.basename(__FILE__)}"
+$stdout.puts "CALLING stdout from initializer"
 
 Rails.application.config.assets.paths << Rails.root.join('vendor', 'assets', 'components')
 
 # add any peoplefinder subdirectories to assets pipeline
 
-puts "rails root is #{Rails.root}"
+$stdout.puts "rails root is #{Rails.root}"
 
 Dir.glob("#{Rails.root}/app/assets/**/").each do |path|
   if path =~ /peoplefinder/
-    puts "people finder dir found in #{path}"
+    $stdout.puts "people finder dir found in #{path}"
   else
-    puts "not found in #{path}"
+    $stdout.puts "not found in #{path}"
   end
 
   Rails.application.config.assets.paths << path if path =~ /peoplefinder/

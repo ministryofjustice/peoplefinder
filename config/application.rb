@@ -25,6 +25,11 @@ module Peoplefinder
     # '*.{rb,yml}').to_s]
     # config.i18n.default_locale = :de
 
+    STDOUT.sync = true
+    $stdout.puts "File: #{File.basename(__FILE__)}"
+    $stdout.puts "CALLING stdout from config/application module Peoplefinder::Application"
+
+
     # app title appears in the header bar
     config.app_title = 'People Finder'
 
