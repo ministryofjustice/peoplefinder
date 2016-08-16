@@ -66,8 +66,7 @@ COPY app/assets/ /usr/src/app/app/assets/
 COPY vendor/assets/ /usr/src/app/vendor/assets/
 COPY Rakefile /usr/src/app/
 
-RUN bundle exec rake assets:precompile RAILS_ENV=assets SUPPORT_EMAIL=''
-
+RUN bundle exec rake assets:precompile RAILS_ENV=assets SUPPORT_EMAIL='' --verbose
 COPY . /usr/src/app
 
 ENTRYPOINT ["./run.sh"]
