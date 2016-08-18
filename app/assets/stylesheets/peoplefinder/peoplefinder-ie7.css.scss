@@ -1,7 +1,7 @@
-@import '_colours';// IE7 styles
+// IE7 styles
+@import '_colours';
 @import "peoplefinder_colours";
 @import "peoplefinder_ie_colours";
-// TODO: sort out 3 misaligned fields on /people/mark-ford/edit?prompt=profile
 
 // layout stuff
 .header-app-name a{
@@ -23,12 +23,17 @@ h1, h2 {
   display: block;
 }
 .login-bar {
+  float: right;
   text-align: right;
   padding: 0.5em 1em;
-  background: $grey-3;
 
   span {
     margin: 0.4em;
+  }
+
+  .logout-link {
+    border-left: 1px solid $white;
+    padding-left: 0.4em;
   }
 }
 .breadcrumbs {
