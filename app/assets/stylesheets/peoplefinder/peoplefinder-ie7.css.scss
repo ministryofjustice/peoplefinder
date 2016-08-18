@@ -139,3 +139,17 @@ form #working-days ul,
   }
    
 }
+
+/*IE7 hack to ensure form elements don't disappear*/
+#feedback_container{
+  #feedbackToggle{
+    *zoom: expression(
+              this.runtimeStyle.zoom="1",
+              this.insertBefore( document.createElement("span"), this.firstChild ).innerHTML="\25BC  "
+             );
+  }
+
+  form{
+    *zoom: 1;
+  }
+}
