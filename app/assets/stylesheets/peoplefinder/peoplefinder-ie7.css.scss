@@ -4,10 +4,37 @@
 @import "peoplefinder_ie_colours";
 
 // layout stuff
-.header-app-name a{
-  color: white;
-  text-decoration: none;
+#global-header .header-wrapper .header-global {
+  .header-app-name {
+    margin: 0;
+    text-align: center;
+    width: 66.66%;
+
+    a {
+      float: left;
+      width: 33.33%;
+    }
+    .login-bar {
+      width: 66.66%;
+      float: right;
+      text-align: right;
+
+      span {
+        margin: 0 0.4em;
+        width: auto;
+        display: inline-block;
+      }
+      .profile-link{
+        padding-right: 0 0.4em;
+      }
+      .logout-link {
+        border-left: 1px solid $white;
+        padding-left: 0.4em;
+      }
+    }
+  }
 }
+
 .grid-wrapper{
   clear:both;
 }
@@ -22,20 +49,7 @@ h1, h2 {
   height: auto;
   display: block;
 }
-.login-bar {
-  float: right;
-  text-align: right;
-  padding: 0.5em 1em;
 
-  span {
-    margin: 0.4em;
-  }
-
-  .logout-link {
-    border-left: 1px solid $white;
-    padding-left: 0.4em;
-  }
-}
 .breadcrumbs {
   margin-top: 1em;
   margin-bottom: 9px;
@@ -55,7 +69,6 @@ h1, h2 {
 // homepage
   .help-peoplefinder {
     float: right;
-
 
     p {
       background: #ededed image-url('icon_info.png') scroll no-repeat 15px 20px;
