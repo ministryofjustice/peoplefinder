@@ -17,7 +17,6 @@
     .login-bar {
       width: 66.66%;
       float: right;
-      text-align: right;
 
       span {
         margin: 0 0.4em;
@@ -26,6 +25,8 @@
       }
       .profile-link{
         padding-right: 0 0.4em;
+        line-height: 18px;
+        text-align: right;
       }
       .logout-link {
         border-left: 1px solid $white;
