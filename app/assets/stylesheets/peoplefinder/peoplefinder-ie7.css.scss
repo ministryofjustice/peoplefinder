@@ -140,6 +140,7 @@ form #working-days ul,
     background-color: $error-bg;
   }
 }
+
 .breadcrumbs {
   li {
     padding-left: 12px;
@@ -166,3 +167,10 @@ form #working-days ul,
     *zoom: 1;
   }
 }
+
+form.search-box {
+  .form-control {
+    height: 25px;
+  }
+}
+
