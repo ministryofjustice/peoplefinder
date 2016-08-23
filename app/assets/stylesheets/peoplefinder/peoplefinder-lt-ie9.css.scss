@@ -19,3 +19,10 @@ form {
     border: 1px solid;
   }
 }
+
+/*required for IE8 to prevent flickering breadcrumb overlap bug*/
+.breadcrumbs {
+  li {
+    margin-right: 1px;
+  }
+}
