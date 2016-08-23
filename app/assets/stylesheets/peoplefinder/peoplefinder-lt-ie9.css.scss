@@ -6,6 +6,16 @@
   background-color: $turqoise;
 }
 
+/*required because CSS3 media rule/query not available til IE9*/
 .no-desk {
   display: none;
+}
+
+/*required to provide minimal file chooser styling for 7 and 8*/
+form {
+  .file {
+    line-height: 1;
+    cursor: hand;
+    border: 1px solid;
+  }
 }
