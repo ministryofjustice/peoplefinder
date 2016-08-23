@@ -3,7 +3,7 @@
 @import "peoplefinder_colours";
 @import "peoplefinder_ie_colours";
 
-// layout stuff
+// banner hacks
 #global-header .header-wrapper .header-global {
   .header-app-name {
     margin: 0;
@@ -17,7 +17,6 @@
     .login-bar {
       width: 66.66%;
       float: right;
-      text-align: right;
 
       span {
         margin: 0 0.4em;
@@ -26,6 +25,7 @@
       }
       .profile-link{
         padding-right: 0 0.4em;
+        line-height: 1;
       }
       .logout-link {
         border-left: 1px solid $white;
@@ -58,25 +58,12 @@ h1, h2 {
   ol {
     li {
       display: inline;
-      // float: left;
       a{
         text-decoration: none;
       }
     }
   }
 }
-
-// homepage
-  .help-peoplefinder {
-    float: right;
-
-    p {
-      background: #ededed image-url('icon_info.png') scroll no-repeat 15px 20px;
-      padding: 20px 15px 20px 80px;
-      margin-top: 15px;
-      margin-left: 50px;
-    }
-  }
 
 // form
 form #working-days ul,
@@ -151,7 +138,6 @@ form #working-days ul,
     padding-left: 0;
     background-image: none;
   }
-   
 }
 
 /*IE7 hack to ensure form elements don't disappear and there is an icon*/

@@ -1,6 +1,46 @@
 // IE9 < styles
+@import '_colours';
 @import "peoplefinder_colours";
 @import "peoplefinder_ie_colours";
+
+
+/*IE8 banner hacks*/
+#global-header .header-wrapper .header-global {
+  .header-app-name {
+    margin: 0;
+    text-align: center;
+    width: 66.66%;
+    display: inline;
+
+    .login-bar {
+      width: 66.66%;
+      float: right;
+      text-align: right;
+
+      span {
+        margin: 0.4em;
+        width: auto;
+      }
+      .logout-link {
+        border-left: 1px solid $white;
+        padding-left: 0.4em;
+      }
+    }
+  }
+}
+
+#home-page {
+  .help-peoplefinder {
+    float: right;
+
+    p {
+      background: #ededed image-url('icon_info.png') scroll no-repeat 15px 20px;
+      padding: 20px 15px 20px 80px;
+      margin-top: 15px;
+      margin-left: 50px;
+    }
+  }
+}
 
 .editing-alert {
   background-color: $turqoise;
@@ -17,5 +57,12 @@ form {
     line-height: 1;
     cursor: hand;
     border: 1px solid;
+  }
+}
+
+/*required by IE8 to prevent flickering breadcrumb overlap bug*/
+.breadcrumbs {
+  li {
+    margin-right: 1px;
   }
 }
