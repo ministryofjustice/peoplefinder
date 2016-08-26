@@ -39,12 +39,12 @@ class Person < ActiveRecord::Base
 
   attr_accessor :crop_x, :crop_y, :crop_w, :crop_h
   after_save :crop_profile_photo
-  after_save :enqueue_update_groups_job
+  after_save :enqueue_group_completion_score_updates
 
-  attr_accessor :bulk_upload
-  skip_callback :save, :after, :enqueue_update_groups_job, if: :bulk_upload
+  attr_accessor :skip_group_completion_score_updates
+  skip_callback :save, :after, :enqueue_group_completion_score_updates, if: :skip_group_completion_score_updates
 
-  def enqueue_update_groups_job
+  def enqueue_group_completion_score_updates
     groups_prior = groups
     reload # updates groups
     groups_current = groups

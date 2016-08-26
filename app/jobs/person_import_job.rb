@@ -38,24 +38,26 @@ class PersonImportJob < ActiveJob::Base
       if Person.find_by(email: person.email)
         Rails.logger.warn "Person identified by email #{person.email} already exists. Skipping!"
       else
-        person.bulk_upload = true
         PersonCreator.new(person, nil).create!
       end
     end
 
-    enqueue_group_updates
+    enqueue_group_completion_score_updates
 
     people.length
   end
 
-  def enqueue_group_updates
+  def enqueue_group_completion_score_updates
     creation_options[:groups].each do |group|
       UpdateGroupMembersCompletionScoreJob.perform_later(group)
     end
   end
 
   def creation_options
-    { groups: PersonCsvImporter.deserialize_group_ids(@serialized_group_ids) }
+    {
+      groups: PersonCsvImporter.deserialize_group_ids(@serialized_group_ids),
+      skip_group_completion_score_updates: true
+    }
   end
 
   def people

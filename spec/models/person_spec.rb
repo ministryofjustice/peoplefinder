@@ -11,7 +11,7 @@ RSpec.describe Person, type: :model do
   it { should have_many(:groups) }
 
   it { should respond_to(:pager_number) }
-  it { should respond_to(:bulk_upload) }
+  it { should respond_to(:skip_group_completion_score_updates) }
 
   describe '.email' do
     it 'is converted to lower case' do
@@ -372,14 +372,14 @@ RSpec.describe Person, type: :model do
     end
   end
 
-  describe '#bulk_upload' do
+  describe '#skip_group_completion_score_updates' do
     before do
       digital_services = create(:group, name: 'Digital Services')
       person.memberships.build(group: digital_services)
-      person.bulk_upload = true
+      person.skip_group_completion_score_updates = true
     end
 
-    it 'prevents enqueuing of group completion score update job' do
+    it 'prevents enqueuing of group completion score update job for bulk upload purposes' do
       expect(UpdateGroupMembersCompletionScoreJob).not_to receive(:perform_later)
       person.save
     end
