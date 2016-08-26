@@ -45,6 +45,12 @@ RSpec.describe PersonImportJob, type: :job do
   context 'when performed' do
 
     context 'now' do
+      # TODO
+      # it 'sets person.bulk_upload attribute to true' do
+      #   expect_any_instance_of(Person).to receive(:bulk_upload=).with(true)
+      #   perform_now
+      # end
+
       it 'uses the PersonCreator' do
         expect(PersonCreator).to receive(:new).
           with(instance_of(Person), nil).thrice.and_call_original
