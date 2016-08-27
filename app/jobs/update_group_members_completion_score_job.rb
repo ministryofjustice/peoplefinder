@@ -1,4 +1,5 @@
 class UpdateGroupMembersCompletionScoreJob < ActiveJob::Base
+
   queue_as :low_priority
 
   def perform(group)

@@ -4,6 +4,7 @@ class Person < ActiveRecord::Base
   include Concerns::Completion
   include Concerns::WorkDays
   include Concerns::ExposeMandatoryFields
+
   belongs_to :profile_photo
 
   extend FriendlyId
@@ -38,13 +39,17 @@ class Person < ActiveRecord::Base
 
   attr_accessor :crop_x, :crop_y, :crop_w, :crop_h
   after_save :crop_profile_photo
+  after_save :enqueue_group_completion_score_updates
 
-  after_save do |person|
-    groups_prior = person.groups
-    person.reload # updates groups
-    groups_present = person.groups
+  attr_accessor :skip_group_completion_score_updates
+  skip_callback :save, :after, :enqueue_group_completion_score_updates, if: :skip_group_completion_score_updates
 
-    (groups_prior + groups_present).uniq.each do |group|
+  def enqueue_group_completion_score_updates
+    groups_prior = groups
+    reload # updates groups
+    groups_current = groups
+
+    (groups_prior + groups_current).uniq.each do |group|
       UpdateGroupMembersCompletionScoreJob.perform_later(group)
     end
   end

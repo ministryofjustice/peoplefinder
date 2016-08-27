@@ -6,7 +6,11 @@ RSpec.describe PersonImportJob, type: :job do
     allow(PermittedDomain).to receive(:pluck).with(:domain).and_return(['valid.gov.uk'])
   end
 
-  let(:group) { create(:group) }
+  let!(:group) do
+    group = create(:group)
+    ActiveJob::Base.queue_adapter.enqueued_jobs = []
+    group
+  end
 
   let(:serialized_people) do
     <<-CSV.strip_heredoc
@@ -45,6 +49,7 @@ RSpec.describe PersonImportJob, type: :job do
   context 'when performed' do
 
     context 'now' do
+
       it 'uses the PersonCreator' do
         expect(PersonCreator).to receive(:new).
           with(instance_of(Person), nil).thrice.and_call_original
@@ -57,7 +62,7 @@ RSpec.describe PersonImportJob, type: :job do
         perform_now
       end
 
-      it 'creates new people from the seralized data' do
+      it 'creates new people from the serialized data' do
         perform_now
         expect(Person.pluck(:email)).to include('peter.bly@valid.gov.uk', 'jon.o.carey@valid.gov.uk')
       end
@@ -74,6 +79,10 @@ RSpec.describe PersonImportJob, type: :job do
 
       it 'returns the number of imported records' do
         expect(perform_now).to eql 3
+      end
+
+      it 'enqeues group completion score updates job for the group, not for the individual people' do
+        expect { perform_now }.to have_enqueued_job(UpdateGroupMembersCompletionScoreJob)
       end
 
       context 'with optional headers' do

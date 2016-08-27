@@ -11,6 +11,7 @@ RSpec.describe Person, type: :model do
   it { should have_many(:groups) }
 
   it { should respond_to(:pager_number) }
+  it { should respond_to(:skip_group_completion_score_updates) }
 
   describe '.email' do
     it 'is converted to lower case' do
@@ -368,6 +369,19 @@ RSpec.describe Person, type: :model do
     it 'is false when last_reminder_email_at is 31 days ago' do
       person.last_reminder_email_at = Time.now - 31.days
       expect(person.reminder_email_sent?(within: 30.days)).to be false
+    end
+  end
+
+  describe '#skip_group_completion_score_updates' do
+    before do
+      digital_services = create(:group, name: 'Digital Services')
+      person.memberships.build(group: digital_services)
+      person.skip_group_completion_score_updates = true
+    end
+
+    it 'prevents enqueuing of group completion score update job for bulk upload purposes' do
+      expect(UpdateGroupMembersCompletionScoreJob).not_to receive(:perform_later)
+      person.save
     end
   end
 
