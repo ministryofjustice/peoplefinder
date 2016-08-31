@@ -9,4 +9,8 @@ class UpdateGroupMembersCompletionScoreJob < ActiveJob::Base
       UpdateGroupMembersCompletionScoreJob.perform_later(group.parent)
     end
   end
+
+  def max_attempts
+    3
+  end
 end

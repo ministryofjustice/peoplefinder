@@ -5,6 +5,14 @@ RSpec.describe UpdateGroupMembersCompletionScoreJob, type: :job do
   let(:parent) { nil }
   let(:group) { double(parent: parent) }
 
+  context 'config' do
+    subject(:job) { described_class.new }
+    it "enqueues with appropriate config settings" do
+      expect(job.queue_name).to eq 'low_priority'
+      expect(job.max_attempts).to eq 3
+    end
+  end
+
   context 'when called' do
     before do
       allow(group).to receive(:update_members_completion_score!)
