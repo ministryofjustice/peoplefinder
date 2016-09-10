@@ -97,6 +97,16 @@ class Person < ActiveRecord::Base
     where(surname: person.surname, given_name: person.given_name).where.not(id: person.id)
   end
 
+  scope :all_in_subtree, -> (group) {joins(:memberships) \
+                                      .where(memberships: { group_id: group.subtree_ids }) \
+                                      .select("people.*,
+                                              string_agg(CASE role WHEN '' THEN NULL ELSE role END, ', ' ORDER BY role) AS role_names"
+                                              ) \
+                                      .group(:id) \
+                                      .uniq
+                                     }
+
+  # last resort - should be a scope
   def self.all_in_groups(group_ids)
     query = <<-SQL
       SELECT DISTINCT p.*,

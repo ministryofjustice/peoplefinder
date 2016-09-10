@@ -27,6 +27,11 @@ class GroupsController < ApplicationController
     end
   end
 
+  # GET /teams/slug/people
+  def all_people
+    @people_in_subtree = Person.all_in_subtree(@group).paginate(:page => params[:page], :per_page => 1000)
+  end
+
   # GET /groups/new
   def new
     @group = collection.new
