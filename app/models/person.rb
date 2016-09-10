@@ -106,7 +106,7 @@ class Person < ActiveRecord::Base
                                       .uniq
                                      }
 
-  # last resort - should be a scope
+  # last resort - see all_in_subtree scope
   def self.all_in_groups(group_ids)
     query = <<-SQL
       SELECT DISTINCT p.*,

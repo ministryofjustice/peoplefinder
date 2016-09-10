@@ -29,7 +29,7 @@ class GroupsController < ApplicationController
 
   # GET /teams/slug/people
   def all_people
-    @people_in_subtree = Person.all_in_subtree(@group).paginate(:page => params[:page], :per_page => 1000)
+    @people_in_subtree = Person.all_in_subtree(@group).paginate(:page => params[:page], :per_page => 500)
   end
 
   # GET /groups/new

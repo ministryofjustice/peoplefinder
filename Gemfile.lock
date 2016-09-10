@@ -602,6 +602,8 @@ GEM
     whenever (0.9.4)
       chronic (>= 0.6.3)
     will_paginate (3.0.7)
+    will_paginate-bootstrap (1.0.1)
+      will_paginate (>= 3.0.3)
     xpath (2.0.0)
       nokogiri (~> 1.3)
 
@@ -681,7 +683,8 @@ DEPENDENCIES
   useragent (~> 0.10.0)
   virtus
   whenever
-  will_paginate (~> 3.0)
+  will_paginate (~> 3.0, >= 3.0.3)
+  will_paginate-bootstrap (~> 1.0, >= 1.0.1)
 
 RUBY VERSION
    ruby 2.3.1p112

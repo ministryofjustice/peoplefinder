@@ -76,7 +76,6 @@ class Group < ActiveRecord::Base
 
   def all_people
     Person.all_in_subtree(self)
-    # Person.all_in_groups(subtree_ids)
   end
 
   def all_people_count
