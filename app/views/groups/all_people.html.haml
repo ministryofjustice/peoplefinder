@@ -2,9 +2,9 @@
   = breadcrumbs(Home.path + @group.path + ['All people'])
 
 %h1= @page_title = "People in #{ @group.name }"
-= will_paginate(@people_in_subtree, renderer: BootstrapPagination::Rails, class: 'all-people-pagination')
+= render partial: "all_people_pagination"
 
 .grid-wrapper
   = render partial: "people/summary", collection: @people_in_subtree
 
-= will_paginate(@people_in_subtree, renderer: BootstrapPagination::Rails, class: 'all-people-pagination')
+= render partial: "all_people_pagination"

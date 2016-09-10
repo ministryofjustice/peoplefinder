@@ -97,16 +97,22 @@ class Person < ActiveRecord::Base
     where(surname: person.surname, given_name: person.given_name).where.not(id: person.id)
   end
 
-  scope :all_in_subtree, -> (group) {joins(:memberships) \
-                                      .where(memberships: { group_id: group.subtree_ids }) \
-                                      .select("people.*,
-                                              string_agg(CASE role WHEN '' THEN NULL ELSE role END, ', ' ORDER BY role) AS role_names"
-                                              ) \
-                                      .group(:id) \
-                                      .uniq
-                                     }
+  def self.all_in_groups_from_clause(groups)
+    joins(:memberships).
+      where(memberships: { group_id: groups }).
+      select("people.*,
+            string_agg(CASE role WHEN '' THEN NULL ELSE role END, ', ' ORDER BY role) AS role_names"
+            ).
+      group(:id).
+      uniq
+  end
 
-  # last resort - see all_in_subtree scope
+  scope :all_in_groups_scope, -> (groups) { from(all_in_groups_from_clause(groups), :people) }
+  scope :all_in_subtree, -> (group) { from(all_in_groups_from_clause(group.subtree_ids), :people) }
+
+  # Does not return ActiveRecord::Relation
+  # - see all_in_groups_scope alternative
+  # TODO: remove when not needed
   def self.all_in_groups(group_ids)
     query = <<-SQL
       SELECT DISTINCT p.*,

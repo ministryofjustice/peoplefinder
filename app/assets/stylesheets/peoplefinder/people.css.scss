@@ -339,22 +339,36 @@ form {
 }
 
 .all-people-pagination {
-  ul, li {
-    margin: 15px 0;
+  div {
+    float: left;
+    clear: none;
     display: inline;
-    border: 1px solid $border-color;
+  }
+  .page-information {
+    color: grey;
     padding: 4px 6px;
   }
-  .active {
-    background-color: $grey-bg;
-    color: grey;
+  .page-navigation {
+    /*display: inline;*/
   }
-  .disabled {
-    border: 0px;
-  }
-  .next, .prev {
-    border: 1px solid $grey-bg;
+  .page-nav-list {
+    ul, li {
+      margin: 15px 0;
+      display: inline;
+      border: 1px solid $border-color;
+      padding: 4px 6px;
+    }
+    .active {
+      background-color: $grey-bg;
+      color: grey;
+    }
     .disabled {
+      border: 0px;
+    }
+    .next, .prev {
+      border: 1px solid $grey-bg;
+      .disabled {
+      }
     }
   }
 }
