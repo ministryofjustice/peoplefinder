@@ -300,6 +300,12 @@ en:
       file: Upload CSV file
 
   will_paginate:
+    models:
+      person:
+        zero:  people
+        one:   person
+        few:   people
+        other: people
     page_entries_info:
       single_page:
         zero:  "No %{model} found"
@@ -312,12 +318,3 @@ en:
 
       multi_page: "Displaying %{model} %{from} - %{to} of %{count}"
       multi_page_html: "Displaying %{model} <b>%{from}&nbsp;-&nbsp;%{to}</b> of <b>%{count}</b>"
-
-  # needed for will_paginate at least 
-  activerecord:
-    models:
-      person:
-        zero:  people
-        one:   person
-        few:   people
-        other: people
