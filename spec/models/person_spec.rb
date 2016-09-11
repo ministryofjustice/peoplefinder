@@ -84,12 +84,12 @@ RSpec.describe Person, type: :model do
     let!(:team) { create(:group) }
     let!(:subteam) { create(:group, parent: team) }
 
-    it 'calls subquery scope with groups IDs of parent group and any children' do
+    it 'calls subquery scope with groups IDs of parent group and any children (a subtree)' do
       expect(described_class).to receive(:all_in_groups_from_clause).with(team.subtree_ids)
       described_class.all_in_subtree(team)
     end
 
-    it 'is chainable' do
+    it 'returns a Person::ActiveRecord_Relation' do
       expect(described_class.all_in_subtree(team).class).to be Person::ActiveRecord_Relation
     end
 

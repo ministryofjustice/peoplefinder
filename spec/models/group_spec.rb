@@ -172,8 +172,8 @@ RSpec.describe Group, type: :model do
         expect(team.all_people.length).to eq(1)
       end
 
-      it 'has items in all_people array that have role_names' do
-        expect(team.all_people.first.respond_to?(:role_names)).to be true
+      it 'has items in all_people Person relation that have role_names' do
+        expect(team.all_people.first).to respond_to :role_names
       end
 
       it "has all_people_count of 1" do
