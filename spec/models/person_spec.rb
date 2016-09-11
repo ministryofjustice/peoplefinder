@@ -80,6 +80,25 @@ RSpec.describe Person, type: :model do
     end
   end
 
+  describe '.all_in_subtree' do
+    let!(:team) { create(:group) }
+    let!(:subteam) { create(:group, parent: team) }
+
+    it 'calls subquery scope with groups IDs of parent group and any children (a subtree)' do
+      expect(described_class).to receive(:all_in_groups_from_clause).with(team.subtree_ids)
+      described_class.all_in_subtree(team)
+    end
+
+    it 'returns a Person::ActiveRecord_Relation' do
+      expect(described_class.all_in_subtree(team).class).to be Person::ActiveRecord_Relation
+    end
+
+    it 'returns relation that includes aggregate role_names column' do
+      expect { described_class.all_in_subtree(team).pluck(:role_names) }.not_to raise_error
+    end
+
+  end
+
   describe '.all_in_groups' do
     let(:groups) { create_list(:group, 3) }
     let(:people) { create_list(:person, 3) }

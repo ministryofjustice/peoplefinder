@@ -2,5 +2,9 @@
   = breadcrumbs(Home.path + @group.path + ['All people'])
 
 %h1= @page_title = "People in #{ @group.name }"
+= render partial: "all_people_pagination"
+
 .grid-wrapper
-  = render partial: "people/summary", collection: @group.all_people
+  = render partial: "people/summary", collection: @people_in_subtree
+
+= render partial: "all_people_pagination"

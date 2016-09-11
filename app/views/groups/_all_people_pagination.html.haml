@@ -1,0 +1,6 @@
+.all-people-pagination.grid-wrapper
+  .page-information.inner-block.grid.grid-1-3
+    = page_entries_info(@people_in_subtree)
+  .page-navigation.inner-block.grid.grid-2-3
+    = will_paginate(@people_in_subtree, renderer: BootstrapPagination::Rails, class: 'page-nav-list')
+  

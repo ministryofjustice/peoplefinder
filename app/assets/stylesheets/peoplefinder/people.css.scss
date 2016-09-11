@@ -337,3 +337,38 @@ form {
     outline: 3px solid #ffbf47;
   }
 }
+
+.all-people-pagination {
+  div {
+    float: left;
+    clear: none;
+    display: inline;
+  }
+  .page-information {
+    color: grey;
+    padding: 4px 6px;
+  }
+  .page-navigation {
+    /*display: inline;*/
+  }
+  .page-nav-list {
+    ul, li {
+      margin: 15px 0;
+      display: inline;
+      border: 1px solid $border-color;
+      padding: 4px 6px;
+    }
+    .active {
+      background-color: $grey-bg;
+      color: grey;
+    }
+    .disabled {
+      border: 0px;
+    }
+    .next, .prev {
+      border: 1px solid $grey-bg;
+      .disabled {
+      }
+    }
+  }
+}

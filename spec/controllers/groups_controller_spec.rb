@@ -70,6 +70,30 @@ RSpec.describe GroupsController, type: :controller do
     end
   end
 
+  describe 'GET all_people' do
+    let(:group) { create(:group, valid_attributes) }
+    let!(:people) { instance_double(Person::ActiveRecord_Relation) }
+
+    subject { get :all_people, { id: group.to_param, page: 2 }, valid_session }
+
+    it 'assigns @group to a Group instance' do
+      subject
+      expect(assigns(:group)).to be_a(Group)
+    end
+
+    it 'assigns @people_in_subtree to a Person AR relation' do
+      subject
+      expect(assigns(:people_in_subtree)).to be_a(Person::ActiveRecord_Relation)
+    end
+
+    it 'sends all_people message to instance of group and paginates people results to 500 (to avoid server timeouts)' do
+      expect_any_instance_of(Group).to receive(:all_people).and_return people
+      expect(people).to receive(:paginate).with(page: "2", per_page: 500).and_return people
+      subject
+    end
+
+  end
+
   describe 'GET new' do
     it 'assigns a new group as @group' do
       get :new, {}, valid_session

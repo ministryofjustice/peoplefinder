@@ -35,7 +35,8 @@ gem 'unicorn', '~> 4.8.3'
 gem 'useragent', '~> 0.10.0'
 gem 'virtus'
 gem 'whenever'
-gem 'will_paginate', '~> 3.0'
+gem 'will_paginate', '~> 3.0', '>=3.0.3'
+gem 'will_paginate-bootstrap', '~> 1.0', '>= 1.0.1'
 
 gem 'carrierwave',
   git: 'https://github.com/carrierwaveuploader/carrierwave.git',
