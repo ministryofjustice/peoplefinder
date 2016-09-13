@@ -49,6 +49,12 @@ RSpec.describe GroupSearch, elastic: true do
         expect(result_set('civil families')).to eq [civil_families_tribunal, civil_families_court]
         expect(result_set('civil tribunal')).to eq [civil_families_tribunal]
       end
+
+      it 'ignores non-word characters' do
+        expect { result_set('*') }.not_to raise_error
+        expect(result_set('\Team/name?')).to eq [team, another_team]
+      end
+
     end
   end
 
