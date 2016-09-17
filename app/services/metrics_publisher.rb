@@ -8,7 +8,7 @@ class MetricsPublisher
     @recipient.publish :profiles, profiles_report
   end
 
-  # private #TODO make private again eventually
+  private
 
   def profiles_report
     {
@@ -19,11 +19,7 @@ class MetricsPublisher
 
   def completion_report
     report = { 'mean' => Person.overall_completion }
-    report.merge! Person.bucketed_completion_scores
+    report.merge! Person.bucketed_completion
   end
 
-  # TODO - remove when sure we do not need this explicit format
-  # def range_to_string(range)
-  #   '[%d,%d%s' % [range.begin, range.end, range.exclude_end? ? ')' : ']']
-  # end
 end

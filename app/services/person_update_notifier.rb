@@ -29,6 +29,7 @@ module PersonUpdateNotifier
     if person.login_count == 0
       false
     else
+
       !person.reminder_email_sent?(within: within) &&
         person.updated_at.end_of_day < within.ago
     end
