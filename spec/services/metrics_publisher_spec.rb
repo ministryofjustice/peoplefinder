@@ -25,21 +25,22 @@ RSpec.describe MetricsPublisher, type: :service do
 
   it 'sends bucketed completion details' do
     allow(person_class).to receive(:bucketed_completion).and_return(
-        "[0,19]" => 10,
-        "[20,49]" => 20,
-        "[50,79]" => 30,
-        "[80,100]" => 5
+      "[0,19]" => 10,
+      "[20,49]" => 20,
+      "[50,79]" => 30,
+      "[80,100]" => 5
     )
 
     expect(recipient).to receive(:publish).
-      with(:completion,
-            a_hash_including(
-              "[0,19]" => 10,
-              "[20,49]" => 20,
-              "[50,79]" => 30,
-              "[80,100]" => 5
-            )
-          )
+      with(
+        :completion,
+        a_hash_including(
+          "[0,19]" => 10,
+          "[20,49]" => 20,
+          "[50,79]" => 30,
+          "[80,100]" => 5
+        )
+      )
 
     subject.publish!
   end

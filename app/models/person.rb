@@ -2,6 +2,7 @@ class Person < ActiveRecord::Base
   include Concerns::Acquisition
   include Concerns::Activation
   include Concerns::Completion
+  include Concerns::BucketedCompletion
   include Concerns::WorkDays
   include Concerns::ExposeMandatoryFields
 

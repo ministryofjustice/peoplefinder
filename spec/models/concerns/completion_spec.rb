@@ -58,9 +58,12 @@ RSpec.describe 'Completion' do # rubocop:disable RSpec/DescribeClass
 
     context 'when legacy image field exists instead of profile photo and all other fields completed' do
       let(:person) do
-        create(:person,
-                completed_attributes.reject{ |k,v| k == :profile_photo_id}.merge(image:'profile_MoJ_small.jpg')
-              )
+        create(
+          :person,
+          completed_attributes.
+            reject { |k, _v| k == :profile_photo_id }.
+            merge(image: 'profile_MoJ_small.jpg')
+        )
       end
       before { create(:membership, person: person) }
 
@@ -81,7 +84,8 @@ RSpec.describe 'Completion' do # rubocop:disable RSpec/DescribeClass
 
     it 'returns 50 if two profiles are 50% complete' do
       2.times do
-        create(:person,
+        create(
+          :person,
           given_name: generate(:given_name),
           surname: generate(:surname),
           email: generate(:email),
@@ -94,13 +98,14 @@ RSpec.describe 'Completion' do # rubocop:disable RSpec/DescribeClass
 
     it 'includes membership in calculation' do
       people = 2.times.map do
-        create(:person,
-                given_name: generate(:given_name),
-                surname: generate(:surname),
-                email: generate(:email),
-                city: generate(:city),
-                primary_phone_number: generate(:phone_number)
-              )
+        create(
+          :person,
+          given_name: generate(:given_name),
+          surname: generate(:surname),
+          email: generate(:email),
+          city: generate(:city),
+          primary_phone_number: generate(:phone_number)
+        )
       end
       expect(UpdateGroupMembersCompletionScoreJob).to receive(:perform_later).exactly(5).times
       2.times do
@@ -110,29 +115,6 @@ RSpec.describe 'Completion' do # rubocop:disable RSpec/DescribeClass
       expect(people[0].completion_score).to be_within(1).of(66)
       expect(people[1].completion_score).to be_within(1).of(55)
       expect(Person.overall_completion).to be_within(1).of(61)
-    end
-  end
-
-  context '.bucketed_completion' do
-    def create_bucketed_people
-      create(:person)
-      2.times do
-        create(:person, :with_details, city: nil, building: nil) 
-      end
-      create(:person, completed_attributes)
-    end
-
-    before do
-      create_bucketed_people
-    end
-
-    it 'counts the people in each bucket' do
-      expect(Person.bucketed_completion).to eq(
-        "[0,19]" => 0,
-        "[20,49]" => 1,
-        "[50,79]" => 2,
-        "[80,100]" => 1
-      )
     end
   end
 
