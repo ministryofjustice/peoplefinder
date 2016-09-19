@@ -3,6 +3,7 @@
 #
 module Concerns::Completion
   extend ActiveSupport::Concern
+  include Concerns::BucketedCompletion
 
   ADEQUATE_FIELDS = %i(
     building

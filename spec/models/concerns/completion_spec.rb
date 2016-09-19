@@ -72,10 +72,27 @@ RSpec.describe 'Completion' do # rubocop:disable RSpec/DescribeClass
         expect(person).not_to be_incomplete
       end
     end
+  end
 
+  context '.average_completion_score' do
+    it 'executes raw SQL for scalability/performance' do
+      results = double.as_null_object
+      expect(ActiveRecord::Base.connection).to receive(:execute).at_least(:once).and_return(results)
+      Person.average_completion_score
+    end
+
+    it 'returns a rounded float for use as a percentage' do
+      create(:person, :with_details)
+      expect(Person.average_completion_score).to eql 78
+    end
   end
 
   context '.overall_completion' do
+    it 'calls method encapsulating contruction of raw SQL for average completion score' do
+      expect(Person).to receive(:average_completion_score)
+      Person.overall_completion
+    end
+
     it 'returns 100 if there is onlu one person who is 100% complete' do
       person = create(:person, completed_attributes)
       create(:membership, person: person)
