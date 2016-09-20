@@ -79,12 +79,17 @@ module Concerns::Completion
 
     def average_completion_sql(id = nil)
       <<-SQL
-        SELECT AVG((
-        #{completion_score_calculation}
+        SELECT AVG(
+        (
+          #{completion_score_calculation}
         ) * 100)::numeric(5,2) AS #{avg_alias}
         FROM "people"
-        #{"WHERE \"people\".id IN (#{[id].flatten.join(',')})" if id.present?}
+        #{where_people_in(id)}
       SQL
+    end
+
+    def where_people_in id = nil
+      ActiveRecord::Base.sanitize_conditions(['WHERE id IN (%s)', [id].flatten.join(',')], 'people') if id.present?
     end
 
     def completion_score_calculation
