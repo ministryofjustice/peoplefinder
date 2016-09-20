@@ -21,6 +21,8 @@ RSpec.describe 'Completion' do # rubocop:disable RSpec/DescribeClass
     create(:profile_photo)
   end
 
+  let(:person) { create(:person) }
+
   context '#completion score' do
     it 'returns 0 if all fields are empty' do
       person = Person.new
@@ -28,26 +30,25 @@ RSpec.describe 'Completion' do # rubocop:disable RSpec/DescribeClass
       expect(person).to be_incomplete
     end
 
-    it 'returns non-0 if a group is assigned' do
-      person = Person.new(groups: [Group.new])
-      expect(person.completion_score).not_to eql(0)
+    it 'returns non-zero for any persisted person' do
+      expect(person.completion_score).not_to eq 0
+    end
+
+    it 'returns higher score if a group is assigned' do
+      initial = person.completion_score
+      create(:membership, person: person)
+      expect(person.completion_score).to be > initial
     end
 
     it 'returns 55 if half the fields are completed' do
-      person = Person.new(
-        given_name: generate(:given_name),
-        surname: generate(:surname),
-        email: generate(:email),
-        city: generate(:city),
-        primary_phone_number: generate(:phone_number)
-      )
-      expect(person.completion_score).to eql(55)
+      person = create(:person, city: generate(:city), primary_phone_number: generate(:phone_number))
+      expect(person.completion_score).to be_within(1).of(55)
       expect(person).to be_incomplete
     end
 
     context 'when all the fields are completed' do
-      let(:person) { Person.new(completed_attributes) }
-      before { person.groups << build(:group) }
+      let(:person) { create(:person, completed_attributes) }
+      before { create(:membership, person: person) }
 
       it 'returns 100' do
         expect(person.completion_score).to eql(100)
@@ -57,23 +58,43 @@ RSpec.describe 'Completion' do # rubocop:disable RSpec/DescribeClass
 
     context 'when legacy image field exists instead of profile photo and all other fields completed' do
       let(:person) do
-        fields = completed_attributes
-        fields.delete(:profile_photo_id)
-        fields[:image] = 'profile_MoJ_small.jpg'
-        Person.new(completed_attributes)
+        create(
+          :person,
+          completed_attributes.
+            reject { |k, _v| k == :profile_photo_id }.
+            merge(image: 'profile_MoJ_small.jpg')
+        )
       end
-      before { person.groups << build(:group) }
+      before { create(:membership, person: person) }
 
       it 'returns 100' do
         expect(person.completion_score).to eql(100)
         expect(person).not_to be_incomplete
       end
     end
+  end
 
+  context '.average_completion_score' do
+    # TODO: raises PG warning
+    xit 'executes raw SQL for scalability/performance' do
+      results = double.as_null_object
+      expect(ActiveRecord::Base.connection).to receive(:execute).at_least(:once).and_return(results)
+      Person.average_completion_score
+    end
+
+    it 'returns a rounded float for use as a percentage' do
+      create(:person, :with_details)
+      expect(Person.average_completion_score).to eql 78
+    end
   end
 
   context '.overall_completion' do
-    it 'returns 100 if one person is 100% complete' do
+    it 'calls method encapsulating contruction of raw SQL for average completion score' do
+      expect(Person).to receive(:average_completion_score)
+      Person.overall_completion
+    end
+
+    it 'returns 100 if there is onlu one person who is 100% complete' do
       person = create(:person, completed_attributes)
       create(:membership, person: person)
       expect(Person.overall_completion).to eq(100)
@@ -81,54 +102,37 @@ RSpec.describe 'Completion' do # rubocop:disable RSpec/DescribeClass
 
     it 'returns 50 if two profiles are 50% complete' do
       2.times do
-        create(:person,
+        create(
+          :person,
           given_name: generate(:given_name),
           surname: generate(:surname),
           email: generate(:email),
           city: generate(:city),
           primary_phone_number: generate(:phone_number)
-              )
+        )
       end
       expect(Person.overall_completion).to be_within(1).of(55)
     end
 
     it 'includes membership in calculation' do
       people = 2.times.map do
-        create(:person,
+        create(
+          :person,
           given_name: generate(:given_name),
           surname: generate(:surname),
           email: generate(:email),
           city: generate(:city),
           primary_phone_number: generate(:phone_number)
-              )
+        )
       end
       expect(UpdateGroupMembersCompletionScoreJob).to receive(:perform_later).exactly(5).times
       2.times do
         create(:membership, person: people[0])
       end
       people.each(&:reload)
-      expect(people[0].completion_score).to eq(66)
-      expect(people[1].completion_score).to eq(55)
+      expect(people[0].completion_score).to be_within(1).of(66)
+      expect(people[1].completion_score).to be_within(1).of(55)
       expect(Person.overall_completion).to be_within(1).of(61)
-    end
-  end
-
-  context '.bucketed_completion' do
-    it 'counts the people in each bucket' do
-      people = [
-        0, 18, 19,
-        20, 49,
-        50, 51, 52, 79,
-        80, 85, 90, 99, 100
-      ].map { |n| double(Person, completion_score: n) }
-      allow(Person).to receive(:all).and_return(people)
-
-      expect(Person.bucketed_completion).to eq(
-        (0...20)  => 3,
-        (20...50) => 2,
-        (50...80) => 4,
-        (80..100) => 5
-      )
     end
   end
 
