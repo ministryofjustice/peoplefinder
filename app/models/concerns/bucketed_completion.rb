@@ -18,13 +18,15 @@ module Concerns::BucketedCompletion
     end
 
     def bucketed_completion_score_sql
-      "SELECT people_count,\n" +
-        bucket_case_statement(avg_alias) +
-        "FROM (\n" \
-          "SELECT count(id) AS people_count, \n" \
-          "(#{completion_score_calculation} * 100)::numeric(5,2) AS #{avg_alias} \n" \
-          " FROM \"people\" GROUP BY (#{avg_alias}) \n" \
-        ') AS buckets'
+      <<-SQL
+      SELECT people_count,
+        #{bucket_case_statement(avg_alias)}
+        FROM (
+          SELECT count(id) AS people_count,
+          (#{completion_score_calculation} * 100)::numeric(5,2) AS #{avg_alias}
+          FROM \"people\" GROUP BY (#{avg_alias})
+        ) AS buckets
+      SQL
     end
 
     def parse_bucketed_results results

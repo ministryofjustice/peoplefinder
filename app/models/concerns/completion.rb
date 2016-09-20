@@ -78,15 +78,13 @@ module Concerns::Completion
     end
 
     def average_completion_sql(id = nil)
-      sql = "SELECT AVG(( \n"
-      sql += completion_score_calculation
-      sql += ") * 100)::numeric(5,2) AS #{avg_alias}"
-      sql += ' FROM "people"'
-      if id.present?
-        ids = *id
-        sql += " WHERE \"people\".id IN (#{ids.join(',')})"
-      end
-      sql
+      <<-SQL
+        SELECT AVG((
+        #{completion_score_calculation}
+        ) * 100)::numeric(5,2) AS #{avg_alias}
+        FROM "people"
+        #{"WHERE \"people\".id IN (#{[id].flatten.join(',')})" if id.present?}
+      SQL
     end
 
     def completion_score_calculation
@@ -110,21 +108,25 @@ module Concerns::Completion
 
     # requires a join and therefore needs separate handling for scalability
     def groups_exist_sql
-      "CASE WHEN (SELECT 1 \n" \
-                  "WHERE EXISTS (SELECT 1 \n" \
-                                "FROM memberships m \n" \
-                                "WHERE m.person_id = people.id)) IS NOT NULL \n" \
-            "THEN 1 \n" \
-          "ELSE 0 \n" \
-      "END \n"
+      <<-SQL
+      CASE WHEN (SELECT 1
+                  WHERE EXISTS (SELECT 1
+                                FROM memberships m
+                                WHERE m.person_id = people.id)) IS NOT NULL
+            THEN 1
+          ELSE 0
+      END
+      SQL
     end
 
     # account for legacy images as well
     def profile_photo_present_sql
-      "(CASE WHEN length(profile_photo_id::varchar) > 0 THEN 1 \n" \
-            "WHEN length(image) > 0 THEN 1 \n" \
-            "ELSE 0 \n" \
-      "END)\n"
+      <<-SQL
+      (CASE WHEN length(profile_photo_id::varchar) > 0 THEN 1
+            WHEN length(image) > 0 THEN 1
+            ELSE 0
+      END)
+      SQL
     end
   end
 
