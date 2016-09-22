@@ -75,10 +75,10 @@ RSpec.describe 'Completion' do # rubocop:disable RSpec/DescribeClass
   end
 
   context '.average_completion_score' do
-    # TODO: raises PG warning
-    xit 'executes raw SQL for scalability/performance' do
-      results = double.as_null_object
-      expect(ActiveRecord::Base.connection).to receive(:execute).at_least(:once).and_return(results)
+    it 'executes raw SQL for scalability/performance' do
+      conn = double.as_null_object
+      expect(ActiveRecord::Base).to receive(:connection).at_least(:once).and_return(conn)
+      expect(conn).to receive(:execute).with(/^\s*SELECT AVG\(.*$/i)
       Person.average_completion_score
     end
 

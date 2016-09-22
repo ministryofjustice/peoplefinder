@@ -61,6 +61,11 @@ module Concerns::Completion
       results.first[avg_alias].to_f.round
     end
 
+    def completion_score_calculation
+      calc_sql = "(\nCOALESCE(#{completion_score_sum},0))::float/#{COMPLETION_FIELDS.size}"
+      calc_sql
+    end
+
     private
 
     def inadequate_profiles_sql
@@ -90,11 +95,6 @@ module Concerns::Completion
 
     def where_people_in id = nil
       ActiveRecord::Base.sanitize_conditions(['WHERE id IN (%s)', [id].flatten.join(',')], 'people') if id.present?
-    end
-
-    def completion_score_calculation
-      calc_sql = "(\nCOALESCE(#{completion_score_sum},0))::float/#{COMPLETION_FIELDS.size}"
-      calc_sql
     end
 
     def completion_score_sum

@@ -41,13 +41,13 @@ RSpec.describe Concerns::Activation do
       expect(Person.activated_percentage).to eq(100)
     end
 
-    it 'returns 50 when two people who have logged in, one with completeness > 80%, one with completeness > 80%' do
+    it 'returns 50 when two people who have logged in, one with completeness > 80%, one with completeness < 80%' do
       create(:person, completed_attributes.merge(login_count: 1))
       create(:person, login_count: 1)
       expect(Person.activated_percentage).to eq(50)
     end
 
-    it 'returns 67 when 3 people who have logged in, two with completeness > 80%, one with completeness > 80%' do
+    it 'returns 67 when 3 people who have logged in, two with completeness > 80%, one with completeness < 80%' do
       create(:person, completed_attributes.merge(login_count: 1))
       create(:person, completed_attributes.merge(email: 'test2@digital.justice.gov.uk', login_count: 1))
       create(:person, login_count: 1)
