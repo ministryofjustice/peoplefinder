@@ -52,6 +52,10 @@ module Concerns::Completion
         order(:email)
     end
 
+    def completion_score_calculation
+      "(\nCOALESCE(#{completion_score_sum},0))::float/#{COMPLETION_FIELDS.size}"
+    end
+
     def overall_completion
       average_completion_score
     end
@@ -90,11 +94,6 @@ module Concerns::Completion
 
     def where_people_in id = nil
       ActiveRecord::Base.sanitize_conditions(['WHERE id IN (%s)', [id].flatten.join(',')], 'people') if id.present?
-    end
-
-    def completion_score_calculation
-      calc_sql = "(\nCOALESCE(#{completion_score_sum},0))::float/#{COMPLETION_FIELDS.size}"
-      calc_sql
     end
 
     def completion_score_sum
