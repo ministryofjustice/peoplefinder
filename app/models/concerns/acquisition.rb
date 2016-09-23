@@ -1,23 +1,22 @@
 module Concerns::Acquisition
   extend ActiveSupport::Concern
 
-  included do
-    # % of people who have logged in at least once
-    def self.acquired_percentage from: nil, before: nil
-      people_count = Person.count
-      if people_count == 0
-        0.0
-      else
-        (acquired_count(from: from, before: before).to_f / people_count * 100).round(0)
-      end
+  class_methods do
+    # % of people created between specified dates (from,before)
+    # and who have logged in at least once
+    def acquired_percentage from: nil, before: nil
+      (acquired_people(from: from, before: before).count.to_f / count * 100).round(0)
+    rescue FloatDomainError, ZeroDivisionError
+      0.0
     end
 
-    def self.acquired_count from: nil, before: nil
-      acquired = Person.logged_in_at_least_once
+    private
+
+    def acquired_people from: nil, before: nil
+      acquired = logged_in_at_least_once
       acquired = acquired.where('created_at >= ?', from) if from
       acquired = acquired.where('created_at < ?', before) if before
-      acquired.count
+      acquired
     end
-
   end
 end

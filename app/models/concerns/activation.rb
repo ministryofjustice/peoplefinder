@@ -1,20 +1,15 @@
 module Concerns::Activation
   extend ActiveSupport::Concern
 
-  included do
-    # % of people that have completeness > 80%
-    def self.activated_percentage from: nil, before: nil
-      acquired = Person.logged_in_at_least_once
-      acquired = acquired.where('created_at >= ?', from) if from
-      acquired = acquired.where('created_at < ?', before) if before
-
-      if acquired.count == 0
-        0
-      else
-        activated_count = acquired.to_a.count { |a| a.completion_score > 80 }
-        (activated_count.to_f / acquired.count * 100).round(0)
-      end
+  class_methods do
+    # % of "acquired" people that have completeness > 80%
+    def activated_percentage from: nil, before: nil
+      acquired = acquired_people(from: from, before: before)
+      activated_count = acquired.where("#{completion_score_calculation} > ?", 0.8).count
+      (activated_count.to_f / acquired.count * 100).round(0)
+    rescue FloatDomainError, ZeroDivisionError
+      0.0
     end
-
   end
+
 end
