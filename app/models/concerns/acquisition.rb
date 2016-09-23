@@ -7,7 +7,7 @@ module Concerns::Acquisition
     def acquired_percentage from: nil, before: nil
       (acquired_people(from: from, before: before).count.to_f / count * 100).round(0)
     rescue FloatDomainError, ZeroDivisionError
-      0
+      0.0
     end
 
     private

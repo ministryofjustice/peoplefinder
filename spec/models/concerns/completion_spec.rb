@@ -23,7 +23,7 @@ RSpec.describe 'Completion' do # rubocop:disable RSpec/DescribeClass
 
   let(:person) { create(:person) }
 
-  context '#completion score' do
+  context '#completion_score' do
     it 'returns 0 if all fields are empty' do
       person = Person.new
       expect(person.completion_score).to eql(0)
@@ -71,20 +71,6 @@ RSpec.describe 'Completion' do # rubocop:disable RSpec/DescribeClass
         expect(person.completion_score).to eql(100)
         expect(person).not_to be_incomplete
       end
-    end
-  end
-
-  context '.average_completion_score' do
-    it 'executes raw SQL for scalability/performance' do
-      conn = double.as_null_object
-      expect(ActiveRecord::Base).to receive(:connection).at_least(:once).and_return(conn)
-      expect(conn).to receive(:execute).with(/^\s*SELECT AVG\(.*$/i)
-      Person.average_completion_score
-    end
-
-    it 'returns a rounded float for use as a percentage' do
-      create(:person, :with_details)
-      expect(Person.average_completion_score).to eql 78
     end
   end
 
@@ -136,7 +122,33 @@ RSpec.describe 'Completion' do # rubocop:disable RSpec/DescribeClass
     end
   end
 
-  describe '#inadequate_profiles' do
+  context '.completion_score_calculation' do
+    it 'constructs sql to calculate score based on existence of values for important fields' do
+      sql_regex = /COALESCE.*CASE WHEN length\(.*\,0\)\)::float.*/mi
+      expect(Person.completion_score_calculation).to match(sql_regex)
+    end
+
+    it 'uses number of COMPLETION_FIELDS to calculate fraction part of the whole' do
+      expect(Person::COMPLETION_FIELDS).to receive(:size)
+      Person.completion_score_calculation
+    end
+  end
+
+  context '.average_completion_score' do
+    it 'executes raw SQL for scalability/performance' do
+      conn = double.as_null_object
+      expect(ActiveRecord::Base).to receive(:connection).at_least(:once).and_return(conn)
+      expect(conn).to receive(:execute).with(/^\s*SELECT AVG\(.*$/i)
+      Person.average_completion_score
+    end
+
+    it 'returns a rounded float for use as a percentage' do
+      create(:person, :with_details)
+      expect(Person.average_completion_score).to eql 78
+    end
+  end
+
+  describe '.inadequate_profiles' do
     let!(:person) { create(:person, completed_attributes) }
     subject { Person.inadequate_profiles }
 

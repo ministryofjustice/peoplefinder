@@ -22,6 +22,12 @@ RSpec.describe Concerns::Activation do
   end
 
   context '.activated_percentage' do
+
+    it 'uses .completion_score_calculation for scalablility' do
+      expect(Person).to receive(:completion_score_calculation).and_return(0.81)
+      Person.activated_percentage
+    end
+
     it 'returns 0 when no profiles' do
       expect(Person.activated_percentage).to eq(0)
     end
