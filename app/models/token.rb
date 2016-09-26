@@ -89,6 +89,7 @@ class Token < ActiveRecord::Base
   def remove_expired_tokens
     self.class.expired.destroy_all
   end
+  handle_asynchronously :remove_expired_tokens, queue: :high_priority
 
   def deactivate_tokens
     self.class.unspent.where('user_email = ? AND id != ?', user_email, id).update_all(spent: true)
