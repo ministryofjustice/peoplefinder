@@ -79,11 +79,11 @@ RSpec.describe Token, type: :model do
     let!(:expiring_tokens) { create_list(:token, 3) }
 
     it 'enqueues delayed job for destroying expired tokens' do
-      expect{ token.save }.to have_delayed_job 1
+      expect { token.save }.to have_delayed_job 1
     end
 
     it 'destroys expired tokens asynchronously for scalability' do
-      expect{ token.save }.to delay_method(:remove_expired_tokens)
+      expect { token.save }.to delay_method(:remove_expired_tokens)
     end
 
     context 'destroys all tokens older than the throttle limit' do

@@ -15,12 +15,12 @@ module DelayedJobHelper
       (@actual == expected) || (@actual == "#{expected}_without_delay".to_sym)
     end
 
-    failure_message do |actual|
-      "expected code block to have delayed the method '#{expected}' but got '#{@actual}'"
+    failure_message do |proc|
+      "expected #{proc} to have delayed the method '#{expected}' but got '#{@actual}'"
     end
 
-    failure_message_when_negated do |actual|
-      "expected code block not to have delayed the method '#{expected}'"
+    failure_message_when_negated do |proc|
+      "expected #{proc} not to have delayed the method '#{expected}'"
     end
   end
 
@@ -32,7 +32,6 @@ module DelayedJobHelper
     match do |proc|
       Delayed::Worker.new.work_off
       @expected_count = count || 1
-      ap @expected_count
       before_count = Delayed::Job.count
       proc.call
       after_count = Delayed::Job.count
@@ -40,12 +39,12 @@ module DelayedJobHelper
       @actual_count == @expected_count
     end
 
-    failure_message do |process|
-      "expected to have enqueued #{@expected_count} delayed job(s) but enqueued #{@actual_count}"
+    failure_message do |proc|
+      "expected #{proc}to have enqueued #{@expected_count} delayed job(s) but enqueued #{@actual_count}"
     end
 
     failure_message_when_negated do |proc|
-      "expected not to have enqueued #{@expected_count} delayed job(s) but enqueued #{@actual_count}"
+      "expected #{proc} not to have enqueued #{@expected_count} delayed job(s) but enqueued #{@actual_count}"
     end
   end
 
