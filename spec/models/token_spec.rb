@@ -78,9 +78,22 @@ RSpec.describe Token, type: :model do
   context 'maintenance' do
     let!(:expiring_tokens) { create_list(:token, 3) }
 
-    it 'removes expired tokens' do
+    # TODO: write rspec matchers for delayed job
+    it 'enqueues job to expire tokens for scalability' do
+      Delayed::Worker.new.work_off
       Timecop.travel(Time.now + token.ttl) do
-        expect { token.save }.to change { described_class.expired.count }.by(-3)
+        expect { token.save }.to change { Delayed::Job.count }.by 1
+      end
+    end
+
+    context 'creating a new token' do
+      before { Delayed::Worker.delay_jobs = false }
+      after { Delayed::Worker.delay_jobs = true }
+
+      it 'destroys all expired tokens' do
+        Timecop.travel(Time.now + token.ttl) do
+          expect { token.save }.to change { described_class.expired.count }.by(-3)
+        end
       end
     end
 
