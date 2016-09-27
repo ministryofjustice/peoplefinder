@@ -27,9 +27,13 @@ class GroupsController < ApplicationController
     end
   end
 
-  # GET /teams/slug/people
+  # GET /teams/slug_or_id/people
   def all_people
     @people_in_subtree = @group.all_people.paginate(page: params[:page], per_page: 500)
+  end
+
+  # GET /teams/slug_or_id/organogram
+  def organogram
   end
 
   # GET /groups/new

@@ -214,7 +214,7 @@ en:
         secondary_email: Alternative work email
   shared:
     search:
-      hint: 'Enter name, job title, team name or location'
+      hint: 'Search name, job title, team name or location'
     cookie_message_html:
       People Finder uses cookies to make the site simpler.
       <a href="/cookies">Find out more about cookies</a>
