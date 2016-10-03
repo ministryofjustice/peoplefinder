@@ -15,7 +15,8 @@
       - if logged_in? && !@login_screen && !@editing_mode
         .grid-wrapper
           .grid.grid-2-3
-            .inner-block= render 'shared/search'
+            .inner-block
+              = render 'shared/search'
           .grid.grid-1-3.new-profile
             .inner-block
               - if can_add_person_here?
