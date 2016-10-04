@@ -6,7 +6,7 @@
 // banner hacks
 #global-header .header-wrapper .header-global {
   .header-app-name {
-    margin: 0;
+
     text-align: center;
     width: 66.66%;
 
@@ -19,17 +19,32 @@
       float: right;
 
       span {
-        margin: 0 0.4em;
+        margin: 0;
         width: auto;
         display: inline-block;
       }
       .profile-link{
-        padding-right: 0 0.4em;
-        line-height: 1;
+        margin: 15px 0 0 0;
+        span {
+          width: auto;
+          display: inline-block;
+          a{
+            margin-right: 0.4em;
+            vertical-align: -10%;
+          }
+        }
       }
       .logout-link {
         border-left: 1px solid $white;
         padding-left: 0.4em;
+      }
+      .login-link {
+        span {
+          margin: 15px 0 0 0;
+          a {
+            vertical-align: -10%;
+          }
+        }
       }
     }
   }

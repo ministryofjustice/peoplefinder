@@ -473,10 +473,19 @@ textarea.form-control {
       .logout-link {
         margin: 0;
         display: inline-block;
-
         a {
           text-decoration: none;
         }
+      }
+      .login-link{
+        span {
+          margin: 0;
+          padding: 0;
+        }
+        a{
+          margin: 0;
+        }
+
       }
     }
     @media (min-width: 641px) {
@@ -499,7 +508,6 @@ textarea.form-control {
     }
   }
 }
-
 
 .new-profile {
   text-align: right;
