@@ -66,3 +66,23 @@ form {
     margin-right: 1px;
   }
 }
+
+/*IE7 & 8 hacks to make footer align bottom-left for acknowledgements and bottom right for copyright*/
+#footer .footer-meta .footer-meta-inner .footer-content {
+  position: relative;
+  ul {
+    position: absolute;
+    bottom: 0;
+    line-height: 1;
+    margin-bottom: 0;
+    li {
+      float: left;
+    }
+  }
+}
+#footer .footer-meta .copyright {
+  width: auto;
+}
+
+
+

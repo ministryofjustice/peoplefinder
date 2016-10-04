@@ -1,14 +1,14 @@
 - content_for :footer_support_links do
   %div.footer-content
-    %ul
-      %li
-        =link_to "Cookies", :cookies
-      %li
-        Built by
-        %a.underlined{href: "https://mojdigital.blog.gov.uk/"}
-          %abbr{title: "Ministry of Justice"} MOJ
-          Digital Services
-
+    %div.acknowledgements
+      %ul
+        %li
+          =link_to "Cookies", :cookies
+        %li
+          Built by
+          %a.underlined{href: "https://mojdigital.blog.gov.uk/"}
+            %abbr{title: "Ministry of Justice"} MOJ
+            Digital Services
     %div.copyright
       %a{href: "https://www.nationalarchives.gov.uk/information-management/our-services/crown-copyright.htm"}
         © Crown copyright
