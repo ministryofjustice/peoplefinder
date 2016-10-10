@@ -170,8 +170,15 @@ form #working-days ul,
 }
 
 form.search-box {
+  /*ensure search box height*/
   .form-control {
     height: 25px;
+  }
+  /*prevent submit text appearing over button*/
+  .submit-button {
+  line-height: 0;
+  width: 49px;
+  height: 49px;
   }
 }
 
