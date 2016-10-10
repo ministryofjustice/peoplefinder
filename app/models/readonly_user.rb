@@ -1,5 +1,6 @@
 class ReadonlyUser
   def self.from_request(request)
+    return new if Rails.env.development?
     header_name = "HTTP_#{Rails.configuration.readonly[:header].tr('-', '_')}"
     header_value = Rails.configuration.readonly[:value]
 

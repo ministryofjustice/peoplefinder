@@ -43,11 +43,10 @@ feature 'Report a problem', js: true do
       visit new_sessions_path
 
       find('a', text: 'Report a problem').trigger('click')
-      fill_in 'Your email', with: 'test@example.com'
       fill_in 'What were you trying to do?', with: 'Rhubarb'
       fill_in 'What went wrong?', with: 'Custard'
+      fill_in 'Your email', with: 'test@example.com'
       click_button 'Report'
-
       expect(current_path).to eq(new_sessions_path)
 
       expect(last_email.to).to eq([Rails.configuration.support_email])

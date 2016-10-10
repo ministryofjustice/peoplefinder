@@ -283,6 +283,30 @@ rake peoplefinder:db:reset_column_information  # reset all column information
 rake peoplefinder:import:csv_check[path]       # Check validity of CSV file before import
 rake peoplefinder:import:csv_import[path]      # Import valid CSV file
 ```
+
+### Front end development
+
+A large part of the audience for Peoplefinder are, at time of writing, still reliant on
+Windows XP for their OS and IE7 for their browser. Consequently considerable styling and javascript needs IE7 workarounds. To assist, you can install Virtual Box VMs using the guide below
+
+1. install virtual box - [Virtualbox](https://www.virtualbox.org/wiki/Downloads)
+2. you can download fairly reliable MS Windows VMs using this site at [xdissent](http://xdissent.github.io/ievms/). The simplest method is to download the Windows 7 with IE10 VM and use the Developer tools in IE10 to change ***Browser mode*** and ***Document mode*** to IE7
+   ```
+   curl -s https://raw.githubusercontent.com/xdissent/ievms/master/ievms.sh | env IEVMS_VERSIONS="10" bash
+   ```
+3. once command above has completed power on the machine in virtual box, start IE and use http://10.0.2.2:3000 (i.e. 10.0.2.2 maps to the host's `localhost` IP)
+
+4. you can map the VMs localhost to 10.0.2.2 to allow GPlus OAuth login to function by amending the `C:\Windows\System32\drivers\etc\hosts` to add the line below:
+```
+10.0.2.2    localhost
+```
+
+5. Optional config for your VM for local development
+  * enable host to VM copy/paste
+  ```
+  vbox>machine>settings>General(tab)>Advanced(tab)>Shared clipboard(dropdown)>Bidirectionl
+  ```
+
 ### Development tools
 
 CI by [Travis](https://travis-ci.org/ministryofjustice/peoplefinder).
