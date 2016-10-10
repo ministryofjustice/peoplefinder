@@ -53,6 +53,7 @@
 .grid-wrapper{
   clear:both;
 }
+
 h1, h2 {
   margin: 30px 0;
   border-bottom: 1px solid $blackish;
@@ -163,14 +164,28 @@ form #working-days ul,
               this.insertBefore( document.createElement("span"), this.firstChild ).innerHTML="\25BC  "
              );
   }
-
   form{
     *zoom: 1;
   }
 }
 
 form.search-box {
+  /*ensure search box height*/
   .form-control {
     height: 25px;
+  }
+  /*prevent submit text appearing over button*/
+  .submit-button {
+  line-height: 0;
+  width: 49px;
+  height: 49px;
+  }
+}
+
+/*IE7 organogram hack - ensure inline block equivalent */
+.organogram-content {
+  .leader, .person, .team {
+    *display: inline;
+    *zoom: 1;
   }
 }
