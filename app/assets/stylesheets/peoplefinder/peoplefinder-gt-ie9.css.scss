@@ -1,0 +1,12 @@
+
+/*IE10+ hacks for main content*/
+@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+  #content .inner-block, #content .grid-wrapper {
+    max-width: 990px;
+    margin: 0 auto;
+  }
+}
+
+/* IE Edge 12+ CSS styles go here */
+@supports (-ms-accelerator:true) {
+}
