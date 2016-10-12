@@ -1,0 +1,20 @@
+
+/*IE10+ hacks for main content*/
+@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+
+  /*moj-internal.css styles for #content not being applied, so over ride */
+  #content .inner-block, #content .grid-wrapper {
+    max-width: 960px;
+    margin: 0 auto;
+  }
+
+  /*moj-internal.ss margin set by .grid .inner-block is ignored, so over ride*/
+  a.subgroup-link-block.inner-block {
+    margin-right: 15px !important;
+  }
+
+}
+
+/* IE Edge 12+ CSS styles go here */
+@supports (-ms-accelerator:true) {
+}
