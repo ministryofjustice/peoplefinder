@@ -95,6 +95,7 @@ class Group < ActiveRecord::Base
   end
 
   def update_members_completion_score!
+    # TODO: this can be very slow for large teams e.g. NOMS
     people = all_people
     score = if people.blank?
               0

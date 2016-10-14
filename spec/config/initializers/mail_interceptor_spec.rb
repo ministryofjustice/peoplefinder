@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.context 'on initialization' do
+RSpec.context 'on initialization', type: :initializer do
 
   context 'when INTERCEPTED_EMAIL_RECIPIENT set' do
     before do

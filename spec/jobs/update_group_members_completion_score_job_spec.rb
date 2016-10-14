@@ -50,7 +50,7 @@ RSpec.describe UpdateGroupMembersCompletionScoreJob, type: :job do
     end
 
     xit 'returns success to prevent retry of job' do
-      # TODO: how
+      expect(described_class.perform_now(group)).to eq true
     end
   end
 
