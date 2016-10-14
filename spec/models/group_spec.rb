@@ -386,4 +386,22 @@ RSpec.describe Group, type: :model do
     end
   end
 
+  describe '#average_completion_score' do
+    let(:team) { create(:group) }
+    let(:subteam) { create(:group, parent: team) }
+
+    it 'returns 0 when no one exists in subtree' do
+      expect(team.average_completion_score).to be 0
+    end
+
+    it 'returns average completion score of all people in group and subtree' do
+      create(:membership, group: team, person: create(:person))
+      create(:membership, group: team, person: create(:person))
+      create(:membership, group: subteam, person: create(:person, city: 'Wherever'))
+      expect(team.average_completion_score).to be_between(47, 49)
+      expect(subteam.average_completion_score).to be_between(55, 58)
+    end
+
+  end
+
 end
