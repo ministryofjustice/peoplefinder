@@ -40,7 +40,7 @@ module DelayedJobHelper
     end
 
     failure_message do |proc|
-      "expected #{proc}to have enqueued #{@expected_count} delayed job(s) but enqueued #{@actual_count}"
+      "expected #{proc} to have enqueued #{@expected_count} delayed job(s) but enqueued #{@actual_count}"
     end
 
     failure_message_when_negated do |proc|

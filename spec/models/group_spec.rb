@@ -20,10 +20,17 @@ RSpec.describe Group, type: :model do
     expect { group.save! }.to raise_error(Exception)
   end
 
-  it 'fires UpdateGroupMembersCompletionScoreJob after save' do
-    group = build(:group, parent: nil)
-    expect(UpdateGroupMembersCompletionScoreJob).to receive(:perform_later).with(group)
-    group.save
+  context '#after_save' do
+    let!(:group) { build(:group, parent: nil) }
+
+    it 'calls method to enqueue job for completion score update' do
+      expect(UpdateGroupMembersCompletionScoreJob).to receive(:perform_later).with(group)
+      group.save!
+    end
+
+    it 'enqueues job to update completion scores for self and all ancestors/parents' do
+      expect{ group.save! }.to have_enqueued_job
+    end
   end
 
   it "knows about its ancestors" do
@@ -100,6 +107,11 @@ RSpec.describe Group, type: :model do
       group.destroy
       expect { described_class.find(group.id) }.to raise_error(ActiveRecord::RecordNotFound)
     end
+
+    it 'does not enqueue completion score update job' do
+      expect{ group.destroy! }.not_to have_enqueued_job.on_queue('low_priority')
+    end
+
   end
 
   describe 'team with subteam' do
