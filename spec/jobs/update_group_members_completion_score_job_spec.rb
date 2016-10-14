@@ -16,14 +16,14 @@ RSpec.describe UpdateGroupMembersCompletionScoreJob, type: :model do
 
   context 'enqueuing' do
     let!(:group) { create(:group) }
-    subject { Proc.new { described_class.perform_later(group) } }
+    subject { proc { described_class.perform_later(group) } }
 
     it 'enqueues on low priority queue' do
-      is_expected.to have_enqueued_job(UpdateGroupMembersCompletionScoreJob).on_queue('low_priority')
+      is_expected.to have_enqueued_job(described_class).on_queue('low_priority')
     end
 
     it 'enqueues with group params' do
-     is_expected.to have_enqueued_job.with(group)
+      is_expected.to have_enqueued_job.with(group)
     end
   end
 

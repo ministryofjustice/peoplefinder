@@ -29,7 +29,7 @@ RSpec.describe Group, type: :model do
     end
 
     it 'enqueues job to update completion scores for self and all ancestors/parents' do
-      expect{ group.save! }.to have_enqueued_job
+      expect { group.save! }.to have_enqueued_job
     end
   end
 
@@ -109,7 +109,7 @@ RSpec.describe Group, type: :model do
     end
 
     it 'does not enqueue completion score update job' do
-      expect{ group.destroy! }.not_to have_enqueued_job.on_queue('low_priority')
+      expect { group.destroy! }.not_to have_enqueued_job.on_queue('low_priority')
     end
 
   end
