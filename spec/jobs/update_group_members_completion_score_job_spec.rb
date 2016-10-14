@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe UpdateGroupMembersCompletionScoreJob, type: :model do
+RSpec.describe UpdateGroupMembersCompletionScoreJob, type: :job do
 
   include ActiveJob::TestHelper
 
