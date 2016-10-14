@@ -94,17 +94,13 @@ class Group < ActiveRecord::Base
     leaderships.group_by(&:person)
   end
 
-  def update_members_completion_score!
-    # TODO: this can be very slow for large teams e.g. NOMS
+  def average_completion_score
     people = all_people
-    score = if people.blank?
-              0
-            else
-              total_score = people.inject(0) do |total, person|
-                total + person.completion_score
-              end
-              (total_score / people.length.to_f).round(0)
-            end
+    people.blank? ? 0 : Person.average_completion_score(people.pluck(:id))
+  end
+
+  def update_members_completion_score!
+    score = average_completion_score
     update_columns(members_completion_score: score)
   end
 
