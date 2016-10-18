@@ -3,7 +3,7 @@ module PreviewHelper
   private
 
   def team
-    @team ||= Group.find_or_create_by(name: 'Testimus\'s Team', description: nil)
+    @team ||= Group.find_or_create_by(name: 'Preview Test Team', description: nil)
   end
 
   def recipient
@@ -11,7 +11,7 @@ module PreviewHelper
   end
 
   # person who caused email to be sent
-  # i.e. by updating/deleting another users profile
+  # e.g. by updating/deleting another users profile, suggesting a change
   def instigator
     @instigator ||= Person.find_or_create_by(given_name: 'Insti', surname: 'Gator', email: 'insti.gator@fake-moj.justice.gov.uk')
   end
