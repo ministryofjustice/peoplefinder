@@ -1,5 +1,6 @@
 # Do the gov-static, moj-base even exist?? docker output indicates not
 Rails.application.config.assets.precompile += %w(
+  peoplefinder/email.css
   peoplefinder/peoplefinder-ie7.css
   peoplefinder/peoplefinder-lt-ie9.css
   peoplefinder/peoplefinder-ie9.css
