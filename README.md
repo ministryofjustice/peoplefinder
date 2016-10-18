@@ -284,6 +284,11 @@ rake peoplefinder:import:csv_check[path]       # Check validity of CSV file befo
 rake peoplefinder:import:csv_import[path]      # Import valid CSV file
 ```
 
+
+### Mail previews
+
+Mail previews can be found at `http://localhost:3000/rails/mailers`, assuming the server is running locally on port 3000.
+
 ### Front end development
 
 A large part of the audience for Peoplefinder are, at time of writing, still reliant on
