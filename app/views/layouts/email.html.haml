@@ -1,0 +1,57 @@
+!!! Strict
+%html{:xmlns => "http://www.w3.org/1999/xhtml"}
+  %head
+    %meta{:content => "text/html; charset=utf-8", "http-equiv" => "Content-Type"}/
+    %meta{:content => "width=device-width, initial-scale=1.0", :name => "viewport"}/
+    %meta{:content => "noindex,nofollow", :name => "robots"}/
+    %meta{:content => "MOJ People Finder", :property => "og:title"}/
+    %title Ministry of Justice - People Finder
+    = stylesheet_link_tag "peoplefinder/email", media: "all"
+    :css
+      @media only screen and (max-device-width: 600px) {
+          table[class="body"] {
+              width: 100% !important;
+          }
+      }
+  %body
+    %table.main
+      %tbody
+        %tr
+          %td{:valign => "top"}
+
+            %table.banner
+              %tbody
+                %tr
+                  %td#moj-logo
+                    = image_tag image_url('moj_logo_email.png'), alt: 'Ministry of Justice'
+            %table
+              %tbody
+                %tr
+                  %td{height: "6", width: "600px"}
+                %tr
+                  %td.title-header
+                    %strong
+                      People Finder
+                %tr
+                  %td
+            = yield
+
+            %table
+              %tbody
+                %tr
+                  %td{height: "50", width: "600px"}
+
+            %table.footer
+              %tbody
+                %tr
+                  %td{colspan: "3", height: "15", width: "600px"}
+                %tr
+                  %td{width: "20px"}
+                  %td.footer-text{align: "left", :valign => "top", width: "560px"}
+                    If you're unsure an email is from the MOJ:
+                    %br/
+                    • forward it to
+                    %a{:href => "mailto:phishing@digital.justice.gov.uk", :target => "_blank"} phishing@digital.justice.gov.uk
+                  %td{width: "20px"}
+                %tr
+                  %td{colspan: "3", height: "40", width: "600px"}

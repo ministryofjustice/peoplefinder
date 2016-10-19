@@ -1,0 +1,71 @@
+* {
+  font-family: Arial, sans-serif;
+}
+
+body {
+  width:100% !important;
+  -webkit-text-size-adjust:100%;
+  -ms-text-size-adjust:100%;
+  margin: 0;
+  padding: 0;
+}
+
+table {
+  mso-table-lspace: 0pt;
+  mso-table-rspace: 0pt;
+  border-collapse: collapse;
+  padding: 0;
+  border-spacing: 0;
+  margin: auto;
+}
+table.banner {
+   background-color: #000000;
+   width: 600px;
+}
+table.main {
+  padding: 0;
+  width:100% !important;
+  line-height:100% !important;
+}
+table.footer {
+  border-top-width: 1px;
+  border-top-style: solid;
+  border-top-color: #a1acb2;
+  background-color: #DEE0E2;
+}
+
+td {
+  border-collapse: collapse;
+  min-width:10px;
+}
+td.title-header{
+  font-size: 22px;
+  padding-left: 20px;
+  width: 560px;
+  font-weight:normal;
+  line-height:normal;
+  color:#434343;
+  padding-bottom: 10px;
+}
+td#moj-logo {
+  width: 100%;
+  background-color: #000000;
+  padding: 5px 0 5px 20px;
+  img {
+    width: 40%;
+    height: auto;
+  }
+}
+td.footer-text {
+  font-size: 14px;
+  font-weight: normal;
+  line-height: 22px;
+  color: #373737;
+  a {
+    color: #097FC9;
+  }
+}
+
+.button {
+  font-size: 18px;
+}

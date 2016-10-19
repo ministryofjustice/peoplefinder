@@ -57,10 +57,13 @@ module Peoplefinder
     config.max_tokens_per_hour = ENV['MAX_TOKENS_PER_HOUR']
 
     config.action_mailer.default_url_options = {
-      host: ENV['ACTION_MAILER_DEFAULT_URL']
+      host: ENV['ACTION_MAILER_DEFAULT_URL'],
+      protocol: 'https'
     }
 
-    config.action_mailer.asset_host = ENV['ACTION_MAILER_DEFAULT_URL']
+    config.action_mailer.asset_host = config.action_mailer.default_url_options[:protocol] +
+                                      '://' +
+                                      (config.action_mailer.default_url_options[:host] || 'localhost')
 
     # Note: ENV is set to 'dev','staging','production' on dev,staging, production respectively
     config.send_reminder_emails = (ENV['ENV'] == 'production')
@@ -69,4 +72,5 @@ module Peoplefinder
     config.phase = 'live'
     config.feedback_url = 'https://docs.google.com/a/digital.justice.gov.uk/forms/d/1dJ9xQ66QFvk8K7raf60W4ZXfK4yTQ1U3EeO4OLLlq88/viewform'
   end
+
 end
