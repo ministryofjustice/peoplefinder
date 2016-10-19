@@ -1,0 +1,20 @@
+%table
+  %tbody
+    %tr
+      %td{:width => "20"}
+      %td{:width => "560"}
+        %table
+          %tbody
+            %tr
+              %td{:style => "padding-bottom: 20px;", :width => "560"}
+                Hello,
+            %tr
+              %td{:style => "line-height: 30px;", :width => "560"}
+                %p To access People Finder, visit #{link_to token_url(@token), token_url(@token), target: '_blank'} today. For security reasons, this link will be active for 3 hours only.
+                %p If you’ve not asked for access, please ignore this email.
+                %p If you have any questions about People Finder, ask your team lead for more information.
+            %tr
+              %td{:width => "560", :style => "line-height: 30px; padding-bottom: 40px;"}
+                %p The People Finder Team
+                %p This email is automatically generated. Do not reply.
+      %td{:width => "20"}
