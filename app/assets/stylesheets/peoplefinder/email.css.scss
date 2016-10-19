@@ -1,5 +1,7 @@
 * {
   font-family: Arial, sans-serif;
+  font-weight: normal;
+  font-size: 16px;
 }
 
 body {
@@ -39,13 +41,16 @@ td {
   min-width:10px;
 }
 td.title-header{
-  font-size: 22px;
   padding-left: 20px;
   width: 560px;
-  font-weight:normal;
-  line-height:normal;
+
   color:#434343;
   padding-bottom: 10px;
+  strong {
+  font-size: 22px;
+  font-weight: bold;
+  line-height: 200%;
+  }
 }
 td#moj-logo {
   width: 100%;
@@ -67,5 +72,21 @@ td.footer-text {
 }
 
 .button {
-  font-size: 18px;
+  font-size: 24px;
+  color: #ffffff;
+  font-size: 24px;
+  font-weight: normal;
+  text-decoration: none;
+  line-height: normal;
+}
+
+.button-container {
+  border-bottom-width: 2px;
+  border-bottom-style: solid;
+  border-bottom-color: #003518;
+  background-color: #00823b;
+  margin-left: 0;
+  td {
+    padding: 15px 15px;
+  }
 }
