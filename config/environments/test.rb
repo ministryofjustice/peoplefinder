@@ -14,5 +14,7 @@ Rails.application.configure do
     host: 'www.example.com',
     protocol: 'http'
   }
+  config.action_mailer.asset_host = 'http://www.example.com'
   config.active_job.queue_adapter = :test
+
 end
