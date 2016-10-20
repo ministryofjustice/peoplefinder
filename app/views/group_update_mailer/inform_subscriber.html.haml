@@ -1,25 +1,25 @@
 %table
   %tbody
     %tr
-      %td{:width => "20"}
-      %td{:align => "center", :valign => "top", :width => "560"}
+      %td{width: "20"}
+      %td{width: "560"}
         %table
           %tbody
             %tr
-              %td{:align => "left", :style => "padding-bottom: 20px;", :width => "560"}
+              %td{style: "padding-bottom: 20px;", width: "560"}
                 Hello,
             %tr
-              %td{:style => "line-height:30px; padding-bottom:20px;", :width => "560"}
+              %td{style: "line-height: 30px; padding-bottom:20px;", width: "560"}
                 %p
                   The #{@group} page on People Finder has been edited by #{@person_responsible}.
                 %p
                   To see the updated page, visit #{link_to @group_url, @group_url}.
             %tr
-              %td{ :style => "padding-bottom: 40px;", :width => "560"}
+              %td{style: "padding-bottom: 40px;", width: "560"}
                 %table.button-container
                   %tbody
                     %tr
                       %td
-                        %a.button{:href => "#{@group_url}", :target => "_blank"}
+                        %a.button{href: "#{@group_url}", target: "_blank"}
                           Log in to People Finder
-      %td{:width => "20"}
+      %td{width: "20"}

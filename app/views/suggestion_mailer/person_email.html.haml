@@ -1,0 +1,36 @@
+%table
+  %tbody
+    %tr
+      %td{width: "20"}
+      %td{width: "560"}
+        %table
+          %tbody
+            %tr
+              %td{ style: "padding-bottom: 20px;", width: "560"}
+                Hello,
+            %tr
+              %td{ style: "line-height: 30px; padding-bottom: 20px;", width: "560"}
+                %p
+                  = @suggester.name
+                  has suggested some improvements to your
+                  PeopleFinder profile.
+                - if @suggestion.missing_fields_info.present?
+                  %p
+                    They provided the following information about missing fields:
+                  %p
+                    = @suggestion.missing_fields_info
+                - if @suggestion.incorrect_fields_info.any?
+                  %p
+                    They suggested that the following fields were incorrect:
+                  %ol
+                    - @suggestion.incorrect_fields_info.each do |field|
+                      %li= field
+            %tr
+              %td{ :style => "padding-bottom: 40px;", width: "560"}
+                %table.button-container
+                  %tbody
+                    %tr
+                      %td
+                        %a.button{:href => "#{person_url(@person)}", :target => "_blank"}
+                          Log in to People Finder
+      %td{width: "20"}
