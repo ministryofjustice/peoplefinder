@@ -1,50 +1,42 @@
-%table
-  %tbody
-    %tr
-      %td{width: "20"}
-      %td{width: "560"}
-        %table
-          %tbody
-            %tr
-              %td{style: "padding-bottom: 20px;", width: "560"}
-                Hello,
-            %tr
-              %td{style: "line-height: 30px; padding-bottom:20px;", :width => "560"}
-                %p
-                  = @suggester.name
-                  suggested the following improvements to
-                  the profile of #{@person.name}:
-                - if @suggestion.duplicate_profile
-                  %p
-                    They suggested it was a duplicate profile.
-                - if @suggestion.inappropriate_content
-                  %p
-                    They suggested it contains inappropriate content.
-                - if @suggestion.inappropriate_content_info.present?
-                  %p
-                    They provided the following information about inappropriate content:
-                  %p
-                    = @suggestion.inappropriate_content_info
-                - if @suggestion.person_left
-                  %p
-                    They suggested that the person left the organisation.
-                  %p
-                    To update this person’s information, just:
-                  %ul
-                    %li Go to their profile page
-                    %li Click the Edit this profile link in the top right hand corner
-                    %li Make any changes or delete their profile if they’ve left
-                - if @suggestion.person_left_info.present?
-                  %p
-                    They provided the following information about the person leaving:
-                  %p
-                    = @suggestion.person_left_info
-            %tr
-              %td{style: "padding-bottom: 40px;", width: "560"}
-                %table.button-container
-                  %tbody
-                    %tr
-                      %td
-                        %a.button{href: "#{person_url(@person)}", target: "_blank"}
-                          Log in to People Finder
-      %td{width: "20"}
+%tr
+  %td{ align:"left", valign: "top", style: "padding-bottom: 20px;", width: "560" }
+    Hello,
+%tr
+  %td{ align:"left", valign: "top", style: "line-height: 30px; padding-bottom:20px;", width: "560" }
+    %p
+      = @suggester.name
+      suggested the following improvements to
+      the profile of #{@person.name}:
+    - if @suggestion.duplicate_profile
+      %p
+        They suggested it was a duplicate profile.
+    - if @suggestion.inappropriate_content
+      %p
+        They suggested it contains inappropriate content.
+    - if @suggestion.inappropriate_content_info.present?
+      %p
+        They provided the following information about inappropriate content:
+      %p
+        = @suggestion.inappropriate_content_info
+    - if @suggestion.person_left
+      %p
+        They suggested that the person left the organisation.
+      %p
+        To update this person’s information, just:
+      %ul
+        %li Go to their profile page
+        %li Click the Edit this profile link in the top right hand corner
+        %li Make any changes or delete their profile if they’ve left
+    - if @suggestion.person_left_info.present?
+      %p
+        They provided the following information about the person leaving:
+      %p
+        = @suggestion.person_left_info
+%tr
+  %td{ align: "center", valign: "top", style: "padding-bottom: 40px;", width: "560" }
+    %table.button-container{ cellpadding: "15", cellspacing: "0", border: "0", align: "left", bgcolor: "#00823b" }
+      %tbody
+        %tr
+          %td{ align: "left", valign: "middle", bgcolor: "#00823b" }
+            %a.button{href: "#{person_url(@person)}", target: "_blank"}
+              Log in to People Finder
