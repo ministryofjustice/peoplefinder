@@ -1,0 +1,17 @@
+%tr
+  %td{ align:"left", valign: "top", style: "padding-bottom: 20px;", width: "560" }
+    Hello #{@name},
+%tr
+  %td{ align:"left", valign: "top", style: "line-height: 30px; padding-bottom: 20px;", width: "560" }
+    %p
+      Just to let you know that your People Finder profile linked to this email address has been deleted
+      - if @by_email.present?
+        by #{@by_email}
+      \.
+    %p
+      If you have any questions about what’s happened, please ask your team lead or the person who deleted your profile.
+    %p
+      The People Finder Team
+    %p
+      This email is automatically generated. Do not reply.
+    %p

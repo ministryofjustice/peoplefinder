@@ -1,0 +1,11 @@
+%tr
+  %td{ align:"left", valign: "top", style: "font-size: 20px; padding-bottom: 30px;", width: "560" }
+    Log in to complete your People finder profile
+%tr
+  %td{ align:"left", valign: "top", width: "560" }
+    Hello #{@person.given_name},
+%tr
+  %td{ align: "left", valign: "top", style: "line-height: 30px;", width: "560" }
+    %p It only takes a couple of minutes to complete your People Finder profile and adding up-to-date details will make it easier for colleagues to collaborate and communicate with you.
+    %p Use this secure link #{link_to @token_url, @token_url, target: '_blank'} to be taken to your ‘edit profile’ page. If you don’t use this link in the next 3 hours you’ll be asked to request a new one.
+    %p You’ll stop receiving emails once you’ve completed your profile.

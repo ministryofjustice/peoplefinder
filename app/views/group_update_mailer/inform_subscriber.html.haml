@@ -1,0 +1,17 @@
+%tr
+  %td{ align:"left", valign: "top", style: "padding-bottom: 20px;", width: "560" }
+    Hello,
+%tr
+  %td{ align:"left", valign: "top", style: "line-height: 30px; padding-bottom:20px;", width: "560" }
+    %p
+      The #{@group} page on People Finder has been edited by #{@person_responsible}.
+    %p
+      To see the updated page, visit #{link_to @group_url, @group_url}.
+%tr
+  %td{ align: "center", valign: "top", style: "padding-bottom: 40px;", width: "560" }
+    %table.button-container{ cellpadding: "15", cellspacing: "0", border: "0", align: "left", bgcolor: "#00823b" }
+      %tbody
+        %tr
+          %td{ align: "left", valign: "middle", bgcolor: "#00823b" }
+            %a.button{href: "#{@group_url}", target: "_blank"}
+              Log in to People Finder

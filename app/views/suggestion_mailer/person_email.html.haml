@@ -1,0 +1,28 @@
+%tr
+  %td{ align:"left", valign: "top", style: "padding-bottom: 20px;", width: "560" }
+    Hello,
+%tr
+  %td{ align:"left", valign: "top", style: "line-height: 30px; padding-bottom: 20px;", width: "560" }
+    %p
+      = @suggester.name
+      has suggested some improvements to your
+      PeopleFinder profile.
+    - if @suggestion.missing_fields_info.present?
+      %p
+        They provided the following information about missing fields:
+      %p
+        = @suggestion.missing_fields_info
+    - if @suggestion.incorrect_fields_info.any?
+      %p
+        They suggested that the following fields were incorrect:
+      %ol
+        - @suggestion.incorrect_fields_info.each do |field|
+          %li= field
+%tr
+  %td{ align: "center", valign: "top", style: "padding-bottom: 40px;", width: "560" }
+    %table.button-container{ cellpadding: "15", cellspacing: "0", border: "0", align: "left", bgcolor: "#00823b" }
+      %tbody
+        %tr
+          %td{ align: "left", valign: "middle", bgcolor: "#00823b" }
+            %a.button{ href: "#{person_url(@person)}", target: "_blank" }
+              Log in to People Finder
