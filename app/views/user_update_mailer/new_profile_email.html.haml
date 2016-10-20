@@ -1,0 +1,42 @@
+%table
+  %tbody
+    %tr
+      %td{width: "20"}
+      %td{width: "560"}
+        %table
+          %tbody
+            %tr
+              %td{style: "padding-bottom: 20px;", width: "560"}
+                Hello #{@person.given_name},
+            %tr
+              %td{style: "line-height: 30px; padding-bottom: 20px;", width: "560"}
+                %p
+                  You’ve just been added to MOJ People Finder - the new and secure way to
+                  share your details and find colleagues across the whole MoJ
+                  - if @by_email
+                    \- by #{@by_email}
+                  \.
+                %p
+                  To check your profile, visit
+                  \#{link_to @profile_url, @profile_url} today.
+                %p
+                  It’s easy to view and update your MOJ People Finder profile. You can only do this on an official network (such as DOM1 or Quantum) or through logging in using an official email address. People outside MoJ cannot view your profile or access your information.
+                %p
+                  The more details you add, the easier it is for colleagues to
+                  recognise and get in touch with you when you’re working.
+                %p
+                  If you have any questions about MOJ People Finder, ask your team
+                  lead or check the intranet for more information.
+                %p
+                  The MOJ People Finder Team
+                %p
+                  This email is automatically generated. Do not reply.
+            %tr
+              %td{style: "padding-bottom: 40px;", width: "560"}
+                %table.button-container
+                  %tbody
+                    %tr
+                      %td
+                        %a.button{href: "#{@profile_url}", target: "_blank"}
+                          Log in to People Finder
+      %td{width: "20"}
