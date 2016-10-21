@@ -33,6 +33,8 @@ RSpec.describe UserUpdateMailer do
   describe ".updated_profile_email" do
     subject(:mail) { described_class.updated_profile_email(person).deliver_now }
 
+    include_examples 'common mailer template elements'
+
     it 'includes the person show url' do
       %w(plain html).each do |part_type|
         expect(get_message_part(mail, part_type)).to have_text(person_url(person))

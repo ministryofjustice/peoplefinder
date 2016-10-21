@@ -65,6 +65,7 @@ RSpec.describe ReminderMailer do
   describe '.never_logged_in' do
     let(:mail) { described_class.never_logged_in(person).deliver_now }
 
+    include_examples 'common mailer template elements'
     include_examples 'sets email to and from correctly'
     include_examples 'subject contains', 'Are your People Finder details up to date?'
     include_examples 'body contains', 'Hello John'
@@ -74,6 +75,7 @@ RSpec.describe ReminderMailer do
   describe '.team_description_missing' do
     let(:mail) { described_class.team_description_missing(person, group).deliver_now }
 
+    include_examples 'common mailer template elements'
     include_examples 'sets email to and from correctly'
     include_examples 'subject contains', 'Improve your team’s profile on People Finder'
     include_examples 'body contains', 'Hello John'
@@ -83,6 +85,7 @@ RSpec.describe ReminderMailer do
   describe '.person_profile_update' do
     let(:mail) { described_class.person_profile_update(person).deliver_now }
 
+    include_examples 'common mailer template elements'
     include_examples 'sets email to and from correctly'
     include_examples 'subject contains', 'Are your People Finder details up to date?'
     include_examples 'body contains', 'Hello John'
