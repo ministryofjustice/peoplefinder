@@ -13,6 +13,8 @@ RSpec.describe GroupUpdateMailer do
         deliver_now
     end
 
+    include_examples 'common mailer template elements'
+
     it 'includes the name of the group changed' do
       %w(plain html).each do |part_type|
         expect(get_message_part(mail, part_type)).to have_text(group.name)

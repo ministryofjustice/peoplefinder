@@ -25,7 +25,10 @@ RSpec.describe SuggestionMailer do
         incorrect_location_of_work: true
       }
     end
+
     let(:mail) { described_class.person_email(person, suggester, suggestion_hash).deliver_now }
+
+    include_examples 'common mailer template elements'
 
     it 'is sent from the support address' do
       expect(mail.from).to include(Rails.configuration.support_email)
@@ -75,6 +78,8 @@ RSpec.describe SuggestionMailer do
         admin
       ).deliver_now
     end
+
+    include_examples 'common mailer template elements'
 
     it 'is sent from the support address' do
       expect(mail.from).to include(Rails.configuration.support_email)
