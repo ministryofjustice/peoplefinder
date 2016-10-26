@@ -94,7 +94,7 @@ RSpec.describe Group, type: :model do
   end
 
   describe '.destroy' do
-    let(:group) { create(:group) }
+    let!(:group) { create(:group) }
 
     it 'persists the record and add an error message when it is not deletable' do
       allow(group).to receive(:deletable?).once.and_return(false)

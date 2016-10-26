@@ -81,7 +81,7 @@ group :development, :test do
   gem 'poltergeist'
   gem 'pry-rails'
   gem 'pry-byebug'
-  gem 'rspec-rails', '>= 3.4'
+  gem 'rspec-rails', '~> 3.5', '>= 3.5.1'
   gem 'shoulda-matchers'
   gem 'simplecov'
   gem 'simplecov-rcov'
@@ -90,7 +90,6 @@ group :development, :test do
   gem 'jasmine-rails'
   gem 'rubocop'
   gem 'rubocop-rspec'
-  gem 'rspec-activejob'
   gem 'annotate'
 end
 
