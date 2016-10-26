@@ -14,6 +14,7 @@ Rails.application.routes.draw do
     get :people, on: :member, action: 'all_people'
     get :"people-outside-subteams", on: :member, action: 'people_outside_subteams'
     get :organogram, on: :member, action: 'organogram'
+    get :structure, on: :member, action: 'structure'
   end
 
   resources :people do

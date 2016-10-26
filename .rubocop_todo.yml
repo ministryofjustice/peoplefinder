@@ -17,6 +17,7 @@ Metrics/ClassLength:
   Exclude:
     - 'app/controllers/people_controller.rb'
     - 'app/models/person.rb'
+    - 'app/controllers/groups_controller.rb'
 
 
 # Offense count: 259
