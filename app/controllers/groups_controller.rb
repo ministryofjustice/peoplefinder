@@ -23,7 +23,7 @@ class GroupsController < ApplicationController
 
     respond_to do |format|
       format.html { session[:last_group_visited] = @group.id }
-      format.js { render :json => @group.as_json(:include => [{:children => {methods: [:all_people_count], :include => [:children, {:leaderships => {:include => {:person => {:include => :profile_photo}}}}]}}]) }
+      format.js { render json: group_structure_json }
     end
   end
 
@@ -119,6 +119,19 @@ class GroupsController < ApplicationController
 
   def set_org_structure
     @org_structure = Group.hierarchy_hash
+  end
+
+  def group_structure_json
+    @group.as_json(include:
+    [{
+      children: {
+        methods:  [:all_people_count],
+        include:  [:children, { leaderships:
+                                { include: { person: { include: :profile_photo } } }
+                              }
+                  ]
+      }
+    }])
   end
 
   # Never trust parameters from the scary internet, only allow the white list
