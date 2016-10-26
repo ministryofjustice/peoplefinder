@@ -19,18 +19,6 @@
             = render partial: 'leaderships', object: leaderships, locals: { person: person }
             .tel= person.primary_phone_number
 
-  - if @group.children.present?
-    %div.inner-block
-      %div.grid-wrapper.teams
-        %h2 Teams
-        - @group.children.each do |subgroup|
-          %div.team
-            .image-background
-              .maginot
-                =image_tag ('medium_team.png')
-            %a{ href: url_for(subgroup) }
-              %h3= subgroup
-
   - if @group.people_outside_subteams.present?
     %div.inner-block
       %div.grid-wrapper.people
@@ -42,3 +30,15 @@
             %h4= link_to person, person
             .role= person.role_names
             .tel= person.primary_phone_number
+
+  - if @group.children.present?
+    %div.inner-block
+      %div.grid-wrapper.teams
+        %h2 Teams
+        - @group.children.each do |subgroup|
+          %div.team
+            .image-background
+              .maginot
+                =image_tag ('medium_team.png')
+            %a{ href: url_for(subgroup) }
+              %h3= subgroup
