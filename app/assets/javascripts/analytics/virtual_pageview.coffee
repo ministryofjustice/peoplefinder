@@ -7,6 +7,9 @@ root.VirtualPageview = (->
   bindLinks = ->
     $('a[data-virtual-pageview]').click onClick
 
+  bindButtons = ->
+   $('input.button[data-virtual-pageview]').click onClick
+
   onClick = (event) ->
     element = event.currentTarget
     urls = $(element).data('virtual-pageview').split(',')
@@ -15,4 +18,5 @@ root.VirtualPageview = (->
     return true
 
   bindLinks: bindLinks
+  bindButtons: bindButtons
 )()

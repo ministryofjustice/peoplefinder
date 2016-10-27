@@ -10,17 +10,16 @@ module AnalyticsHelper
 
   def request_token_analytics_attributes
     {
-      'virtual-pageview': '/token-request',
-      'event-category': 'Tokens',
-      'event-action': 'Click request link'
+      'virtual-pageview': '/token-request'
     }
   end
 
-  def spend_token_analytics_attributes
-    {
-      'virtual-pageview': '/token-spend',
-      'event-category': 'Tokens',
-      'event-action': 'Click token link in email'
-    }
-  end
+  # TODO: (or NOT) the email will need to have all the GA account details
+  # def spend_token_analytics_attributes
+  #   {
+  #     'virtual-pageview': '/token-spend',
+  #     'event-category': 'Tokens',
+  #     'event-action': 'Click token link in email'
+  #   }
+  # end
 end
