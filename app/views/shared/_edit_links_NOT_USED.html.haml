@@ -7,4 +7,4 @@
     = link_to 'Add new sub-team', new_group_group_path(@group), class: 'add-new-sub-team'
 
   - if @person
-    = link_to 'Edit this profile', edit_person_path(@person), class: 'edit-this-person'
+    = edit_person_link 'Edit this profile', @person, class: 'edit-this-person'

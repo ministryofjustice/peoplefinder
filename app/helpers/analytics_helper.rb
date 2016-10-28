@@ -8,18 +8,17 @@ module AnalyticsHelper
     }
   end
 
-  def request_token_analytics_attributes
+  def token_request_analytics_attributes
     {
-      'virtual-pageview': '/token-request'
+      'virtual-pageview': '/sessions/token-request'
     }
   end
 
-  # TODO: (or NOT) the email will need to have all the GA account details
-  # def spend_token_analytics_attributes
-  #   {
-  #     'virtual-pageview': '/token-spend',
-  #     'event-category': 'Tokens',
-  #     'event-action': 'Click token link in email'
-  #   }
-  # end
+  def edit_profile_analytics_attributes(person_id = nil)
+    {
+      'virtual-pageview': '/people/edit-click',
+      'event-category': 'Edit profile click',
+      'event-action': "Click edit person #{person_id}"
+    }
+  end
 end

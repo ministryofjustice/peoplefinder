@@ -3,7 +3,7 @@
     = @page_title = @person
     - if @person.persisted?
       %div.heading-links
-        = link_to 'Edit this profile', edit_person_path(@person), class: 'small'
+        = edit_person_link 'Edit this profile', @person, class: 'small'
 
 .grid-wrapper.profile
   .grid.grid-1-3
