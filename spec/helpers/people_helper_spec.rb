@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe PeopleHelper, type: :helper do
+  include PermittedDomainHelper
+
   describe 'day_name' do
     it "returns a name for each day" do
       expect(day_name(:works_wednesday)).to eql("Wednesday")
@@ -33,7 +35,7 @@ RSpec.describe PeopleHelper, type: :helper do
     end
   end
 
-  describe 'person_image_tag' do
+  describe 'profile_image_tag' do
     let(:person)  { build(:person, :with_photo) }
     let(:options) { { class: 'my-class', version: :preview } }
 
@@ -58,6 +60,25 @@ RSpec.describe PeopleHelper, type: :helper do
       person.profile_photo_id = nil
       expect(profile_image_tag(person, options)).to match(/.*\/medium_no_photo.png.*/)
     end
-
   end
+
+  describe 'edit_person_link' do
+    include AnalyticsHelper
+
+    let(:person) { create :person, slug: 'fred-bloggs' }
+
+    it 'builds an anchor tag reference to edit page for the person' do
+      expect(edit_person_link('Edit profile', person)).to match(/href=\"\/people\/fred-bloggs\/edit\"/)
+    end
+
+    it 'inserts activity option as url param' do
+      expect(edit_person_link('Edit profile', person, activity: 'complete')).to include '?activity=complete'
+    end
+
+    it 'sends message to contruct google analytics attributes' do
+      expect(self).to receive(:edit_profile_analytics_attributes).with(person.id)
+      edit_person_link('Edit profile', person)
+    end
+  end
+
 end

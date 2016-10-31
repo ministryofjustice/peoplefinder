@@ -7,6 +7,6 @@
   - unless @preview
     - if person.incomplete?
       - complete_text = (current_user == person) ? 'complete your profile' : 'complete this profile'
-      %p= link_to complete_text, edit_person_path(person, activity: 'complete')
+      %p= edit_person_link(complete_text, person, activity: 'complete')
     - else
       %p Thanks for improving People Finder for everyone!

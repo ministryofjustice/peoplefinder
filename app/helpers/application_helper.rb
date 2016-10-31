@@ -97,15 +97,6 @@ module ApplicationHelper
     I18n.t([key, subkey].join('.'), options.merge(name: user))
   end
 
-  def search_result_analytics_attributes(index)
-    pageview_path = index < 3 ? '/top-3-search-result' : '/below-top-3-search-result'
-    {
-      'virtual-pageview': "/search-result,#{pageview_path}",
-      'event-category': 'Search result click',
-      'event-action': "Click result #{'%03d' % (index + 1)}"
-    }
-  end
-
   private
 
   def updated_at(datetime)

@@ -26,6 +26,14 @@ module PeopleHelper
     profile_image_div 'medium_team.png', "Team icon for #{team.name}", options
   end
 
+  def edit_person_link(name, person, options = {})
+    link_to name,
+      edit_person_path(person, activity: options[:activity]),
+      options.
+      except(:activity).
+      merge(data: edit_profile_analytics_attributes(person.id))
+  end
+
   def profile_image_div source, alt_text, options
     content_tag(:div, class: 'maginot') do
       image_tag(source, options.merge(alt: alt_text)) +

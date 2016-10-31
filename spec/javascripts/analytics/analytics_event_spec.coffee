@@ -3,7 +3,7 @@
 describe 'AnalyticsEvent', ->
   element = null
 
-  describe 'given "data-event-category" anchor link', ->
+  describe 'given there is "data-event-category" anchor link', ->
 
     beforeEach ->
       element = $('<body>' +
@@ -18,7 +18,7 @@ describe 'AnalyticsEvent', ->
       element.remove()
       element = null
 
-    describe 'click on "data-event-label" element', ->
+    describe 'when I click on "data-event-label" element', ->
       it "dispatches analytics event", ->
         spyOn window, 'dispatchAnalyticsEvent'
         $('#a_link').trigger 'click'

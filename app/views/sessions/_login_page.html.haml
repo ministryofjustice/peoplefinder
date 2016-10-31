@@ -30,7 +30,7 @@
       = f.hidden_field(:unauthorised_login, value: @unauthorised_login)
 
     .spacer-20
-    = f.submit t('.log_in_email'), class: 'button'
+    = f.submit t('.log_in_email'), { class: 'button', data: token_request_analytics_attributes }
 
   %hr
   .spacer-5
