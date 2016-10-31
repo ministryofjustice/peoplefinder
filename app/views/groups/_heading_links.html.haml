@@ -1,0 +1,4 @@
+%div.heading-links
+  - if @group.children.count > 0
+    = link_to "View #{pluralize_with_delimiter @group.children.count, 'sub-team'}", '#teams', class: 'small link-left'
+  = link_to 'Edit this team', edit_group_path(@group), { class: 'small', data: edit_team_analytics_attributes(@group.id) }

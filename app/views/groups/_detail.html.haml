@@ -1,29 +1,20 @@
 - @page_title = @group
 .group-title.line-below
   - if @group.acronym?
-    %h1.no-line= @group.acronym
+    %h1.no-line
+      = @group.acronym
     %h2
       = @group.name
-      %div.heading-links
-        - if @group.children.count > 0
-          = link_to "View #{pluralize_with_delimiter @group.children.count, 'sub-team'}", '#teams', class: 'small link-left'
-        = link_to 'Edit this team', edit_group_path(@group), class: 'small'
-
+      = render partial: 'heading_links'
   - else
     %h1.no-line
       = @group.name
-      %div.heading-links
-        - if @group.children.count > 0
-          = link_to "View #{pluralize_with_delimiter @group.children.count, 'sub-team'}", '#teams', class: 'small link-left'
-        = link_to 'Edit this team', edit_group_path(@group), class: 'small'
-
+      = render partial: 'heading_links'
 
 %div.grid-wrapper.details
   - if @group.leaderships.count > 0
     %div.grid.grid-1-3
-
       %div.inner-block.group-leader{ class: (@group.leaderships.count > 1) ? 'multiple-leaders' : '' }
-
         %h3 Team #{'leader'.pluralize(@group.leaderships.count)}
         - @group.leaderships_by_person.each do |person, leaderships|
           = render partial: 'leaderships', object: leaderships, locals: { person: person }
