@@ -21,4 +21,12 @@ module AnalyticsHelper
       'event-action': "Click edit person #{person_id}"
     }
   end
+
+  def edit_team_analytics_attributes(team_id = nil)
+    {
+      'virtual-pageview': '/teams/edit-click',
+      'event-category': 'Edit team click',
+      'event-action': "Click edit team #{team_id}"
+    }
+  end
 end
