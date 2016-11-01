@@ -271,6 +271,7 @@ GEM
     formatador (0.2.5)
     friendly_id (5.0.5)
       activerecord (>= 4.0.0)
+    geckoboard-ruby (0.3.0)
     git-version-bump (0.15.1)
     globalid (0.3.7)
       activesupport (>= 4.1.0)
@@ -632,6 +633,7 @@ DEPENDENCIES
   fog
   foreman
   friendly_id (~> 5.0.0)
+  geckoboard-ruby (~> 0.3.0)
   govspeak
   govuk_frontend_toolkit
   govuk_template
