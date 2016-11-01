@@ -70,6 +70,7 @@ group :test do
   gem 'codeclimate-test-reporter', require: nil
   gem 'database_cleaner'
   gem 'site_prism'
+  gem 'webmock'
 end
 
 group :development, :test do

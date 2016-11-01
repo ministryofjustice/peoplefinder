@@ -4,6 +4,7 @@ class Person < ActiveRecord::Base
   include Concerns::Completion
   include Concerns::WorkDays
   include Concerns::ExposeMandatoryFields
+  include Concerns::GeckoboardDatasets
 
   belongs_to :profile_photo
 
