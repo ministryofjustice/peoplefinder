@@ -69,19 +69,21 @@ class ApplicationController < ActionController::Base
 
   def desired_path person
     path = session.delete(:desired_path) || person_path(person, prompt: :profile)
-    if desired_new_person_path?(path, person)
-      path = person_path(person, prompt: :profile)
-      notice :profile_created_from_login
+    if person_just_created(person)
+      # if path == new_person_path
+      #   path = person_path(person, prompt: :profile)
+      # end
+      # flash[:notice] = I18n.t('.profile_created_from_login_html', href: person_path(person, prompt: :profile)).html_safe
+      html_safe_notice :profile_created_from_login_html, href: edit_person_path(person)
+      # , link: view_context.link_to('here', person_path(person, prompt: :profile))
+      # notice :profile_created_from_login_html, href: edit_person_path(person), html_safe: true
     end
     path
   end
 
-  def desired_new_person_path? desired_path, person
-    [
-      desired_path == new_person_path,
-      person.present?,
+  def person_just_created person
+      person.present? &&
       person.created_at > DateTime.current-10.seconds
-    ].all?
   end
 
   def i18n_flash(type, *partial_key, **options)
@@ -89,6 +91,10 @@ class ApplicationController < ActionController::Base
       :controllers, controller_path, *partial_key
     ].join('.')
     flash[type] = I18n.t(full_key, options)
+  end
+
+  def html_safe_notice(*partial_key, **options)
+    i18n_flash :html_safe_notice, partial_key, options
   end
 
   def notice(*partial_key, **options)

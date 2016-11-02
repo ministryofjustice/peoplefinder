@@ -8,6 +8,7 @@ feature 'Login flow' do
   let(:current_time) { Time.now }
 
   let(:edit_profile_page) { Pages::EditProfile.new }
+  let(:edit_group_page) { Pages::EditGroup.new}
   let(:new_profile_page) { Pages::NewProfile.new }
   let(:profile_page) { Pages::Profile.new }
   let(:login_page) { Pages::Login.new }
@@ -70,6 +71,29 @@ feature 'Login flow' do
         expect(profile_page.body).to include 'Your profile did not exist so we created it for you.'
       end
     end
+
+    context 'when editing a team without having my own profile' do
+      let(:group) { create :group }
+      scenario 'flashes a notice that their own profile was just created' do
+        visit edit_group_path group
+        expect(login_page).to be_displayed
+        token_log_in_as(email)
+        expect(edit_group_page.current_url).to eql page.current_url
+        expect(edit_group_page.body).to include 'Your profile did not exist so we created it for you.'
+      end
+    end
+
+    context 'when editing a profile without having my own profile' do
+      let(:person) { create :person }
+      scenario 'flashes a notice that their own profile was just created' do
+        visit edit_person_path person
+        expect(login_page).to be_displayed
+        token_log_in_as(email)
+        expect(edit_group_page.current_url).to eql page.current_url
+        expect(edit_profile_page.body).to include 'Your profile did not exist so we created it for you.'
+      end
+    end
+
   end
 
 end
