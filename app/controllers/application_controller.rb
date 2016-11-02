@@ -64,10 +64,24 @@ class ApplicationController < ActionController::Base
   def login_person(person)
     login_service = Login.new(session, person)
     login_service.login
+    redirect_to desired_path(person)
+  end
 
+  def desired_path person
     path = session.delete(:desired_path) || person_path(person, prompt: :profile)
+    if desired_new_person_path(path, person)
+      path = person_path(person, prompt: :profile)
+      notice :profile_created_from_login
+    end
+    path
+  end
 
-    redirect_to path
+  def desired_new_person_path desired_path, person
+    [
+      desired_path == new_person_path,
+      person.present?,
+      person.created_at > DateTime.now-10.seconds
+    ].all?
   end
 
   def i18n_flash(type, *partial_key, **options)

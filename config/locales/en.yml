@@ -20,6 +20,8 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
+  shared:
+    profile_created_from_login: &profile_created_from_login "Your profile did not exist so we created it for you. Now you can add details."
   time:
     formats:
       default: "%d %b %Y %H:%M"
@@ -62,10 +64,13 @@ en:
       message_sent: "Your message has been sent to %{person}"
     memberships:
       member_removed: "Removed %{person} from %{group}"
+    sessions:
+      profile_created_from_login: *profile_created_from_login
     tokens:
       expired_token: |
         The authentication token has expired.
         Request a new link to log in.
+      profile_created_from_login: *profile_created_from_login
     admin/person_uploads:
         upload_succeeded: "Successfully uploaded %{count} people"
         upload_failed: "Upload failed"
