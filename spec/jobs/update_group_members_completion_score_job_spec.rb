@@ -49,9 +49,6 @@ RSpec.describe UpdateGroupMembersCompletionScoreJob, type: :job do
       perform_enqueued_jobs { enqueue_job }
     end
 
-    xit 'returns success to prevent retry of job' do
-      expect(described_class.perform_now(group)).to eq true
-    end
   end
 
   context 'when called' do

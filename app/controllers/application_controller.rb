@@ -69,18 +69,18 @@ class ApplicationController < ActionController::Base
 
   def desired_path person
     path = session.delete(:desired_path) || person_path(person, prompt: :profile)
-    if desired_new_person_path(path, person)
+    if desired_new_person_path?(path, person)
       path = person_path(person, prompt: :profile)
       notice :profile_created_from_login
     end
     path
   end
 
-  def desired_new_person_path desired_path, person
+  def desired_new_person_path? desired_path, person
     [
       desired_path == new_person_path,
       person.present?,
-      person.created_at > DateTime.now-10.seconds
+      person.created_at > DateTime.current-10.seconds
     ].all?
   end
 

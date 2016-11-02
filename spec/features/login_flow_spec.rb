@@ -10,9 +10,9 @@ feature 'Login flow' do
   let(:edit_profile_page) { Pages::EditProfile.new }
   let(:new_profile_page) { Pages::NewProfile.new }
   let(:profile_page) { Pages::Profile.new }
+  let(:login_page) { Pages::Login.new }
   let(:search_page) { Pages::Search.new }
   let(:base_page) { Pages::Base.new }
-
 
   context 'Choosing to login' do
     scenario 'When user logs in for the first time, they see their profile' do
@@ -48,21 +48,28 @@ feature 'Login flow' do
     end
   end
 
-  context 'Prompted to login' do
-    context 'clicking create a profile' do
-      context 'with pre-existing profile' do
-        scenario do
-          create(:person, email: email)
-          omni_auth_log_in_as(email)
-          expect(new_profile_page).to be_displayed
-        end
+  context 'Unlogged-in User prompted to login' do
+
+    context 'when creating a profile and I have my own profile' do
+      scenario 'redirects to new profile page' do
+        create(:person, email: email, created_at: 1.minute.ago)
+        visit new_person_path
+        expect(login_page).to be_displayed
+        token_log_in_as(email)
+        expect(new_profile_page).to be_displayed
+        expect(profile_page.body).to include 'You are creating a profile'
       end
-      context 'without have profile' do
-        scenario do
-          omni_auth_log_in_as(email)
-          expect(profile_page).to be_displayed
-        end
+    end
+
+    context 'when creating a profile without having my own profile' do
+      scenario 'redirects to their own just created profile page and flashes a notice' do
+        visit new_person_path
+        expect(login_page).to be_displayed
+        token_log_in_as(email)
+        expect(profile_page).to be_displayed
+        expect(profile_page.body).to include 'Your profile did not exist so we created it for you.'
       end
     end
   end
+
 end
