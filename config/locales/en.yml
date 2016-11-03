@@ -20,7 +20,6 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
-  # profile_created_from_login_html: "Your profile did not exist so we created it for you. Click <a href=\"%{href}\">here</a> to edit."
   shared:
     profile_created_from_login_html: &profile_created_from_login_html "Your profile did not exist so we created it for you. Click <a href=\"%{href}\">here</a> to edit."
   time:
