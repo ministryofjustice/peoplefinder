@@ -66,8 +66,8 @@ feature 'Login flow' do
     let(:other_person) { create :person }
 
     context 'when I have a profile' do
-      scenario 'creating a new profile redirects via login back to new profile page with no flash' do
-        create(:person, email: email, created_at: 1.minute.ago)
+      scenario 'creating a new profile redirects via login back to new profile page with NO flash notice' do
+        create(:person, email: email)
         visit new_person_path
         token_login_step_with_expectation
         expect(new_profile_page).to be_displayed
@@ -75,7 +75,7 @@ feature 'Login flow' do
       end
     end
 
-    context 'when I don\'t have a profile' do
+    context 'when I do not have a profile' do
       scenario 'creating a new profile redirects via login to new profile page and flashes a notice that their own profile was just created' do
         visit new_person_path
         token_login_step_with_expectation

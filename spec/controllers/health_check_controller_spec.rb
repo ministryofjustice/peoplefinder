@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe HealthCheckController, type: :controller do
+RSpec.describe HealthCheckController, type: :controller do
   describe 'INDEX' do
     it 'returns  200 if successful' do
       service = double HealthCheckService

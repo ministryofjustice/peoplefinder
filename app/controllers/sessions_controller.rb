@@ -1,10 +1,12 @@
 class SessionsController < ApplicationController
+  include SessionPersonCreator
+
   skip_before_action :ensure_user
 
   before_action :set_login_screen_flag
 
   def create
-    person = FindCreatePerson.from_auth_hash(auth_hash)
+    person = person_from_auth_hash(auth_hash)
 
     if person
       login_person(person)

@@ -1,5 +1,7 @@
 require 'secure'
 class TokensController < ApplicationController
+  include SessionPersonCreator
+
   skip_before_action :ensure_user
   before_action :ensure_token_auth_enabled!
 

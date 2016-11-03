@@ -68,13 +68,7 @@ class ApplicationController < ActionController::Base
   end
 
   def desired_path person
-    path = session.delete(:desired_path) || person_path(person, prompt: :profile)
-    html_safe_notice :profile_created_from_login_html, href: edit_person_path(person) if person_just_created?(person)
-    path
-  end
-
-  def person_just_created? person
-    person.present? && person.created_at > 10.seconds.ago
+    session.delete(:desired_path) || person_path(person, prompt: :profile)
   end
 
   def i18n_flash(type, *partial_key, **options)
