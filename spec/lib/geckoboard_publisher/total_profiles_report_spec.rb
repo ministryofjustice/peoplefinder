@@ -64,10 +64,9 @@ RSpec.describe GeckoboardPublisher::TotalProfilesReport do
 
     it 'returns expected dataset items' do
       expected_items.each do |item|
-        expect(subject).to include item
+        is_expected.to include item
       end
     end
-
   end
 
 end

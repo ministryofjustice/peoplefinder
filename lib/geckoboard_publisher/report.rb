@@ -22,7 +22,7 @@ module GeckoboardPublisher
     # geckoboard-ruby gem's dataset.find_or_create id attribute
     # e.g. peoplefinder-staging.total_profiles_report
     def id
-        Rails.application.class.parent_name.underscore +
+      Rails.application.class.parent_name.underscore +
         '-' +
         Rails.env.downcase +
         '.' +
@@ -60,12 +60,10 @@ module GeckoboardPublisher
     end
 
     def test_client
-      begin
-        @client.ping
-      rescue Geckoboard::UnauthorizedError => err
-        Rails.logger.warn "#{err} Geckoboard API key is not authorized for #{self.class}"
-        raise
-      end
+      @client.ping
+    rescue Geckoboard::UnauthorizedError => err
+      Rails.logger.warn "#{err} Geckoboard API key is not authorized for #{self.class}"
+      raise
     end
   end
 end

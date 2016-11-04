@@ -22,7 +22,6 @@ shared_examples 'geckoboard publishable report' do
   it { is_expected.to respond_to :publish! }
 
   describe '#new' do
-
     it 'connects to geckoboard using API key stored in ENV variable' do
       expect(ENV).to receive(:[]).with('GECKOBOARD_API_KEY').and_return 'fake-API-key'
       expect(Geckoboard).to receive(:client).with('fake-API-key').and_return client
@@ -43,7 +42,7 @@ shared_examples 'geckoboard publishable report' do
       expect(Rails).to receive(:logger).and_return logger
       expect(logger).to receive(:warn).with(/.*Geckoboard API key.*/)
 
-      expect{ subject }.to raise_error Geckoboard::UnauthorizedError
+      expect { subject }.to raise_error Geckoboard::UnauthorizedError
     end
   end
 
@@ -71,4 +70,3 @@ shared_examples 'geckoboard publishable report' do
   end
 
 end
-
