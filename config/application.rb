@@ -71,6 +71,10 @@ module Peoplefinder
     # The following values are required by the phase banner
     config.phase = 'live'
     config.feedback_url = 'https://docs.google.com/a/digital.justice.gov.uk/forms/d/1dJ9xQ66QFvk8K7raf60W4ZXfK4yTQ1U3EeO4OLLlq88/viewform'
+
+    # make the geckoboard publisher available generally
+    # NOTE: may need to eager load paths instead if lib code is commonly called
+    config.autoload_paths << Rails.root.join('lib')
   end
 
 end
