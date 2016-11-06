@@ -24,7 +24,7 @@ module GeckoboardPublisher
     def id
       Rails.application.class.parent_name.underscore +
         '-' +
-        Rails.env.downcase +
+        Rails.host.env.downcase +
         '.' +
         self.class.name.demodulize.underscore
     end

@@ -47,7 +47,9 @@ shared_examples 'geckoboard publishable report' do
   end
 
   describe '#id' do
-    before { allow(Rails).to receive(:env).and_return 'staging' }
+    before do
+      expect(Rails).to receive_message_chain(:host, :env).and_return 'staging'
+    end
 
     it 'is specific to app, environment and report name' do
       expect(subject.id).to eql "peoplefinder-staging.#{described_class.name.demodulize.underscore}"
@@ -61,7 +63,7 @@ shared_examples 'geckoboard publishable report' do
       expect(client).to receive(:ping).and_return true
     end
 
-    it 'creates existing dataset' do
+    it 'creates (or finds) geckoboard dataset and replaces its data' do
       expect(subject).to receive(:create_dataset!)
       expect(subject).to receive(:replace_dataset!)
       subject.publish!

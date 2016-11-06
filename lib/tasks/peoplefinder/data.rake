@@ -38,7 +38,7 @@ namespace :peoplefinder do
       end
     end
 
-    desc 'create a valid csv for load testing, [count: number of records=500], [file: path to file=spec/fixtures/]'
+    desc 'create a valid csv for load testing, [count: number of records=500], [email_prefix: prefix for email addresses generated=nil], [file: path to file=spec/fixtures/]'
     task :demo_csv, [:count, :email_prefix, :file] => :environment do |_task, args|
       require 'csv'
 

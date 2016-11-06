@@ -19,7 +19,7 @@ RSpec.configure do |config|
 
   config.before(:each) do
     stub_request(:get, "https://api.geckoboard.com/").
-      with(headers: { 'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Authorization'=>'Basic ZjU5YzVmMTI5YmU4MTNjMzA0ZGVkYzk3OTc5MmMwOTE6', 'User-Agent'=>'Geckoboard-Ruby/0.3.0' }).
+      with(headers: { 'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'User-Agent'=>'Geckoboard-Ruby/0.3.0' }).
       to_return(status: 200, body: "", headers: {})
   end
 
