@@ -26,7 +26,7 @@ module ApplicationHelper
             starts_with_root_team: starts_with_root_team }
   end
 
-  FLASH_NOTICE_KEYS = %w(error notice warning).freeze
+  FLASH_NOTICE_KEYS = %w(error notice warning html_safe_notice).freeze
 
   def flash_messages
     messages = flash.keys.map(&:to_s) & FLASH_NOTICE_KEYS
@@ -109,7 +109,11 @@ module ApplicationHelper
 
   def flash_message(type)
     content_tag(:div, class: "flash-message #{type}", role: 'alert') do
-      flash[type]
+      if type == 'html_safe_notice'
+        flash[type].html_safe
+      else
+        flash[type]
+      end
     end
   end
 

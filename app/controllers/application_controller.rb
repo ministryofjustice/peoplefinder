@@ -64,10 +64,11 @@ class ApplicationController < ActionController::Base
   def login_person(person)
     login_service = Login.new(session, person)
     login_service.login
+    redirect_to desired_path(person)
+  end
 
-    path = session.delete(:desired_path) || person_path(person, prompt: :profile)
-
-    redirect_to path
+  def desired_path person
+    session.delete(:desired_path) || person_path(person, prompt: :profile)
   end
 
   def i18n_flash(type, *partial_key, **options)
@@ -75,6 +76,10 @@ class ApplicationController < ActionController::Base
       :controllers, controller_path, *partial_key
     ].join('.')
     flash[type] = I18n.t(full_key, options)
+  end
+
+  def html_safe_notice(*partial_key, **options)
+    i18n_flash :html_safe_notice, partial_key, options
   end
 
   def notice(*partial_key, **options)

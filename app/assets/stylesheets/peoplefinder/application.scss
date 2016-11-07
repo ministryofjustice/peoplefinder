@@ -120,7 +120,7 @@ footer {
     margin: 15px 0;
     padding: 15px;
   }
-  .notice {
+  .notice, .html_safe_notice {
     background-color: $notice-bg;
   }
   .error {

@@ -1,9 +1,13 @@
 require 'rails_helper'
+require Rails.root.join('spec', 'controllers', 'concerns', 'session_person_creator_spec.rb')
 
 describe TokensController, type: :controller do
+  include PermittedDomainHelper
+
+  it_behaves_like 'session_person_creatable'
+
   describe 'GET show' do
     context 'user is logged in as a Person' do
-      include PermittedDomainHelper
       let(:person) { create(:person) }
       before do
         allow(controller).to receive(:current_user).and_return person
