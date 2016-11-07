@@ -31,6 +31,28 @@ module Concerns::GeckoboardDatasets
         group("DATE_TRUNC('day',versions.created_at)").
         count
     end
+
+    def total_profiles
+      unscoped.count
+    end
+
+    def total_photo_profiles
+      unscoped.
+        where('profile_photo_id IS NOT NULL OR length(image) > 0').
+        count
+    end
+
+    def total_additional_info_profiles
+      unscoped.
+        where('length(description) > 0 OR length(current_project) > 0').
+        count
+    end
+
+    def non_members
+      unscoped.
+        joins('LEFT JOIN memberships ON memberships.person_id = people.id').
+        where('memberships.id IS NULL')
+    end
   end
 
 end
