@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe GeckoboardPublisher::ProfilesReport do
+RSpec.describe GeckoboardPublisher::ProfilesPercentageReport do
   include PermittedDomainHelper
 
   it_behaves_like 'geckoboard publishable report'
@@ -11,8 +11,8 @@ RSpec.describe GeckoboardPublisher::ProfilesReport do
     let(:expected_fields) do
       [
         Geckoboard::NumberField.new(:total, name: 'Total'),
-        Geckoboard::NumberField.new(:with_photos, name: 'With Photos'),
-        Geckoboard::NumberField.new(:with_additional_info, name: 'With Additional Info')
+        Geckoboard::PercentageField.new(:with_photos, name: 'With Photos'),
+        Geckoboard::PercentageField.new(:with_additional_info, name: 'With Additional Info')
       ].map { |field| [field.id,field.name] }
     end
 
@@ -26,8 +26,8 @@ RSpec.describe GeckoboardPublisher::ProfilesReport do
       [
         {
           total: 3,
-          with_photos: 2,
-          with_additional_info: 2,
+          with_photos: 66.67,
+          with_additional_info: 66.67,
         }
       ]
     end

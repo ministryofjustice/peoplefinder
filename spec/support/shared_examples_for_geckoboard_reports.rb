@@ -81,7 +81,7 @@ shared_examples 'geckoboard publishable report' do
       expect(ENV).to receive(:[]).with('GECKOBOARD_API_KEY').and_return 'fake-API-key'
       expect(Geckoboard).to receive(:client).with('fake-API-key').and_return client
       expect(client).to receive(:ping).and_return true
-      expect(client).to receive_message_chain(:datasets, :find_or_create).and_return dataset
+      expect(client).to receive(:datasets).and_return dataset
       expect(dataset).to receive(:delete)
       subject.unpublish!
     end

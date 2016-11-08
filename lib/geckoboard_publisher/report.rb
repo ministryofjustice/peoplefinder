@@ -20,8 +20,9 @@ module GeckoboardPublisher
     end
 
     def unpublish!
-      @dataset = client.datasets.find_or_create(id)
-      dataset.delete
+      @dataset = client.datasets.delete(id)
+    rescue Geckoboard::UnexpectedStatusError
+      false
     end
 
     # geckoboard-ruby gem's dataset.find_or_create id attribute
