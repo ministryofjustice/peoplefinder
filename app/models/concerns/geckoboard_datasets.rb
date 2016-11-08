@@ -51,33 +51,12 @@ module Concerns::GeckoboardDatasets
         where('memberships.id IS NULL')
     end
 
-    # NOTE: these may have since been deleted
-    # def added_profiles
-    #   people_changed 'create'
-    # end
-
-    # def edited_profiles
-    #   people_changed 'update'
-    # end
-
-    # def deleted_profiles
-    #   people_changed 'destroy'
-    # end
-
     def profile_events
       pgresults = ActiveRecord::Base.connection.execute profile_events_raw_sql
       pgresults
     end
 
     private
-
-    # def people_changed event
-    #   Version.
-    #     where(item_type: 'Person').
-    #     where(event: event).
-    #     group("DATE_TRUNC('day',versions.created_at)").
-    #     count
-    # end
 
     def profile_events_raw_sql
       <<-SQL

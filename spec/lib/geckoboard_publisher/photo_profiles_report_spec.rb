@@ -18,7 +18,7 @@ RSpec.describe GeckoboardPublisher::PhotoProfilesReport do
     it { is_expected.to eq expected_fields }
   end
 
-  describe '#items' do
+  describe '#items', versioning: true do
     subject { described_class.new.items }
 
     let(:expected_items) do
@@ -49,22 +49,21 @@ RSpec.describe GeckoboardPublisher::PhotoProfilesReport do
     before { Timecop.freeze Date.parse('01-SEP-2016') }
     after { Timecop.return }
 
-    it 'returns a geckoboard compatible format' do
-      is_expected.to be_an(Array)
-      expect(subject.first).to be_a(Hash)
-      expect(subject.to_json).to be_a(String)
-    end
+    include_examples 'returns valid items structure'
 
-    it 'returns dates in ISO 8601 format' do
-      expect(subject.first[:photo_added_at]).to eql Date.parse('28-FEB-2015').iso8601
+    it 'returns dates to day precision in ISO 8601 format - YYYY-MM-DD' do
+      expect(subject.first[:photo_added_at]).to match /^(\d{4}-(0[1-9]|1[12])-((0[1-9]|[12]\d)|3[01]))$/
     end
 
     it 'returns profiles with photos added regardless of how old they are' do
       expect(subject.size).to eql 3
     end
 
+    # TODO: need to modify the Person.changes_for_papertrail method as it is blowing up papertrail for legacy image changes
+    # needs spcing in uploader spec.
     xit 'returns profiles with legacy photos too' do
       Timecop.freeze(Date.parse('28-FEB-2015')) { create(:person, image: File.open(sample_image)) }
+      expect(Person.legacy_photo_profiles_by_day_added.count).to eql 1
       expect(subject.size).to eql 4
     end
 

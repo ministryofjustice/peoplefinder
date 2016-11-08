@@ -71,10 +71,10 @@ RSpec.describe GeckoboardPublisher::ProfilesChangedReport do
 
     it { expect(PaperTrail).to be_enabled }
 
-    it 'returns a geckoboard compatible format' do
-      is_expected.to be_an(Array)
-      expect(subject.first).to be_a(Hash)
-      expect(subject.to_json).to be_a(String)
+    include_examples 'returns valid items structure'
+
+    it 'returns dates to day precision in ISO 8601 format - YYYY-MM-DD' do
+      expect(subject.first[:date]).to match /^(\d{4}-(0[1-9]|1[12])-((0[1-9]|[12]\d)|3[01]))$/
     end
 
     it 'returns expected dataset items' do

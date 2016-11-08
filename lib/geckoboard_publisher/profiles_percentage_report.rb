@@ -24,8 +24,8 @@ module GeckoboardPublisher
 
     def setup
       @total = Person.total_profiles.to_f
-      @with_photos = (Person.total_photo_profiles.to_f/@total*100).round(2)
-      @with_additional_info = (Person.total_additional_info_profiles.to_f/@total*100).round(2)
+      @with_photos = (Person.total_photo_profiles.to_f/@total).round(2)
+      @with_additional_info = (Person.total_additional_info_profiles.to_f/@total).round(2)
     end
   end
 

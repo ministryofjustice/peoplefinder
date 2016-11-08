@@ -20,7 +20,7 @@ module GeckoboardPublisher
     end
 
     def unpublish!
-      @dataset = client.datasets.delete(id)
+      client.datasets.delete(id)
     rescue Geckoboard::UnexpectedStatusError
       false
     end

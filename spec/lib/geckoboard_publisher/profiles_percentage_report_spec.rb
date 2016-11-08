@@ -26,8 +26,8 @@ RSpec.describe GeckoboardPublisher::ProfilesPercentageReport do
       [
         {
           total: 3,
-          with_photos: 66.67,
-          with_additional_info: 66.67,
+          with_photos: 0.67,
+          with_additional_info: 0.67,
         }
       ]
     end
@@ -38,15 +38,7 @@ RSpec.describe GeckoboardPublisher::ProfilesPercentageReport do
       create(:person, description: 'test extra information ')
     end
 
-    it 'returns a geckoboard compatible format' do
-      is_expected.to be_an(Array)
-      expect(subject.first).to be_a(Hash)
-      expect(subject.to_json).to be_a(String)
-    end
-
-    it 'returns profiles created in the last six months only' do
-      expect(subject.size).to eql 1
-    end
+    include_examples 'returns valid items structure'
 
     it 'returns expected dataset items' do
       expected_items.each do |item|

@@ -48,14 +48,10 @@ RSpec.describe GeckoboardPublisher::TotalProfilesReport do
     before { Timecop.freeze Date.parse('01-SEP-2016') }
     after { Timecop.return }
 
-    it 'returns a geckoboard compatible format' do
-      is_expected.to be_an(Array)
-      expect(subject.first).to be_a(Hash)
-      expect(subject.to_json).to be_a(String)
-    end
+    include_examples 'returns valid items structure'
 
-    it 'returns dates in ISO 8601 format' do
-      expect(subject.first[:created_at]).to eql Date.parse('01-MAR-2015').iso8601
+    it 'returns dates to day precision in ISO 8601 format - YYYY-MM-DD' do
+      expect(subject.first[:created_at]).to match /^(\d{4}-(0[1-9]|1[12])-((0[1-9]|[12]\d)|3[01]))$/
     end
 
     it 'returns expected dataset items' do

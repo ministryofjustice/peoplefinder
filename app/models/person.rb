@@ -28,6 +28,7 @@ class Person < ActiveRecord::Base
                   ignore: [:updated_at, :created_at, :id, :slug, :login_count, :last_login_at,
                            :last_reminder_email_at]
 
+  # TODO: eerrh! what is this trying to do, it breaks when attempting to create people with legacy image uploads
   def changes_for_paper_trail
     super.tap do |changes|
       changes['image'].map! { |img| img.url && File.basename(img.url) } if changes.key?('image')
