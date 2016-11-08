@@ -24,7 +24,7 @@ module GeckoboardPublisher
     def id
       Rails.application.class.parent_name.underscore +
         '-' +
-        Rails.host.env.downcase +
+        (Rails.host.env.downcase rescue Rails.env) +
         '.' +
         self.class.name.demodulize.underscore
     end
@@ -53,6 +53,9 @@ module GeckoboardPublisher
 
     def create_dataset!
       @dataset = client.datasets.find_or_create(id, fields: fields, unique_by: unique_by)
+    rescue Geckoboard::ConflictError
+      client.datasets.delete(id)
+      create_dataset!
     end
 
     def replace_dataset!

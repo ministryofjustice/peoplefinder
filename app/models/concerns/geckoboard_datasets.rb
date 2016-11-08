@@ -4,7 +4,6 @@ module Concerns::GeckoboardDatasets
 
   class_methods do
 
-    # count of profiles created in last 6 months grouped by day created
     def total_profiles_by_day
       unscoped.
         group("DATE_TRUNC('day', created_at)").
@@ -12,7 +11,6 @@ module Concerns::GeckoboardDatasets
         count
     end
 
-    # count of profiles with photos grouped by day photo was added/created
     # NOTE does not include legacy photos
     def photo_profiles_by_day_added
       unscoped.
@@ -53,6 +51,46 @@ module Concerns::GeckoboardDatasets
         joins('LEFT JOIN memberships ON memberships.person_id = people.id').
         where('memberships.id IS NULL')
     end
+
+    # NOTE: these may have since been deleted
+    def added_profiles
+      people_changed 'create'
+    end
+
+    def edited_profiles
+      people_changed 'update'
+    end
+
+    def deleted_profiles
+      people_changed 'destroy'
+    end
+
+    def profile_events
+      pgresults = ActiveRecord::Base.connection.execute profile_events_raw_sql
+      pgresults
+    end
+
+    private
+
+    def people_changed event
+      Version.
+        where(item_type: 'Person').
+        where(event: event).
+        group("DATE_TRUNC('day',versions.created_at)").
+        count
+    end
+
+    def profile_events_raw_sql
+      <<-SQL
+        SELECT count(*), DATE_TRUNC('day',v.created_at) AS event_date, v.event AS event
+        FROM versions v
+        WHERE item_type = 'Person'
+        AND v.event IN ('create','update','destroy')
+        GROUP BY event_date, event
+      SQL
+    end
+
+
   end
 
 end
