@@ -25,7 +25,7 @@ RSpec.describe GeckoboardPublisher::TotalProfilesReport do
       [
         {
           count: 2,
-          created_at: "2016-03-01",
+          created_at: "2015-03-01",
         },
         {
           count: 1,
@@ -39,8 +39,8 @@ RSpec.describe GeckoboardPublisher::TotalProfilesReport do
     end
 
     before do
-      create(:person, created_at: Date.parse('28-FEB-2016'))
-      create_list(:person, 2, created_at: Date.parse('01-MAR-2016'))
+      create(:person, created_at: Date.parse('01-MAR-2015 12:43'))
+      create(:person, created_at: Date.parse('01-MAR-2015 13:32'))
       create(:person, created_at: Date.parse('21-JUNE-2016'))
       create(:person, created_at: Date.parse('21-AUG-2016'))
     end
@@ -55,14 +55,11 @@ RSpec.describe GeckoboardPublisher::TotalProfilesReport do
     end
 
     it 'returns dates in ISO 8601 format' do
-      expect(subject.first[:created_at]).to eql Date.parse('01-MAR-2016').iso8601
-    end
-
-    it 'returns profiles created in the last six months only' do
-      expect(subject.size).to eql 3
+      expect(subject.first[:created_at]).to eql Date.parse('01-MAR-2015').iso8601
     end
 
     it 'returns expected dataset items' do
+      expect(subject.size).to eql 3
       expected_items.each do |item|
         is_expected.to include item
       end

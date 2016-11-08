@@ -7,7 +7,6 @@ module Concerns::GeckoboardDatasets
     def total_profiles_by_day
       unscoped.
         group("DATE_TRUNC('day', created_at)").
-        where(created_at: 6.months.ago..Date.current).
         count
     end
 
