@@ -89,7 +89,6 @@ module Concerns::GeckoboardDatasets
       SQL
     end
 
-
   end
 
 end

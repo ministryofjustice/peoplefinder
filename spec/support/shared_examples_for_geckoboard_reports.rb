@@ -14,6 +14,7 @@
 shared_examples 'geckoboard publishable report' do
 
   let(:client) { double Geckoboard::Client }
+  let(:dataset) { double Geckoboard::Dataset }
   subject { described_class.new }
 
   it { is_expected.to respond_to :client }
@@ -48,7 +49,11 @@ shared_examples 'geckoboard publishable report' do
 
   describe '#id' do
     before do
-      expect(Rails).to receive_message_chain(:host, :env).and_return 'staging'
+      # expect(Rails).to receive_message_chain(:host, :env).and_return 'staging'
+      expect(ENV).to receive(:[]).with('ENV').and_return 'staging'
+      expect(ENV).to receive(:[]).with('GECKOBOARD_API_KEY').and_return 'fake-API-key'
+      expect(Geckoboard).to receive(:client).with('fake-API-key').and_return client
+      expect(client).to receive(:ping).and_return true
     end
 
     it 'is specific to app, environment and report name' do
@@ -56,7 +61,7 @@ shared_examples 'geckoboard publishable report' do
     end
   end
 
-  describe '#publish' do
+  describe '#publish!' do
     before do
       expect(ENV).to receive(:[]).with('GECKOBOARD_API_KEY').and_return 'fake-API-key'
       expect(Geckoboard).to receive(:client).with('fake-API-key').and_return client
@@ -68,7 +73,18 @@ shared_examples 'geckoboard publishable report' do
       expect(subject).to receive(:replace_dataset!)
       subject.publish!
     end
+  end
 
+  describe '#unpublish!' do
+    it 'creates (or finds) geckoboard dataset and replaces its data' do
+      expect(ENV).to receive(:[]).with('ENV').and_return 'test'
+      expect(ENV).to receive(:[]).with('GECKOBOARD_API_KEY').and_return 'fake-API-key'
+      expect(Geckoboard).to receive(:client).with('fake-API-key').and_return client
+      expect(client).to receive(:ping).and_return true
+      expect(client).to receive_message_chain(:datasets, :find_or_create).and_return dataset
+      expect(dataset).to receive(:delete)
+      subject.unpublish!
+    end
   end
 
 end

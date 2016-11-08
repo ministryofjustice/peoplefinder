@@ -19,12 +19,17 @@ module GeckoboardPublisher
       replace_dataset!
     end
 
+    def unpublish!
+      @dataset = client.datasets.find_or_create(id)
+      dataset.delete
+    end
+
     # geckoboard-ruby gem's dataset.find_or_create id attribute
     # e.g. peoplefinder-staging.total_profiles_report
     def id
       Rails.application.class.parent_name.underscore +
         '-' +
-        (Rails.host.env.downcase rescue Rails.env) +
+        (ENV['ENV'] || Rails.env).downcase +
         '.' +
         self.class.name.demodulize.underscore
     end
