@@ -16,33 +16,27 @@ module GeckoboardPublisher
 
     private
 
-    def parse results
-      items = []
-      results.each do |row|
-        find_or_add_set(items, row)
+    def parse pgresult
+      @sets = []
+      pgresult.each do |row|
+        find_or_create_set(row)
       end
-      items
+      @sets
     end
 
     def template date, options = {}
-      { date: date,
+      { date: date.to_date.iso8601,
         create: options[:create] || 0,
         update: options[:update] || 0,
         destroy: options[:destroy] || 0
       }
     end
 
-    def find_or_add_set items, row
-      found = false
-      items.each do |item|
-        break if found
-        if item[:date] == row['event_date'].to_date.iso8601
-          item[row['event'].to_sym] = row['count'].to_i if item[:date] == row['event_date'].to_date.iso8601
-          found = true
-        end
+    def find_or_create_set row
+      @sets.each do |set|
+        return set[row['event'].to_sym] = row['count'].to_i if set[:date] == row['event_date'].to_date.iso8601
       end
-      items << template(row['event_date'].to_date.iso8601, row['event'].to_sym => row['count'].to_i) unless found
-      items
+      @sets << template(row['event_date'], row['event'].to_sym => row['count'].to_i)
     end
   end
 end
