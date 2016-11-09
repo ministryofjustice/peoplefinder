@@ -1,6 +1,14 @@
 module GeckoboardPublisher
   class ProfilesChangedReport < Report
 
+    attr_accessor :limit
+
+    def initialize
+      @limit = 500
+      @items = nil
+      super
+    end
+
     def fields
       [
         Geckoboard::DateField.new(:date, name: 'Date'),
@@ -11,7 +19,7 @@ module GeckoboardPublisher
     end
 
     def items
-      parse Person.profile_events
+      @items ||= parse Person.profile_events
     end
 
     private
@@ -21,7 +29,11 @@ module GeckoboardPublisher
       pgresult.each do |row|
         find_or_create_set(row)
       end
-      @sets
+      @sets.drop(limit_diff)
+    end
+
+    def limit_diff
+      [0, @sets.size - limit].max
     end
 
     def template date, options = {}

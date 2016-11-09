@@ -65,6 +65,7 @@ module Concerns::GeckoboardDatasets
         WHERE item_type = 'Person'
         AND v.event IN ('create','update','destroy')
         GROUP BY event_date, event
+        ORDER BY event_date ASC
       SQL
     end
 
