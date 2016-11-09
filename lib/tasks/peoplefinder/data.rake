@@ -38,8 +38,8 @@ namespace :peoplefinder do
       end
     end
 
-    desc 'create a valid csv for load testing, [count: number of records=500], [file: path to file=spec/fixtures/]'
-    task :demo_csv, [:count, :file] => :environment do |_task, args|
+    desc 'create a valid csv for load testing, [count: number of records=500], [email_prefix: prefix for email addresses generated=nil], [file: path to file=spec/fixtures/]'
+    task :demo_csv, [:count, :email_prefix, :file] => :environment do |_task, args|
       require 'csv'
 
       file = args[:file] || Rails.root.join('spec','fixtures','csv_load_tester.csv').to_path
@@ -47,7 +47,7 @@ namespace :peoplefinder do
       CSV.open(file,'w') do |csv|
         csv << csv_header
         count.times do |i|
-          csv << csv_record
+          csv << csv_record(args[:email_prefix])
         end
       end
     end
@@ -56,8 +56,9 @@ namespace :peoplefinder do
       PersonCsvImporter::REQUIRED_COLUMNS + PersonCsvImporter::OPTIONAL_COLUMNS
     end
 
-    def csv_record
+    def csv_record(email_prefix = nil)
       person = FactoryGirl.build(:person, :with_details)
+      person.email.prepend(email_prefix) if email_prefix.present?
       record = []
       csv_header.each do |attribute|
         record += [person.__send__(attribute)]

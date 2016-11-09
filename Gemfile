@@ -15,6 +15,7 @@ gem 'friendly_id', '~> 5.0.0'
 gem 'govspeak'
 gem 'govuk_frontend_toolkit'
 gem 'govuk_template'
+gem 'geckoboard-ruby', '~> 0.3.0'
 gem 'haml-rails'
 gem 'jbuilder', '~> 2.0'
 gem 'jquery-rails', '>= 4.0.4'
@@ -69,6 +70,7 @@ group :test do
   gem 'codeclimate-test-reporter', require: nil
   gem 'database_cleaner'
   gem 'site_prism'
+  gem 'webmock'
 end
 
 group :development, :test do
