@@ -5,6 +5,9 @@ RSpec.describe GeckoboardPublisher::ProfilesChangedReport do
 
   it_behaves_like 'geckoboard publishable report'
 
+  it { is_expected.to respond_to :limit }
+  it { is_expected.to respond_to :limit= }
+
   describe '#fields' do
     subject { described_class.new.fields.map { |field| [field.id, field.name] } }
 
@@ -81,6 +84,23 @@ RSpec.describe GeckoboardPublisher::ProfilesChangedReport do
       expect(subject.size).to eql 4
       expected_items.each do |item|
         is_expected.to include item
+      end
+    end
+
+    context 'limitability' do
+      it 'limits the number of returned items' do
+        expect_any_instance_of(described_class).to receive(:limit).and_return 1
+        expect(subject.size).to eql 1
+      end
+
+      it 'removes items over the limit oldest first' do
+        allow_any_instance_of(described_class).to receive(:limit).and_return 3
+        is_expected.not_to include expected_items.first
+        is_expected.to include expected_items.last
+      end
+
+      it 'default limit is 500 - due to geckoboard limitation of 500' do
+        expect(described_class.new.limit).to eql 500
       end
     end
   end

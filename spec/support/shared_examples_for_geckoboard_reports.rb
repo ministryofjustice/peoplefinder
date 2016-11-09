@@ -62,7 +62,6 @@ shared_examples 'geckoboard publishable report' do
   end
 
   describe '#unpublish!' do
-
     context 'when dataset exists' do
       it 'deletes the dataset and returns true' do
         mock_expectations do |client|
@@ -72,6 +71,7 @@ shared_examples 'geckoboard publishable report' do
         end
       end
     end
+
     context 'when dataset does not exist' do
       it 'returns false when the dataset does not exist' do
         mock_expectations do |client|
