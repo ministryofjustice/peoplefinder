@@ -29,26 +29,24 @@ module Concerns::GeckoboardDatasets
         count
     end
 
-    def total_profiles
-      unscoped.count
-    end
-
-    def total_photo_profiles
+    def photo_profiles
       unscoped.
-        where('profile_photo_id IS NOT NULL OR length(image) > 0').
-        count
+        where('profile_photo_id IS NOT NULL OR length(image) > 0')
     end
 
-    def total_additional_info_profiles
+    def additional_info_profiles
       unscoped.
-        where('length(description) > 0 OR length(current_project) > 0').
-        count
+        where('length(description) > 0 OR length(current_project) > 0')
     end
 
-    def non_members
+    def not_in_team
       unscoped.
         joins('LEFT JOIN memberships ON memberships.person_id = people.id').
         where('memberships.id IS NULL')
+    end
+
+    def not_in_subteam
+      Group.find_by(ancestry_depth: 0).people_outside_subteams
     end
 
     def profile_events
@@ -59,7 +57,7 @@ module Concerns::GeckoboardDatasets
     private
 
     def profile_events_raw_sql
-      <<-SQL
+      <<~SQL
         SELECT count(*), DATE_TRUNC('day',v.created_at) AS event_date, v.event AS event
         FROM versions v
         WHERE item_type = 'Person'
