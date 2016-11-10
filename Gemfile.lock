@@ -606,6 +606,8 @@ GEM
     websocket-extensions (0.1.2)
     whenever (0.9.4)
       chronic (>= 0.6.3)
+    whenever-test (1.0.1)
+      whenever
     will_paginate (3.0.7)
     will_paginate-bootstrap (1.0.1)
       will_paginate (>= 3.0.3)
@@ -689,6 +691,7 @@ DEPENDENCIES
   virtus
   webmock
   whenever
+  whenever-test
   will_paginate (~> 3.0, >= 3.0.3)
   will_paginate-bootstrap (~> 1.0, >= 1.0.1)
 
