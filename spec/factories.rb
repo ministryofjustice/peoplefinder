@@ -39,6 +39,21 @@ FactoryGirl.define do
       association :profile_photo, factory: :profile_photo
     end
 
+    # i.e. person in a group with ancestry of 1+
+    trait :team_member do
+      after(:create) do |p|
+        create(:membership, person: p)
+      end
+    end
+
+    # i.e. unassigned person - person in group with ancestry of 0 (i.e. MoJ)
+    trait :department_member do
+      after(:create) do |p|
+        department = Group.where(ancestry_depth: 0).first_or_create(name: 'Ministry of Justice')
+        create(:membership, person: p, group: department)
+      end
+    end
+
     factory :person_with_multiple_logins do
       login_count 10
       last_login_at { 1.day.ago }
