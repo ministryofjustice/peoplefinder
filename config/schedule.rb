@@ -13,3 +13,19 @@ end
 every :weekday, at: '8:15am' do
   rails_script 'PersonUpdateNotifier.send_reminders'
 end
+
+every :weekday, at: '8:00pm' do
+  rails_script 'GeckoboardPublisher::PhotoProfilesReport.new.publish!'
+end
+
+every :weekday, at: '8:10pm' do
+  rails_script 'GeckoboardPublisher::ProfilesPercentageReport.new.publish!'
+end
+
+every :weekday, at: '8:20pm' do
+  rails_script 'GeckoboardPublisher::TotalProfilesReport.new.publish!'
+end
+
+every :weekday, at: '8:30pm' do
+  rails_script 'GeckoboardPublisher::ProfilesChangedReport.new.publish!'
+end
