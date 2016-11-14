@@ -71,6 +71,7 @@ group :test do
   gem 'database_cleaner'
   gem 'site_prism'
   gem 'webmock'
+  gem 'whenever-test'
 end
 
 group :development, :test do

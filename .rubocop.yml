@@ -117,6 +117,7 @@ Metrics/ModuleLength:
 RSpec/DescribeClass:
   Exclude:
     - 'spec/views/**/*'
+    - 'spec/config/schedule_spec.rb'
 
 Metrics/AbcSize:
   Exclude:
