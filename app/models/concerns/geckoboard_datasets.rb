@@ -54,6 +54,13 @@ module Concerns::GeckoboardDatasets
       pgresults
     end
 
+    def not_in_tip_team
+      non_branch_tip_teams = Group.all.select(&:has_children?).map(&:id)
+      unscoped.
+        joins(:memberships).
+        where(memberships: { group_id: non_branch_tip_teams })
+    end
+
     private
 
     def profile_events_raw_sql
