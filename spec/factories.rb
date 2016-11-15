@@ -46,6 +46,15 @@ FactoryGirl.define do
       end
     end
 
+    trait :member_of do
+      transient do
+        team nil
+      end
+      after(:create) do |peep, evaluator|
+        create(:membership, person: peep, group: evaluator.team)
+      end
+    end
+
     # i.e. unassigned person - person in group with ancestry of 0 (i.e. MoJ)
     trait :department_member do
       after(:create) do |p|

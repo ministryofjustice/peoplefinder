@@ -59,9 +59,6 @@ module GeckoboardPublisher
 
     def create_dataset!
       @dataset = client.datasets.find_or_create(id, fields: fields, unique_by: unique_by)
-    rescue Geckoboard::ConflictError
-      client.datasets.delete(id)
-      create_dataset!
     end
 
     def replace_dataset!
