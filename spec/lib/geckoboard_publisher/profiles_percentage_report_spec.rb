@@ -14,7 +14,8 @@ RSpec.describe GeckoboardPublisher::ProfilesPercentageReport do
         Geckoboard::PercentageField.new(:with_photos, name: 'With Photos'),
         Geckoboard::PercentageField.new(:with_additional_info, name: 'With Additional Info'),
         Geckoboard::PercentageField.new(:not_in_team, name: 'Not in any team nor MoJ'),
-        Geckoboard::PercentageField.new(:not_in_subteam, name: 'Not in a subteam - i.e. in MoJ')
+        Geckoboard::PercentageField.new(:not_in_subteam, name: 'Not in a subteam - i.e. in MoJ'),
+        Geckoboard::PercentageField.new(:not_in_tip_team, name: 'Not in a branch tip team - e.g. at Agency level')
       ].map { |field| [field.id,field.name] }
     end
 
@@ -27,11 +28,11 @@ RSpec.describe GeckoboardPublisher::ProfilesPercentageReport do
     let(:expected_items) do
       [
         {
-          total: 3,
           with_photos: 0.67,
           with_additional_info: 0.67,
           not_in_team: 0.33,
-          not_in_subteam: 0.33
+          not_in_subteam: 0.33,
+          not_in_tip_team: 0.33
         }
       ]
     end
