@@ -3,6 +3,22 @@ if ENV['ENV'] == 'production'
 
   job_type :rails_script, "cd /usr/src/app && ./rails_runner.sh ':task' :output"
 
+  every :weekday, at: '6:00am' do
+    rails_script 'GeckoboardPublisher::PhotoProfilesReport.new.publish!'
+  end
+
+  every :weekday, at: '6:10am' do
+    rails_script 'GeckoboardPublisher::ProfilesPercentageReport.new.publish!'
+  end
+
+  every :weekday, at: '6:20am' do
+    rails_script 'GeckoboardPublisher::TotalProfilesReport.new.publish!'
+  end
+
+  every :weekday, at: '6:30am' do
+    rails_script 'GeckoboardPublisher::ProfilesChangedReport.new.publish!'
+  end
+
   every :weekday, at: '8am' do
     rails_script 'NeverLoggedInNotifier.send_reminders'
   end
@@ -15,19 +31,4 @@ if ENV['ENV'] == 'production'
     rails_script 'PersonUpdateNotifier.send_reminders'
   end
 
-  every :weekday, at: '8:00pm' do
-    rails_script 'GeckoboardPublisher::PhotoProfilesReport.new.publish!'
-  end
-
-  every :weekday, at: '8:10pm' do
-    rails_script 'GeckoboardPublisher::ProfilesPercentageReport.new.publish!'
-  end
-
-  every :weekday, at: '8:20pm' do
-    rails_script 'GeckoboardPublisher::TotalProfilesReport.new.publish!'
-  end
-
-  every :weekday, at: '8:30pm' do
-    rails_script 'GeckoboardPublisher::ProfilesChangedReport.new.publish!'
-  end
 end
