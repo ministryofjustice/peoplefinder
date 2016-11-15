@@ -48,7 +48,7 @@ RSpec.describe GeckoboardPublisher::ProfileCompletionsReport do
 
     before do
       csg = create :group, name: 'Corporate Services Group'
-      ds = create :group, name: 'Digital Services'
+      ds = create :group, name: 'Digital Services', acronym: ' '
       noms = create :group, name: 'National Offender Managment Service', acronym: 'NOMS'
       person = create :person, :member_of, team: csg, description: 'description added'
       person = create :person, :with_photo, :member_of, team: ds, current_project: " \n\t" # test whitespace exclusion
@@ -57,8 +57,9 @@ RSpec.describe GeckoboardPublisher::ProfileCompletionsReport do
 
     include_examples 'returns valid items structure'
 
-    it 'uses acronyms if available' do
+    it 'uses acronyms if not blank' do
       is_expected.to include_hash_matching team: 'NOMS'
+      is_expected.not_to include_hash_matching team: ' '
     end
 
     it 'returns expected dataset items' do
