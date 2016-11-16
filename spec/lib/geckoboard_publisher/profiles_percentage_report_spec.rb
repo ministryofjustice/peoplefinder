@@ -10,7 +10,6 @@ RSpec.describe GeckoboardPublisher::ProfilesPercentageReport do
 
     let(:expected_fields) do
       [
-        Geckoboard::NumberField.new(:total, name: 'Total'),
         Geckoboard::PercentageField.new(:with_photos, name: 'With Photos'),
         Geckoboard::PercentageField.new(:with_additional_info, name: 'With Additional Info'),
         Geckoboard::PercentageField.new(:not_in_team, name: 'Not in any team nor MoJ'),
