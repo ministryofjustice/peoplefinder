@@ -1,8 +1,11 @@
 shared_examples 'geckoboard publishable report' do
 
   let(:client) { double Geckoboard::Client }
+  let(:datasets_client) { double Geckoboard::DatasetsClient }
   let(:dataset) { double Geckoboard::Dataset }
   let(:logger) { double Rails.logger }
+  let(:null_object) { double('null object').as_null_object }
+
   subject { described_class.new }
 
   it { is_expected.to respond_to :client }
@@ -50,14 +53,32 @@ shared_examples 'geckoboard publishable report' do
   end
 
   describe '#publish!' do
-    before do
-      mock_expectations
-    end
-
     it 'creates (or finds) geckoboard dataset and replaces its data' do
+      mock_expectations
       expect(subject).to receive(:create_dataset!)
       expect(subject).to receive(:replace_dataset!)
       subject.publish!
+    end
+
+    context 'handles conflict errors' do
+      before do
+        mock_expectations do |client|
+          allow(client).to receive(:datasets).and_return datasets_client
+          allow(datasets_client).to receive(:find_or_create).with(any_args).and_return dataset
+          allow(subject).to receive(:items).and_return null_object
+          allow(dataset).to receive(:put).with(null_object).and_raise Geckoboard::ConflictError
+        end
+      end
+
+      it 'by trying once again when force specified' do
+        expect(subject).to receive(:try_once_more!)
+        subject.publish! true
+      end
+
+      it 'by raising errors when force not specified' do
+        expect(subject).not_to receive(:try_once_more!)
+        expect { subject.publish! }.to raise_error Geckoboard::ConflictError
+      end
     end
   end
 
@@ -73,7 +94,7 @@ shared_examples 'geckoboard publishable report' do
     end
 
     context 'when dataset does not exist' do
-      it 'returns false when the dataset does not exist' do
+      it 'returns false' do
         mock_expectations do |client|
           expect(client).to receive(:datasets).and_return dataset
           expect(dataset).to receive(:delete).and_raise Geckoboard::UnexpectedStatusError
@@ -89,5 +110,10 @@ shared_examples 'returns valid items structure' do
     is_expected.to be_an(Array)
     expect(subject.first).to be_a(Hash)
     expect { subject.to_json }.not_to raise_error
+  end
+
+  it 'returns dataset which matches field definitions' do
+    fields = described_class.new.fields
+    expect(subject.first.keys).to match_array fields.map(&:id)
   end
 end

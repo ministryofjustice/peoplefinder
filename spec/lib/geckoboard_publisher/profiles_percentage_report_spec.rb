@@ -38,7 +38,7 @@ RSpec.describe GeckoboardPublisher::ProfilesPercentageReport do
 
     before do
       create(:person, :with_photo, :department_member, current_project: 'peoplefinder')
-      create(:person, :with_photo, :team_member, current_project: nil, description: nil)
+      create(:person, :with_photo, :team_member, current_project: nil, description: " \t\n") # test whitespace exclusion
       create(:person, description: 'test extra information ')
     end
 

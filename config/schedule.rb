@@ -19,6 +19,10 @@ if ENV['ENV'] == 'production'
     rails_script 'GeckoboardPublisher::ProfilesChangedReport.new.publish!'
   end
 
+  every :weekday, at: '6:40am' do
+    rails_script 'GeckoboardPublisher::ProfileCompletionsReport.new.publish!'
+  end
+
   every :weekday, at: '8am' do
     rails_script 'NeverLoggedInNotifier.send_reminders'
   end
