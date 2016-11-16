@@ -106,9 +106,9 @@ en:
         add a new sub-team when viewing a team on People Finder.
     leader:
       mine: |
-        Are you a leader of the <span class="team-led">team above</span>?
+        Are you the leader of the <span class="team-led">team above</span>?
       other: |
-        Is this person a leader of the <span class="team-led">team above</span>?
+        Is this person the leader of the <span class="team-led">team above</span>?
     subscribed:
       mine: |
         Do you want to be notified by email when changes are made to the team above?
