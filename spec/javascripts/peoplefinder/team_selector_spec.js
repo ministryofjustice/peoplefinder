@@ -3,7 +3,7 @@ describe("Team Selector", function() {
   var ts,
     obj = $('<div/>'),
     input = $('<input value="123" /><a href="">Technology</a>'),
-    teamLeadQuestion = $('<div class="team-leader"><fieldset><legend class="form-label-bold">Are you a leader of the <span class="team-led">above team</span>?</legend></fieldset></div>'),
+    teamLeadQuestion = $('<div class="team-leader"><fieldset><legend class="form-label-bold">Are you the leader of the <span class="team-led">above team</span>?</legend></fieldset></div>'),
     orgBrowser = $('<nav class="has-form org-browser"> \
       <div class="team visible"> \
         <h3><input type="radio" value="1" name="person[memberships_attributes][0][group_id]" id="person_memberships_attributes_0_group_id_1" /><a class="team-link" href="/teams/1" title="Ministry of Justice">Ministry of Justice</a></h3> \
@@ -93,7 +93,7 @@ describe("Team Selector", function() {
         expect(ts.selector.find('.team-leader legend').text()).toBe('Are you the Permanent Secretary?');
 
         ts.setTeamName('Digital');
-        expect(ts.selector.find('.team-leader legend').text()).toBe('Are you a leader of the Digital team?');
+        expect(ts.selector.find('.team-leader legend').text()).toBe('Are you the leader of the Digital team?');
       });
     });
   });
