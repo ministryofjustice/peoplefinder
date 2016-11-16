@@ -20,16 +20,6 @@ module Concerns::GeckoboardDatasets
         count
     end
 
-    # TODO: incorporate into photo profiles by day added
-    # def legacy_photo_profiles_by_day_added
-    #   unscoped.
-    #     where.not(image: nil).
-    #     joins(:versions).
-    #     where('versions.object_changes ILIKE ?', '%image:%').
-    #     group("DATE_TRUNC('day',versions.created_at)").
-    #     count
-    # end
-
     def photo_profiles
       unscope(:order).
         where('profile_photo_id IS NOT NULL OR length(image) > 0')
@@ -61,14 +51,9 @@ module Concerns::GeckoboardDatasets
         where(memberships: { group_id: non_branch_tip_teams })
     end
 
-    def completion_per_top_level_team
+    def completions_per_top_level_team
       top_level_teams.inject([]) do |results, group|
-        set = {}
-        set[:team] = group.acronym.present? ? group.acronym : group.name
-        set[:total] = all_in_subtree(group).count
-        set[:with_photos] = all_in_subtree(group).photo_profiles.count
-        set[:with_additional_info] = all_in_subtree(group).additional_info_profiles.count
-        results << set
+        results << completions_set(group)
       end
     end
 
@@ -90,6 +75,15 @@ module Concerns::GeckoboardDatasets
         #{string_present?(:description)}
         OR #{string_present?(:current_project)}
       SQL
+    end
+
+    def completions_set group
+      {
+        team: group.acronym.present? ? group.acronym : group.name,
+        total: all_in_subtree(group).count,
+        with_photos: all_in_subtree(group).photo_profiles.count,
+        with_additional_info: all_in_subtree(group).additional_info_profiles.count
+      }
     end
 
     def non_branch_tip_teams

@@ -57,9 +57,9 @@ RSpec.describe GeckoboardPublisher::ProfileCompletionsReport do
 
     include_examples 'returns valid items structure'
 
-    it 'uses acronyms if not blank' do
+    it 'uses acronyms if available' do
       is_expected.to include_hash_matching team: 'NOMS'
-      is_expected.not_to include_hash_matching team: ' '
+      is_expected.not_to include_hash_matching team: " \n\t"
     end
 
     it 'returns expected dataset items' do

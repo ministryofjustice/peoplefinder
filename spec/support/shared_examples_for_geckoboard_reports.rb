@@ -60,7 +60,7 @@ shared_examples 'geckoboard publishable report' do
       subject.publish!
     end
 
-    context 'handling conflict errors' do
+    context 'handles conflict errors' do
       before do
         mock_expectations do |client|
           allow(client).to receive(:datasets).and_return datasets_client
@@ -70,12 +70,13 @@ shared_examples 'geckoboard publishable report' do
         end
       end
 
-      it 'when force specified it tries again' do
-        expect(subject).to receive(:try_again!)
+      it 'by trying once again when force specified' do
+        expect(subject).to receive(:try_once_more!)
         subject.publish! true
       end
-      it 'when force not specified it raises errors' do
-        expect(subject).not_to receive(:try_again!)
+
+      it 'by raising errors when force not specified' do
+        expect(subject).not_to receive(:try_once_more!)
         expect { subject.publish! }.to raise_error Geckoboard::ConflictError
       end
     end

@@ -11,7 +11,7 @@ module GeckoboardPublisher
     end
 
     def items
-      @items ||= Person.completion_per_top_level_team
+      @items ||= Person.completions_per_top_level_team
     end
 
   end

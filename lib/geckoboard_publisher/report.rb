@@ -67,14 +67,10 @@ module GeckoboardPublisher
     def replace_dataset!
       dataset.put items
     rescue Geckoboard::ConflictError # existing dataset on geckoboard does not match
-      if force
-        try_again!
-      else
-        raise
-      end
+      force ? try_once_more! : raise
     end
 
-    def try_again!
+    def try_once_more!
       @force = false
       unpublish!
       publish!
