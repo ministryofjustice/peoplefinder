@@ -90,4 +90,9 @@ shared_examples 'returns valid items structure' do
     expect(subject.first).to be_a(Hash)
     expect { subject.to_json }.not_to raise_error
   end
+
+  it 'returns dataset which matches field definitions' do
+    fields = described_class.new.fields
+    expect(subject.first.keys).to match_array fields.map(&:id)
+  end
 end

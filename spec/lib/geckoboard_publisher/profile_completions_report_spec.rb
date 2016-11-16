@@ -10,10 +10,10 @@ RSpec.describe GeckoboardPublisher::ProfileCompletionsReport do
 
     let(:expected_fields) do
       [
-        Geckoboard::StringField.new(:date, name: 'Name'),
-        Geckoboard::NumberField.new(:create, name: 'Total'),
-        Geckoboard::NumberField.new(:update, name: 'With photos'),
-        Geckoboard::NumberField.new(:destroy, name: 'With Additional Info')
+        Geckoboard::StringField.new(:team, name: 'Team name'),
+        Geckoboard::NumberField.new(:total, name: 'Total profiles'),
+        Geckoboard::NumberField.new(:with_photos, name: 'Profiles with photos'),
+        Geckoboard::NumberField.new(:with_additional_info, name: 'Profiles with Additional Info')
       ].map { |field| [field.id,field.name] }
     end
 
