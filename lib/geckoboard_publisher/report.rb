@@ -8,13 +8,16 @@ module GeckoboardPublisher
 
     attr_reader :client
     attr_reader :dataset
+    attr_reader :force
 
     def initialize
+      @force = false
       @client = Geckoboard.client(ENV['GECKOBOARD_API_KEY'])
       test_client
     end
 
-    def publish!
+    def publish! force = false
+      @force = force
       create_dataset!
       replace_dataset!
     end
@@ -63,6 +66,18 @@ module GeckoboardPublisher
 
     def replace_dataset!
       dataset.put items
+    rescue Geckoboard::ConflictError # existing dataset on geckoboard does not match
+      if force
+        try_again!
+      else
+        raise
+      end
+    end
+
+    def try_again!
+      @force = false
+      unpublish!
+      publish!
     end
 
     def test_client
