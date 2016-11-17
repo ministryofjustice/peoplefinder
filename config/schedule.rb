@@ -1,5 +1,6 @@
-if ENV['ENV'] == 'production'
-  set :output, '/var/log/cron_log.log'
+if %w{ production staging }.include? ENV['ENV']
+
+  set :output, standard: '/var/log/cron.log', error: '/var/log/cron_error.log'
 
   job_type :rails_script, "cd /usr/src/app && ./rails_runner.sh ':task' :output"
 
