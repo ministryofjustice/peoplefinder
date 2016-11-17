@@ -14,14 +14,15 @@ RSpec.describe GeckoboardPublisher::ProfilesPercentageReport do
         Geckoboard::PercentageField.new(:with_additional_info, name: 'With Additional Info'),
         Geckoboard::PercentageField.new(:not_in_team, name: 'Not in any team nor MoJ'),
         Geckoboard::PercentageField.new(:not_in_subteam, name: 'Not in a subteam - i.e. in MoJ'),
-        Geckoboard::PercentageField.new(:not_in_tip_team, name: 'Not in a branch tip team - e.g. at Agency level')
+        Geckoboard::PercentageField.new(:not_in_tip_team, name: 'Not in a branch tip team - e.g. at Agency level'),
+        Geckoboard::PercentageField.new(:not_edited, name: 'Never been edited')
       ].map { |field| [field.id,field.name] }
     end
 
     it { is_expected.to eq expected_fields }
   end
 
-  describe '#items' do
+  describe '#items', versioning: true do
     subject { described_class.new.items }
 
     let(:expected_items) do
@@ -31,7 +32,8 @@ RSpec.describe GeckoboardPublisher::ProfilesPercentageReport do
           with_additional_info: 0.67,
           not_in_team: 0.33,
           not_in_subteam: 0.33,
-          not_in_tip_team: 0.33
+          not_in_tip_team: 0.33,
+          not_edited: 0.67
         }
       ]
     end
@@ -39,7 +41,7 @@ RSpec.describe GeckoboardPublisher::ProfilesPercentageReport do
     before do
       create(:person, :with_photo, :department_member, current_project: 'peoplefinder')
       create(:person, :with_photo, :team_member, current_project: nil, description: " \t\n") # test whitespace exclusion
-      create(:person, description: 'test extra information ')
+      create(:person, description: 'test extra information ').update(given_name: 'Joe')
     end
 
     include_examples 'returns valid items structure'
