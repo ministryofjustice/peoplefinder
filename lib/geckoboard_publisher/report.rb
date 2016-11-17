@@ -19,7 +19,9 @@ module GeckoboardPublisher
     def publish! force = false
       @force = force
       create_dataset!
-      replace_dataset!
+      success = replace_dataset!
+      cron_log "publishing #{success.to_string_boolean} for #{self.class.name}"
+      success
     end
 
     def unpublish!
@@ -82,5 +84,21 @@ module GeckoboardPublisher
       Rails.logger.warn "#{err} Geckoboard API key is not authorized for #{self.class}"
       raise
     end
+
+    # rubocop:disable Rails/Output
+    # cron reads from STDOUT to /var/log/cron.log
+    def cron_log string
+      puts "#{DateTime.current}: #{string}" unless Rails.env.test?
+    end
+    # rubocop:enable Rails/Output
+
+  end
+end
+
+class Object
+  def to_string_boolean
+    return 'failure' if [FalseClass, NilClass].include?(self.class)
+    return 'success' if self.class == TrueClass
+    self
   end
 end

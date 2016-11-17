@@ -11,21 +11,15 @@ esac
 
 case ${ROLE} in
 worker)
-    # echo "creating rails_runner.sh for running rails runners via a cron job"
-    # env > env.sh
+    echo 'exporting non-language env vars to cron available environment'
+    env | grep -ve LANG -ve LC_ >> '/etc/environment'
 
-    # echo 'deleting certain env vars - not necessary'
-    # sed -i '/ADMIN_IP_RANGES.*/d' env.sh
-    # sed -i '/NEW_RELIC_APP_NAME.*/d' env.sh
+    echo 'exporting language vars to default locale'
+    env | grep -e LANG -e LC_ >> '/etc/default/locale'
 
-    echo 'exporting env vars to cron available environment'
-    env >> '/etc/environment'
-
+    echo 'writing rails runner script'
     echo '#!/bin/bash' > rails_runner.sh
-    echo "cd /usr/src/app" >> rails_runner.sh
-
     PATH_APPENDS='PATH=/usr/local/bundle/bin:$PATH GEM_HOME=/usr/local/bundle GEM_PATH=/usr/local/bundle:$GEM_PATH'
-    # echo "cd /usr/src/app && $(cat env.sh | xargs) $PATH_APPENDS bin/rails runner -e production \$1" >> rails_runner.sh
     echo "cd /usr/src/app && $PATH_APPENDS bin/rails runner -e production \$1" >> rails_runner.sh
     chmod a+x rails_runner.sh
 
@@ -33,7 +27,7 @@ worker)
     apt-get update && apt-get install -y cron
 
     echo "starting cron"
-    service cron start
+    service cron restart
 
     echo "running whenever to create/update crontab"
     bundle exec whenever -w
