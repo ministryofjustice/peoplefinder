@@ -1,4 +1,4 @@
-if %w{ production staging }.include? ENV['ENV']
+if %w( production staging ).include? ENV['ENV']
 
   set :output, standard: '/var/log/cron.log', error: '/var/log/cron_error.log'
 
