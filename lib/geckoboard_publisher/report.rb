@@ -19,14 +19,18 @@ module GeckoboardPublisher
     def publish! force = false
       @force = force
       create_dataset!
-      success = replace_dataset!
-      cron_log "publishing #{success.to_string_boolean} for #{self.class.name}"
-      success
+      replace_dataset!.tap do |result|
+        cron_logger.info "publishing #{self.class.name} has #{result.to_string_boolean}"
+      end
+    rescue Geckoboard::ConflictError => e
+      cron_logger.error "#{self.class.name} call of #{__method__} raised #{e}"
+      force ? try_once_more! : raise
     end
 
     def unpublish!
       client.datasets.delete(id)
-    rescue Geckoboard::UnexpectedStatusError
+    rescue Geckoboard::UnexpectedStatusError => e
+      cron_logger.error "#{self.class.name} call of #{__method__} raised #{e}"
       false
     end
 
@@ -68,14 +72,11 @@ module GeckoboardPublisher
 
     def replace_dataset!
       dataset.put items
-    rescue Geckoboard::ConflictError # existing dataset on geckoboard does not match
-      force ? try_once_more! : raise
     end
 
     def try_once_more!
-      @force = false
       unpublish!
-      publish!
+      publish! false
     end
 
     def test_client
@@ -85,20 +86,19 @@ module GeckoboardPublisher
       raise
     end
 
-    # rubocop:disable Rails/Output
-    # cron reads from STDOUT to /var/log/cron.log
-    def cron_log string
-      puts "#{DateTime.current}: #{string}" unless Rails.env.test?
+    def cron_logger
+      @logger ||= Logger.new(STDOUT).tap do |log|
+        log.progname = 'Worker cron job'
+        log.level = Rails.env.test? ? Logger::UNKNOWN : Logger::DEBUG
+      end
     end
-    # rubocop:enable Rails/Output
-
   end
 end
 
 class Object
   def to_string_boolean
-    return 'failure' if [FalseClass, NilClass].include?(self.class)
-    return 'success' if self.class == TrueClass
+    return 'failed' if [FalseClass, NilClass].include?(self.class)
+    return 'succeeded' if self.class == TrueClass
     self
   end
 end
