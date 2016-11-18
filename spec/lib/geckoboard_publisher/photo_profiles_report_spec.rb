@@ -59,14 +59,6 @@ RSpec.describe GeckoboardPublisher::PhotoProfilesReport do
       expect(subject.size).to eql 3
     end
 
-    # TODO: need to modify the Person.changes_for_papertrail method as it is blowing up papertrail for legacy image changes
-    # needs spcing in uploader spec.
-    xit 'returns profiles with legacy photos too' do
-      Timecop.freeze(Date.parse('28-FEB-2015')) { create(:person, image: File.open(sample_image)) }
-      expect(Person.legacy_photo_profiles_by_day_added.count).to eql 1
-      expect(subject.size).to eql 4
-    end
-
     it 'returns expected dataset items' do
       expected_items.each do |item|
         is_expected.to include item

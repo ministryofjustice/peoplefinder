@@ -56,7 +56,7 @@ shared_examples 'geckoboard publishable report' do
     it 'creates (or finds) geckoboard dataset and replaces its data' do
       mock_expectations
       expect(subject).to receive(:create_dataset!)
-      expect(subject).to receive(:replace_dataset!)
+      expect(subject).to receive(:replace_dataset!).and_return true
       subject.publish!
     end
 
@@ -64,9 +64,7 @@ shared_examples 'geckoboard publishable report' do
       before do
         mock_expectations do |client|
           allow(client).to receive(:datasets).and_return datasets_client
-          allow(datasets_client).to receive(:find_or_create).with(any_args).and_return dataset
-          allow(subject).to receive(:items).and_return null_object
-          allow(dataset).to receive(:put).with(null_object).and_raise Geckoboard::ConflictError
+          allow(datasets_client).to receive(:find_or_create).with(any_args).and_raise Geckoboard::ConflictError
         end
       end
 
