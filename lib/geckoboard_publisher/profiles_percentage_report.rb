@@ -7,7 +7,8 @@ module GeckoboardPublisher
         Geckoboard::PercentageField.new(:with_additional_info, name: 'With Additional Info'),
         Geckoboard::PercentageField.new(:not_in_team, name: 'Not in any team nor MoJ'),
         Geckoboard::PercentageField.new(:not_in_subteam, name: 'Not in a subteam - i.e. in MoJ'),
-        Geckoboard::PercentageField.new(:not_in_tip_team, name: 'Not in a branch tip team - e.g. at Agency level')
+        Geckoboard::PercentageField.new(:not_in_tip_team, name: 'Not in a branch tip team - e.g. at Agency level'),
+        Geckoboard::PercentageField.new(:not_edited, name: 'Never been edited')
       ]
     end
 
@@ -19,7 +20,8 @@ module GeckoboardPublisher
           with_additional_info: @with_additional_info,
           not_in_team: @not_in_team,
           not_in_subteam: @not_in_subteam,
-          not_in_tip_team: @not_in_tip_team
+          not_in_tip_team: @not_in_tip_team,
+          not_edited: @not_edited
         }
       ]
     end
@@ -33,6 +35,7 @@ module GeckoboardPublisher
       @not_in_team ||= percentage.value(:not_in_team)
       @not_in_subteam ||= percentage.value(:not_in_subteam)
       @not_in_tip_team ||= percentage.value(:not_in_tip_team)
+      @not_edited ||= percentage.value(:not_edited)
     end
 
     class PercentageOfTotal

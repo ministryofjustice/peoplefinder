@@ -40,15 +40,23 @@ module Concerns::GeckoboardDatasets
       Group.find_by(ancestry_depth: 0).people_outside_subteams
     end
 
-    def profile_events
-      pgresults = ActiveRecord::Base.connection.execute profile_events_raw_sql
-      pgresults
+    def not_edited
+      unscoped.
+        joins("LEFT JOIN versions on versions.item_id = people.id
+                AND versions.item_type = 'Person'
+                AND versions.event = 'update'").
+        where(versions: { id: nil })
     end
 
     def not_in_tip_team
       unscoped.
         joins(:memberships).
         where(memberships: { group_id: non_branch_tip_teams })
+    end
+
+    def profile_events
+      pgresults = ActiveRecord::Base.connection.execute profile_events_raw_sql
+      pgresults
     end
 
     def completions_per_top_level_team
