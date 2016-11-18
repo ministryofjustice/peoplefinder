@@ -11,30 +11,32 @@ esac
 
 case ${ROLE} in
 worker)
-    echo "creating rails_runner.sh for running rails runners via a cron job"
-    env > env.sh
-    sed -i '/ADMIN_IP_RANGES.*/d' env.sh
-    sed -i '/NEW_RELIC_APP_NAME.*/d' env.sh
-    cat env.sh | xargs > rails_runner.sh
-    PATH_APPENDS='PATH=/usr/local/bundle/bin:$PATH GEM_HOME=/usr/local/bundle GEM_PATH=/usr/local/bundle:$GEM_PATH'
+    echo 'exporting non-language env vars to cron available environment'
+    env | grep -ve LANG -ve LC_ >> '/etc/environment'
+
+    echo 'exporting language vars to default locale'
+    env | grep -e LANG -e LC_ >> '/etc/default/locale'
+
+    echo 'writing rails runner script'
     echo '#!/bin/bash' > rails_runner.sh
-    echo "cd /usr/src/app" >> rails_runner.sh
-    echo "cd /usr/src/app && $(cat env.sh | xargs) $PATH_APPENDS bin/rails runner -e production \$1" >> rails_runner.sh
+    PATH_APPENDS='PATH=/usr/local/bundle/bin:$PATH GEM_HOME=/usr/local/bundle GEM_PATH=/usr/local/bundle:$GEM_PATH'
+    echo "cd /usr/src/app && $PATH_APPENDS bin/rails runner -e production \$1" >> rails_runner.sh
     chmod a+x rails_runner.sh
 
-    echo "installing and running cron"
-    apt-get update
-    apt-get install -y cron
-    cron
+    echo "installing cron"
+    apt-get update && apt-get install -y cron
 
-    echo "running whenever to create crontab"
+    echo "starting cron"
+    service cron restart
+
+    echo "running whenever to create/update crontab"
     bundle exec whenever -w
 
     echo "running worker"
     bundle exec rake jobs:work
     ;;
 *)
-    echo "running app"
+    echo "running app server - unicorn"
     bundle exec unicorn -c config/unicorn.rb -p $UNICORN_PORT
     ;;
 esac
