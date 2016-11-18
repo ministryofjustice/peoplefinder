@@ -5,23 +5,23 @@ if ENV['ENV'] == 'production'
   job_type :rails_script, "cd /usr/src/app && ./rails_runner.sh ':task' :output"
 
   every :weekday, at: '6:00am' do
-    rails_script 'GeckoboardPublisher::PhotoProfilesReport.new.publish!'
+    rails_script 'GeckoboardPublisher::PhotoProfilesReport.new.publish!(true)'
   end
 
   every :weekday, at: '6:10am' do
-    rails_script 'GeckoboardPublisher::ProfilesPercentageReport.new.publish!'
+    rails_script 'GeckoboardPublisher::ProfilesPercentageReport.new.publish!(true)'
   end
 
   every :weekday, at: '6:20am' do
-    rails_script 'GeckoboardPublisher::TotalProfilesReport.new.publish!'
+    rails_script 'GeckoboardPublisher::TotalProfilesReport.new.publish!(true)'
   end
 
   every :weekday, at: '6:30am' do
-    rails_script 'GeckoboardPublisher::ProfilesChangedReport.new.publish!'
+    rails_script 'GeckoboardPublisher::ProfilesChangedReport.new.publish!(true)'
   end
 
   every :weekday, at: '6:40am' do
-    rails_script 'GeckoboardPublisher::ProfileCompletionsReport.new.publish!'
+    rails_script 'GeckoboardPublisher::ProfileCompletionsReport.new.publish!(true)'
   end
 
   every :weekday, at: '8am' do
