@@ -65,6 +65,10 @@ module Concerns::GeckoboardDatasets
       end
     end
 
+    def duplicate_profiles
+      ActiveRecord::Base.connection.execute duplicate_profiles_sql
+    end
+
     private
 
     def profile_events_raw_sql
@@ -94,6 +98,18 @@ module Concerns::GeckoboardDatasets
       }
     end
 
+     def duplicate_profiles_sql
+      <<~SQL
+        SELECT given_name || ' ' || surname AS full_name,
+               email
+        FROM people
+        WHERE given_name || ' ' || surname IN (SELECT given_name || ' ' || surname
+                                                FROM people
+                                                GROUP BY given_name || ' ' || surname
+                                                HAVING count(*) > 1) order by given_name || ' ' || surname
+      SQL
+    end
+
     def non_branch_tip_teams
       Group.all.select(&:has_children?).map(&:id)
     end
@@ -105,6 +121,7 @@ module Concerns::GeckoboardDatasets
     def top_level_teams
       Group.where(ancestry_depth: [1])
     end
+
   end
 
 end
