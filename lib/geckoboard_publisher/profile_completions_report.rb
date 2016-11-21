@@ -5,13 +5,23 @@ module GeckoboardPublisher
       [
         Geckoboard::StringField.new(:team, name: 'Team name'),
         Geckoboard::NumberField.new(:total, name: 'Total profiles'),
-        Geckoboard::NumberField.new(:with_photos, name: 'Profiles with photos'),
-        Geckoboard::NumberField.new(:with_additional_info, name: 'Profiles with Additional Info')
+        Geckoboard::PercentageField.new(:with_photos, name: '% Profiles with photos'),
+        Geckoboard::PercentageField.new(:with_additional_info, name: '% Profiles with Additional Info')
       ]
     end
 
     def items
-      @items ||= Person.completions_per_top_level_team
+      @items ||= parse Person.completions_per_top_level_team
+    end
+
+    private
+
+    def parse items
+      items.each do |item|
+        total = item[:total].to_f
+        item[:with_photos] = item[:with_photos]/total
+        item[:with_additional_info] = item[:with_additional_info]/total
+      end
     end
 
   end
