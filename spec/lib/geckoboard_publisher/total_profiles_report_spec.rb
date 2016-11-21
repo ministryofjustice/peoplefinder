@@ -6,13 +6,13 @@ RSpec.describe GeckoboardPublisher::TotalProfilesReport do
   it_behaves_like 'geckoboard publishable report'
 
   describe '#fields' do
-    subject { described_class.new.fields.map { |field| [field.id, field.name] } }
+    subject { described_class.new.fields.map { |field| [field.class, field.id, field.name] } }
 
     let(:expected_fields) do
       [
         Geckoboard::NumberField.new(:count, name: 'Count'),
         Geckoboard::DateField.new(:created_at, name: 'Created'),
-      ].map { |field| [field.id,field.name] }
+      ].map { |field| [field.class, field.id,field.name] }
     end
 
     it { is_expected.to eq expected_fields }

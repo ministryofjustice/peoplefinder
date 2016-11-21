@@ -9,7 +9,7 @@ RSpec.describe GeckoboardPublisher::ProfilesChangedReport do
   it { is_expected.to respond_to :limit= }
 
   describe '#fields' do
-    subject { described_class.new.fields.map { |field| [field.id, field.name] } }
+    subject { described_class.new.fields.map { |field| [field.class, field.id, field.name] } }
 
     let(:expected_fields) do
       [
@@ -17,7 +17,7 @@ RSpec.describe GeckoboardPublisher::ProfilesChangedReport do
         Geckoboard::NumberField.new(:create, name: 'Added'),
         Geckoboard::NumberField.new(:update, name: 'Edited'),
         Geckoboard::NumberField.new(:destroy, name: 'Deleted')
-      ].map { |field| [field.id,field.name] }
+      ].map { |field| [field.class, field.id, field.name] }
     end
 
     it { is_expected.to eq expected_fields }
