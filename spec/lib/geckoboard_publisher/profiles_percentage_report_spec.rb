@@ -6,7 +6,7 @@ RSpec.describe GeckoboardPublisher::ProfilesPercentageReport do
   it_behaves_like 'geckoboard publishable report'
 
   describe '#fields' do
-    subject { described_class.new.fields.map { |field| [field.id, field.name] } }
+    subject { described_class.new.fields.map { |field| [field.class, field.id, field.name] } }
 
     let(:expected_fields) do
       [
@@ -16,7 +16,7 @@ RSpec.describe GeckoboardPublisher::ProfilesPercentageReport do
         Geckoboard::PercentageField.new(:not_in_subteam, name: 'Not in a subteam - i.e. in MoJ'),
         Geckoboard::PercentageField.new(:not_in_tip_team, name: 'Not in a branch tip team - e.g. at Agency level'),
         Geckoboard::PercentageField.new(:not_edited, name: 'Never been edited')
-      ].map { |field| [field.id,field.name] }
+      ].map { |field| [field.class, field.id,field.name] }
     end
 
     it { is_expected.to eq expected_fields }

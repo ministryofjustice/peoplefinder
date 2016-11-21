@@ -6,15 +6,15 @@ RSpec.describe GeckoboardPublisher::ProfileCompletionsReport do
   it_behaves_like 'geckoboard publishable report'
 
   describe '#fields' do
-    subject { described_class.new.fields.map { |field| [field.id, field.name] } }
+    subject { described_class.new.fields.map { |field| [field.class, field.id, field.name] } }
 
     let(:expected_fields) do
       [
         Geckoboard::StringField.new(:team, name: 'Team name'),
         Geckoboard::NumberField.new(:total, name: 'Total profiles'),
-        Geckoboard::NumberField.new(:with_photos, name: 'Profiles with photos'),
-        Geckoboard::NumberField.new(:with_additional_info, name: 'Profiles with Additional Info')
-      ].map { |field| [field.id,field.name] }
+        Geckoboard::PercentageField.new(:with_photos, name: '% Profiles with photos'),
+        Geckoboard::PercentageField.new(:with_additional_info, name: '% Profiles with Additional Info')
+      ].map { |field| [field.class, field.id, field.name] }
     end
 
     it { is_expected.to eq expected_fields }
@@ -28,20 +28,20 @@ RSpec.describe GeckoboardPublisher::ProfileCompletionsReport do
         {
           team: "Corporate Services Group",
           total: 1,
-          with_photos: 0,
-          with_additional_info: 1
+          with_photos: 0.0,
+          with_additional_info: 1.0
         },
         {
           team: "Digital Services",
           total: 1,
-          with_photos: 1,
-          with_additional_info: 0
+          with_photos: 1.0,
+          with_additional_info: 0.0
         },
         {
           team: "NOMS",
-          total: 1,
-          with_photos: 1,
-          with_additional_info: 1
+          total: 2,
+          with_photos: 0.5,
+          with_additional_info: 0.5
         }
       ]
     end
@@ -53,6 +53,7 @@ RSpec.describe GeckoboardPublisher::ProfileCompletionsReport do
       person = create :person, :member_of, team: csg, description: 'description added'
       person = create :person, :with_photo, :member_of, team: ds, current_project: " \n\t" # test whitespace exclusion
       person = create :person, :with_photo, :member_of, team: noms, current_project: "mmmmm, donuts!"
+      person = create :person, :member_of, team: noms
     end
 
     include_examples 'returns valid items structure'
