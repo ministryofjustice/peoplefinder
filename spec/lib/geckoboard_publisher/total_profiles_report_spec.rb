@@ -12,7 +12,7 @@ RSpec.describe GeckoboardPublisher::TotalProfilesReport do
       [
         Geckoboard::NumberField.new(:count, name: 'Count'),
         Geckoboard::DateField.new(:created_at, name: 'Created'),
-      ].map { |field| [field.class, field.id,field.name] }
+      ].map { |field| [field.class, field.id, field.name] }
     end
 
     it { is_expected.to eq expected_fields }
