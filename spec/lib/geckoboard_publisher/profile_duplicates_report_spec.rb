@@ -11,7 +11,7 @@ RSpec.describe GeckoboardPublisher::ProfileDuplicatesReport do
     let(:expected_fields) do
       [
         Geckoboard::StringField.new(:full_name, name: 'Duplicate name'),
-        Geckoboard::NumberField.new(:emails, name: 'email list'),
+        Geckoboard::StringField.new(:emails, name: 'email list'),
       ].map { |field| [field.class, field.id, field.name] }
     end
 

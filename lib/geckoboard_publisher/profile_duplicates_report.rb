@@ -1,21 +1,10 @@
-
-
-
 module GeckoboardPublisher
   class ProfileDuplicatesReport < Report
-
-    attr_accessor :limit
-
-    def initialize
-      @limit = 5000
-      @items = nil
-      super
-    end
 
     def fields
       [
         Geckoboard::StringField.new(:full_name, name: 'Duplicate name'),
-        Geckoboard::NumberField.new(:emails, name: 'email list')
+        Geckoboard::StringField.new(:emails, name: 'email list')
       ]
     end
 

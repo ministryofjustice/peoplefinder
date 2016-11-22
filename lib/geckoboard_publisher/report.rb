@@ -8,9 +8,11 @@ module GeckoboardPublisher
 
     # geckboard datasets can only accept 500 sets per POST or PUT
     # and only 5000 sets maximum
-    ITEMS_CHUNK_SIZE = 500.freeze
+    ITEMS_CHUNK_SIZE = 500
 
-    attr_reader :client, :dataset
+    attr_reader :client, :dataset, :published, :force
+    alias published? published
+    alias force? force
 
     def initialize
       @published = false
@@ -66,14 +68,6 @@ module GeckoboardPublisher
 
     def items
       raise "Implement #{__method__} in subclass"
-    end
-
-    def force?
-      @force
-    end
-
-    def published?
-      @published
     end
 
     private

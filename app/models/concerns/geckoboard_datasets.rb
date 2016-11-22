@@ -98,7 +98,7 @@ module Concerns::GeckoboardDatasets
       }
     end
 
-     def duplicate_profiles_sql
+    def duplicate_profiles_sql
       <<~SQL
         SELECT given_name || ' ' || surname AS full_name,
                email
@@ -106,7 +106,8 @@ module Concerns::GeckoboardDatasets
         WHERE given_name || ' ' || surname IN (SELECT given_name || ' ' || surname
                                                 FROM people
                                                 GROUP BY given_name || ' ' || surname
-                                                HAVING count(*) > 1) order by given_name || ' ' || surname
+                                                HAVING count(*) > 1)
+        ORDER BY given_name || ' ' || surname
       SQL
     end
 

@@ -1,11 +1,6 @@
 module GeckoboardPublisher
   class ProfilesChangedReport < Report
 
-    def initialize
-      @items = nil
-      super
-    end
-
     def fields
       [
         Geckoboard::DateField.new(:date, name: 'Date'),

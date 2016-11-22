@@ -12,6 +12,8 @@ shared_examples 'geckoboard publishable report' do
   it { is_expected.to respond_to :id }
   it { is_expected.to respond_to :fields }
   it { is_expected.to respond_to :publish! }
+  it { is_expected.to respond_to :force? }
+  it { is_expected.to respond_to :published? }
 
   def mock_expectations exit_without_ping = nil
     allow(ENV).to receive(:[]).with('ENV').and_return 'staging'
@@ -68,7 +70,7 @@ shared_examples 'geckoboard publishable report' do
         end
       end
 
-      it 'by trying once again when force specified' do
+      it 'by overwriting existing dataset when force specified' do
         expect(subject).to receive(:overwrite!)
         subject.publish! true
       end
