@@ -8,10 +8,13 @@ shared_examples 'geckoboard publishable report' do
 
   subject { described_class.new }
 
+  it { expect(described_class).to have_constant name: :ITEMS_CHUNK_SIZE, value: 500 }
   it { is_expected.to respond_to :client }
   it { is_expected.to respond_to :id }
   it { is_expected.to respond_to :fields }
   it { is_expected.to respond_to :publish! }
+  it { is_expected.to respond_to :force? }
+  it { is_expected.to respond_to :published? }
 
   def mock_expectations exit_without_ping = nil
     allow(ENV).to receive(:[]).with('ENV').and_return 'staging'
@@ -68,13 +71,13 @@ shared_examples 'geckoboard publishable report' do
         end
       end
 
-      it 'by trying once again when force specified' do
-        expect(subject).to receive(:try_once_more!)
+      it 'by overwriting existing dataset when force specified' do
+        expect(subject).to receive(:overwrite!)
         subject.publish! true
       end
 
       it 'by raising errors when force not specified' do
-        expect(subject).not_to receive(:try_once_more!)
+        expect(subject).not_to receive(:overwrite!)
         expect { subject.publish! }.to raise_error Geckoboard::ConflictError
       end
     end

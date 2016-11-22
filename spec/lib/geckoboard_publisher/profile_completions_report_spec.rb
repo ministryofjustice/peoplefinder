@@ -12,8 +12,8 @@ RSpec.describe GeckoboardPublisher::ProfileCompletionsReport do
       [
         Geckoboard::StringField.new(:team, name: 'Team name'),
         Geckoboard::NumberField.new(:total, name: 'Total profiles'),
-        Geckoboard::PercentageField.new(:with_photos, name: '% Profiles with photos'),
-        Geckoboard::PercentageField.new(:with_additional_info, name: '% Profiles with Additional Info')
+        Geckoboard::PercentageField.new(:with_photos, name: '% profiles with photos'),
+        Geckoboard::PercentageField.new(:with_additional_info, name: '% profiles with Additional Info')
       ].map { |field| [field.class, field.id, field.name] }
     end
 

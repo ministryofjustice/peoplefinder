@@ -6,11 +6,16 @@ require 'geckoboard'
 module GeckoboardPublisher
   class Report
 
-    attr_reader :client
-    attr_reader :dataset
-    attr_reader :force
+    # geckboard datasets can only accept 500 sets per POST or PUT
+    # and only 5000 sets maximum
+    ITEMS_CHUNK_SIZE = 500
+
+    attr_reader :client, :dataset, :published, :force
+    alias published? published
+    alias force? force
 
     def initialize
+      @published = false
       @force = false
       @client = Geckoboard.client(ENV['GECKOBOARD_API_KEY'])
       test_client
@@ -24,11 +29,12 @@ module GeckoboardPublisher
       end
     rescue Geckoboard::ConflictError => e
       cron_logger.error "#{self.class.name} call of #{__method__} raised #{e}"
-      force ? try_once_more! : raise
+      force? ? overwrite! : raise
     end
 
     def unpublish!
       client.datasets.delete(id)
+      @published = false
     rescue Geckoboard::UnexpectedStatusError => e
       cron_logger.error "#{self.class.name} call of #{__method__} raised #{e}"
       false
@@ -71,10 +77,18 @@ module GeckoboardPublisher
     end
 
     def replace_dataset!
-      dataset.put items
+      items.each_slice(ITEMS_CHUNK_SIZE).with_index do |chunk, idx|
+        @published = if idx == 0
+                       dataset.put(chunk)
+                     else
+                       dataset.post(chunk)
+                     end
+        break unless published?
+      end
+      published?
     end
 
-    def try_once_more!
+    def overwrite!
       unpublish!
       publish! false
     end
