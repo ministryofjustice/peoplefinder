@@ -77,8 +77,12 @@ module GeckoboardPublisher
     end
 
     def replace_dataset!
-      items.each_slice(ITEMS_CHUNK_SIZE) do |chunk|
-        @published = dataset.put(chunk)
+      items.each_slice(ITEMS_CHUNK_SIZE).with_index do |chunk, idx|
+        @published = if idx == 0
+                       dataset.put(chunk)
+                     else
+                       dataset.post(chunk)
+                     end
         break unless published?
       end
       published?

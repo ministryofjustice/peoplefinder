@@ -35,11 +35,11 @@ RSpec.describe GeckoboardPublisher::ProfileDuplicatesReport do
     end
 
     before do
-      person = create :person, given_name: 'Sid', surname: 'James', email: 'sid.james@digital.justice.gov.uk'
-      person = create :person, given_name: 'Sid', surname: 'James', email: 'sid.james2@digital.justice.gov.uk'
-      person = create :person, given_name: 'Peter', surname: 'Smith', email: 'peter.smith@digital.justice.gov.uk'
-      person = create :person, given_name: 'Peter', surname: 'Smith', email: 'peter.smith2@digital.justice.gov.uk'
-      person = create :person, given_name: 'Sidney', surname: 'James', email: 'sidney.james@digital.justice.gov.uk'
+      create :person, given_name: 'Sid', surname: 'James', email: 'sid.james@digital.justice.gov.uk'
+      create :person, given_name: 'Sid', surname: 'James', email: 'sid.james2@digital.justice.gov.uk'
+      create :person, given_name: 'Peter', surname: 'Smith', email: 'peter.smith@digital.justice.gov.uk'
+      create :person, given_name: 'Peter', surname: 'Smith', email: 'peter.smith2@digital.justice.gov.uk'
+      create :person, given_name: 'Sidney', surname: 'James', email: 'sidney.james@digital.justice.gov.uk'
     end
 
     include_examples 'returns valid items structure'
