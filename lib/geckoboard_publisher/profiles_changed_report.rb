@@ -1,10 +1,7 @@
 module GeckoboardPublisher
   class ProfilesChangedReport < Report
 
-    attr_accessor :limit
-
     def initialize
-      @limit = 500
       @items = nil
       super
     end
@@ -29,11 +26,7 @@ module GeckoboardPublisher
       pgresult.each do |row|
         find_or_create_set(row)
       end
-      @sets.drop(limit_diff)
-    end
-
-    def limit_diff
-      [0, @sets.size - limit].max
+      @sets
     end
 
     def template date, options = {}

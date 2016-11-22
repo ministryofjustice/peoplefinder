@@ -19,8 +19,8 @@ module GeckoboardPublisher
     def parse items
       items.each do |item|
         total = item[:total].to_f
-        item[:with_photos] = item[:with_photos]/total
-        item[:with_additional_info] = item[:with_additional_info]/total
+        item[:with_photos] = (item[:with_photos]/total).round(2)
+        item[:with_additional_info] = (item[:with_additional_info]/total).round(2)
       end
     end
 

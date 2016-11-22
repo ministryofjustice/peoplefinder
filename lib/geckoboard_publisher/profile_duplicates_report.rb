@@ -33,11 +33,6 @@ module GeckoboardPublisher
       @sets
     end
 
-    # geckboard datasets can only accept 500 sets per POST or PUT and only 5000 sets maximum
-    def replace_dataset!
-      raise "To be implemented"
-    end
-
     def find_or_create_set row
       @sets.each do |set|
         if set[:full_name] == row['full_name']

@@ -69,12 +69,12 @@ shared_examples 'geckoboard publishable report' do
       end
 
       it 'by trying once again when force specified' do
-        expect(subject).to receive(:try_once_more!)
+        expect(subject).to receive(:overwrite!)
         subject.publish! true
       end
 
       it 'by raising errors when force not specified' do
-        expect(subject).not_to receive(:try_once_more!)
+        expect(subject).not_to receive(:overwrite!)
         expect { subject.publish! }.to raise_error Geckoboard::ConflictError
       end
     end
