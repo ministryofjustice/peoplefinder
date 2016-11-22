@@ -60,7 +60,7 @@ shared_examples 'geckoboard publishable report' do
       mock_expectations
       expect(subject).to receive(:create_dataset!)
       expect(subject).to receive(:replace_dataset!).and_return true
-      subject.publish!
+      expect(subject.publish!).to eql true
     end
 
     context 'handles conflict errors' do
@@ -89,7 +89,7 @@ shared_examples 'geckoboard publishable report' do
         mock_expectations do |client|
           expect(client).to receive(:datasets).and_return dataset
           expect(dataset).to receive(:delete).and_return true
-          subject.unpublish!
+          expect(subject.unpublish!).to eql true
         end
       end
     end

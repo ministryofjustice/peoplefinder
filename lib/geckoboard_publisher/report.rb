@@ -33,8 +33,9 @@ module GeckoboardPublisher
     end
 
     def unpublish!
-      client.datasets.delete(id)
-      @published = false
+      client.datasets.delete(id).tap do |deleted|
+        @published = false if deleted
+      end
     rescue Geckoboard::UnexpectedStatusError => e
       cron_logger.error "#{self.class.name} call of #{__method__} raised #{e}"
       false
