@@ -9,6 +9,7 @@ shared_examples 'geckoboard publishable report' do
   subject { described_class.new }
 
   it { expect(described_class).to have_constant name: :ITEMS_CHUNK_SIZE, value: 500 }
+  it { expect(described_class).to have_constant name: :MAX_STRING_LENGTH, value: 100 }
   it { is_expected.to respond_to :client }
   it { is_expected.to respond_to :id }
   it { is_expected.to respond_to :fields }

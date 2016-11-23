@@ -4,7 +4,8 @@ module GeckoboardPublisher
     def fields
       [
         Geckoboard::StringField.new(:full_name, name: 'Duplicate name'),
-        Geckoboard::StringField.new(:emails, name: 'email list')
+        Geckoboard::NumberField.new(:count, name: 'No. of duplicates'),
+        Geckoboard::StringField.new(:emails, name: 'email list (truncated)')
       ]
     end
 
@@ -23,12 +24,30 @@ module GeckoboardPublisher
     end
 
     def find_or_create_set row
-      @sets.each do |set|
-        if set[:full_name] == row['full_name']
-          return set[:emails] = set[:emails] + ', ' + row['email']
-        end
-      end
-      @sets << { full_name: row['full_name'], emails: row['email'] }
+      add_set(row) unless update_set(row)
     end
+
+    def add_set row
+      @sets << { full_name: row['full_name'],
+                  count: 1,
+                  emails: row['email'].slice(0, MAX_STRING_LENGTH)
+                }
+    end
+
+    def find_set full_name
+      found = @sets.select do |set|
+        set[:full_name] == full_name
+      end
+      found.first
+    end
+
+    def update_set row
+      set = find_set row['full_name']
+      return false if set.nil?
+      set[:emails] = (set[:emails] + ', ' + row['email']).slice(0, MAX_STRING_LENGTH)
+      set[:count] += 1
+      true
+    end
+
   end
 end

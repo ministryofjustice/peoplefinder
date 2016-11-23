@@ -11,7 +11,8 @@ RSpec.describe GeckoboardPublisher::ProfileDuplicatesReport do
     let(:expected_fields) do
       [
         Geckoboard::StringField.new(:full_name, name: 'Duplicate name'),
-        Geckoboard::StringField.new(:emails, name: 'email list'),
+        Geckoboard::NumberField.new(:count, name: 'No. of duplicates'),
+        Geckoboard::StringField.new(:emails, name: 'email list (truncated)')
       ].map { |field| [field.class, field.id, field.name] }
     end
 
@@ -25,10 +26,12 @@ RSpec.describe GeckoboardPublisher::ProfileDuplicatesReport do
       [
         {
           full_name: "Sid James",
+          count: 2,
           emails: 'sid.james@digital.justice.gov.uk, sid.james2@digital.justice.gov.uk'
         },
         {
           full_name: "Peter Smith",
+          count: 2,
           emails: 'peter.smith@digital.justice.gov.uk, peter.smith2@digital.justice.gov.uk'
         }
       ]
@@ -49,6 +52,22 @@ RSpec.describe GeckoboardPublisher::ProfileDuplicatesReport do
       expected_items.each do |item|
         is_expected.to include item
       end
+    end
+
+    describe 'truncation of string fields' do
+
+      before do
+        stub_const("#{described_class.superclass}::MAX_STRING_LENGTH", 10)
+      end
+
+      it 'test stubs max string length' do
+        expect(described_class).to have_constant name: :MAX_STRING_LENGTH, value: 10
+      end
+
+      it 'truncates email list to geckoboard max string length' do
+        expect(subject.first[:emails]).to eq subject.first[:emails][0..9]
+      end
+
     end
 
   end
