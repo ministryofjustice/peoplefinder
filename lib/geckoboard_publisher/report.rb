@@ -9,6 +9,7 @@ module GeckoboardPublisher
     # geckboard datasets can only accept 500 sets per POST or PUT
     # and only 5000 sets maximum
     ITEMS_CHUNK_SIZE = 500
+    MAX_STRING_LENGTH = 100
 
     attr_reader :client, :dataset, :published, :force
     alias published? published
