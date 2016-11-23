@@ -16,6 +16,7 @@ RSpec::Matchers.define :include_hash_matching do |expected|
 end
 
 RSpec::Matchers.define :have_constant do |expected|
+  expected.assert_valid_keys :name, :value
   match do |owner|
     result = owner.const_defined?(expected[:name])
     result = owner.const_get(expected[:name]) == expected[:value] if expected.key? :value

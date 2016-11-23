@@ -61,7 +61,7 @@ RSpec.describe GeckoboardPublisher::ProfileDuplicatesReport do
       end
 
       it 'test stubs max string length' do
-        expect(described_class).to have_constant name: :MAX_STRING_LENGTH, valule: 10
+        expect(described_class).to have_constant name: :MAX_STRING_LENGTH, value: 10
       end
 
       it 'truncates email list to geckoboard max string length' do
