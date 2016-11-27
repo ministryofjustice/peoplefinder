@@ -44,8 +44,6 @@ feature 'OmniAuth Authentication' do
 
   scenario 'Non existent users are redirected to their new profiles edit page after logging in' do
     OmniAuth.config.mock_auth[:gplus] = valid_user
-    # visit group_path(group)
-    # click_link 'Log in'
     group = create(:group)
     visit group_path(group)
     click_link 'Log in using Google+'
@@ -56,7 +54,7 @@ feature 'OmniAuth Authentication' do
     create(:person, email: valid_user[:info][:email])
     OmniAuth.config.mock_auth[:gplus] = valid_user
     visit group_path(group)
-    click_link 'Log in'
+    click_link 'Log in using Google+'
     expect(group_page).to be_displayed
   end
 end
