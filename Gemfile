@@ -33,6 +33,7 @@ gem 'sass-rails', '~> 4.0.3'
 gem 'uglifier', '>= 2.7.2'
 gem 'unf'
 gem 'unicorn', '~> 4.8.3'
+gem 'unicorn-worker-killer', '~> 0.4.4'
 gem 'useragent', '~> 0.10.0'
 gem 'virtus'
 gem 'whenever', require: false

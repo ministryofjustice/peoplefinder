@@ -21,6 +21,8 @@ module GeckoboardPublisher
         find_or_create_set(row)
       end
       @sets
+    ensure
+      pgresult.clear
     end
 
     def find_or_create_set row

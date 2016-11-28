@@ -274,6 +274,7 @@ GEM
     friendly_id (5.0.5)
       activerecord (>= 4.0.0)
     geckoboard-ruby (0.3.0)
+    get_process_mem (0.2.1)
     git-version-bump (0.15.1)
     globalid (0.3.7)
       activesupport (>= 4.1.0)
@@ -591,6 +592,9 @@ GEM
       kgio (~> 2.6)
       rack
       raindrops (~> 0.7)
+    unicorn-worker-killer (0.4.4)
+      get_process_mem (~> 0)
+      unicorn (>= 4, < 6)
     useragent (0.10.0)
     virtus (1.0.5)
       axiom-types (~> 0.1)
@@ -687,6 +691,7 @@ DEPENDENCIES
   uglifier (>= 2.7.2)
   unf
   unicorn (~> 4.8.3)
+  unicorn-worker-killer (~> 0.4.4)
   useragent (~> 0.10.0)
   virtus
   webmock
@@ -699,4 +704,4 @@ RUBY VERSION
    ruby 2.3.1p112
 
 BUNDLED WITH
-   1.12.5
+   1.13.6
