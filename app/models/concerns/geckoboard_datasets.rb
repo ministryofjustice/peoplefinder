@@ -107,7 +107,7 @@ module Concerns::GeckoboardDatasets
                                                 FROM people
                                                 GROUP BY given_name || ' ' || surname
                                                 HAVING count(*) > 1)
-        ORDER BY given_name || ' ' || surname
+        ORDER BY given_name || ' ' || surname, email DESC
       SQL
     end
 
