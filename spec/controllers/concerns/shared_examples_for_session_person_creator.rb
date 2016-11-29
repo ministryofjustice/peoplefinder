@@ -1,5 +1,3 @@
-require 'rails_helper'
-
 shared_examples_for "session_person_creatable" do
 
   it { is_expected.to respond_to :person_from_auth_hash }

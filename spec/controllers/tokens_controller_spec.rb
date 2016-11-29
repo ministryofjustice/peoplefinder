@@ -1,5 +1,5 @@
 require 'rails_helper'
-require Rails.root.join('spec', 'controllers', 'concerns', 'session_person_creator_spec.rb')
+require Rails.root.join('spec', 'controllers', 'concerns', 'shared_examples_for_session_person_creator.rb')
 
 describe TokensController, type: :controller do
   include PermittedDomainHelper
