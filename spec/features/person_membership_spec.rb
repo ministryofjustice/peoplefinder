@@ -34,6 +34,23 @@ feature "Person maintenance" do
     expect(page).to have_selector('.group-leader .leader-role', text: 'Head Honcho')
   end
 
+  scenario 'Confirming an identical person with membership details', js: true do
+    create(:group, name: 'Digital Justice')
+    create(:person, given_name: person_attributes[:given_name], surname: person_attributes[:surname])
+
+    javascript_log_in
+    visit new_person_path
+    fill_in_complete_profile_details
+    fill_in_membership_details('Digital Justice')
+
+    click_button 'Save', match: :first
+
+    expect(page).to have_text('1 result found')
+    click_button 'Continue'
+    duplicate = Person.find_by(email: person_attributes[:email])
+    expect(duplicate.memberships.last).to have_attributes membership_attributes
+  end
+
   scenario 'Editing a job title', js: true do
     person = create_person_in_digital_justice
 
@@ -105,9 +122,6 @@ feature "Person maintenance" do
     within('.new-team') do
       fill_in 'AddTeam', with: 'New team'
     end
-    # click_link 'Create'
-    # expect(page).to have_selector('.subteam-name', text: 'New team', visible: :visible)
-
   end
 
   scenario 'Adding an additional role', js: true do
@@ -129,8 +143,8 @@ feature "Person maintenance" do
     expect(Person.last.memberships.length).to eql(2)
   end
 
-  def check_leader
-    within('.team-leader') { choose('Yes') }
+  def check_leader(choice = 'Yes')
+    within('.team-leader') { choose(choice) }
   end
 
   scenario 'Adding an additional leadership role in same team', js: true do
