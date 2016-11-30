@@ -16,6 +16,8 @@
     = f.fields_for :memberships do |membership_f|
       = membership_f.hidden_field :role
       = membership_f.hidden_field :group_id
+      = membership_f.hidden_field :leader
+      = membership_f.hidden_field :subscribed
 
     = f.hidden_field :location_in_building
     = f.hidden_field :building

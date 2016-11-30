@@ -16,6 +16,15 @@ module SpecSupport
       }
     end
 
+    def membership_attributes
+      {
+        role: 'The boss',
+        group_id: Group.first.id || create(:group).id,
+        leader: true,
+        subscribed: false
+      }
+    end
+
     def complete_profile!(person)
       profile_photo = create(:profile_photo)
       person.update_attributes(
@@ -41,6 +50,17 @@ module SpecSupport
       fill_in 'Current project(s)', with: person_attributes[:current_project]
       uncheck('Monday')
       uncheck('Friday')
+    end
+
+    def fill_in_membership_details(team_name)
+      fill_in 'Job title', with: membership_attributes[:role]
+      select_in_team_select(team_name)
+      within '.team-leader' do
+        choose(membership_attributes[:leader] ? 'Yes' : 'No')
+      end
+      within '.team-subscribed' do
+        choose membership_attributes[:subscribed] ? 'Yes' : 'No'
+      end
     end
 
     def check_creation_of_profile_details
