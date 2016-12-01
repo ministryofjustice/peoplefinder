@@ -180,6 +180,20 @@ e.g. `brew install elasticsearch17`.
 
 Elasticsearch requires [jdk version 7 or greater](http://www.oracle.com/technetwork/java/javase/downloads/jdk7-downloads-1880260.html).
 
+To check the health of the elasticsearch (ES) stack you can use the following, from either host instance:
+
+```
+curl 'localhost:9200/_cat/health?v'
+```
+
+or view ES settings and stats:
+
+```
+curl 'localhost:9200/_cluster/stats/?pretty'
+curl 'localhost:9200/_cat/indices?v'
+curl 'localhost:9200/_cat/nodes?v'
+```
+
 If you get an IndexMissingException, you will need to index the Person model:
 
 ```
