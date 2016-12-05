@@ -4,11 +4,13 @@ RSpec.describe PersonUpdater, type: :service do
   let(:person) do
     double(
       'Person',
+      changes: { email: ['test.user@digital.justice.gov.uk', 'changed.user@digital.justice.gov.uk'] },
       save!: true,
       new_record?: false,
       notify_of_change?: false
     )
   end
+
   let(:current_user) { double('Current User', email: 'user@example.com') }
   subject { described_class.new(person, current_user) }
 
@@ -16,6 +18,11 @@ RSpec.describe PersonUpdater, type: :service do
     it 'raises an exception if person is a new record' do
       allow(person).to receive(:new_record?).and_return(true)
       expect { subject }.to raise_error(PersonUpdater::NewRecordError)
+    end
+
+    it 'stores changes to person as copy' do
+      expect(person).to receive(:changes)
+      subject.update!
     end
   end
 
@@ -50,9 +57,10 @@ RSpec.describe PersonUpdater, type: :service do
         with(current_user).
         and_return(true)
       mailing = double('mailing')
+
       expect(class_double('UserUpdateMailer').as_stubbed_const).
         to receive(:updated_profile_email).
-        with(person, current_user.email).
+        with(person, person.changes, current_user.email).
         and_return(mailing)
       expect(mailing).to receive(:deliver_later)
       subject.update!

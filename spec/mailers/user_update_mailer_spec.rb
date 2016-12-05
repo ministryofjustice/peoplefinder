@@ -42,7 +42,12 @@ describe UserUpdateMailer do
   end
 
   describe ".updated_profile_email" do
-    subject(:mail) { described_class.updated_profile_email(person, instigator.email).deliver_now }
+
+    before do
+      person.primary_phone_number = '0123 456 789'
+    end
+
+    subject(:mail) { described_class.updated_profile_email(person, person.changes, instigator.email).deliver_now }
 
     include_examples 'common mailer template elements'
     include_examples "common #{described_class} mail elements"
@@ -50,6 +55,27 @@ describe UserUpdateMailer do
     it 'includes the person show url' do
       %w(plain html).each do |part_type|
         expect(get_message_part(mail, part_type)).to have_text(person_url(person))
+      end
+    end
+
+    context 'recipients' do
+      it 'emails changed person' do
+        expect(mail.to).to include 'test.user@digital.justice.gov.uk'
+        expect(mail.cc).to be_empty
+      end
+
+      it 'emails changed person at new address and cc\'s old address when email changed' do
+        person.email = 'changed.user@digital.justice.gov.uk'
+        expect(mail.to).to include 'changed.user@digital.justice.gov.uk'
+        expect(mail.cc).to include 'test.user@digital.justice.gov.uk'
+      end
+    end
+
+    it 'includes list of changed person attributes' do
+      person.changes.each_pair do |field, change|
+        %w(plain html).each do |part_type|
+          expect(get_message_part(mail, part_type)).to have_content(/#{field.to_s.humanize} changed:.*from: #{ change.first || 'blank' }.*to: #{ change.second || 'blank' }/m)
+        end
       end
     end
   end

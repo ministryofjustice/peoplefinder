@@ -9,11 +9,12 @@ class UserUpdateMailer < ActionMailer::Base
     mail to: @person.email
   end
 
-  def updated_profile_email(person, by_email = nil)
+  def updated_profile_email(person, changes, by_email = nil)
     @person = person
+    @changes = changes
     @by_email = by_email
     @profile_url = profile_url(person)
-    mail to: @person.email
+    mail to: person.email, cc: changes[:email]&.first
   end
 
   def deleted_profile_email(recipient_email, recipient_name, by_email = nil)
