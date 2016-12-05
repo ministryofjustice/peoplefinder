@@ -1,5 +1,4 @@
-require 'spec_helper'
-require 'email_extractor'
+require 'rails_helper'
 
 RSpec.describe EmailExtractor, type: :service do
   subject do

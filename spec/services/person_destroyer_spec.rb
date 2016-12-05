@@ -1,5 +1,4 @@
-require 'spec_helper'
-require 'person_destroyer'
+require 'rails_helper'
 
 RSpec.describe PersonDestroyer, type: :service do
   let(:person) do

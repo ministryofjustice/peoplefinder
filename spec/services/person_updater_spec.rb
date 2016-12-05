@@ -1,5 +1,4 @@
-require 'spec_helper'
-require 'person_updater'
+require 'rails_helper'
 
 RSpec.describe PersonUpdater, type: :service do
   let(:person) do

@@ -1,5 +1,4 @@
-require 'spec_helper'
-require 'deployment'
+require 'rails_helper'
 
 RSpec.describe Deployment, type: :service do
   subject { described_class.new(environment) }
