@@ -21,7 +21,7 @@ RSpec.describe PersonUpdater, type: :service do
     end
 
     it 'stores changes to person as copy' do
-      expect(person).to receive(:changes)
+      expect(ChangesPresenter).to receive(:new).with(person.changes)
       subject.update!
     end
   end
@@ -52,15 +52,22 @@ RSpec.describe PersonUpdater, type: :service do
     end
 
     it 'sends an update email if required' do
+      changes_presenter = double('changes_presenter')
+      json = double('json')
+      mailing = double('mailing')
+
+      expect(ChangesPresenter).to receive(:new).with(person.changes).and_return changes_presenter
+
       allow(person).
         to receive(:notify_of_change?).
         with(current_user).
         and_return(true)
-      mailing = double('mailing')
+
+      expect(changes_presenter).to receive(:serialize).and_return json
 
       expect(class_double('UserUpdateMailer').as_stubbed_const).
         to receive(:updated_profile_email).
-        with(person, person.changes, current_user.email).
+        with(person, json, current_user.email).
         and_return(mailing)
       expect(mailing).to receive(:deliver_later)
       subject.update!

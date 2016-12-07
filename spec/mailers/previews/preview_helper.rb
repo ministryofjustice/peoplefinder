@@ -7,15 +7,25 @@ module PreviewHelper
   end
 
   def recipient
-    @recipient ||= Person.find_or_create_by!(given_name: 'Testimus', surname: 'Recipientus', email: 'testimus.recipientus@fake-moj.justice.gov.uk')
+    @recipient ||=
+      Person.find_or_create_by!(
+        given_name: 'Fred',
+        surname: 'Bloggs',
+        email: 'fred.bloggs@fake-moj.justice.gov.uk',
+        primary_phone_number: '0555 555 555',
+        location_in_building: 'room 101',
+        building: ''
+      )
   end
 
-  def dirty_recipient
+  def dirty_recipient_changes
     @dirty_recipient ||= recipient.tap do
-      recipient.email = 'changed.user@fake-moj.justice.gov.uk'
+      recipient.email = 'fred.john.bloggs@fake-moj.justice.gov.uk'
       recipient.primary_phone_number = '0123 456 789'
-      recipient.location_in_building = '10.51'
+      recipient.location_in_building = ''
+      recipient.building = 'St Pancras'
     end
+    ChangesPresenter.new(@dirty_recipient.changes).serialize
   end
 
   # person who caused email to be sent

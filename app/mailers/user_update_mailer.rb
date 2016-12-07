@@ -1,5 +1,9 @@
 class UserUpdateMailer < ActionMailer::Base
   include FeatureHelper
+  extend Forwardable
+
+  def_delegator :ChangesPresenter, :deserialize
+
   layout 'email'
 
   def new_profile_email(person, by_email = nil)
@@ -11,10 +15,10 @@ class UserUpdateMailer < ActionMailer::Base
 
   def updated_profile_email(person, changes, by_email = nil)
     @person = person
-    @changes = changes
+    @changes = deserialize(changes)
     @by_email = by_email
     @profile_url = profile_url(person)
-    mail to: person.email, cc: changes[:email]&.first
+    mail to: person.email, cc: @changes.raw['email']&.first
   end
 
   def deleted_profile_email(recipient_email, recipient_name, by_email = nil)
@@ -28,4 +32,5 @@ class UserUpdateMailer < ActionMailer::Base
   def profile_url(person)
     person_url(person)
   end
+
 end

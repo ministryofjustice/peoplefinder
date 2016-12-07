@@ -43,14 +43,30 @@ describe UserUpdateMailer do
 
   describe ".updated_profile_email" do
 
-    before do
-      person.primary_phone_number = '0123 456 789'
+    let(:serialized_changes) { ChangesPresenter.new(person.changes).serialize }
+
+    subject(:mail) do
+      described_class.updated_profile_email(person, serialized_changes, instigator.email).deliver_now
     end
 
-    subject(:mail) { described_class.updated_profile_email(person, person.changes, instigator.email).deliver_now }
+    before do
+      person.primary_phone_number = '0123 456 789'
+      person.building = ''
+    end
 
     include_examples 'common mailer template elements'
     include_examples "common #{described_class} mail elements"
+
+    it 'called with person, changes and instigator email' do
+      mailing = double('mailing').as_null_object
+      expect(described_class).to receive(:updated_profile_email).
+        with(
+          instance_of(Person),
+          instance_of(String),
+          instance_of(String)
+        ).and_return(mailing)
+      mail
+    end
 
     it 'includes the person show url' do
       %w(plain html).each do |part_type|
@@ -71,10 +87,14 @@ describe UserUpdateMailer do
       end
     end
 
-    it 'includes list of changed person attributes' do
-      person.changes.each_pair do |field, change|
-        %w(plain html).each do |part_type|
-          expect(get_message_part(mail, part_type)).to have_content(/#{field.to_s.humanize} changed:.*from: #{ change.first || 'blank' }.*to: #{ change.second || 'blank' }/m)
+    context 'mail content' do
+      let(:changes_presenter) { ChangesPresenter.new(person.changes) }
+
+      it 'includes list of presented changed person attributes' do
+        changes_presenter.each_pair do |_field, change|
+          %w(plain html).each do |part_type|
+            expect(get_message_part(mail, part_type)).to have_content(/#{change}/m)
+          end
         end
       end
     end

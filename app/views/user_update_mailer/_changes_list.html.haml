@@ -1,10 +1,5 @@
 The following changes were made:
 %ul
-- @changes.each_pair do |field, change|
+- @changes.each_pair do |_field, change|
   %li
-    = "#{field.to_s.humanize} changed: "
-    %ul
-      %li
-        = "from: #{ change.first || 'blank' }"
-      %li
-        = "to: #{ change.second || 'blank' }"
+    = change
