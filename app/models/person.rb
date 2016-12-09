@@ -112,6 +112,15 @@ class Person < ActiveRecord::Base
   scope :all_in_groups_scope, -> (groups) { from(all_in_groups_from_clause(groups), :people) }
   scope :all_in_subtree, -> (group) { from(all_in_groups_from_clause(group.subtree_ids), :people) }
 
+  def self.outside_subteams(group)
+    unscope(:order).
+      joins(:memberships).
+      where(memberships: { group_id: group.id }).
+      where(memberships: { leader: false }).
+      where('NOT EXISTS (SELECT 1 FROM memberships m2 WHERE m2.person_id = people.id AND m2.group_id != ?)', group.id).
+      uniq
+  end
+
   # Does not return ActiveRecord::Relation
   # - see all_in_groups_scope alternative
   # TODO: remove when not needed
