@@ -83,11 +83,13 @@ class Group < ActiveRecord::Base
   end
 
   def people_outside_subteams
+    # TODO: replace with scope and person method for role_names
+    # i.e. Person.outside_subteams(self)
     Person.all_in_groups([id]) - Person.all_in_groups(subteam_ids) - leaders
   end
 
   def people_outside_subteams_count
-    Person.count_in_groups([id], excluded_group_ids: subteam_ids, excluded_ids: leaders.pluck(:id))
+    Person.outside_subteams(self).count
   end
 
   def leaderships_by_person
