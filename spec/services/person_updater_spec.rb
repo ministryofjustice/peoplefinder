@@ -52,11 +52,11 @@ RSpec.describe PersonUpdater, type: :service do
     end
 
     it 'sends an update email if required' do
-      changes_presenter = double('changes_presenter')
+      changes_presenter = double('person_changes_presenter')
       json = double('json')
       mailing = double('mailing')
 
-      expect(ChangesPresenter).to receive(:new).with(person.changes).and_return changes_presenter
+      expect(PersonChangesPresenter).to receive(:new).with(person.changes).and_return changes_presenter
 
       allow(person).
         to receive(:notify_of_change?).

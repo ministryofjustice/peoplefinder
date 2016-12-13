@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe ChangesPresenter, type: :presenter do
+RSpec.describe PersonChangesPresenter, type: :presenter do
   include PermittedDomainHelper
 
   let(:old_email) { 'test.user@digital.justice.gov.uk' }

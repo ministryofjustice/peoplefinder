@@ -25,7 +25,7 @@ module PreviewHelper
       recipient.location_in_building = ''
       recipient.building = 'St Pancras'
     end
-    ChangesPresenter.new(@dirty_recipient.changes).serialize
+    PersonChangesPresenter.new(@dirty_recipient.changes).serialize
   end
 
   # person who caused email to be sent

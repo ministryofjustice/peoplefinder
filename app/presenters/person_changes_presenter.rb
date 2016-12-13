@@ -1,0 +1,2 @@
+class PersonChangesPresenter < ChangesPresenter
+end

@@ -13,7 +13,7 @@ class PersonUpdater
       raise NewRecordError, 'cannot update a new Person record'
     end
     @person = person
-    @changes = ChangesPresenter.new(@person.changes)
+    @changes = PersonChangesPresenter.new(@person.changes)
     @current_user = current_user
   end
 
