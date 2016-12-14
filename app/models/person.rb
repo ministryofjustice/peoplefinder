@@ -5,6 +5,7 @@ class Person < ActiveRecord::Base
   include Concerns::WorkDays
   include Concerns::ExposeMandatoryFields
   include Concerns::GeckoboardDatasets
+  include Concerns::MembershipChanges
 
   belongs_to :profile_photo
 
@@ -75,8 +76,14 @@ class Person < ActiveRecord::Base
   validates :email, presence: true, uniqueness: { case_sensitive: false }, email: true
   validates :secondary_email, email: true, allow_blank: true
 
-  has_many :memberships, -> { includes(:group).order('groups.name') }, dependent: :destroy
+  has_many :memberships, -> { includes(:group).order('groups.name') },
+    dependent: :destroy,
+    before_add: :on_add_membership,
+    before_remove: :on_remove_membership
   has_many :groups, through: :memberships
+
+  after_initialize :initialize_membership_changes
+  after_save :clear_membership_changes
 
   accepts_nested_attributes_for :memberships, allow_destroy: true,
     reject_if: proc { |membership| membership['group_id'].blank? }

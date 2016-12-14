@@ -1,4 +1,3 @@
-
 module Concerns::GeckoboardDatasets
   extend ActiveSupport::Concern
 
