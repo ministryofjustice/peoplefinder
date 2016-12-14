@@ -72,14 +72,12 @@ class ChangesPresenter
     end
   end
 
-  private
-
   def format raw_changes
     h = {}
     raw_changes.each do |field, raw_change|
-      h[field] = default_message(field, raw_change) if changed? raw_change
+      h.merge!(default(field, raw_change)) if changed? raw_change
     end
-    h.symbolize_keys
+    h.deep_symbolize_keys
   end
 
   # TODO: need rules for:
@@ -89,9 +87,35 @@ class ChangesPresenter
   # - team leader question
   # - subscription question
 
-  def default_message field, raw_change
-    { raw: raw_change, message: sentence(field, raw_change).humanize }
+  protected
+
+  # ignore nil => empty string or vice versa changes
+  def changed? change
+    change.first&.gsub(/\s/, '').present? || change.second&.gsub(/\s/, '').present?
+  rescue
+    true
   end
+
+  def template field, &_block
+    h = {
+      field =>
+        {
+          raw: nil,
+          message: nil
+        }
+    }
+    yield h
+    h
+  end
+
+  def default field, raw_change
+    template(field) do |h|
+      h[field][:raw] = raw_change
+      h[field][:message] = sentence(field, raw_change).humanize
+    end
+  end
+
+  private
 
   def sentence field, raw_change
     change = Change.new(raw_change)
@@ -102,13 +126,6 @@ class ChangesPresenter
     elsif change.modification?
       "changed your #{field} from #{change.old_val} to #{change.new_val}"
     end
-  end
-
-  # ignore nil => empty string or vice versa changes
-  def changed? change
-    change.first&.gsub(/\s/, '').present? || change.second&.gsub(/\s/, '').present?
-  rescue
-    true
   end
 
 end

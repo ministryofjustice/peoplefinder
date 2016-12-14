@@ -43,7 +43,7 @@ describe UserUpdateMailer do
 
   describe ".updated_profile_email" do
 
-    let(:serialized_changes) { ChangesPresenter.new(person.changes).serialize }
+    let(:serialized_changes) { PersonChangesPresenter.new(person.changes).serialize }
 
     subject(:mail) do
       described_class.updated_profile_email(person, serialized_changes, instigator.email).deliver_now
@@ -57,12 +57,20 @@ describe UserUpdateMailer do
     include_examples 'common mailer template elements'
     include_examples "common #{described_class} mail elements"
 
+    it 'delegates .deserialize to PersonChangesPresenter' do
+      changes = double('changes').as_null_object
+      expect(PersonChangesPresenter).to receive(:deserialize).
+        with(serialized_changes).
+        and_return(changes)
+      mail
+    end
+
     it 'called with person, changes and instigator email' do
       mailing = double('mailing').as_null_object
       expect(described_class).to receive(:updated_profile_email).
         with(
           instance_of(Person),
-          instance_of(String),
+          serialized_changes,
           instance_of(String)
         ).and_return(mailing)
       mail
@@ -88,7 +96,12 @@ describe UserUpdateMailer do
     end
 
     context 'mail content' do
-      let(:changes_presenter) { ChangesPresenter.new(person.changes) }
+      let(:changes_presenter) { PersonChangesPresenter.new(person.changes) }
+
+      before do
+        person.works_monday = false
+        person.works_saturday = true
+      end
 
       it 'includes list of presented changed person attributes' do
         changes_presenter.each_pair do |_field, change|

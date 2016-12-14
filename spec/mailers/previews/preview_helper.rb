@@ -24,6 +24,8 @@ module PreviewHelper
       recipient.primary_phone_number = '0123 456 789'
       recipient.location_in_building = ''
       recipient.building = 'St Pancras'
+      recipient.works_monday = false
+      recipient.works_saturday = true
     end
     PersonChangesPresenter.new(@dirty_recipient.changes).serialize
   end

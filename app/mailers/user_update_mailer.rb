@@ -2,7 +2,7 @@ class UserUpdateMailer < ActionMailer::Base
   include FeatureHelper
   extend Forwardable
 
-  def_delegator :ChangesPresenter, :deserialize
+  def_delegator :PersonChangesPresenter, :deserialize
 
   layout 'email'
 

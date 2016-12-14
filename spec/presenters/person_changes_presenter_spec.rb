@@ -50,6 +50,18 @@ RSpec.describe PersonChangesPresenter, type: :presenter do
       }
     end
 
+    let(:valid_workdays) do
+      {
+        work_days:
+          { raw:
+            { works_saturday: [false, true],
+              works_monday: [true, false]
+            },
+          message: 'Changed your working days'
+          }
+      }
+    end
+
     before do
       person.email = new_email
       person.location_in_building = ''
@@ -68,6 +80,12 @@ RSpec.describe PersonChangesPresenter, type: :presenter do
 
     it 'ignores empty strings as changes' do
       is_expected.to_not have_key :description
+    end
+
+    it 'returns single message for work days' do
+      person.works_saturday = true
+      person.works_monday = false
+      is_expected.to include valid_workdays
     end
 
   end
