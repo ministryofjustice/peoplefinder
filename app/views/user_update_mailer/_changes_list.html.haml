@@ -3,3 +3,9 @@ The following changes were made:
 - @changes.each_pair do |_field, change|
   %li
     = change
+
+%ul
+- @membership_changes&.each_pair do |_field, change|
+  %li
+    = change
+

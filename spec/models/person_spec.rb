@@ -202,34 +202,31 @@ RSpec.describe Person, type: :model do
   end
 
   describe '.membership_changes' do
-    let(:digital_services) { create(:group, name: 'Digital Services') }
+    let(:ds) { create(:group, name: 'Digital Services') }
+    let(:csg) { create(:group, name: 'Corporate Services Group') }
     subject { person.membership_changes }
 
     context 'adding a membership' do
-      before do
-        @group_id = team.changes[:group_id].second
-      end
-
-      let(:team) do
+      let!(:membership) do
         person.memberships.build(
-          group: digital_services,
+          group: ds,
           role: 'Service Assessments Lead',
           leader: true,
           subscribed: false
         )
       end
 
+      let(:new_group_id) { membership.changes[:group_id].second }
+
       let(:valid_membership_changes) do
         {
-          added: [
-                    {
-                      group_id: [nil, @group_id],
-                      role: [nil, "Service Assessments Lead"],
-                      leader: [false, true],
-                      subscribed: [true, false]
-                    }
-                  ],
-          removed: []
+          "membership_#{membership.object_id}".to_sym =>
+            {
+              group_id: [nil, new_group_id],
+              role: [nil, "Service Assessments Lead"],
+              leader: [false, true],
+              subscribed: [true, false]
+            }
         }
       end
 
@@ -239,28 +236,30 @@ RSpec.describe Person, type: :model do
     end
 
     context 'removing a membership' do
+
+      let(:membership) do
+        person.memberships.create(group: ds, role: 'Service Assessments Lead', leader: true, subscribed: false)
+      end
+
       before do
         person.save!
-        team = person.memberships.create(group: digital_services, role: 'Service Assessments Lead', leader: true, subscribed: false)
+        membership # create and memoize
         person.save!
-        person.memberships.destroy team
-        @group_id = team.group_id
-        @role = team.role
+        person.memberships.destroy membership
       end
 
       let(:valid_membership_changes) do
         {
-          removed: [
+          "membership_#{membership.object_id}".to_sym =>
             {
-              group_id: [@group_id, nil],
-              role: [@role, nil]
+              group_id: [membership.group_id, nil],
+              role: [membership.role, nil]
             }
-          ],
-          added: []
         }
       end
+
       it 'stores removal of a membership' do
-        is_expected.to eql valid_membership_changes
+        is_expected.to include valid_membership_changes
       end
     end
   end

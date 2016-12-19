@@ -20,11 +20,11 @@ class ChangesPresenter
 
   Change = Struct.new(:change) do
     def old_val
-      change.first
+      change&.first
     end
 
     def new_val
-      change.second
+      change&.second
     end
 
     def modification?
@@ -72,6 +72,7 @@ class ChangesPresenter
     end
   end
 
+  # over-ride in subclasses requiring fields with special handling
   def format raw_changes
     h = {}
     raw_changes.each do |field, raw_change|
@@ -111,7 +112,7 @@ class ChangesPresenter
   def default field, raw_change
     template(field) do |h|
       h[field][:raw] = raw_change
-      h[field][:message] = sentence(field, raw_change).humanize
+      h[field][:message] = sentence(field, raw_change)&.humanize
     end
   end
 

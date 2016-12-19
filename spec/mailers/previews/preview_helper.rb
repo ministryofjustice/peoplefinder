@@ -7,8 +7,10 @@ module PreviewHelper
   end
 
   def recipient
-    @recipient ||=
-      Person.find_or_create_by!(
+    if @recipient
+      @recipient
+    else
+      @recipient = Person.find_or_create_by!(
         given_name: 'Fred',
         surname: 'Bloggs',
         email: 'fred.bloggs@fake-moj.justice.gov.uk',
@@ -16,9 +18,13 @@ module PreviewHelper
         location_in_building: 'room 101',
         building: ''
       )
+      @recipient.memberships.create!(group: Group.last)
+      @recipient.save!
+    end
+    @recipient
   end
 
-  def dirty_recipient_changes
+  def dirty_recipient
     @dirty_recipient ||= recipient.tap do
       recipient.email = 'fred.john.bloggs@fake-moj.justice.gov.uk'
       recipient.primary_phone_number = '0123 456 789'
@@ -26,8 +32,9 @@ module PreviewHelper
       recipient.building = 'St Pancras'
       recipient.works_monday = false
       recipient.works_saturday = true
+      recipient.memberships.destroy(recipient.memberships.first)
+      recipient.memberships.build(group: Group.first, role: "Lead Developer", leader: true, subscribed: false)
     end
-    PersonChangesPresenter.new(@dirty_recipient.changes).serialize
   end
 
   # person who caused email to be sent

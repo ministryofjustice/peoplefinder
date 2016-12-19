@@ -78,12 +78,9 @@ class Person < ActiveRecord::Base
 
   has_many :memberships, -> { includes(:group).order('groups.name') },
     dependent: :destroy,
-    before_add: :on_add_membership,
-    before_remove: :on_remove_membership
+    before_add: :store_membership_addition,
+    before_remove: :store_membership_removal
   has_many :groups, through: :memberships
-
-  after_initialize :initialize_membership_changes
-  after_save :clear_membership_changes
 
   accepts_nested_attributes_for :memberships, allow_destroy: true,
     reject_if: proc { |membership| membership['group_id'].blank? }

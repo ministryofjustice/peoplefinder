@@ -44,9 +44,10 @@ describe UserUpdateMailer do
   describe ".updated_profile_email" do
 
     let(:serialized_changes) { PersonChangesPresenter.new(person.changes).serialize }
+    let(:serialized_membership_changes) { MembershipChangesPresenter.new(person.membership_changes).serialize }
 
     subject(:mail) do
-      described_class.updated_profile_email(person, serialized_changes, instigator.email).deliver_now
+      described_class.updated_profile_email(person, serialized_changes, serialized_membership_changes, instigator.email).deliver_now
     end
 
     before do
@@ -71,7 +72,8 @@ describe UserUpdateMailer do
         with(
           instance_of(Person),
           serialized_changes,
-          instance_of(String)
+          serialized_membership_changes,
+          an_instance_of(String)
         ).and_return(mailing)
       mail
     end
@@ -97,10 +99,32 @@ describe UserUpdateMailer do
 
     context 'mail content' do
       let(:changes_presenter) { PersonChangesPresenter.new(person.changes) }
+      let!(:hr) { create(:group, name: 'Human Resources') }
+      let!(:ds) { create(:group, name: 'Digital Services') }
+      let!(:csg) { create(:group, name: 'Corporate Services Group') }
 
       before do
+        person.memberships << build(:membership, person: person, group: hr, role: "Administrative Officer")
+        person.save!
         person.works_monday = false
         person.works_saturday = true
+        hrm = person.memberships.find_by(group_id: hr)
+        person.memberships.destroy hrm
+        person.memberships << build(:membership, person: person, group: ds, role: "Lead Developer", leader: true, subscribed: false)
+        person.memberships << build(:membership, person: person, group: csg, role: "Product Manager")
+      end
+
+      it 'includes team membership additions' do
+        %w(plain html).each do |part_type|
+          expect(get_message_part(mail, part_type)).to have_content(/Added you to the Digital Services team as Lead Developer. You are a leader of the team./m)
+          expect(get_message_part(mail, part_type)).to have_content(/Added you to the Corporate Services Group team as Product Manager/m)
+        end
+      end
+
+      it 'includes team membership removals' do
+        %w(plain html).each do |part_type|
+          expect(get_message_part(mail, part_type)).to have_content(/Removed you from the Human Resources team/m)
+        end
       end
 
       it 'includes list of presented changed person attributes' do
