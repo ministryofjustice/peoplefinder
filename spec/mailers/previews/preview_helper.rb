@@ -7,21 +7,14 @@ module PreviewHelper
   end
 
   def recipient
-    if @recipient
-      @recipient
-    else
-      @recipient = Person.find_or_create_by!(
-        given_name: 'Fred',
-        surname: 'Bloggs',
-        email: 'fred.bloggs@fake-moj.justice.gov.uk',
-        primary_phone_number: '0555 555 555',
-        location_in_building: 'room 101',
-        building: ''
-      )
-      @recipient.memberships.create!(group: Group.last)
-      @recipient.save!
-    end
-    @recipient
+    @recipient ||= Person.find_or_create_by!(
+      given_name: 'Fred',
+      surname: 'Bloggs',
+      email: 'fred.bloggs@fake-moj.justice.gov.uk',
+      primary_phone_number: '0555 555 555',
+      location_in_building: 'room 101',
+      building: ''
+    )
   end
 
   def dirty_recipient
@@ -32,7 +25,6 @@ module PreviewHelper
       recipient.building = 'St Pancras'
       recipient.works_monday = false
       recipient.works_saturday = true
-      recipient.memberships.destroy(recipient.memberships.first)
       recipient.memberships.build(group: Group.first, role: "Lead Developer", leader: true, subscribed: false)
     end
   end

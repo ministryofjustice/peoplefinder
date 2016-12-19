@@ -6,6 +6,8 @@ class PersonChangesPresenter < ChangesPresenter
       next unless changed? raw_change
       if work_days? field
         create_or_add_work_days(h, field, raw_change)
+      elsif profile_photo? field
+        h.merge! profile_photo_change(field, raw_change)
       else
         h.merge! default(field, raw_change)
       end
@@ -34,4 +36,27 @@ class PersonChangesPresenter < ChangesPresenter
       )
     end
   end
+
+  def profile_photo? field
+    field.to_sym == :profile_photo_id
+  end
+
+  def profile_photo_change field, raw_change
+    template(field) do |h|
+      h[field][:raw] = raw_change
+      h[field][:message] = profile_photo_sentence(field, raw_change)&.humanize
+    end
+  end
+
+  def profile_photo_sentence field, raw_change
+    change = Change.new(raw_change)
+    if change.addition?
+      "added a #{field}"
+    elsif change.removal?
+      "removed the #{field}"
+    elsif change.modification?
+      "changed your #{field}"
+    end
+  end
+
 end

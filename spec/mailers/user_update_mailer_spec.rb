@@ -108,22 +108,16 @@ describe UserUpdateMailer do
         person.save!
         person.works_monday = false
         person.works_saturday = true
-        hrm = person.memberships.find_by(group_id: hr)
-        person.memberships.destroy hrm
         person.memberships << build(:membership, person: person, group: ds, role: "Lead Developer", leader: true, subscribed: false)
         person.memberships << build(:membership, person: person, group: csg, role: "Product Manager")
       end
 
+      # TODO: removals require rewrite of form
+      # TODO: changes to existing memberships require bespoke tracking method
       it 'includes team membership additions' do
         %w(plain html).each do |part_type|
           expect(get_message_part(mail, part_type)).to have_content(/Added you to the Digital Services team as Lead Developer. You are a leader of the team./m)
           expect(get_message_part(mail, part_type)).to have_content(/Added you to the Corporate Services Group team as Product Manager/m)
-        end
-      end
-
-      it 'includes team membership removals' do
-        %w(plain html).each do |part_type|
-          expect(get_message_part(mail, part_type)).to have_content(/Removed you from the Human Resources team/m)
         end
       end
 
@@ -132,6 +126,16 @@ describe UserUpdateMailer do
           %w(plain html).each do |part_type|
             expect(get_message_part(mail, part_type)).to have_content(/#{change}/m)
           end
+        end
+      end
+
+      it 'includes profile photo changes' do
+        person.profile_photo_id = 1
+        person.save!
+        person.profile_photo_id = 2
+        %w(plain html).each do |part_type|
+          expect(get_message_part(mail, part_type)).to have_content(/Changed your profile photo/m)
+          expect(get_message_part(mail, part_type)).to_not have_content(/Changed your profile photo id from/m)
         end
       end
     end
