@@ -19,6 +19,7 @@ AllCops:
     - 'lib/tasks/**/*'
     - 'spec/dummy/db/**/*'
     - 'smoke_test'
+    - 'spec/mailers/previews/*'
   TargetRubyVersion: 2.3
 
 Rails:

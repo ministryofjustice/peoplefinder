@@ -105,7 +105,7 @@ class ChangesPresenter
           message: nil
         }
     }
-    yield h
+    yield h if block_given?
     h
   end
 

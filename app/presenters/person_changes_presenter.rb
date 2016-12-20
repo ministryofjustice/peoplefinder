@@ -1,20 +1,20 @@
 class PersonChangesPresenter < ChangesPresenter
 
+  WORK_DAYS_FIELD = 'work_days'.freeze
+
   def format raw_changes
-    h = {}
-    raw_changes.each do |field, raw_change|
-      next unless changed? raw_change
+    raw_changes.inject({}) do |memo, (field, raw_change)|
+      next memo unless changed? raw_change
       if work_days? field
-        create_or_add_work_days(h, field, raw_change)
+        add_or_create_work_days(memo, field, raw_change)
       elsif profile_photo? field
-        h.merge! profile_photo_change(field, raw_change)
+        memo.merge! profile_photo_change(field, raw_change)
       elsif extra_info? field
-        h.merge! extra_info_change(field, raw_change)
+        memo.merge! extra_info_change(field, raw_change)
       else
-        h.merge! default(field, raw_change)
+        memo.merge! default(field, raw_change)
       end
-    end
-    h.deep_symbolize_keys
+    end.deep_symbolize_keys
   end
 
   private
@@ -23,19 +23,20 @@ class PersonChangesPresenter < ChangesPresenter
     field.to_s =~ /^works_.*$/
   end
 
-  def create_or_add_work_days changes_hash, field, raw_change
-    work_days_field = 'work_days'
-
-    if changes_hash.key? work_days_field
-      changes_hash[work_days_field][:raw][field] = raw_change
+  def add_or_create_work_days memo, field, raw_change
+    if memo.key? WORK_DAYS_FIELD
+      memo[WORK_DAYS_FIELD][:raw][field] = raw_change
+      memo
     else
-      changes_hash.merge!(
-        template(work_days_field) do |h|
-          h[work_days_field][:raw] ||= {}
-          h[work_days_field][:raw][field] = raw_change
-          h[work_days_field][:message] ||= 'Changed your working days'
-        end
-      )
+      memo.merge! work_days_template(field, raw_change)
+    end
+  end
+
+  def work_days_template field, raw_change
+    template(WORK_DAYS_FIELD) do |h|
+      h[WORK_DAYS_FIELD][:raw] ||= {}
+      h[WORK_DAYS_FIELD][:raw][field] = raw_change
+      h[WORK_DAYS_FIELD][:message] ||= 'Changed your working days'
     end
   end
 
@@ -61,7 +62,7 @@ class PersonChangesPresenter < ChangesPresenter
     end
   end
 
-   def extra_info? field
+  def extra_info? field
     field.to_sym == :description
   end
 
