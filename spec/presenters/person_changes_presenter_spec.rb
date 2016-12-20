@@ -87,7 +87,6 @@ RSpec.describe PersonChangesPresenter, type: :presenter do
       person.works_monday = false
       is_expected.to include valid_workdays
     end
-
   end
 
   describe '#serialize' do

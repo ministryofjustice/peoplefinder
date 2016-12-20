@@ -81,13 +81,6 @@ class ChangesPresenter
     h.deep_symbolize_keys
   end
 
-  # TODO: need rules for:
-  # - work days
-  # - multiple roles
-  # - multiple memberships
-  # - team leader question
-  # - subscription question
-
   protected
 
   # ignore nil => empty string or vice versa changes

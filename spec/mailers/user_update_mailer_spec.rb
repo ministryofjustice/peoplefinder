@@ -58,11 +58,19 @@ describe UserUpdateMailer do
     include_examples 'common mailer template elements'
     include_examples "common #{described_class} mail elements"
 
-    it 'delegates .deserialize to PersonChangesPresenter' do
-      changes = double('changes').as_null_object
+    it 'deserializes person changes to create presenter object' do
+      person_changes_presenter = double(PersonChangesPresenter).as_null_object
       expect(PersonChangesPresenter).to receive(:deserialize).
         with(serialized_changes).
-        and_return(changes)
+        and_return(person_changes_presenter)
+      mail
+    end
+
+    it 'deserializes membership changes to create presenter object' do
+      membership_changes_presenter = double(MembershipChangesPresenter).as_null_object
+      expect(MembershipChangesPresenter).to receive(:deserialize).
+        with(serialized_membership_changes).
+        and_return(membership_changes_presenter)
       mail
     end
 
