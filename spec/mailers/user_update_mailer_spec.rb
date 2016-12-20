@@ -138,6 +138,15 @@ describe UserUpdateMailer do
           expect(get_message_part(mail, part_type)).to_not have_content(/Changed your profile photo id from/m)
         end
       end
+
+      it 'includes profile photo changes' do
+        person.description = 'old info'
+        person.save!
+        person.description = 'new info'
+        %w(plain html).each do |part_type|
+          expect(get_message_part(mail, part_type)).to have_content(/Changed your extra information/m)
+        end
+      end
     end
   end
 

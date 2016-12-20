@@ -8,6 +8,8 @@ class PersonChangesPresenter < ChangesPresenter
         create_or_add_work_days(h, field, raw_change)
       elsif profile_photo? field
         h.merge! profile_photo_change(field, raw_change)
+      elsif extra_info? field
+        h.merge! extra_info_change(field, raw_change)
       else
         h.merge! default(field, raw_change)
       end
@@ -56,6 +58,29 @@ class PersonChangesPresenter < ChangesPresenter
       "removed the #{field}"
     elsif change.modification?
       "changed your #{field}"
+    end
+  end
+
+   def extra_info? field
+    field.to_sym == :description
+  end
+
+  def extra_info_change field, raw_change
+    template(field) do |h|
+      h[field][:raw] = raw_change
+      h[field][:message] = extra_info_sentence(field, raw_change)&.humanize
+    end
+  end
+
+  def extra_info_sentence _field, raw_change
+    change = Change.new(raw_change)
+    term = 'extra information'
+    if change.addition?
+      "added #{term}"
+    elsif change.removal?
+      "removed #{term}"
+    elsif change.modification?
+      "changed your #{term}"
     end
   end
 
