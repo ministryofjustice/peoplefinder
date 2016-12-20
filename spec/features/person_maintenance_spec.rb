@@ -228,11 +228,31 @@ feature 'Person maintenance' do
 
         edit_profile_page.form.given_name.set ''
         edit_profile_page.form.surname.set ''
+        edit_profile_page.form.email.set ''
         edit_profile_page.form.save.click
 
         expect(edit_profile_page.form).to have_global_error
         expect(edit_profile_page.form).to have_given_name_error
         expect(edit_profile_page.form).to have_surname_error
+        expect(edit_profile_page.form).to have_email_error
+      end
+
+      scenario 'Editing a person to have an existing e-mail raises an error' do
+        existing_person = create(:person)
+
+        edit_profile_page.load(slug: person.slug)
+        edit_profile_page.form.email.set existing_person.email
+        edit_profile_page.form.save.click
+
+        expect(edit_profile_page.form).to have_email_error
+      end
+
+      scenario 'Editing a person to have an unpermitted e-mail raises an error' do
+        edit_profile_page.load(slug: person.slug)
+        edit_profile_page.form.email.set 'whatevers@big.blackhole.com'
+        edit_profile_page.form.save.click
+
+        expect(edit_profile_page.form).to have_email_error
       end
 
       scenario 'Recording audit details' do

@@ -73,6 +73,7 @@ group :test do
   gem 'site_prism'
   gem 'webmock'
   gem 'whenever-test'
+  gem 'rspec-json_expectations'
 end
 
 group :development, :test do

@@ -7,7 +7,12 @@ class UserUpdateMailerPreview < ActionMailer::Preview
   end
 
   def updated_profile_email
-    UserUpdateMailer.updated_profile_email(recipient, instigator.email)
+    UserUpdateMailer.updated_profile_email(
+      dirty_recipient,
+      PersonChangesPresenter.new(dirty_recipient.changes).serialize,
+      MembershipChangesPresenter.new(dirty_recipient.membership_changes).serialize,
+      instigator.email
+    )
   end
 
   def deleted_profile_email

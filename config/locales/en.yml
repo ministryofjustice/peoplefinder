@@ -115,9 +115,6 @@ en:
       other: |
         Do you want this person to be notified by email when changes are made to the team above?
   people:
-    form:
-      notes:
-        email: "Note: You can’t change this email address. If it’s changed, you must delete this profile and create a new one."
     day_names:
       works_monday: "Monday"
       works_tuesday: "Tuesday"

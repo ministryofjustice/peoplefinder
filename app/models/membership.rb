@@ -4,6 +4,7 @@ class Membership < ActiveRecord::Base
 
   belongs_to :person, touch: true
   belongs_to :group, touch: true
+
   validates :person, presence: true, on: :update
   validates :group, presence: true, on: :update
 
@@ -18,5 +19,4 @@ class Membership < ActiveRecord::Base
   scope :subscribing, -> { where(subscribed: true) }
 
   before_destroy { |m| UpdateGroupMembersCompletionScoreJob.perform_later(m.group) }
-
 end

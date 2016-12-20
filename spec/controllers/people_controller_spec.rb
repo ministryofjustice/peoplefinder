@@ -174,10 +174,10 @@ RSpec.describe PeopleController, type: :controller do
         attributes_for(:person).merge(works_tuesday: false)
       end
 
-      it 'updates the person, except email' do
+      it 'updates the person' do
         person.reload
         new_attributes.each do |key, value|
-          expect(person.__send__(key)).to eql value unless key == :email
+          expect(person.__send__(key)).to eql value
         end
       end
 
@@ -226,9 +226,9 @@ RSpec.describe PeopleController, type: :controller do
         end
       end
 
-      it 'does not update e-mail' do
+      it 'allows update of e-mail too' do
         person.reload
-        expect(person.email).not_to eql(new_attributes[:email])
+        expect(person.email).to eql(new_attributes[:email])
       end
 
       it 'assigns the requested person as @person' do

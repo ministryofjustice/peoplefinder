@@ -34,7 +34,7 @@ class PeopleController < ApplicationController
 
   # POST /people
   def create
-    @person = Person.new(person_create_params)
+    @person = Person.new(person_params)
     authorize @person
 
     if @preview
@@ -49,7 +49,7 @@ class PeopleController < ApplicationController
 
   # PATCH/PUT /people/1
   def update
-    @person.assign_attributes(person_update_params)
+    @person.assign_attributes(person_params)
     authorize @person
 
     if @preview
@@ -88,17 +88,11 @@ class PeopleController < ApplicationController
     @person = Person.friendly.includes(:groups).find(params[:id])
   end
 
-  # Never trust parameters from the scary internet, only allow the white list
-  # through.
-  def person_create_params
-    params.require(:person).permit(*person_shared_params_list)
+  def person_params
+    params.require(:person).permit(*person_params_list)
   end
 
-  def person_update_params
-    params.require(:person).permit(*(person_shared_params_list - [:email]))
-  end
-
-  def person_shared_params_list
+  def person_params_list
     [
       :given_name, :surname, :location_in_building, :building, :city,
       :primary_phone_number, :secondary_phone_number, :pager_number,
