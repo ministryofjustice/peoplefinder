@@ -25,7 +25,7 @@ feature 'Make a suggestion about a profile', js: true do
   end
 
   before(:each, user: :readonly) do
-    page.driver.browser.header('RO', 'ENABLED')
+    mock_readonly_user
     visit person_path(subject)
   end
 

@@ -12,7 +12,7 @@ feature 'Person maintenance' do
   end
 
   before(:each, user: :readonly) do
-    page.driver.browser.header('RO', 'ENABLED')
+    mock_readonly_user
   end
 
   let(:edit_profile_page) { Pages::EditProfile.new }

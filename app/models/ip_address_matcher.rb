@@ -2,7 +2,7 @@ require 'netaddr'
 
 class IpAddressMatcher
   def initialize(terms)
-    @cidrs = cidrs(terms)
+    @cidrs = cidrs(terms) || []
   end
 
   def ===(other)
@@ -12,7 +12,7 @@ class IpAddressMatcher
   private
 
   def cidrs(terms)
-    terms.split(';').map { |s| cidr(s) }
+    terms.split(';').map { |s| cidr(s) } unless terms.blank?
   end
 
   def cidr(term)

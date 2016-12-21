@@ -4,28 +4,30 @@ RSpec.describe ReadonlyUser, type: :model do
   subject { described_class.new }
 
   describe '.from_request' do
-    let(:headers) { {} }
-    let(:request) { double(headers: headers) }
+    let(:request) { double('request') }
 
     subject { described_class.from_request(request) }
 
-    # the header name and value is defined in .env for test
-    context 'when readonly header is set' do
-      context 'when the value is correct' do
-        let(:headers) { { 'HTTP_RO' => 'ENABLED' } }
-
-        it { is_expected.to be_a(described_class) }
+    # when request IP is whitelisted were return an instance of read-only user
+    context 'when client IP is whitelisted' do
+      before do
+        expect(request).to receive(:remote_ip_whitelisted?).and_return(true)
       end
 
-      context 'for any other value' do
-        let(:headers) { { 'HTTP_RO' => 'OTHER' } }
-
-        it { is_expected.to be nil }
+      it "returns instance of #{described_class}" do
+        is_expected.to be_instance_of described_class
       end
     end
 
-    context 'when readonly header is not set' do
-      it { is_expected.to be nil }
+    context 'when client IP is not whitelisted' do
+      before do
+        expect(request).to receive(:remote_ip_whitelisted?).and_return(false)
+      end
+
+      it 'returns nil' do
+        is_expected.to_not be_instance_of described_class
+        is_expected.to be_nil
+      end
     end
   end
 

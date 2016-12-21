@@ -1,10 +1,17 @@
 class ReadonlyUser
-  def self.from_request(request)
-    return new if Rails.env.development?
-    header_name = "HTTP_#{Rails.configuration.readonly[:header].tr('-', '_')}"
-    header_value = Rails.configuration.readonly[:value]
 
-    if request.headers[header_name] && request.headers[header_name] == header_value
+  class ActionDispatch::Request
+    def readonly_ip_whitelist
+      @whitelist ||= IpAddressMatcher.new(Rails.configuration.readonly_ip_whitelist)
+    end
+
+    def remote_ip_whitelisted?
+      readonly_ip_whitelist === remote_ip
+    end
+  end
+
+  def self.from_request(request)
+    if request.remote_ip_whitelisted?
       new
     end
   end

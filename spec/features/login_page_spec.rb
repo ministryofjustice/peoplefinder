@@ -16,7 +16,7 @@ feature 'Login page' do
   end
   context 'User from inside the network' do
     before do
-      page.driver.browser.header('RO', 'ENABLED')
+      mock_readonly_user
     end
 
     scenario 'Is presented with standard login page and copy if they decide to login' do
