@@ -6,14 +6,12 @@ class ReadonlyUser
     end
 
     def remote_ip_whitelisted?
-      readonly_ip_whitelist === remote_ip
+      readonly_ip_whitelist.include? remote_ip
     end
   end
 
   def self.from_request(request)
-    if request.remote_ip_whitelisted?
-      new
-    end
+    new if request.remote_ip_whitelisted?
   end
 
   def id

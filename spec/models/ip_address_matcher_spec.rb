@@ -1,5 +1,4 @@
-require 'spec_helper'
-require 'ip_address_matcher'
+require 'rails_helper'
 
 RSpec.describe IpAddressMatcher do
   it 'matches a single IP address' do
@@ -21,5 +20,11 @@ RSpec.describe IpAddressMatcher do
     expect(matcher.===('12.34.56.78')).to be_truthy
     expect(matcher.===('127.0.0.1')).to be_truthy
     expect(matcher.===('12.33.44.44')).to be_falsy
+  end
+
+  it 'aliases include? to ===' do
+    matcher = described_class.new('12.34.0.0/16;127.0.0.0/24')
+    expect(matcher.include?('127.0.0.1')).to be_truthy
+    expect(matcher.include?('12.33.44.44')).to be_falsy
   end
 end
