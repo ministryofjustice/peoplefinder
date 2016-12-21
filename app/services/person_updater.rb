@@ -14,27 +14,23 @@ class PersonUpdater
     end
     @person = person
     @current_user = current_user
-    store_changes
+    set_person_changes
   end
 
   def update!
     person.save!
+    set_membership_changes person
     send_update_email!
   end
 
   private
 
-  def store_changes
-    set_person_changes
-    set_membership_changes
-  end
-
   def set_person_changes
     @changes = PersonChangesPresenter.new(@person.changes)
   end
 
-  def set_membership_changes
-    @membership_changes = MembershipChangesPresenter.new(@person.membership_changes)
+  def set_membership_changes person
+    @membership_changes = MembershipChangesPresenter.new(person.membership_changes)
   end
 
   def send_update_email!

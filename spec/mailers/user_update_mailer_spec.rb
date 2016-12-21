@@ -26,7 +26,7 @@ describe UserUpdateMailer do
   end
 
   let(:instigator) { create(:person, email: 'instigator.user@digital.justice.gov.uk') }
-  let(:person) { create(:person, email: 'test.user@digital.justice.gov.uk') }
+  let(:person) { create(:person, email: 'test.user@digital.justice.gov.uk', profile_photo_id: 1, description: 'old info') }
 
   describe ".new_profile_email" do
     subject(:mail) { described_class.new_profile_email(person, instigator.email).deliver_now }
@@ -106,26 +106,64 @@ describe UserUpdateMailer do
     end
 
     context 'mail content' do
-      let(:changes_presenter) { PersonChangesPresenter.new(person.changes) }
       let!(:hr) { create(:group, name: 'Human Resources') }
       let!(:ds) { create(:group, name: 'Digital Services') }
       let!(:csg) { create(:group, name: 'Corporate Services Group') }
+      let(:changes_presenter) { PersonChangesPresenter.new(person.changes) }
+      let(:hr_membership) { create(:membership, person: person, group: hr, role: "Administrative Officer") }
 
-      before do
-        person.memberships << build(:membership, person: person, group: hr, role: "Administrative Officer")
-        person.save!
-        person.works_monday = false
-        person.works_saturday = true
-        person.memberships << build(:membership, person: person, group: ds, role: "Lead Developer", leader: true, subscribed: false)
-        person.memberships << build(:membership, person: person, group: csg, role: "Product Manager")
+      let(:memberships_params) do
+        {
+          works_monday: false,
+          works_saturday: true,
+          profile_photo_id: 2,
+          description: 'changed info',
+          memberships_attributes: {
+            '0' => {
+                      role: 'Lead Developer',
+                  group_id: ds.id,
+                    leader: true,
+                subscribed: false
+            },
+            '1' => {
+                      role: 'Product Manager',
+                  group_id: csg.id,
+                    leader: false,
+                subscribed: true
+            },
+            '2' => {
+                        id: hr_membership.id,
+                      role: 'Executive Officer',
+                  group_id: hr.id,
+                    leader: false,
+                subscribed: true
+            }
+          }
+        }
       end
 
-      # TODO: removals require rewrite of form
-      # TODO: changes to existing memberships require bespoke tracking method
+      subject(:mail) do
+        described_class.updated_profile_email(person, @serialized_person_changes, @serialized_membership_changes, instigator.email).deliver_now
+      end
+
+      before do
+        # mock controller behaviour for changes. required for association change tracking
+        person.assign_attributes(memberships_params)
+        @serialized_person_changes = PersonChangesPresenter.new(person.changes).serialize
+        person.save!
+        @serialized_membership_changes = MembershipChangesPresenter.new(person.membership_changes).serialize
+      end
+
       it 'includes team membership additions' do
         %w(plain html).each do |part_type|
           expect(get_message_part(mail, part_type)).to have_content(/Added you to the Digital Services team as Lead Developer. You are a leader of the team./m)
           expect(get_message_part(mail, part_type)).to have_content(/Added you to the Corporate Services Group team as Product Manager/m)
+        end
+      end
+
+      it 'includes team membership modifications' do
+        %w(html).each do |part_type|
+          expect(get_message_part(mail, part_type)).to have_content(/Changed the role Administrative Officer to Executive Officer for Human Resources team./m)
         end
       end
 
@@ -138,19 +176,13 @@ describe UserUpdateMailer do
       end
 
       it 'includes profile photo changes' do
-        person.profile_photo_id = 1
-        person.save!
-        person.profile_photo_id = 2
         %w(plain html).each do |part_type|
           expect(get_message_part(mail, part_type)).to have_content(/Changed your profile photo/m)
           expect(get_message_part(mail, part_type)).to_not have_content(/Changed your profile photo id from/m)
         end
       end
 
-      it 'includes profile photo changes' do
-        person.description = 'old info'
-        person.save!
-        person.description = 'new info'
+      it 'includes extra info changes' do
         %w(plain html).each do |part_type|
           expect(get_message_part(mail, part_type)).to have_content(/Changed your extra information/m)
         end

@@ -8,15 +8,23 @@ class MembershipChangeSet
 
   def added?
     raw_changes[:group_id].first.nil?
+  rescue
+    false
   end
 
   def removed?
     raw_changes[:group_id].second.nil?
+  rescue
+    false
   end
 
   def team_name
     team = change(raw_changes[:group_id])
     Group.find(team.new_val || team.old_val).name
+  end
+
+  def team id
+    Group.find(id).name
   end
 
   def sentence
@@ -42,13 +50,13 @@ class MembershipChangeSet
   # map undefined methods to membership attribute keys
   # to simplify value retrieval.
   # i.e. set.role, set.role?
-  def method_missing name, *args
-    @name = name
+  def method_missing method_name, *args
+    @method_name = method_name
     if valid_missing_method
       if raw_changes.key?(attribute_name_from_method)
         change = change(raw_changes[attribute_name_from_method])
         val = change.new_val || change.old_val
-        return val.present? if @name.to_s =~ /\?$/
+        return val.present? if @method_name.to_s =~ /\?$/
         val
       end
     else
@@ -58,11 +66,11 @@ class MembershipChangeSet
 
   def valid_missing_method
     valid_methods = Membership.columns.flat_map { |col| [col.name, "#{col.name}?"] }.map(&:to_sym)
-    valid_methods.include? @name.to_sym
+    valid_methods.include? @method_name.to_sym
   end
 
   def attribute_name_from_method
-    @name.to_s.sub('?', '').to_sym
+    @method_name.to_s.sub('?', '').to_sym
   end
 
   def change raw_change

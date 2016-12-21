@@ -76,10 +76,7 @@ class Person < ActiveRecord::Base
   validates :email, presence: true, uniqueness: { case_sensitive: false }, email: true
   validates :secondary_email, email: true, allow_blank: true
 
-  has_many :memberships, -> { includes(:group).order('groups.name') },
-    dependent: :destroy,
-    before_add: :store_membership_addition,
-    before_remove: :store_membership_removal
+  has_many :memberships, -> { includes(:group).order('groups.name') }, dependent: :destroy
   has_many :groups, through: :memberships
 
   accepts_nested_attributes_for :memberships, allow_destroy: true,
