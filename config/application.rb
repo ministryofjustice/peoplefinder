@@ -30,14 +30,11 @@ module Peoplefinder
 
     config.admin_ip_ranges = ENV.fetch('ADMIN_IP_RANGES', '127.0.0.1')
 
+    config.readonly_ip_whitelist = ENV.fetch('READONLY_IP_WHITELIST', '127.0.0.1')
+
     config.assets.paths << Rails.root.join('vendor', 'assets', 'components')
 
     config.support_email = ENV.fetch('SUPPORT_EMAIL')
-
-    config.readonly = {
-      header: ENV['READONLY_HEADER'],
-      value: ENV['READONLY_VALUE']
-    }
 
     config.action_mailer.default_options = {
       from:  config.support_email

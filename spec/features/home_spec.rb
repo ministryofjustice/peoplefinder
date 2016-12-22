@@ -19,8 +19,7 @@ feature 'Home page' do
   context 'for the readonly user' do
     before do
       create(:department)
-
-      page.driver.header 'RO', 'ENABLED'
+      mock_readonly_user
       visit '/'
     end
 

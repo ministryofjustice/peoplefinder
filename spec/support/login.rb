@@ -1,5 +1,9 @@
 module SpecSupport
   module Login
+    def mock_readonly_user
+      allow(ReadonlyUser).to receive(:from_request).and_return ReadonlyUser.new
+    end
+
     def mock_logged_in_user
       controller.session[::Login::SESSION_KEY] =
         create(:person, email: 'test.user@digital.justice.gov.uk').id

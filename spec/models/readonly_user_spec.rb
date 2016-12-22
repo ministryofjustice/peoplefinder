@@ -3,29 +3,57 @@ require 'rails_helper'
 RSpec.describe ReadonlyUser, type: :model do
   subject { described_class.new }
 
+  let(:be_readonly_user) { be_instance_of described_class }
+
   describe '.from_request' do
-    let(:headers) { {} }
-    let(:request) { double(headers: headers) }
+    let(:request) { ActionDispatch::TestRequest.new }
 
     subject { described_class.from_request(request) }
 
-    # the header name and value is defined in .env for test
-    context 'when readonly header is set' do
-      context 'when the value is correct' do
-        let(:headers) { { 'HTTP_RO' => 'ENABLED' } }
-
-        it { is_expected.to be_a(described_class) }
+    context 'when client IP is whitelisted' do
+      before do
+        expect(request).to receive(:remote_ip_whitelisted?).and_return(true)
       end
 
-      context 'for any other value' do
-        let(:headers) { { 'HTTP_RO' => 'OTHER' } }
-
-        it { is_expected.to be nil }
+      it "returns instance of #{described_class}" do
+        is_expected.to be_readonly_user
       end
     end
 
-    context 'when readonly header is not set' do
-      it { is_expected.to be nil }
+    context 'when client IP is not whitelisted' do
+      before do
+        expect(request).to receive(:remote_ip_whitelisted?).and_return(false)
+      end
+
+      it 'returns nil' do
+        is_expected.to_not be_readonly_user
+        is_expected.to be_nil
+      end
+    end
+
+    context 'whitelist' do
+      let(:ip_whitelist) { '127.0.0.2/31;127.0.0.4/32' }
+      before do
+        allow(Rails.configuration).to receive(:readonly_ip_whitelist).and_return ip_whitelist
+      end
+
+      context "For IPs in CIDR range" do
+        (2..4).each do |i|
+          it "accepts IP 127.0.0.#{i}" do
+            request.remote_addr = "127.0.0.#{i}"
+            is_expected.to be_readonly_user
+          end
+        end
+      end
+
+      context "For IPs outside CIDR range" do
+        [1, 5].each do |i|
+          it "rejects IP 127.0.0.#{i}" do
+            request.remote_addr = "127.0.0.#{i}"
+            is_expected.to be_nil
+          end
+        end
+      end
     end
   end
 

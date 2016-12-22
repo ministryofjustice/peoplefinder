@@ -13,7 +13,7 @@ feature 'Group maintenance' do
   end
 
   before(:each, user: :readonly) do
-    page.driver.browser.header('RO', 'ENABLED')
+    mock_readonly_user
   end
 
   def visit_edit_view group
