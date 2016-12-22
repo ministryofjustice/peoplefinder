@@ -324,7 +324,7 @@ and to remove the report...
 GeckboardPublisher::ProfilePercentagesReport.new.unpublish!
 ```
 
-NOTE: there is a limit of 100 datasets per geckboard account and a limit of 500 records per dataset
+NOTE: there is a limit of 100 datasets per geckboard account and a limit of 5000 records per dataset. Further, you can only push a maximum of 500 records per request.
 
 ### Front end development
 
