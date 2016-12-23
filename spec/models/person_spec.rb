@@ -201,28 +201,42 @@ RSpec.describe Person, type: :model do
     end
   end
 
-  describe '.membership_changes' do
+  describe '.all_changes' do
     let(:ds) { create(:group, name: 'Digital Services') }
     let(:csg) { create(:group, name: 'Corporate Services Group') }
-    subject { person.membership_changes }
+    let(:membership) { person.memberships.frst }
+    subject { person.all_changes }
+
+    before do
+      person.assign_attributes(mass_assignment_params)
+      person.save!
+    end
 
     context 'adding a membership' do
-      let!(:membership) do
-        person.memberships.build(
-          group: ds,
-          role: 'Service Assessments Lead',
-          leader: true,
-          subscribed: false
-        )
-      end
 
-      let(:new_group_id) { membership.changes[:group_id].second }
+      let(:mass_assignment_params) do
+        {
+          email: 'changed.user@digital.justice.gov.uk',
+          works_monday: false,
+          works_saturday: true,
+          profile_photo_id: 2,
+          description: 'changed info',
+          memberships_attributes: {
+            '0' => {
+              role: 'Service Assessments Lead',
+              group_id: ds.id,
+              leader: true,
+              subscribed: false
+            }
+          }
+        }
+      end
 
       let(:valid_membership_changes) do
         {
-          "membership_#{membership.object_id}".to_sym =>
+          "membership_#{ds.id}".to_sym =>
             {
-              group_id: [nil, new_group_id],
+              group_id: [nil, ds.id],
               role: [nil, "Service Assessments Lead"],
               leader: [false, true],
               subscribed: [true, false]
@@ -231,34 +245,6 @@ RSpec.describe Person, type: :model do
       end
 
       it 'stores addition of a membership' do
-        is_expected.to include valid_membership_changes
-      end
-    end
-
-    context 'removing a membership' do
-
-      let(:membership) do
-        person.memberships.create(group: ds, role: 'Service Assessments Lead', leader: true, subscribed: false)
-      end
-
-      before do
-        person.save!
-        membership # create and memoize
-        person.save!
-        person.memberships.destroy membership
-      end
-
-      let(:valid_membership_changes) do
-        {
-          "membership_#{membership.object_id}".to_sym =>
-            {
-              group_id: [membership.group_id, nil],
-              role: [membership.role, nil]
-            }
-        }
-      end
-
-      it 'stores removal of a membership' do
         is_expected.to include valid_membership_changes
       end
     end

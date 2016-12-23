@@ -1,21 +1,29 @@
 class MembershipChangesPresenter < ChangesPresenter
 
+  SENTENCE_EXCEPTIONS = %w(group_id role leader subscribed).freeze
+
   class ::Hash
     def to_membership_set
       MembershipChangeSet.new(deep_symbolize_keys)
     end
   end
 
-  attr_reader :current_team
-
   def format raw_change_set
     h = {}
     raw_change_set&.each do |membership_key, raw_changes|
-      set_current_team(membership_key)
+      self.current_team = membership_key
       h[membership_key] = {}
       membership_template(h[membership_key], raw_changes)
     end
     h.deep_symbolize_keys
+  end
+
+  def each
+    @changes.each do |membership|
+      membership.each do |change|
+        yield change
+      end
+    end
   end
 
   def each_pair
@@ -28,8 +36,10 @@ class MembershipChangesPresenter < ChangesPresenter
 
   private
 
-  def set_current_team membership_key
-    @current_team = Group.find(membership_key.to_s.sub('membership_',''))
+  attr_reader :current_team
+
+  def current_team=(membership_key)
+    @current_team = Group.find(membership_key.to_s.sub('membership_', ''))
   end
 
   def membership_template memo, raw_changes
@@ -51,28 +61,22 @@ class MembershipChangesPresenter < ChangesPresenter
 
   def amended_changes memo, raw_changes
     raw_changes.each do |field, raw_change|
-      if team_change? field
-        memo.merge! team_change(field, raw_change)
-      elsif role_change? field
-        memo.merge! role_change(field, raw_change)
-      elsif leader_change? field
-        memo.merge! leader_change(field, raw_changes.deep_symbolize_keys)
-      elsif subscribed_change? field
-        memo.merge! subscribed_change(field, raw_changes.deep_symbolize_keys)
+      if bespoke_rule? field
+        memo.merge! send("#{field}_change".to_sym, field, raw_change)
       else
         memo.merge! default(field, raw_change)
       end
     end
   end
 
-  def leader_change? field
-    field.to_sym == :leader
+  def bespoke_rule? field
+    SENTENCE_EXCEPTIONS.include? field.to_s
   end
 
-  def leader_change field, raw_changes
+  def leader_change field, raw_change
     template(field) do |h|
-      h[field][:raw] = raw_changes[:leader]
-      h[field][:message] = leader_change_sentence(raw_changes[:leader])
+      h[field][:raw] = raw_change
+      h[field][:message] = leader_change_sentence(raw_change)
     end
   end
 
@@ -85,29 +89,22 @@ class MembershipChangesPresenter < ChangesPresenter
     end
   end
 
-  def subscribed_change? field
-    field.to_sym == :subscribed
-  end
-
-  def subscribed_change field, raw_changes
+  def subscribed_change field, raw_change
     template(field) do |h|
-      h[field][:raw] = raw_changes[:subscribed]
-      h[field][:message] = subscribed_change_sentence(raw_changes[:subscribed])
+      h[field][:raw] = raw_change
+      h[field][:message] = subscribed_change_sentence(raw_change)
     end
   end
 
   def subscribed_change_sentence subscribed_change
     subscribed = Change.new(subscribed_change)
-
-    if subscribed.addition?
-      "Changed your notification settings so you do get notifications if changes are made to the #{current_team} team"
-    elsif subscribed.removal?
-      "Changed your notification settings so you don't get notifications if changes are made to the #{current_team} team"
-    end
+    subscribed_text(subscribed.addition?)
   end
 
-  def role_change? field
-    field.to_sym == :role
+  def subscribed_text subscribed
+    'Changed your notification settings so you ' \
+      "#{subscribed ? 'do' : 'don\'t'}" \
+      " get notifications if changes are made to the #{current_team} team"
   end
 
   def role_change field, raw_change
@@ -128,11 +125,7 @@ class MembershipChangesPresenter < ChangesPresenter
     end
   end
 
-  def team_change? field
-    field.to_sym == :group_id
-  end
-
-  def team_change field, raw_change
+  def group_id_change field, raw_change
     template(field) do |h|
       h[field][:raw] = raw_change
       h[field][:message] = team_change_sentence(raw_change)

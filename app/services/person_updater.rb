@@ -6,7 +6,7 @@ class PersonUpdater
 
   def_delegators :person, :valid?
 
-  attr_reader :person, :changes, :membership_changes
+  attr_reader :person, :changes
 
   def initialize(person, current_user)
     if person.new_record?
@@ -14,29 +14,24 @@ class PersonUpdater
     end
     @person = person
     @current_user = current_user
-    set_person_changes
   end
 
   def update!
     person.save!
-    set_membership_changes person
+    store_changes person
     send_update_email!
   end
 
   private
 
-  def set_person_changes
-    @changes = PersonChangesPresenter.new(@person.changes)
-  end
-
-  def set_membership_changes person
-    @membership_changes = MembershipChangesPresenter.new(person.membership_changes)
+  def store_changes person
+    @changes = PersonAllChangesPresenter.new(person.all_changes)
   end
 
   def send_update_email!
     if person.notify_of_change?(@current_user)
       UserUpdateMailer.updated_profile_email(
-        person, changes.serialize, membership_changes.serialize, @current_user.email
+        person, changes.serialize, @current_user.email
       ).deliver_later
     end
   end

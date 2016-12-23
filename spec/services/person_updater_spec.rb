@@ -4,8 +4,7 @@ RSpec.describe PersonUpdater, type: :service do
   let(:person) do
     double(
       'Person',
-      changes: { email: ['test.user@digital.justice.gov.uk', 'changed.user@digital.justice.gov.uk'] },
-      membership_changes: { membership_7771: { group_id: [1, nil] } },
+      all_changes: { email: ['test.user@digital.justice.gov.uk', 'changed.user@digital.justice.gov.uk'], membership_12: { group_id: [1, nil] } },
       save!: true,
       new_record?: false,
       notify_of_change?: false
@@ -25,12 +24,6 @@ RSpec.describe PersonUpdater, type: :service do
       allow(person).to receive(:new_record?).and_return(true)
       expect { subject }.to raise_error(PersonUpdater::NewRecordError)
     end
-
-    it 'stores changes to person for use in update email' do
-      expect(person).to receive(:changes)
-      expect(person).to receive(:membership_changes)
-      subject
-    end
   end
 
   describe 'valid?' do
@@ -47,6 +40,11 @@ RSpec.describe PersonUpdater, type: :service do
       subject.update!
     end
 
+    it 'stores changes to person for use in update email' do
+      expect(person).to receive(:all_changes)
+      subject.update!
+    end
+
     it 'sends no update email if not required' do
       allow(person).
         to receive(:notify_of_change?).
@@ -59,25 +57,22 @@ RSpec.describe PersonUpdater, type: :service do
     end
 
     it 'sends an update email if required' do
-      person_changes_presenter = double('person_changes_presenter')
-      membership_changes_presenter = double('membership_changes_presenter')
+      changes_presenter = double('person_all_changes_presenter')
       json = double('json')
       mailing = double('mailing')
 
-      expect(PersonChangesPresenter).to receive(:new).with(person.changes).and_return person_changes_presenter
-      expect(MembershipChangesPresenter).to receive(:new).with(person.membership_changes).and_return membership_changes_presenter
+      expect(PersonAllChangesPresenter).to receive(:new).with(person.all_changes).and_return changes_presenter
 
       allow(person).
         to receive(:notify_of_change?).
         with(current_user).
         and_return(true)
 
-      expect(person_changes_presenter).to receive(:serialize).and_return json
-      expect(membership_changes_presenter).to receive(:serialize).and_return json
+      expect(changes_presenter).to receive(:serialize).and_return json
 
       expect(class_double('UserUpdateMailer').as_stubbed_const).
         to receive(:updated_profile_email).
-        with(person, json, json, current_user.email).
+        with(person, json, current_user.email).
         and_return(mailing)
       expect(mailing).to receive(:deliver_later)
       subject.update!
