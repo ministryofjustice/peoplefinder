@@ -48,7 +48,7 @@ describe UserUpdateMailer do
     let!(:ds) { create(:group, name: 'Digital Services') }
     let!(:csg) { create(:group, name: 'Corporate Services Group') }
 
-    let(:changes_presenter) { PersonAllChangesPresenter.new(person.all_changes) }
+    let(:changes_presenter) { ProfileChangesPresenter.new(person.all_changes) }
     let(:serialized_changes) { changes_presenter.serialize }
 
     let(:mass_assignment_params) do
@@ -90,8 +90,8 @@ describe UserUpdateMailer do
     include_examples "common #{described_class} mail elements"
 
     it 'deserializes changes to create presenter objects' do
-      person_all_changes_presenter = double(PersonAllChangesPresenter).as_null_object
-      expect(PersonAllChangesPresenter).to receive(:deserialize).
+      person_all_changes_presenter = double(ProfileChangesPresenter).as_null_object
+      expect(ProfileChangesPresenter).to receive(:deserialize).
         with(serialized_changes).
         and_return(person_all_changes_presenter)
       mail

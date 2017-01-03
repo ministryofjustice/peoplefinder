@@ -61,7 +61,7 @@ RSpec.describe PersonUpdater, type: :service do
       json = double('json')
       mailing = double('mailing')
 
-      expect(PersonAllChangesPresenter).to receive(:new).with(person.all_changes).and_return changes_presenter
+      expect(ProfileChangesPresenter).to receive(:new).with(person.all_changes).and_return changes_presenter
 
       allow(person).
         to receive(:notify_of_change?).

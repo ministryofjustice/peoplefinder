@@ -18,14 +18,14 @@ class PersonUpdater
 
   def update!
     person.save!
-    store_changes person
+    present person
     send_update_email!
   end
 
   private
 
-  def store_changes person
-    @changes = PersonAllChangesPresenter.new(person.all_changes)
+  def present person
+    @changes = ProfileChangesPresenter.new(person.all_changes)
   end
 
   def send_update_email!

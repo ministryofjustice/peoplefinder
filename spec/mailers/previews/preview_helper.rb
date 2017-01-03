@@ -19,29 +19,60 @@ module PreviewHelper
   end
 
   def dirty_recipient
-    @dirty_recipient ||= recipient.tap do
-      recipient.given_name = "Frederick"
-      recipient.surname = 'Reese-Bloggs'
-      recipient.primary_phone_number = '0123 456 789'
-      recipient.secondary_phone_number = '07708 139 313'
-      recipient.pager_number = '0113 432 567'
-      recipient.email = 'fred.reese-bloggs@fake-moj.justice.gov.uk'
-      recipient.location_in_building = ''
-      recipient.building = 'St Pancras'
-      recipient.city = 'Manchester'
-      recipient.current_project = 'Office 365 Rollout'
-      recipient.works_monday = false
-      recipient.works_saturday = true
-      recipient.description = 'new info'
-      recipient.profile_photo_id = 1
-      recipient.memberships.build(group: Group.first, role: "Lead Developer", leader: true, subscribed: false)
+    clean_recipient
+    @dirty_recipient = recipient
+    @dirty_recipient.tap do |dr|
+      dr.assign_attributes mass_person_attrs(dr)
+      dr.save!
     end
   end
 
-  # person who caused email to be sent
-  # e.g. by updating/deleting another users profile, suggesting a change
   def instigator
     @instigator ||= Person.find_or_create_by!(given_name: 'Insti', surname: 'Gator', email: 'insti.gator@fake-moj.justice.gov.uk')
+  end
+
+  def clean_recipient
+    ['fred.bloggs@fake-moj.justice.gov.uk','fred.reese-bloggs@fake-moj.justice.gov.uk'].each do |email|
+      recipient = Person.find_by(email: email)
+      recipient.destroy if recipient
+    end
+    @recipient = nil
+  end
+
+  def mass_person_attrs person
+    membership = person.reload.memberships.create(group_id: Group.second.id, role: "Executive Office", leader: false, subscribed: true)
+    {
+      email: 'changed.user@digital.justice.gov.uk',
+      given_name: "Frederick",
+      surname: 'Reese-Bloggs',
+      primary_phone_number: '0123 456 789',
+      secondary_phone_number: '07708 139 313',
+      pager_number: '0113 432 567',
+      email: 'fred.reese-bloggs@fake-moj.justice.gov.uk',
+      location_in_building: '',
+      building: 'St Pancras',
+      city: 'Manchester',
+      current_project: 'Office 365 Rollout',
+      works_monday: false,
+      works_saturday: true,
+      description: 'new info',
+      profile_photo_id: 1,
+      memberships_attributes: {
+        '0' => {
+          role: 'The Boss',
+          group_id: Group.first.id,
+          leader: true,
+          subscribed: false
+        },
+        '1' => {
+          id: membership.id,
+          group_id: membership.group_id,
+          role: 'Chief Executive Officer',
+          leader: true,
+          subscribed: false
+        }
+      }
+    }
   end
 
 end

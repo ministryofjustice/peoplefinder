@@ -21,8 +21,7 @@ module Concerns::PersonChanges
     end
 
     def all_changes
-      all_changes = person_changes.merge(membership_changes)
-      all_changes
+      person_changes.merge(membership_changes)
     end
 
     private
