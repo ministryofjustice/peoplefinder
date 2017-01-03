@@ -9,12 +9,7 @@ RSpec.describe MembershipChangesPresenter, type: :presenter do
 
   subject { described_class.new(person.changes) }
 
-  it { is_expected.to be_a(described_class) }
-  it { is_expected.to respond_to :changes }
-  it { is_expected.to respond_to :raw }
-  it { is_expected.to respond_to :[] }
-  it { is_expected.to respond_to :each }
-  it { is_expected.to respond_to :each_pair }
+  it_behaves_like 'a changes_presenter'
 
   let(:mass_assignment_params) do
     {
@@ -80,10 +75,7 @@ RSpec.describe MembershipChangesPresenter, type: :presenter do
       }
     end
 
-    it { is_expected.to be_a Hash }
-    it { is_expected.to respond_to :[] }
-    it { is_expected.to respond_to :each }
-    it { is_expected.to respond_to :each_pair }
+    it_behaves_like '#changes on changes_presenter'
 
     it 'returns expected format of data' do
       is_expected.to include membership_changes_for_ds
@@ -93,4 +85,11 @@ RSpec.describe MembershipChangesPresenter, type: :presenter do
       expect(subject.size).to eql 2
     end
   end
+
+  describe '#serialize' do
+    subject { described_class.new(person.membership_changes).serialize }
+
+    include_examples 'serializability'
+  end
+
 end

@@ -40,9 +40,8 @@ module PreviewHelper
   end
 
   def mass_person_attrs person
-    membership = person.reload.memberships.create(group_id: Group.second.id, role: "Executive Office", leader: false, subscribed: true)
+    membership = person.reload.memberships.create(group_id: Group.second.id, role: "Executive Officer", leader: false, subscribed: true)
     {
-      email: 'changed.user@digital.justice.gov.uk',
       given_name: "Frederick",
       surname: 'Reese-Bloggs',
       primary_phone_number: '0123 456 789',
