@@ -57,7 +57,7 @@ RSpec.describe PersonUpdater, type: :service do
     end
 
     it 'sends an update email if required' do
-      changes_presenter = double('person_all_changes_presenter')
+      changes_presenter = instance_double('ProfileChangesPresenter')
       json = double('json')
       mailing = double('mailing')
 

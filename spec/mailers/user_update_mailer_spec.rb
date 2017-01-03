@@ -82,6 +82,20 @@ describe UserUpdateMailer do
       }
     end
 
+    let(:team_reassignment) do
+      {
+        memberships_attributes: {
+          '2' => {
+            id: hr_membership.id,
+            group_id: ds.id,
+            role: 'Chief Executive Officer',
+            leader: true,
+            subscribed: false
+          }
+        }
+      }
+    end
+
     subject(:mail) do
       described_class.updated_profile_email(person, serialized_changes, instigator.email).deliver_now
     end
@@ -90,10 +104,10 @@ describe UserUpdateMailer do
     include_examples "common #{described_class} mail elements"
 
     it 'deserializes changes to create presenter objects' do
-      person_all_changes_presenter = double(ProfileChangesPresenter).as_null_object
+      profile_changes_presenter = double(ProfileChangesPresenter).as_null_object
       expect(ProfileChangesPresenter).to receive(:deserialize).
         with(serialized_changes).
-        and_return(person_all_changes_presenter)
+        and_return(profile_changes_presenter)
       mail
     end
 
@@ -131,20 +145,28 @@ describe UserUpdateMailer do
         end
       end
 
+      it 'includes team membership modifications' do
+        person.assign_attributes(team_reassignment)
+        person.save!
+        %w(plain html).each do |part_type|
+          expect(get_message_part(mail, part_type)).to have_content(/Changed your membership of the team Human Resources to Digital Services/m)
+        end
+      end
+
       it 'includes team membership role modifications' do
-        %w(html).each do |part_type|
-          expect(get_message_part(mail, part_type)).to have_content(/Changed the role Administrative Officer to Chief Executive Officer for Human Resources team./m)
+        %w(plain html).each do |part_type|
+          expect(get_message_part(mail, part_type)).to have_content(/Changed the role Administrative Officer to Chief Executive Officer for Human Resources team/m)
         end
       end
 
       it 'includes team membership leadership modifications' do
-        %w(html).each do |part_type|
+        %w(plain html).each do |part_type|
           expect(get_message_part(mail, part_type)).to have_content(/Made you leader of the Human Resources team./m)
         end
       end
 
       it 'includes team membership subscription modifications' do
-        %w(html).each do |part_type|
+        %w(plain html).each do |part_type|
           expect(get_message_part(mail, part_type)).to have_content(/Changed your notification settings so you don't get notifications if changes are made to the Human Resources team./m)
         end
       end

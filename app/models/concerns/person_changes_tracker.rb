@@ -1,4 +1,4 @@
-module Concerns::PersonChanges
+module Concerns::PersonChangesTracker
   extend ActiveSupport::Concern
 
   included do
