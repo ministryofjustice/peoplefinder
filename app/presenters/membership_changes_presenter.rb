@@ -117,11 +117,11 @@ class MembershipChangesPresenter < ChangesPresenter
   def role_change_sentence raw_change
     change = Change.new(raw_change)
     if change.addition?
-      "Added the role #{change.new_val} for #{current_team} team"
+      "Added the role #{change.new_val} in the #{current_team} team"
     elsif change.removal?
-      "Removed the role #{change.old_val} for #{current_team} team"
+      "Removed the role #{change.old_val} in the #{current_team} team"
     elsif change.modification?
-      "Changed the role #{change.old_val} to #{change.new_val} for #{current_team} team"
+      "Changed your role from #{change.old_val} to #{change.new_val} in the #{current_team} team"
     end
   end
 
@@ -135,11 +135,12 @@ class MembershipChangesPresenter < ChangesPresenter
   def team_change_sentence raw_change
     change = Change.new(raw_change)
     if change.addition?
-      "Added you to the team #{Group.find(change.new_val).name}"
+      "Added you to the #{Group.find(change.new_val).name} team"
     elsif change.removal?
-      "Removed you from the team #{Group.find(change.old_val).name}"
+      "Removed you from the #{Group.find(change.old_val).name} team"
     elsif change.modification?
-      "Changed your membership of the team #{Group.find(change.old_val).name} to #{Group.find(change.new_val).name}"
+      "Changed your membership of the #{Group.find(change.old_val).name} team \
+      to the #{Group.find(change.new_val).name} team"
     end
   end
 end

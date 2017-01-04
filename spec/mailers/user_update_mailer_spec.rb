@@ -149,13 +149,13 @@ describe UserUpdateMailer do
         person.assign_attributes(team_reassignment)
         person.save!
         %w(plain html).each do |part_type|
-          expect(get_message_part(mail, part_type)).to have_content(/Changed your membership of the team Human Resources to Digital Services/m)
+          expect(get_message_part(mail, part_type)).to have_content(/Changed your membership of the Human Resources team to the Digital Services team/m)
         end
       end
 
       it 'includes team membership role modifications' do
         %w(plain html).each do |part_type|
-          expect(get_message_part(mail, part_type)).to have_content(/Changed the role Administrative Officer to Chief Executive Officer for Human Resources team/m)
+          expect(get_message_part(mail, part_type)).to have_content(/Changed your role from Administrative Officer to Chief Executive Officer in the Human Resources team/m)
         end
       end
 
