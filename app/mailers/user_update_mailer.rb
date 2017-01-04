@@ -11,11 +11,9 @@ class UserUpdateMailer < ActionMailer::Base
     mail to: @person.email
   end
 
-  def updated_profile_email(person, changes, membership_changes, by_email = nil)
+  def updated_profile_email(person, changes, by_email = nil)
     @person = person
-    @changes = PersonChangesPresenter.deserialize(changes)
-    @membership_changes = MembershipChangesPresenter.deserialize(membership_changes)
-
+    present changes
     @by_email = by_email
     @profile_url = profile_url(person)
     mail to: person.email, cc: @changes.raw['email']&.first
@@ -31,5 +29,9 @@ class UserUpdateMailer < ActionMailer::Base
 
   def profile_url(person)
     person_url(person)
+  end
+
+  def present changes
+    @changes = ProfileChangesPresenter.deserialize(changes)
   end
 end

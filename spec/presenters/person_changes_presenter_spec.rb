@@ -16,12 +16,7 @@ RSpec.describe PersonChangesPresenter, type: :presenter do
 
   subject { described_class.new(person.changes) }
 
-  it { is_expected.to be_a(described_class) }
-  it { is_expected.to respond_to :changes }
-  it { is_expected.to respond_to :raw }
-  it { is_expected.to respond_to :[] }
-  it { is_expected.to respond_to :each }
-  it { is_expected.to respond_to :each_pair }
+  it_behaves_like 'a changes_presenter'
 
   describe 'delegation' do
     before { person.email = new_email }
@@ -69,10 +64,7 @@ RSpec.describe PersonChangesPresenter, type: :presenter do
       person.description = ''
     end
 
-    it { is_expected.to be_a Hash }
-    it { is_expected.to respond_to :[] }
-    it { is_expected.to respond_to :each }
-    it { is_expected.to respond_to :each_pair }
+    it_behaves_like '#changes on changes_presenter'
 
     it 'returns expected format of data' do
       is_expected.to eql valid_format
@@ -108,23 +100,12 @@ RSpec.describe PersonChangesPresenter, type: :presenter do
       person.description = ''
     end
 
-    it { is_expected.to be_json }
+    include_examples 'serializability'
 
     it 'returns JSON of raw changes only' do
       is_expected.to include_json(valid_json_hash)
       is_expected.not_to include_json(message: "Changed email from #{old_email} to #{new_email}")
     end
-
-    it 'is deserializable' do
-      expect { described_class.deserialize(subject) }.to_not raise_error
-    end
-  end
-
-  describe '.deserialize' do
-    let(:serialized_changes) { described_class.new(person.changes).serialize }
-    subject { described_class.deserialize(serialized_changes) }
-
-    it { is_expected.to be_instance_of described_class }
   end
 
 end
