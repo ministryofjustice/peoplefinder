@@ -244,7 +244,7 @@ en:
       complete_your_profile_alert_html: "Start building your profile now so colleagues and co-workers can get the latest information on you.<br/>We’ll send you regular reminders until it’s complete."
       delete_this_profile: "Delete this profile"
       delete_this_team: "Delete this team"
-      duplicate_names_hint: "There are existing profiles that have the same name. Check that it’s not one of these before continuing."
+      duplicate_names_hint: "There are existing profiles that look similar to the details you entered. Select one of the profiles below or continue to create a new one."
       editing_alert: "You are currently editing this profile - click the Save button to finish"
       hint_add_person_team_not_found: "If you can’t find your team, you’ll need to add it."
       hint_add_person_to_team: "Find the team from this organisation browser."

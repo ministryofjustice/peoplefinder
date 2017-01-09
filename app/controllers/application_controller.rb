@@ -9,6 +9,12 @@ class ApplicationController < ActionController::Base
 
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 
+  def login_person(person)
+    login_service = Login.new(session, person)
+    login_service.login
+    redirect_to desired_path(person)
+  end
+
   private
 
   def user_for_paper_trail
@@ -59,12 +65,6 @@ class ApplicationController < ActionController::Base
     return true if logged_in?
     session[:desired_path] = request.fullpath
     redirect_to new_sessions_path
-  end
-
-  def login_person(person)
-    login_service = Login.new(session, person)
-    login_service.login
-    redirect_to desired_path(person)
   end
 
   def desired_path person

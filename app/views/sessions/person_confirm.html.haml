@@ -1,0 +1,22 @@
+- @editing_mode = false
+#search_results
+  %h1.noborder= @page_title = 'Create profile'
+  .spacer-45
+  = info_text('duplicate_names_hint')
+
+  .pagination= pluralize(@people.length, "result") + ' found'
+
+  #results
+    = render partial: 'search/person', collection: @people, locals: { search_result: false }
+
+  = form_for @person, url: :sessions_people, method: :post do |f|
+
+    = f.hidden_field :given_name
+    = f.hidden_field :surname
+    = f.hidden_field :email
+
+    .spacer-45
+    .form-group
+      = f.submit 'Continue', class: 'button'
+      .cancel
+        = link_to 'Return to home page', home_path

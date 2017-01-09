@@ -7,22 +7,45 @@ describe TokensController, type: :controller do
   it_behaves_like 'session_person_creatable'
 
   describe 'GET show' do
-    context 'user is logged in as a Person' do
-      let(:person) { create(:person) }
+    let(:person) { create(:person) }
+    let(:token) { create(:token, user_email: person.email) }
+
+    context 'user is logged in' do
       before do
         allow(controller).to receive(:current_user).and_return person
         allow(controller).to receive(:logged_in_regular?).and_return true
       end
 
       it 'redirects to person profile' do
-        get :show, id: 'token'
-        expect(response).to redirect_to(person_path(person))
+        get :show, id: token
+        expect(response).to redirect_to person_path(person)
       end
 
-      context 'and desired path is set' do
+      context 'when desired path is set' do
+        before { request.session[:desired_path] = new_group_path }
         it 'redirects to desired path' do
-          get :show, id: 'token', desired_path: '/search'
-          expect(response).to redirect_to('/search')
+          get :show, id: token
+          expect(response).to redirect_to new_group_path
+        end
+      end
+
+      context 'user is not logged in' do
+        before do
+          allow(controller).to receive(:current_user).and_return nil
+          allow(controller).to receive(:logged_in_regular?).and_return false
+        end
+
+        it 'redirects to person profile' do
+          get :show, id: token
+          expect(response).to redirect_to person_path(person, prompt: 'profile')
+        end
+
+        context 'when desired path is set' do
+          before { request.session[:desired_path] = new_group_path }
+          it 'redirects to desired path' do
+            get :show, id: token
+            expect(response).to redirect_to new_group_path
+          end
         end
       end
     end

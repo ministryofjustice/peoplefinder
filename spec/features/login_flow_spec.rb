@@ -13,6 +13,7 @@ feature 'Login flow' do
   let(:profile_page) { Pages::Profile.new }
   let(:login_page) { Pages::Login.new }
   let(:search_page) { Pages::Search.new }
+  let(:confirm_page) { Pages::PersonConfirm.new }
   let(:base_page) { Pages::Base.new }
 
   let(:profile_created_from_login_html) { "Your profile did not exist so we created it for you." }
@@ -95,6 +96,24 @@ feature 'Login flow' do
         token_login_step_with_expectation
         expect(edit_profile_page).to be_displayed
         expect_profile_created_flash_notice(edit_profile_page)
+      end
+
+      context 'and I have namesakes' do
+        let(:email) { 'john.doe3@digital.justice.gov.uk' }
+        before do
+          create(:person, given_name: 'John', surname: 'Doe', email: 'john.doe@digital.justice.gov.uk')
+          create(:person, given_name: 'John', surname: 'Doe', email: 'john.doe2@digital.justice.gov.uk')
+        end
+        scenario 'creating a new team renders the profile creation confirmation page' do
+          visit new_group_path
+          token_login_step_with_expectation
+          expect(confirm_page).to be_displayed
+          expect(confirm_page).to have_content "Create profile"
+          expect(confirm_page.form).to be_all_there
+          expect(confirm_page.form).to have_continue_button
+          expect(confirm_page.search_results).to have_search_results count: 2
+          expect(confirm_page.search_results.name_links).to include '/people/john-doe'
+        end
       end
     end
 
