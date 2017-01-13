@@ -318,6 +318,29 @@ RSpec.describe PeopleController, type: :controller do
     end
   end
 
+  describe 'PUT update_email' do
+    let(:person) { create(:person, given_name: "John", surname: "Doe", email: 'john.doe@digital.justice.gov.uk') }
+    let(:new_attributes) { { email: 'john.doe2@digital.justice.gov.uk' } }
+    subject do
+      put :update_email, id: person.to_param, person: new_attributes
+    end
+
+    it 'assigns person' do
+      subject
+      expect(assigns(:person)).to eql person
+    end
+
+    it 'updates email only' do
+      subject
+      expect(person.reload.email).to eql new_attributes[:email]
+    end
+
+    it 'redirects to SHOW action' do
+      request.session[:desired_path] = new_group_path
+      is_expected.to redirect_to person_path(person, prompt: 'profile')
+    end
+  end
+
   describe 'DELETE destroy' do
     it 'destroys the requested person' do
       person = create(:person, valid_attributes)

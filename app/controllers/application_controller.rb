@@ -5,7 +5,7 @@ class ApplicationController < ActionController::Base
   helper MojHelper
 
   protect_from_forgery with: :exception
-  before_action :ensure_user
+  before_action :ensure_user, except: :update_email
 
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 

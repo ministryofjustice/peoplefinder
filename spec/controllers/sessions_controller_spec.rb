@@ -79,17 +79,10 @@ RSpec.describe SessionsController, type: :controller do
           expect(person.surname).to eql fred_bloggs_omniauth_hash['info']['last_name']
         end
 
-        it 'redirects to the person\'s profile page' do
+        it 'redirects to the person\'s profile edit page, ignoring desired path' do
+          request.session[:desired_path] = new_group_path
           post :create
-          expect(response).to redirect_to person_path(Person.find_by(email: 'fred.bloggs@digital.justice.gov.uk'), prompt: 'profile')
-        end
-
-        context 'when desired path is set' do
-          before { request.session[:desired_path] = new_group_path }
-          it 'redirects to desired path' do
-            post :create
-            expect(response).to redirect_to new_group_path
-          end
+          expect(response).to redirect_to edit_person_path(Person.find_by(email: 'fred.bloggs@digital.justice.gov.uk'))
         end
       end
 
@@ -152,16 +145,10 @@ RSpec.describe SessionsController, type: :controller do
       expect { post :create_person, person_params }.to change Person, :count
     end
 
-    it 'redirects to the person\'s profile page' do
+    it 'redirects to the person\'s profile edit page, ignoring desired path' do
+      request.session[:desired_path] = '/search'
       post :create_person, person_params
-      expect(response).to redirect_to person_path(Person.find_by(email: 'fred.bloggs@digital.justice.gov.uk'), prompt: 'profile')
-    end
-
-    context 'when desired path is set' do
-      it 'redirects to desired path' do
-        post :create_person, person_params, desired_path: '/search'
-        expect(response).to redirect_to('/search')
-      end
+      expect(response).to redirect_to edit_person_path(Person.find_by(email: 'fred.bloggs@digital.justice.gov.uk'))
     end
   end
 end

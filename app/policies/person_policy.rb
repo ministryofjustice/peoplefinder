@@ -11,6 +11,10 @@ class PersonPolicy < ApplicationPolicy
     regular_user?
   end
 
+  def update_email?
+    true
+  end
+
   def new?
     regular_user?
   end

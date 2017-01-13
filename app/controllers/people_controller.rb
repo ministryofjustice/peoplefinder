@@ -1,6 +1,7 @@
 # FIXME: Refactor this controller - it's too long and mailing shouldn't be done in models
 class PeopleController < ApplicationController
-  before_action :set_person, only: [:show, :edit, :update, :destroy]
+
+  before_action :set_person, only: [:show, :edit, :update, :update_email, :destroy]
   before_action :set_org_structure,
     only: [:new, :edit, :create, :update, :add_membership]
   before_action :load_versions, only: [:show]
@@ -61,6 +62,17 @@ class PeopleController < ApplicationController
     end
   end
 
+  def update_email
+    @person.assign_attributes(person_email_update_params)
+    authorize @person
+    if @person.valid?
+      updater = PersonUpdater.new(@person, current_user)
+      updater.update!
+      session.delete(:desired_path)
+      login_person @person
+    end
+  end
+
   # DELETE /people/1
   def destroy
     authorize @person
@@ -102,6 +114,10 @@ class PeopleController < ApplicationController
       *Person::DAYS_WORKED,
       memberships_attributes: [:id, :role, :group_id, :leader, :subscribed]
     ]
+  end
+
+  def person_email_update_params
+    params.require(:person).permit(:email)
   end
 
   def set_org_structure

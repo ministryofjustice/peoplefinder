@@ -55,6 +55,7 @@ module SessionPersonCreator
       person_creator = PersonCreator.new(person, current_user)
       person_creator.create!
       html_safe_notice :profile_created_from_login_html, href: edit_person_path(person)
+      session[:desired_path] = edit_person_path(@person)
       login_person(@person)
     end
 

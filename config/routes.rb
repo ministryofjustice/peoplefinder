@@ -20,6 +20,11 @@ Rails.application.routes.draw do
     collection do
       get :add_membership
     end
+    member do
+      put :update_email
+      patch :update_email
+    end
+
     resource :image, controller: 'person_image', only: [:edit, :update]
     resources :suggestions, only: [:new, :create]
   end

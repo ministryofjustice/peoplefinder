@@ -30,20 +30,26 @@ feature 'Login flow' do
 
   RSpec::Matchers.define :have_profile_link do |expected|
     match do |actual|
-      actual.find_link(expected.name, href: person_path(expected)).present? rescue false
+      begin
+        within '.profile-link' do
+          actual.find_link(expected.name, href: person_path(expected)).present?
+        end
+      rescue
+        false
+      end
     end
     failure_message do |actual|
-      "expected that #{actual} would have profile link for #{expected.email}"
+      "expected that #{actual} would have profile link for #{person_path(expected)}."
     end
   end
 
   describe 'Choosing to login' do
-    scenario 'When user logs in for the first time, they see their profile' do
+    scenario 'When a user logs in for the first time, they are prompted edit their profile' do
       omni_auth_log_in_as(email)
-      expect(profile_page).to be_displayed
+      expect(edit_profile_page).to be_displayed
     end
 
-    scenario 'When user logs in, their profile page is displayed' do
+    scenario 'When and existing user logs in, their profile page is displayed' do
       login_count = 5
       create(:person_with_multiple_logins, email: email, login_count: login_count)
       omni_auth_log_in_as(email)
@@ -86,25 +92,11 @@ feature 'Login flow' do
     end
 
     context 'when I do not have a profile' do
-      scenario 'creating a new profile redirects via login to new profile page and flashes a notice that their own profile was just created' do
+      scenario 'creating a new profile redirects via login to their own newly created profile and flashes a notice that their own profile was just created' do
         visit new_person_path
         token_login_step_with_expectation
-        expect(new_profile_page).to be_displayed
-        expect_profile_created_flash_notice(new_profile_page)
-      end
-
-      scenario 'editing a team redirects via login to edit group page and flashes a notice that their own profile was just created' do
-        visit edit_group_path group
-        token_login_step_with_expectation
-        expect(edit_group_page).to be_displayed
-        expect_profile_created_flash_notice(edit_group_page)
-      end
-
-      scenario 'editing a profile redirects via login to edit profile page and flashes a notice that their own profile was just created' do
-        visit edit_person_path other_person
-        token_login_step_with_expectation
         expect(edit_profile_page).to be_displayed
-        expect_profile_created_flash_notice(edit_profile_page)
+        expect_profile_created_flash_notice(new_profile_page)
       end
 
       context 'and I have namesakes' do
@@ -114,7 +106,7 @@ feature 'Login flow' do
           create(:person, given_name: 'John', surname: 'Doe', email: 'john.doe2@digital.justice.gov.uk')
         end
 
-        scenario 'creating a new team renders the profile creation confirmation page' do
+        scenario 'I am redirect to the profile creation confirmation page' do
           visit new_group_path
           token_login_step_with_expectation
           expect(confirm_page).to be_displayed
@@ -125,7 +117,7 @@ feature 'Login flow' do
           expect(confirm_page.search_results.name_links).to include '/people/john-doe'
         end
 
-        scenario 'confirming I need a new profile signs me in and redirects to desired page' do
+        scenario 'confirming I need a new profile signs me in and redirects to edit my profile' do
           visit new_group_path
           token_login_step_with_expectation
           expect(confirm_page).to be_displayed
@@ -133,8 +125,20 @@ feature 'Login flow' do
           confirm_page.form.continue_button.click
           person = Person.find_by(email: email)
           expect(person).to_not be_nil
-          expect(current_path).to eql new_group_path
+          expect(edit_profile_page).to be_displayed
           expect(page).to have_profile_link person
+        end
+
+        scenario 'selecting an existing profile updates the primary email address of the selectee, logins in and redirects to profile page' do
+          visit new_group_path
+          token_login_step_with_expectation
+          expect(confirm_page).to be_displayed
+          expect(confirm_page.search_results).to have_search_results count: 2
+          person = Person.find_by(email: 'john.doe@digital.justice.gov.uk')
+          confirm_page.search_results.select_buttons.first.click
+          expect(profile_page).to be_displayed
+          expect(profile_page).to have_profile_link person
+          expect(person.reload.email).to eql email
         end
       end
     end
