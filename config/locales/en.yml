@@ -22,6 +22,7 @@
 en:
   shared:
     profile_created_from_login_html: &profile_created_from_login_html "Your profile did not exist so we created it for you. Click <a href=\"%{href}\">here</a> to edit."
+    person_confirm: &person_confirm_flash "You need to create a People Finder account to finish signing in"
   time:
     formats:
       default: "%d %b %Y %H:%M"
@@ -66,11 +67,13 @@ en:
       member_removed: "Removed %{person} from %{group}"
     sessions:
       profile_created_from_login_html: *profile_created_from_login_html
+      person_confirm: *person_confirm_flash
     tokens:
       expired_token: |
         The authentication token has expired.
         Request a new link to log in.
       profile_created_from_login_html: *profile_created_from_login_html
+      person_confirm: *person_confirm_flash
     admin/person_uploads:
         upload_succeeded: "Successfully uploaded %{count} people"
         upload_failed: "Upload failed"

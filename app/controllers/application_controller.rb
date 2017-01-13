@@ -82,6 +82,10 @@ class ApplicationController < ActionController::Base
     i18n_flash :html_safe_notice, partial_key, options
   end
 
+  def warning(*partial_key, **options)
+    i18n_flash :warning, partial_key, options
+  end
+
   def notice(*partial_key, **options)
     i18n_flash :notice, partial_key, options
   end

@@ -41,6 +41,7 @@ module SessionPersonCreator
       @person = person
       if @person.valid?
         if namesakes?
+          warning :person_confirm
           render 'sessions/person_confirm'
         else
           create_person_and_login @person
@@ -58,7 +59,7 @@ module SessionPersonCreator
     end
 
     def namesakes?
-      return false if params['commit'] == 'Continue'
+      return false if params['commit'] == 'Continue, it is not one of these'
       @people = Person.namesakes(@person)
       @people.present?
     end

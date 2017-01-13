@@ -6,6 +6,7 @@ module Pages
     set_url '/tokens{/token}'
     set_url_matcher(%r{tokens\/.*})
 
+    element :person_confirm_flash, '#flash-messages'
     section :search_results, Sections::SearchResults, '#results'
     section :form, Sections::PersonConfirmForm, '.new_person'
   end

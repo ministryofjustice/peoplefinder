@@ -1,7 +1,9 @@
 - @editing_mode = false
 #search_results
   %h1.noborder= @page_title = 'Create profile'
-  .spacer-45
+  .spacer-5
+  %hr
+  .spacer-10
   = info_text('duplicate_names_hint')
 
   .pagination= pluralize(@people.length, "result") + ' found'
@@ -17,6 +19,6 @@
 
     .spacer-45
     .form-group
-      = f.submit 'Continue', class: 'button'
+      = f.submit 'Continue, it is not one of these', class: 'button'
       .cancel
         = link_to 'Return to home page', home_path

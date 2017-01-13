@@ -123,6 +123,9 @@ footer {
   .notice, .html_safe_notice {
     background-color: $notice-bg;
   }
+  .warning {
+    background-color: $warning-bg;
+  }
   .error {
     background-color: $error-bg;
   }

@@ -28,6 +28,15 @@ feature 'Login flow' do
     expect(site_prism_page).to have_link('here', href: /\/people\/[\w\-]+\/edit/)
   end
 
+  RSpec::Matchers.define :have_profile_link do |expected|
+    match do |actual|
+      actual.find_link(expected.name, href: person_path(expected)).present? rescue false
+    end
+    failure_message do |actual|
+      "expected that #{actual} would have profile link for #{expected.email}"
+    end
+  end
+
   describe 'Choosing to login' do
     scenario 'When user logs in for the first time, they see their profile' do
       omni_auth_log_in_as(email)
@@ -104,15 +113,28 @@ feature 'Login flow' do
           create(:person, given_name: 'John', surname: 'Doe', email: 'john.doe@digital.justice.gov.uk')
           create(:person, given_name: 'John', surname: 'Doe', email: 'john.doe2@digital.justice.gov.uk')
         end
+
         scenario 'creating a new team renders the profile creation confirmation page' do
           visit new_group_path
           token_login_step_with_expectation
           expect(confirm_page).to be_displayed
-          expect(confirm_page).to have_content "Create profile"
+          expect(confirm_page).to be_all_there
           expect(confirm_page.form).to be_all_there
-          expect(confirm_page.form).to have_continue_button
+          expect(confirm_page).to have_content "Create profile"
           expect(confirm_page.search_results).to have_search_results count: 2
           expect(confirm_page.search_results.name_links).to include '/people/john-doe'
+        end
+
+        scenario 'confirming I need a new profile signs me in and redirects to desired page' do
+          visit new_group_path
+          token_login_step_with_expectation
+          expect(confirm_page).to be_displayed
+          expect(confirm_page.form).to have_continue_button
+          confirm_page.form.continue_button.click
+          person = Person.find_by(email: email)
+          expect(person).to_not be_nil
+          expect(current_path).to eql new_group_path
+          expect(page).to have_profile_link person
         end
       end
     end
