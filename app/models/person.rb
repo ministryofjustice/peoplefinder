@@ -84,13 +84,10 @@ class Person < ActiveRecord::Base
 
   default_scope { order(surname: :asc, given_name: :asc) }
 
-  scope :never_logged_in, -> { where(login_count: 0) }
-
-  scope :logged_in_at_least_once, -> { where('people.login_count > 0') }
-
-  scope :last_reminder_email_older_than, lambda { |within|
-    where('last_reminder_email_at IS ? OR last_reminder_email_at < ?', nil, within)
-  }
+  scope :never_logged_in, ::Query::PeopleNeverLoggedInQuery.new
+  scope :logged_in_at_least_once, ::Query::PeopleLoggedInAtLeastOnceQuery.new
+  scope :last_reminder_email_older_than, ->(within) { ::Query::ReminderMailOlderThanQuery.new(within).call }
+  scope :updated_at_older_than, -> (within) { ::Query::PeopleUpdatedOlderThanQuery.new(within).call }
 
   scope :updated_at_older_than, -> (within) { where('updated_at < ?', within) }
 
@@ -100,18 +97,10 @@ class Person < ActiveRecord::Base
     where(surname: person.surname, given_name: person.given_name).where.not(id: person.id)
   end
 
-  def self.all_in_groups_from_clause(groups)
-    joins(:memberships).
-      where(memberships: { group_id: groups }).
-      select("people.*,
-            string_agg(CASE role WHEN '' THEN NULL ELSE role END, ', ' ORDER BY role) AS role_names"
-            ).
-      group(:id).
-      uniq
-  end
 
-  scope :all_in_groups_scope, -> (groups) { from(all_in_groups_from_clause(groups), :people) }
-  scope :all_in_subtree, -> (group) { from(all_in_groups_from_clause(group.subtree_ids), :people) }
+  scope :all_in_groups_scope, -> (groups) { ::Query::PeopleInGroupsQuery.new(groups).call }
+
+  scope :all_in_subtree, -> (group) { ::Query::PeopleInGroupsQuery.new(group.subtree_ids).call }
 
   def self.outside_subteams(group)
     unscope(:order).
