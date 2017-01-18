@@ -31,11 +31,20 @@ ul.working_days {
   height: auto;
   overflow: hidden;
 }
+
 .panel {
   border-left: 5px solid $border-colour;
   clear: both;
   padding-left: 15px;
   margin-bottom: 60px;
+}
+
+.duplicate-hint {
+  max-width: 530px;
+}
+.duplicate-hint.panel {
+  margin-bottom: 20px;
+  padding-bottom: 15px;
 }
 
 .profile {
@@ -138,6 +147,10 @@ ul.working_days {
         float: right;
         padding: 45.5px 0;
         text-align: center;
+        .button {
+          padding-left: 30px;
+          padding-right: 30px;
+        }
       }
     }
   }

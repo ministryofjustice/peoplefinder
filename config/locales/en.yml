@@ -21,8 +21,7 @@
 
 en:
   shared:
-    profile_created_from_login_html: &profile_created_from_login_html "Your profile did not exist so we created it for you. Click <a href=\"%{href}\">here</a> to edit."
-    person_confirm: &person_confirm_flash "You need to create a People Finder account to finish signing in"
+    finish_profile_request: &finish_profile_request "You need to create a People Finder account to finish signing in"
   time:
     formats:
       default: "%d %b %Y %H:%M"
@@ -66,14 +65,14 @@ en:
     memberships:
       member_removed: "Removed %{person} from %{group}"
     sessions:
-      profile_created_from_login_html: *profile_created_from_login_html
-      person_confirm: *person_confirm_flash
+      person_confirm: *finish_profile_request
+      complete_profile: *finish_profile_request
     tokens:
       expired_token: |
         The authentication token has expired.
         Request a new link to log in.
-      profile_created_from_login_html: *profile_created_from_login_html
-      person_confirm: *person_confirm_flash
+      person_confirm: *finish_profile_request
+      complete_profile: *finish_profile_request
     admin/person_uploads:
         upload_succeeded: "Successfully uploaded %{count} people"
         upload_failed: "Upload failed"
@@ -84,6 +83,7 @@ en:
         other: |
           Thank you for helping to improve People Finder.
           We have let %{person} know that you’ve made changes
+      profile_email_updated: "Your primary email has been updated to %{email}"
       profile_deleted: "Deleted %{person}’s profile"
       create_error: "The profile was not created. Please check the errors below"
     person_image:
@@ -247,7 +247,8 @@ en:
       complete_your_profile_alert_html: "Start building your profile now so colleagues and co-workers can get the latest information on you.<br/>We’ll send you regular reminders until it’s complete."
       delete_this_profile: "Delete this profile"
       delete_this_team: "Delete this team"
-      duplicate_names_hint: "There are existing profiles that look similar to the details you entered. Select one of the profiles below or continue to create a new one."
+      duplicate_names_hint: "There are existing profiles that look similar to the details you entered. Check you don’t already have a profile or continue to create a new one."
+      duplicate_names_warning: "If you select an existing profile we will update your email address to the one you logged in with."
       editing_alert: "You are currently editing this profile - click the Save button to finish"
       hint_add_person_team_not_found: "If you can’t find your team, you’ll need to add it."
       hint_add_person_to_team: "Find the team from this organisation browser."

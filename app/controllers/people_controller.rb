@@ -69,6 +69,7 @@ class PeopleController < ApplicationController
       updater = PersonUpdater.new(@person, current_user)
       updater.update!
       session.delete(:desired_path)
+      notice :profile_email_updated, email: @person.email
       login_person @person
     end
   end

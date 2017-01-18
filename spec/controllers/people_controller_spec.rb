@@ -335,9 +335,14 @@ RSpec.describe PeopleController, type: :controller do
       expect(person.reload.email).to eql new_attributes[:email]
     end
 
-    it 'redirects to SHOW action' do
+    it 'redirects to SHOW action, ignoring desired path' do
       request.session[:desired_path] = new_group_path
       is_expected.to redirect_to person_path(person, prompt: 'profile')
+    end
+
+    it 'sets a flash message' do
+      subject
+      expect(flash[:notice]).to include("Your primary email has been updated to #{new_attributes[:email]}")
     end
   end
 

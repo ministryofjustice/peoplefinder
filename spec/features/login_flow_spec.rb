@@ -23,11 +23,6 @@ feature 'Login flow' do
     token_log_in_as(email)
   end
 
-  def expect_profile_created_flash_notice site_prism_page
-    expect(site_prism_page).to have_selector('#flash-messages', text: profile_created_from_login_html)
-    expect(site_prism_page).to have_link('here', href: /\/people\/[\w\-]+\/edit/)
-  end
-
   RSpec::Matchers.define :have_profile_link do |expected|
     match do |actual|
       begin
@@ -96,7 +91,6 @@ feature 'Login flow' do
         visit new_person_path
         token_login_step_with_expectation
         expect(edit_profile_page).to be_displayed
-        expect_profile_created_flash_notice(new_profile_page)
       end
 
       context 'and I have namesakes' do
@@ -106,7 +100,7 @@ feature 'Login flow' do
           create(:person, given_name: 'John', surname: 'Doe', email: 'john.doe2@digital.justice.gov.uk')
         end
 
-        scenario 'I am redirect to the profile creation confirmation page' do
+        scenario 'I am redirected to the profile creation confirmation page' do
           visit new_group_path
           token_login_step_with_expectation
           expect(confirm_page).to be_displayed
