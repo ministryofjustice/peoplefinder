@@ -55,7 +55,7 @@ module SessionPersonCreator
       person_creator = PersonCreator.new(person, current_user)
       person_creator.create!
       warning :complete_profile
-      session[:desired_path] = edit_person_path(@person)
+      session[:desired_path] = edit_person_path(@person, page_title: 'Create profile')
       login_person(@person)
     end
 

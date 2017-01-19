@@ -97,7 +97,8 @@ class Person < ActiveRecord::Base
   scope :created_at_older_than, -> (within) { where('created_at < ?', within) }
 
   def self.namesakes(person)
-    where(surname: person.surname, given_name: person.given_name).where.not(id: person.id)
+    where('LOWER(surname) = :surname AND LOWER(given_name) = :given_name', surname: person.surname.downcase, given_name: person.given_name.downcase).
+    where.not(id: person.id)
   end
 
   def self.all_in_groups_from_clause(groups)
