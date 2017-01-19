@@ -91,7 +91,7 @@ feature 'Person maintenance' do
         new_profile_page.form.save.click
 
         expect(new_profile_page.form).to have_global_error
-        expect(new_profile_page.form).to have_no_given_name_error
+        expect(new_profile_page.form).to have_given_name_error
         expect(new_profile_page.form).to have_surname_error
         expect(new_profile_page.form).to have_email_error
       end
@@ -386,6 +386,7 @@ feature 'Person maintenance' do
     visit new_person_path
     expect(page).not_to have_selector('.search-box')
 
+    fill_in 'First name', with: person_attributes[:given_name]
     fill_in 'Surname', with: person_attributes[:surname]
     fill_in 'Main email', with: person_attributes[:email]
     click_button 'Save', match: :first

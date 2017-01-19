@@ -36,6 +36,7 @@ class PeopleController < ApplicationController
   # POST /people
   def create
     @person = Person.new(person_params)
+    @editing_picture = (params['editing_picture'] == 'true' || params['editing_picture'] == 'Edit this picture')
     authorize @person
 
     if @preview
@@ -51,6 +52,7 @@ class PeopleController < ApplicationController
   # PATCH/PUT /people/1
   def update
     @person.assign_attributes(person_params)
+    @editing_picture = (params['editing_picture'] == 'true' || params['editing_picture'] == 'Edit this picture')
     authorize @person
 
     if @preview
@@ -112,6 +114,7 @@ class PeopleController < ApplicationController
       :email, :secondary_email,
       :profile_photo_id, :crop_x, :crop_y, :crop_w, :crop_h,
       :description, :current_project,
+      :editing_picture,
       *Person::DAYS_WORKED,
       memberships_attributes: [:id, :role, :group_id, :leader, :subscribed]
     ]
@@ -147,7 +150,8 @@ class PeopleController < ApplicationController
       creator = PersonCreator.new(@person, current_user)
       creator.create!
       notice :profile_created, person: @person
-      redirect_to @person
+
+      redirect_to redirection_destination
     end
   end
 
@@ -160,7 +164,18 @@ class PeopleController < ApplicationController
 
       type = @person == current_user ? :mine : :other
       notice :profile_updated, type, person: @person
-      redirect_to @person
+
+      redirect_to redirection_destination
+    end
+  end
+
+  def redirection_destination
+    if @editing_picture
+      edit_person_image_path(@person)
+    elsif params['return-from-editing-picture'] == 'true'
+      edit_person_path(@person)
+    else
+      @person
     end
   end
 

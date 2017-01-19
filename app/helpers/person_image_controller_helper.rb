@@ -1,0 +1,2 @@
+module PersonImageControllerHelper
+end

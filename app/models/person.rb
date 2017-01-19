@@ -71,7 +71,7 @@ class Person < ActiveRecord::Base
     end
   end
 
-  validates :given_name, presence: true, on: :update
+  validates :given_name, presence: true
   validates :surname, presence: true
   validates :email, presence: true, uniqueness: { case_sensitive: false }, email: true
   validates :secondary_email, email: true, allow_blank: true

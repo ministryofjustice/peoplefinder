@@ -35,6 +35,8 @@
     = f.hidden_field :crop_w
     = f.hidden_field :crop_h
 
+    = hidden_field_tag 'editing_picture', @editing_picture
+
     - Person::DAYS_WORKED.each do |day|
       = f.hidden_field day
 
