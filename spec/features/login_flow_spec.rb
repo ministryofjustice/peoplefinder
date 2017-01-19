@@ -97,7 +97,7 @@ feature 'Login flow' do
         let(:email) { 'john.doe3@digital.justice.gov.uk' }
         before do
           create(:person, given_name: 'John', surname: 'Doe', email: 'john.doe@digital.justice.gov.uk')
-          create(:person, given_name: 'John', surname: 'Doe', email: 'john.doe2@digital.justice.gov.uk')
+          create(:person, given_name: 'Johnny', surname: 'Doe-Smyth', email: 'john.doe2@digital.justice.gov.uk')
         end
 
         scenario 'I am redirected to the profile creation confirmation page' do

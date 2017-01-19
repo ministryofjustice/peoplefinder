@@ -259,11 +259,20 @@ RSpec.describe PeopleController, type: :controller do
     end
 
     describe 'with duplicate name' do
-      it 'renders the confirm template' do
+      let(:person) { create(:person, given_name: 'Bobbie', surname: 'Browne') }
+
+      before do
         create(:person, given_name: 'Bo', surname: 'Diddley')
-        person = create(:person, given_name: 'Bobbie', surname: 'Browne')
+      end
+
+      it 'when fundamental info amended it renders the confirm template' do
         put :update, id: person.to_param, person: { given_name: 'Bo', surname: 'Diddley' }
-        expect(response).to render_template('confirm')
+        expect(response).to render_template :confirm
+      end
+
+      it 'when fundamental info NOT altered it redirects to profile page' do
+        put :update, id: person.to_param, person: { current_project: 'whatevers' }
+        expect(response).to redirect_to person_path(person)
       end
     end
 

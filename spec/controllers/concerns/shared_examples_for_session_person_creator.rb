@@ -42,12 +42,6 @@ shared_examples_for "session_person_creatable" do
     end
   end
 
-  # def flashable_expectation_stub
-  #   flash = double ActionDispatch::Flash.new(:notice)
-  #   expect_any_instance_of(described_class).to receive(:html_safe_notice).and_return flash
-  #   expect_any_instance_of(described_class).to receive(:edit_person_path).and_return 'whatever'
-  # end
-
   describe '.person_from_oauth' do
     subject do
       view = described_class.new
@@ -73,10 +67,6 @@ shared_examples_for "session_person_creatable" do
     end
 
     context 'for a new person' do
-      # before do
-      #   flashable_expectation_stub
-      # end
-
       let(:auth_hash) { valid_auth_hash }
 
       it_behaves_like 'new person created' do
@@ -91,10 +81,6 @@ shared_examples_for "session_person_creatable" do
     subject { described_class.new.person_from_token(token) }
 
     context 'for a new person' do
-      # before do
-      #   flashable_expectation_stub
-      # end
-
       it_behaves_like 'new person created' do
         let(:expected_email) { token.user_email }
         let(:expected_name) { 'Aled Jones' }

@@ -127,9 +127,12 @@ class PeopleController < ApplicationController
 
   def namesakes?
     return false if params['commit'] == 'Continue'
-
     @people = Person.namesakes(@person)
     @people.present?
+  end
+
+  def namesakes_check_required_and_found?
+    namesakes? if @person.changes.keys.any? { |key| %w(email surname given_name).include? key }
   end
 
   def render_with_preview action
@@ -149,7 +152,7 @@ class PeopleController < ApplicationController
   end
 
   def confirm_or_update
-    if namesakes?
+    if namesakes_check_required_and_found?
       render(:confirm)
     else
       updater = PersonUpdater.new(@person, current_user)
