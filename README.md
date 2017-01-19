@@ -50,9 +50,9 @@ brew install postgresql
 brew install imagemagick
 brew install phantomjs
 
-brew install homebrew/versions/elasticsearch@1.7
-ln -sfv /usr/local/opt/elasticsearch@1.7/*.plist ~/Library/LaunchAgents
-launchctl load ~/Library/LaunchAgents/homebrew.mxcl.elasticsearch@1.7.plist
+brew install homebrew/versions/elasticsearch17
+brew services start elasticsearch@1.7
+
 
 git clone git@github.com:ministryofjustice/peoplefinder.git
 cd peoplefinder
