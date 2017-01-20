@@ -7,9 +7,10 @@ feature 'Login flow' do
   let!(:department) { create(:department) }
   let(:current_time) { Time.now }
 
-  let(:edit_profile_page) { Pages::EditProfile.new }
-  let(:edit_group_page) { Pages::EditGroup.new }
   let(:new_profile_page) { Pages::NewProfile.new }
+  let(:edit_profile_page) { Pages::EditProfile.new }
+  let(:new_group_page) { Pages::NewGroup.new }
+  let(:edit_group_page) { Pages::EditGroup.new }
   let(:profile_page) { Pages::Profile.new }
   let(:login_page) { Pages::Login.new }
   let(:search_page) { Pages::Search.new }
@@ -39,7 +40,7 @@ feature 'Login flow' do
   end
 
   describe 'Choosing to login' do
-    scenario 'When a user logs in for the first time, they are prompted edit their profile' do
+    scenario 'When a user logs in for the first time, they are directed to edit their profile' do
       omni_auth_log_in_as(email)
       expect(edit_profile_page).to be_displayed
     end
@@ -75,22 +76,25 @@ feature 'Login flow' do
   describe 'Prompted to login' do
     let(:group) { create :group }
     let(:other_person) { create :person }
+    let(:create_profile_warning) { 'You need to create a People Finder account to finish signing in' }
 
     context 'when I have a profile' do
-      scenario 'creating a new profile redirects via login back to new profile page with NO flash notice' do
+      scenario 'attempting a new|edit action redirects via login back to that action\'s template page with NO flash notice' do
         create(:person, email: email)
-        visit new_person_path
+        visit new_group_path
         token_login_step_with_expectation
-        expect(new_profile_page).to be_displayed
-        expect(new_profile_page.body).not_to have_selector('#flash-messages')
+        expect(new_group_page).to be_displayed
+        expect(new_group_page).not_to have_flash_message
       end
     end
 
     context 'when I do not have a profile' do
-      scenario 'creating a new profile redirects via login to their own newly created profile and flashes a notice that their own profile was just created' do
-        visit new_person_path
+      scenario 'attempting a new|edit action redirects via login back to their own edit profile page and flashes a notice that their own profile was just created' do
+        visit new_group_path
         token_login_step_with_expectation
         expect(edit_profile_page).to be_displayed
+        expect(edit_profile_page).to have_flash_message
+        expect(edit_profile_page.flash_message).to have_selector('.warning', text: create_profile_warning)
       end
 
       context 'and I have namesakes' do
@@ -120,7 +124,9 @@ feature 'Login flow' do
           person = Person.find_by(email: email)
           expect(person).to_not be_nil
           expect(edit_profile_page).to be_displayed
-          expect(page).to have_profile_link person
+          expect(edit_profile_page).to have_flash_message
+          expect(edit_profile_page.flash_message).to have_selector('.warning', text: create_profile_warning)
+          expect(edit_profile_page).to have_profile_link person
         end
 
         scenario 'selecting an existing profile updates the primary email address of the selectee, logins in and redirects to profile page' do
@@ -132,6 +138,8 @@ feature 'Login flow' do
           confirm_page.search_results.select_buttons.first.click
           expect(profile_page).to be_displayed
           expect(profile_page).to have_profile_link person
+          expect(profile_page).to have_flash_message
+          expect(profile_page.flash_message).to have_selector('.notice', text: /Your primary email has been updated to/)
           expect(person.reload.email).to eql email
         end
       end
