@@ -35,6 +35,11 @@ Point your browser to http://0.0.0.0:3000 and you should see the application's s
 ### Mac OSX install
 
 [Install Java](https://www.java.com/en/download/mac_download.jsp) if it is not on your machine.
+Alternatively, you can install it with Homebrew-Cask:
+
+```
+brew cask install java
+```
 
 [Install Homebrew](http://brew.sh/) if it is not on your machine.
 
@@ -46,8 +51,8 @@ brew install imagemagick
 brew install phantomjs
 
 brew install homebrew/versions/elasticsearch17
-ln -sfv /usr/local/opt/elasticsearch17/*.plist ~/Library/LaunchAgents
-launchctl load ~/Library/LaunchAgents/homebrew.mxcl.elasticsearch17.plist
+brew services start elasticsearch@1.7
+
 
 git clone git@github.com:ministryofjustice/peoplefinder.git
 cd peoplefinder
