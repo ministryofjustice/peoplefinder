@@ -96,7 +96,7 @@ class Person < ActiveRecord::Base
   def self.namesakes(person)
     where(surname: person.surname, given_name: person.given_name).where.not(id: person.id)
   end
-  
+
   scope :all_in_groups_scope, -> (groups) { ::Query::PeopleInGroupsQuery.new(groups).call }
 
   scope :all_in_subtree, -> (group) { ::Query::PeopleInGroupsQuery.new(group.subtree_ids).call }
