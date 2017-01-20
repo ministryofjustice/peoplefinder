@@ -25,9 +25,11 @@
 # ignore osx .DS_Store
 *.DS_Store
 .idea
+.ruby-version
 
 # ignore byebug history
 /.byebug_history
 
 # load tester file produced by rake task by default
 /spec/fixtures/csv_load_tester.csv
+/spec/support/uploads
