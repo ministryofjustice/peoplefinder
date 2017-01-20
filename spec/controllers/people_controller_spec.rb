@@ -259,11 +259,20 @@ RSpec.describe PeopleController, type: :controller do
     end
 
     describe 'with duplicate name' do
-      it 'renders the confirm template' do
+      let(:person) { create(:person, given_name: 'Bobbie', surname: 'Browne') }
+
+      before do
         create(:person, given_name: 'Bo', surname: 'Diddley')
-        person = create(:person, given_name: 'Bobbie', surname: 'Browne')
+      end
+
+      it 'when fundamental info amended it renders the confirm template' do
         put :update, id: person.to_param, person: { given_name: 'Bo', surname: 'Diddley' }
-        expect(response).to render_template('confirm')
+        expect(response).to render_template :confirm
+      end
+
+      it 'when fundamental info NOT altered it redirects to profile page' do
+        put :update, id: person.to_param, person: { current_project: 'whatevers' }
+        expect(response).to redirect_to person_path(person)
       end
     end
 
@@ -315,6 +324,34 @@ RSpec.describe PeopleController, type: :controller do
     it 'crops preview profile photo immediatley' do
       expect_any_instance_of(Person).to receive(:crop_profile_photo).with(:preview).exactly(:once)
       update_preview
+    end
+  end
+
+  describe 'PUT update_email' do
+    let(:person) { create(:person, given_name: "John", surname: "Doe", email: 'john.doe@digital.justice.gov.uk') }
+    let(:new_attributes) { { email: 'john.doe2@digital.justice.gov.uk' } }
+    subject do
+      put :update_email, id: person.to_param, person: new_attributes
+    end
+
+    it 'assigns person' do
+      subject
+      expect(assigns(:person)).to eql person
+    end
+
+    it 'updates email only' do
+      subject
+      expect(person.reload.email).to eql new_attributes[:email]
+    end
+
+    it 'redirects to SHOW action, ignoring desired path' do
+      request.session[:desired_path] = new_group_path
+      is_expected.to redirect_to person_path(person, prompt: 'profile')
+    end
+
+    it 'sets a flash message' do
+      subject
+      expect(flash[:notice]).to include("Your primary email has been updated to #{new_attributes[:email]}")
     end
   end
 

@@ -5,9 +5,15 @@ class ApplicationController < ActionController::Base
   helper MojHelper
 
   protect_from_forgery with: :exception
-  before_action :ensure_user
+  before_action :ensure_user, except: :update_email
 
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
+
+  def login_person(person)
+    login_service = Login.new(session, person)
+    login_service.login
+    redirect_to desired_path(person)
+  end
 
   private
 
@@ -61,12 +67,6 @@ class ApplicationController < ActionController::Base
     redirect_to new_sessions_path
   end
 
-  def login_person(person)
-    login_service = Login.new(session, person)
-    login_service.login
-    redirect_to desired_path(person)
-  end
-
   def desired_path person
     session.delete(:desired_path) || person_path(person, prompt: :profile)
   end
@@ -80,6 +80,10 @@ class ApplicationController < ActionController::Base
 
   def html_safe_notice(*partial_key, **options)
     i18n_flash :html_safe_notice, partial_key, options
+  end
+
+  def warning(*partial_key, **options)
+    i18n_flash :warning, partial_key, options
   end
 
   def notice(*partial_key, **options)

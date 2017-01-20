@@ -4,10 +4,7 @@
 %tr
   %td{ align:"left", valign: "top", style: "line-height: 30px; padding-bottom: 20px;", width: "560" }
     %p
-      Your profile on MOJ People Finder has been edited
-      - if @by_email.present?
-        by #{@by_email}
-      \.
+      = "Your profile on MOJ People Finder has been edited#{' by ' << @by_email if @by_email.present?}."
     %p
       = render partial: 'changes_list'
     %p

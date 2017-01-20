@@ -1,7 +1,7 @@
 require_relative 'sections/profile_form'
 
 module Pages
-  class EditProfile < SitePrism::Page
+  class EditProfile < Base
     set_url '/people{/slug}/edit'
     set_url_matcher(%r{people\/([\w\-]+)\/edit})
 

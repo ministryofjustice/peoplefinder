@@ -3,7 +3,12 @@ require 'rails_helper'
 feature 'OmniAuth Authentication' do
   include PermittedDomainHelper
 
+  let(:group) { create(:group) }
+
   let(:login_page) { Pages::Login.new }
+  let(:profile_page) { Pages::Profile.new }
+  let(:edit_profile_page) { Pages::EditProfile.new }
+  let(:group_page) { Pages::Group.new }
 
   before do
     OmniAuth.config.test_mode = true
@@ -37,16 +42,19 @@ feature 'OmniAuth Authentication' do
     expect(login_page).to be_displayed
   end
 
-  scenario 'Being redirected to desired path after logging in' do
+  scenario 'Non existent users are redirected to their new profiles edit page after logging in' do
     OmniAuth.config.mock_auth[:gplus] = valid_user
-
-    group = create(:group)
-    path = group_path(group)
-
-    visit path
+    visit group_path(group)
     click_link 'Log in'
+    expect(edit_profile_page).to be_displayed
+  end
 
-    expect(current_path).to eql(path)
+  scenario 'Existing users are redirected to their desired path after logging in' do
+    create(:person, email: valid_user[:info][:email])
+    OmniAuth.config.mock_auth[:gplus] = valid_user
+    visit group_path(group)
+    click_link 'Log in'
+    expect(group_page).to be_displayed
   end
 end
 

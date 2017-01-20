@@ -2,14 +2,16 @@ require 'secure'
 
 class TokenLogin
 
+  attr_reader :token
+
   def initialize(token_value)
     @token_value = token_value
+    @token = find_token_securely
   end
 
   def call view
-    token = find_token_securely
     if token && token.active?
-      login(view, token)
+      login_and_render(view)
     else
       view.render_new_sessions_path_with_expired_token_message
     end
@@ -23,9 +25,9 @@ class TokenLogin
     end
   end
 
-  def login view, token
+  def login_and_render view
     person = view.person_from_token(token)
-    view.login_and_render(person)
+    view.render_or_redirect_login person
     token.spend!
   end
 

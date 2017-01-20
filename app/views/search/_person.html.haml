@@ -23,3 +23,8 @@
             .meta
               Current project(s):
               = person.current_project
+        - if ['sessions','tokens'].include? controller_name
+          .select-person
+            = form_for person, url: update_email_person_path(person) do |f|
+              = f.hidden_field :email, value: @person.email
+              = f.submit 'Select', class: 'button'

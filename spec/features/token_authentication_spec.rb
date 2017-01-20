@@ -11,6 +11,7 @@ feature 'Token Authentication' do
   include PermittedDomainHelper
 
   let(:login_page) { Pages::Login.new }
+  let(:edit_profile_page) { Pages::EditProfile.new }
 
   before do
     create(:group)
@@ -67,9 +68,8 @@ feature 'Token Authentication' do
   scenario 'following valid link from email and seeing my profile' do
     token = create(:token)
     visit token_path(token)
-
+    expect(edit_profile_page).to be_displayed
     expect(page).to have_text('Signed in as')
-    expect(page).to have_text('Edit this profile')
   end
 
   scenario "logging in with a fake token" do

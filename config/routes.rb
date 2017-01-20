@@ -20,6 +20,11 @@ Rails.application.routes.draw do
     collection do
       get :add_membership
     end
+    member do
+      put :update_email
+      patch :update_email
+    end
+
     resource :image, controller: 'person_image', only: [:edit, :update]
     resources :suggestions, only: [:new, :create]
   end
@@ -27,6 +32,7 @@ Rails.application.routes.draw do
   resource :sessions, only: [:new, :create, :destroy]
   resources :tokens, only: [:create, :destroy, :show]
 
+  match '/sessions/people', to: 'sessions#create_person', via: :post
   match '/auth/:provider/callback', to: 'sessions#create', via: [:get, :post]
   match '/audit_trail', to: 'versions#index', via: [:get]
   match '/audit_trail/undo/:id', to: 'versions#undo', via: [:post]

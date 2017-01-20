@@ -33,10 +33,6 @@ class TokensController < ApplicationController
     render action: :create
   end
 
-  def login_and_render person
-    login_person(person)
-  end
-
   def render_new_sessions_path_with_expired_token_message
     error :expired_token
     redirect_to new_sessions_path

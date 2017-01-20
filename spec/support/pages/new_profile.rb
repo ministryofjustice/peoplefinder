@@ -1,7 +1,7 @@
 require_relative 'sections/profile_form'
 
 module Pages
-  class NewProfile < SitePrism::Page
+  class NewProfile < Base
     set_url '/people/new'
     set_url_matcher(/people\/new/)
 

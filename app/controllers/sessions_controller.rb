@@ -6,13 +6,8 @@ class SessionsController < ApplicationController
   before_action :set_login_screen_flag
 
   def create
-    person = person_from_auth_hash(auth_hash)
-
-    if person
-      login_person(person)
-    else
-      render :failed
-    end
+    oauth_login = OauthLogin.new(auth_hash)
+    oauth_login.call(self)
   end
 
   def new
@@ -21,11 +16,24 @@ class SessionsController < ApplicationController
 
   def destroy
     Login.new(session, @current_user).logout
-
     redirect_to '/'
   end
 
+  def create_person
+    @person = Person.new(person_params)
+    create_person_and_login @person
+  end
+
   private
+
+  def person_params
+    params.require(:person).
+      permit(
+        :given_name,
+        :surname,
+        :email
+      )
+  end
 
   def set_login_screen_flag
     @login_screen = true

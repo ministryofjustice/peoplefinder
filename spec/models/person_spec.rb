@@ -13,14 +13,14 @@ RSpec.describe Person, type: :model do
   it { should respond_to(:pager_number) }
   it { should respond_to(:skip_group_completion_score_updates) }
 
-  describe '.email' do
+  describe '#email' do
     it 'is converted to lower case' do
       person = create(:person, email: 'User.Example@digital.justice.gov.uk')
       expect(person.email).to eq 'user.example@digital.justice.gov.uk'
     end
   end
 
-  describe '.email_address_with_name' do
+  describe '#email_address_with_name' do
     it 'returns name and email' do
       person = create(:person, given_name: 'Sue', surname: 'Boe', email: 'User.Example@digital.justice.gov.uk')
       expect(person.email_address_with_name).to eq 'Sue Boe <user.example@digital.justice.gov.uk>'
@@ -54,7 +54,7 @@ RSpec.describe Person, type: :model do
     end
   end
 
-  describe '.name' do
+  describe '#name' do
     context 'with a given_name and surname' do
       let(:person) { build(:person, given_name: 'Jon', surname: 'von Brown') }
 
@@ -77,6 +77,21 @@ RSpec.describe Person, type: :model do
         person.valid?
         expect(person.name).to eql('John Smith')
       end
+    end
+  end
+
+  describe '.namesakes' do
+    subject { described_class.namesakes(person).count }
+
+    let(:person) { create(:person, given_name: 'John', surname: 'Doe', email: 'john.doe@digital.justice.gov.uk') }
+    before do
+      create(:person, given_name: 'john', surname: 'doe', email: 'fred.bloggs@digital.justice.gov.uk')
+      create(:person, given_name: 'Johnny', surname: 'Doe-Smyth', email: 'john.doe2@digital.justice.gov.uk')
+      create(:person, given_name: 'Johnny', surname: 'Doe-Smyth', email: 'johnny.doe-smyth@digital.justice.gov.uk')
+    end
+
+    it 'returns people matching given and surname of specified person OR email prefix' do
+      is_expected.to eql 2
     end
   end
 
@@ -142,7 +157,7 @@ RSpec.describe Person, type: :model do
     end
   end
 
-  context 'slug' do
+  context '#slug' do
     it 'generates from the first part of the email address if present' do
       person = create(:person, email: 'user.example@digital.justice.gov.uk')
       person.reload
@@ -201,7 +216,7 @@ RSpec.describe Person, type: :model do
     end
   end
 
-  describe '.all_changes' do
+  describe '#all_changes' do
     let(:ds) { create(:group, name: 'Digital Services') }
     let(:csg) { create(:group, name: 'Corporate Services Group') }
     let(:membership) { person.memberships.frst }
@@ -250,7 +265,7 @@ RSpec.describe Person, type: :model do
     end
   end
 
-  context 'path' do
+  context '#path' do
     let(:person) { described_class.new }
 
     context 'when there are no memberships' do
@@ -285,7 +300,7 @@ RSpec.describe Person, type: :model do
     end
   end
 
-  describe '.phone' do
+  describe '#phone' do
     let(:person) { create(:person) }
     let(:primary_phone_number) { '0207-123-4567' }
     let(:secondary_phone_number) { '0208-999-8888' }
@@ -383,7 +398,7 @@ RSpec.describe Person, type: :model do
     end
   end
 
-  describe 'profile_image' do
+  describe '#profile_image' do
     context 'when there is a profile photo' do
       it 'delegates to the profile photo' do
         profile_photo = create(:profile_photo)
@@ -407,7 +422,7 @@ RSpec.describe Person, type: :model do
     end
   end
 
-  describe '.last_reminder_email_at' do
+  describe '#last_reminder_email_at' do
     it 'is nil on create' do
       expect(person.last_reminder_email_at).to be_nil
     end
@@ -419,7 +434,7 @@ RSpec.describe Person, type: :model do
     end
   end
 
-  describe 'reminder_email_sent? within 30 days' do
+  describe '#reminder_email_sent? within 30 days' do
     it 'is false on create' do
       expect(person.reminder_email_sent?(within: 30.days)).to be false
     end

@@ -1,6 +1,7 @@
 # FIXME: Refactor this controller - it's too long and mailing shouldn't be done in models
 class PeopleController < ApplicationController
-  before_action :set_person, only: [:show, :edit, :update, :destroy]
+
+  before_action :set_person, only: [:show, :edit, :update, :update_email, :destroy]
   before_action :set_org_structure,
     only: [:new, :edit, :create, :update, :add_membership]
   before_action :load_versions, only: [:show]
@@ -61,6 +62,18 @@ class PeopleController < ApplicationController
     end
   end
 
+  def update_email
+    @person.assign_attributes(person_email_update_params)
+    authorize @person
+    if @person.valid?
+      updater = PersonUpdater.new(@person, current_user)
+      updater.update!
+      session.delete(:desired_path)
+      notice :profile_email_updated, email: @person.email
+      login_person @person
+    end
+  end
+
   # DELETE /people/1
   def destroy
     authorize @person
@@ -104,15 +117,22 @@ class PeopleController < ApplicationController
     ]
   end
 
+  def person_email_update_params
+    params.require(:person).permit(:email)
+  end
+
   def set_org_structure
     @org_structure = Group.hierarchy_hash
   end
 
   def namesakes?
     return false if params['commit'] == 'Continue'
-
     @people = Person.namesakes(@person)
     @people.present?
+  end
+
+  def namesakes_check_required_and_found?
+    namesakes? if @person.changes.keys.any? { |key| %w(email surname given_name).include? key }
   end
 
   def render_with_preview action
@@ -132,7 +152,7 @@ class PeopleController < ApplicationController
   end
 
   def confirm_or_update
-    if namesakes?
+    if namesakes_check_required_and_found?
       render(:confirm)
     else
       updater = PersonUpdater.new(@person, current_user)

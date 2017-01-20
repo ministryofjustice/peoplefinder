@@ -1,6 +1,6 @@
 shared_examples_for "session_person_creatable" do
 
-  it { is_expected.to respond_to :person_from_auth_hash }
+  it { is_expected.to respond_to :person_from_oauth }
   it { is_expected.to respond_to :person_from_token }
 
   let(:valid_auth_hash) do
@@ -42,15 +42,10 @@ shared_examples_for "session_person_creatable" do
     end
   end
 
-  def flashable_expectation_stub
-    flash = double ActionDispatch::Flash.new(:notice)
-    expect_any_instance_of(described_class).to receive(:html_safe_notice).and_return flash
-    expect_any_instance_of(described_class).to receive(:edit_person_path).and_return 'whatever'
-  end
-
-  describe '.person_from_auth_hash' do
+  describe '.person_from_oauth' do
     subject do
-      described_class.new.person_from_auth_hash(auth_hash)
+      view = described_class.new
+      view.person_from_oauth(auth_hash)
     end
 
     context 'for an existing person' do
@@ -58,6 +53,12 @@ shared_examples_for "session_person_creatable" do
       let(:auth_hash) { valid_auth_hash }
 
       it_behaves_like 'existing person returned'
+
+      it 'extracts email from auth hash' do
+        email_address = double('EmailAddress', permitted_domain?: true)
+        expect(EmailAddress).to receive(:new).with(valid_auth_hash['info']['email']).and_return email_address
+        subject
+      end
     end
 
     context 'for invalid email' do
@@ -66,10 +67,6 @@ shared_examples_for "session_person_creatable" do
     end
 
     context 'for a new person' do
-      before do
-        flashable_expectation_stub
-      end
-
       let(:auth_hash) { valid_auth_hash }
 
       it_behaves_like 'new person created' do
@@ -80,13 +77,10 @@ shared_examples_for "session_person_creatable" do
   end
 
   describe '.person_from_token' do
-    let(:token) { Token.create(user_email: 'aled.jones@digital.justice.gov.uk') }
+    let(:token) { create(:token, user_email: 'aled.jones@digital.justice.gov.uk') }
     subject { described_class.new.person_from_token(token) }
 
     context 'for a new person' do
-      before do
-        flashable_expectation_stub
-      end
       it_behaves_like 'new person created' do
         let(:expected_email) { token.user_email }
         let(:expected_name) { 'Aled Jones' }

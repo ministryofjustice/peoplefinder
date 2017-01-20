@@ -16,6 +16,7 @@ Metrics/ClassLength:
   Max: 147
   Exclude:
     - 'app/models/person.rb'
+    - 'app/controllers/people_controller.rb'
 
 # Offense count: 299
 # Cop supports --auto-correct.
