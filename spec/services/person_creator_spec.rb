@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe PersonCreator, type: :service do
+  include PermittedDomainHelper
   let(:person) do
     double(
       'Person',
@@ -21,7 +22,19 @@ RSpec.describe PersonCreator, type: :service do
     end
   end
 
+
   describe 'create!' do
+    context 'person membership defaults' do
+      subject { described_class.new(person_object, current_user).create! }
+
+      let!(:moj) { create(:department) }
+      let(:person_object) { build(:person) }
+
+      it 'adds membership of the top team if none specified' do
+        expect{ subject }.to change(person_object.memberships, :count).by(1)
+      end
+    end
+
     it 'saves the person' do
       expect(person).to receive(:save!)
       subject.create!

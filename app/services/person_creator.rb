@@ -14,6 +14,7 @@ class PersonCreator
 
   def create!
     person.save!
+    person.memberships.create(group: Group.department) if person.memberships.empty?
     send_create_email!
   end
 
