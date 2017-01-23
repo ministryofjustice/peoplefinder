@@ -19,7 +19,7 @@ dependencies:
 ## Customize database setup
 database:
   override:
-    - bundle exec rake db:create db:structure:load
+    - bundle exec rake db:create db:schema:load
 
 ## Customize test commands
 test:
