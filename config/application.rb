@@ -43,7 +43,7 @@ module Peoplefinder
     config.active_job.queue_adapter = :delayed_job
 
     config.active_record.raise_in_transactional_callbacks = true
-    config.active_record.schema_format = :sql
+    config.active_record.schema_format = :ruby
 
     config.elastic_search_url = ENV['MOJ_PF_ES_URL']
 
