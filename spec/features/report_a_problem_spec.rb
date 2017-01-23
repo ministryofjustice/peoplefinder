@@ -24,7 +24,7 @@ feature 'Report a problem', js: true do
       fill_in 'What went wrong?', with: 'Custard'
       click_button 'Report'
 
-      expect(current_path).to eq(group_path(group))
+      expect(current_path).to eq group_path(group)
 
       expect(last_email.to).to eq([Rails.configuration.support_email])
       body = last_email.body.encoded
