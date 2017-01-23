@@ -5,7 +5,6 @@
 - content_for :content do
   #wrapper
     %main#content{role: 'main'}
-      = yield :editing_alert
       = flash_messages
       .grid-wrapper
         .grid.grid-3-3

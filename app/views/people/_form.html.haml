@@ -1,4 +1,4 @@
-= editing_mode(building)
+- @editing_mode = true
 = form_for @person, builder: PersonFormBuilder, html: { multipart: true, class: person_form_class(@person, @activity) } do |f|
 
   - if @person.errors.any?
