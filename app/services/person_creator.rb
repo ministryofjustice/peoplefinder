@@ -14,10 +14,15 @@ class PersonCreator
 
   def create!
     person.save!
+    default_membership!(person) if person.memberships.empty?
     send_create_email!
   end
 
   private
+
+  def default_membership! person
+    person.memberships.create!(group: Group.department) if Group.department.present?
+  end
 
   def send_create_email!
     if person.notify_of_change?(@current_user)
