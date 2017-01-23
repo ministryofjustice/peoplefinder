@@ -99,8 +99,10 @@ RSpec.describe Person, type: :model do
     let!(:team) { create(:group) }
     let!(:subteam) { create(:group, parent: team) }
 
-    it 'calls subquery scope with groups IDs of parent group and any children (a subtree)' do
-      expect(described_class).to receive(:all_in_groups_from_clause).with(team.subtree_ids)
+    it 'calls PeopleInGroupsQuery with group subtrees' do
+      query = double Query::PeopleInGroupsQuery
+      expect(Query::PeopleInGroupsQuery).to receive(:new).with(team.subtree_ids).and_return(query)
+      expect(query).to receive(:call)
       described_class.all_in_subtree(team)
     end
 

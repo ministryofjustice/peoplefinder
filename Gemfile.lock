@@ -169,7 +169,7 @@ GEM
     factory_girl_rails (4.5.0)
       factory_girl (~> 4.5.0)
       railties (>= 3.0.0)
-    faker (1.4.3)
+    faker (1.7.2)
       i18n (~> 0.5)
     faraday (0.9.1)
       multipart-post (>= 1.2, < 3)
@@ -643,7 +643,7 @@ DEPENDENCIES
   elasticsearch-model (~> 0.1.4)
   elasticsearch-rails (~> 0.1.4)
   factory_girl_rails
-  faker
+  faker (~> 1.7)
   fog
   foreman
   friendly_id (~> 5.0.0)

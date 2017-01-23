@@ -9,7 +9,7 @@ gem 'delayed_job', git: 'https://github.com/collectiveidea/delayed_job.git',
 gem 'delayed_job_active_record'
 gem 'elasticsearch-model', '~> 0.1.4'
 gem 'elasticsearch-rails', '~> 0.1.4'
-gem 'faker'
+gem 'faker', '~> 1.7'
 gem 'fog'
 gem 'friendly_id', '~> 5.0.0'
 gem 'govspeak'

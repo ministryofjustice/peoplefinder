@@ -2,7 +2,7 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 9.3.4
+-- Dumped from database version 9.5.1
 -- Dumped by pg_dump version 9.5.1
 
 SET statement_timeout = 0;
@@ -559,7 +559,7 @@ ALTER TABLE ONLY memberships
 -- PostgreSQL database dump complete
 --
 
-SET search_path TO "$user",public;
+SET search_path TO "$user", public;
 
 INSERT INTO schema_migrations (version) VALUES ('20141014092058');
 

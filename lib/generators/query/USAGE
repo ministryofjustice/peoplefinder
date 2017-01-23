@@ -1,0 +1,9 @@
+Description:
+    Query Object Generator
+
+Example:
+    rails generate query PeopleLoggedIn
+
+    This will create:
+        app/models/query/people_logged_in_query.rb
+        spec/models/query/people_logged_in_query_spec.rb

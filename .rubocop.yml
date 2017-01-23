@@ -20,6 +20,7 @@ AllCops:
     - 'spec/dummy/db/**/*'
     - 'smoke_test'
     - 'spec/mailers/previews/*'
+    - 'lib/generators/**/*'
   TargetRubyVersion: 2.3
 
 Rails:
@@ -146,7 +147,6 @@ Style/ClassVars:
 Style/IndentArray:
   Exclude:
     - 'spec/**/*'
-
 Style/SpaceAroundOperators:
   Enabled: false
 
@@ -162,4 +162,10 @@ RSpec/NotToNot:
   Enabled: false
 
 RSpec/AnyInstance:
+  Enabled: false
+
+RSpec/InstanceVariable:
+  Enabled: false
+
+Rails/ScopeArgs:
   Enabled: false
