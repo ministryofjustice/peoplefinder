@@ -5,13 +5,12 @@
 - content_for :content do
   #wrapper
     %main#content{role: 'main'}
-      = flash_messages
       .grid-wrapper
         .grid.grid-3-3
           .inner-block
             %nav
               .breadcrumbs= yield :breadcrumbs
-      - if logged_in? && !@login_screen && !@editing_mode
+      - if render_search_box?
         .grid-wrapper
           .grid.grid-2-3
             .inner-block
@@ -20,6 +19,7 @@
             .inner-block
               - if can_add_person_here?
                 = link_to 'Create a new profile', new_person_path, class: 'add-new-person'
+      = flash_messages
       .inner-block
         = yield
         #report_link
