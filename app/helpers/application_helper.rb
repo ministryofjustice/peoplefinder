@@ -116,15 +116,4 @@ module ApplicationHelper
       end
     end
   end
-
-  def editing_mode(building = false)
-    @editing_mode = true
-    content_for :editing_alert do
-      if building
-        render partial: 'shared/building_alert'
-      else
-        render partial: 'shared/editing_alert'
-      end
-    end
-  end
 end

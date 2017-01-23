@@ -128,14 +128,14 @@ feature 'Group maintenance' do
       visit_edit_view(group)
 
       expect(page).to have_title("Edit team - #{app_title}")
-      expect(page).to have_text('You are currently editing this profile')
+      expect(page).not_to have_selector('.search-box')
       new_name = 'Cyberdigital Cyberservices'
       fill_in 'Team name', with: new_name
 
       click_button 'Save'
 
       expect(page).to have_content('Updated Cyberdigital Cyberservices')
-      expect(page).not_to have_text('You are currently editing this profile')
+      expect(page).to have_selector('.search-box')
       group.reload
       expect(group.name).to eql(new_name)
 
@@ -255,16 +255,13 @@ feature 'Group maintenance' do
     scenario 'UI elements on the new/edit pages' do
       visit new_group_path
       expect(page).not_to have_selector('.search-box')
-      expect(page).to have_text('You are currently editing this profile')
 
       fill_in 'Team name', with: 'Digital'
       click_button 'Save'
       expect(page).to have_selector('.search-box')
-      expect(page).not_to have_text('You are currently editing this profile')
 
       click_link 'Edit this team'
       expect(page).not_to have_selector('.search-box')
-      expect(page).to have_text('You are currently editing this profile')
     end
 
     scenario 'Cancelling an edit' do
