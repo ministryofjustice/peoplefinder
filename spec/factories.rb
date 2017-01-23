@@ -9,6 +9,10 @@ FactoryGirl.define do
   sequence(:pager_number) { |n| '07600 %06d' % (900_000 + n) }
   sequence(:phone_number) { |n| '07700 %06d' % (900_000 + n) }
 
+  factory :permitted_domain do
+    domain 'digital.justice.gov.uk'
+  end
+
   factory :department, class: 'Group' do
     initialize_with do
       Group.where(ancestry_depth: 0).first_or_create(name: 'Ministry of Justice')

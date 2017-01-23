@@ -26,11 +26,12 @@ class Group < ActiveRecord::Base
     dependent: :destroy
   has_many :people, through: :memberships
   has_many :leaderships, -> { where(leader: true) }, class_name: 'Membership'
-  has_many :non_leaderships,
-    -> { where(leader: false).includes(:person).order('people.surname ASC, people.given_name ASC') },
-    class_name: 'Membership'
   has_many :leaders, through: :leaderships, source: :person
   has_many :non_leaders, through: :non_leaderships, source: :person
+
+  def distinct_non_leaderships
+    Queries::Group::DistinctMembership.new(group: self, leadership: false).call
+  end
 
   validates :name, presence: true
   validates :slug, uniqueness: true
