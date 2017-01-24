@@ -130,7 +130,8 @@ form #working-days ul,
 }
 
 #flash-messages {
-  text-align: center;
+  font-weight: bold;
+  text-align: left;
   .flash-message {
     margin: 15px 0;
     padding: 15px;
@@ -138,13 +139,9 @@ form #working-days ul,
   .notice {
     background-color: $notice-bg;
     color: white;
-    font-weight: bold;
-    text-align: left;
   }
   .warning {
     background-color: $warning-bg;
-    font-weight: bold;
-    text-align: left;
   }
   .error {
     background-color: $error-bg;

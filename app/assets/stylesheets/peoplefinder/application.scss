@@ -115,7 +115,8 @@ footer {
   position: absolute;
 }
 #flash-messages {
-  text-align: center;
+  text-align: left;
+  font-weight: bold;
   .flash-message {
     margin: 15px 0;
     padding: 15px;
@@ -123,13 +124,9 @@ footer {
   .notice {
     background-color: $notice-bg;
     color: white;
-    font-weight: bold;
-    text-align: left;
   }
   .warning {
     background-color: $warning-bg;
-    font-weight: bold;
-    text-align: left;
   }
   .error {
     background-color: $error-bg;
