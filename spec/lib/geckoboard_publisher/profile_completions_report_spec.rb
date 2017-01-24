@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe GeckoboardPublisher::ProfileCompletionsReport do
+RSpec.describe GeckoboardPublisher::ProfileCompletionsReport, geckoboard: true do
   include PermittedDomainHelper
 
   it_behaves_like 'geckoboard publishable report'
