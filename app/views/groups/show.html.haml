@@ -25,7 +25,7 @@
       %div.heading-links.subheading-links
         = link_to 'Add new sub-team', new_group_group_path(@group), class: 'small'
   .grid-wrapper
-    = render partial: "memberships/summary", collection: @group.non_leaderships
+    = render partial: "memberships/summary", collection: @group.distinct_non_leaderships
 
 - unless @versions.nil?
   %h1 Audit Log
