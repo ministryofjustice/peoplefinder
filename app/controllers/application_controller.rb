@@ -78,10 +78,6 @@ class ApplicationController < ActionController::Base
     flash[type] = I18n.t(full_key, options)
   end
 
-  def html_safe_notice(*partial_key, **options)
-    i18n_flash :html_safe_notice, partial_key, options
-  end
-
   def warning(*partial_key, **options)
     i18n_flash :warning, partial_key, options
   end
