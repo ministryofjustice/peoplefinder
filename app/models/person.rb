@@ -84,10 +84,10 @@ class Person < ActiveRecord::Base
 
   default_scope { order(surname: :asc, given_name: :asc) }
 
-  scope :never_logged_in, ::Query::PeopleNeverLoggedInQuery.new
-  scope :logged_in_at_least_once, ::Query::PeopleLoggedInAtLeastOnceQuery.new
-  scope :last_reminder_email_older_than, ->(within) { ::Query::ReminderMailOlderThanQuery.new(within).call }
-  scope :updated_at_older_than, -> (within) { ::Query::PeopleUpdatedOlderThanQuery.new(within).call }
+  scope :never_logged_in, PeopleNeverLoggedInQuery.new
+  scope :logged_in_at_least_once, PeopleLoggedInAtLeastOnceQuery.new
+  scope :last_reminder_email_older_than, ->(within) { ReminderMailOlderThanQuery.new(within).call }
+  scope :updated_at_older_than, -> (within) { PeopleUpdatedOlderThanQuery.new(within).call }
 
   scope :updated_at_older_than, -> (within) { where('updated_at < ?', within) }
 
@@ -97,9 +97,9 @@ class Person < ActiveRecord::Base
     where(surname: person.surname, given_name: person.given_name).where.not(id: person.id)
   end
 
-  scope :all_in_groups_scope, -> (groups) { ::Query::PeopleInGroupsQuery.new(groups).call }
+  scope :all_in_groups_scope, -> (groups) { PeopleInGroupsQuery.new(groups).call }
 
-  scope :all_in_subtree, -> (group) { ::Query::PeopleInGroupsQuery.new(group.subtree_ids).call }
+  scope :all_in_subtree, -> (group) { PeopleInGroupsQuery.new(group.subtree_ids).call }
 
   def self.outside_subteams(group)
     unscope(:order).
