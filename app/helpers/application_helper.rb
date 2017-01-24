@@ -80,6 +80,10 @@ module ApplicationHelper
     ).compact.join(' - ')
   end
 
+  def render_search_box?
+    logged_in? && !@login_screen && !@editing_mode
+  end
+
   def call_to(telno)
     return nil unless telno
     digits = telno.gsub(/[^0-9+#*,]+/, '')
