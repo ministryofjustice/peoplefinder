@@ -3,7 +3,26 @@
     Hello,
 %tr
   %td{ align:"left", valign: "top", style: "line-height: 30px;", width: "560" }
-    %p To access People Finder, visit #{link_to token_url(@token), token_url(@token), target: '_blank'} today. For security reasons, this link will be active for 3 hours only.
+    %p
+      To access People Finder, please click on the button below.
+%tr
+  %td{ align: "center", valign: "top", style: "padding-bottom: 20px;", width: "560" }
+    %table.button-container{ cellpadding: "0", cellspacing: "0", border: "0", align: "left", bgcolor: "#00823b" }
+      %tbody
+        %tr
+          %td{ align: "left", valign: "middle", bgcolor: "#00823b" }
+            %a.button{ href: "#{token_url(@token)}", target: "_blank" }
+              Access People Finder
+%tr
+  %td
+    %p
+      %strong{ style: "font-weight: bold" }
+        If your computer users Internet Explorer 6
+      please copy-and-paste the following link into Firefox:
+    %p
+      = token_url(@token)
+
+    %p For security reasons, this link will be active for 3 hours only.
     %p If you’ve not asked for access, please ignore this email.
     %p If you have any questions about People Finder, ask your team lead for more information.
 %tr
