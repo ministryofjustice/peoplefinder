@@ -30,7 +30,7 @@ class Group < ActiveRecord::Base
   has_many :non_leaders, through: :non_leaderships, source: :person
 
   def distinct_non_leaderships
-    Queries::Group::DistinctMembership.new(group: self, leadership: false).call
+    DistinctMembershipQuery.new(group: self, leadership: false).call
   end
 
   validates :name, presence: true

@@ -39,6 +39,19 @@ FactoryGirl.define do
       city
     end
 
+    trait :with_random_dets do
+      after :build do
+        PermittedDomain.create(domain: 'example.com') unless PermittedDomain.exists?(domain: 'example.com')
+      end
+
+      given_name { Faker::Name.unique.first_name }
+      surname { Faker::Name.unique.last_name }
+      email { "#{given_name}.#{surname}@example.com" }
+      primary_phone_number { Faker::PhoneNumber.phone_number }
+      login_count { Random.rand(20) + 1 }
+      last_login_at { login_count == 0 ? nil : Random.rand(15).days.ago }
+    end
+
     trait :with_photo do
       association :profile_photo, factory: :profile_photo
     end
