@@ -87,7 +87,7 @@ class PersonSearch
     exact_matches = exact_search
     query_matches = query_search
     fuzzy_matches = fuzziness_search
-    exact_name_matches = exact_matches.select { |p| p.name == @query }
+    exact_name_matches = exact_matches.select { |p| p.name.casecmp(@query) == 0 }
     if single_word_query?
       exact_name_matches += query_matches.select { |p| p.name[/^#{@query} /i] }.sort_by(&:name)
     end
