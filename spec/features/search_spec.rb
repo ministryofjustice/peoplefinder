@@ -17,7 +17,7 @@ feature 'Searching feature', elastic: true do
   end
 
   before do
-    Person.import
+    Person.import force: true
     Person.__elasticsearch__.client.indices.refresh
     omni_auth_log_in_as 'test.user@digital.justice.gov.uk'
     visit home_path
