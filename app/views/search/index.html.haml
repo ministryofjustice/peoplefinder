@@ -10,7 +10,7 @@
       = pluralize(@team_results.size + @people_results.size, "result") + ' found'
     - else
       == <span class="query-term">#{@query}</span> not found —
-      == found #{pluralize(@people_results.size + @team_results.size, "similiar result")}
+      == found #{pluralize(@people_results.size + @team_results.size, "similar result")}
 
   = render partial: 'search/team', collection: @team_results.set
   = render partial: 'search/person', collection: @people_results.set, locals: { search_result: true }
