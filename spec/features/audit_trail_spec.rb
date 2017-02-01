@@ -45,21 +45,21 @@ feature 'Audit trail' do
     end
   end
 
-  # scenario 'Auditing the deletion of a person' do
-  #   with_versioning do
-  #     person = create(:person, surname: 'Dan', given_name: 'Greg')
-  #     visit edit_person_path(person)
-  #     click_link('Delete this profile')
+  scenario 'Auditing the deletion of a person' do
+    with_versioning do
+      person = create(:person, surname: 'Dan', given_name: 'Greg')
+      visit person_path(person)
+      click_link('Delete this profile')
 
-  #     visit '/audit_trail'
-  #     expect(page).to have_text('Deleted Person')
-  #     expect(page).to have_text('Name: Greg Dan')
+      visit '/audit_trail'
+      expect(page).to have_text('Deleted Person')
+      expect(page).to have_text('Name: Greg Dan')
 
-  #     expect do
-  #       click_button 'undo', match: :first
-  #     end.to change(Person, :count).by(1)
-  #   end
-  # end
+      expect do
+        click_button 'undo', match: :first
+      end.to change(Person, :count).by(1)
+    end
+  end
 
   scenario 'Auditing an edit of a group' do
     with_versioning do

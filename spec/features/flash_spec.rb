@@ -19,13 +19,13 @@ feature 'Flash messages feature' do
       omni_auth_log_in_as 'test.user@digital.justice.gov.uk'
     end
 
-    # scenario 'display flash messages above search box for home page' do
-    #   visit edit_person_path(person)
-    #   click_link 'Delete this profile'
-    #   expect(current_path).to eql '/'
-    #   expect(flash_messages).to appear_before searchbox
-    #   expect(searchbox).not_to appear_before flash_messages
-    # end
+    scenario 'display flash messages above search box for home page' do
+      visit person_path(person)
+      click_link 'Delete this profile'
+      expect(current_path).to eql '/'
+      expect(flash_messages).to appear_before searchbox
+      expect(searchbox).not_to appear_before flash_messages
+    end
 
     scenario 'display flash messages below search box' do
       visit group_path(dept)
