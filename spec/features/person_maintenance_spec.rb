@@ -309,32 +309,32 @@ feature 'Person maintenance' do
     end
   end
 
-  context 'Deleting a person' do
-    context 'for a regular user', user: :regular do
-      scenario 'Deleting a person' do
-        person = create :person
-        email_address = person.email
-        given_name = person.given_name
+  # context 'Deleting a person' do
+  #   context 'for a regular user', user: :regular do
+  #     scenario 'Deleting a person' do
+  #       person = create :person
+  #       email_address = person.email
+  #       given_name = person.given_name
 
-        visit edit_person_path(person)
-        click_link('Delete this profile')
-        expect { Person.find(person.id) }.to raise_error(ActiveRecord::RecordNotFound)
+  #       visit edit_person_path(person)
+  #       click_link('Delete this profile')
+  #       expect { Person.find(person.id) }.to raise_error(ActiveRecord::RecordNotFound)
 
-        expect(last_email.to).to include(email_address)
-        expect(last_email.subject).to eq('Your profile on MOJ People Finder has been deleted')
-        expect(last_email.body.encoded).to match("Hello #{given_name}")
-      end
+  #       expect(last_email.to).to include(email_address)
+  #       expect(last_email.subject).to eq('Your profile on MOJ People Finder has been deleted')
+  #       expect(last_email.body.encoded).to match("Hello #{given_name}")
+  #     end
 
-      scenario 'Allow deletion of a person even when there are memberships' do
-        membership = create(:membership)
-        person = membership.person
-        visit edit_person_path(person)
-        click_link('Delete this profile')
-        expect { Membership.find(membership.id) }.to raise_error(ActiveRecord::RecordNotFound)
-        expect { Person.find(person.id) }.to raise_error(ActiveRecord::RecordNotFound)
-      end
-    end
-  end
+  #     scenario 'Allow deletion of a person even when there are memberships' do
+  #       membership = create(:membership)
+  #       person = membership.person
+  #       visit edit_person_path(person)
+  #       click_link('Delete this profile')
+  #       expect { Membership.find(membership.id) }.to raise_error(ActiveRecord::RecordNotFound)
+  #       expect { Person.find(person.id) }.to raise_error(ActiveRecord::RecordNotFound)
+  #     end
+  #   end
+  # end
 
   context 'Viewing my own profile', user: :regular do
     scenario 'when it is complete' do

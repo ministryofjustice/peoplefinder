@@ -9,10 +9,10 @@ feature 'Regression' do
     omni_auth_log_in_as 'test.user@digital.justice.gov.uk'
   end
 
-  scenario 'Gracefully handle a session when the logged in person deletes their profile' do
-    visit edit_person_path(Person.last)
-    click_link 'Delete this profile'
+  # scenario 'Gracefully handle a session when the logged in person deletes their profile' do
+  #   visit edit_person_path(Person.last)
+  #   click_link 'Delete this profile'
 
-    expect(login_page).to be_displayed
-  end
+  #   expect(login_page).to be_displayed
+  # end
 end
