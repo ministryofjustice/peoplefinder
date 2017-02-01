@@ -2,7 +2,16 @@
 #search_results
   %h1.noborder= @page_title = 'Duplicate names found'
   .spacer-45
-  = info_text('duplicate_names_hint')
+
+  .validation-summary{role: "group", "aria-labelledby": "error-summary-heading-example-1",  tabindex: "-1"}
+
+    %h3.heading-small#error-summary-heading-example-1
+      = "Your details match one or more existing profiles."
+
+    .duplicate-hint
+      = "Select a profile below to update it with your new details,"
+      %br/
+      = "or click continue to create a new profile."
 
   .pagination= pluralize(@people.length, "result") + ' found'
 
