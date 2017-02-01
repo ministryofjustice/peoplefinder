@@ -316,7 +316,7 @@ feature 'Person maintenance' do
         email_address = person.email
         given_name = person.given_name
 
-        visit edit_person_path(person)
+        visit person_path(person)
         click_link('Delete this profile')
         expect { Person.find(person.id) }.to raise_error(ActiveRecord::RecordNotFound)
 
@@ -328,7 +328,7 @@ feature 'Person maintenance' do
       scenario 'Allow deletion of a person even when there are memberships' do
         membership = create(:membership)
         person = membership.person
-        visit edit_person_path(person)
+        visit person_path(person)
         click_link('Delete this profile')
         expect { Membership.find(membership.id) }.to raise_error(ActiveRecord::RecordNotFound)
         expect { Person.find(person.id) }.to raise_error(ActiveRecord::RecordNotFound)

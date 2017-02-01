@@ -3,7 +3,13 @@
     = @page_title = @person
     - if @person.persisted?
       %div.heading-links
-        = edit_person_link 'Edit this profile', @person, class: 'small'
+        = link_to info_text('delete_this_profile'),
+          @person,
+          method: :delete,
+          style: "color: red;display: inline-block;margin:10px 10px 0 0;",
+          class: "small",
+          data: { confirm: "Are you sure you want to delete #{ @person }? #{ info_text('profile_deletable') }." }
+        = edit_person_link 'Edit this profile', @person, class: 'button small'
 
 .grid-wrapper.profile
   .grid.grid-1-3
