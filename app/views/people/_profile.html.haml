@@ -6,8 +6,8 @@
         = link_to info_text('delete_this_profile'),
           @person,
           method: :delete,
-          style: "color: red;display: inline-block;margin:10px 10px 0 0;",
-          class: "small",
+          style: "display: inline-block;margin:0 20px 0 0;",
+          class: "small button-secondary",
           data: { confirm: "Are you sure you want to delete #{ @person }? #{ info_text('profile_deletable') }." }
         = edit_person_link 'Edit this profile', @person, class: 'button small'
 
