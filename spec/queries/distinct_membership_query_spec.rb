@@ -24,9 +24,7 @@ describe DistinctMembershipQuery do
   end
 
   after(:all) do
-    Membership.delete_all
-    Group.delete_all
-    Person.delete_all
+    clean_up_indexes_and_tables
   end
 
   let(:group) { Group.where(name: 'Peoplefinder Team').first }

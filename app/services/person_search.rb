@@ -1,6 +1,6 @@
 class PersonSearch
 
-  attr_reader :query, :results, :exact_name_matches, :name_matches, :exact_matches, :query_matches, :fuzzy_matches
+  attr_reader :query, :results, :phrase_name_matches, :phrase_matches, :fuzzy_matches
 
   def initialize query, results
     @query = clean_query query
@@ -38,25 +38,23 @@ class PersonSearch
   end
 
   def do_searches
-    @exact_name_matches, @exact_matches, @query_matches, @fuzzy_matches = perform_searches
+    perform_searches
 
     results = [].
-              push(*@exact_name_matches).
-              push(*@exact_matches).
-              push(*@query_matches).
-              push(*@fuzzy_matches).
+              push(*phrase_name_matches).
+              push(*phrase_matches).
+              push(*fuzzy_matches).
               uniq[0..@max - 1]
 
-    @results.set = sort_by_edit_distance results
+    @results.set = results
     @results.contains_exact_match = exact_match_exists?
   end
 
   def exact_match_exists?
     @exact_match ||= if single_word_query?
-                       @exact_name_matches.present? ||
-                         @exact_matches.present? ||
-                         any_partial_name_matches?(@query_matches) ||
-                         any_partial_name_matches?(@fuzzy_matches) ||
+                       phrase_name_matches.present? ||
+                         phrase_matches.present? ||
+                         any_partial_name_matches?(fuzzy_matches) ||
                          any_exact_matches?
                      else
                        any_exact_matches?
@@ -84,41 +82,34 @@ class PersonSearch
   end
 
   def perform_searches
-    exact_matches = exact_search
-    query_matches = query_search
-    fuzzy_matches = fuzziness_search
-    exact_name_matches = exact_matches.select { |p| p.name.casecmp(@query) == 0 }
-    if single_word_query?
-      exact_name_matches += query_matches.select { |p| p.name[/^#{@query} /i] }.sort_by(&:name)
-    end
-
-    [exact_name_matches, exact_matches, query_matches, fuzzy_matches]
+    @phrase_name_matches = phrase_name_search
+    @phrase_matches = phrase_search
+    @fuzzy_matches = fuzzy_search
   end
 
-  def exact_search
+  # search name field for exact "phrase" with synonym and exact match boost
+  # NOTE: includes synonyms equivalence
+  #
+  def phrase_name_search
+    @search_definitiion = {}
+    @search_definitiion[:query] = phrase_name_query
+    search @search_definitiion
+  end
+
+  # search all indexed fields for any phrase matches
+  # NOTE: does NOT include synonym equivalence
+  #
+  def phrase_search
     search %("#{@query}")
   end
 
-  def query_search
-    search(@query)
-  end
-
-  def single_word_query?
-    !@query[/\s/]
-  end
-
-  def fuzziness_search
-    search(
+  def fuzzy_search
+    results = search(
       size: @max,
-      query: {
-        multi_match: {
-          fields: fields_to_search,
-          fuzziness: 1, # maximum allowed Levenshtein Edit Distance
-          prefix_length: 1, # number of initial characters which won't be "fuzzified"
-          query: @query
-        }
-      }
+      query: fuzzy_query
     )
+
+    sort_by_edit_distance(results)
   end
 
   def sort_by_edit_distance results
@@ -135,10 +126,7 @@ class PersonSearch
   end
 
   def fields_to_search
-    [
-      :name, :description, :location_in_building, :building,
-      :city, :role_and_group, :current_project
-    ]
+    %w(name surname^4 description location_in_building building city role_and_group current_project)
   end
 
   def clean_query query
@@ -151,6 +139,55 @@ class PersonSearch
 
   def search query
     Person.search_results(query, limit: @max).to_a
+  end
+
+  private
+
+  def phrase_name_query
+    {
+      bool: {
+        must: match_name_synonym_phrase,
+        should: match_standard_name_boost
+      }
+    }
+  end
+
+  def match_name_synonym_phrase
+    {
+      match_phrase: {
+        name: {
+          query: @query,
+          analyzer: 'name_synonyms_expand' # default analyzer for name field but clearer o be explicit
+        }
+      }
+    }
+  end
+
+  def match_standard_name_boost
+    {
+      match: {
+        name: {
+          query: @query,
+          analyzer: 'standard', # override default synonym analyzer
+          boost: 10.0 # boost to prioritise exact matches over synonyms
+        }
+      }
+    }
+  end
+
+  def fuzzy_query
+    {
+      multi_match: {
+        fields: fields_to_search,
+        fuzziness: 1, # maximum allowed Levenshtein Edit Distance/ 'AUTO' is recommended by documention
+        prefix_length: 1, # number of initial characters which won't be "fuzzified"
+        query: @query
+      }
+    }
+  end
+
+  def single_word_query?
+    !@query[/\s/]
   end
 
 end
