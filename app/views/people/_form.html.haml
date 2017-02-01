@@ -17,15 +17,33 @@
     = f.label :given_name, class: 'form-label-bold' do
       First name
       - if @person.errors.include?(:given_name)
-        %span.error= @person.errors[:given_name].first
+        %span.error
+          = @person.errors[:given_name].first
     = f.text_field :given_name, class: 'form-control'
 
   = f.form_group :surname do
     = f.label :surname, class: 'form-label-bold' do
       Surname
       - if @person.errors.include?(:surname)
-        %span.error= @person.errors[:surname].first
+        %span.error
+          = @person.errors[:surname].first
     = f.text_field :surname, class: 'form-control'
+
+  = f.form_group :email do
+    = f.label :email, class: 'form-label-bold' do
+      = t(:email, scope: 'activerecord.attributes.person')
+      - if @person.errors.include?(:email)
+        %span.error= @person.errors[:email].first
+    = f.text_field :email, class: 'form-control'
+
+  .form-group
+    = f.label :profile_image, class: 'form-label-bold' do
+      Photo
+    .edit-preview
+      = profile_image_tag @person
+    .form-group
+      %br
+      = f.submit 'Edit this picture', name: 'editing_picture', class: 'button'
 
   .form-group
     #contact-details
@@ -43,12 +61,6 @@
           = f.text_field :pager_number, class: 'form-control'
 
       .emails
-        = f.form_group :email do
-          = f.label :email, class: 'form-label-bold' do
-            = t(:email, scope: 'activerecord.attributes.person')
-            - if @person.errors.include?(:email)
-              %span.error= @person.errors[:email].first
-          = f.text_field :email, class: 'form-control'
         = f.form_group :secondary_email do
           = f.label :secondary_email, class: 'form-label-bold'
           = f.text_field :secondary_email, class: 'form-control'
@@ -97,36 +109,11 @@
               = f.check_box day
               = day_name(day)
 
-  =f.form_group :description do
+  = f.form_group :description do
     = f.label :description, class: 'form-label-bold' do
       Extra information
       %p.form-hint= role_translate(@person, 'views.info_text.notes_field_hint')
     = f.text_area :description, class: 'form-control'
-
-  =f.form_group :profile_photo_id, class: 'line-above person-photo initial' do
-    = f.label :profile_photo_id, class: 'form-label-bold' do
-      Photo
-    = f.hidden_field :profile_photo_id
-    = f.hidden_field :crop_x
-    = f.hidden_field :crop_y
-    = f.hidden_field :crop_w
-    = f.hidden_field :crop_h
-    %p.form-hint.crop-hint= info_text('photo_crop_hint')
-
-    %div.preview-box
-      = profile_image_tag @person, class: 'preview'
-    %p.hidden
-      %a{href: '#', class: 'crop-again-button'} Crop image again
-    %div.upload-button-bar
-      %div.initial-state
-        %label{ for: 'person-image', class: 'form-hint upload-hint' }= info_text('photo_upload_hint')
-        .js-photo-upload-error.alert-error.hidden
-        %p
-          %input{ name: 'profile_photo[image]', id: 'person-image', type: 'file', class: 'form-control file' }
-          %a{href: '#', class: 'reset-image-button'} Reset to default
-        %button.photo-upload-button.button.hidden Upload photo
-        %p.form-hint.uploading-hint Uploading
-        %button.crop-finished-button.button-secondary Finished
 
   .form-group.save-cancel-actions
     = f.submit 'Preview', name: 'preview', class: 'button-secondary'

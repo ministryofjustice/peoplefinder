@@ -23,6 +23,8 @@ var PhotoUpload = (function (){
       PhotoUpload.clearError(els);
       PhotoUpload.showUploadButton(els, false);
       PhotoUpload.checkFileSize(this, PhotoUpload.imageSizeLimit, els);
+
+      $('.save-cancel-actions input').hide();
     },
 
     checkFileSize: function ( fileInput, limit, els ) {
@@ -87,7 +89,6 @@ var PhotoUpload = (function (){
     },
 
     photoUploaded: function ( event ){
-
       var $iframe = $(event.target);
       var jsonText = $iframe.contents().text();
       if(jsonText.length>1){
@@ -155,8 +156,10 @@ var PhotoUpload = (function (){
         els.$preview.naturalHeight()
       ];
 
+      console.log(imgw, trueSize);
+
       els.$preview.Jcrop({
-        setSelect: [20, 20, imgw-20, imgw-20],
+        setSelect: [0,0,trueSize[0],trueSize[0]],
         trueSize: trueSize,
         onSelect: function ( cropData ){
           els.$preview.data('new-crop-data', cropData);
@@ -198,6 +201,8 @@ var PhotoUpload = (function (){
       });
 
       PhotoUpload.setState(els, 'cropped');
+
+      $('.save-cancel-actions input').show();
     },
 
     cropAgain: function ( event ){
@@ -298,11 +303,11 @@ $(function (){
   var photoBlocks = $('.person-photo');
   if(photoBlocks.length > 0){
     _.each(photoBlocks, PhotoUpload.enhance);
-    
+
     var saveBtn = $('.save-cancel-actions input[name="commit"]'),
       cropButton = PhotoUpload.findElements(photoBlocks).$cropButton,
       editForm = $('form.edit_person, form.new_person');
-    
+
     saveBtn.click(function(e){
       e.preventDefault();
       if(cropButton.is(':visible')){

@@ -10,7 +10,7 @@ $(window).load(function(){
   };
 
   $('#croppable').Jcrop({
-    setSelect: [20, 20, 300, 300],
+    setSelect: [200, 200, 300, 300],
     boxWidth:  ($(window).width()*0.80),
     onSelect: stashCoords,
     aspectRatio: 1

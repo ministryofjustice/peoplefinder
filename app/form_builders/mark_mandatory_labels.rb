@@ -18,7 +18,6 @@ class MarkMandatoryLabels < SimpleDelegator
 
   def presence_validated?(method)
     object.respond_to?(:mandates_presence_of?) &&
-      object.mandates_presence_of?(method) &&
-      method != :email
+      object.mandates_presence_of?(method)
   end
 end

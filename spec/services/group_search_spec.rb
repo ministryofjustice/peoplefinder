@@ -52,7 +52,7 @@ RSpec.describe GroupSearch, elastic: true do
 
       it 'ignores non-word characters' do
         expect { result_set('*') }.not_to raise_error
-        expect(result_set('\Team/name?')).to eq [team, another_team]
+        expect(result_set('\Team/name?')).to match_array([team, another_team])
       end
 
     end

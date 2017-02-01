@@ -406,4 +406,55 @@ RSpec.describe PeopleController, type: :controller do
       end
     end
   end
+
+  context 'action routing' do
+    context 'create' do
+      context 'save button pressed' do
+        it 'updates and shows the edit person page' do
+          post :create, minimal_create_params
+          person = Person.friendly.find('francis-drake')
+          expect(response).to redirect_to(person_path(person))
+        end
+      end
+
+      context 'save button presssed with duplicate person in database' do
+        it 'displays duplicate confirmation page' do
+          create :person, given_name: 'Francis', surname: 'Drake', email: 'fd@digital.justice.gov.uk'
+          post :create, minimal_create_params
+          expect(response).to render_template(:confirm)
+        end
+      end
+
+      context 'pressing confirm on duplicate confirmation page' do
+        it 'updates and shows the person edit page' do
+          post :create, minimal_dupe_confirmation_params
+          person = Person.friendly.find('francis-drake')
+          expect(response).to redirect_to(person_path(person))
+        end
+      end
+    end
+  end
+
+  def minimal_create_params
+    {
+      'person'=>{
+        'given_name'=>'Francis',
+        'surname'=>'Drake',
+        'email'=>'francis.drake@digital.justice.gov.uk'
+      },
+      'commit'=>'Save'
+    }
+  end
+
+  def minimal_dupe_confirmation_params
+    {
+      'person'=>{
+        'given_name'=>'Francis',
+        'surname'=>'Drake',
+        'email'=>'francis.drake@digital.justice.gov.uk'
+      },
+      'editing_picture' => 'false',
+      'commit'=>'Continue'
+    }
+  end
 end

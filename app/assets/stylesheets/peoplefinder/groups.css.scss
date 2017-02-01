@@ -141,6 +141,12 @@ $focus-color: #FFBF47;
   }
 }
 
+
+.edit-preview{
+  @include maginot(217px, 217px);
+  height: 217px;
+}
+
 .view-people-outside-subteams {
   float:right;
   font-size: 44.5%;
