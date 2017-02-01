@@ -48,7 +48,7 @@ feature 'Audit trail' do
   scenario 'Auditing the deletion of a person' do
     with_versioning do
       person = create(:person, surname: 'Dan', given_name: 'Greg')
-      visit edit_person_path(person)
+      visit person_path(person)
       click_link('Delete this profile')
 
       visit '/audit_trail'

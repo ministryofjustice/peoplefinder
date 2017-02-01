@@ -13,9 +13,3 @@
 %h1= @page_title = (params[:page_title] || "Edit profile")
 
 = render partial: 'form', locals: { building: false }
-
-.form-group.delete-actions
-  .deletable
-    = link_to info_text('delete_this_profile'), @person, method: :delete,
-      data: { confirm: "Are you sure you want to delete #{ @person }? #{ info_text('profile_deletable') }." }
-  %p.form-hint= info_text('profile_deletable')

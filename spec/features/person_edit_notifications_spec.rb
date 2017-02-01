@@ -27,16 +27,11 @@ feature 'Person edit notifications' do
 
   scenario 'Deleting a person with different email' do
     person = create(:person, email: 'bob.smith@digital.justice.gov.uk')
-    visit edit_person_path(person)
+    visit person_path(person)
     expect { click_link('Delete this profile') }.to change { ActionMailer::Base.deliveries.count }.by(1)
 
     expect(last_email.subject).to eq('Your profile on MOJ People Finder has been deleted')
     check_email_to_and_from
-  end
-
-  scenario 'Deleting a person with same email' do
-    visit edit_person_path(person)
-    expect { click_link('Delete this profile') }.not_to change { ActionMailer::Base.deliveries.count }
   end
 
   scenario 'Editing a person with different email' do
