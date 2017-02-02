@@ -46,6 +46,7 @@ feature 'Report a problem', js: true do
       fill_in 'What were you trying to do?', with: 'Rhubarb'
       fill_in 'What went wrong?', with: 'Custard'
       fill_in 'Your email', with: 'test@example.com'
+
       click_button 'Report'
       expect(current_path).to eq(new_sessions_path)
 

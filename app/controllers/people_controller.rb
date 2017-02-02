@@ -129,7 +129,7 @@ class PeopleController < ApplicationController
   end
 
   def namesakes?
-    return false if params['commit'] == 'Continue'
+    return false if params['commit'] == 'Continue, it is not one of these'
     @people = Person.namesakes(@person)
     @people.present?
   end
