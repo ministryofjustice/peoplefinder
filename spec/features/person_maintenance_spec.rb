@@ -133,7 +133,8 @@ feature 'Person maintenance' do
         click_button 'Save', match: :first
 
         expect(page).to have_text('1 result found')
-        click_button 'Continue'
+
+        click_button 'Continue, it is not one of these'
         check_creation_of_profile_details
         expect(Person.where(surname: person_attributes[:surname]).count).to eql(2)
       end
