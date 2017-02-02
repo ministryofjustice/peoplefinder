@@ -12,10 +12,18 @@ module SpecSupport
       end
     end
 
-    def print_all_documents(limit: 100)
-      p = IO.popen("curl -i -XGET 'localhost:9200/#{Person.index_name}/person/_search?size=#{limit}&pretty'")
-      puts p.readlines
-      p.close
+    def all_curl_documents(limit: 100)
+      response = IO.popen("curl -i -XGET 'localhost:9200/#{Person.index_name}/person/_search?size=#{limit}&pretty'")
+      lines = response.readlines
+      response.close
+      lines
+    end
+
+    def all_curl_mappings
+    response = IO.popen("curl 'localhost:9200/test_people/_mappings?pretty'")
+    lines = response.readlines
+    response.close
+    lines
     end
 
     def index_health

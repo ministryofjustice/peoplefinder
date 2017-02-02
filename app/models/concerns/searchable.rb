@@ -17,7 +17,15 @@ module Concerns::Searchable
     end
 
     def self.search_results(query, limit:)
-      search(query).records.limit(limit)
+      response = search(query)
+      # ap "<<<<<<<<<<<< LINE #{__LINE__} >>>>>>>>>>>>>>"
+      # ap response.search.definition
+      # ap "<<<<<<<<<<<< LINE #{__LINE__} >>>>>>>>>>>>>>"
+      # if response.search.definition.dig(:body)&.has_key? :highlight
+      #   ap response.records.map_with_hit { |r,h| [r.name, r.given_name, r.surname, h] }
+      # end
+      # ap "<<<<<<<<<<<< LINE #{__LINE__} >>>>>>>>>>>>>>"
+      response
     end
 
     settings analysis: {

@@ -11,7 +11,7 @@ RSpec.describe SearchController, type: :controller do
 
   before do
     mock_logged_in_user
-    allow(PersonSearch).to receive(:new).and_return(person_search)
+    # allow(PersonSearch).to receive(:new).and_return(person_search)
     allow(GroupSearch).to receive(:new).and_return(group_search)
   end
 
@@ -56,6 +56,7 @@ RSpec.describe SearchController, type: :controller do
 
       it 'assigns people search result to @people_results' do
         subject
+        ap assigns(:people_results)
         expect(assigns(:people_results)).to eq(people_results)
       end
 

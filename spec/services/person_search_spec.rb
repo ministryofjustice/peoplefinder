@@ -59,21 +59,19 @@ RSpec.describe PersonSearch, elastic: true do
 
     it 'searches by email' do
       results = search_for(@alice.email.upcase)
-      expect(results.set).to eq [@alice]
+      expect(results.set.first.name).to eq @alice.name
       expect(results.contains_exact_match).to eq true
     end
 
     it 'searches by surname' do
       results = search_for('Andrews')
-      expect(results.set).to include(@alice)
-      expect(results.set).to_not include(@bob)
+      expect(results.set.map(&:name)).to match_array [@alice.name, @andrew.name]
       expect(results.contains_exact_match).to eq true
     end
 
     it 'searches by given name' do
       results = search_for('Alice')
-      expect(results.set).to include(@alice)
-      expect(results.set).to_not include(@bob)
+      expect(results.set.map(&:name)).to match_array [@alice.name, @andrew.name]
       expect(results.contains_exact_match).to eq true
     end
 
@@ -84,120 +82,122 @@ RSpec.describe PersonSearch, elastic: true do
       expect(results.contains_exact_match).to eq true
     end
 
-    it 'puts exact match first for phrase' do
-      results = search_for('Digital Project')
-      expect(results.set.map(&:name)).to eq([@alice, @bob, @john_smyth].map(&:name))
-      expect(results.contains_exact_match).to eq true
-    end
-
     it 'searches by single word non-name match' do
       results = search_for('Digital')
-      expect(results.set).to include(@alice)
-      expect(results.set).to include(@bob)
+      expect(results.set.map(&:name)).to match_array [@alice.name, @bob.name, @john_smyth.name]
       expect(results.contains_exact_match).to eq true
     end
 
     it 'puts exact match first for "Alice Andrews"' do
       results = search_for('Alice Andrews')
-      expect(results.set).to eq([@alice, @andrew])
+      expect(results.set[0..1].map(&:name)).to eq [@alice.name, @andrew.name]
       expect(results.contains_exact_match).to eq true
     end
 
     it 'puts exact match first for "Andrew Alice"' do
       results = search_for('Andrew Alice')
-      expect(results.set).to eq([@andrew, @alice])
+      expect(results.set[0..1].map(&:name)).to eq [@andrew.name, @alice.name]
       expect(results.contains_exact_match).to eq true
     end
 
     it 'puts name synonym matches in results' do
       results = search_for('Abe Kiehn')
-      expect(results.set).to include(@abraham_kiehn)
-      expect(results.set).to include(@abe)
+      expect(results.set.map(&:name)).to match_array [@abraham_kiehn.name, @abe.name]
       expect(results.contains_exact_match).to eq false
     end
 
     it 'puts single name match at top of results when name synonym' do
       results = search_for('Abe')
-      expect(results.set.first).to eq(@abe)
+      expect(results.set.first.name).to eq @abe.name
       expect(results.contains_exact_match).to eq true
     end
 
     it 'puts single name match at top of results when first name match' do
       results = search_for('Andrew')
-      expect(results.set).to eq([@andrew, @alice])
+      expect(results.set[0..1].map(&:name)).to eq [@andrew.name, @alice.name]
       expect(results.contains_exact_match).to eq true
     end
 
     it 'searches by group name and membership role' do
       results = search_for('Director at digiTAL Services')
-      expect(results.set.map(&:name)).to eq([@bob, @john_smyth, @alice].map(&:name))
+      expect(results.set.map(&:name)).to eq [@bob, @john_smyth].map(&:name)
       expect(results.contains_exact_match).to eq false
     end
 
-    it 'searches by description and location' do
-      results = search_for('weekends at petty france office')
-      expect(results.set).to_not include(@alice)
-      expect(results.set).to include(@bob)
-      expect(results.contains_exact_match).to eq false
+    it 'searches by description, current_project, group and role ' do
+      results = search_for('Digital Project')
+      expect(results.set.map(&:name)).to eq([@alice, @bob, @john_smyth].map(&:name))
+      expect(results.contains_exact_match).to eq true
+    end
+
+    it 'searches by location' do
+      results = search_for('petty france')
+      expect(results.set.map(&:name)).to_not include(@alice.name)
+      expect(results.set.map(&:name)).to include(@bob.name)
+    end
+
+    it 'searches by description, location' do
+      results = search_for('weekends only petty france office')
+      expect(results.set.map(&:name)).to_not include(@alice.name)
+      expect(results.set.map(&:name)).to include(@bob.name)
     end
 
     it 'searches ignoring * in search term' do
       results = search_for('Alice *')
-      expect(results.set).to include(@alice)
+      expect(results.set.map(&:name)).to include(@alice.name)
       expect(results.contains_exact_match).to eq true
     end
 
     it 'searches ignoring " at start of search term' do
       results = search_for('"Alice ')
-      expect(results.set).to include(@alice)
+      expect(results.set.map(&:name)).to include(@alice.name)
       expect(results.contains_exact_match).to eq true
     end
 
     it 'searches ignoring " at end of search term' do
       results = search_for('Alice"')
-      expect(results.set).to include(@alice)
+      expect(results.set.map(&:name)).to include(@alice.name)
       expect(results.contains_exact_match).to eq true
     end
 
     it 'searches ignoring " in middle of search term' do
       results = search_for('Alice" Andrews')
-      expect(results.set).to include(@alice)
+      expect(results.set.map(&:name)).to include(@alice.name)
       expect(results.contains_exact_match).to eq true
     end
 
     it 'searches apostrophe in name' do
       results = search_for("O'Leary")
-      expect(results.set).to include(@oleary)
+      expect(results.set.first.name).to include(@oleary.name)
       expect(results.contains_exact_match).to eq true
 
       results = search_for("O’Leary")
-      expect(results.set).to include(@oleary2)
+      expect(results.set.first.name).to include(@oleary2.name)
       expect(results.contains_exact_match).to eq true
     end
 
     it 'searches by current project' do
       results = search_for('Current project')
-      expect(results.set).to eq([@bob, @alice])
+      expect(results.set[0..1].map(&:name)).to eq([@bob.name, @alice.name])
       expect(results.contains_exact_match).to eq true
     end
 
     it 'searches by partial match and orders by edit distance if edit distance 1 exists' do
       results = search_for("John Collie")
-      expect(results.set[0..2].map(&:name)).to eq([@collier, @miller, @scotti].map(&:name))
+      expect(results.set.first.name).to eql @collier.name
       expect(results.contains_exact_match).to eq false
     end
 
     it 'searches by partial match and orders by edit distance if edit distance 2 exists' do
       results = search_for("John Colli")
-      expect(results.set.first.name).to eq(@collier.name)
-      expect(results.set.map(&:name)).to include(@miller.name) # has edit distance of 4 from query term
-      expect(results.set.map(&:name)).to include(@scotti.name) # also has edit distance of 4 from query term
+      expect(results.set.first.name).to eq(@collier.name) # edit distance of 2
       expect(results.contains_exact_match).to eq false
     end
 
-    it 'searches by partial match and orders by edit distance if edit distance 3 exists' do
+    xit 'searches by partial match and orders by edit distance if edit distance 3 exists' do
       results = search_for("John Coll")
-      expect(results.set.map(&:name)).to include(*[@collier, @miller, @scotti].map(&:name))
+      ap results.set.name_with_score
+      expect(results.set.map(&:name)).to eq [@collier, @miller, @scotti].map(&:name) # edit distance of 2, 3, 5 respectively
       expect(results.contains_exact_match).to eq false
     end
 
@@ -205,23 +205,6 @@ RSpec.describe PersonSearch, elastic: true do
       results = search_for('')
       expect(results.set).to eq([])
       expect(results.contains_exact_match).to eq false
-    end
-  end
-
-  context 'performs several searches' do
-    it '- phrase name search' do
-      expect_any_instance_of(described_class).to receive(:phrase_name_search).and_return []
-      search_for('Smith Bill')
-    end
-
-    it '- phrase search' do
-      expect_any_instance_of(described_class).to receive(:phrase_search).and_return []
-      search_for('Smith Bill')
-    end
-
-    it '- fuzzy search' do
-      expect_any_instance_of(described_class).to receive(:fuzzy_search).and_return []
-      search_for('Smith Bill')
     end
   end
 
@@ -234,51 +217,6 @@ RSpec.describe PersonSearch, elastic: true do
     it 'replaces all other non-alpha-numeric characters as single whitespace' do
       search_for('\Smith\?Bill*&£23@%') do |searcher|
         expect(searcher.query).to eql 'Smith Bill 23'
-      end
-    end
-  end
-
-  describe '.phrase_name_matches' do
-    let(:query) { 'john smith' }
-
-    it 'returns case-insensitive exact matches based on name alone' do
-      search_for(query) do |searcher|
-        expect(searcher.phrase_name_matches.first.name).to eql @john_smith.name
-      end
-    end
-
-    it 'returns synonymous names as if exact' do
-      search_for(query) do |searcher|
-        expect(searcher.phrase_name_matches.second.name).to eql @jonathan_smith.name
-      end
-    end
-  end
-
-  describe '.phrase_matches' do
-    let(:query) { 'Peter Smithson' }
-
-    it 'returns documents matching exact phrase in any indexed field' do
-      search_for(query) do |searcher|
-        expect(searcher.phrase_matches.map(&:name)).to match_array [@peter_smithson.name, @peter_smithson_pa.name]
-      end
-    end
-
-    it 'does not include synonymous names' do
-      search_for(query) do |searcher|
-        expect(searcher.phrase_matches.map(&:name)).not_to include @pete_smithson.name
-      end
-    end
-  end
-
-  describe '.fuzzy_matches' do
-    let(:query) { 'Digital Developer' }
-
-    it 'returns documents where one or more tokens found in one or more of the indexed fields incl. role and group' do
-      search_for('Digital Developer') do |searcher|
-        expect(searcher.fuzzy_matches.map(&:name)).to include @john_smyth.name
-      end
-      search_for('Content') do |searcher|
-        expect(searcher.fuzzy_matches.map(&:name)).to include @john_smyth.name
       end
     end
   end
@@ -316,25 +254,16 @@ RSpec.describe PersonSearch, elastic: true do
           expect(results.set[1..2].map(&:name)).to match_array ['Stephen Richards', 'Steven Richards']
         end
 
-        it 'returns people with exact name but NOT in name field in third batch' do
-          expect(results.set[3].name).to eql 'Personal Assistant'
+        it 'returns people with exact surname but different first name in 3rd batch' do
+          expect(results.set[3].name).to eql 'John Richards'
         end
 
-        it 'returns people with exact first name and similar surname in fourth batch' do
-          expect(results.set[4].name).to eql 'Steve Richardson'
+        it 'returns people with similar first name and similarar surname in 4th batch' do
+          expect(results.set[4..6].map(&:name)).to match_array ['Steve Richardson', 'Steven Richardson', 'Stephen Richardson']
         end
 
-        it 'returns people with synonymous first name and similar surname in fifth batch' do
-          expect(results.set[5..7].map(&:name)).to match_array ['Steven Richardson', 'Stephen Richardson', 'John Richards']
-        end
-
-        xit 'returns people with different first name and exact surname in seventh batch' do
-          expect(results.set[7].name).to eql 'John Richards'
-        end
-
-        xit 'returns people in expected order' do
-          pending 'need to sort out flickers'
-          expect(results.set[0..7].map(&:name)).to eql expected_steves
+        it 'returns people with different and similar combinations' do
+          expect(results.set[7..-1].map(&:name)).to match_array ['Steve Edmundson','John Richardson','Personal Assistant','Stephen Edmundson']
         end
       end
 
@@ -372,6 +301,12 @@ RSpec.describe PersonSearch, elastic: true do
     results = searcher.perform_search
     yield searcher if block_given?
     results
+  end
+
+  class Elasticsearch::Model::Response::Records
+    def name_with_score
+      self.map_with_hit { |rec, hit| [ rec.name, hit._score] }
+    end
   end
 
 end
