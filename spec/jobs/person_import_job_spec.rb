@@ -52,7 +52,7 @@ RSpec.describe PersonImportJob, type: :job do
 
       it 'uses the PersonCreator' do
         expect(PersonCreator).to receive(:new).
-          with(instance_of(Person), nil).thrice.and_call_original
+          with(person: instance_of(Person), current_user: nil, state_cookie: instance_of(StateManagerCookie)).thrice.and_call_original
         perform_now
       end
 
