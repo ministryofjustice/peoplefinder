@@ -1,3 +1,17 @@
+# == Schema Information
+#
+# Table name: memberships
+#
+#  id         :integer          not null, primary key
+#  group_id   :integer          not null
+#  person_id  :integer          not null
+#  role       :text
+#  created_at :datetime
+#  updated_at :datetime
+#  leader     :boolean          default(FALSE)
+#  subscribed :boolean          default(TRUE), not null
+#
+
 require 'rails_helper'
 
 RSpec.describe Membership, type: :model do

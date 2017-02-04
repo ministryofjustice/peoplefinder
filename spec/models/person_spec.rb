@@ -1,3 +1,39 @@
+# == Schema Information
+#
+# Table name: people
+#
+#  id                     :integer          not null, primary key
+#  given_name             :text
+#  surname                :text
+#  email                  :text
+#  primary_phone_number   :text
+#  secondary_phone_number :text
+#  location_in_building   :text
+#  description            :text
+#  created_at             :datetime
+#  updated_at             :datetime
+#  works_monday           :boolean          default(TRUE)
+#  works_tuesday          :boolean          default(TRUE)
+#  works_wednesday        :boolean          default(TRUE)
+#  works_thursday         :boolean          default(TRUE)
+#  works_friday           :boolean          default(TRUE)
+#  image                  :string
+#  slug                   :string
+#  works_saturday         :boolean          default(FALSE)
+#  works_sunday           :boolean          default(FALSE)
+#  login_count            :integer          default(0), not null
+#  last_login_at          :datetime
+#  super_admin            :boolean          default(FALSE)
+#  building               :text
+#  city                   :text
+#  secondary_email        :text
+#  profile_photo_id       :integer
+#  last_reminder_email_at :datetime
+#  current_project        :string
+#  pager_number           :text
+#  prototype              :boolean          default(FALSE)
+#
+
 require 'rails_helper'
 
 RSpec.describe Person, type: :model do

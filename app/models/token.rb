@@ -1,3 +1,15 @@
+# == Schema Information
+#
+# Table name: tokens
+#
+#  id         :integer          not null, primary key
+#  value      :text
+#  user_email :text
+#  created_at :datetime
+#  updated_at :datetime
+#  spent      :boolean          default(FALSE)
+#
+
 class Token < ActiveRecord::Base
   class TTLRaceCondition < StandardError; end
 
