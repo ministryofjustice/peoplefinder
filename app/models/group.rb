@@ -1,3 +1,20 @@
+# == Schema Information
+#
+# Table name: groups
+#
+#  id                            :integer          not null, primary key
+#  name                          :text
+#  created_at                    :datetime
+#  updated_at                    :datetime
+#  slug                          :string
+#  description                   :text
+#  ancestry                      :text
+#  ancestry_depth                :integer          default(0), not null
+#  acronym                       :text
+#  description_reminder_email_at :datetime
+#  members_completion_score      :integer
+#
+
 class Group < ActiveRecord::Base
   include Concerns::Hierarchical
   include Concerns::Placeholder

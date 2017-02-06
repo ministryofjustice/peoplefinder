@@ -1,3 +1,19 @@
+# == Schema Information
+#
+# Table name: versions
+#
+#  id             :integer          not null, primary key
+#  item_type      :text             not null
+#  item_id        :integer          not null
+#  event          :text             not null
+#  whodunnit      :text
+#  object         :text
+#  created_at     :datetime
+#  object_changes :text
+#  ip_address     :string
+#  user_agent     :string
+#
+
 class Version < PaperTrail::Version
   def self.public_user
     'Public user'
