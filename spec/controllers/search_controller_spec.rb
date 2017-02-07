@@ -11,14 +11,13 @@ RSpec.describe SearchController, type: :controller do
 
   before do
     mock_logged_in_user
-    # allow(PersonSearch).to receive(:new).and_return(person_search)
+    allow(PersonSearch).to receive(:new).and_return(person_search)
     allow(GroupSearch).to receive(:new).and_return(group_search)
   end
 
   subject { get :index, query: query }
 
   describe 'GET #index - rendering' do
-    render_views
 
     let(:query) { 'whichever' }
     let(:group) { create(:group) }
@@ -31,15 +30,12 @@ RSpec.describe SearchController, type: :controller do
       expect(response).to render_template(:index)
     end
 
-    it 'template calls matches_exist?' do
-      expect(controller).to receive(:matches_exist?)
-      subject
-    end
-
-    it 'assigns @query for use in view' do
+    it 'assigns results for use in view' do
       subject
       expect(assigns(:team_results)).to eq(team_results)
+      expect(assigns(:people_results)).to eq(people_results)
     end
+
   end
 
   describe 'GET #index' do
@@ -56,7 +52,6 @@ RSpec.describe SearchController, type: :controller do
 
       it 'assigns people search result to @people_results' do
         subject
-        ap assigns(:people_results)
         expect(assigns(:people_results)).to eq(people_results)
       end
 

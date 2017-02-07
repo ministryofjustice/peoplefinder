@@ -2,10 +2,11 @@ require 'rails_helper'
 
 feature 'Searching feature', elastic: true do
   extend FeatureFlagSpecHelper
-  include PermittedDomainHelper
 
-  let!(:group) { create(:group, name: 'Technology') }
-  let!(:person) do
+
+  def create_test_data
+    PermittedDomain.find_or_create_by(domain: 'digital.justice.gov.uk')
+    group = create(:group, name: 'Technology')
     person = create(:person,
       given_name: 'Jon',
       surname: 'Browne',
@@ -13,18 +14,23 @@ feature 'Searching feature', elastic: true do
       primary_phone_number: '0711111111',
       current_project: 'Digital justice')
     create(:membership, person: person, group: group)
-    person
+  end
+
+
+  before(:all) do
+    clean_up_indexes_and_tables
+    create_test_data
+    Person.import force: true
+    Person.__elasticsearch__.refresh_index!
+  end
+
+  after(:all) do
+    clean_up_indexes_and_tables
   end
 
   before do
-    Person.import force: true
-    Person.__elasticsearch__.client.indices.refresh
     omni_auth_log_in_as 'test.user@digital.justice.gov.uk'
     visit home_path
-  end
-
-  after do
-    clean_up_indexes_and_tables
   end
 
   feature 'for people' do

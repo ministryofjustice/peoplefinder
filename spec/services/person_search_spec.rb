@@ -196,7 +196,6 @@ RSpec.describe PersonSearch, elastic: true do
 
     xit 'searches by partial match and orders by edit distance if edit distance 3 exists' do
       results = search_for("John Coll")
-      ap results.set.name_with_score
       expect(results.set.map(&:name)).to eq [@collier, @miller, @scotti].map(&:name) # edit distance of 2, 3, 5 respectively
       expect(results.contains_exact_match).to eq false
     end
@@ -258,7 +257,7 @@ RSpec.describe PersonSearch, elastic: true do
           expect(results.set[3].name).to eql 'John Richards'
         end
 
-        it 'returns people with similar first name and similarar surname in 4th batch' do
+        it 'returns people with similar first name and similar surname in 4th batch' do
           expect(results.set[4..6].map(&:name)).to match_array ['Steve Richardson', 'Steven Richardson', 'Stephen Richardson']
         end
 
@@ -301,12 +300,6 @@ RSpec.describe PersonSearch, elastic: true do
     results = searcher.perform_search
     yield searcher if block_given?
     results
-  end
-
-  class Elasticsearch::Model::Response::Records
-    def name_with_score
-      self.map_with_hit { |rec, hit| [ rec.name, hit._score] }
-    end
   end
 
 end

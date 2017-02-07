@@ -30,6 +30,12 @@ module SpecSupport
       Person.__elasticsearch__.client.cluster.health
     end
 
+    class Elasticsearch::Model::Response::Records
+      def name_with_score
+        self.map_with_hit { |rec, hit| [ rec.name, hit._score] }
+      end
+    end
+
     private
 
     def match_all(limit: 100)
