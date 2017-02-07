@@ -8,7 +8,7 @@ class PersonUpdater
 
   attr_reader :person, :changes
 
-  def initialize(person: e, current_user: cu, state_cookie: smc)
+  def initialize(person:, current_user:, state_cookie:)
     if person.new_record?
       raise NewRecordError, 'cannot update a new Person record'
     end
