@@ -1,6 +1,8 @@
 # FIXME: Refactor this controller - it's too long and mailing shouldn't be done in models
 class PeopleController < ApplicationController
 
+  include StateCookieHelper
+
   before_action :set_person, only: [:show, :edit, :update, :update_email, :destroy]
   before_action :set_org_structure,
     only: [:new, :edit, :create, :update, :add_membership]
@@ -28,15 +30,16 @@ class PeopleController < ApplicationController
   # GET /people/1/edit
   def edit
     authorize @person
-
     @activity = params[:activity]
     @person.memberships.build if @person.memberships.empty?
   end
 
   # POST /people
   def create
+    set_state_cookie_action_create
+    set_state_cookie_phase_from_button
+
     @person = Person.new(person_params)
-    @editing_picture = (params['editing_picture'] == 'true' || params['editing_picture'] == 'Edit this picture')
     authorize @person
 
     if @preview
@@ -51,8 +54,9 @@ class PeopleController < ApplicationController
 
   # PATCH/PUT /people/1
   def update
+    set_state_cookie_action_update_if_not_create
+    set_state_cookie_phase_from_button
     @person.assign_attributes(person_params)
-    @editing_picture = (params['editing_picture'] == 'true' || params['editing_picture'] == 'Edit this picture')
     authorize @person
 
     if @preview
@@ -68,7 +72,9 @@ class PeopleController < ApplicationController
     @person.assign_attributes(person_email_update_params)
     authorize @person
     if @person.valid?
-      updater = PersonUpdater.new(@person, current_user)
+      updater = PersonUpdater.new(person: @person,
+                                  current_user: current_user,
+                                  state_cookie: StateManagerCookie.new(cookies))
       updater.update!
       session.delete(:desired_path)
       notice :profile_email_updated, email: @person.email
@@ -114,7 +120,6 @@ class PeopleController < ApplicationController
       :email, :secondary_email,
       :profile_photo_id, :crop_x, :crop_y, :crop_w, :crop_h,
       :description, :current_project,
-      :editing_picture,
       *Person::DAYS_WORKED,
       memberships_attributes: [:id, :role, :group_id, :leader, :subscribed]
     ]
@@ -129,7 +134,7 @@ class PeopleController < ApplicationController
   end
 
   def namesakes?
-    return false if params['commit'] == 'Continue, it is not one of these'
+    return false if params['continue_from_duplication'].present?
     @people = Person.namesakes(@person)
     @people.present?
   end
@@ -147,10 +152,11 @@ class PeopleController < ApplicationController
     if namesakes?
       render(:confirm)
     else
-      creator = PersonCreator.new(@person, current_user)
+      creator = PersonCreator.new(person: @person,
+                                  current_user: current_user,
+                                  state_cookie: StateManagerCookie.new(cookies))
       creator.create!
-      notice :profile_created, person: @person
-
+      notice(:profile_created, person: @person) if state_cookie_saving_profile?
       redirect_to redirection_destination
     end
   end
@@ -159,20 +165,20 @@ class PeopleController < ApplicationController
     if namesakes_check_required_and_found?
       render(:confirm)
     else
-      updater = PersonUpdater.new(@person, current_user)
+      updater = PersonUpdater.new(person: @person,
+                                  current_user: current_user,
+                                  state_cookie: StateManagerCookie.new(cookies))
       updater.update!
-
       type = @person == current_user ? :mine : :other
-      notice :profile_updated, type, person: @person
-
+      notice(:profile_updated, type, person: @person) if state_cookie_saving_profile?
       redirect_to redirection_destination
     end
   end
 
   def redirection_destination
-    if @editing_picture
+    if state_cookie_editing_picture?
       edit_person_image_path(@person)
-    elsif params['return-from-editing-picture'] == 'true'
+    elsif state_cookie_editing_picture_done?
       edit_person_path(@person)
     else
       @person
