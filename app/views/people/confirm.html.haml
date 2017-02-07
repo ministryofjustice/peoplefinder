@@ -44,13 +44,11 @@
     = f.hidden_field :crop_w
     = f.hidden_field :crop_h
 
-    = hidden_field_tag 'editing_picture', @editing_picture
-
     - Person::DAYS_WORKED.each do |day|
       = f.hidden_field day
 
     .spacer-45
     .form-group
-      = f.submit 'Continue, it is not one of these', class: 'button'
+      = f.submit 'Continue, it is not one of these', class: 'button', name: 'continue_from_duplication'
       .cancel
         = link_to 'Return to home page', home_path

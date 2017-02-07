@@ -166,7 +166,7 @@ RSpec.describe PeopleController, type: :controller do
     let(:person) { current_user }
 
     before do
-      put :update, id: person.to_param, person: new_attributes
+      put :update, id: person.to_param, person: new_attributes, commit: 'Save'
     end
 
     describe 'with valid params' do
@@ -214,7 +214,7 @@ RSpec.describe PeopleController, type: :controller do
       end
 
       before do
-        put :update, id: person.to_param, person: new_attributes
+        put :update, id: person.to_param, person: new_attributes, commit: 'Save'
       end
 
       it 'updates the requested person apart from e-mail' do
@@ -453,7 +453,6 @@ RSpec.describe PeopleController, type: :controller do
         'surname'=>'Drake',
         'email'=>'francis.drake@digital.justice.gov.uk'
       },
-      'editing_picture' => 'false',
       'commit'=>'Continue'
     }
   end

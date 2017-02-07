@@ -52,7 +52,9 @@ module SessionPersonCreator
     end
 
     def create_person_and_login person
-      person_creator = PersonCreator.new(person, current_user)
+      person_creator = PersonCreator.new(person: person,
+                                         current_user: current_user,
+                                         state_cookie: StateManagerCookie.new(cookies))
       person_creator.create!
       warning :complete_profile
       session[:desired_path] = edit_person_path(@person, page_title: 'Create profile')
