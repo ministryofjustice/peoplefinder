@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe 'search/person', type: :view do
   include PermittedDomainHelper
 
- before(:all) do
+  before(:all) do
     clean_up_indexes_and_tables
     PermittedDomain.find_or_create_by(domain: 'digital.justice.gov.uk')
 
@@ -44,7 +44,7 @@ RSpec.describe 'search/person', type: :view do
   shared_examples 'sets analytics attributes' do
     it "sets data-event-category correctly on links" do
       list.each do |item|
-        expect(rendered).to have_selector('[data-event-category="Search result click"]', text: item )
+        expect(rendered).to have_selector('[data-event-category="Search result click"]', text: item)
       end
     end
 
@@ -62,26 +62,26 @@ RSpec.describe 'search/person', type: :view do
 
   describe 'people links' do
     let(:list) { people_results.map(&:name) }
-    let(:div) { 'result-name'}
+    let(:div) { 'result-name' }
 
     include_examples 'sets analytics attributes'
   end
 
   describe 'team links' do
-    let(:div) { 'result-memberships'}
+    let(:div) { 'result-memberships' }
     let(:list) do
-        people_results.map do |person|
-          person.memberships.map do |membership|
-            membership.group.name
-          end
-        end.flatten
+      people_results.map do |person|
+        person.memberships.map do |membership|
+          membership.group.name
+        end
+      end.flatten
     end
 
     include_examples 'sets analytics attributes'
   end
 
   describe 'email links' do
-    let(:div) { 'result-email'}
+    let(:div) { 'result-email' }
     let(:list) { people_results.map(&:email) }
 
     include_examples 'sets analytics attributes'

@@ -16,7 +16,7 @@ module Concerns::Searchable
       __elasticsearch__.delete_index! index: index_name
     end
 
-    def self.search_results(query, limit:)
+    def self.search_results(query)
       response = search(query)
       # ap "<<<<<<<<<<<< LINE #{__LINE__} >>>>>>>>>>>>>>"
       # ap response.search.definition

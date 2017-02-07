@@ -262,7 +262,7 @@ RSpec.describe PersonSearch, elastic: true do
         end
 
         it 'returns people with different and similar combinations' do
-          expect(results.set[7..-1].map(&:name)).to match_array ['Steve Edmundson','John Richardson','Personal Assistant','Stephen Edmundson']
+          expect(results.set[7..-1].map(&:name)).to match_array ['Steve Edmundson', 'John Richardson', 'Personal Assistant', 'Stephen Edmundson']
         end
       end
 

@@ -90,7 +90,7 @@ class PersonSearch
   def sort_query
     {
       _score: { order: 'desc' },
-      name: { order: 'asc'}
+      name: { order: 'asc' }
     }
   end
 
@@ -103,7 +103,7 @@ class PersonSearch
   end
 
   def search query
-    Person.search_results(query, limit: @max)
+    Person.search_results(query)
   end
 
   # exact full name word/token match booster, not including synonyms

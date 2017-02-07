@@ -3,7 +3,6 @@ require 'rails_helper'
 feature 'Searching feature', elastic: true do
   extend FeatureFlagSpecHelper
 
-
   def create_test_data
     PermittedDomain.find_or_create_by(domain: 'digital.justice.gov.uk')
     group = create(:group, name: 'Technology')
@@ -15,7 +14,6 @@ feature 'Searching feature', elastic: true do
       current_project: 'Digital justice')
     create(:membership, person: person, group: group)
   end
-
 
   before(:all) do
     clean_up_indexes_and_tables
