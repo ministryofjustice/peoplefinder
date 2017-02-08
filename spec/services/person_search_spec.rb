@@ -6,7 +6,7 @@ RSpec.describe PersonSearch, elastic: true do
   before(:all) do
     clean_up_indexes_and_tables
     PermittedDomain.find_or_create_by(domain: 'digital.justice.gov.uk')
-    @alice = create(:person, given_name: 'Alice', surname: 'Andrews', description: 'digital project')
+    @alice = create(:person, given_name: 'Alice', surname: 'Andrews', current_project: 'digital project')
     @bob = create(:person, given_name: 'Bob', surname: 'Browning',
              location_in_building: '10th floor', building: '102 Petty France',
              city: 'London', description: 'weekends only',
@@ -44,7 +44,6 @@ RSpec.describe PersonSearch, elastic: true do
     @john_richardson = create(:person, given_name: 'John', surname: 'Richardson')
     @john_edmundson = create(:person, given_name: 'John', surname: 'Edmundson') # should not appea
     @jane_medurst = create(:person, given_name: 'Jane', surname: 'Medurst')
-    @steve_richards_pa = create(:person, given_name: 'Personal', surname: 'Assistant', description: 'PA to Steve Richards')
 
     Person.import force: true
     Person.__elasticsearch__.refresh_index!
@@ -236,8 +235,8 @@ RSpec.describe PersonSearch, elastic: true do
         end
 
         it 'test has expected records and ES index documents' do
-          expect(Person.count).to eql 29
-          expect(Person.search('*').results.total).to eql 29
+          expect(Person.count).to eql 28
+          expect(Person.search('*').results.total).to eql 28
         end
 
         it 'returns person with exact first name and surname in 1st rank' do
@@ -253,15 +252,15 @@ RSpec.describe PersonSearch, elastic: true do
         end
 
         it 'returns people with different and similar combinations' do
-          expect(results.set[8..-1].map(&:name)).to match_array ['John Richardson', 'Personal Assistant', 'Stephen Edmundson']
+          expect(results.set[8..-1].map(&:name)).to match_array ['John Richardson', 'Stephen Edmundson']
         end
       end
 
       context 'search for given name only' do
         let(:query) { 'Steve' }
-        let(:expected_steves) { %w(Steve Steven Stephen Personal) }
+        let(:expected_steves) { %w(Steve Steven Stephen) }
 
-        it 'returns people in order of given names distance from exact name', skip: 'skip until failure on Circle CI resolved' do
+        it 'returns people in order of given names distance from exact name' do
           actual_steves = results.set.map(&:name).map(&:split).map(&:first).uniq
           expect(actual_steves).to match_array expected_steves
           expect(actual_steves.last).to eql expected_steves.last
@@ -270,13 +269,12 @@ RSpec.describe PersonSearch, elastic: true do
 
       context 'search for surname only' do
         let(:query) { 'Richards' }
-        let(:expected_richards) { %w(John Steven Stephen Steve Personal) }
+        let(:expected_richards) { %w(John Steven Stephen Steve) }
 
         # given name order is unhandled by code
         it 'returns people with only the surname richards as name or, less importantly, in another field' do
           actual_richards = results.set.map(&:name).map(&:split).map(&:first).uniq
           expect(actual_richards).to match_array expected_richards
-          expect(actual_richards.last).to eql expected_richards.last
         end
       end
     end
