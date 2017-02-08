@@ -50,6 +50,19 @@ RSpec.describe Person, type: :model do
   it { should respond_to(:skip_group_completion_score_updates) }
 
   describe '#email' do
+
+    it 'does not raise an invalid format error if blank' do
+      person = build :person, email: ''
+      expect(person.save).to be false
+      expect(person.errors[:email]).to eq(['is required'])
+    end
+
+    it 'does raise an invalid format error if present but invalid' do
+      person = build :person, email: 'sdsdsdsds'
+      expect(person.save).to be false
+      expect(person.errors[:email]).to eq(["isn’t valid"])
+    end
+
     it 'is converted to lower case' do
       person = create(:person, email: 'User.Example@digital.justice.gov.uk')
       expect(person.email).to eq 'user.example@digital.justice.gov.uk'
