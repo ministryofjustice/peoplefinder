@@ -47,7 +47,6 @@ RSpec.describe Person, type: :model do
   it { should have_many(:groups) }
 
   it { should respond_to(:pager_number) }
-  it { should respond_to(:skip_group_completion_score_updates) }
 
   describe '#email' do
 

@@ -20,10 +20,7 @@
 
           .meta= call_to(person.phone)
           .result-email
-            .meta
-              = mail_to(hit.try(:highlight).try(:email) ? hit.highlight.email : person.email,
-              nil,
-              data: search_result_analytics_attributes(index) )
+            .meta= mail_to(person.email, nil, data: search_result_analytics_attributes(index) )
 
           - if person.current_project.present?
             .meta

@@ -12,6 +12,12 @@ module SpecSupport
       end
     end
 
+    def name_with_hit
+      if response.search.definition.dig(:body)&.has_key? :highlight
+        ap response.records.map_with_hit { |r,h| [r.name, h] }
+      end
+    end
+
     def all_documents(limit: 100)
       IO.popen("curl -i -XGET 'localhost:9200/#{Person.index_name}/person/_search?size=#{limit}&pretty'", &:readlines)
     end
@@ -24,9 +30,14 @@ module SpecSupport
       Person.__elasticsearch__.client.cluster.health
     end
 
+    # add some helpers to elastic search itself
     class Elasticsearch::Model::Response::Records
-      def name_with_score
+      def names_with_score
         map_with_hit { |rec, hit| [rec.name, hit._score] }
+      end
+
+      def names_with_hit
+        map_with_hit { |rec, hit| [rec.name, hit] }
       end
     end
 

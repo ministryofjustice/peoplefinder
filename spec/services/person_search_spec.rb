@@ -55,6 +55,7 @@ RSpec.describe PersonSearch, elastic: true do
   end
 
   context 'with some people' do
+
     it_behaves_like 'a search'
 
     it 'searches by email' do
@@ -120,7 +121,7 @@ RSpec.describe PersonSearch, elastic: true do
 
     it 'searches by group name and membership role' do
       results = search_for('Director at digiTAL Services')
-      expect(results.set.map(&:name)).to eq [@bob, @john_smyth].map(&:name)
+      expect(results.set.map(&:name)).to eq [@bob, @john_smyth, @alice].map(&:name)
       expect(results.contains_exact_match).to eq false
     end
 
@@ -182,21 +183,15 @@ RSpec.describe PersonSearch, elastic: true do
       expect(results.contains_exact_match).to eq true
     end
 
-    it 'searches by partial match and orders by edit distance if edit distance 1 exists' do
+    it 'searches with edit distance of 1' do
       results = search_for("John Collie")
       expect(results.set.first.name).to eql @collier.name
       expect(results.contains_exact_match).to eq false
     end
 
-    it 'searches by partial match and orders by edit distance if edit distance 2 exists' do
+    it 'searches with edit distance 2 exists', skip: 'skip until we can work out how to stop it flickering when run as part of test suite' do
       results = search_for("John Colli")
-      expect(results.set.first.name).to eq(@collier.name) # edit distance of 2
-      expect(results.contains_exact_match).to eq false
-    end
-
-    xit 'searches by partial match and orders by edit distance if edit distance 3 exists' do
-      results = search_for("John Coll")
-      expect(results.set.map(&:name)).to eq [@collier, @miller, @scotti].map(&:name) # edit distance of 2, 3, 5 respectively
+      expect(results.set.first.name).to eq(@collier.name)
       expect(results.contains_exact_match).to eq false
     end
 
@@ -245,24 +240,20 @@ RSpec.describe PersonSearch, elastic: true do
           expect(Person.search('*').results.total).to eql 29
         end
 
-        it 'returns person with exact first name and surname first' do
+        it 'returns person with exact first name and surname in 1st rank' do
           expect(results.set.first.name).to eql 'Steve Richards'
         end
 
-        it 'returns people with synonyms of first name and exact surname in second batch, ordered alphabetically' do
+        it 'returns people with synonyms of first name and exact surname in 2nd rank' do
           expect(results.set[1..2].map(&:name)).to match_array ['Stephen Richards', 'Steven Richards']
         end
 
-        it 'returns people with exact surname but different first name in 3rd batch' do
-          expect(results.set[3].name).to eql 'John Richards'
-        end
-
-        it 'returns people with similar first name and similar surname in 4th batch' do
-          expect(results.set[4..6].map(&:name)).to match_array ['Steve Richardson', 'Steven Richardson', 'Stephen Richardson']
+        it 'returns people with similar first name or similar surname in 3rd rank' do
+          expect(results.set[3..7].map(&:name)).to match_array ['John Richards', 'Steve Edmundson', 'Steve Richardson', 'Steven Richardson', 'Stephen Richardson']
         end
 
         it 'returns people with different and similar combinations' do
-          expect(results.set[7..-1].map(&:name)).to match_array ['Steve Edmundson', 'John Richardson', 'Personal Assistant', 'Stephen Edmundson']
+          expect(results.set[8..-1].map(&:name)).to match_array ['John Richardson', 'Personal Assistant', 'Stephen Edmundson']
         end
       end
 
