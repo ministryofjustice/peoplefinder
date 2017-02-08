@@ -1,4 +1,3 @@
-
 module Concerns::Searchable
   extend ActiveSupport::Concern
 

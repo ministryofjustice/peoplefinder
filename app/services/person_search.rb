@@ -172,8 +172,8 @@ class PersonSearch
       post_tags: ['</span>'],
       fields: {
         name: {},
-        email: {},
-        role_and_group: {}
+        role_and_group: {},
+        current_project: {}
       }
     }
   end

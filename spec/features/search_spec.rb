@@ -80,6 +80,15 @@ feature 'Searching feature', elastic: true do
         expect(page).to have_selector('.es-highlight', text: 'Jon')
       end
     end
+
+    scenario 'highlights individual current project terms' do
+      fill_in 'query', with: 'Digital Prisons Browne'
+      click_button 'Submit search'
+      within '.result-current-project' do
+        expect(page).to have_selector('.es-highlight', text: 'Digital')
+        expect(page).to have_selector('.es-highlight', text: 'Prisons')
+      end
+    end
   end
 
 end
