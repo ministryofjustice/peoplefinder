@@ -2,6 +2,10 @@
 #
 module StateCookieHelper
 
+  def delete_state_cookie
+    cookies.delete StateManagerCookie::KEY
+  end
+
   def set_state_cookie_action_create
     smc = StateManagerCookie.new(cookies).action_create!
     cookies[smc.cookie_key] = smc.to_cookie
