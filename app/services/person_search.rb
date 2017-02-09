@@ -20,18 +20,18 @@ class PersonSearch
   # #=> [ @set=[#<Elasticsearch::Model::Response::Records], true ]
   #
   def perform_search
-    if @query.present?
-      do_searches unless email_found(@email_query)
+    if query.present?
+      do_searches unless email_found
     end
     results
   end
 
   private
 
-  def email_found(email)
-    person = Person.find_by_email(email)
-    if person
-      @results.set = [person]
+  def email_found
+    @matches = email_search
+    if matches.records.present?
+      @results.set = matches.records
       @results.contains_exact_match = true
     end
     @results.present?
@@ -81,17 +81,8 @@ class PersonSearch
     @search_definition[:min_score] = 0.02
     @search_definition[:query] = combined_query
     @search_definition[:sort] = sort_query
-    @search_definition[:highlight] = highlight_fields
+    @search_definition[:highlight] = highlighter
     search @search_definition
-  end
-
-  # score descending is the default sorting.
-  # for identical scores we sort alphabetically on name
-  def sort_query
-    {
-      _score: { order: 'desc' },
-      name: { order: 'asc' }
-    }
   end
 
   def clean_query query
@@ -104,6 +95,35 @@ class PersonSearch
 
   def search query
     Person.search_results(query)
+  end
+
+  # score descending is the default sorting.
+  # for identical scores we sort alphabetically on name
+  def sort_query
+    {
+      _score: { order: 'desc' },
+      name: { order: 'asc' }
+    }
+  end
+
+  # exact match - email is not analyzed (see mappings)
+  def email_query
+    {
+      filtered: {
+        query: {
+          term: {
+            email: @email_query
+          }
+        }
+      }
+    }
+  end
+
+  def email_search
+    @search_definition = {}
+    @search_definition[:query] = email_query
+    @search_definition[:highlight] = highlighter
+    search @search_definition
   end
 
   # exact full name word/token match booster, not including synonyms
@@ -127,7 +147,7 @@ class PersonSearch
       match: {
         name: {
           query: @query,
-          analyzer: 'name_synonyms_expand',
+          analyzer: 'name_synonyms_analyzer', # this is the default name field's analyzer
           boost: 4.0 # boost to prioritise synonym matches to 2nd rank
         }
       }
@@ -149,7 +169,7 @@ class PersonSearch
   # promote fuzzy surname matches above role/group, above full name
   #
   def fields_to_search
-    %w(surname^12 role_and_group^6 current_project^4 location^4 name^4)
+    %w(surname^12 role_and_group^6 current_project^4 location^4 name^4 email)
   end
 
   def combined_query
@@ -166,15 +186,20 @@ class PersonSearch
     }
   end
 
-  def highlight_fields
+  def highlighter
     {
       pre_tags: ['<span class="es-highlight">'],
       post_tags: ['</span>'],
-      fields: {
-        name: {},
-        role_and_group: {},
-        current_project: {}
-      }
+      fields: fields_to_highlight
+    }
+  end
+
+  def fields_to_highlight
+    {
+      name: {},
+      role_and_group: {},
+      current_project: {},
+      email: {}
     }
   end
 

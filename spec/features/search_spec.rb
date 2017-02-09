@@ -32,6 +32,13 @@ feature 'Searching feature', elastic: true do
   end
 
   feature 'for people' do
+
+    scenario 'retrieves single exact match for email' do
+      fill_in 'query', with: 'jon.browne@digital.justice.gov.uk'
+      click_button 'Submit search'
+      expect(page).to have_selector('.search-result', count: 1)
+    end
+
     scenario 'retrieves the details of matching people' do
       fill_in 'query', with: 'Browne'
       click_button 'Submit search'
@@ -63,7 +70,16 @@ feature 'Searching feature', elastic: true do
   end
 
   feature 'higlighting of search terms' do
-    scenario 'highlights individual role group terms' do
+
+    scenario 'highlights entire matching email address' do
+      fill_in 'query', with: 'jon.browne@digital.justice.gov.uk'
+      click_button 'Submit search'
+      within '.result-email' do
+        expect(page).to have_selector('.es-highlight', text: 'jon.browne@digital.justice.gov.uk')
+      end
+    end
+
+    scenario 'highlights individual role and group terms' do
       fill_in 'query', with: 'HMP Wilsden'
       click_button 'Submit search'
       within '.result-memberships' do
