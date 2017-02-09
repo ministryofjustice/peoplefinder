@@ -17,6 +17,7 @@ class PeopleController < ApplicationController
   # GET /people/1
   def show
     authorize @person
+    delete_state_cookie
   end
 
   # GET /people/new
