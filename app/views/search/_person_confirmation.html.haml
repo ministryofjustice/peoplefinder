@@ -9,6 +9,7 @@
 
           - if person.memberships.present?
             - person.memberships.each do |membership|
+              = "#{ membership.role }, " if membership.role?
               = link_to membership.group.name, membership.group
 
           .meta= call_to(person.phone)

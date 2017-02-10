@@ -60,7 +60,7 @@ class PersonSearch
   end
 
   def any_partial_match? person
-    [:description, :role_and_group, :location_in_building, :building, :city, :current_project].any? do |field|
+    [:description, :role_and_group, :location, :current_project].any? do |field|
       any_partial_match_for?(person, field)
     end
   end
