@@ -205,6 +205,12 @@ If you get an IndexMissingException, you will need to index the Person model:
 bundle exec rake environment elasticsearch:import:model CLASS='Person' FORCE=y
 ```
 
+Or, alternatively:
+
+```
+rake peoplefinder:es:index_people
+```
+
 Or you can create the index from the console:
 
 ```

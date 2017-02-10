@@ -5,27 +5,31 @@
         .image-background
           = profile_image_tag person
         .details
-          - index = person_iteration.index
-          %h3= link_to person.name, person,
-            search_result ? { data: search_result_analytics_attributes(index) } : {}
-          - if person.memberships.empty?
-            .meta
-          - else
-            - person.memberships.each do |membership|
-              .meta
-                = "#{ membership.role }, " if membership.role?
-                = link_to membership.group.name, membership.group,
-                  search_result ? { data: search_result_analytics_attributes(index) } : {}
+          %h3.result-name
+            = link_to hit.try(:highlight).try(:name) ? hit.highlight.name.join.html_safe : person.name,
+            person,
+            { data: search_result_analytics_attributes(index) }
+
+          .result-memberships
+            - if person.memberships.present?
+              - person.memberships.each do |membership|
+                .meta
+                  = link_to hit.try(:highlight).try(:role_and_group) ? hit.highlight.role_and_group.join.html_safe : membership.group.name,
+                    membership.group,
+                    { data: search_result_analytics_attributes(index) }
 
           .meta= call_to(person.phone)
-          .meta= mail_to(person.email, nil, data: search_result_analytics_attributes(index) )
-          - if person.current_project.present?
+          .result-email
             .meta
-              Current project(s):
-              = person.current_project
+              = mail_to(person.email, hit.try(:highlight).try(:email) ? hit.highlight.email.join.html_safe : person.email, data: search_result_analytics_attributes(index) )
 
-        - if ['sessions','tokens', 'people'].include? controller_name
-          .select-person
-            = form_for person, url: update_email_person_path(person) do |f|
-              = f.hidden_field :email, value: @person.email
-              = f.submit 'Select', class: 'button'
+          .result-current-project
+            - if person.current_project.present?
+              .meta
+                Current project(s):
+                = hit.try(:highlight).try(:current_project) ? hit.highlight.current_project.join.html_safe : person.current_project
+
+      - if Rails.env.development? || current_user.super_admin?
+        %span{style: "float: right; font-size: 10px;"}
+          Score:
+          = hit._score

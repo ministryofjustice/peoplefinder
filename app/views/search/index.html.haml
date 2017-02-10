@@ -13,7 +13,9 @@
       == found #{pluralize(@people_results.size + @team_results.size, "similar result")}
 
   = render partial: 'search/team', collection: @team_results.set
-  = render partial: 'search/person', collection: @people_results.set, locals: { search_result: true }
+
+  - @people_results.each_with_hit.with_index do |(person, hit), idx|
+    = render partial: 'search/person', locals: { person: person, hit: hit, index: idx }
 
   .add-new-person
     Can't find the person you're looking for? Why not

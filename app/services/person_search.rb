@@ -1,6 +1,6 @@
 class PersonSearch
 
-  attr_reader :query, :results, :phrase_name_matches, :phrase_matches, :fuzzy_matches
+  attr_reader :query, :results, :matches
 
   def initialize query, results
     @query = clean_query query
@@ -10,52 +10,42 @@ class PersonSearch
     @max = 100
   end
 
-  # Returns a two element array, first element is the list of results, second
-  # element is a boolean which is true when the results contain an exact match
-  # for supplied query term and false otherwise.
+  # Returns a structure consisting of, Elasticsearch::Model::Response::Records
+  # and a boolan denoting whether an "exact" match is included based on the
+  # supplied query term and false otherwise.
   #
   # Example:
   #
   # PersonSearch.new('John Smith', SearchResults.new).perform_search
-  # #=> [ [#<Person given_name: "John", surname: "Smith"], true ]
+  # #=> [ @set=[#<Elasticsearch::Model::Response::Records], true ]
   #
-  # PersonSearch.new('John Zoolander', SearchResults.new).perform_search
-  # #=> [ [#<Person given_name: "John", surname: "Smith"], false ]
   def perform_search
-    if @query.present?
-      do_searches unless email_found(@email_query)
+    if query.present?
+      do_searches unless email_found
     end
-    @results
+    results
   end
 
-  def email_found(email)
-    person = Person.find_by_email(email)
-    if person
-      @results.set = [person]
+  private
+
+  def email_found
+    @matches = email_search
+    if matches.records.present?
+      @results.set = matches.records
       @results.contains_exact_match = true
     end
     @results.present?
   end
 
   def do_searches
-    perform_searches
-
-    results = [].
-              push(*phrase_name_matches).
-              push(*phrase_matches).
-              push(*fuzzy_matches).
-              uniq[0..@max - 1]
-
-    @results.set = results
+    execute_search
+    @results.set = matches.records
     @results.contains_exact_match = exact_match_exists?
   end
 
   def exact_match_exists?
     @exact_match ||= if single_word_query?
-                       phrase_name_matches.present? ||
-                         phrase_matches.present? ||
-                         any_partial_name_matches?(fuzzy_matches) ||
-                         any_exact_matches?
+                       matches.records.present?
                      else
                        any_exact_matches?
                      end
@@ -81,52 +71,18 @@ class PersonSearch
     end
   end
 
-  def perform_searches
-    @phrase_name_matches = phrase_name_search
-    @phrase_matches = phrase_search
-    @fuzzy_matches = fuzzy_search
+  def execute_search
+    @matches = combined_search
   end
 
-  # search name field for exact "phrase" with synonym and exact match boost
-  # NOTE: includes synonyms equivalence
-  #
-  def phrase_name_search
-    @search_definitiion = {}
-    @search_definitiion[:query] = phrase_name_query
-    search @search_definitiion
-  end
-
-  # search all indexed fields for any phrase matches
-  # NOTE: does NOT include synonym equivalence
-  #
-  def phrase_search
-    search %("#{@query}")
-  end
-
-  def fuzzy_search
-    results = search(
-      size: @max,
-      query: fuzzy_query
-    )
-
-    sort_by_edit_distance(results)
-  end
-
-  def sort_by_edit_distance results
-    if any_close_by_edit_distance? results
-      results.sort_by { |x| Text::Levenshtein.distance(x.name, @query) }
-    else
-      results
-    end
-  end
-
-  def any_close_by_edit_distance? results
-    edit_distances = results.map { |x| Text::Levenshtein.distance(x.name, @query) }
-    edit_distances.any? { |e| e > 0 && e < 4 }
-  end
-
-  def fields_to_search
-    %w(name surname^4 description location_in_building building city role_and_group current_project)
+  def combined_search
+    @search_definition = {}
+    @search_definition[:size] = @max
+    @search_definition[:min_score] = 0.02
+    @search_definition[:query] = combined_query
+    @search_definition[:sort] = sort_query
+    @search_definition[:highlight] = highlighter
+    search @search_definition
   end
 
   def clean_query query
@@ -138,51 +94,112 @@ class PersonSearch
   end
 
   def search query
-    Person.search_results(query, limit: @max).to_a
+    Person.search_results(query)
   end
 
-  private
-
-  def phrase_name_query
+  # score descending is the default sorting.
+  # for identical scores we sort alphabetically on name
+  def sort_query
     {
-      bool: {
-        must: match_name_synonym_phrase,
-        should: match_standard_name_boost
-      }
+      _score: { order: 'desc' },
+      name: { order: 'asc' }
     }
   end
 
-  def match_name_synonym_phrase
+  # exact match - email is not analyzed (see mappings)
+  def email_query
     {
-      match_phrase: {
-        name: {
-          query: @query,
-          analyzer: 'name_synonyms_expand' # default analyzer for name field but clearer o be explicit
+      filtered: {
+        query: {
+          term: {
+            email: @email_query
+          }
         }
       }
     }
   end
 
+  def email_search
+    @search_definition = {}
+    @search_definition[:query] = email_query
+    @search_definition[:highlight] = highlighter
+    search @search_definition
+  end
+
+  # exact full name word/token match booster, not including synonyms
+  # - promote exact name matches to 1st rank
   def match_standard_name_boost
     {
       match: {
         name: {
           query: @query,
-          analyzer: 'standard', # override default synonym analyzer
-          boost: 10.0 # boost to prioritise exact matches over synonyms
+          analyzer: 'standard', # override default name field synonym analyzer
+          boost: 6.0 # boost to prioritise exact matches over synonyms
         }
       }
     }
   end
 
-  def fuzzy_query
+  # exact full name word/token match booster, including synonyms
+  # - promote exact name matches with synonyms to 2nd rank
+  def match_synonym_name_boost
+    {
+      match: {
+        name: {
+          query: @query,
+          analyzer: 'name_synonyms_analyzer', # this is the default name field's analyzer
+          boost: 4.0 # boost to prioritise synonym matches to 2nd rank
+        }
+      }
+    }
+  end
+
+  def multi_match_fuzzy
     {
       multi_match: {
         fields: fields_to_search,
-        fuzziness: 1, # maximum allowed Levenshtein Edit Distance/ 'AUTO' is recommended by documention
-        prefix_length: 1, # number of initial characters which won't be "fuzzified"
-        query: @query
+        fuzziness: 2, # maximum allowed Levenshtein Edit Distance/ 'AUTO' is recommended by documention
+        prefix_length: 3, # number of initial characters which won't be "fuzzified"
+        query: @query,
+        analyzer: 'standard'
       }
+    }
+  end
+
+  # promote fuzzy surname matches above role/group, above full name
+  #
+  def fields_to_search
+    %w(surname^12 role_and_group^6 current_project^4 location^4 name^4)
+  end
+
+  def combined_query
+    {
+      bool: {
+        should: [
+          match_standard_name_boost,
+          match_synonym_name_boost,
+          multi_match_fuzzy
+        ],
+        minimum_should_match: 1,
+        boost: 1.0
+      }
+    }
+  end
+
+  def highlighter
+    {
+      pre_tags: ['<span class="es-highlight">'],
+      post_tags: ['</span>'],
+      fields: fields_to_highlight
+    }
+  end
+
+  def fields_to_highlight
+    {
+      name: {},
+      role_and_group: {},
+      current_project: {},
+      email: {}
     }
   end
 

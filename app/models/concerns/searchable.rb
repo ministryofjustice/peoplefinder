@@ -16,8 +16,8 @@ module Concerns::Searchable
       __elasticsearch__.delete_index! index: index_name
     end
 
-    def self.search_results(query, limit:)
-      search(query).records.limit(limit)
+    def self.search_results(query)
+      search(query)
     end
 
     settings analysis: {
@@ -28,7 +28,7 @@ module Concerns::Searchable
         }
       },
       analyzer: {
-        name_synonyms_expand: {
+        name_synonyms_analyzer: {
           tokenizer: 'whitespace',
           filter: %w(
             lowercase
@@ -37,7 +37,8 @@ module Concerns::Searchable
       }
     } do
       mapping do
-        indexes :name, search_analyzer: 'name_synonyms_expand', type: 'string'
+        indexes :name, search_analyzer: 'name_synonyms_analyzer', type: 'string'
+        indexes :email, index: :not_analyzed
       end
     end
   end
