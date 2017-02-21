@@ -17,11 +17,11 @@ class AllUserRolesQuery < BaseQuery
         full_name: rec.full_name,
         address: rec.address, # can't use location as the name as this is a method on person model
         team_name: rec.team_name,
-        test: rec.ancestor_ids,
         ancestors: rec.ancestors,
         team_role: rec.team_role,
         login_count: rec.login_count,
-        last_login_at: rec.last_login_at
+        last_login_at: rec.last_login_at,
+        updates_count: rec.updates_count
       }
     end
   end
@@ -54,6 +54,18 @@ class AllUserRolesQuery < BaseQuery
   end
   # rubocop:enable MethodLength
 
+  def select_updates_count
+    <<~SQL
+    (
+      SELECT count(v.id) AS updates_count
+      FROM versions v
+      WHERE v.item_id = people.id
+        AND v.item_type = 'Person'
+        AND v.event = 'update'
+    )
+    SQL
+  end
+
   def selected_columns
     <<~SQL
       people.id,
@@ -62,9 +74,9 @@ class AllUserRolesQuery < BaseQuery
       people.login_count,
       people.last_login_at,
       groups.name AS team_name,
-      groups.ancestry || regexp_split_to_array(groups.ancestry,'\/') AS ancestor_ids,
       #{select_ancestors},
-      memberships.role AS team_role
+      memberships.role AS team_role,
+      #{select_updates_count} AS updates_count
     SQL
   end
 
