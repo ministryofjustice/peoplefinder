@@ -80,7 +80,7 @@ RSpec.describe 'Completion' do # rubocop:disable RSpec/DescribeClass
       Person.overall_completion
     end
 
-    it 'returns 100 if there is onlu one person who is 100% complete' do
+    it 'returns 100 if there is only one person who is 100% complete' do
       person = create(:person, completed_attributes)
       create(:membership, person: person)
       expect(Person.overall_completion).to eq(100)

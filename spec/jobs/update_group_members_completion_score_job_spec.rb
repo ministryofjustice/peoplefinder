@@ -25,6 +25,11 @@ RSpec.describe UpdateGroupMembersCompletionScoreJob, type: :job do
     it 'enqueues with group params' do
       is_expected.to have_enqueued_job.with(group)
     end
+
+    it 'checks job is not already enqueued' do
+      expect_any_instance_of(described_class).to receive(:enqueued?).with group
+      described_class.perform_later(group)
+    end
   end
 
   context '#error_handler' do
@@ -48,10 +53,12 @@ RSpec.describe UpdateGroupMembersCompletionScoreJob, type: :job do
       expect_any_instance_of(ActiveJob::DeserializationError).to receive(:original_exception).and_return(ActiveRecord::RecordNotFound)
       perform_enqueued_jobs { enqueue_job }
     end
-
   end
 
   context 'when called' do
+    let(:group) { create :group }
+    let(:parent) { group.parent }
+
     before do
       allow(group).to receive(:update_members_completion_score!)
     end
@@ -62,6 +69,7 @@ RSpec.describe UpdateGroupMembersCompletionScoreJob, type: :job do
     end
 
     context 'with group with nil parent' do
+      before { group.parent = nil }
       it 'does not create new job for parent' do
         expect(described_class).not_to receive(:perform_later).with(parent)
         described_class.perform_now(group)
@@ -69,19 +77,8 @@ RSpec.describe UpdateGroupMembersCompletionScoreJob, type: :job do
     end
 
     context 'with group with a parent' do
-      let(:parent) { double }
-
       it 'creates new job to update parent' do
         expect(described_class).to receive(:perform_later).with(parent)
-        described_class.perform_now(group)
-      end
-    end
-
-    context 'with group with root department as parent' do
-      let(:parent) { Group.department }
-
-      it 'does not create new job for parent' do
-        expect(described_class).not_to receive(:perform_later).with(parent)
         described_class.perform_now(group)
       end
     end
