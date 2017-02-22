@@ -4,6 +4,8 @@ class UserUpdateMailer < ActionMailer::Base
 
   layout 'email'
 
+  before_action :set_firefox_warning
+
   def new_profile_email(person, by_email = nil)
     @person = person
     @by_email = by_email
@@ -26,6 +28,10 @@ class UserUpdateMailer < ActionMailer::Base
   end
 
   private
+
+  def set_firefox_warning
+    @firefox_browser_warning = t('.firefox_message', default: '')
+  end
 
   def profile_url(person)
     person_url(person)

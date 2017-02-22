@@ -23,6 +23,12 @@ en:
   shared:
     finish_profile_request: &finish_profile_request "You need to create a People Finder account to finish signing in"
     unauthorised: &unauthorised Unauthorised, insufficient privileges
+    firefox_message: &firefox_message |
+        <strong style="font-weight: 700">Internet Explorer 6 and 7 users:</strong>
+        <br/>
+        We recommend the <strong style="font-weight: 700">Firefox</strong> web browser for a more enhanced experience.
+        <br/><br/>
+        <strong style="font-weight: 700">Copy and paste</strong> the link below to use in <strong style="font-weight: 700">Firefox</strong>
   time:
     formats:
       default: "%d %b %Y %H:%M"
@@ -167,37 +173,51 @@ en:
   problem_report_mailer:
     problem_report:
       subject: "Problem reported by People Finder user"
+      firefox_message: *firefox_message
   reminder_mailer:
     information_request:
       subject: "Request to update your People Finder profile"
+      firefox_message: *firefox_message
     never_logged_in:
       subject: 'Are your People Finder details up to date?'
+      firefox_message: *firefox_message
     person_profile_update:
       subject: 'Are your People Finder details up to date?'
+      firefox_message: *firefox_message
     team_description_missing:
       subject: 'Improve your team’s profile on People Finder'
+      firefox_message: *firefox_message
   suggestion_mailer:
     person_email:
       subject: "Your People Finder profile"
+      firefox_message: *firefox_message
     team_admin_email:
       subject: "People Finder profile improvements"
+      firefox_message: *firefox_message
   user_update_mailer:
     new_profile_email:
       subject: "You’re on MOJ People Finder, check your profile today"
+      firefox_message: *firefox_message
     updated_profile_email:
       subject: "Your profile on MOJ People Finder has been edited"
+      firefox_message: *firefox_message
     deleted_profile_email:
       subject: "Your profile on MOJ People Finder has been deleted"
+      firefox_message: *firefox_message
     updated_address_from_email:
       subject: "This email address has been removed from a profile on MOJ People Finder"
+      firefox_message: *firefox_message
     updated_address_to_email:
       subject: "This email address has been added to a profile on MOJ People Finder"
+      firefox_message: *firefox_message
   group_update_mailer:
     inform_subscriber:
       subject: "People Finder team updated"
+      firefox_message: *firefox_message
   token_mailer:
     new_token_email:
       subject: 'Access request to MOJ People Finder'
+      firefox_message: *firefox_message
   errors: &errors
     information_request:
       message_required: "You must enter a message to be sent to the person"

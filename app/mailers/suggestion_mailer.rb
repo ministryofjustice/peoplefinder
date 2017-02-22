@@ -5,6 +5,7 @@ class SuggestionMailer < ActionMailer::Base
     @person = person
     @suggester = suggester
     @suggestion = Suggestion.new(suggestion_hash)
+    @firefox_browser_warning = t('.firefox_message', default: '')
     mail to: person.email
   end
 
@@ -12,6 +13,7 @@ class SuggestionMailer < ActionMailer::Base
     @person = person
     @suggester = suggester
     @suggestion = Suggestion.new(suggestion_hash)
+    @firefox_browser_warning = t('.firefox_message', default: '')
     mail to: admin.email
   end
 end
