@@ -3,15 +3,29 @@ require 'rails_helper'
 RSpec.describe CsvPublisher::UserBehaviorReport, versioning: true do
   include PermittedDomainHelper
 
+  let(:file) { described_class.default_file_path }
+  let(:teardown) do
+    File.delete(file) if File.exist?(file)
+  end
+
+  before { teardown }
+  after { teardown }
+
   it { is_expected.to respond_to :publish! }
   it { is_expected.to respond_to :file }
   it { is_expected.to respond_to :query }
   it { is_expected.to respond_to :dataset }
+  it { expect(described_class).to respond_to :default_file_path }
+
+  describe '#default_file_path' do
+    subject { described_class.default_file_path }
+    it 'returns file name containing app name, environment and report name' do
+      expect(subject.to_path).to include "peoplefinder_test_user_behavior_report"
+    end
+  end
 
   describe '#publish!' do
     subject { described_class.new(file).publish! }
-
-    let(:file) { Rails.root.join('tmp', 'reports', 'peoplefinder_test_user_behavior_report.csv') }
 
     let(:moj) { create :department}
     let(:csg) { create(:group, name: 'Corporate Service Group', parent: moj) }
@@ -33,10 +47,6 @@ RSpec.describe CsvPublisher::UserBehaviorReport, versioning: true do
       adrian.update! location_in_building: '10.51', building: 'Fleet Street', city: 'Vancouver'
       adrian.update! location_in_building: '10.52', building: 'Fleet Street', city: 'Vancouver'
       adrian
-    end
-
-    after do
-      File.delete(file) if File.exist?(file)
     end
 
     it 'returns Pathname object' do

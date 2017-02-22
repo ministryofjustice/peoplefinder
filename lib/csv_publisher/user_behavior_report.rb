@@ -6,7 +6,7 @@ module CsvPublisher
     attr_reader :file, :query, :dataset
 
     def initialize file = nil
-      @file = file || Rails.root.join('tmp', 'reports', default_file_name)
+      @file = file || self.class.default_file_path
       @query = UserBehaviorQuery.new
     end
 
@@ -15,17 +15,31 @@ module CsvPublisher
       write! if dataset.present?
     end
 
-    private
-
-    # e.g. peoplefinder_staging_user_behavior_report
-    def default_file_name
-      Rails.application.class.parent_name.underscore +
-        '_' +
-        (ENV['ENV'] || Rails.env).downcase +
-        '_' +
-        self.class.name.demodulize.underscore +
-        '.csv'
+    def self.default_file_path
+      Dir.mkdir(tmp_dir) unless Dir.exist? tmp_dir
+      tmp_dir.join(default_file_name)
     end
+
+    class << self
+
+      private
+
+      def tmp_dir
+        @tmp_dir ||= Rails.root.join('tmp', 'reports')
+      end
+
+      # e.g. peoplefinder_staging_user_behavior_report
+      def default_file_name
+        Rails.application.class.parent_name.underscore +
+          '_' +
+          (ENV['ENV'] || Rails.env).downcase +
+          '_' +
+          name.demodulize.underscore +
+          '.csv'
+      end
+    end
+
+    private
 
     def csv_header
       dataset.first.keys
