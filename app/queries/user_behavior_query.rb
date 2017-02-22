@@ -1,4 +1,6 @@
-class AllUserRolesQuery < BaseQuery
+class UserBehaviorQuery < BaseQuery
+
+  DATE_STRING_FORMAT = '%d-%m-%Y'.freeze
 
   def initialize
     @relation = Person.all.unscoped
@@ -17,10 +19,10 @@ class AllUserRolesQuery < BaseQuery
         full_name: rec.full_name,
         address: rec.address, # can't use location as the name as this is a method on person model
         team_name: rec.team_name,
-        ancestors: rec.ancestors,
+        ancestors: rec.ancestors&.join(' > '),
         team_role: rec.team_role,
         login_count: rec.login_count,
-        last_login_at: rec.last_login_at,
+        last_login_at: rec.last_login_at&.strftime(DATE_STRING_FORMAT),
         updates_count: rec.updates_count
       }
     end
@@ -39,15 +41,16 @@ class AllUserRolesQuery < BaseQuery
   def select_ancestors
     <<~SQL
       CASE
-        WHEN groups.ancestry_depth > 0 then
+        WHEN groups.ancestry_depth IS NOT NULL then
           (
-          SELECT array_agg(name) AS names
-          FROM
-            (
-            SELECT g2.name AS name
-            FROM groups AS g2
-            WHERE g2.id::text = ANY (regexp_split_to_array(groups.ancestry,'\/'))
-            ) as group_names
+            SELECT array_agg(name) AS names
+            FROM
+              (
+                SELECT g2.name AS name
+                FROM groups AS g2
+                WHERE g2.id::text = ANY (regexp_split_to_array(groups.ancestry,'\/'))
+                ORDER BY g2.ancestry_depth ASC
+              ) AS group_names
           )
       END as ancestors
     SQL
