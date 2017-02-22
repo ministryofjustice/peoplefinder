@@ -3,7 +3,13 @@ require 'rails_helper'
 RSpec.describe CsvPublisher::UserBehaviorReport, versioning: true do
   include PermittedDomainHelper
 
+  it { is_expected.to respond_to :publish! }
+  it { is_expected.to respond_to :file }
+  it { is_expected.to respond_to :query }
+  it { is_expected.to respond_to :dataset }
+
   describe '#publish!' do
+    subject { described_class.new(file).publish! }
 
     let(:file) { Rails.root.join('tmp', 'reports', 'peoplefinder_test_user_behavior_report.csv') }
 
@@ -29,15 +35,24 @@ RSpec.describe CsvPublisher::UserBehaviorReport, versioning: true do
       adrian
     end
 
-    before do
-      File.delete file
+    after do
+      File.delete(file) if File.exist?(file)
     end
 
-    it 'writes the file' do
+    it 'returns Pathname object' do
+      is_expected.to be_a Pathname
+    end
+
+    it 'calls #data on query object' do
+      expect_any_instance_of(UserBehaviorQuery).to receive(:data)
+      subject
+    end
+
+    it 'writes to the specified file' do
       expect(File.exist?(file)).to eql false
-      report = described_class.new file
-      report.publish!
+      subject
       expect(File.exist?(file)).to eql true
     end
+
   end
 end

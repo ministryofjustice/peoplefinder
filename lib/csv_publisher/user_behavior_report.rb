@@ -3,16 +3,16 @@ require 'csv'
 module CsvPublisher
   class UserBehaviorReport
 
-    attr_reader :file, :dataset
+    attr_reader :file, :query, :dataset
 
     def initialize file = nil
-      @file = file || Rails.root.join('tmp', 'reports', default_file_name).to_path
+      @file = file || Rails.root.join('tmp', 'reports', default_file_name)
       @query = UserBehaviorQuery.new
     end
 
     def publish!
-      @dataset = @query.data
-      write! if @dataset.present?
+      @dataset = query.data
+      write! if dataset.present?
     end
 
     private
@@ -40,12 +40,12 @@ module CsvPublisher
     end
 
     def write!
-      CSV.open(file, 'w') do |csv|
-        csv << csv_header
+      CSV.open(file, 'w', write_headers: true, headers: csv_header) do |csv|
         dataset.each do |rec|
           csv << csv_record(rec)
         end
       end
+      file # return pathname to published file
     end
   end
 end

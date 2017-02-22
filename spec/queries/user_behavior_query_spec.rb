@@ -18,10 +18,10 @@ describe UserBehaviorQuery, versioning: true do
 
   let!(:person2) { create :person, given_name: 'John', surname: 'Smith', email: 'john.smith@digital.justice.gov.uk', login_count: 2, last_login_at: Time.new(2017, 05, 22, 2, 2, 2, "+00:00") }
   let!(:person3) do
-    adrian = create :person, given_name: 'Adrian', surname: 'Smith', email: 'adrian.smith@digital.justice.gov.uk', login_count: 3, last_login_at: Time.new(2016, 05, 21, 3, 3, 3, "+00:00")
-    adrian.update! location_in_building: '10.51', building: 'Fleet Street', city: 'Vancouver'
-    adrian.update! location_in_building: '10.52', building: 'Fleet Street', city: 'Vancouver'
-    adrian
+    person = create :person, given_name: 'Adrian', surname: 'Smith', email: 'adrian.smith@digital.justice.gov.uk', login_count: 3, last_login_at: Time.new(2016, 05, 21, 3, 3, 3, "+00:00")
+    person.update! location_in_building: '10.51', building: 'Fleet Street', city: 'Vancouver'
+    person.update! location_in_building: '10.52', building: 'Fleet Street', city: 'Vancouver'
+    person
   end
 
   describe '#call' do
