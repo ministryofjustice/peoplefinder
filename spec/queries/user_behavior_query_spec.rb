@@ -4,7 +4,7 @@ describe UserBehaviorQuery, versioning: true do
   include PermittedDomainHelper
 
   let(:expected_attributes) { %w( id full_name address login_count last_login_at team_name team_role ancestors updates_count) }
-  let(:moj) { create :department}
+  let(:moj) { create :department }
   let(:csg) { create(:group, name: 'Corporate Services Group', parent: moj) }
   let(:ds) { create(:group, name: 'Digital Services', parent: csg) }
 
