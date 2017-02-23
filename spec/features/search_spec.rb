@@ -31,6 +31,11 @@ feature 'Searching feature', elastic: true do
     visit home_path
   end
 
+  scenario 'does not error on null search' do
+    click_button 'Submit search'
+    expect(page).to have_content('not found')
+  end
+
   feature 'for people' do
 
     scenario 'retrieves single exact match for email' do
