@@ -1,9 +1,7 @@
 module Admin
   class ManagementController < ApplicationController
     before_action :set_search_box_render
-
-    def show
-    end
+    before_action :authorize_user
 
     def user_behavior_report
       @file = CsvPublisher::UserBehaviorReport.new.publish!
@@ -14,8 +12,14 @@ module Admin
       )
     end
 
+    private
+
     def set_search_box_render
       @admin_management = true
+    end
+
+    def authorize_user
+      authorize 'Admin::Management'.to_sym, "#{action_name}?".to_sym
     end
   end
 end

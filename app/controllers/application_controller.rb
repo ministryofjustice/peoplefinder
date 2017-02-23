@@ -73,8 +73,10 @@ class ApplicationController < ActionController::Base
 
   def i18n_flash(type, *partial_key, **options)
     full_key = [
-      :controllers, controller_path, *partial_key
+      :controllers, controller_path.tr('/', '.'), *partial_key
     ].join('.')
+    ap full_key
+    ap options
     flash[type] = I18n.t(full_key, options)
   end
 
@@ -95,6 +97,10 @@ class ApplicationController < ActionController::Base
       session[:desired_path] = request.fullpath
       session[:unauthorised_login] = true
       redirect_to new_sessions_path
+    elsif logged_in_regular?
+      warning :unauthorised
+      session[:desired_path] = request.fullpath
+      redirect_to home_path
     end
   end
 end

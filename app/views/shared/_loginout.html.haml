@@ -5,8 +5,8 @@
       %span
         = link_to current_user, person_path(current_user)
       - if super_admin?
-        %span.admin-link
-          = link_to 'Admin', admin_home_path
+        %span.manage-link
+          = link_to 'Manage', admin_home_path
       %span.logout-link
         = link_to "Sign out", sessions_path, :method => :delete
   - elsif logged_in_readonly? && !@login_screen
