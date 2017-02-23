@@ -1,6 +1,7 @@
 // GDS colour mixins
 @import '_colours';
 @import "peoplefinder_colours";
+@import "admin";
 @import "people";
 @import "groups";
 @import "home";
@@ -504,7 +505,7 @@ textarea.form-control {
           margin: 0.4em;
           width: auto;
         }
-        .logout-link {
+        .logout-link, .admin-link {
           border-left: 1px solid $white;
           display: inline-block;
           padding-left: 0.4em;

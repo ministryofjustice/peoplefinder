@@ -8,6 +8,10 @@ class ApplicationPolicy
 
   private
 
+  def admin_user?
+    @user.is_a?(Person) && @user.super_admin?
+  end
+
   def regular_user?
     @user.is_a?(Person)
   end

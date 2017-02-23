@@ -3,7 +3,7 @@ require 'rails_helper'
 describe UserBehaviorQuery, versioning: true do
   include PermittedDomainHelper
 
-  let(:expected_attributes) { %w( id full_name address login_count last_login_at team_name team_role ancestors updates_count) }
+  let(:expected_attributes) { %w( id full_name address login_count last_login_at team_name team_role ancestors updates_count).map(&:to_sym) }
   let(:moj) { create :department }
   let(:csg) { create(:group, name: 'Corporate Services Group', parent: moj) }
   let(:ds) { create(:group, name: 'Digital Services', parent: csg) }
@@ -73,7 +73,7 @@ describe UserBehaviorQuery, versioning: true do
 
     it 'returns expected columns' do
       expected_attributes.each do |attribute|
-        expect(subject.first).to respond_to attribute.to_sym
+        expect(subject.first).to respond_to attribute
       end
     end
 
@@ -157,7 +157,7 @@ describe UserBehaviorQuery, versioning: true do
 
     it 'returns expected attributes' do
       expected_attributes.each do |attribute|
-        expect(subject.first).to have_key attribute.to_sym
+        expect(subject.first).to have_key attribute
       end
     end
 

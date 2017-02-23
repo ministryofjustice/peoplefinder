@@ -81,7 +81,7 @@ module ApplicationHelper
   end
 
   def render_search_box?
-    logged_in? && !@login_screen && !@editing_mode
+    logged_in? && !@login_screen && !@editing_mode && !@admin_management
   end
 
   def call_to(telno)

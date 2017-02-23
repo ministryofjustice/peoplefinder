@@ -55,6 +55,8 @@ Rails.application.routes.draw do
 
   constraints ip: admin_ip_matcher do
     namespace :admin do
+      root to: 'management#show', as: :home
+      get 'user_behavior_report', controller: 'management', to: :user_behavior_report
       resources :person_uploads, only: [:new, :create]
     end
   end

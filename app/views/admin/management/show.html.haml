@@ -1,0 +1,11 @@
+%h1= t('management.header')
+%h3= t('management.report_header')
+.report-row
+  .report-name User behaviour report
+  .download-link
+    = link_to 'download', admin_user_behavior_report_path
+%h3= t('management.tools_header')
+%ul
+  %li
+    = link_to 'Bulk Uploader', new_admin_person_upload_path
+

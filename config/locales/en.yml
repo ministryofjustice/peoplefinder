@@ -134,6 +134,10 @@ en:
       works_friday: "F"
       works_saturday: "S"
       works_sunday: "S"
+  management:
+    header: Management
+    report_header: Reports
+    tools_header: Tools
   person_uploads:
     header: Upload people’s details
     add_new_team: Add new team

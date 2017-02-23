@@ -60,16 +60,16 @@ feature 'Login flow' do
       expect(person.login_count).to eql(4)
     end
 
-    scenario 'When super user logs in they see the super admin badge in their name' do
+    scenario 'When super user logs in they see the admin link in the banner' do
       create(:super_admin, email: email)
       omni_auth_log_in_as(email)
-      expect(base_page).to have_super_admin_badge
+      expect(base_page).to have_admin_link
     end
 
     scenario 'When a normal user logs in they do not see the super admin badge in their name' do
       create(:person, email: email)
       omni_auth_log_in_as(email)
-      expect(base_page).to have_no_super_admin_badge
+      expect(base_page).to have_no_admin_link
     end
   end
 

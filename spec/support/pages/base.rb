@@ -1,6 +1,6 @@
 module Pages
   class Base < SitePrism::Page
     element :flash_message, '#flash-messages'
-    element :super_admin_badge, '.login-bar span.super-admin'
+    element :admin_link, '.login-bar span.admin-link'
   end
 end
