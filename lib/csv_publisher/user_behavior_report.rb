@@ -15,12 +15,16 @@ module CsvPublisher
       write! if dataset.present?
     end
 
-    def self.default_file_path
-      Dir.mkdir(tmp_dir) unless Dir.exist? tmp_dir
-      tmp_dir.join(default_file_name)
-    end
-
     class << self
+
+      def publish!
+        new.publish!
+      end
+
+      def default_file_path
+        Dir.mkdir(tmp_dir) unless Dir.exist? tmp_dir
+        tmp_dir.join(default_file_name)
+      end
 
       private
 

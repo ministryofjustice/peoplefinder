@@ -59,6 +59,8 @@ en:
         upload_failed: "Upload failed"
       management:
         unauthorised: *unauthorised
+        generate_user_behavior_report: User behaviour report will be processed shortly. Try downloading in 2 minutes
+        file_not_generated: User behaviour report has not been generated. Generate first
     groups:
       group_created: "Created %{group}"
       group_updated: "Updated %{group}"

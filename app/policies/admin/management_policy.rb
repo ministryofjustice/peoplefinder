@@ -15,5 +15,9 @@ module Admin
       admin_user?
     end
 
+    def generate_user_behavior_report?
+      admin_user?
+    end
+
   end
 end
