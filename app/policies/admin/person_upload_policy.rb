@@ -2,11 +2,11 @@ module Admin
   class PersonUploadPolicy < ApplicationPolicy
 
     def new?
-      regular_user?
+      admin_user?
     end
 
     def create?
-      regular_user?
+      admin_user?
     end
 
   end

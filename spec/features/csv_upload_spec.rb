@@ -5,11 +5,20 @@ feature 'Upload CSV' do
   include PermittedDomainHelper
 
   let!(:group) { create(:group) }
+  let(:email) { 'test.user@digital.justice.gov.uk' }
 
   before do
-    omni_auth_log_in_as 'test.user@digital.justice.gov.uk'
+    omni_auth_log_in_as email
+    Person.find_by(email: email).update(super_admin: true)
     visit new_admin_person_upload_path
     select group.name, from: 'Choose your team'
+  end
+
+  scenario 'only super admins can access uploader' do
+    Person.find_by(email: email).update(super_admin: false)
+    visit new_admin_person_upload_path
+    expect(current_path).to eql home_path
+    expect(page).to have_selector('.flash-message.warning', text: 'Unauthorised')
   end
 
   scenario 'uploading a good CSV file' do

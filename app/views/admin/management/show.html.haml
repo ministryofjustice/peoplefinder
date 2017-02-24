@@ -1,0 +1,18 @@
+%h1= t('management.header')
+
+.grid-row
+  %h2= t('management.report_header')
+.grid-row{ style: "display: inline-block;"}
+  .grid
+    .report-name
+      User behaviour report
+    .download-link
+      = link_to 'download', admin_user_behavior_report_path
+
+.grid-row
+  .grid
+    %h2= t('management.tools_header')
+.grid-row
+  .grid
+    = link_to 'Bulk Uploader', new_admin_person_upload_path
+
