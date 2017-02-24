@@ -32,40 +32,44 @@ class UserBehaviorQuery < BaseQuery
 
   def joins_sql
     <<~SQL
-    LEFT JOIN memberships ON memberships.person_id = people.id
-    LEFT JOIN groups ON groups.id = memberships.group_id
+      LEFT JOIN memberships ON memberships.person_id = people.id
+      LEFT JOIN groups ON groups.id = memberships.group_id
     SQL
   end
 
-  # rubocop:disable MethodLength
   def select_ancestors
     <<~SQL
       CASE
         WHEN groups.ancestry_depth IS NOT NULL then
-          (
-            SELECT array_agg(name) AS names
-            FROM
-              (
-                SELECT g2.name AS name
-                FROM groups AS g2
-                WHERE g2.id::text = ANY (regexp_split_to_array(groups.ancestry,'\/'))
-                ORDER BY g2.ancestry_depth ASC
-              ) AS group_names
-          )
+          #{select_ancestor_name_array}
       END as ancestors
     SQL
   end
-  # rubocop:enable MethodLength
+
+  def select_ancestor_name_array
+    <<~SQL
+      (
+        SELECT array_agg(name) AS names
+          FROM
+            (
+              SELECT g2.name AS name
+              FROM groups AS g2
+              WHERE g2.id::text = ANY (regexp_split_to_array(groups.ancestry,'\/'))
+              ORDER BY g2.ancestry_depth ASC
+            ) AS group_names
+      )
+    SQL
+  end
 
   def select_updates_count
     <<~SQL
-    (
-      SELECT count(v.id) AS updates_count
-      FROM versions v
-      WHERE v.item_id = people.id
-        AND v.item_type = 'Person'
-        AND v.event = 'update'
-    )
+      (
+        SELECT count(v.id) AS updates_count
+        FROM versions v
+        WHERE v.item_id = people.id
+          AND v.item_type = 'Person'
+          AND v.event = 'update'
+      )
     SQL
   end
 
