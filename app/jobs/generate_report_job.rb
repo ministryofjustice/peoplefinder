@@ -16,7 +16,7 @@ class GenerateReportJob < ActiveJob::Base
   end
 
   def destroy_failed_jobs?
-    false
+    true
   end
 
   private
