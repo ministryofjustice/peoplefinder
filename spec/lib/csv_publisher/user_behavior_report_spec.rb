@@ -15,6 +15,7 @@ RSpec.describe CsvPublisher::UserBehaviorReport, versioning: true do
   it { is_expected.to respond_to :file }
   it { is_expected.to respond_to :query }
   it { is_expected.to respond_to :dataset }
+  it { expect(described_class).to respond_to :publish! }
   it { expect(described_class).to respond_to :default_file_path }
 
   describe '#default_file_path' do

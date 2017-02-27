@@ -2,6 +2,7 @@ require 'csv'
 
 module CsvPublisher
   class UserBehaviorReport
+    extend SingleForwardable
 
     attr_reader :file, :query, :dataset
 
@@ -14,13 +15,14 @@ module CsvPublisher
       @dataset = query.data
       write! if dataset.present?
     end
-
-    def self.default_file_path
-      Dir.mkdir(tmp_dir) unless Dir.exist? tmp_dir
-      tmp_dir.join(default_file_name)
-    end
+    def_single_delegator :new, :publish!, :publish!
 
     class << self
+
+      def default_file_path
+        Dir.mkdir(tmp_dir) unless Dir.exist? tmp_dir
+        tmp_dir.join(default_file_name)
+      end
 
       private
 
