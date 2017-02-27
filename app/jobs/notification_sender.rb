@@ -17,7 +17,7 @@ class NotificationSender
 
   def process_group(gi)
     notifications = QueuedNotification.start_processing_grouped_item(gi)
-    unless notifications.nil?
+    unless notifications.nil? || notifications.empty?
       @person = notifications.first.person
       @logged_in_user = notifications.first.current_user
       if new_profile_notification?(notifications)

@@ -60,13 +60,45 @@ describe NotificationSender do
 
         sender.send!
       end
+    end
 
+    context 'one grouped session sent and a second group with same ids unsent' do
+      it 'sends and email for the second group' do
+        # This tests the edge case where a group of queued notifications has been processed, and there is another
+        # unprocessed group with the same session id, current user and person.  We have to be sure that the first
+        # processed group does not inhibit sending a mail relating to the second group
+
+        # given a group which has been processed
+        Timecop.freeze 30.minutes.ago do
+          changes = jsonify('name' => ['Steve', 'Stephen'])
+          create_qn(email_template: 'updated_profile_email', processing_started_at: Time.now, sent: true, changes_json: changes)
+        end
+
+        # and another unprocessed group for the same session id, current_user and person
+        Timecop.freeze 16.minutes.ago do
+          changes = jsonify('profile_photo_id' => [23, 33])
+          create_qn(email_template: 'updated_profile_email', processing_started_at: nil, sent: false, changes_json: changes)
+        end
+
+        # I would expect a mail to be sent
+        mail = double UserUpdateMailer
+        expect(UserUpdateMailer).to receive(:updated_profile_email).and_return(mail)
+        expect(mail).to receive(:deliver_later)
+        # when I run the notification sender
+        sender = described_class.new
+        sender.send!
+      end
     end
 
     def create_qn(options)
       merged_options = { session_id: 'def', person_id: 22, current_user_id: 333 }.merge(options)
       create :queued_notification, merged_options
     end
+
+    def jsonify(hash)
+      { 'json_class' => 'ProfileChangesPresenter', 'data' => { 'raw' => hash}}.to_json
+    end
+
 
     def expect_queued_notifications_to_be_marked_as_sent
       expect(QueuedNotification.all.map(&:sent)).not_to include(false)
