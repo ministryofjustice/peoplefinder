@@ -90,8 +90,6 @@ ActiveRecord::Schema.define(version: 20170228181641) do
     t.datetime "last_reminder_email_at"
     t.string   "current_project"
     t.text     "pager_number"
-    t.boolean  "prototype",              default: false
-    t.boolean  "creation_completed",     default: true
   end
 
   add_index "people", ["slug"], name: "index_people_on_slug", unique: true, using: :btree
