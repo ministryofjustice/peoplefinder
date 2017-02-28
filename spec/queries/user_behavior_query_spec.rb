@@ -29,25 +29,13 @@ describe UserBehaviorQuery, versioning: true do
 
     let(:expected_sql) do
       <<~SQL
-         SELECT people.id,
-         people.given_name || ' ' || people.surname AS full_name,
-         people.location_in_building || ', ' || people.building || ', ' || people.city AS address,
-         people.login_count,
-         people.last_login_at,
-         groups.name AS team_name,
-         CASE
-           WHEN groups.ancestry_depth IS NOT NULL then
-            (
-              SELECT array_agg(name) AS names
-              FROM
-                (
-                  SELECT g2.name AS name
-                  FROM groups AS g2
-                  WHERE g2.id::text = ANY (regexp_split_to_array(groups.ancestry,'/'))
-                  ORDER BY g2.ancestry_depth ASC
-                ) AS group_names
-            )
-          END AS ancestors,
+        SELECT people.id,
+          people.given_name || ' ' || people.surname AS full_name,
+          people.location_in_building || ', ' || people.building || ', ' || people.city AS address,
+          people.login_count,
+          people.last_login_at,
+          groups.name AS team_name,
+          regexp_split_to_array(groups.ancestry,'\/') AS ancestors,
           memberships.role AS team_role,
           (
             SELECT count(v.id) AS updates_count
@@ -56,10 +44,10 @@ describe UserBehaviorQuery, versioning: true do
               AND v.item_type = 'Person'
               AND v.event = 'update'
           ) AS updates_count
-          FROM "people"
-          LEFT JOIN memberships ON memberships.person_id = people.id
-          LEFT JOIN groups ON groups.id = memberships.group_id
-          ORDER BY people.id, full_name
+        FROM "people"
+        LEFT JOIN memberships ON memberships.person_id = people.id
+        LEFT JOIN groups ON groups.id = memberships.group_id
+        ORDER BY people.id, full_name
       SQL
     end
 
