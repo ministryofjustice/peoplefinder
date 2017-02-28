@@ -55,31 +55,6 @@ class UserBehaviorQuery < BaseQuery
     SQL
   end
 
-  # def select_ancestors
-  #   <<~SQL
-  #     CASE
-  #       WHEN groups.ancestry_depth IS NOT NULL then
-  #         regexp_split_to_array(groups.ancestry,'\/')
-  #     END AS ancestors
-  #   SQL
-  # end
-
-  # TO SLOW/UNSCALABLE
-  # def select_ancestor_name_array
-  #   <<~SQL
-  #     (
-  #       SELECT array_agg(name) AS names
-  #         FROM
-  #           (
-  #             SELECT g2.name AS name
-  #             FROM groups AS g2
-  #             WHERE g2.id::text = ANY (regexp_split_to_array(groups.ancestry,'\/'))
-  #             ORDER BY g2.ancestry_depth ASC
-  #           ) AS group_names
-  #     )
-  #   SQL
-  # end
-
   def select_updates_count
     <<~SQL
       (

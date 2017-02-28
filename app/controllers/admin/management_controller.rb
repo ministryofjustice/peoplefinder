@@ -4,8 +4,7 @@ module Admin
     before_action :authorize_user
 
     def generate_user_behavior_report
-      report = serialize(CsvPublisher::UserBehaviorReport)
-      GenerateReportJob.perform_later(report)
+      generate CsvPublisher::UserBehaviorReport
       notice :generate_user_behavior_report
       redirect_to :back
     end
@@ -16,6 +15,11 @@ module Admin
     end
 
     private
+
+    def generate report_klass
+      report = serialize(report_klass)
+      GenerateReportJob.perform_later(report)
+    end
 
     def download file:, name:
       if File.exist? file
