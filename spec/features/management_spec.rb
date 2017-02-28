@@ -38,8 +38,7 @@ feature 'Management flow' do
     end
 
     scenario 'can be generated' do
-      expect(GenerateReportJob).to receive(:perform_later)
-      click_link 'generate'
+      expect { click_link 'generate' }.to delay_method(:generate)
     end
 
     scenario 'can be downloaded', skip: 'until we can implement an approrpiate web driver for testing downloads' do

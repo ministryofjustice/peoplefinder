@@ -4,8 +4,9 @@ module Admin
     before_action :authorize_user
 
     def generate_user_behavior_report
-      report = serialize(CsvPublisher::UserBehaviorReport)
-      GenerateReportJob.perform_later(report)
+      # report = serialize(CsvPublisher::UserBehaviorReport)
+      # GenerateReportJob.perform_now(report)
+      self.class.generate
       notice :generate_user_behavior_report
       redirect_to :back
     end
@@ -16,6 +17,16 @@ module Admin
     end
 
     private
+
+    class << self
+
+      # has to be class method to use with handle_asynchornously from a controller
+      def generate
+        CsvPublisher::UserBehaviorReport.publish!
+      end
+      handle_asynchronously :generate, queue: :generate_report
+
+    end
 
     def download file:, name:
       if File.exist? file
@@ -30,11 +41,11 @@ module Admin
       end
     end
 
-    def serialize klass
-      {
-        'json_class' => klass.name
-      }.to_json
-    end
+    # def serialize klass
+    #   {
+    #     'json_class' => klass.name
+    #   }.to_json
+    # end
 
     def set_search_box_render
       @admin_management = true

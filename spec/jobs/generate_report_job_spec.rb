@@ -16,7 +16,7 @@ RSpec.describe GenerateReportJob, type: :job do
   context 'when enqueued' do
     it "enqueues with appropriate config settings" do
       expect(job.queue_name).to eq 'generate_report'
-      expect(job.max_run_time).to eq 5.minutes
+      expect(job.max_run_time).to eq 10.minutes
       expect(job.max_attempts).to eq 3
       expect(job.destroy_failed_jobs?).to eq true
     end

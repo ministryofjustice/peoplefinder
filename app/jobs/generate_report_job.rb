@@ -12,7 +12,7 @@ class GenerateReportJob < ActiveJob::Base
   end
 
   def max_run_time
-    5.minutes
+    10.minutes
   end
 
   def destroy_failed_jobs?
