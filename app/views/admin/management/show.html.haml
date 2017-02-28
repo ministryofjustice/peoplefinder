@@ -4,17 +4,19 @@
   %h2= t('management.report_header')
 .grid-row{ style: "display: inline-block;"}
   .grid
-    .report-name
-      User behaviour report
-    .generate-link
-      = link_to 'generate', admin_generate_user_behavior_report_path
-    .download-link
-      = link_to 'download', admin_user_behavior_report_path
+    #user-behavior-report
+      .report-name
+        User behaviour report
+      .generate-link
+        = link_to 'generate', admin_generate_user_behavior_report_path
+      .download-link
+        = link_to 'download', admin_user_behavior_report_path
 
 .grid-row
   .grid
     %h2= t('management.tools_header')
 .grid-row
   .grid
-    = link_to 'Bulk Uploader', new_admin_person_upload_path
+    .bulk-uploader
+      = link_to 'Bulk Uploader', new_admin_person_upload_path
 

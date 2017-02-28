@@ -2,6 +2,8 @@ class UserBehaviorQuery < BaseQuery
 
   DATE_STRING_FORMAT = '%d-%m-%Y'.freeze
 
+  attr_reader :relation
+
   def initialize
     @relation = Person.all.unscoped
   end
@@ -19,13 +21,29 @@ class UserBehaviorQuery < BaseQuery
         full_name: rec.full_name,
         address: rec.address, # can't use location as the name as this is a method on person model
         team_name: rec.team_name,
-        ancestors: rec.ancestors&.join(' > '),
+        ancestors: team_name_map(rec.ancestors),
         team_role: rec.team_role,
         login_count: rec.login_count,
         last_login_at: rec.last_login_at&.strftime(DATE_STRING_FORMAT),
         updates_count: rec.updates_count
       }
     end
+  end
+
+  def team_mapping
+    @team_mapping ||= \
+      Group.order(id: :asc).
+      pluck(:id, :name).
+      each_with_object({}) do |(id, name), mapping|
+        mapping.merge!(id => name)
+      end
+  end
+
+  def team_name_map ancestor_ids, delimiter = ' > '
+    names = ancestor_ids&.each_with_object([]) do |id, arr|
+      arr.push team_mapping[id.to_i]
+    end
+    names&.join(delimiter)
   end
 
   private
@@ -37,29 +55,30 @@ class UserBehaviorQuery < BaseQuery
     SQL
   end
 
-  def select_ancestors
-    <<~SQL
-      CASE
-        WHEN groups.ancestry_depth IS NOT NULL then
-          #{select_ancestor_name_array}
-      END as ancestors
-    SQL
-  end
+  # def select_ancestors
+  #   <<~SQL
+  #     CASE
+  #       WHEN groups.ancestry_depth IS NOT NULL then
+  #         regexp_split_to_array(groups.ancestry,'\/')
+  #     END AS ancestors
+  #   SQL
+  # end
 
-  def select_ancestor_name_array
-    <<~SQL
-      (
-        SELECT array_agg(name) AS names
-          FROM
-            (
-              SELECT g2.name AS name
-              FROM groups AS g2
-              WHERE g2.id::text = ANY (regexp_split_to_array(groups.ancestry,'\/'))
-              ORDER BY g2.ancestry_depth ASC
-            ) AS group_names
-      )
-    SQL
-  end
+  # TO SLOW/UNSCALABLE
+  # def select_ancestor_name_array
+  #   <<~SQL
+  #     (
+  #       SELECT array_agg(name) AS names
+  #         FROM
+  #           (
+  #             SELECT g2.name AS name
+  #             FROM groups AS g2
+  #             WHERE g2.id::text = ANY (regexp_split_to_array(groups.ancestry,'\/'))
+  #             ORDER BY g2.ancestry_depth ASC
+  #           ) AS group_names
+  #     )
+  #   SQL
+  # end
 
   def select_updates_count
     <<~SQL
@@ -81,7 +100,7 @@ class UserBehaviorQuery < BaseQuery
       people.login_count,
       people.last_login_at,
       groups.name AS team_name,
-      #{select_ancestors},
+      regexp_split_to_array(groups.ancestry,'\/') AS ancestors,
       memberships.role AS team_role,
       #{select_updates_count} AS updates_count
     SQL
