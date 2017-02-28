@@ -70,7 +70,7 @@ describe NotificationSender do
 
         # given a group which has been processed
         Timecop.freeze 30.minutes.ago do
-          changes = jsonify('name' => ['Steve', 'Stephen'])
+          changes = jsonify('name' => %w(Steve Stephen))
           create_qn(email_template: 'updated_profile_email', processing_started_at: Time.now, sent: true, changes_json: changes)
         end
 
@@ -96,9 +96,8 @@ describe NotificationSender do
     end
 
     def jsonify(hash)
-      { 'json_class' => 'ProfileChangesPresenter', 'data' => { 'raw' => hash}}.to_json
+      { 'json_class' => 'ProfileChangesPresenter', 'data' => { 'raw' => hash } }.to_json
     end
-
 
     def expect_queued_notifications_to_be_marked_as_sent
       expect(QueuedNotification.all.map(&:sent)).not_to include(false)

@@ -44,7 +44,11 @@ class QueuedNotification < ActiveRecord::Base
   # returns all the records for a grouped item returned by QueuedNotification.unsent_groups
   #
   def self.all_for_grouped_item(gi)
-    where(session_id: gi.session_id, person_id: gi.person_id, current_user_id: gi.current_user_id, processing_started_at: nil).order(:id)
+    where(session_id: gi.session_id,
+      person_id: gi.person_id,
+      current_user_id: gi.current_user_id,
+      processing_started_at: nil).
+      order(:id)
   end
 
   # Returns all the records for a grouped item after having datestamped the processing_started_at column.

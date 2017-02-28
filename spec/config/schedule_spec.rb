@@ -7,7 +7,7 @@ RSpec.describe 'Whenever schedule' do
     before { allow(ENV).to receive(:[]).with('ENV').and_return 'production' }
 
     it 'has expected number of jobs' do
-      expect(schedule.jobs[:rails_script].count).to eql 9
+      expect(schedule.jobs[:rails_script].count).to eql 10
     end
 
     it 'all rails script runnner job tasks are defined' do
