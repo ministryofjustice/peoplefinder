@@ -1,15 +1,9 @@
 require 'rails_helper'
 
-RSpec.describe CsvPublisher::UserBehaviorReport, versioning: true do
+RSpec.describe CsvPublisher::UserBehaviorReport, versioning: true, csv_report: true do
   include PermittedDomainHelper
 
   let(:file) { described_class.default_file_path }
-  let(:teardown) do
-    File.delete(file) if File.exist?(file)
-  end
-
-  before { teardown }
-  after { teardown }
 
   it { is_expected.to respond_to :publish! }
   it { is_expected.to respond_to :file }
@@ -26,7 +20,7 @@ RSpec.describe CsvPublisher::UserBehaviorReport, versioning: true do
   end
 
   describe '#publish!' do
-    subject { described_class.new(file).publish! }
+    subject { described_class.new.publish! }
 
     let(:moj) { create :department}
     let(:csg) { create(:group, name: 'Corporate Service Group', parent: moj) }
@@ -50,8 +44,8 @@ RSpec.describe CsvPublisher::UserBehaviorReport, versioning: true do
       adrian
     end
 
-    it 'returns Pathname object' do
-      is_expected.to be_a Pathname
+    it 'returns Report record instance' do
+      is_expected.to be_an_instance_of Report
     end
 
     it 'calls #data on query object' do
@@ -60,9 +54,7 @@ RSpec.describe CsvPublisher::UserBehaviorReport, versioning: true do
     end
 
     it 'writes to the specified file' do
-      expect(File.exist?(file)).to eql false
-      subject
-      expect(File.exist?(file)).to eql true
+      expect { subject }.to have_created_file file
     end
 
   end

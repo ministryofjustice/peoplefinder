@@ -23,4 +23,18 @@ RSpec.configure do |config|
       to_return(status: 200, body: "", headers: {})
   end
 
+  config.before :each, csv_report: true do
+    delete_csv_reports
+  end
+
+  config.after :all, csv_report: true do
+    delete_csv_reports
+  end
+
+  def delete_csv_reports
+    Dir[Report.new.__send__(:tmp_dir).join('**', '*')].each do |file|
+      File.delete(file)
+    end
+  end
+
 end
