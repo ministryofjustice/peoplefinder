@@ -1,4 +1,5 @@
 FactoryGirl.define do
+
   sequence(:email) { |n| 'example.user.%d@digital.justice.gov.uk' % n }
   sequence(:given_name) { |n| "First name #{('a'.ord + (n % 25)).chr}" }
   sequence(:surname) { |n| "Surname #{('a'.ord + (n % 25)).chr}" }
@@ -112,4 +113,15 @@ FactoryGirl.define do
 
   factory :readonly_user do
   end
+
+  factory :report do
+    content <<~CSV
+      id,full_name,login_count
+      1,John Smith,5
+    CSV
+    name 'factory_test_report'
+    extension 'csv'
+    mime_type 'text/csv'
+  end
+
 end

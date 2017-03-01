@@ -10,8 +10,7 @@ module Admin
     end
 
     def user_behavior_report
-      file = CsvPublisher::UserBehaviorReport.default_file_path
-      download(file: file, name: __method__)
+      download(name: __method__)
     end
 
     private
@@ -21,12 +20,15 @@ module Admin
       GenerateReportJob.perform_later(report)
     end
 
-    def download file:, name:
-      if File.exist? file
+    def download name:
+      report = Report.find_by(name: name)
+      file = report&.to_csv_file
+
+      if file && File.exist?(file)
         send_file(
           file,
-          filename: "#{name}_#{Date.current.strftime('%d-%m-%Y')}.csv",
-          type: 'text/csv'
+          filename: report.client_filename,
+          type: report.mime_type
         )
       else
         warning :file_not_generated

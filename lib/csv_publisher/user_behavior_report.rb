@@ -6,8 +6,10 @@ module CsvPublisher
 
     attr_reader :file, :query, :dataset
 
-    def initialize file = nil
-      @file = file || self.class.default_file_path
+    FILE_EXTENSION = 'csv'.freeze
+
+    def initialize
+      @file = self.class.default_file_path
       @query = UserBehaviorQuery.new
     end
 
@@ -19,8 +21,12 @@ module CsvPublisher
 
     class << self
 
+      def report_name
+        name.demodulize.underscore
+      end
+
       def default_file_path
-        Dir.mkdir(tmp_dir) unless Dir.exist? tmp_dir
+        FileUtils.mkdir_p tmp_dir
         tmp_dir.join(default_file_name)
       end
 
@@ -36,8 +42,9 @@ module CsvPublisher
           '_' +
           (ENV['ENV'] || Rails.env).downcase +
           '_' +
-          name.demodulize.underscore +
-          '.csv'
+          report_name +
+          '.' +
+          FILE_EXTENSION
       end
     end
 
@@ -55,13 +62,19 @@ module CsvPublisher
       csv_record
     end
 
+    def save! file
+      content = File.read(file)
+      Report.where(name: self.class.report_name).delete_all
+      Report.create!(name: self.class.report_name, content: content, extension: FILE_EXTENSION, mime_type: 'text/csv')
+    end
+
     def write!
       CSV.open(file, 'w', write_headers: true, headers: csv_header) do |csv|
         dataset.each do |rec|
           csv << csv_record(rec)
         end
       end
-      file # return pathname to published file
+      save!(file)
     end
   end
 end
