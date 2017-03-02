@@ -12,7 +12,7 @@ class ProfilePhoto < ActiveRecord::Base
   has_one :person
   mount_uploader :image, ImageUploader
 
-  validates :image, file_size: { maximum: 3.megabytes }
+  validates :image, file_size: { maximum: 6.megabytes }
 
   attr_accessor :crop_x, :crop_y, :crop_w, :crop_h
 
