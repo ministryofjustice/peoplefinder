@@ -5,17 +5,24 @@ class PersonCreator
 
   def_delegators :person, :valid?
 
-  attr_reader :person
-  def initialize(person:, current_user:, state_cookie:)
+  attr_reader :person, :current_user, :session_id
+  def initialize(person:, current_user:, state_cookie:, session_id: nil)
     @person = person
     @current_user = current_user
     @state_cookie = state_cookie
+    @session_id = session_id
   end
 
   def create!
-    person.save!
-    default_membership!(person) if person.memberships.empty?
-    send_create_email!
+    Person.transaction do
+      person.save!
+      default_membership!(person) if person.memberships.empty?
+      QueuedNotification.queue!(self) if person.notify_of_change?(@current_user)
+    end
+  end
+
+  def edit_finalised?
+    @state_cookie.save_profile?
   end
 
   def flash_message
@@ -28,13 +35,4 @@ class PersonCreator
     person.memberships.create!(group: Group.department) if Group.department.present?
   end
 
-  def send_create_email!
-    if @state_cookie.save_profile?
-      if person.notify_of_change?(@current_user)
-        UserUpdateMailer.new_profile_email(
-          @person, @current_user.try(:email)
-        ).deliver_later
-      end
-    end
-  end
 end

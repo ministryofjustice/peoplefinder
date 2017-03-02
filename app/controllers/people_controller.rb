@@ -75,7 +75,8 @@ class PeopleController < ApplicationController
     if @person.valid?
       updater = PersonUpdater.new(person: @person,
                                   current_user: current_user,
-                                  state_cookie: StateManagerCookie.new(cookies))
+                                  state_cookie: StateManagerCookie.new(cookies),
+                                  session_id: session.id)
       updater.update!
       session.delete(:desired_path)
       notice :profile_email_updated, email: @person.email
@@ -155,7 +156,8 @@ class PeopleController < ApplicationController
     else
       creator = PersonCreator.new(person: @person,
                                   current_user: current_user,
-                                  state_cookie: StateManagerCookie.new(cookies))
+                                  state_cookie: StateManagerCookie.new(cookies),
+                                  session_id: session.id)
       creator.create!
       notice(:profile_created, person: @person) if state_cookie_saving_profile?
       redirect_to redirection_destination
@@ -168,7 +170,8 @@ class PeopleController < ApplicationController
     else
       updater = PersonUpdater.new(person: @person,
                                   current_user: current_user,
-                                  state_cookie: StateManagerCookie.new(cookies))
+                                  state_cookie: StateManagerCookie.new(cookies),
+                                  session_id: session.id)
       updater.update!
       type = @person == current_user ? :mine : :other
       notice(:profile_updated, type, person: @person) if state_cookie_saving_profile?

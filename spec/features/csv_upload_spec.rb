@@ -36,7 +36,8 @@ feature 'Upload CSV' do
     ).each do |email|
       person = Person.find_by(email: email)
       expect(person.groups).to eq([group])
-      check_new_user_notification_email(email)
+      check_queued_notification(person)
+
     end
   end
 
@@ -56,7 +57,7 @@ feature 'Upload CSV' do
       person = Person.find_by(email: email)
       expect(person.groups).to eq([group])
       expect(person.location).to eq "Room 5.02, 5th Floor, Blue Core, 102, Petty France, London"
-      check_new_user_notification_email(email)
+      check_queued_notification(person)
     end
   end
 
@@ -94,5 +95,9 @@ feature 'Upload CSV' do
     expect(msg).not_to be_nil
 
     expect(msg.subject).to eq('You’re on MOJ People Finder, check your profile today')
+  end
+
+  def check_queued_notification(person)
+    expect(QueuedNotification.where(person_id: person.id)).not_to be_empty
   end
 end

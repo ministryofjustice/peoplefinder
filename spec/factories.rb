@@ -1,3 +1,4 @@
+
 FactoryGirl.define do
 
   sequence(:email) { |n| 'example.user.%d@digital.justice.gov.uk' % n }
@@ -124,4 +125,12 @@ FactoryGirl.define do
     mime_type 'text/csv'
   end
 
+  factory :queued_notification do
+    session_id "MyString"
+    person_id 1
+    current_user_id 1
+    changes_json '{}'
+    edit_finalised false
+    sent false
+  end
 end

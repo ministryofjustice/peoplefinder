@@ -17,12 +17,27 @@ feature 'Person edit notifications' do
     fill_in 'Main email', with: 'bob.smith@digital.justice.gov.uk'
     expect do
       click_button 'Save', match: :first
-    end.to change { ActionMailer::Base.deliveries.count }.by(1)
+    end.to change { QueuedNotification.count }.by(1)
 
-    expect(last_email.subject).to eq('You’re on MOJ People Finder, check your profile today')
-
-    check_email_to_and_from
-    check_email_has_profile_link(Person.where(email: 'bob.smith@digital.justice.gov.uk').first)
+    notification = QueuedNotification.last
+    expect(notification.current_user_id).to eq person.id
+    expect(notification.sent).to be false
+    expect(notification.edit_finalised).to be true
+    expect(notification.changes_hash['data']['raw']).to eq(
+      'given_name' => [nil, 'Bob'],
+      'surname' => [nil, 'Smith'],
+      'location_in_building' => [nil, ''],
+      'building' => [nil, ''],
+      'city' => [nil, ''],
+      'primary_phone_number' => [nil, ''],
+      'secondary_phone_number' => [nil, ''],
+      'pager_number' => [nil, ''],
+      'email' => [nil, 'bob.smith@digital.justice.gov.uk'],
+      'secondary_email' => [nil, ''],
+      'description' => [nil, ''],
+      'current_project' => [nil, ''],
+      'slug' => [nil, 'bob-smith']
+    )
   end
 
   scenario 'Deleting a person with different email' do
@@ -41,12 +56,8 @@ feature 'Person edit notifications' do
     fill_in 'Surname', with: 'Smelly Pants'
     expect do
       click_button 'Save', match: :first
-    end.to change { ActionMailer::Base.deliveries.count }.by(1)
-
-    expect(last_email.subject).to eq('Your profile on MOJ People Finder has been edited')
-
-    check_email_to_and_from
-    check_email_has_profile_link(person)
+    end.to change { QueuedNotification.count }.by(1)
+    expect(QueuedNotification.last.changes_hash['data']['raw']['surname']).to eq(["Smith", "Smelly Pants"])
   end
 
   scenario 'Editing a person with same email' do

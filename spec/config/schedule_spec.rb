@@ -18,10 +18,20 @@ RSpec.describe 'Whenever schedule' do
   end
 
   context 'non-production enviroments' do
-    before { allow(ENV).to receive(:[]).with('ENV').and_return 'staging' }
+    context 'staging' do
 
-    it 'does not schedule any jobs' do
-      expect(schedule.jobs[:rails_script]).to be_nil
+      before { allow(ENV).to receive(:[]).with('ENV').and_return 'staging' }
+
+      it 'only schedules the Sender Notification job' do
+        expect(schedule.jobs[:rails_script]).to eq(
+          [
+            {
+              task: "NotificationSender.new.send!",
+              every: [300.seconds],
+              command: "cd /usr/src/app && ./rails_runner.sh ':task' :output"
+            }
+        ])
+      end
     end
   end
 end
