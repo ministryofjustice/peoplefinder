@@ -107,6 +107,19 @@ ActiveRecord::Schema.define(version: 20170228181641) do
     t.datetime "updated_at"
   end
 
+  create_table "queued_notifications", force: :cascade do |t|
+    t.string   "email_template"
+    t.string   "session_id"
+    t.integer  "person_id"
+    t.integer  "current_user_id"
+    t.text     "changes_json"
+    t.boolean  "edit_finalised",        default: false
+    t.datetime "processing_started_at"
+    t.boolean  "sent",                  default: false
+    t.datetime "created_at",                            null: false
+    t.datetime "updated_at",                            null: false
+  end
+
   create_table "reports", force: :cascade do |t|
     t.text     "content"
     t.string   "name"

@@ -12,7 +12,7 @@ RSpec.describe PersonCreator, type: :service do
       notify_of_change?: false
     )
   end
-  let(:current_user) { double('Current User', email: 'user@example.com') }
+  let(:current_user) { double('Current User', email: 'user@example.com', id: 25) }
   subject { described_class.new(person: person, current_user: current_user, state_cookie: smc) }
 
   context 'Saving profile' do
@@ -54,11 +54,9 @@ RSpec.describe PersonCreator, type: :service do
         subject.create!
       end
 
-      it 'sends a new profile email if required' do
+      it 'creates a queued notification' do
         allow(person).to receive(:notify_of_change?).with(current_user).and_return(true)
-        mailing = double('mailing')
-        expect(class_double('UserUpdateMailer').as_stubbed_const).to receive(:new_profile_email).with(person, current_user.email).and_return(mailing)
-        expect(mailing).to receive(:deliver_later)
+        expect(QueuedNotification).to receive(:queue!)
         subject.create!
       end
     end
@@ -67,9 +65,9 @@ RSpec.describe PersonCreator, type: :service do
   context 'Not saving profile' do
     let(:smc) { double StateManagerCookie, save_profile?: false }
 
-    it 'does not send a new profile email' do
+    it 'does not  a notification' do
       allow(person).to receive(:notify_of_change?).with(current_user).and_return(true)
-      expect(class_double('UserUpdateMailer').as_stubbed_const).not_to receive(:new_profile_email)
+      expect(QueuedNotification).to receive(:queue!)
       subject.create!
     end
   end

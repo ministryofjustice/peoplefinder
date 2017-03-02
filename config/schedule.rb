@@ -40,4 +40,20 @@ if ENV['ENV'] == 'production'
     rails_script 'PersonUpdateNotifier.send_reminders'
   end
 
+  every 5.minutes do
+    rails_script 'NotificationSender.new.send!'
+  end
+
+end
+
+if ENV['ENV'] == 'staging'
+
+  set :output, standard: '/var/log/cron.log', error: '/var/log/cron_error.log'
+
+  job_type :rails_script, "cd /usr/src/app && ./rails_runner.sh ':task' :output"
+
+  every 5.minutes do
+    rails_script 'NotificationSender.new.send!'
+  end
+
 end

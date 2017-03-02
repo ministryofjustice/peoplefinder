@@ -31,7 +31,6 @@
 #  last_reminder_email_at :datetime
 #  current_project        :string
 #  pager_number           :text
-#  prototype              :boolean          default(FALSE)
 #
 
 require 'rails_helper'
@@ -249,16 +248,18 @@ RSpec.describe Person, type: :model do
     end
 
     it 'allows updates to those memberships' do
-      expect(person.memberships.first.leader).to be false
+      membership = person.memberships.first
+      expect(membership.leader).to be false
 
-      membership_attributes = person.memberships.first.attributes
+      membership_attributes = membership.attributes
       person.assign_attributes(
         memberships_attributes: {
           membership_attributes[:id] => membership_attributes.merge(leader: true)
         }
       )
       person.save!
-      expect(person.reload.memberships.first.leader).to be true
+      updated_membership = person.reload.memberships.find(membership.id)
+      expect(updated_membership.leader).to be true
     end
 
     it 'fires UpdateGroupMembersCompletionScoreJob for group on save' do

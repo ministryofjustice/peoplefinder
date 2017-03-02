@@ -31,7 +31,6 @@
 #  last_reminder_email_at :datetime
 #  current_project        :string
 #  pager_number           :text
-#  prototype              :boolean          default(FALSE)
 #
 
 class Person < ActiveRecord::Base

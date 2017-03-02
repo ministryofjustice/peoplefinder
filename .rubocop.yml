@@ -109,6 +109,12 @@ Style/MethodDefParentheses:
 Style/AlignHash:
   Enabled: false
 
+Style/BlockDelimiters:
+  Enabled: false
+
+Style/DoubleNegation:
+  Enabled: false
+
 Metrics/ClassLength:
   CountComments: false
   Max: 120

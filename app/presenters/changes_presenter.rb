@@ -8,8 +8,8 @@ class ChangesPresenter
   #
   #   person.email = 'new.email@address.com'
   #   person.primary_phone_number = nil
-  #   changes = ChangesPresenter.new(person)
-  #   changes.each_pair { |field, change| puts [field, change]}
+  #   changes = ChangesPresenter.new(person.changes)
+  #   changes.c.each_pair { |field, change| puts [field, change]}
   #
 
   extend Forwardable
