@@ -28,7 +28,7 @@ var PhotoUpload = (function (){
     },
 
     checkFileSize: function ( fileInput, limit, els ) {
-      // let backend validator handle files between 3 and 10MB for more consistent error handling.
+      // let backend validator handle files between 6 and 10MB for more consistent error handling.
       var el = fileInput;
       var fileSize = PhotoUpload.fileSize(el)
       if (fileSize > limit) {
