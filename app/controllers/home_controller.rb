@@ -5,7 +5,7 @@ class HomeController < ApplicationController
       notice :top_level_group_needed
       redirect_to new_group_path
     end
-
+    @all_people_count = @group.all_people_count
     @org_structure = Group.hierarchy_hash
   end
 end

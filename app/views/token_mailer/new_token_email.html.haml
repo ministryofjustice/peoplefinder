@@ -20,7 +20,7 @@
         If your computer uses Internet Explorer 6
       please copy-and-paste the following link into Firefox:
     %p
-      = token_url(@token)
+      = token_url(@token).gsub('http','h<span>t</span>tp<span></span>').html_safe
 
     %p For security reasons, this link will be active for 3 hours only.
     %p If you’ve not asked for access, please ignore this email.

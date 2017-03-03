@@ -25,6 +25,8 @@ module Peoplefinder
     # '*.{rb,yml}').to_s]
     # config.i18n.default_locale = :de
 
+    ActionView::Base.default_form_builder = GovukElementsFormBuilder::FormBuilder
+
     # app title appears in the header bar
     config.app_title = 'People Finder'
 
