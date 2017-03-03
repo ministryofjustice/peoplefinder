@@ -1,5 +1,9 @@
-= form_tag '/search', method: :get, class: 'search-box' do
-  %label.form-hint{ for: :query }
-    = t('shared.search.hint')
-  = text_field_tag :query, @query, class: 'form-control'
-  = submit_tag 'Submit search', class: 'submit-button'
+.grid-row
+  .column-full
+    = form_tag '/search', method: :get, class: 'search-box' do
+      .form-group
+        %label.form-hint{ for: :query }
+          = t('shared.search.hint')
+        = text_field_tag :query, @query, class: 'form-control'
+      .form-group
+        = submit_tag 'Submit search', class: 'button'
