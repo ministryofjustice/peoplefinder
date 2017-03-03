@@ -1,5 +1,6 @@
-- content_for :body_classes, 'new-team-page'
+- content_for :body_classes, 'new-team-page '
 
-%h1= @page_title = 'New team'
+%h1.heading-xlarge
+  = @page_title = 'New team'
 
 = render 'form'

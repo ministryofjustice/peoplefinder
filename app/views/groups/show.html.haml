@@ -1,32 +1,45 @@
-- content_for :body_classes, 'team-page'
+- @page_title = @group
+- content_for :body_classes, 'team-page '
 
 = render partial: 'breadcrumbs'
 
-= render partial: 'detail'
+.grid-row.mod-heading
+  .column-full
+    %h1.heading-xlarge.mod-heading-border
+      %span.heading-secondary
+        = @group.acronym
+      = @group.name
+      = render partial: 'heading_links'
+
+.grid-row.mod-team-overview
+  .column-one-third
+    - if @group.leaderships.count > 0
+      %h3.heading-medium
+        = "Team #{'leader'.pluralize(@group.leaderships.count)}"
+      - @group.leaderships_by_person.each do |person, leaderships|
+        = render partial: 'leaderships', object: leaderships, locals: { person: person, counter: @group.leaderships.count }
+
+  .column-two-thirds
+    %h3.heading-medium
+      = "About the team"
+
+    = govspeak(@group.with_placeholder_default(:description))
+
+
+    - if @all_people_count > 0 || @group.children.present?
+      = link_to "View printable organogram", organogram_group_path(@group)
+    - unless @group.leaf_node?
+      - if @all_people_count > 0 && @group.parent.present?
+        = link_to "View #{ @all_people_count > 1 ? 'all' : 'NONE' } people", people_group_path(@group), class: 'view-all-people'
+
 
 - unless @group.leaf_node?
-  %h2#teams
-    Teams within
-    - if @group.acronym?
-      = @group.acronym
-    - else
-      = @group.name
-    %div.heading-links.subheading-links
-      - if @people_outside_subteams_count > 0
-        = link_to "View #{ pluralize_with_delimiter @people_outside_subteams_count, 'person' } not assigned to a sub-team", people_outside_subteams_group_path(@group), class: 'small link-left'
-      = link_to 'Add new sub-team', new_group_group_path(@group), class: 'small'
-  .grid-wrapper
-    = render partial: "subgroup", collection: @group.children
+  = render partial: "teams_in_team"
 
 - if @group.leaf_node?
-  .title_with_edit
-    %h2
-      People in #{ @group.short_name }
-      %div.heading-links.subheading-links
-        = link_to 'Add new sub-team', new_group_group_path(@group), class: 'small'
-  .grid-wrapper
-    = render partial: "memberships/summary", collection: @group.distinct_non_leaderships
+  = render partial: "people_in_team"
 
 - unless @versions.nil?
-  %h1 Audit Log
+  %h1
+    = Audit Log
   =render 'shared/audit', versions: @versions

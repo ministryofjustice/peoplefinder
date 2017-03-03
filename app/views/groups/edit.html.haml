@@ -1,8 +1,9 @@
-- content_for :body_classes, 'edit-team-page'
+- content_for :body_classes, 'edit-team-page '
 
 = render partial: 'breadcrumbs'
 
-%h1= @page_title = 'Edit team'
+%h1.heading-xlarge
+  = @page_title = 'Edit team'
 
 = render 'form'
 

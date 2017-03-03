@@ -2,8 +2,6 @@ class ApplicationController < ActionController::Base
   include Pundit
   include FeatureHelper
 
-  helper MojHelper
-
   protect_from_forgery with: :exception
   before_action :ensure_user, except: :update_email
 
