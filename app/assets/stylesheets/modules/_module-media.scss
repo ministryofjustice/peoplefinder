@@ -1,0 +1,157 @@
+// Bootstrap media block
+// .profile, .card, .leader variations
+//
+.media {
+  margin-top: 15px;
+}
+.media:first-child {
+  margin-top: 0;
+}
+.media,
+.media-body {
+  zoom: 1;
+  overflow: hidden;
+}
+
+.media-body {
+  width: 10000px;
+}
+.media-object {
+  display: block;
+}
+.media-object.img-thumbnail {
+  max-width: none;
+}
+.media-right,
+.media > .pull-right {
+  padding-left: 10px;
+}
+.media-left,
+.media > .pull-left {
+  // padding-right: 10px;
+}
+.media-left,
+.media-right,
+.media-body {
+  display: table-cell;
+  vertical-align: top;
+}
+.media-middle {
+  vertical-align: middle;
+}
+.media-bottom {
+  vertical-align: bottom;
+}
+.media-heading {
+  margin-top: 0;
+  margin-bottom: 5px;
+  // @include core-24;
+}
+.media-list {
+  padding-left: 0;
+  list-style: none;
+}
+
+@mixin tablet($orientation: landscape) {
+  @media (min-width: #{$tablet-width}) and (max-width: #{$desktop-width - 1px}) and (orientation: $orientation){
+    @content;
+  }
+}
+
+@mixin desktop($orientation: landscape)  {
+  @media (min-width: #{$desktop-width}) and (orientation: $orientation){
+    @content;
+  }
+}
+
+@mixin setSize($size:128px, $multiply:true){
+  width: $size;
+  // height: $size;
+
+  @include tablet(landscape){
+    // border: 1px solid red;
+    @if $multiply{
+      width: $size*1.5;
+      // height: $size*1.5;
+    }
+  }
+
+  @include tablet(portrait){
+    // border: 1px solid pink;
+     @if $multiply{
+      width: $size*1.2;
+      // height: $size*1.2;
+    }
+  }
+
+  @include desktop{
+     @if $multiply{
+      width: $size*2.35;
+      // height: $size*1.8;
+    }
+  }
+}
+
+.team-leader-list{
+  @extend %contain-floats;
+}
+
+.form-group.mod-media.card{
+  @include setSize(150px);
+  margin: 0 10px 50px 0;
+}
+
+.mod-media{
+  .media-object{
+    width: 100%;
+    height: 100%;
+  }
+  margin-bottom: $gutter;
+
+  .media-heading{
+    @include core-19;
+    font-weight: 700;
+  }
+
+  &.profile{
+    .media-object{
+      @include setSize();
+    }
+
+    .media-left{
+      padding-right:$gutter;
+    }
+  }
+
+  &.card{
+    @include setSize();
+    float:left;
+    margin: 0 10px 10px 0;
+    @extend %contain-floats;
+
+    .media-left{
+      float: left;
+    }
+
+    .media-heading{
+      @include core-16;
+    }
+  }
+  &.leaders, &.leader{
+    @include core-16;
+  }
+  &.leaders{
+    float:left !important;
+    padding-right: 10px;
+    @include setSize(128px, false);
+  }
+  &.leader{
+    @include setSize();
+  }
+}
+
+
+
+
+
+

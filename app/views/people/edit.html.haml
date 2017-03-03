@@ -1,4 +1,4 @@
-- content_for :body_classes, 'edit-profile-page'
+- content_for :body_classes, 'edit-profile-page '
 
 = render partial: 'breadcrumbs'
 
@@ -6,6 +6,7 @@
   .completion-prompt
     %p Fill in the highlighted fields to achieve 100% profile completion
 
-%h1= @page_title = (params[:page_title] || "Edit profile")
+%h1.heading-xlarge
+  = @page_title = (params[:page_title] || "Edit profile")
 
 = render partial: 'form', locals: { building: false }

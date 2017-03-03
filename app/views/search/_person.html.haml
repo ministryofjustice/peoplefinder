@@ -1,36 +1,49 @@
-.search-result
-  .grid-wrapper
-    .grid
-      .inner-block
-        .image-background
-          = profile_image_tag person
-        .details
-          %h3.result-name
-            = link_to es_highlighter(hit, person, :name), person,
+.grid-row.mod-media.result-person
+  .column-two-thirds
+    .media
+      .media-left
+        = profile_image_tag person
+      .media-body
+        %h4.media-heading
+          = link_to es_highlighter(hit, person, :name), person,
             { data: search_result_analytics_attributes(index) }
+        %ul
+          -# - if person.memberships.empty?
+          -# - else
+          -#   - person.memberships.each do |membership|
+          -#     %li
+          -#       = "#{ membership.role }, " if membership.role?
+          -#       = link_to membership.group.name, membership.group, search_result ? { data: search_result_analytics_attributes(index) } : {}
 
-          .result-memberships
-            .meta
-              - if person.memberships.present?
-                - person.memberships.each.with_index do |membership, idx|
-                  - if hit.try(:highlight).try(:role_and_group)
-                    = link_to es_highlighter(hit, person, :role_and_group), membership.group, { data: search_result_analytics_attributes(index) } if idx == 0
-                  - else
-                    = "#{ membership.role }, " if membership.role?
-                    = link_to membership.group.name, membership.group, { data: search_result_analytics_attributes(index) }
+          - if person.memberships.present?
+            - person.memberships.each.with_index do |membership, idx|
+              - if hit.try(:highlight).try(:role_and_group)
+                %li
+                  = link_to hit.highlight.role_and_group.join.html_safe, membership.group, { data: search_result_analytics_attributes(index) } if idx == 0
+              - else
+                %li
+                  = "#{ membership.role }, " if membership.role?
+                  = link_to membership.group.name, membership.group, { data: search_result_analytics_attributes(index) }
 
-          .meta= call_to(person.phone)
-          .result-email
-            .meta
-              = mail_to(person.email, es_highlighter(hit, person, :email), data: search_result_analytics_attributes(index) )
+          %li
+            = call_to(person.phone)
+          %li
+            = mail_to(person.email, es_highlighter(hit, person, :email), data: search_result_analytics_attributes(index) )
 
-          .result-current-project
-            - if person.current_project.present?
-              .meta
-                Current project(s):
-                = es_highlighter(hit, person, :current_project)
+          - if person.current_project.present?
+            %li.core-16
+              %span.bold
+                Current project(s)
+              %br/
+              = es_highlighter(hit, person, :current_project)
 
-      - if Rails.env.development? || current_user.super_admin?
-        %span{style: "float: right; font-size: 10px;"}
-          Score:
-          = hit._score
+          - if Rails.env.development? || current_user.super_admin?
+            %span{style: "float: right; font-size: 10px;"}
+              Score:
+              = hit._score
+
+  .column-one-third
+    - if ['sessions','tokens', 'people'].include? controller_name
+      = form_for person, url: update_email_person_path(person) do |f|
+        = f.hidden_field :email, value: @person.email
+        = f.submit 'Select', class: 'button'
