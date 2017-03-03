@@ -9,6 +9,7 @@ var teamSelector = function teamSelector(isPerson, obj) {
   this.originalTeamLedQuestion = null;
 
   /* Listen for events */
+
   this.initEvents = function() {
 
     var self = this;
@@ -18,6 +19,7 @@ var teamSelector = function teamSelector(isPerson, obj) {
     }
 
     /* Clicking the 'Edit' link to show the team selector */
+
     this.selector.on('click', '.show-editable-fields, .editable-summary .title', function(e) {
 
       self.onClick(e);
@@ -26,6 +28,7 @@ var teamSelector = function teamSelector(isPerson, obj) {
       self.init();
     });
     /* Clicking the 'Done' button to hide the team selector */
+
     this.selector.on('click', '.hide-editable-fields', function(e) {
 
       self.onClick(e);
@@ -34,6 +37,7 @@ var teamSelector = function teamSelector(isPerson, obj) {
       self.selector.find('.team-leader label:first').focus();
     });
     /* Clicking on the 'Back' link */
+
     this.orgBrowser.on('click', '.team-back', function(e) {
 
       self.onClick(e);
@@ -41,6 +45,7 @@ var teamSelector = function teamSelector(isPerson, obj) {
       self.back();
     });
     /* Clicking on a team with subteams */
+
     this.orgBrowser.on('click', 'li:not(.disabled) .subteam-link', function(e) {
 
       self.onClick(e);
@@ -48,6 +53,7 @@ var teamSelector = function teamSelector(isPerson, obj) {
       self.forward();
     });
     /* Clicking on a team with no subteams */
+
     this.orgBrowser.on('click', '.team-link', function(e) {
 
       self.onClick(e);
@@ -60,6 +66,7 @@ var teamSelector = function teamSelector(isPerson, obj) {
       }
     });
     /* Clicking directly on a radio button */
+
     this.orgBrowser.on('change', 'input[type=radio]', function(e) {
 
       self.currentTarget = $(e.currentTarget);
@@ -80,12 +87,14 @@ var teamSelector = function teamSelector(isPerson, obj) {
           break;
         case 37: //Left
         case 38: // Up
+
           if (top) {
             self.currentTarget = target.parent().prev();
             self.back();
             return false;
           } else {
             var li = target.closest('li').prev('li');
+
             if (li.hasClass('has-subteams')) {
               li.find('> p > .subteam-link').focus();
               return false;
@@ -96,6 +105,7 @@ var teamSelector = function teamSelector(isPerson, obj) {
           }
           break;
         case 40: // Down
+
           if (top) {
             var subTeam = target.parent().next('ul');
             if (subTeam.length > 0) {
@@ -110,6 +120,7 @@ var teamSelector = function teamSelector(isPerson, obj) {
             }
           } else {
             var li = target.closest('li').next('li');
+
             if (li.hasClass('leaf-node')) {
               li.find('>p>input').prop('checked', 'checked').trigger('change').focus();
               return false;
@@ -120,6 +131,7 @@ var teamSelector = function teamSelector(isPerson, obj) {
           }
           break;
         case 39: // Right
+
           if (target.hasClass('subteam-link')) {
             self.currentTarget = target;
             self.forward();
@@ -132,6 +144,7 @@ var teamSelector = function teamSelector(isPerson, obj) {
     });
 
     /* Add New Team */
+
     this.selector.on('click', '.button-add-team', function(e) {
       self.onClick(e);
       self.toggleTeamInput(true);
@@ -150,13 +163,14 @@ var teamSelector = function teamSelector(isPerson, obj) {
   };
 
   /* Handle clicks and preventDefault and stopPropagation */
-  this.onClick = function(e) {
 
+  this.onClick = function(e) {
     e.preventDefault();
     e.stopPropagation();
   };
 
   /* Set the 'selected' class on the last visible team */
+
   this.init = function() {
 
     var self = this;
@@ -173,6 +187,7 @@ var teamSelector = function teamSelector(isPerson, obj) {
     this.orgBrowser.find('h3 > a').hide();
     this.removeSelected();
     var visible = this.getLastVisible().addClass('selected').find('> h3 > a').show();
+
     setTimeout(function() {
       self.animateScroll();
     }, 0);
@@ -182,6 +197,7 @@ var teamSelector = function teamSelector(isPerson, obj) {
   Remove the 'expanded' class from current subteams
   Scroll backwards and wait before removing the 'visible' class
   */
+
   this.back = function() {
 
     var self = this,
@@ -189,6 +205,7 @@ var teamSelector = function teamSelector(isPerson, obj) {
     this.currentTarget.children('li').removeClass('expanded');
     this.animateScroll('left');
     // Wait for the scroll back to complete
+
     setTimeout(function() {
       self.orgBrowser.find('.visible > h3 > a').hide();
       team.removeClass('visible');
@@ -197,6 +214,7 @@ var teamSelector = function teamSelector(isPerson, obj) {
   };
 
   /* If the team has subteams, find the next team */
+
   this.forward = function() {
 
     if (this.currentTarget.closest('li').hasClass('has-subteams') === false) {
@@ -213,6 +231,7 @@ var teamSelector = function teamSelector(isPerson, obj) {
     this.animateScroll('right');
   };
 
+
   this.getBreadcrumb = function(isSubTeam) {
 
     var arr = [],
@@ -222,6 +241,7 @@ var teamSelector = function teamSelector(isPerson, obj) {
       arr.push(text);
     });
     arr.push(this.getTeamName(this.currentTarget));
+
     this.orgBrowser.closest('.editable-container').find('.editable-summary .title .breadcrumbs').html(this.createBreadcrumb(arr));
   };
 
@@ -236,12 +256,13 @@ var teamSelector = function teamSelector(isPerson, obj) {
   };
 
   /* Return the text of the given input element */
-  this.getTeamName = function(input) {
 
+  this.getTeamName = function(input) {
     return input.next('a').text();
   };
 
   /* Set the Team leader heading and hint spans with the given team name */
+
   this.setTeamName = function(teamName) {
 
     if (this.isPerson) {
@@ -250,6 +271,7 @@ var teamSelector = function teamSelector(isPerson, obj) {
         this.originalTeamLedQuestion = null;
       }
       this.selector.find('.team-led').text(teamName + ' team');
+
       if (teamName === 'Ministry of Justice') {
         var legend = this.selector.find('.team-leader legend');
         this.originalTeamLedQuestion = legend.html();
@@ -263,24 +285,28 @@ var teamSelector = function teamSelector(isPerson, obj) {
   };
 
   /* Remove the 'selected' class from all teams */
+
   this.removeSelected = function() {
 
     this.orgBrowser.find('.team').removeClass('selected');
   };
 
   /* Return the last 'visible' team element */
+
   this.getLastVisible = function() {
 
     return this.orgBrowser.find('.visible').last();
   };
 
   /* Set the last 'visible' elements parent li to have the 'expanded' class */
+
   this.setExpanded = function() {
 
     this.orgBrowser.find('.visible').parents('li').addClass('expanded');
   };
 
   /* When moving forward down the subteams */
+
   this.revealSubteam = function(team) {
 
     this.setExpanded();
@@ -290,6 +316,7 @@ var teamSelector = function teamSelector(isPerson, obj) {
   };
 
   /* Set the last 'visible' element to be 'selected' and check the radio button, then set the team name */
+
   this.selectCurrent = function() {
 
     var teamText, $current;
@@ -300,6 +327,7 @@ var teamSelector = function teamSelector(isPerson, obj) {
   };
 
   /* Animate the team selector to scroll left or right */
+
   this.animateScroll = function(direction) {
 
     var visible = this.orgBrowser.find('.visible');
@@ -350,6 +378,7 @@ var teamSelector = function teamSelector(isPerson, obj) {
     }
   };
 
+
   this.createInput = function(i, id) {
 
     return '<input type="radio" value="' + id + '" name="person[memberships_attributes][' + i + '][group_id]" id="person_memberships_attributes_' + i + '_group_id_' + id + '">';
@@ -398,6 +427,7 @@ var teamSelector = function teamSelector(isPerson, obj) {
         self.forward();
       } else {
         var el = '<p>' +
+
           self.createInput(i, data.id) + self.createTeamName(data) + '</p>';
         var li = $('<li/>').addClass('leaf-node').html(el);
         $(obj).append(li);

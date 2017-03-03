@@ -127,7 +127,6 @@ $border-color: #bfc1c3;
 
 @import "print";
 
-
 .clearfix:before,
 .clearfix:after {
   content: " ";
@@ -239,8 +238,6 @@ $border-color: #bfc1c3;
   @include mobile(portrait){
     display: block;
   }
-
-
 }
 
 #proposition-links{
@@ -249,4 +246,3 @@ $border-color: #bfc1c3;
     width: auto;
   }
 }
-

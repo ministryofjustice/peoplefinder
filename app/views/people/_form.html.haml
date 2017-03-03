@@ -46,9 +46,6 @@
         - Person::DAYS_WORKED.each do |day|
           %li
             = f.check_box day
-            / = f.label day, class: 'block-label' do
-            /   = f.check_box day
-            /   = day_name(day)
 
   %h3.heading-medium.with-border-lg
     = "Extra information"

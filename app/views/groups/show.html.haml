@@ -35,7 +35,6 @@
       - if @all_people_count > 0 && @group.parent.present?
         = link_to "View #{ @all_people_count > 1 ? 'all' : '' } people", people_group_path(@group), class: 'view-all-people pipe-left'
 
-
 - unless @group.leaf_node?
   = render partial: "teams_in_team"
 

@@ -25,6 +25,13 @@ GIT
       faraday (>= 0.7.6)
 
 GIT
+  remote: https://github.com/ministryofjustice/govuk_elements_form_builder.git
+  revision: 3edec18eb86a14438fd84e6ff530a999875d67b2
+  specs:
+    govuk_elements_form_builder (0.0.1)
+      rails (>= 4.2)
+
+GIT
   remote: https://github.com/ministryofjustice/omniauth-gplus.git
   revision: c9b013d10c6af55d9eb92d41191e7e0d036ef7c9
   specs:
@@ -541,7 +548,7 @@ GEM
     sprockets (2.12.4)
       hike (~> 1.2)
       multi_json (~> 1.0)
-      rack (~> 1.0)
+      rack (~> 1.0)<<
       tilt (~> 1.1, != 1.3.0)
     sprockets-rails (2.3.3)
       actionpack (>= 3.0)
