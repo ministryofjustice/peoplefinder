@@ -34,6 +34,8 @@
 #
 
 class Person < ActiveRecord::Base
+  attr_accessor :working_days
+
   include Concerns::Acquisition
   include Concerns::Activation
   include Concerns::Completion

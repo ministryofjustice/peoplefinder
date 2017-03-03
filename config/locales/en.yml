@@ -20,6 +20,9 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
+  groups:
+    form:
+      placeholder: Discover what this team is responsible for, who is in it and how you can get in touch with them.
   shared:
     finish_profile_request: &finish_profile_request "You need to create a People Finder account to finish signing in"
     unauthorised: &unauthorised Unauthorised, insufficient privileges
@@ -295,6 +298,27 @@ en:
         Discover what this team is responsible for, who is in it and how you can get in touch with them.
 
   helpers:
+    label:
+      person:
+        given_name: First name
+        surname: Surname
+        email: Main email
+        current_project: Current project
+        description: Extra information
+      group:
+        name: Team name
+        acronym: Team initials
+        description: Team description
+    hint:
+      person:
+        current_project: List the names of current projects you’re working on. Use a comma to separate project names.
+      group:
+        name: Write out the name of your team in full. Do not use initials
+        acronym: If your team is also known by its initials (eg HMCTS) add them below
+        description: What is the role and purpose of the team?
+    placeholder:
+        group:
+            description: sdfsdf
     submit:
       person:
         create: "Save"

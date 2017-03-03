@@ -1,43 +1,47 @@
 - @disable_logo_link  = true
 - @page_title = 'Log in'
-- content_for :body_classes, 'login-page'
-%h1.no-line<
-  - if @unauthorised_login
-    = t('.heading_unauthorised')
-  - else
-    = t('.heading')
+- content_for :body_classes, 'login-page '
 
-%div.description
-  - if @unauthorised_login
-    -t('.intro_unauthorised').each_line do |line|
-      %p= line
-  -else
-    -t('.intro').each_line do |line|
-      %p= line
+.grid-row.mod-heading
+  .column-full
+    %h1.heading-xlarge.mod-heading-border
+      - if @unauthorised_login
+        = t('.heading_unauthorised')
+      - else
+        = t('.heading')
 
-.spacer-25
+    %p.lede
+      - if @unauthorised_login
+        - t('.intro_unauthorised').each_line do |line|
+          = line
+      -else
+        - t('.intro').each_line do |line|
+          = line
+
 
 - if feature_enabled?('token_auth')
-  %h2.h3.no-line= t('.heading_other')
+  %h2.heading-medium
+    = t('.heading_other')
 
   = form_for (@token ||= Token.new) do |f|
 
-    .form-group{ class: ('gov-uk-field-error' if @user_email_error) }
-      = f.label :user_email, class: 'visuallyhidden'
-      - if @user_email_error
-        %span.error= @user_email_error
-      = f.text_field :user_email, class: 'form-control'
-      = f.hidden_field(:unauthorised_login, value: @unauthorised_login)
+    = f.text_field :user_email
+    = f.hidden_field(:unauthorised_login, value: @unauthorised_login)
 
-    .spacer-20
+
     = f.submit t('.log_in_email'), { class: 'button', data: token_request_analytics_attributes }
 
   %hr
-  .spacer-5
 
-%h2.h3.no-line= t('.heading_google')
 
-%p= t('.body_google')
+.grid-row
+  .column-full
+    %h2.heading-medium
+      = t('.heading_google')
 
-%p
-  = link_to t('.log_in_google'), "/auth/gplus", class: 'button login-button'
+    %p
+      = t('.body_google')
+
+    %p
+      = link_to t('.log_in_google'), "/auth/gplus", class: 'button login-button'
+

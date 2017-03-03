@@ -104,7 +104,7 @@ namespace :peoplefinder do
     end
 
     def csv_record(email_prefix = nil)
-      person = FactoryGirl.build(:person, :with_details)
+      person = FactoryGirl.build(:person, :with_random_dets)
       person.email.prepend(email_prefix) if email_prefix.present?
       record = []
       csv_header.each do |attribute|
