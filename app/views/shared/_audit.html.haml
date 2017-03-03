@@ -1,27 +1,41 @@
-%table.audit
-  %thead
-    %tr
-      %th{ style: 'width: 150px' } Event at
-      %th{ style: 'width: 150px' } By
-      %th IP address
-      %th Browser
-      %th Change
-  %tbody
-    - versions.reverse.each do |v|
-      %tr
-        %td
-          = l(v.created_at)
-        -if v.whodunnit.is_a?(Person)
-          %td= link_to v.whodunnit.to_s, v.whodunnit
-        - else
-          %td= v.whodunnit
-        %td= v.ip_address
-        %td{title: v.user_agent}=v.user_agent_summary
-        %td
-          %ul
-            - v.changes.each do |field, value|
-              %li
-                = succeed ':' do
-                  %strong<
-                    = field
-                = value
+.grid-row.audit-log
+  .column-full
+    %h3.heading-medium
+      = "Audit Log"
+    %table.audit
+      %thead
+        %tr
+          %th{ style: '' }
+            = "Event at"
+          %th
+            = "By"
+          %th
+            = "IP address"
+          %th
+            = "Browser"
+          %th
+            = "Change"
+      %tbody
+        - versions.reverse.each do |v|
+          %tr
+            %td
+              = v.created_at.strftime("%F")
+            -if v.whodunnit.is_a?(Person)
+              %td
+                = link_to v.whodunnit.to_s, v.whodunnit
+            - else
+              %td
+                = v.whodunnit
+                = "EMPTY?"
+            %td
+              = v.ip_address
+            %td{title: v.user_agent}
+              = v.user_agent_summary
+            %td
+              %ul
+                - v.changes.each do |field, value|
+                  %li
+                    = succeed ':' do
+                      %strong<
+                        = field
+                    = value
