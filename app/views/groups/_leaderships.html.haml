@@ -1,5 +1,7 @@
-.team-leader
-  .image-background
-    = profile_image_tag person
-  %h4= link_to person, person
-  .leader-role= leaderships.map(&:role).select(&:present?).sort.join(', ')
+%div{class: counter > 1 ? "mod-media leaders" : "mod-media leader"}
+  .media
+    .media-left
+      = profile_image_tag person
+      %h4.media-heading
+        = link_to person, person
+      = leaderships.map(&:role).select(&:present?).sort.join(', ')
