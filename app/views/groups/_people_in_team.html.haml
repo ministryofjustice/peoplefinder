@@ -1,0 +1,10 @@
+.grid-row.mod-heading
+  .column-full
+    %h2.heading-large.mod-heading-border
+      People in #{ @group.short_name }
+
+      %span.pull-right
+        = link_to 'Add new sub-team', new_group_group_path(@group), class: 'font-xsmall'
+
+.grid-row
+  = render partial: "memberships/summary", collection: @group.distinct_non_leaderships
