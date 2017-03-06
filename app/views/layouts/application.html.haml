@@ -39,8 +39,8 @@
 -#   = "after_header"
 
 //Inside parent #footer-wrapper Insertion point
-- content_for :footer_top  do
-  = "footer_top"
+-# - content_for :footer_top  do
+-#   = render partial: "layouts/footer"
 
 //Inside parent .footer-meta-inner  Insertion point
 - content_for :footer_support_links  do
