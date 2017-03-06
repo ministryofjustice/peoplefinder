@@ -46,7 +46,7 @@ if ENV['ENV'] == 'production'
 
 end
 
-if ENV['ENV'] == 'staging'
+if %w(dev demo staging).include? ENV['ENV']
 
   set :output, standard: '/var/log/cron.log', error: '/var/log/cron_error.log'
 
