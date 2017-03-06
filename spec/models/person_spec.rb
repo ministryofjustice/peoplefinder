@@ -238,6 +238,24 @@ RSpec.describe Person, type: :model do
     end
   end
 
+  context 'group member completion score update' do
+    include ActiveJob::TestHelper
+
+    let(:person) { build(:person) }
+    let!(:digital_services) { create(:group, name: 'Digital Services') }
+    before do
+      person.save!
+      person.memberships.create(group: digital_services, role: 'Service Assessments Lead')
+      person.save!
+      person.primary_phone_number = '00222'
+      clear_enqueued_jobs
+    end
+
+    it 'enqueues the UpdateGroupMembersCompletionScoreJob' do
+      expect { person.save! }.to have_enqueued_job(UpdateGroupMembersCompletionScoreJob).with(digital_services)
+    end
+  end
+
   context 'with two memberships in the same group' do
     before do
       person.save!

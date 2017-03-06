@@ -6,16 +6,28 @@ class UpdateGroupMembersCompletionScoreJob < ActiveJob::Base
 
   queue_as :low_priority
 
-  # update current groups score and enqueue job to update parent too
-  def perform(group)
-    group.update_members_completion_score!
+  around_enqueue do |job, block|
+    block.call unless enqueued? job.arguments.first
+  end
 
-    if group.parent && group.parent != Group.department
+  # update current groups and parent's score
+  def perform(group)
+    ap "File: #{File.basename(__FILE__)}, Method: #{__method__}, Line: #{__LINE__}"
+    group.update_members_completion_score!
+    if group.parent
       UpdateGroupMembersCompletionScoreJob.perform_later(group.parent)
     end
   end
 
   private
+
+  def enqueued? group
+    count = Delayed::Job.
+            where("substring(handler from 'job_class: #{self.class}') IS NOT NULL").
+            where("substring(handler from 'gid://peoplefinder/Group/#{group.id}.*') IS NOT NULL").
+            count
+    count > 0
+  end
 
   def error_handler exception
     Rails.logger.warn "#{self.class} encountered #{exception.class}: #{exception.message}"
