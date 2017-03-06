@@ -1,0 +1,6 @@
+.search-box{
+  @extend %contain-floats;
+  .form-control{
+    width: 75% !important;
+  }
+}
