@@ -2,11 +2,13 @@
   - if logged_in_regular?
     %li
       = link_to "Signed in as #{current_user}", person_path(current_user)
-      - if super_admin?
-        %span.manage-link
-          = link_to 'Manage', admin_home_path
-      %span.logout-link
-        = link_to "Sign out", sessions_path, :method => :delete
+
+    - if super_admin?
+      %li
+        = link_to 'Manage', admin_home_path
+
+    %li
+      = link_to "Sign out", sessions_path, :method => :delete
   - elsif logged_in_readonly? && !@login_screen
     %li
       = link_to('To update People Finder, Sign in now', new_sessions_path )
