@@ -1,7 +1,7 @@
 - content_for :body_classes do
   = 'home-page '
 
-= link_to 'Create a new profile', new_person_path, class: 'add-new-person'
+-# = link_to 'Create a new profile', new_person_path, class: 'add-new-person'
 
 .grid-row
   .column-full
@@ -16,8 +16,7 @@
     = render 'shared/search'
 
   .column-one-third
-    = t('home.usage_heading')
-    = t('home.usage')
+    -# SPACER COL
 
 
 .grid-row.mod-heading
@@ -26,7 +25,6 @@
       %span.heading-secondary
         = @group.acronym
       = @group.name
-      -# = render partial: 'groups/heading_links'
 
 .grid-row.mod-team-overview
   .column-one-third
@@ -42,16 +40,11 @@
 
     = govspeak(@group.with_placeholder_default(:description))
 
-    -# - if @all_people_count > 0 || @group.children.present?
-    -#   = link_to "View printable organogram", organogram_group_path(@group)
-    -# - unless @group.leaf_node?
-    -#   - if @all_people_count > 0 && @group.parent.present?
-    -#     = link_to "View #{ @all_people_count > 1 ? 'all' : 'NONE' } people", people_group_path(@group), class: 'view-all-people'
-
-
-
-.grid-row
-  %h2
+    - if @all_people_count > 0 || @group.children.present?
+      = link_to "View printable organogram", organogram_group_path(@group)
+    - unless @group.leaf_node?
+      - if @all_people_count > 0 && @group.parent.present?
+        = link_to "View #{ @all_people_count > 1 ? 'all' : 'NONE' } people", people_group_path(@group), class: 'view-all-people'
 
 .grid-row.mod-heading
   .column-full
