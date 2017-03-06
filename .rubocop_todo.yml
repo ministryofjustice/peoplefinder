@@ -18,6 +18,7 @@ Metrics/ClassLength:
     - 'app/models/person.rb'
     - 'app/controllers/people_controller.rb'
     - 'app/services/person_search.rb'
+    - 'app/presenters/membership_changes_presenter.rb'
 
 # Offense count: 299
 # Cop supports --auto-correct.

@@ -19,8 +19,11 @@ class MembershipChangeSet
   end
 
   def team_name
-    team = change(raw_changes[:group_id])
-    Group.find(team.new_val || team.old_val).name
+    group = change(raw_changes[:group_id])
+    team = Group.find(group.new_val || group.old_val)
+    "the #{team}"
+  rescue ActiveRecord::RecordNotFound
+    'a no longer existing'
   end
 
   def team id
@@ -38,7 +41,7 @@ class MembershipChangeSet
   def added_sentence
     role_addendum = " as #{role}" if role?
     leader_addendum = ' You are a leader of the team.' if leader?
-    "Added you to the #{team_name} team#{role_addendum}.#{leader_addendum}"
+    "Added you to #{team_name} team#{role_addendum}.#{leader_addendum}"
   end
 
   def removed_sentence
