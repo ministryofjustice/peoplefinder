@@ -128,3 +128,22 @@ $border-color: #bfc1c3;
   @include core-16;
 }
 }
+
+.formatted-text {
+  word-wrap: break-word;
+  ul li {
+    list-style-type: disc;
+    margin-left: 20px;
+  }
+
+  ol li {
+    list-style-type: decimal;
+    margin-left: 25px;
+  }
+
+  h4{
+    margin-top: $gutter;
+    @include core-19;
+    font-weight: 700;
+  }
+}

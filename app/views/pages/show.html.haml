@@ -1,4 +1,12 @@
-%h1= t(:title, scope: [:pages, @page_name])
+%br/
+= render partial: 'shared/search'
 
-.formatted-text
-  = govspeak(t(:body, scope: [:pages, @page_name]))
+.grid-row.mod-heading
+  .column-full
+    %h1.heading-xlarge.mod-heading-border
+      %span.heading-secondary
+      = t(:title, scope: [:pages, @page_name])
+
+.grid-row.formatted-text
+  .column-full
+    = govspeak(t(:body, scope: [:pages, @page_name]))
