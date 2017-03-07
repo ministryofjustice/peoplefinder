@@ -5,6 +5,7 @@ class ProblemReport
   include Virtus.model
   extend ActiveModel::Naming
   include ActiveModel::Conversion
+  include Concerns::GovukElementsFormBuilderMocker
 
   attribute :goal, String
   attribute :problem, String
@@ -17,6 +18,7 @@ class ProblemReport
   def initialize(*)
     super
     self.timestamp ||= Time.now.to_i
+    @errors = ActiveModel::Errors.new(self)
   end
 
   def persisted?
