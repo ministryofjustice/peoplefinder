@@ -4,6 +4,7 @@ class ProfilePhotosController < ApplicationController
   def create
     set_state_cookie_picture_editing_complete
     photo = ProfilePhoto.create(profile_photo_params)
+
     # NOTE: IE requires JSON as text
     if photo.valid?
       render text: photo.to_json

@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe EmailValidator do
-  class TestModel
+  class EmailValidatorTestModel
     include ActiveModel::Model
 
     attr_accessor :email
@@ -13,7 +13,7 @@ RSpec.describe EmailValidator do
     allow(PermittedDomain).to receive(:pluck).with(:domain).and_return(['valid.gov.uk'])
   end
 
-  subject { TestModel.new(email: email) }
+  subject { EmailValidatorTestModel.new(email: email) }
 
   context 'email is a valid email with a supported domain' do
     let(:email) { 'name.surname@valid.gov.uk' }

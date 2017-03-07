@@ -108,8 +108,20 @@ FactoryGirl.define do
 
   factory :profile_photo do
     image Rack::Test::UploadedFile.new(
-      File.join(Rails.root, 'spec', 'fixtures', 'placeholder.png')
+      File.join(Rails.root, 'spec', 'fixtures', 'profile_photo_valid.png')
     )
+
+    trait :invalid_dimensions do
+      image Rack::Test::UploadedFile.new(
+        File.join(Rails.root, 'spec', 'fixtures', 'profile_photo_invalid.png')
+      )
+    end
+
+    trait :large_dimensions do
+      image Rack::Test::UploadedFile.new(
+        File.join(Rails.root, 'spec', 'fixtures', 'profile_photo_large.png')
+      )
+    end
   end
 
   factory :readonly_user do

@@ -30,7 +30,9 @@ class ImageUploader < CarrierWave::Uploader::Base
     end
   end
 
-  version :croppable
+  version :croppable do
+    before :cache, :store_upload_dimensions
+  end
 
   version :medium, from_version: :croppable do
     process :crop
@@ -66,9 +68,21 @@ class ImageUploader < CarrierWave::Uploader::Base
     mounted_as.to_s.sub(/^legacy_/, '')
   end
 
-  # Add a white list of extensions which are allowed to be uploaded.
-  # For images you might use something like this:
+  # white list of permissable file extensions for upload
   def extension_white_list
     %w( jpg jpeg gif png )
+  end
+
+  private
+
+  def image_dimensions file
+    width, height = `identify -format "%wx%h" #{file.path}`.split(/x/).map(&:to_i)
+    { width: width, height: height }
+  end
+
+  def store_upload_dimensions(new_file)
+    if model.upload_dimensions.nil?
+      model.upload_dimensions = image_dimensions(new_file)
+    end
   end
 end
