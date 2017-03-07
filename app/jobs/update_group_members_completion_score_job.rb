@@ -12,7 +12,6 @@ class UpdateGroupMembersCompletionScoreJob < ActiveJob::Base
 
   # update current groups and parent's score
   def perform(group)
-    ap "File: #{File.basename(__FILE__)}, Method: #{__method__}, Line: #{__LINE__}"
     group.update_members_completion_score!
     if group.parent
       UpdateGroupMembersCompletionScoreJob.perform_later(group.parent)

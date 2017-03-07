@@ -135,12 +135,18 @@ class MembershipChangesPresenter < ChangesPresenter
   def team_change_sentence raw_change
     change = Change.new(raw_change)
     if change.addition?
-      "Added you to the #{Group.find(change.new_val).name} team"
+      "Added you to #{team_name(change.new_val)} team"
     elsif change.removal?
-      "Removed you from the #{Group.find(change.old_val).name} team"
+      "Removed you from #{team_name(change.old_val)} team"
     elsif change.modification?
-      "Changed your membership of the #{Group.find(change.old_val).name} team \
-      to the #{Group.find(change.new_val).name} team"
+      "Changed your membership of #{team_name(change.old_val)} team \
+      to #{team_name(change.new_val)} team"
     end
+  end
+
+  def team_name id
+    "the #{Group.find(id).name}"
+  rescue ActiveRecord::RecordNotFound
+    'a no longer existing'
   end
 end
