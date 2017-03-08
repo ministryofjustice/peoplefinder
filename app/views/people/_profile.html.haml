@@ -29,54 +29,71 @@
         %h4.media-heading
         - @person.memberships.group_by(&:group).each do |group, memberships|
           -if memberships.first.role.present?
-            %h3.job-title
+            %h3.heading-medium
               #{memberships.map(&:role).select(&:present?).sort.join(', ')}
               %small
                 in
                 %a{ href: url_for(group) }
                   = group
-          - path = memberships.first.path
-          - if path.length > 1
-            %dl.inline-labels.role-and-location
-              %dt Team
-              %dd.breadcrumbs= breadcrumbs(path.drop(1))
 
-        %dl.inline-labels
-          - if @person.location.present?
-            %dt Location
-            %dd= @person.location
+        - if @person.location.present?
+          %dl.inline-labels
+            %dt
+              Location
+            %dd
+              = @person.location
 
-        %dl.inline-labels
-          - if @person.email.present?
-            %dt= t(:email, scope: 'activerecord.attributes.person')
-            %dd= mail_to(@person.email)
-          - if @person.secondary_email.present?
-            %dt= t(:secondary_email, scope: 'activerecord.attributes.person')
-            %dd= mail_to(@person.secondary_email)
+        - if @person.email.present?
+          %dl.inline-labels
+            %dt
+              = t(:email, scope: 'activerecord.attributes.person')
+            %dd
+              = mail_to(@person.email)
 
-        %dl.inline-labels
-          - if @person.primary_phone_number.present?
-            %dt Primary phone number
-            %dd= call_to(@person.primary_phone_number)
+        - if @person.secondary_email.present?
+          %dl.inline-labels
+            %dt
+              = t(:secondary_email, scope: 'activerecord.attributes.person')
+            %dd
+              = mail_to(@person.secondary_email)
 
-          - if @person.secondary_phone_number.present?
-            %dt Other phone number
-            %dd= call_to(@person.secondary_phone_number)
+        - if @person.primary_phone_number.present?
+          %dl.inline-labels
+            %dt
+              Primary phone number
+            %dd
+              = call_to(@person.primary_phone_number)
 
-          - if @person.pager_number.present?
-            %dt Pager number
-            %dd= call_to(@person.pager_number)
+        - if @person.secondary_phone_number.present?
+          %dl.inline-labels
+            %dt
+              Other phone number
+            %dd
+              = call_to(@person.secondary_phone_number)
 
-        %dl.inline-labels
-          - if @person.current_project.present?
-            %dt Current project(s)
-            %dd= @person.current_project
+        - if @person.pager_number.present?
+          %dl.inline-labels
+            %dt
+              Pager number
+            %dd
+              = call_to(@person.pager_number)
+
+        - if @person.current_project.present?
+          %dl.inline-labels
+            %dt
+              Current project(s)
+            %dd
+              = @person.current_project
 
         - if @person.description.present?
-          %h5 Extra information:
-          %p= @person.description
+          %dl.inline-labels
+            %dt
+              Extra information
+            %dd
+              = @person.description
 
-        %h4 Days worked
+        %h4.heading-small
+          = "Days worked"
         %ul.working_days
           = render 'working_days'
 
