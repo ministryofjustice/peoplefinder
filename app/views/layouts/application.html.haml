@@ -39,12 +39,14 @@
 -#   = "after_header"
 
 //Inside parent #footer-wrapper Insertion point
--# - content_for :footer_top  do
--#   = render partial: "layouts/footer"
+- content_for :footer_top  do
+  = render 'shared/feedback_form'
+
 
 //Inside parent .footer-meta-inner  Insertion point
 - content_for :footer_support_links  do
-  = "footer_support_links"
+  = render 'layouts/footer'
+
 
 //Before closing </body> element  Insertion point
 - content_for :body_end  do
@@ -60,5 +62,4 @@
 
     = yield
 
-= render partial: 'shared/feedback_form'
 = render template: 'layouts/govuk_template'
