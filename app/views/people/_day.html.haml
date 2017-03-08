@@ -4,4 +4,5 @@
       = "Works on #{ day_name(day) }s"
     - else
       = "Doesn't work on #{ day_name(day) }s"
-  .span{ aria: { hidden: 'true' } }= day_symbol(day)
+  .span{ aria: { hidden: 'true' } }
+    = day_symbol(day)
