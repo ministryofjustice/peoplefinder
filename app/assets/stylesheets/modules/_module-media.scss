@@ -86,7 +86,7 @@
 
   @include desktop{
      @if $multiply{
-      width: $size*2.35;
+      width: 100%;
       // height: $size*1.8;
     }
   }
@@ -121,6 +121,12 @@
     .media-left{
       padding-right:$gutter;
     }
+    .heading-medium{
+      margin-top:0;
+      small{
+        @include core-19;
+      }
+    }
   }
 
   &.card{
@@ -148,8 +154,62 @@
   &.leader{
     @include setSize();
   }
+
+  ul.working_days {
+  clear: both;
+  list-style: none;
+  padding: 0;
+
+  li {
+    display:inline-block;
+    text-align: center;
+    background-color: gray;
+    width: 25px;
+    padding:3px 0;
+    color: white;
+
+    background: image-url('bg_not_working_day.png') no-repeat scroll 0 0;
+
+    &.active {
+      background-image: none;
+      background-color: rgb(98,152,187);
+    }
+  }
+}
 }
 
+.profile {
+  min-height: 300px;
+  .image-background {
+    height: 300px;
+  }
+
+  dl {
+    margin-bottom: 15px;
+  }
+  .inline-labels dt {
+    font-weight: 700;
+  }
+
+  dd.breadcrumbs {
+    margin: 0;
+    ol {
+      margin: 0;
+      padding: 0;
+    }
+  }
+
+  .role-and-location {
+    dd, dt {
+      margin-bottom: 0.4em;
+    }
+  }
+  .job-title {
+    small {
+      font-size: 16px;
+    }
+  }
+}
 
 
 
