@@ -336,6 +336,9 @@ en:
         name: Team name
         acronym: Team initials
         description: Team description
+      problem_report:
+        goal: "What were you trying to do?"
+        problem: "What went wrong?"
     hint:
       person:
         current_project: List the names of current projects you’re working on. Use a comma to separate project names.
@@ -343,6 +346,7 @@ en:
         name: Write out the name of your team in full. Do not use initials
         acronym: If your team is also known by its initials (eg HMCTS) add them below
         description: What is the role and purpose of the team?
+
     placeholder:
         group:
             description: sdfsdf
