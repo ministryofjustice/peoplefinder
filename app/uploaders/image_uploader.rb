@@ -49,14 +49,14 @@ class ImageUploader < CarrierWave::Uploader::Base
   def crop
     if model.crop_x.present?
       manipulate! do |img|
-        x, y, w, h = dimensions model
+        x, y, w, h = origin_and_dimensions model
         img.crop "#{w}x#{h}+#{x}+#{y}"
         img
       end
     end
   end
 
-  def dimensions model
+  def origin_and_dimensions model
     x = model.crop_x.to_i
     y = model.crop_y.to_i
     w = model.crop_w.to_i
@@ -73,20 +73,26 @@ class ImageUploader < CarrierWave::Uploader::Base
     %w( jpg jpeg gif png )
   end
 
-  private
-
-  def identify_format file
-    `identify -format \"%wx%h\" #{file.path}`
+  # later versions of Carrierwave::MiniMagick includes this method
+  def width
+    dimensions[:width]
   end
 
-  def image_dimensions file
-    w, h = identify_format(file).split(/x/).map(&:to_i)
+  # later versions of Carrierwave::MiniMagick includes this method
+  def height
+    dimensions[:height]
+  end
+
+  def dimensions
+    w, h = ::MiniMagick::Image.open(file.file)[:dimensions]
     { width: w, height: h }
   end
 
-  def store_upload_dimensions(new_file)
+  private
+
+  def store_upload_dimensions _file
     if model.upload_dimensions.nil?
-      model.upload_dimensions = image_dimensions(new_file)
+      model.upload_dimensions = dimensions
     end
   end
 end
