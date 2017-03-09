@@ -75,9 +75,13 @@ class ImageUploader < CarrierWave::Uploader::Base
 
   private
 
+  def identify_format file
+    `identify -format \"%wx%h\" #{file.path}`
+  end
+
   def image_dimensions file
-    width, height = `identify -format "%wx%h" #{file.path}`.split(/x/).map(&:to_i)
-    { width: width, height: height }
+    w, h = identify_format(file).split(/x/).map(&:to_i)
+    { width: w, height: h }
   end
 
   def store_upload_dimensions(new_file)

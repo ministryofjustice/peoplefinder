@@ -14,14 +14,14 @@ RSpec.describe ImageUploader, type: :uploader do
 
   context 'with a profile photo object' do
     subject { profile_photo.image }
-    let(:profile_photo) { create(:profile_photo, :large_dimensions) }
+    let(:profile_photo) { create(:profile_photo) }
 
-    it 'stores upload dimensions on the model' do
-      expect(profile_photo.upload_dimensions).to eq(width: 1024, height: 1057)
+    it 'stores dimensions on the model' do
+      expect(profile_photo.upload_dimensions).to eq(width: 648, height: 648)
     end
 
     it 'creates default image sizes' do
-      expect(subject.croppable).to be_no_larger_than(1536, 1536)
+      expect(subject.croppable).to have_dimensions(648, 648)
       expect(subject.medium).to be_no_larger_than(512, 512)
       expect(subject.preview).to be_no_larger_than(512, 512)
     end

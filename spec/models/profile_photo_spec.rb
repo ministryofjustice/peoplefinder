@@ -53,6 +53,11 @@ RSpec.describe ProfilePhoto, type: :model do
   describe 'validations' do
     subject { build(:profile_photo) }
 
+    it 'validates file is of a whitelisted extension type' do
+      subject.image = non_white_list_image
+      expect(subject).to be_invalid
+    end
+
     it 'validates file size not to exceed 6M' do
       allow(subject.image).to receive(:size).and_return 6.001.megabytes
       expect(subject).to be_invalid
@@ -68,6 +73,36 @@ RSpec.describe ProfilePhoto, type: :model do
       allow(subject).to receive(:upload_dimensions).and_return(width: 648, height: 648)
       expect(subject).to be_valid
     end
+
+    context 'saving file' do
+      context 'with non image' do
+        subject { build :profile_photo, :non_image }
+        it { is_expected.to be_invalid }
+
+        it 'raises error' do
+          expect { subject.save! }.to raise_error ActiveRecord::RecordInvalid, /not allowed to upload "csv" files, allowed types: jpg, jpeg, gif, png/
+        end
+      end
+
+      context 'with unwhitelisted extension' do
+        subject { build :profile_photo, :invalid_extension }
+        it { is_expected.to be_invalid }
+
+        it 'raises error' do
+          expect { subject.save! }.to raise_error ActiveRecord::RecordInvalid, /not allowed to upload "bmp" files, allowed types: jpg, jpeg, gif, png/
+        end
+      end
+
+      context 'with invalid dimensions' do
+        subject { build :profile_photo, :invalid_dimensions }
+        it { is_expected.to be_invalid }
+
+        it 'raises error' do
+          expect { subject.save! }.to raise_error ActiveRecord::RecordInvalid, /dimensions, 510x512, must not be less than 648x648 pixels/
+        end
+      end
+    end
+
   end
 
 end

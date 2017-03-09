@@ -31,7 +31,7 @@ class ImageDimensionsValidator < ActiveModel::EachValidator
   end
 
   def minimum_dimensions_valid?
-    if minimum_dimensions_required?
+    if minimum_dimensions_required? && record.upload_dimensions.present?
       [
         record.upload_dimensions[:width] >= options[:min_width],
         record.upload_dimensions[:height] >= options[:min_height]

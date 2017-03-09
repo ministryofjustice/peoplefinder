@@ -111,9 +111,21 @@ FactoryGirl.define do
       File.join(Rails.root, 'spec', 'fixtures', 'profile_photo_valid.png')
     )
 
+    trait :invalid_extension do
+      image Rack::Test::UploadedFile.new(
+        File.join(Rails.root, 'spec', 'fixtures', 'placeholder.bmp')
+      )
+    end
+
+    trait :non_image do
+      image Rack::Test::UploadedFile.new(
+        File.join(Rails.root, 'spec', 'fixtures', 'invalid_rows.csv')
+      )
+    end
+
     trait :invalid_dimensions do
       image Rack::Test::UploadedFile.new(
-        File.join(Rails.root, 'spec', 'fixtures', 'profile_photo_invalid.png')
+        File.join(Rails.root, 'spec', 'fixtures', 'profile_photo_invalid_dimensions.png')
       )
     end
 
