@@ -1,6 +1,8 @@
 - content_for :breadcrumbs do
   = breadcrumbs(Home.path + @group.path + ['People not assigned to a sub-team'])
-.whoami
+
+= render partial: 'shared/search'
+
 
 %h1.heading-xlarge
   = @page_title = "People in #{ @group.name }"
