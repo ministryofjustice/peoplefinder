@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe EmailValidator do
+RSpec.describe EmailValidator, type: :validator do
   class EmailValidatorTestModel
     include ActiveModel::Model
 
