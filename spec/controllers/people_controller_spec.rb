@@ -133,31 +133,6 @@ RSpec.describe PeopleController, type: :controller do
     end
   end
 
-  describe 'POST create - preview only' do
-    def post_preview
-      post :create, person: valid_attributes, preview: 'only key presence matters'
-    end
-
-    it 'assigns a flag to indicate this is a preview' do
-      post_preview
-      expect(assigns(:preview)).to be true
-    end
-
-    it 'does not create a new person' do
-      expect { post_preview }.not_to change(Person, :count)
-    end
-
-    it 're-renders the new template' do
-      post_preview
-      expect(response).to render_template('new')
-    end
-
-    it 'crops preview profile photo immediatley' do
-      expect_any_instance_of(Person).to receive(:crop_profile_photo).with(:preview).exactly(:once)
-      post_preview
-    end
-  end
-
   describe 'PUT update myself' do
     let(:person) { current_user }
 
@@ -285,41 +260,6 @@ RSpec.describe PeopleController, type: :controller do
         person.reload
         expect(person).not_to be_super_admin
       end
-    end
-  end
-
-  describe 'PUT update - preview only' do
-    let(:person) { current_user }
-    def update_preview
-      put :update, id: person.to_param, person: new_attributes, preview: 'only key presence matters'
-    end
-
-    before do
-      update_preview
-    end
-
-    let(:new_attributes) do
-      attributes_for(:person).merge(works_tuesday: false)
-    end
-
-    it 'assigns a flag to indicate this is a preview' do
-      expect(assigns(:preview)).to be true
-    end
-
-    it 'does not update the person' do
-      person.reload
-      new_attributes.each do |key, value|
-        expect(person.__send__(key)).not_to eql value
-      end
-    end
-
-    it 're-renders the edit template' do
-      expect(response).to render_template(:edit)
-    end
-
-    it 'crops preview profile photo immediatley' do
-      expect_any_instance_of(Person).to receive(:crop_profile_photo).with(:preview).exactly(:once)
-      update_preview
     end
   end
 

@@ -39,8 +39,8 @@ RSpec.describe ProfilePhoto, type: :model do
     end
 
     it 'accepts a specific version to crop' do
-      expect(subject.image).to receive(:recreate_versions!).with(:preview)
-      subject.crop(1, 2, 3, 4, :preview)
+      expect(subject.image).to receive(:recreate_versions!).with(:medium)
+      subject.crop(1, 2, 3, 4, :medium)
     end
 
     it 'defaults to cropping all versions' do

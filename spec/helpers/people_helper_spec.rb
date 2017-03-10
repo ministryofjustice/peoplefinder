@@ -37,14 +37,14 @@ RSpec.describe PeopleHelper, type: :helper do
 
   describe 'profile_image_tag' do
     let(:person)  { build(:person, :with_photo) }
-    let(:options) { { class: 'my-class', version: :preview } }
+    let(:options) { { class: 'my-class', version: :croppable } }
 
     it 'test builds person with photo' do
       expect(person.profile_photo.image).not_to be_nil
     end
 
     it 'uses the specified image version' do
-      expect(profile_image_tag(person, options)).to match(/.*profile_photo.*\/preview_.*/)
+      expect(profile_image_tag(person, options)).to match(/.*profile_photo.*\/croppable.*/)
     end
 
     it 'removes the version element from options hash' do
