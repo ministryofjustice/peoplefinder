@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Concerns::Sanitizable do
 
-  class TestModel
+  class SanitizableTestModel
     include ActiveModel::Model
     include ActiveModel::Validations::Callbacks
 
@@ -19,7 +19,7 @@ RSpec.describe Concerns::Sanitizable do
   end
 
   subject do
-    TestModel.new(
+    SanitizableTestModel.new(
       color: ' Orange3 ',
       shape: ' Square ',
       flavor: ' Strawberry2 ',

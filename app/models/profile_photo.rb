@@ -12,9 +12,10 @@ class ProfilePhoto < ActiveRecord::Base
   has_one :person
   mount_uploader :image, ImageUploader
 
-  validates :image, file_size: { maximum: 6.megabytes }
+  attr_accessor :upload_dimensions, :crop_x, :crop_y, :crop_w, :crop_h
 
-  attr_accessor :crop_x, :crop_y, :crop_w, :crop_h
+  validates :image, file_size: { maximum: 6.megabytes }
+  validates :image, image_dimensions: { min_width: 648, min_height: 648 }
 
   def crop(x, y, w, h, versions = [])
     self.crop_x = x

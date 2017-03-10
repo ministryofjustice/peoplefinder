@@ -9,7 +9,7 @@ RSpec.describe ProfilePhotosController, type: :controller do
 
   describe 'POST create' do
     describe 'with valid params' do
-      let(:valid_params) { { image: File.open(sample_image) } }
+      let(:valid_params) { { image: valid_image } }
 
       it 'creates a new ProfilePhoto' do
         expect do
@@ -46,7 +46,7 @@ RSpec.describe ProfilePhotosController, type: :controller do
   end
 
   describe 'with invalid params' do
-    let(:invalid_params) { { image: File.open(non_white_list_image) } }
+    let(:invalid_params) { { image: non_white_list_image } }
     let(:photo_id) { 123 }
     let(:photo) { double('photo', to_json: { id: photo_id }.to_json) }
 

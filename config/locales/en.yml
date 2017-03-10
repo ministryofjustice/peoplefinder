@@ -218,6 +218,12 @@ en:
         attributes:
           base:
             memberships_exist: "cannot be deleted until all the memberships have been removed"
+    validators:
+      image_dimensions_validator:
+        too_small: "is %{actual_dimensions} pixels. The minimum requirement is %{expected_dimensions} pixels"
+      file_size_validator:
+        too_big: "file size, %{size}, is too large"
+        not_in_range: "file size, %{size}, is not in expected range"
   activerecord:
     errors:
       <<: *errors

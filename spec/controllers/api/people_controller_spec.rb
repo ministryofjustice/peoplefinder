@@ -14,10 +14,6 @@ RSpec.describe Api::PeopleController, type: :controller do
     { surname: '' }
   end
 
-  let(:valid_attributes_with_image) do
-    attributes_for(:person).merge(image: File.open(sample_image))
-  end
-
   let!(:group) { create(:group) }
 
   describe 'GET show' do
