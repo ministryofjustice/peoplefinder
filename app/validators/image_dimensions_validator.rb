@@ -50,7 +50,13 @@ class ImageDimensionsValidator < ActiveModel::EachValidator
   end
 
   def minimum_dimensions_message
-    message || "dimensions, #{humanize_dimensions}, must not be less than #{humanize_minimum_dimensions} pixels."
+    message ||
+      I18n.t(
+        :too_small,
+        scope: [:errors, :validators, :image_dimensions_validator],
+        actual_dimensions: humanize_dimensions,
+        expected_dimensions: humanize_minimum_dimensions
+      )
   end
 
 end

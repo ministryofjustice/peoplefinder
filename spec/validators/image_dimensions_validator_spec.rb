@@ -22,7 +22,7 @@ RSpec.describe ImageDimensionsValidator do
     it 'assigns a default error message' do
       expect { subject.valid? }.to change(subject.errors, :count).by 1
       subject.valid?
-      expect(subject.errors.full_messages).to include "Image dimensions, 649x647, must not be less than 648x648 pixels."
+      expect(subject.errors.full_messages).to include "Image is 649x647 pixels. The minimum requirement is 648x648 pixels"
     end
   end
 

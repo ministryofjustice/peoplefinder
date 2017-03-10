@@ -26,7 +26,6 @@ RSpec.describe ProfilePhoto, type: :model do
 
   it 'stores upload dimensions' do
     expect(subject.upload_dimensions).to eq width: 648, height: 648
-    subject
   end
 
   describe '#crop' do
@@ -69,7 +68,7 @@ RSpec.describe ProfilePhoto, type: :model do
     it 'validates image dimensions to not be less than 648x648 pixels' do
       allow(subject).to receive(:upload_dimensions).and_return(width: 649, height: 647)
       expect(subject).to be_invalid
-      expect(subject.errors[:image].first).to match(/dimensions.*649x647.*648x648 pixels/)
+      expect(subject.errors[:image].first).to match(/is.*649x647.*648x648 pixels/)
       allow(subject).to receive(:upload_dimensions).and_return(width: 648, height: 648)
       expect(subject).to be_valid
     end
@@ -98,7 +97,7 @@ RSpec.describe ProfilePhoto, type: :model do
         it { is_expected.to be_invalid }
 
         it 'raises error' do
-          expect { subject.save! }.to raise_error ActiveRecord::RecordInvalid, /dimensions, 510x512, must not be less than 648x648 pixels/
+          expect { subject.save! }.to raise_error ActiveRecord::RecordInvalid, /is 510x512 pixels. The minimum requirement is 648x648 pixels/
         end
       end
     end

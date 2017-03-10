@@ -23,12 +23,26 @@ class FileSizeValidator < ActiveModel::EachValidator
     record.errors[attribute] << message
   end
 
+  def scope_t
+    [:errors, :validators, :file_size_validator]
+  end
+
   def max_message
-    @message || "file size, #{human_size}, is too large"
+    @message ||
+      I18n.t(
+        :too_big,
+        scope: scope_t,
+        size: human_size
+      )
   end
 
   def range_message
-    @message || "file size, #{human_size}, is not in expected range"
+    @message ||
+      I18n.t(
+        :not_in_range,
+        scope: scope_t,
+        size: human_size
+      )
   end
 
   def human_size
