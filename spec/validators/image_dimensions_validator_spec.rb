@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe ImageDimensionsValidator do
+RSpec.describe ImageDimensionsValidator, type: :validator do
   class ImageDimensionsTestModel
     include ActiveModel::Model
 
