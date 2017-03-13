@@ -73,26 +73,27 @@ class ImageUploader < CarrierWave::Uploader::Base
     %w( jpg jpeg gif png )
   end
 
-  # later versions of Carrierwave::MiniMagick includes this method
-  def width
-    dimensions[:width]
-  end
-
-  # later versions of Carrierwave::MiniMagick includes this method
-  def height
-    dimensions[:height]
-  end
-
   def dimensions
-    w, h = ::MiniMagick::Image.open(file.file)[:dimensions]
+    w, h = ::MiniMagick::Image.open(url_or_file)[:dimensions]
     { width: w, height: h }
   end
 
   private
 
+  def url_or_file
+    file.url if file.respond_to? :url
+    file.file if file.respond_to? :file
+  end
+
+  def uploaded_file_dimensions
+    w, h = ::MiniMagick::Image.open(file.file)[:dimensions]
+    { width: w, height: h }
+  end
+
   def store_upload_dimensions _file
     if model.upload_dimensions.nil?
-      model.upload_dimensions = dimensions
+      model.upload_dimensions = uploaded_file_dimensions
     end
   end
+
 end

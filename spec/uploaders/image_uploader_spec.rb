@@ -16,10 +16,17 @@ RSpec.describe ImageUploader, type: :uploader do
     subject { profile_photo.image }
     let(:profile_photo) { create(:profile_photo) }
 
-    it { is_expected.to respond_to :dimensions }
+    context '#dimensions' do
+      it { is_expected.to respond_to :dimensions }
 
-    it 'stores original dimensions on the model' do
-      expect(profile_photo.upload_dimensions).to eq subject.croppable.dimensions
+      it 'retrieves dimensions of stored object' do
+        expect(subject.dimensions).to eq width: 648, height: 648
+      end
+    end
+
+    it 'stores dimensions on the model temporarily' do
+      expect(profile_photo.upload_dimensions).to eq width: 648, height: 648
+      expect(ProfilePhoto.find(profile_photo.id).upload_dimensions).to eq nil
     end
 
     it 'creates default image sizes' do
