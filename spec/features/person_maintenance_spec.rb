@@ -68,24 +68,6 @@ feature 'Person maintenance' do
         check_creation_of_profile_details
       end
 
-      scenario 'Previewing on creation' do
-        visit new_person_path
-
-        fill_in 'First name', with: 'Jane'
-        fill_in 'Surname', with: 'Doe'
-        fill_in 'Main email', with: person_attributes[:email]
-
-        expect do
-          click_button 'Preview'
-        end.not_to change(Person, :count)
-
-        expect(page).to have_selector('.preview h1', text: 'Jane Doe')
-
-        expect do
-          click_button 'Save', match: :first
-        end.to change(Person, :count).by(1)
-      end
-
       scenario 'Creating an invalid person' do
         new_profile_page.load
         new_profile_page.form.save.click
@@ -184,25 +166,6 @@ feature 'Person maintenance' do
         within('h1') do
           expect(page).to have_text('Jane Doe')
         end
-      end
-
-      scenario 'Previewing on update' do
-        person = create(:person, given_name: 'Jane', surname: 'Doe')
-
-        visit person_path(person)
-        click_link 'Edit this profile'
-
-        fill_in 'First name', with: 'Monica'
-        fill_in 'Surname', with: 'Changed'
-
-        click_button 'Preview'
-
-        expect(page).to have_selector('.preview h1', text: 'Monica Changed')
-        expect(person.reload.name).to eq('Jane Doe')
-
-        click_button 'Save', match: :first
-
-        expect(person.reload.name).to eq('Monica Changed')
       end
 
       scenario 'Editing my own profile from a normal edit link' do

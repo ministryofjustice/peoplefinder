@@ -116,7 +116,6 @@
     = f.text_area :description, class: 'form-control'
 
   .form-group.save-cancel-actions
-    = f.submit 'Preview', name: 'preview', class: 'button-secondary'
     = f.submit class: 'button'
     .cancel
       = link_to 'Cancel and go to profile page', @person.new_record? ? :back : @person
