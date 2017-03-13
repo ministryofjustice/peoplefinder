@@ -81,8 +81,11 @@ class ImageUploader < CarrierWave::Uploader::Base
   private
 
   def url_or_file
-    file.url if file.respond_to? :url
-    file.file if file.respond_to? :file
+    if file.respond_to? :file
+      file.file
+    else
+      file.url
+    end
   end
 
   def uploaded_file_dimensions
