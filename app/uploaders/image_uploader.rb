@@ -73,43 +73,26 @@ class ImageUploader < CarrierWave::Uploader::Base
     %w( jpg jpeg gif png )
   end
 
-  # later versions of Carrierwave::MiniMagick includes this method
-  def width
-    dimensions[:width]
-  end
-
-  # later versions of Carrierwave::MiniMagick includes this method
-  def height
-    dimensions[:height]
-  end
-
   def dimensions
-    w, h = ::MiniMagick::Image.open(file.file)[:dimensions]
-    { width: w, height: h }
-  end
-
-  # test only - to be removed
-  def dimensions_from_path
-    w, h = ::MiniMagick::Image.open(file.path)[:dimensions]
-    { width: w, height: h }
-  end
-
-  # test only - to be removed
-  def dimensions_from_url
-    w, h = ::MiniMagick::Image.open(file.url)[:dimensions]
+    w, h = ::MiniMagick::Image.open(url_or_file)[:dimensions]
     { width: w, height: h }
   end
 
   private
 
+  def url_or_file
+    file.url if file.respond_to? :url
+    file.file if file.respond_to? :file
+  end
+
+  def uploaded_file_dimensions
+    w, h = ::MiniMagick::Image.open(file.file)[:dimensions]
+    { width: w, height: h }
+  end
+
   def store_upload_dimensions _file
-    Rails.logger.info "File: #{File.basename(__FILE__)}, Method: #{__method__}, Line: #{__LINE__}"
-    Rails.logger.info "Dimensions for file.path are #{dimensions_from_path}"
-    begin Rails.logger.info "Dimensions for file.url are #{dimensions_from_url}"; rescue => err; Rails.logger.info "Error: file.url raised error #{err}" end;
-    Rails.logger.info "Dimensions for file.file are #{dimensions}"
     if model.upload_dimensions.nil?
-      Rails.logger.info "Storing Dimensions as they are nil"
-      model.upload_dimensions = dimensions
+      model.upload_dimensions = uploaded_file_dimensions
     end
   end
 
