@@ -40,12 +40,6 @@ class ImageUploader < CarrierWave::Uploader::Base
     process quality: 60
   end
 
-  version :preview, from_version: :croppable do
-    process :crop
-    process resize_to_limit: [512, 512]
-    process quality: 60
-  end
-
   def crop
     if model.crop_x.present?
       manipulate! do |img|

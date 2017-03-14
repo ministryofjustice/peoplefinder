@@ -2,10 +2,6 @@
 
 = render partial: 'breadcrumbs'
 
-- if @preview
-  .preview
-    = render partial: 'profile'
-
 - if @activity == 'complete'
   .completion-prompt
     %p Fill in the highlighted fields to achieve 100% profile completion

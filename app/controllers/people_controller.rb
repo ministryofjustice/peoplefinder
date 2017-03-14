@@ -7,7 +7,6 @@ class PeopleController < ApplicationController
   before_action :set_org_structure,
     only: [:new, :edit, :create, :update, :add_membership]
   before_action :load_versions, only: [:show]
-  before_action :check_and_set_preview_flag, only: [:create, :update]
 
   # GET /people
   def index
@@ -43,9 +42,7 @@ class PeopleController < ApplicationController
     @person = Person.new(person_params)
     authorize @person
 
-    if @preview
-      render_with_preview :new
-    elsif @person.valid?
+    if @person.valid?
       confirm_or_create
     else
       error :create_error
@@ -60,9 +57,7 @@ class PeopleController < ApplicationController
     @person.assign_attributes(person_params)
     authorize @person
 
-    if @preview
-      render_with_preview :edit
-    elsif @person.valid?
+    if @person.valid?
       confirm_or_update
     else
       render :edit
@@ -145,11 +140,6 @@ class PeopleController < ApplicationController
     namesakes? if @person.changes.keys.any? { |key| %w(email surname given_name).include? key }
   end
 
-  def render_with_preview action
-    @person.crop_profile_photo :preview
-    render action
-  end
-
   def confirm_or_create
     if namesakes?
       render(:confirm)
@@ -195,9 +185,5 @@ class PeopleController < ApplicationController
     if super_admin?
       @versions = AuditVersionPresenter.wrap(versions)
     end
-  end
-
-  def check_and_set_preview_flag
-    @preview = params[:preview].present?
   end
 end

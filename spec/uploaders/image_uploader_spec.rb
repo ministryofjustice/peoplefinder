@@ -21,18 +21,25 @@ RSpec.describe ImageUploader, type: :uploader do
 
       it 'retrieves dimensions of stored object' do
         expect(subject.dimensions).to eq width: 648, height: 648
+        expect(subject.medium.dimensions).to eq width: 512, height: 512
       end
     end
 
-    it 'stores dimensions on the model temporarily' do
-      expect(profile_photo.upload_dimensions).to eq width: 648, height: 648
-      expect(ProfilePhoto.find(profile_photo.id).upload_dimensions).to eq nil
+    context 'stores uploaded file dimensions' do
+      it 'in before cache callback' do
+        expect_any_instance_of(described_class).to receive :store_upload_dimensions
+        subject
+      end
+
+      it 'unpersisted' do
+        expect(profile_photo.upload_dimensions).to eq width: 648, height: 648
+        expect(ProfilePhoto.find(profile_photo.id).upload_dimensions).to eq nil
+      end
     end
 
     it 'creates default image sizes' do
       expect(subject.croppable).to have_dimensions(648, 648)
       expect(subject.medium).to be_no_larger_than(512, 512)
-      expect(subject.preview).to be_no_larger_than(512, 512)
     end
 
     it 'crops the medium image and leaves the croppable version intact' do

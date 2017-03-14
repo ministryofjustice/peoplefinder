@@ -12,7 +12,7 @@ module Pages
       element :email, '#person_email'
       element :email_error, :xpath, '//label[@for="person_email"]/*[@class="error"]'
 
-      element :save, '.save-cancel-actions input[type=submit][name!=preview]'
+      element :save, '.save-cancel-actions input[type=submit]'
     end
   end
 end
