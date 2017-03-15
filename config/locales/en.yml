@@ -287,7 +287,7 @@ en:
         other: |
           Include details about where this person works on different days, any days out of the office, and if this person starts early or late.
 
-      photo_upload_hint: "Add or replace an image (no files over 3MB.)"
+      photo_upload_hint: "Add or replace an image (no files over 6MB.)"
       photo_crop_hint: "Move and resize the box to crop your profile image."
       profile_deletable: "(Note that deleting a profile cannot be undone.)"
       reported_profile_additional_details_label: "Additional details (optional)"
