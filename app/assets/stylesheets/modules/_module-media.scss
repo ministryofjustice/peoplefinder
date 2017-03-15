@@ -109,7 +109,7 @@
   margin-bottom: $gutter;
 
   .media-heading{
-    @include core-19;
+    @include core-24;
     font-weight: 700;
   }
 
@@ -143,17 +143,43 @@
       @include core-16;
     }
   }
+
   &.leaders, &.leader{
     @include core-16;
   }
+
   &.leaders{
     float:left !important;
     padding-right: 10px;
     @include setSize(128px, false);
   }
+
   &.leader{
     @include setSize();
   }
+
+  &.result-team{
+    // border: 1px solid green;
+  }
+
+  &.result-person,
+  &.result-team{
+    .media-left{
+      min-width: 85px;
+      width: 15%;
+      padding-right: $gutter/2;
+    }
+  }
+
+  &.result-person{
+    .media-body{
+      ul li{
+        margin-bottom: $gutter/4;
+        @include core-16;
+      }
+    }
+  }
+
 
   ul.working_days {
   clear: both;
