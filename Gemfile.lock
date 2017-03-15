@@ -25,13 +25,6 @@ GIT
       faraday (>= 0.7.6)
 
 GIT
-  remote: https://github.com/ministryofjustice/govuk_elements_form_builder.git
-  revision: 3edec18eb86a14438fd84e6ff530a999875d67b2
-  specs:
-    govuk_elements_form_builder (0.0.1)
-      rails (>= 4.2)
-
-GIT
   remote: https://github.com/ministryofjustice/omniauth-gplus.git
   revision: c9b013d10c6af55d9eb92d41191e7e0d036ef7c9
   specs:
@@ -277,6 +270,8 @@ GEM
       kramdown (~> 1.4.1)
       nokogiri (~> 1.5)
       sanitize (~> 2.1.0)
+    govuk_elements_form_builder (0.0.3)
+      rails (>= 4.2)
     govuk_elements_rails (2.2.1)
       govuk_frontend_toolkit (>= 5.0.2)
       rails (>= 4.1.0)
@@ -634,7 +629,7 @@ DEPENDENCIES
   friendly_id (~> 5.0.0)
   geckoboard-ruby (~> 0.3.0)
   govspeak
-  govuk_elements_form_builder!
+  govuk_elements_form_builder (~> 0.0, >= 0.0.3)
   govuk_elements_rails (>= 1.1.2)
   govuk_frontend_toolkit (>= 4.6.1)
   govuk_template (~> 0.18.0)
