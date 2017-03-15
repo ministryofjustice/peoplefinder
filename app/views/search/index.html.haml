@@ -9,9 +9,8 @@
   .column-full
     %h1.heading-xlarge
       = @page_title = 'Search results'
-      .heading-secondary
+      %span.heading-secondary
         = "Select a team or person's name to view more details."
-      %hr/
 
 .grid-row
   .column-full
@@ -25,15 +24,12 @@
 
 .grid-row
   .column-full
-    %h3
-      TEAMS
-    = render partial: 'search/team', collection: @team_results.set
+    = render partial: 'search/person', collection: @people_results.set, locals: { search_result: true }
 
 .grid-row
   .column-full
-    %h3
-      PERSONS
-    = render partial: 'search/person', collection: @people_results.set, locals: { search_result: true }
+    = render partial: 'search/team', collection: @team_results.set
+
 
 .grid-row
   .column-full
