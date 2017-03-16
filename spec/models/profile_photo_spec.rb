@@ -73,6 +73,14 @@ RSpec.describe ProfilePhoto, type: :model do
       expect(subject).to be_valid
     end
 
+    it 'validates image dimensions to be not more than 8192x8192 pixels' do
+      allow(subject).to receive(:upload_dimensions).and_return(width: 8193, height: 8192)
+      expect(subject).to be_invalid
+      expect(subject.errors[:image].first).to match(/is.*8193x8192.*8192x8192 pixels/)
+      allow(subject).to receive(:upload_dimensions).and_return(width: 8192, height: 8192)
+      expect(subject).to be_valid
+    end
+
     context 'saving file' do
       context 'with non image' do
         subject { build :profile_photo, :non_image }
@@ -92,12 +100,26 @@ RSpec.describe ProfilePhoto, type: :model do
         end
       end
 
-      context 'with invalid dimensions' do
-        subject { build :profile_photo, :invalid_dimensions }
+      context 'with too small dimensions' do
+        subject { build :profile_photo, :too_small_dimensions }
         it { is_expected.to be_invalid }
 
         it 'raises error' do
           expect { subject.save! }.to raise_error ActiveRecord::RecordInvalid, /is 510x512 pixels. The minimum requirement is 648x648 pixels/
+        end
+      end
+
+      context 'with too large dimensions' do
+        subject { build :profile_photo }
+
+        before do
+          allow(subject).to receive(:upload_dimensions).and_return(width: 8192, height: 8193)
+        end
+
+        it { is_expected.to be_invalid }
+
+        it 'raises error' do
+          expect { subject.save! }.to raise_error ActiveRecord::RecordInvalid, /is 8192x8193 pixels. The maximum permitted is 8192x8192 pixels/
         end
       end
     end

@@ -21,8 +21,8 @@ module SpecSupport
       test_image :profile_photo_valid
     end
 
-    def invalid_dimensions_image
-      test_image :profile_photo_invalid_dimensions
+    def too_small_dimensions_image
+      test_image :profile_photo_too_small_dimensions
     end
 
     def large_image

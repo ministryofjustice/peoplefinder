@@ -123,9 +123,9 @@ FactoryGirl.define do
       )
     end
 
-    trait :invalid_dimensions do
+    trait :too_small_dimensions do
       image Rack::Test::UploadedFile.new(
-        File.join(Rails.root, 'spec', 'fixtures', 'profile_photo_invalid_dimensions.png')
+        File.join(Rails.root, 'spec', 'fixtures', 'profile_photo_too_small_dimensions.png')
       )
     end
 
