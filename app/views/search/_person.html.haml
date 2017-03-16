@@ -1,4 +1,4 @@
-.grid-row.mod-media
+.grid-row.mod-media.result-person
   .column-full
     .media
       .media-left
@@ -23,8 +23,10 @@
             = mail_to(person.email, nil, data: search_result_analytics_attributes(index) )
 
           - if person.current_project.present?
-            %li
-              Current project(s):
+            %li.core-16
+              %span.bold
+                Current project(s)
+              %br/
               = person.current_project
 
           - if ['sessions','tokens', 'people'].include? controller_name
