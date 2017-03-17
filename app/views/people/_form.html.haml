@@ -23,11 +23,11 @@
 
   = f.text_field :primary_phone_number
   = f.text_field :secondary_phone_number
+  = f.text_field :pager_number
   = f.text_field :secondary_email
   = f.text_field :location_in_building
   = f.text_field :building
   = f.text_field :city
-  = f.text_field :current_project
 
 
   .form-group
@@ -43,6 +43,7 @@
     = link_to 'Add another role', add_membership_people_path(id: @person.to_param),
       id: 'add_membership', class: 'button-secondary'
 
+  = f.text_field :current_project
 
   .form-group
     = f.check_box_fieldset :working_days, Person::DAYS_WORKED
@@ -51,7 +52,7 @@
 
 
   .form-group
-    = f.submit class: 'button'
+    = f.submit 'Save', class: 'button'
 
   .form-group
     .cancel
