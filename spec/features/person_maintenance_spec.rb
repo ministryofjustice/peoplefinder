@@ -207,7 +207,6 @@ feature 'Person maintenance' do
         edit_profile_page.load(slug: person.slug)
         edit_profile_page.form.email.set existing_person.email
         edit_profile_page.form.save.click
-
         expect(edit_profile_page.form).to have_email_error
       end
 
