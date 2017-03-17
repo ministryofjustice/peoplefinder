@@ -45,19 +45,7 @@
 
 
   .form-group
-    %fieldset#working-days
-      %legend.form-label-bold Working days
-
-      %ul
-
-    = f.radio_button_fieldset :working_days, choices: Person::DAYS_WORKED
-
-
-    - Person::DAYS_WORKED.each do |day|
-      %li
-        = f.label day do
-          = f.check_box day
-          = day_name(day)
+    = f.check_box_fieldset :working_days, Person::DAYS_WORKED
 
   = f.text_area :description
 
