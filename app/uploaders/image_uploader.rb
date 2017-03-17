@@ -1,8 +1,9 @@
 # encoding: utf-8
+require 'fastimage'
+
 class ImageUploader < CarrierWave::Uploader::Base
   include CarrierWave::MiniMagick
   include CarrierWave::DirHelpers
-  include CarrierWave::BombShelter
 
   # Storage location is configured per-environment in
   # config/initializers/carrierwave.rb
@@ -83,7 +84,7 @@ class ImageUploader < CarrierWave::Uploader::Base
   end
 
   def uploaded_file_dimensions
-    w, h = ::MiniMagick::Image.open(file.file)[:dimensions]
+    w, h = FastImage.size(file.file)
     { width: w, height: h }
   end
 

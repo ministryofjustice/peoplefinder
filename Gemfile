@@ -10,6 +10,7 @@ gem 'delayed_job_active_record'
 gem 'elasticsearch-model', '~> 0.1.4'
 gem 'elasticsearch-rails', '~> 0.1.4'
 gem 'faker', '~> 1.7'
+gem 'fastimage', '~> 1.7.0'
 gem 'fog'
 gem 'friendly_id', '~> 5.0.0'
 gem 'govspeak'
@@ -43,7 +44,6 @@ gem 'will_paginate-bootstrap', '~> 1.0', '>= 1.0.1'
 gem 'carrierwave',
   git: 'https://github.com/carrierwaveuploader/carrierwave.git',
   tag: 'cc39842e44edcb6187b2d379a606ec48a6b5e4a8'
-gem 'carrierwave-bombshelter'
 gem 'omniauth-gplus',
   git: 'https://github.com/ministryofjustice/omniauth-gplus.git'
 

@@ -52,52 +52,104 @@ RSpec.describe ProfilePhoto, type: :model do
   describe 'validations' do
     subject { build(:profile_photo) }
 
-    it 'validates file is of a whitelisted extension type' do
-      subject.image = non_white_list_image
-      expect(subject).to be_invalid
+    context 'file' do
+      context 'extension is whitelisted' do
+        it do
+          subject.image = non_white_list_image
+          is_expected.to be_invalid
+        end
+
+        it do
+          subject.image = valid_image
+          is_expected.to be_valid
+        end
+      end
+
+      context 'size must be less than or equal to 6M' do
+        it do
+          allow(subject.image).to receive(:size).and_return 6.001.megabytes
+          is_expected.to be_invalid
+        end
+
+        it do
+          allow(subject.image).to receive(:size).and_return 6.megabytes
+          is_expected.to be_valid
+        end
+      end
     end
 
-    it 'validates file size not to exceed 6M' do
-      allow(subject.image).to receive(:size).and_return 6.001.megabytes
-      expect(subject).to be_invalid
-      expect(subject.errors[:image].first).to match(/file size.*too large/)
-      allow(subject.image).to receive(:size).and_return 6.megabytes
-      expect(subject).to be_valid
-    end
+    context 'image dimensions' do
+      context 'must be greater than 648x648 pixels' do
+        it do
+          allow(subject).to receive(:upload_dimensions).and_return(width: 649, height: 647)
+          is_expected.to be_invalid
+        end
 
-    it 'validates image dimensions to not be less than 648x648 pixels' do
-      allow(subject).to receive(:upload_dimensions).and_return(width: 649, height: 647)
-      expect(subject).to be_invalid
-      expect(subject.errors[:image].first).to match(/is.*649x647.*648x648 pixels/)
-      allow(subject).to receive(:upload_dimensions).and_return(width: 648, height: 648)
-      expect(subject).to be_valid
+        it do
+          allow(subject).to receive(:upload_dimensions).and_return(width: 648, height: 648)
+          is_expected.to be_valid
+        end
+      end
+
+      context 'must be less than or equal to 8192x8192 pixels' do
+        it do
+          allow(subject).to receive(:upload_dimensions).and_return(width: 8193, height: 8192)
+          is_expected.to be_invalid
+        end
+
+        it do
+          allow(subject).to receive(:upload_dimensions).and_return(width: 8192, height: 8192)
+          is_expected.to be_valid
+        end
+      end
     end
 
     context 'saving file' do
       context 'with non image' do
         subject { build :profile_photo, :non_image }
-        it { is_expected.to be_invalid }
 
-        it 'raises error' do
+        it 'raises expected error' do
           expect { subject.save! }.to raise_error ActiveRecord::RecordInvalid, /not allowed to upload "csv" files, allowed types: jpg, jpeg, gif, png/
+        end
+      end
+
+      context 'with very large file' do
+        subject { build :profile_photo }
+
+        before do
+          allow(subject.image).to receive(:size).and_return 6.001.megabytes
+        end
+
+        it 'raises expected error' do
+          expect { subject.save! }.to raise_error ActiveRecord::RecordInvalid, /file size, 6 MB, is too large/
         end
       end
 
       context 'with unwhitelisted extension' do
         subject { build :profile_photo, :invalid_extension }
-        it { is_expected.to be_invalid }
 
-        it 'raises error' do
+        it 'raises expected error' do
           expect { subject.save! }.to raise_error ActiveRecord::RecordInvalid, /not allowed to upload "bmp" files, allowed types: jpg, jpeg, gif, png/
         end
       end
 
-      context 'with invalid dimensions' do
-        subject { build :profile_photo, :invalid_dimensions }
-        it { is_expected.to be_invalid }
+      context 'with too small dimensions' do
+        subject { build :profile_photo, :too_small_dimensions }
 
-        it 'raises error' do
+        it 'raises expected error' do
           expect { subject.save! }.to raise_error ActiveRecord::RecordInvalid, /is 510x512 pixels. The minimum requirement is 648x648 pixels/
+        end
+      end
+
+      context 'with too large dimensions' do
+        subject { build :profile_photo }
+
+        before do
+          allow(subject).to receive(:upload_dimensions).and_return(width: 8192, height: 8193)
+        end
+
+        it 'raises expected error' do
+          expect { subject.save! }.to raise_error ActiveRecord::RecordInvalid, /is 8192x8193 pixels. The maximum permitted is 8192x8192 pixels/
         end
       end
     end

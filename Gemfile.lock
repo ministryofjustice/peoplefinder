@@ -108,10 +108,6 @@ GEM
       rack (>= 1.0.0)
       rack-test (>= 0.5.4)
       xpath (~> 2.0)
-    carrierwave-bombshelter (0.1.0.2)
-      activesupport (>= 3.2.0)
-      carrierwave
-      fastimage
     childprocess (0.5.9)
       ffi (~> 1.0, >= 1.0.11)
     chronic (0.10.2)
@@ -632,7 +628,6 @@ DEPENDENCIES
   byebug
   capybara
   carrierwave!
-  carrierwave-bombshelter
   codeclimate-test-reporter
   coffee-rails
   daemon
@@ -644,6 +639,7 @@ DEPENDENCIES
   elasticsearch-rails (~> 0.1.4)
   factory_girl_rails
   faker (~> 1.7)
+  fastimage (~> 1.7.0)
   fog
   foreman
   friendly_id (~> 5.0.0)

@@ -221,6 +221,7 @@ en:
     validators:
       image_dimensions_validator:
         too_small: "is %{actual_dimensions} pixels. The minimum requirement is %{expected_dimensions} pixels"
+        too_big: "is %{actual_dimensions} pixels. The maximum permitted is %{expected_dimensions} pixels"
       file_size_validator:
         too_big: "file size, %{size}, is too large"
         not_in_range: "file size, %{size}, is not in expected range"
