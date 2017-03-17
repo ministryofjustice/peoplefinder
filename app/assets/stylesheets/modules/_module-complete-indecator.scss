@@ -1,0 +1,33 @@
+.complete-your-profile {
+  background-color: $grey-bg;
+  width: 300px;
+  margin-top: 5px;
+  padding: 15px 0 1px 15px;
+  font-weight: bold;
+  .bar {
+    line-height: 15px;
+    width: 200px;
+    margin-top: 10px;
+    float: left;
+    .on {
+      background-color: $green;
+      float: left;
+    }
+    .off {
+      background-color: $border-color;
+      float: left;
+    }
+  }
+  .score {
+    float: left;
+    margin-left: 15px;
+    color: $green;
+    font-size: 24px;
+  }
+  a {
+    font-weight: normal;
+  }
+}
+.complete-your-profile.complete {
+  background-color: $palegreen;
+}

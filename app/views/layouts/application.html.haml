@@ -1,34 +1,65 @@
-= render partial: 'layouts/shared'
-- content_for :header_app_name do
-  =link_to app_title, home_path
-  = render "shared/loginout"
+//Text inside the <title> element GOV.UK - The best place to find government services and information
+- content_for :page_title do
+  = page_title
+
+//Before closing </head> element  Insertion point
+- content_for :head  do
+  = stylesheet_link_tag "application", media: "all"
+  = csrf_meta_tag
+  %meta{name: "format-detection", content: "telephone=no"}
+
+// Classes to be added to the <body> element  Insertion point
+- content_for :body_classes do
+  = " controller-" + controller.controller_name
+
+//After opening <body> element  Insertion point
+-# - content_for :body_start  do
+-#   = "body_start"
+
+//<header> element  Set the value of header_class to with-proposition to show the propositional navigation
+- content_for :header_class do
+  = "with-proposition"
+
+-# // Inside parent .header-global Insertion point
+-# - content_for :inside_header do
+-#   = "inside_header"
+
+//Inside parent .header-wrapper Add a propositional title and navigation links
+- content_for :proposition_header  do
+  .header-proposition
+    .content
+      %a.js-header-toggle.menu{:href => "#proposition-links"}
+        = "Menu"
+      %nav#proposition-menu
+        =link_to app_title, home_path, id: "proposition-name"
+        = render "shared/loginout"
+
+//After closing </header> element Insertion point
+-# - content_for :after_header  do
+-#   = "after_header"
+
+//Inside parent #footer-wrapper Insertion point
+- content_for :footer_top  do
+  = render 'shared/feedback_form'
+
+
+//Inside parent .footer-meta-inner  Insertion point
+- content_for :footer_support_links  do
+  = render 'layouts/footer'
+
+
+//Before closing </body> element  Insertion point
+- content_for :body_end  do
+  = javascript_include_tag 'application'
+  = render 'layouts/ga'
+
+//  Main content goes in here Insertion point. Content must be wrapped with id="content" for the skiplink to work.
 - content_for :content do
-  #wrapper
-    %main#content{role: 'main'}
-      .grid-wrapper
-        .grid.grid-3-3
-          .inner-block
-            %nav
-              .breadcrumbs= yield :breadcrumbs
-      - if render_search_box?
-        .grid-wrapper
-          .grid.grid-2-3
-            .inner-block
-              = render 'shared/search'
-          .grid.grid-1-3.new-profile
-            .inner-block
-              - if can_add_person_here?
-                = link_to 'Create a new profile', new_person_path, class: 'add-new-person'
-      = flash_messages
-      .inner-block
-        = yield
-        #report_link
-          = yield :report_link
-        #last_update
-          = last_update
-- content_for :cookie_message do
-  %p= t('shared.cookie_message_html')
-= render partial: "shared/feedback_form"
-= render partial: "layouts/footer"
-= render 'layouts/script'
-= render template: "layouts/peoplefinder"
+  %main#content
+    = yield :breadcrumbs
+
+    = flash_messages
+
+    = yield
+
+= render template: 'layouts/govuk_template'

@@ -1,22 +1,15 @@
-- content_for :footer_support_links do
-  #feedback_container
-    %a{href: '#feedback', id: 'feedbackToggle'}
-      Report a problem
-    = form_for ProblemReport.new, id: 'feedback' do |f|
-      .form-group
-        = f.label :goal do
-          What were you trying to do?
-        = f.text_area :goal, class: 'form-control'
+#feedback_container
+  %a{href: '#feedback', id: 'feedbackToggle'}
+    Report a problem
+  = form_for ProblemReport.new, id: 'feedback' do |f|
 
-        = f.label :problem do
-          What went wrong?
-        = f.text_area :problem, class: 'form-control'
+    = f.text_area :goal, class: "form-control"
 
-        - unless logged_in_regular?
-          = f.label :person_email do
-            Your email
-          = f.text_field :person_email, class: 'form-control'
+    = f.text_area :problem, class: "form-control"
 
-        = f.hidden_field :browser
+    - unless logged_in_regular?
+      = f.text_field :person_email, class: "form-control"
 
-      = f.submit class: 'button'
+    = f.hidden_field :browser
+
+    = f.submit class: 'button'

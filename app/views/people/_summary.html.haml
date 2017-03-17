@@ -1,9 +1,9 @@
-%div.grid.grid-1-4
-  %div.inner-block.team-member
-
+.grid-row.mod-media.card
+  .media
     = link_to summary do
-      .image-background
+      .media-left
         = profile_image_tag summary, class: 'team-members'
-      %h4.person-name= summary.name
-
-    .role= summary.role_names
+      .media-body
+        %h4.media-heading
+          = summary.name
+        = summary.role_names

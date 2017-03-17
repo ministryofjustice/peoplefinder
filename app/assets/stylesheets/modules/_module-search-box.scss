@@ -1,0 +1,11 @@
+.search-box{
+  @extend %contain-floats;
+}
+
+.home-page{
+  .search-box{
+    .form-control{
+      width: 75% !important;
+    }
+  }
+}

@@ -1,5 +1,4 @@
 var root;
-
 root = typeof exports !== "undefined" && exports !== null ? exports : this;
 
 root.dispatchAnalyticsEvent = function(category, action, label) {

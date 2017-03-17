@@ -1,37 +1,55 @@
-- content_for :body_classes, 'home-page'
+- content_for :body_classes do
+  = 'home-page '
 
-%h1= t('home.heading', group_name: @group.name)
-%p= t('home.explanation')
+-# = link_to 'Create a new profile', new_person_path, class: 'add-new-person'
 
-%div.search-wrapper
-  %div.help-peoplefinder.grid-1-2
-    %p
-      = t('home.usage_heading')
-      %br
-      = t('home.usage')
+.grid-row
+  .column-full
+    %h1.heading-xlarge
+      = t('home.heading', group_name: @group.name)
 
+    %p.lede
+      = t('home.explanation')
 
-  %div.grid-1-2
+.grid-row
+  .column-two-thirds
     = render 'shared/search'
 
-%div.root-team
-  %h2.org-structure= @group.name
-  %div.leaders.grid.grid-1-3
-    - @group.leaders.each do |leader|
-      %div.profile
-        = profile_image_tag leader
-        %p
-          =link_to leader.name, leader, class: 'leader-name'
-          %span.leader-role= leader.memberships.where(group:@group).first.role
+  .column-one-third
+    -# SPACER COL
 
-  %h3.grid.grid-2-3.about-team-header About the team
-  %div.about-the-team.formatted-text.about.text.grid.grid-2-3
+
+.grid-row.mod-heading
+  .column-full
+    %h1.heading-xlarge.mod-heading-border
+      %span.heading-secondary
+        = @group.acronym
+      = @group.name
+
+.grid-row.mod-team-overview
+  .column-one-third
+    - if @group.leaderships.count > 0
+      %h3.heading-medium
+        = "Team #{'leader'.pluralize(@group.leaderships.count)}"
+      - @group.leaderships_by_person.each do |person, leaderships|
+        = render partial: 'groups/leaderships', object: leaderships, locals: { person: person, counter: @group.leaderships.count }
+
+  .column-two-thirds
+    %h3.heading-medium
+      = "About the team"
+
     = govspeak(@group.with_placeholder_default(:description))
 
+    - if @all_people_count > 0 || @group.children.present?
+      = link_to "View printable organogram", organogram_group_path(@group)
+    - unless @group.leaf_node?
+      - if @all_people_count > 0 && @group.parent.present?
+        = link_to "View #{ @all_people_count > 1 ? 'all' : 'NONE' } people", people_group_path(@group), class: 'view-all-people'
 
-%div.root-subteams
-  %h2
-    = "Teams within #{@group.name}"
+.grid-row.mod-heading
+  .column-full
+    %h1.heading-large.mod-heading-border
+      = "Teams within #{@group.name}"
 
-  .grid-wrapper
-    = render partial: "groups/subgroup", collection: @group.children
+.grid-row.mod-team-subgroup
+  = render partial: "groups/subgroup", collection: @group.children

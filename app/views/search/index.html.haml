@@ -1,22 +1,37 @@
-- content_for :body_classes, 'search-page'
+- content_for :body_classes, 'search-page '
+
 - content_for :breadcrumbs do
   = breadcrumbs(Home.path + ['Search results'])
 
-#search_results
-  %h1.noborder= @page_title = 'Search results'
-  .search-hint Select a team or person's name to view more details.
-  .pagination
+= render partial: 'shared/search'
+
+.grid-row
+  .column-full
+    %h1.heading-xlarge
+      = @page_title = 'Search results'
+      %span.heading-secondary
+        = "Select a team or person's name to view more details."
+
+.grid-row
+  .column-full
+    %hr/
     - if matches_exist?
       = pluralize(@team_results.size + @people_results.size, "result") + ' found'
     - else
       == <span class="query-term">#{@query}</span> not found —
       == found #{pluralize(@people_results.size + @team_results.size, "similar result")}
+    %hr/
 
-  = render partial: 'search/team', collection: @team_results.set
+.grid-row
+  .column-full
+    = render partial: 'search/person', collection: @people_results.set, locals: { search_result: true }
 
-  - @people_results.each_with_hit.with_index do |(person, hit), idx|
-    = render partial: 'search/person', locals: { person: person, hit: hit, index: idx }
+.grid-row
+  .column-full
+    = render partial: 'search/team', collection: @team_results.set
 
-  .add-new-person
+
+.grid-row
+  .column-full
     Can't find the person you're looking for? Why not
     = link_to 'add them', new_person_path
