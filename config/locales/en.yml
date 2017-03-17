@@ -350,7 +350,6 @@ en:
         name: Write out the name of your team in full. Do not use initials
         acronym: If your team is also known by its initials (eg HMCTS) add them below
         description: What is the role and purpose of the team?
-
     placeholder:
         group:
             description: sdfsdf
@@ -371,6 +370,23 @@ en:
     person_uploads:
       group_id: Choose your team
       file: Upload CSV file
+
+  helpers:
+    fieldset:
+      person:
+        working_days: Which days of the week do you work?
+    label:
+      person:
+        works_monday: Monday
+        works_tuesday: Tuesday
+        works_wednesday: Wednesday
+        works_thursday: Thursday
+        works_friday: Friday
+        works_saturday: Saturday
+        works_sunday: Sunday
+    hint:
+      person:
+        working_days: Select all that apply
 
   will_paginate:
     models:
