@@ -347,12 +347,24 @@ en:
       group_id: Choose your team
       file: Upload CSV file
 
+  # the following translations are used by the govuk_elements_form_builder gem
   helpers:
     fieldset:
       person:
         working_days: Which days of the week do you work?
     label:
       person:
+        given_name: First name*
+        surname: Surname*
+        email: Main email*
+        secondary_email: Alternative work email
+        primary_phone_number: Main phone number
+        secondary_phone_number: Alternative phone number
+        pager_number: Pager number
+        location_in_building: Location in building
+        building: Building
+        city: City
+        current_project: Current project(s)
         works_monday: Monday
         works_tuesday: Tuesday
         works_wednesday: Wednesday
@@ -360,9 +372,15 @@ en:
         works_friday: Friday
         works_saturday: Saturday
         works_sunday: Sunday
+        description: Extra information
     hint:
       person:
+        location_in_building: (eg 10.30)
+        building: (eg 102 Petty France)
+        city: (eg London)
+        current_project: List the names of current projects this person is working on. Use a comma to separate project names.
         working_days: Select all that apply
+        description: Include details about where this person works on different days, any days out of the office, and if this person starts early or late.
 
   will_paginate:
     models:
