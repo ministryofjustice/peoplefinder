@@ -6,9 +6,7 @@
     "Optional description of the errors and how to correct them"
 
   = f.text_field :given_name
-
   = f.text_field :surname
-
   = f.text_field :email
 
   .form-group.mod-media.card
@@ -19,16 +17,13 @@
     %br/
     = f.submit 'Edit this picture', name: 'edit-picture-button', class: 'button'
 
-
-
   = f.text_field :primary_phone_number
   = f.text_field :secondary_phone_number
+  = f.text_field :pager_number
   = f.text_field :secondary_email
   = f.text_field :location_in_building
   = f.text_field :building
   = f.text_field :city
-  = f.text_field :current_project
-
 
   .form-group
     %h1.heading-xlarge
@@ -43,15 +38,23 @@
     = link_to 'Add another role', add_membership_people_path(id: @person.to_param),
       id: 'add_membership', class: 'button-secondary'
 
+  = f.text_field :current_project
 
   .form-group
-    = f.check_box_fieldset :working_days, Person::DAYS_WORKED
+    %fieldset#working-days
+      %legend.form-label-bold Working days
+      %ul
+        - Person::DAYS_WORKED.each do |day|
+          %li
+            = f.label day, class: 'block-label' do
+              = f.check_box day
+              = day_name(day)
 
   = f.text_area :description
 
 
   .form-group
-    = f.submit class: 'button'
+    = f.submit 'Save', class: 'button'
 
   .form-group
     .cancel
