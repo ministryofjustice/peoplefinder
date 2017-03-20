@@ -1,5 +1,5 @@
 .grid-row
-  .column-full
+  .column-two-thirds
     = form_tag '/search', method: :get, class: 'search-box' do
       .form-group
         %label.form-hint{ for: :query }
@@ -7,3 +7,6 @@
         = text_field_tag :query, @query, class: 'form-control'
       .form-group
         = submit_tag 'Submit search', class: 'button'
+  .column-one-third
+    - if can_add_person_here?
+      = link_to 'Create a new profile', new_person_path, class: 'add-new-person'
