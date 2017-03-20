@@ -84,7 +84,7 @@ group :development, :test do
   gem 'factory_girl_rails'
   gem 'launchy'
   gem 'minitest'
-  gem 'poltergeist'
+  gem 'poltergeist', '~> 1.14'
   gem 'pry-rails'
   gem 'pry-byebug'
   gem 'rspec-rails', '~> 3.5', '>= 3.5.1'
