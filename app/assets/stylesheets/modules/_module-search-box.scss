@@ -2,10 +2,17 @@
   @extend %contain-floats;
 }
 
+
+.search-box{
+  .form-control{
+    width: 75% !important;
+  }
+}
+
 .home-page{
   .search-box{
     .form-control{
-      width: 75% !important;
+      width: 100% !important;
     }
   }
 }
