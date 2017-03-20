@@ -35,6 +35,12 @@ module SpecSupport
       person.groups << create(:group)
     end
 
+    def govuk_checkbox_click locator
+      el = page.find("label[for='#{locator}']") rescue nil
+      el ||= page.find('label', text: locator)
+      el.click
+    end
+
     def fill_in_complete_profile_details
       fill_in 'First name', with: person_attributes[:given_name]
       fill_in 'Surname', with: person_attributes[:surname]
@@ -48,8 +54,8 @@ module SpecSupport
       fill_in 'City', with: person_attributes[:city]
       fill_in 'Extra information', with: person_attributes[:description]
       fill_in 'Current project(s)', with: person_attributes[:current_project]
-      uncheck('Monday')
-      uncheck('Friday')
+      govuk_checkbox_click 'Monday'
+      govuk_checkbox_click 'Friday'
     end
 
     def fill_in_membership_details(team_name)

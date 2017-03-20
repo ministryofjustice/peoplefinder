@@ -7,7 +7,6 @@
 //= require moj
 //= require_tree ./modules
 
-
 // Eliminate console spam in test output
 moj.log = function() {};
 
