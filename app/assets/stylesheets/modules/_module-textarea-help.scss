@@ -25,3 +25,7 @@
   width:75%;
   float: left;
 }
+
+textarea[data-limit]{
+  margin-bottom: $gutter/4;
+}

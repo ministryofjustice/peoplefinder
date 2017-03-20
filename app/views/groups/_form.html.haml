@@ -10,7 +10,8 @@
 
   .grid-row
     .column-two-thirds
-      = f.text_area :description, placeholder: t('.placeholder'), rows: 10
+      = f.text_area :description, placeholder: t('.placeholder'), rows: 10, "data-limit": 1000
+
     .column-one-third
       .form-group.help-area
         %h3.heading-medium
