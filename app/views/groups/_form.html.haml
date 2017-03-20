@@ -7,9 +7,50 @@
 
   = f.text_field :name
   = f.text_field :acronym
-  = f.text_area :description, placeholder: t('.placeholder'), rows: 10
 
-  LOADS OF CONDITIONS IN THE VIEW?
+  .grid-row
+    .column-two-thirds
+      = f.text_area :description, placeholder: t('.placeholder'), rows: 10
+    .column-one-third
+      .form-group.help-area
+        %h3.heading-medium
+          Formatting
+        %p
+          Click each heading below to find out how you can add formatting to your text.
+        %details
+          %summary
+            %span.summary
+              Bullet point list
+          .panel
+            Copy and paste the formatting below then replace each item with the text you want
+            %br
+            * bullet point copy here
+            %br
+            * bullet point copy here
+            %br
+            &nbsp;&nbsp;* sub bullet point copy here
+            %br
+            &nbsp;&nbsp;* sub bullet point copy here
+
+        %details
+          %summary
+            %span.summary
+              Numbered list
+          .panel
+            Copy and paste the formatting below then replace each item with the text you want
+            %br
+            1. point 1 copy here
+            %br
+            2. point 2 copy here
+            %br
+            3. point 3 copy here
+
+        %details
+          %summary
+            %span.summary
+              Line space
+          .panel
+            To add a line space press the spacebar twice
 
   - if @group.editable_parent?
     .form-group.group-parent.editable-container
@@ -32,6 +73,8 @@
 
   .form-group
     = f.submit class: 'button'
+
+  .form-group
     .cancel
       - if @group.new_record?
         = link_to 'Cancel', :back
@@ -40,33 +83,4 @@
 
 .grid-row
   .column-full
-    %h3
-      Formatting
-    %p
-      Click each heading below to find out how you can add formatting to your text.
-    %p.help-toggle
-      Bullet point list
-    .help-content
-      Copy and paste the formatting below then replace each item with the text you want
-      %br
-      * bullet point copy here
-      %br
-      * bullet point copy here
-      %br
-      &nbsp;&nbsp;* sub bullet point copy here
-      %br
-      &nbsp;&nbsp;* sub bullet point copy here
-    %p.help-toggle
-      Numbered list
-    .help-content
-      Copy and paste the formatting below then replace each item with the text you want
-      %br
-      1. point 1 copy here
-      %br
-      2. point 2 copy here
-      %br
-      3. point 3 copy here
-    %p.help-toggle
-      Line space
-    .help-content
-      To add a line space press the spacebar twice
+
