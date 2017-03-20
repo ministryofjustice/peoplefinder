@@ -415,10 +415,9 @@ GEM
     pg (0.18.1)
     phantomjs (1.9.8.0)
     pkg-config (1.1.7)
-    poltergeist (1.6.0)
+    poltergeist (1.14.0)
       capybara (~> 2.1)
       cliver (~> 0.3.1)
-      multi_json (~> 1.0)
       websocket-driver (>= 0.2.0)
     powerpack (0.1.1)
     premailer (1.8.7)
@@ -586,7 +585,7 @@ GEM
       addressable (>= 2.3.6)
       crack (>= 0.3.2)
       hashdiff
-    websocket-driver (0.6.2)
+    websocket-driver (0.6.5)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.2)
     whenever (0.9.4)
@@ -650,7 +649,7 @@ DEPENDENCIES
   omniauth-gplus!
   paper_trail (~> 4.0.2)
   pg
-  poltergeist
+  poltergeist (~> 1.14)
   premailer-rails (~> 1.9)
   pry-byebug
   pry-rails
