@@ -1,7 +1,10 @@
-.column-one-third
-  %div.mod-media
+.column-one-quarter
+  .mod-media.card
     .media
-      .media-left
-        = profile_image_tag summary
-        %h4.media-heading
-          = link_to summary, summary
+      = link_to summary do
+        .media-left
+          = profile_image_tag summary, class: 'team-members'
+        .media-body
+          %h4.media-heading
+            = summary.name
+          = summary.role_names
