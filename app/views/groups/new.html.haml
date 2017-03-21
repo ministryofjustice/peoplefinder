@@ -1,6 +1,8 @@
 - content_for :body_classes, 'new-team-page '
 
-%h1.heading-xlarge
-  = @page_title = 'New team'
+= render partial: 'breadcrumbs'
+
+%h1.heading-xlarge.with-border-lg
+  = @page_title = 'Create a team'
 
 = render 'form'
