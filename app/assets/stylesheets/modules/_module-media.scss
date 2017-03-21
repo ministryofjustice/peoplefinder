@@ -136,7 +136,7 @@
   &.card{
     min-height: 275px;
     @include setSize();
-    float:left;
+    // float:left;
     margin: 0 10px 10px 0;
     @extend %contain-floats;
 
@@ -170,8 +170,8 @@
   &.result-person,
   &.result-team{
     .media-left{
-      min-width: 85px;
-      width: 15%;
+      min-width: 120px;
+      width: 30%;
       padding-right: $gutter/2;
     }
   }
