@@ -4,12 +4,13 @@
 = render partial: 'shared/search'
 
 
-%h1.heading-xlarge
+%h1.heading-xlarge.with-border-lg
   = @page_title = "People in #{ @group.name }"
   .heading-secondary
     = "not assigned to a sub-team"
 
-= render partial: "people/summary", collection: @group.people_outside_subteams
+.grid-row
+  = render partial: "people/summary", collection: @group.people_outside_subteams
 
 .grid-row
   .column-full

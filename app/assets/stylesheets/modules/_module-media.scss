@@ -102,6 +102,10 @@
 }
 
 .mod-media{
+  a{
+    @extend %contains-floats;
+    display:block;
+  }
   .media-object{
     width: 100%;
     height: 100%;
@@ -130,6 +134,7 @@
   }
 
   &.card{
+    min-height: 275px;
     @include setSize();
     float:left;
     margin: 0 10px 10px 0;
@@ -139,7 +144,7 @@
       float: left;
     }
 
-    .media-heading{
+    .media-heading, .media-body{
       @include core-16;
     }
   }
