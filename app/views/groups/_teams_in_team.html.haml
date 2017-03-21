@@ -12,5 +12,5 @@
           = link_to "View #{ pluralize_with_delimiter @people_outside_subteams_count, 'person' } not assigned to a sub-team", people_outside_subteams_group_path(@group), class: 'font-xsmall'
         = link_to 'Add new sub-team', new_group_group_path(@group), class: 'font-xsmall'
 
-#teams.grid-row.mod-team-subgroup
+#teams.grid-row.mod-subgroups
   = render partial: "subgroup", collection: @group.children
