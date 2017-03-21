@@ -1,11 +1,12 @@
 .column-one-third
-  %a{ href: url_for(subgroup) }
-    %h3.heading-medium
-      = subgroup
-  - if subgroup.members_completion_score
-    .subgroup-completion
-      %span.score< #{subgroup.members_completion_score}%
-      of profile information completed
-  %div.about-subgroup
-    .formatted-text
-      = govspeak(truncate(subgroup.with_placeholder_default(:description), length: 350))
+  .mod-subgroup
+    %a.subgroup-link-block{ href: url_for(subgroup) }
+      %h3.heading-medium
+        = subgroup
+      - if subgroup.members_completion_score
+        .subgroup-completion
+          %span.score< #{subgroup.members_completion_score}%
+          of profile information completed
+      %div.about-subgroup
+        .formatted-text
+          = govspeak(truncate(subgroup.with_placeholder_default(:description), length: 350))
