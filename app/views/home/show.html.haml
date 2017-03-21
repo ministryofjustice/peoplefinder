@@ -51,5 +51,5 @@
     %h1.heading-large.mod-heading-border
       = "Teams within #{@group.name}"
 
-.grid-row.mod-team-subgroup
+#teams.grid-row.mod-subgroups
   = render partial: "groups/subgroup", collection: @group.children
