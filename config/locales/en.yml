@@ -303,50 +303,6 @@ en:
     group:
       description: |
         Discover what this team is responsible for, who is in it and how you can get in touch with them.
-
-  helpers:
-    label:
-      person:
-        given_name: First name
-        surname: Surname
-        email: Main email
-        current_project: Current project
-        description: Extra information
-      group:
-        name: Team name
-        acronym: Team initials
-        description: Team description
-      problem_report:
-        goal: "What were you trying to do?"
-        problem: "What went wrong?"
-    hint:
-      person:
-        current_project: List the names of current projects you’re working on. Use a comma to separate project names.
-      group:
-        name: Write out the name of your team in full. Do not use initials
-        acronym: If your team is also known by its initials (eg HMCTS) add them below
-        description: What is the role and purpose of the team?
-    placeholder:
-        group:
-            description: sdfsdf
-    submit:
-      person:
-        create: "Save"
-        update: "Save"
-      group:
-        create: "Save"
-        update: "Save"
-      information_request:
-        create: "Submit"
-        create: "Submit"
-      person_upload:
-        create: "Upload"
-      problem_report:
-        create: "Report"
-    person_uploads:
-      group_id: Choose your team
-      file: Upload CSV file
-
   # the following translations are used by the govuk_elements_form_builder gem
   helpers:
     fieldset:
@@ -373,6 +329,33 @@ en:
         works_saturday: Saturday
         works_sunday: Sunday
         description: Extra information
+    group:
+      name: Team name
+      acronym: Team initials
+      description: Team description
+    problem_report:
+      goal: "What were you trying to do?"
+      problem: "What went wrong?"
+    placeholder:
+      group:
+          description: sdfsdf
+    submit:
+      person:
+        create: "Save"
+        update: "Save"
+      group:
+        create: "Save"
+        update: "Save"
+      information_request:
+        create: "Submit"
+        create: "Submit"
+      person_upload:
+        create: "Upload"
+      problem_report:
+        create: "Report"
+    person_uploads:
+      group_id: Choose your team
+      file: Upload CSV file
     hint:
       person:
         location_in_building: (eg 10.30)
@@ -381,6 +364,10 @@ en:
         current_project: List the names of current projects this person is working on. Use a comma to separate project names.
         working_days: Select all that apply
         description: Include details about where this person works on different days, any days out of the office, and if this person starts early or late.
+      group:
+        name: Write out the name of your team in full. Do not use initials
+        acronym: If your team is also known by its initials (eg HMCTS) add them below
+        description: What is the role and purpose of the team?
 
   will_paginate:
     models:
