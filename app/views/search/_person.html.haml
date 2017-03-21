@@ -1,5 +1,5 @@
 .grid-row.mod-media.result-person
-  .column-full
+  .column-two-thirds
     .media
       .media-left
         = profile_image_tag person
@@ -28,8 +28,8 @@
                 Current project(s)
               %br/
               = person.current_project
-
-          - if ['sessions','tokens', 'people'].include? controller_name
-            = form_for person, url: update_email_person_path(person) do |f|
-              = f.hidden_field :email, value: @person.email
-              = f.submit 'Select', class: 'button'
+  .column-one-third
+    - if ['sessions','tokens', 'people'].include? controller_name
+      = form_for person, url: update_email_person_path(person) do |f|
+        = f.hidden_field :email, value: @person.email
+        = f.submit 'Select', class: 'button'
