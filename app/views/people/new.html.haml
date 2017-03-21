@@ -1,6 +1,8 @@
 - content_for :body_classes, 'new-profile-page '
 
-%h1
+= render partial: 'breadcrumbs'
+
+%h1.heading-xlarge.with-border-lg
   = @page_title = 'New profile'
 
 = render partial: 'form', locals: { building: true }
