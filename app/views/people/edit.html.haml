@@ -6,7 +6,7 @@
   .completion-prompt
     %p Fill in the highlighted fields to achieve 100% profile completion
 
-%h1.heading-xlarge
+%h1.heading-xlarge.with-border-lg
   = @page_title = (params[:page_title] || "Edit profile")
 
 = render partial: 'form', locals: { building: false }
