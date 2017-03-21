@@ -1,9 +1,10 @@
-.grid-row.mod-media.card
-  .media
-    = link_to summary do
-      .media-left
-        = profile_image_tag summary, class: 'team-members'
-      .media-body
-        %h4.media-heading
-          = summary.name
-        = summary.role_names
+.column-one-quarter
+  .mod-media.card
+    .media
+      = link_to summary do
+        .media-left
+          = profile_image_tag summary, class: 'team-members'
+        .media-body
+          %h4.media-heading
+            = summary.name
+          = summary.role_names
