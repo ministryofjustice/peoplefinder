@@ -1,5 +1,4 @@
 /* global $, _ */
-
 var PhotoUpload = (function (){
   'use strict';
 
@@ -94,7 +93,6 @@ var PhotoUpload = (function (){
       if(jsonText.length>1){
         var uploadData = $.parseJSON(jsonText);
         var els = PhotoUpload.findElements($iframe);
-
         if (uploadData.error) {
           // e.g. carrierwave whitelist errors
           PhotoUpload.showError(els, uploadData.error);
@@ -159,6 +157,7 @@ var PhotoUpload = (function (){
       els.$preview.Jcrop({
         setSelect: [0,0,trueSize[0],trueSize[0]],
         trueSize: trueSize,
+        // boxWidth: 450, boxHeight: 400 ,
         onSelect: function ( cropData ){
           els.$preview.data('new-crop-data', cropData);
         },
@@ -173,7 +172,7 @@ var PhotoUpload = (function (){
 
       var els = PhotoUpload.findElements(event.target);
       var cropData = els.$preview.data('new-crop-data');
-      var previewBoxWidth  = els.$preview.closest('.preview-box').width();
+      var previewBoxWidth  = els.$preview.closest('.media-object').width();
       var naturalWidth  = els.$preview.naturalWidth();
 
       var xaspect = previewBoxWidth  / naturalWidth;
@@ -240,7 +239,8 @@ var PhotoUpload = (function (){
       var $el           = $(el).closest('.person-photo');
       var $label        = $el.find('label[for="person-image"]');
       var $input        = $el.find('#person-image');
-      var $preview      = $el.find('.maginot > img.preview');
+      var $preview      = $el.find('.maginot > img.media-object');
+
 
       if( !$el.hasClass('person-photo') &&
           $input.length   === 0 &&
@@ -284,7 +284,6 @@ var PhotoUpload = (function (){
       node = this[0],
       img,
       value;
-
       if (node.tagName.toLowerCase() === 'img') {
         img = new Image();
         img.src = node.src,
