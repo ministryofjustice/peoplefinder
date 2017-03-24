@@ -1,57 +1,65 @@
-%h1
-  = "Edit Image"
+- content_for :body_classes, 'edit-profile-image-page '
 
-.grid-wrapper
-  .grid.grid-1-2
-    .inner-block
-      = form_for @person, builder: PersonFormBuilder, html: { multipart: true, class: person_form_class(@person, @activity) } do |f|
-        = f.form_group :profile_photo_id, class: 'person-photo initial' do
-          = f.label :profile_photo_id, class: 'form-label-bold' do
-            Photo
-          = f.hidden_field :profile_photo_id
-          = f.hidden_field :crop_x
-          = f.hidden_field :crop_y
-          = f.hidden_field :crop_w
-          = f.hidden_field :crop_h
+= render partial: 'breadcrumbs'
 
-          %p.form-hint.crop-hint
-            = info_text('photo_crop_hint')
+.grid-row.mod-heading
+  .column-full
+    %h1.heading-xlarge.mod-heading-border
+      = @page_title = "Edit profile picture"
+      %span.pull-right
+        = link_to 'Cancel and go to profile page', @person.new_record? ? :back : @person,{ class: 'font-xsmall' }
 
-          %div.preview-box
-            = profile_image_tag @person, class: 'preview'
-          %p.hidden
-            %a{href: '#', class: 'crop-again-button'}
-              Crop image again
-          %div.upload-button-bar
-            %div.initial-state
-              %label{ for: 'person-image', class: 'form-hint upload-hint' }
-                = info_text('photo_upload_hint')
-              .js-photo-upload-error.alert-error.hidden
-              %p
-                %input{ name: 'profile_photo[image]', id: 'person-image', type: 'file', class: 'form-control file' }
-                %a{href: '#', class: 'reset-image-button'}
-                  Reset to default
-              %button.photo-upload-button.button.hidden
-                Upload photo
-              %p.form-hint.uploading-hint
-                Uploading
-              %button.crop-finished-button.button-secondary
-                Crop picture
+.grid-row
+  .column-one-half
+    %h3.heading-medium{:for => "person_profile_photo_id"}
+      Profile picture
+      %span.form-hint
+        = "There are some steps to follow"
+    %ol
+      %li
+        1. Choose a photo or drag and drop
+      %li
+        2. Click the Upload photo button
+      %li
+        3. Use your mouse to adjust the crop lines
+      %li
+        4. Click the Crop picture button
+      %li
+        5. Click the Save button
 
-          .form-group.save-cancel-actions
-            = f.submit class: 'button'
-            .cancel
-              = link_to 'Cancel and go to profile page', @person.new_record? ? :back : @person
-  .grid.grid-1-2
-    .inner-block
-      %ol
-        %li
-          1. Choose a photo or drag and drop
-        %li
-          2. Click the Upload photo button
-        %li
-          3. Use your mouse to adjust the crop lines
-        %li
-          4. Click the Crop picture button
-        %li
-          5. Click the Save button
+
+  .column-one-half
+    = form_for @person, builder: PersonFormBuilder, html: { multipart: true, class: person_form_class(@person, @activity) } do |f|
+      = f.form_group :profile_photo_id, class: 'person-photo initial' do
+        = f.hidden_field :profile_photo_id
+        = f.hidden_field :crop_x
+        = f.hidden_field :crop_y
+        = f.hidden_field :crop_w
+        = f.hidden_field :crop_h
+
+        %div.preview-box
+          = profile_image_tag @person, class: 'preview'
+
+        %p.hidden
+          %a{href: '#', class: 'crop-again-button'}
+            Crop image again
+
+
+        %div.upload-button-bar
+          %div.initial-state
+            %label{ for: 'person-image', class: 'form-hint upload-hint' }
+              = info_text('photo_upload_hint')
+            .js-photo-upload-error.error.hidden
+            %p
+              %input{ name: 'profile_photo[image]', id: 'person-image', type: 'file', class: 'form-control file' }
+              %a{href: '#', class: 'reset-image-button'}
+                Reset to default
+            %button.photo-upload-button.button.hidden
+              Upload photo
+            %p.form-hint.uploading-hint
+              Uploading
+            %button.crop-finished-button.button-secondary
+              Crop picture
+
+        .form-group.save-cancel-actions
+          = f.submit class: 'button'
