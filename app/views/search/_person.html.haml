@@ -6,8 +6,7 @@
           = profile_image_tag person
         .details
           %h3.result-name
-            = link_to hit.try(:highlight).try(:name) ? hit.highlight.name.join.html_safe : person.name,
-            person,
+            = link_to es_highlighter(hit, person, :name), person,
             { data: search_result_analytics_attributes(index) }
 
           .result-memberships
@@ -23,13 +22,13 @@
           .meta= call_to(person.phone)
           .result-email
             .meta
-              = mail_to(person.email, hit.try(:highlight).try(:email) ? hit.highlight.email.join.html_safe : person.email, data: search_result_analytics_attributes(index) )
+              = mail_to(person.email, es_highlighter(hit, person, :email), data: search_result_analytics_attributes(index) )
 
           .result-current-project
             - if person.current_project.present?
               .meta
                 Current project(s):
-                = hit.try(:highlight).try(:current_project) ? hit.highlight.current_project.join.html_safe : person.current_project
+                = es_highlighter(hit, person, :current_project)
 
       - if Rails.env.development? || current_user.super_admin?
         %span{style: "float: right; font-size: 10px;"}
