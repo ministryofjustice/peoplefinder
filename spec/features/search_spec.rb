@@ -13,6 +13,12 @@ feature 'Searching feature', elastic: true do
       primary_phone_number: '0711111111',
       current_project: 'Digital Prisons')
     create(:membership, person: person, group: group)
+    create(:person,
+      given_name: 'Dodgy<script> alert(\'XSS\'); </script>',
+      surname: 'Bloke',
+      email: 'dodgy.bloke@digital.justice.gov.uk',
+      primary_phone_number: '0711111111',
+      current_project: 'Digital Prisons')
   end
 
   before(:all) do
@@ -108,6 +114,15 @@ feature 'Searching feature', elastic: true do
       within '.result-current-project' do
         expect(page).to have_selector('.es-highlight', text: 'Digital')
         expect(page).to have_selector('.es-highlight', text: 'Prisons')
+      end
+    end
+
+    scenario 'does not highlight unsanitary attribute values' do
+      fill_in 'query', with: 'dodgy bloke'
+      click_button 'Submit search'
+      within '.result-name' do
+        expect(page).not_to have_selector('.es-highlight')
+        expect(page).to have_text('Dodgy<script> alert(\'XSS\'); </script> Bloke')
       end
     end
   end

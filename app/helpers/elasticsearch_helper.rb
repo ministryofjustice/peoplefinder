@@ -11,7 +11,7 @@ module ElasticsearchHelper
   def sanitize_highlighter hit, person, attribute
     unsanitized = hit.highlight.__send__(attribute).join.html_safe
     unhighlighted = strip_highlighting!(hit.highlight.__send__(attribute).join.html_safe)
-    sanitized = sanitize(person.__send__(attribute))
+    sanitized = sanitize person.__send__(attribute)
 
     unhighlighted == sanitized ? unsanitized : person.__send__(attribute)
   end
