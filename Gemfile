@@ -78,7 +78,7 @@ end
 
 group :development, :test do
   gem 'byebug'
-  gem 'brakeman'
+  gem 'brakeman', require: false
   gem 'capybara'
   gem 'factory_girl_rails'
   gem 'launchy'

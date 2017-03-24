@@ -1,4 +1,7 @@
 class HealthCheckController < ActionController::Base
+
+  protect_from_forgery with: :exception
+
   def index
     Rails.logger.silence do
       report = HealthCheckService.new.report

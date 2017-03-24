@@ -1,0 +1,26 @@
+{
+  "ignored_warnings": [
+    {
+      "warning_type": "SQL Injection",
+      "warning_code": 0,
+      "fingerprint": "a3a768073f322565a93a63bc30ee837cb52945b09b9b580d885d8aa42e5dc595",
+      "check_name": "SQL",
+      "message": "Possible SQL injection",
+      "file": "app/models/concerns/activation.rb",
+      "line": 8,
+      "link": "http://brakemanscanner.org/docs/warning_types/sql_injection/",
+      "code": "acquired_people(:from => from, :before => before).where(\"#{completion_score_calculation} > ?\", 0.8)",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "Concerns::Activation",
+        "method": "activated_percentage"
+      },
+      "user_input": "completion_score_calculation",
+      "confidence": "Weak",
+      "note": "Calls method that returns dynamically generated SQL but with no injection possible"
+    }
+  ],
+  "updated": "2017-03-23 23:15:15 +0000",
+  "brakeman_version": "3.6.0"
+}
