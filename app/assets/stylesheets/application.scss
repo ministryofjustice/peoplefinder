@@ -1,5 +1,5 @@
 .border{
-	border:1px solid red;
+  border:1px solid red;
 }
 
 // Settings (variables)
@@ -48,6 +48,7 @@
 @import "elements/phase-banner";                  // Alpha and beta banners and tags
 @import "elements/components";                    // GOV.UK prefixed styles - blue highlighted box
 
+@import "Jcrop/css/jquery.Jcrop.min";
 
 $tablet-width: 768px;
 $desktop-width: 1025px;
@@ -115,13 +116,6 @@ $border-color: #bfc1c3;
 .affix {
   position: fixed;
 }
-
-
-
-.audit-log{
-	display: none;
-}
-
 
 .audit {
   td, th{
