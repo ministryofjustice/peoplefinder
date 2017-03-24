@@ -101,6 +101,11 @@
   margin: 0 10px 50px 0;
 }
 
+.edit-profile-page{
+  .card .media-left{
+    max-width: 300px;
+  }
+}
 .mod-media{
   a{
     @extend %contains-floats;
