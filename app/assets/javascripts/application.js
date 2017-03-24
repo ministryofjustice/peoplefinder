@@ -6,6 +6,8 @@
 //= require govuk_toolkit
 //= require moj
 //= require_tree ./modules
+//= require_tree ./peoplefinder
+//= require Jcrop/js/jquery.Jcrop.min
 
 // Eliminate console spam in test output
 moj.log = function() {};
