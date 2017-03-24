@@ -12,10 +12,10 @@
       == <span class="query-term">#{@query}</span> not found —
       == found #{pluralize(@people_results.size + @team_results.size, "similar result")}
 
-  = render partial: 'search/team', collection: @team_results.set
-
   - @people_results.each_with_hit.with_index do |(person, hit), idx|
     = render partial: 'search/person', locals: { person: person, hit: hit, index: idx }
+
+  = render partial: 'search/team', collection: @team_results.set
 
   .add-new-person
     Can't find the person you're looking for? Why not
