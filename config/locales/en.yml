@@ -353,6 +353,8 @@ en:
         works_saturday: Saturday
         works_sunday: Sunday
         description: Extra information
+      membership:
+        role: "Job title"
     group:
       name: Team name
       acronym: Team initials
