@@ -36,7 +36,10 @@ module SpecSupport
     end
 
     def govuk_checkbox_click locator
-      el = page.find("label[for='#{locator}']") rescue nil
+      el = page.find("label[for='#{locator}']")
+    rescue
+      nil
+    ensure
       el ||= page.find('label', text: locator)
       el.click
     end
