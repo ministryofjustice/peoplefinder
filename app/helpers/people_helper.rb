@@ -36,7 +36,7 @@ module PeopleHelper
 
   def profile_image_div source, alt_text, options
     content_tag(:div, class: 'maginot') do
-      image_tag(source, options.merge(alt: alt_text, class: "media-object"))
+      image_tag(source, options.merge(alt: alt_text, class: 'media-object'))
     end
   end
 
