@@ -1,8 +1,8 @@
 - membership = membership_f.object
 .membership.panel
   .form-group
-    = membership_f.label :role, 'Job title', class: 'form-label-bold'
-    = membership_f.text_field :role, class: 'form-control'
+    -# = membership_f.label :role, 'Job title', class: 'form-label-bold'
+    = membership_f.text_field :role
 
   .form-group
     = membership_f.label :group_id, 'Team', class: 'form-label-bold'
@@ -56,6 +56,7 @@
         = membership_f.radio_button :subscribed, false
         No
 
+  .form-group
     .remove-link
       - if membership.new_record?
         = link_to 'Delete role', '#', class: 'remove-new-membership button-secondary'
