@@ -2,30 +2,31 @@
 - content_for :page_title do
   = page_title
 
-//Before closing </head> element  Insertion point
-- content_for :head  do
+- content_for :global_header_text do
+  = 'Ministry of Justice'
+
+- content_for :homepage_url do
+  = home_path
+
+- content_for :logo_link_title do
+  = 'Go to the People finder homepage'
+
+//Before closing </head> element Insertion point
+- content_for :head do
   = stylesheet_link_tag "application", media: "all"
   = csrf_meta_tag
   %meta{name: "format-detection", content: "telephone=no"}
 
-// Classes to be added to the <body> element  Insertion point
+// Classes to be added to the <body> element Insertion point
 - content_for :body_classes do
   = " controller-" + controller.controller_name
 
-//After opening <body> element  Insertion point
--# - content_for :body_start  do
--#   = "body_start"
-
-//<header> element  Set the value of header_class to with-proposition to show the propositional navigation
+//<header> element Set the value of header_class to with-proposition to show the propositional navigation
 - content_for :header_class do
   = "with-proposition"
 
--# // Inside parent .header-global Insertion point
--# - content_for :inside_header do
--#   = "inside_header"
-
 //Inside parent .header-wrapper Add a propositional title and navigation links
-- content_for :proposition_header  do
+- content_for :proposition_header do
   .header-proposition
     .content
       %a.js-header-toggle.menu{:href => "#proposition-links"}
@@ -34,26 +35,22 @@
         =link_to app_title, home_path, id: "proposition-name"
         = render "shared/loginout"
 
-//After closing </header> element Insertion point
--# - content_for :after_header  do
--#   = "after_header"
-
 //Inside parent #footer-wrapper Insertion point
-- content_for :footer_top  do
+- content_for :footer_top do
   = render 'shared/feedback_form'
 
 
-//Inside parent .footer-meta-inner  Insertion point
-- content_for :footer_support_links  do
+//Inside parent .footer-meta-inner Insertion point
+- content_for :footer_support_links do
   = render 'layouts/footer'
 
 
-//Before closing </body> element  Insertion point
-- content_for :body_end  do
+//Before closing </body> element Insertion point
+- content_for :body_end do
   = javascript_include_tag 'application'
   = render 'layouts/ga'
 
-//  Main content goes in here Insertion point. Content must be wrapped with id="content" for the skiplink to work.
+// Main content goes in here Insertion point. Content must be wrapped with id="content" for the skiplink to work.
 - content_for :content do
   %main#content
     = yield :breadcrumbs
