@@ -1,6 +1,6 @@
 
 var teamSelector = function teamSelector(isPerson, obj){
-  console.log('TeamSelector', [isPerson, obj]);
+
   this.isPerson = isPerson;
   this.selector = $(obj);
   this.orgBrowser = this.selector.find('.org-browser');
@@ -11,8 +11,11 @@ var teamSelector = function teamSelector(isPerson, obj){
 
   /* Listen for events */
   this.initEvents = function(){
-    console.log('TeamSelector.initEvents', arguments);
+
     var self = this;
+
+    var $buttons = $("label input[type='radio'], label input[type='checkbox']");
+    var selectionButtons = new GOVUK.SelectionButtons($buttons);
 
     if(this.isPerson){
       teamName = this.selector.find('.editable-summary ol li:last-child').text();
@@ -21,7 +24,7 @@ var teamSelector = function teamSelector(isPerson, obj){
 
     /* Clicking the 'Edit' link to show the team selector */
     this.selector.on('click', '.show-editable-fields, .editable-summary .title', function (e){
-      console.log('click', self.selector, e);
+
       self.onClick(e);
       self.editButton.hide();
       self.selector.find('.editable-fields').show();
@@ -29,7 +32,7 @@ var teamSelector = function teamSelector(isPerson, obj){
     });
     /* Clicking the 'Done' button to hide the team selector */
     this.selector.on('click', '.hide-editable-fields', function (e){
-      console.log('click', self.selector, e);
+
       self.onClick(e);
       self.editButton.show();
       self.selector.find('.editable-fields').hide();
@@ -37,21 +40,21 @@ var teamSelector = function teamSelector(isPerson, obj){
     });
     /* Clicking on the 'Back' link */
     this.orgBrowser.on('click', '.team-back', function (e){
-      console.log('click', self.orgBrowser, e);
+
       self.onClick(e);
       self.currentTarget = $(e.currentTarget);
       self.back();
     });
     /* Clicking on a team with subteams */
     this.orgBrowser.on('click', 'li:not(.disabled) .subteam-link', function (e){
-      console.log('click', self.orgBrowser, e);
+
       self.onClick(e);
       self.currentTarget = $(e.currentTarget);
       self.forward();
     });
     /* Clicking on a team with no subteams */
     this.orgBrowser.on('click', '.team-link', function (e){
-      console.log('click', self.orgBrowser, e);
+
       self.onClick(e);
       self.currentTarget = $(e.currentTarget);
       // if it's a form
@@ -63,7 +66,7 @@ var teamSelector = function teamSelector(isPerson, obj){
     });
     /* Clicking directly on a radio button */
     this.orgBrowser.on('change', 'input[type=radio]', function(e){
-      console.log('change', self.orgBrowser, e);
+
       self.currentTarget = $(e.currentTarget);
       self.currentTarget.focus();
       self.setTeamName(self.getTeamName(self.currentTarget));
@@ -153,14 +156,14 @@ var teamSelector = function teamSelector(isPerson, obj){
 
   /* Handle clicks and preventDefault and stopPropagation */
   this.onClick = function(e){
-    console.log('TeamSelector.onClick', e);
+
     e.preventDefault();
     e.stopPropagation();
   };
 
   /* Set the 'selected' class on the last visible team */
   this.init = function(){
-    console.log('TeamSelector.init', arguments);
+
     var self = this;
     this.orgBrowser.find('.team-back').first().remove();
     if( this.orgBrowser.hasClass('has-form') ){
@@ -183,7 +186,7 @@ var teamSelector = function teamSelector(isPerson, obj){
   Scroll backwards and wait before removing the 'visible' class
   */
   this.back = function(){
-    console.log('TeamSelector.back', arguments);
+
     var self = this,
       team = this.currentTarget.parent('.team');
     this.currentTarget.children('li').removeClass('expanded');
@@ -198,7 +201,7 @@ var teamSelector = function teamSelector(isPerson, obj){
 
   /* If the team has subteams, find the next team */
   this.forward = function(){
-    console.log('TeamSelector.forward', arguments);
+
     if( this.currentTarget.closest('li').hasClass('has-subteams') === false ){
       if( this.orgBrowser.hasClass('has-form') ){
         var input = this.currentTarget.closest('p').children('input').prop('checked', 'checked').trigger('change');
@@ -214,7 +217,7 @@ var teamSelector = function teamSelector(isPerson, obj){
   };
 
   this.getBreadcrumb = function(isSubTeam){
-    console.log('TeamSelector.getBreadcrumb', isSubTeam);
+
     var arr = [],
         selector = isSubTeam? '.team.visible' : '.team.visible:not(.selected)';
     this.orgBrowser.find(selector).each(function(i,obj){
@@ -231,19 +234,19 @@ var teamSelector = function teamSelector(isPerson, obj){
       var li = $('<li/>').addClass('breadcrumb-'+i).text($.trim(crumb));
       ol.append(li);
     });
-    console.log('TeamSelector.createBreadcrumb', arr, ol);
+
     return $(ol);
   };
 
   /* Return the text of the given input element */
   this.getTeamName = function(input){
-    console.log('TeamSelector.getTeamName', input);
+
     return input.next('a').text();
   };
 
   /* Set the Team leader heading and hint spans with the given team name */
   this.setTeamName = function(teamName){
-    console.log('TeamSelector.setTeamName', teamName);
+
     if(this.isPerson){
       if(this.originalTeamLedQuestion) {
         this.selector.find('.team-leader legend').html(this.originalTeamLedQuestion);
@@ -264,25 +267,25 @@ var teamSelector = function teamSelector(isPerson, obj){
 
   /* Remove the 'selected' class from all teams */
   this.removeSelected = function(){
-    console.log('TeamSelector.removeSelected', arguments);
+
     this.orgBrowser.find('.team').removeClass('selected');
   };
 
   /* Return the last 'visible' team element */
   this.getLastVisible = function(){
-    console.log('TeamSelector.getLastVisible', arguments);
+
     return this.orgBrowser.find('.visible').last();
   };
 
   /* Set the last 'visible' elements parent li to have the 'expanded' class */
   this.setExpanded = function(){
-    console.log('TeamSelector.setExpanded', arguments);
+
     this.orgBrowser.find('.visible').parents('li').addClass('expanded');
   };
 
   /* When moving forward down the subteams */
   this.revealSubteam = function (team){
-    console.log('TeamSelector.revealSubteam', team);
+
     this.setExpanded();
     // Remove the 'visible' class from all teams
     this.orgBrowser.find('.team').removeClass('visible');
@@ -291,7 +294,7 @@ var teamSelector = function teamSelector(isPerson, obj){
 
   /* Set the last 'visible' element to be 'selected' and check the radio button, then set the team name */
   this.selectCurrent = function(){
-    console.log('TeamSelector.selectCurrent', arguments);
+
     var teamText, $current;
     this.removeSelected();
     var visible = this.getLastVisible();
@@ -301,21 +304,21 @@ var teamSelector = function teamSelector(isPerson, obj){
 
   /* Animate the team selector to scroll left or right */
   this.animateScroll = function(direction){
-    console.log('TeamSelector.animateScroll', direction);
+
     var visible = this.orgBrowser.find('.visible');
     var offset = direction === 'left'? (visible.length - 2) * visible.width() : visible.length * visible.width();
     this.orgBrowser.animate({ scrollLeft: offset }, 400);
   };
 
   this.toggleTeamInput = function(focus){
-    console.log('TeamSelector.toggleTeamInput', focus);
+
     this.newTeam.toggle();
     if(focus)
       this.newTeamInput.val('').focus();
   };
 
   this.createNewTeam = function(){
-    console.log('TeamSelector.createNewTeam', arguments);
+
     var self = this,
     input = this.orgBrowser.find('input:checked'),
       teamId = input.val(),
@@ -339,19 +342,19 @@ var teamSelector = function teamSelector(isPerson, obj){
   };
 
   this.createInput = function(i, id){
-    console.log('TeamSelector.createInput', [i, id]);
+
     return '<input type="radio" value="'+id+'" name="person[memberships_attributes]['+i+'][group_id]" id="person_memberships_attributes_'+i+'_group_id_'+id+'">';
   };
 
   this.createTeamName = function(data){
-    console.log('TeamSelector.createTeamName', data);
+
     return '<a class="subteam-link" href="#" title="'+data.name+'"> \
       <span class="subteam-name">'+data.name+'</span> \
     </a>';
   };
 
   this.createTeamList = function(i, data){
-    console.log('TeamSelector.createTeamList', [i, data]);
+
     return '<div class="team"> \
       <a class="team-back" href="#">Back</a> \
       <h3 class="">'+
@@ -370,7 +373,7 @@ var teamSelector = function teamSelector(isPerson, obj){
   };
 
   this.addTeamToList = function(data){
-    console.log('TeamSelector.addTeamToList', data);
+
     var self = this,
       isSubteam = this.orgBrowser.find('input:checked').next().hasClass('subteam-link')? true : false,
       input = isSubteam? $('input[value="'+data.parentId+'"]').closest('li') : $('input[value="'+data.parentId+'"]').parent('h3').next('ul');
@@ -397,8 +400,7 @@ var teamSelector = function teamSelector(isPerson, obj){
 };
 
 $(function (){
-  var $buttons = $("label input[type='radio'], label input[type='checkbox']");
-  var selectionButtons = new GOVUK.SelectionButtons($buttons);
+
   // Is this the person profile page?
   var isPerson = $('#memberships').length === 1? true : false;
   // Which element should we be targeting?
