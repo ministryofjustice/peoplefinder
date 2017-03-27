@@ -5,7 +5,6 @@ class ProblemReport
   include Virtus.model
   extend ActiveModel::Naming
   include ActiveModel::Conversion
-  include Concerns::GovukElementsFormBuilderMocker
 
   attribute :goal, String
   attribute :problem, String
