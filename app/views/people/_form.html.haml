@@ -26,12 +26,9 @@
   = f.text_field :city
 
   .form-group
-    %h1.heading-xlarge
-      missing roles
-
-  .form-group
     #memberships
-      %h2.line-above Role
+      %h3.heading-large.with-border-lg
+        = "Roles"
       = f.fields_for :memberships do |membership_f|
         = render 'membership_fields', membership_f: membership_f, org_structure: @org_structure, person: @person
 

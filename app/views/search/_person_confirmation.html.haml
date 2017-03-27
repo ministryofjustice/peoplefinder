@@ -1,0 +1,35 @@
+.grid-row.mod-media.result-person
+  .column-two-thirds
+    .media
+      .media-left
+        = profile_image_tag person
+      .media-body
+        %h4.media-heading
+          - index = person_iteration.index
+          = link_to person.name, person
+
+        %ul
+          - if person.memberships.empty?
+
+          - else
+            - person.memberships.each do |membership|
+              %li
+                = "#{ membership.role }, " if membership.role?
+                = link_to membership.group.name, membership.group
+
+          %li
+            = call_to(person.phone)
+          %li
+            = mail_to(person.email, nil, data: search_result_analytics_attributes(index) )
+
+          - if person.current_project.present?
+            %li.core-16
+              %span.bold
+                Current project(s)
+              %br/
+              = person.current_project
+  .column-one-third
+    - if ['sessions','tokens', 'people'].include? controller_name
+      = form_for person, url: update_email_person_path(person) do |f|
+        = f.hidden_field :email, value: @person.email
+        = f.submit 'Select', class: 'button'
