@@ -25,7 +25,7 @@
     %h3.heading-medium
       = "About the team"
 
-    .mod-wrap-text
+    .mod-wrap-text.formatted-text
       = govspeak(@group.with_placeholder_default(:description))
 
 
@@ -43,6 +43,4 @@
   = render partial: "people_in_team"
 
 - unless @versions.nil?
-  %h1
-    = "Audit Log"
   = render 'shared/audit', versions: @versions

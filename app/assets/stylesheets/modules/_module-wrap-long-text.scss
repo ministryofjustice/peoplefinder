@@ -1,4 +1,7 @@
-.mod-wrap-text p {
+.mod-wrap-text{
+  margin-bottom:$gutter/3;
+
+  p {
 
   /* These are technically the same, but use both */
   overflow-wrap: break-word;
@@ -15,5 +18,8 @@
   -moz-hyphens: auto;
   -webkit-hyphens: auto;
   hyphens: auto;
+
+}
+
 
 }
