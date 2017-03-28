@@ -180,9 +180,12 @@
       padding-right: $gutter/2;
     }
   }
-
+  &.result-team,
   &.result-person{
     .media-body{
+      .media-heading{
+        font-weight: 400;
+      }
       ul li{
         margin-bottom: $gutter/4;
         @include core-16;
