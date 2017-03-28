@@ -38,7 +38,7 @@ $grey-4: #F8F8F8;
       display: inline-block;
       float: left;
       &:after {
-        content: '>';
+        // content: '>';
         padding: 0 4px;
       }
       &:last-child:after {
