@@ -19,3 +19,14 @@
   }
 
 }
+
+.acknowledgements{
+  @extend %contain-floats;
+}
+
+.new_problem_report{
+  display: none;
+  input[type="text"], textarea{
+    background-color: white;
+  }
+}

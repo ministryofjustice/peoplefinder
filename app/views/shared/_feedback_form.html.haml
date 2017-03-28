@@ -3,12 +3,12 @@
     Report a problem
   = form_for ProblemReport.new, id: 'feedback' do |f|
 
-    = f.text_area :goal, class: "form-control"
+    = f.text_area :goal
 
-    = f.text_area :problem, class: "form-control"
+    = f.text_area :problem
 
     - unless logged_in_regular?
-      = f.text_field :person_email, class: "form-control"
+      = f.text_field :person_email
 
     = f.hidden_field :browser
 
