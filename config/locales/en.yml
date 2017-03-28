@@ -351,13 +351,15 @@ en:
         description: Extra information
       membership:
         role: "Job title"
+      problem_report:
+        goal: "What were you trying to do?"
+        problem: "What went wrong?"
+        person_email: "Your email"
     group:
       name: Team name
       acronym: Team initials
       description: Team description
-    problem_report:
-      goal: "What were you trying to do?"
-      problem: "What went wrong?"
+
     placeholder:
       group:
           description: sdfsdf
