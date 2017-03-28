@@ -124,11 +124,13 @@
 
   &.profile{
     .media-object{
+
       @include setSize();
     }
 
     .media-left{
       padding-right:$gutter;
+      width: 33%;
     }
     .heading-medium{
       margin-top:0;
@@ -139,7 +141,7 @@
   }
 
   &.card{
-    min-height: 275px;
+    min-height: 305px;
     @include setSize();
     // float:left;
     margin: 0 10px 10px 0;
@@ -166,6 +168,9 @@
 
   &.leader{
     @include setSize();
+    .maginot{
+      margin-bottom: $gutter/2;
+    }
   }
 
   &.result-team{
@@ -195,26 +200,26 @@
 
 
   ul.working_days {
-  clear: both;
-  list-style: none;
-  padding: 0;
+    clear: both;
+    list-style: none;
+    padding: 0;
 
-  li {
-    display:inline-block;
-    text-align: center;
-    background-color: gray;
-    width: 25px;
-    padding:3px 0;
-    color: white;
+    li {
+      display:inline-block;
+      text-align: center;
+      background-color: gray;
+      width: 25px;
+      padding:3px 0;
+      color: white;
 
-    background: image-url('bg_not_working_day.png') no-repeat scroll 0 0;
+      background: image-url('bg_not_working_day.png') no-repeat scroll 0 0;
 
-    &.active {
-      background-image: none;
-      background-color: rgb(98,152,187);
+      &.active {
+        background-image: none;
+        background-color: rgb(98,152,187);
+      }
     }
   }
-}
 }
 
 .profile {
