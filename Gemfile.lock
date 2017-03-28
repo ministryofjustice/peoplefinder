@@ -648,7 +648,7 @@ DEPENDENCIES
   omniauth-gplus!
   paper_trail (~> 4.0.2)
   pg
-  poltergeist (~> 1.14)
+  poltergeist
   premailer-rails (~> 1.9)
   pry-byebug
   pry-rails
