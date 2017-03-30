@@ -1,10 +1,9 @@
 .column-one-quarter
   .mod-media.card
     .media
-      = link_to summary do
-        .media-left
-          = profile_image_tag summary, class: 'team-members'
-        .media-body
-          %h4.media-heading
-            = summary.name
-          = summary.role_names
+      .media-left
+        = profile_image_tag summary, class: 'team-members'
+      .media-body
+        %h4.media-heading
+          = link_to summary.name, person_path(summary)
+        = summary.role_names
