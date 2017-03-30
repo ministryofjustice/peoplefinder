@@ -58,13 +58,16 @@
       - if params[:group_id]
         = f.hidden_field :parent_id
       - else
-        %label.form-label-bold Team parent
-        %p.form-hint Use this to change where in the organisation this team is located.
+        %label.form-label-bold
+          Team parent
+        %p.form-hint
+          Use this to change where in the organisation this team is located.
 
         -unless @group.new_record?
           .editable-summary.parent-summary
             - if @group.parent
-              .title= breadcrumbs(@group.parent.path, show_links: false)
+              .title
+                = breadcrumbs(@group.parent.path, show_links: false)
             = link_to 'Edit team parent', '#', class: 'show-editable-fields button-secondary'
 
         .editable-fields{ style: ('display:none' unless @group.new_record?) }
@@ -81,7 +84,3 @@
         = link_to 'Cancel', :back
       - else
         = link_to 'Cancel', @group
-
-.grid-row
-  .column-full
-
