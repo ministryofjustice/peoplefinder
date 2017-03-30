@@ -36,11 +36,19 @@ RSpec.describe PeopleHelper, type: :helper do
   end
 
   describe 'profile_image_tag' do
-    let(:person)  { build(:person, :with_photo) }
+    let(:person)  { create(:person, :with_photo) }
     let(:options) { { class: 'my-class', version: :croppable } }
 
     it 'test builds person with photo' do
       expect(person.profile_photo.image).not_to be_nil
+    end
+
+    it 'adds a link to the person profile by default' do
+      expect(profile_image_tag(person, options)).to match(/.*href=\"\/people\/.*\".*/)
+    end
+
+    it 'does not add a link to when option set' do
+      expect(profile_image_tag(person, options.merge(link: false))).to_not match(/.*href=.*/)
     end
 
     it 'uses the specified image version' do
@@ -48,7 +56,7 @@ RSpec.describe PeopleHelper, type: :helper do
     end
 
     it 'removes the version element from options hash' do
-      expect { profile_image_tag(person, options) }.to change(options, :size).by(-1)
+      expect { profile_image_tag(person, options) }.to change { options.keys }.from([:class, :version]).to([:class, :link])
     end
 
     it 'defaults to using the medium image version' do
