@@ -28,7 +28,8 @@
     .mod-wrap-text.formatted-text
       = govspeak(@group.with_placeholder_default(:description))
 
-    - if @all_people_count > 0 || @group.children.present?
+    - if @group.children.present?
+
       = link_to "View printable organogram", organogram_group_path(@group)
     - unless @group.leaf_node?
       - if @all_people_count > 0 && @group.parent.present?
