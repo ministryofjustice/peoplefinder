@@ -298,7 +298,7 @@ en:
       request_information: "Incorrect or missing information? Has this person left the department or is this a duplicate?"
       request_information_link: "Help improve this profile"
       team_deletable: "Note that team deletion cannot be undone."
-      team_not_deletable: "Team deletion is only possible if there are no people associated with it."
+      team_not_deletable: "Team deletion is only possible if there are no people or subteams associated with it."
   placeholders:
     group:
       description: |
