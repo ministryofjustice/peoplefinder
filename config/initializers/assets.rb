@@ -3,6 +3,9 @@ Rails.application.config.assets.precompile += %w(
   email.css
   Jcrop/css/jquery.Jcrop.min.css
   Jcrop/js/jquery.Jcrop.min.js
+  application-ie6.css
+  application-ie7.css
+  application-ie8.css
 )
 # TODO: these were in the precompile array
 #       but look to be a leftover from
