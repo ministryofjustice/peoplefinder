@@ -17,6 +17,16 @@
   = csrf_meta_tag
   %meta{name: "format-detection", content: "telephone=no"}
 
+  /[if IE 6]
+    = stylesheet_link_tag "application-ie6", media: "all"
+
+  /[if IE 7]
+    = stylesheet_link_tag "application-ie7", media: "all"
+
+  /[if IE 8]
+    = stylesheet_link_tag "application-ie8", media: "all"
+
+
 // Classes to be added to the <body> element Insertion point
 - content_for :body_classes do
   = " controller-" + controller.controller_name
