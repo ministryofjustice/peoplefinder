@@ -230,7 +230,6 @@ var teamSelector = function teamSelector(isPerson, obj) {
   };
 
   this.createBreadcrumb = function(arr) {
-    console.log(arr);
     var ol = $('<ol/>');
     $(arr).each(function(i, crumb) {
       var li = $('<li/>').addClass('breadcrumb-' + i).text($.trim(crumb));
@@ -370,7 +369,6 @@ var teamSelector = function teamSelector(isPerson, obj) {
   };
 
   this.createTeamList = function(i, data) {
-    console.log([i,data]);
     return ['<div class="team">',
       '<a class="team-back" href="#">Back</a>',
       '<h3 class="">',
