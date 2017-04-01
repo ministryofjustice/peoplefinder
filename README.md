@@ -5,6 +5,8 @@
 Climate](https://codeclimate.com/github/ministryofjustice/peoplefinder/badges/gpa.svg)](https://codeclimate.com/github/ministryofjustice/peoplefinder)
 [![Test
 Coverage](https://codeclimate.com/github/ministryofjustice/peoplefinder/badges/coverage.svg)](https://codeclimate.com/github/ministryofjustice/peoplefinder/coverage)
+[![Dependency Status](https://gemnasium.com/badges/github.com/ministryofjustice/peoplefinder.svg)](https://gemnasium.com/github.com/ministryofjustice/peoplefinder)
+
 
 ## Installing for development
 
