@@ -38,7 +38,7 @@
         = f.hidden_field :crop_h
 
         %div.preview-box
-          = profile_image_tag @person, class: 'preview'
+          = profile_image_tag @person, class: 'preview', link: false
 
         %p.hidden
           %a{href: '#', class: 'crop-again-button'}
