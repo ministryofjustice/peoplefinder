@@ -44,7 +44,7 @@
       = link_to "View printable organogram", organogram_group_path(@group)
     - unless @group.leaf_node?
       - if @all_people_count > 0 && @group.parent.present?
-        = link_to "View #{ @all_people_count > 1 ? 'all' : 'NONE' } people", people_group_path(@group), class: 'view-all-people'
+        = link_to "View #{ @all_people_count > 1 ? 'all' : '' } people", people_group_path(@group), class: 'view-all-people'
 
 .grid-row.mod-heading
   .column-full
