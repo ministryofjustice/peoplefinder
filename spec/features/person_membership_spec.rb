@@ -13,7 +13,7 @@ feature "Person maintenance" do
 
     visit new_person_path
     fill_in 'First name', with: 'Helen'
-    fill_in 'Surname', with: 'Taylor'
+    fill_in 'Last name', with: 'Taylor'
     fill_in 'Main email', with: person_attributes[:email]
     fill_in 'Job title', with: 'Head Honcho'
 
@@ -65,7 +65,7 @@ feature "Person maintenance" do
 
     membership = Person.last.memberships.last
     expect(membership.role).to eql('Head Honcho')
-    expect(page).to have_selector('.job-title', text: 'Head Honcho in Digital Justice')
+    expect(page).to have_selector('.cb-job-title', text: 'Head Honcho in Digital Justice')
   end
 
   scenario 'Leaving the job title blank', js: true do
@@ -79,7 +79,7 @@ feature "Person maintenance" do
 
     click_button 'Save', match: :first
 
-    within('.profile') { expect(page).not_to have_selector('.job-title') }
+    within('.profile') { expect(page).not_to have_selector('.cb-job-title') }
   end
 
   scenario 'Changing team membership via clicking "Back"', js: true do
@@ -153,7 +153,7 @@ feature "Person maintenance" do
     javascript_log_in
     visit edit_person_path(person)
     fill_in 'First name', with: 'Samantha'
-    fill_in 'Surname', with: 'Taylor'
+    fill_in 'Last name', with: 'Taylor'
     fill_in 'Job title', with: 'Head Honcho'
     check_leader
 

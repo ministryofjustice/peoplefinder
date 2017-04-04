@@ -47,7 +47,7 @@ feature 'Searching feature', elastic: true do
     scenario 'retrieves single exact match for email' do
       fill_in 'query', with: 'jon.browne@digital.justice.gov.uk'
       click_button 'Submit search'
-      expect(page).to have_selector('.search-result', count: 1)
+      expect(page).to have_selector('.cb-person', count: 1)
     end
 
     scenario 'retrieves the details of matching people' do
@@ -85,7 +85,7 @@ feature 'Searching feature', elastic: true do
     scenario 'highlights entire matching email address' do
       fill_in 'query', with: 'jon.browne@digital.justice.gov.uk'
       click_button 'Submit search'
-      within '.result-email' do
+      within '.cb-person-email' do
         expect(page).to have_selector('.es-highlight', text: 'jon.browne@digital.justice.gov.uk')
       end
     end
@@ -93,7 +93,7 @@ feature 'Searching feature', elastic: true do
     scenario 'highlights individual role and group terms' do
       fill_in 'query', with: 'HMP Wilsden'
       click_button 'Submit search'
-      within '.result-memberships' do
+      within '.cb-person-memberships' do
         expect(page).to have_selector('.es-highlight', text: 'HMP')
         expect(page).to have_selector('.es-highlight', text: 'Wilsden')
       end
@@ -102,7 +102,7 @@ feature 'Searching feature', elastic: true do
     scenario 'highlights individual name terms' do
       fill_in 'query', with: 'Jon Browne'
       click_button 'Submit search'
-      within '.result-name' do
+      within '.cb-person-name' do
         expect(page).to have_selector('.es-highlight', text: 'Browne')
         expect(page).to have_selector('.es-highlight', text: 'Jon')
       end
@@ -111,7 +111,7 @@ feature 'Searching feature', elastic: true do
     scenario 'highlights individual current project terms' do
       fill_in 'query', with: 'Digital Prisons Browne'
       click_button 'Submit search'
-      within '.result-current-project' do
+      within '.cb-person-current-project' do
         expect(page).to have_selector('.es-highlight', text: 'Digital')
         expect(page).to have_selector('.es-highlight', text: 'Prisons')
       end
@@ -120,7 +120,7 @@ feature 'Searching feature', elastic: true do
     scenario 'does not highlight unsanitary attribute values' do
       fill_in 'query', with: 'dodgy bloke'
       click_button 'Submit search'
-      within '.result-name' do
+      within '.cb-person-name' do
         expect(page).not_to have_selector('.es-highlight')
         expect(page).to have_text('Dodgy<script> alert(\'XSS\'); </script> Bloke')
       end

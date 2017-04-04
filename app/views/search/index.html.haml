@@ -23,7 +23,7 @@
     %hr/
 
 .grid-row
-  .column-full
+  #results.column-full
     - @people_results.each_with_hit.with_index do |(person, hit), idx|
       = render partial: 'search/person', locals: { person: person, hit: hit, index: idx }
 

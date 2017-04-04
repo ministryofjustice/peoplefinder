@@ -5,7 +5,7 @@
 
     - if super_admin?
       %li
-        = link_to 'Manage', admin_home_path
+        = link_to 'Manage', admin_home_path, class: "manage-link"
 
     %li
       = link_to "Sign out", sessions_path, :method => :delete

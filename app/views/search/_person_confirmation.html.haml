@@ -4,7 +4,7 @@
       .media-left
         = profile_image_tag person
       .media-body
-        %h4.media-heading
+        %h4.media-heading.cb-person-name
           - index = person_iteration.index
           = link_to person.name, person
 
@@ -13,13 +13,13 @@
 
           - else
             - person.memberships.each do |membership|
-              %li
+              %li.cb-person-memberships
                 = "#{ membership.role }, " if membership.role?
                 = link_to membership.group.name, membership.group
 
-          %li
+          %li.cb-person-phone
             = call_to(person.phone)
-          %li
+          %li.cb-result-email
             = mail_to(person.email, nil, data: search_result_analytics_attributes(index) )
 
           - if person.current_project.present?

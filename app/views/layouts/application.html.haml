@@ -2,6 +2,9 @@
 - content_for :page_title do
   = page_title
 
+- content_for :cookie_message do
+  = "<p>GOV.UK uses cookies to make the site simpler. <a href=\"/cookies\">Find out more about cookies</a></p>".html_safe
+
 - content_for :global_header_text do
   = 'Ministry of Justice'
 
