@@ -52,11 +52,25 @@
   list-style: none;
 }
 
+@mixin mobile($orientation: landscape) {
+  @media (max-width: #{$tablet-width - 1px}) and (orientation: $orientation){
+    @content;
+  }
+}
+
 @mixin tablet($orientation: landscape) {
   @media (min-width: #{$tablet-width}) and (max-width: #{$desktop-width - 1px}) and (orientation: $orientation){
     @content;
   }
 }
+
+@mixin tablet($orientation: landscape) {
+  @media (min-width: #{$tablet-width}) and (max-width: #{$desktop-width - 1px}) and (orientation: $orientation){
+    @content;
+  }
+}
+
+
 
 @mixin desktop($orientation: landscape)  {
   @media (min-width: #{$desktop-width}) and (orientation: $orientation){
@@ -64,31 +78,23 @@
   }
 }
 
-@mixin setSize($size:128px, $multiply:true){
+@mixin setSize($size:100%, $multiply:true){
   width: $size;
-  // height: $size;
+
+  @include mobile(landscape){
+    width: $size/4;
+  }
 
   @include tablet(landscape){
-    // border: 1px solid red;
-    @if $multiply{
-      width: $size*1.5;
-      // height: $size*1.5;
-    }
+    width: $size/4;
   }
 
   @include tablet(portrait){
-    // border: 1px solid pink;
-     @if $multiply{
-      width: $size*1.2;
-      // height: $size*1.2;
-    }
+    width: $size/4;
   }
 
   @include desktop{
-     @if $multiply{
-      width: 100%;
-      // height: $size*1.8;
-    }
+    width: $size/4;
   }
 }
 
@@ -97,8 +103,10 @@
 }
 
 .form-group.mod-media.card{
-  @include setSize(150px);
   margin: 0 10px 50px 0;
+  .media-left{
+    @include setSize();
+  }
 }
 
 .edit-profile-page{
@@ -118,14 +126,14 @@
   margin-bottom: $gutter;
 
   .media-heading{
-    @include core-24;
+    @include core-19;
     font-weight: 700;
   }
 
   &.profile{
     .media-object{
 
-      @include setSize();
+      // @include setSize();
     }
 
     .media-left{
@@ -142,8 +150,6 @@
 
   &.card{
     min-height: 305px;
-    @include setSize();
-    // float:left;
     margin: 0 10px 10px 0;
     @extend %contain-floats;
 
@@ -163,11 +169,11 @@
   &.leaders{
     float:left !important;
     padding-right: 10px;
-    @include setSize(128px, false);
+    width: 45%;
   }
 
   &.leader{
-    @include setSize();
+    // @include setSize();
     .maginot{
       margin-bottom: $gutter/2;
     }
