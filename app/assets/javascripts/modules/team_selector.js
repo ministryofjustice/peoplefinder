@@ -12,10 +12,6 @@ var teamSelector = function teamSelector(isPerson, obj) {
   this.initEvents = function() {
 
     var self = this;
-
-    var $buttons = $("label input[type='radio'], label input[type='checkbox']");
-    var selectionButtons = new GOVUK.SelectionButtons($buttons);
-
     if (this.isPerson) {
       teamName = this.selector.find('.editable-summary ol li:last-child').text();
       self.setTeamName(teamName);
