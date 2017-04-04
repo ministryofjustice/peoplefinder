@@ -14,6 +14,10 @@ moj.log = function() {};
 
 $(function() {
   moj.init();
+
+  var $buttons = $("label input[type='radio'], label input[type='checkbox']");
+  var selectionButtons = new GOVUK.SelectionButtons($buttons);
+
 });
 
 $(function() {
