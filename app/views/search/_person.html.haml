@@ -1,37 +1,30 @@
-.grid-row.mod-media.result-person
+.grid-row.mod-media.result-person.cb-person
   .column-two-thirds
     .media
       .media-left
         = profile_image_tag person
       .media-body
-        %h4.media-heading
+        %h4.media-heading.cb-person-name
           = link_to es_highlighter(hit, person, :name), person,
             { data: search_result_analytics_attributes(index) }
         %ul
-          -# - if person.memberships.empty?
-          -# - else
-          -#   - person.memberships.each do |membership|
-          -#     %li
-          -#       = "#{ membership.role }, " if membership.role?
-          -#       = link_to membership.group.name, membership.group, search_result ? { data: search_result_analytics_attributes(index) } : {}
-
           - if person.memberships.present?
             - person.memberships.each.with_index do |membership, idx|
               - if hit.try(:highlight).try(:role_and_group)
-                %li
+                %li.cb-person-memberships
                   = link_to hit.highlight.role_and_group.join.html_safe, membership.group, { data: search_result_analytics_attributes(index) } if idx == 0
               - else
                 %li
                   = "#{ membership.role }, " if membership.role?
                   = link_to membership.group.name, membership.group, { data: search_result_analytics_attributes(index) }
 
-          %li
+          %li.cb-person-phone
             = call_to(person.phone)
-          %li
+          %li.cb-person-email
             = mail_to(person.email, es_highlighter(hit, person, :email), data: search_result_analytics_attributes(index) )
 
           - if person.current_project.present?
-            %li.core-16
+            %li.cb-person-current-project.core-16
               %span.bold
                 Current project(s)
               %br/

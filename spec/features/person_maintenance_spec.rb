@@ -126,7 +126,7 @@ feature 'Person maintenance' do
         visit new_person_path
 
         fill_in 'First name', with: person_attributes[:given_name]
-        fill_in 'Surname', with: person_attributes[:surname]
+        fill_in 'Last name', with: person_attributes[:surname]
         fill_in 'Main email', with: person_attributes[:email]
         click_button 'Save', match: :first
 
@@ -159,7 +159,7 @@ feature 'Person maintenance' do
         expect(page).to have_title("Edit profile - #{app_title}")
         expect(page).not_to have_text(completion_prompt_text)
         fill_in 'First name', with: 'Jane'
-        fill_in 'Surname', with: 'Doe'
+        fill_in 'Last name', with: 'Doe'
         click_button 'Save', match: :first
 
         expect(page).to have_content('We have let Jane Doe know that you’ve made changes')
@@ -244,7 +244,7 @@ feature 'Person maintenance' do
         visit edit_person_path(person)
 
         fill_in 'First name', with: person_attributes[:given_name]
-        fill_in 'Surname', with: person_attributes[:surname]
+        fill_in 'Last name', with: person_attributes[:surname]
         click_button 'Save', match: :first
 
         expect(page).to have_title("Duplicate names found - #{app_title}")
@@ -350,7 +350,7 @@ feature 'Person maintenance' do
     expect(page).not_to have_selector('.search-box')
 
     fill_in 'First name', with: person_attributes[:given_name]
-    fill_in 'Surname', with: person_attributes[:surname]
+    fill_in 'Last name', with: person_attributes[:surname]
     fill_in 'Main email', with: person_attributes[:email]
     click_button 'Save', match: :first
     expect(page).to have_selector('.search-box')
