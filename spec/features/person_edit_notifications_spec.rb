@@ -13,7 +13,7 @@ feature 'Person edit notifications' do
     visit new_person_path
 
     fill_in 'First name', with: 'Bob'
-    fill_in 'Surname', with: 'Smith'
+    fill_in 'Last name', with: 'Smith'
     fill_in 'Main email', with: 'bob.smith@digital.justice.gov.uk'
     expect do
       click_button 'Save', match: :first
@@ -53,7 +53,7 @@ feature 'Person edit notifications' do
     person = create(:person, given_name: 'Bob', surname: 'Smith', email: 'bob.smith@digital.justice.gov.uk')
     visit person_path(person)
     click_link 'Edit this profile'
-    fill_in 'Surname', with: 'Smelly Pants'
+    fill_in 'Last name', with: 'Smelly Pants'
     expect do
       click_button 'Save', match: :first
     end.to change { QueuedNotification.count }.by(1)
@@ -63,7 +63,7 @@ feature 'Person edit notifications' do
   scenario 'Editing a person with same email' do
     visit person_path(person)
     click_link 'Edit this profile'
-    fill_in 'Surname', with: 'Smelly Pants'
+    fill_in 'Last name', with: 'Smelly Pants'
     expect do
       click_button 'Save', match: :first
     end.not_to change { ActionMailer::Base.deliveries.count }

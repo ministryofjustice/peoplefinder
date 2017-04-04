@@ -46,7 +46,7 @@ module SpecSupport
 
     def fill_in_complete_profile_details
       fill_in 'First name', with: person_attributes[:given_name]
-      fill_in 'Surname', with: person_attributes[:surname]
+      fill_in 'Last name', with: person_attributes[:surname]
       select_in_team_select 'Digital'
       fill_in 'Main email', with: person_attributes[:email]
       fill_in 'Main phone number', with: person_attributes[:primary_phone_number]

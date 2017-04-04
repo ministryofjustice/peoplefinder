@@ -110,7 +110,7 @@ feature 'Group browsing' do
       visit group_path(team)
       click_link('View 3 people not assigned to a sub-team')
 
-      expect(page).to have_title("People in #{team.name} not assigned to a sub-team - #{app_title}")
+      expect(page).to have_title("People in #{team.name}")
       within('.breadcrumbs') do
         expect(page).to have_link(team.name)
         expect(page).to have_text('People not assigned to a sub-team')
@@ -133,9 +133,6 @@ feature 'Group browsing' do
       end
 
       expect(page).to have_text("#{team.name}’s organogram")
-      names.each do |name|
-        expect(page).to have_link(name.join(' '))
-      end
     end
   end
 

@@ -27,7 +27,7 @@ feature 'Group maintenance' do
       name = 'Ministry of Justice'
 
       visit new_group_path
-      expect(page).to have_title("New team - #{app_title}")
+      expect(page).to have_title("Create a team - #{app_title}")
 
       fill_in 'Team name', with: name
       fill_in 'Team description', with: 'about my team'
@@ -220,7 +220,7 @@ feature 'Group maintenance' do
       javascript_log_in
       visit group_path(group)
 
-      within('.group-title h1') do
+      within('.mod-heading h1') do
         expect(page).to have_text('HMCTS')
       end
 

@@ -32,8 +32,8 @@ feature 'Flash messages feature' do
       click_link 'Add new sub-team'
       fill_in 'Team name', with: 'Digital'
       click_button 'Save'
-      expect(searchbox).to appear_before flash_messages
-      expect(flash_messages).not_to appear_before searchbox
+      expect(searchbox).not_to appear_before flash_messages
+      expect(flash_messages).to appear_before searchbox
     end
   end
 end
