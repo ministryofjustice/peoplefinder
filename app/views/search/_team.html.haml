@@ -5,7 +5,7 @@
         = team_image_tag team
       .media-body
         - index = team_iteration.index
-        %h4.media-heading
+        %h4.media-heading.cb-group-name
           = link_to team.name, team, { data: search_result_analytics_attributes(index) }
         = breadcrumbs(team.path[0..(team.path.size - 2)])
   .column-one-third

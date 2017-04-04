@@ -29,7 +29,7 @@
         %h4.media-heading
         - @person.memberships.group_by(&:group).each do |group, memberships|
           -if memberships.first.role.present?
-            %h3.heading-medium
+            %h3.heading-medium.cb-job-title
               #{memberships.map(&:role).select(&:present?).sort.join(', ')}
               %small
                 in
