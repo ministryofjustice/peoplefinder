@@ -7,6 +7,6 @@
         = text_field_tag :query, @query, class: 'form-control'
       .form-group
         = submit_tag 'Submit search', class: 'button'
-  .column-one-third
+  .column-one-third.new-profile
     - if can_add_person_here?
       = link_to 'Create a new profile', new_person_path, class: 'add-new-person'
