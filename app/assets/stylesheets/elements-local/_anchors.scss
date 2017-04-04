@@ -5,3 +5,12 @@ a{
 a:hover{
   text-decoration: underline;
 }
+.new-profile a.add-new-person {
+    background: url(icon_add_person.png) scroll no-repeat 0 0;
+}
+
+.new-profile a {
+    display: inline-block;
+    margin-top: 13px;
+    padding: 2px 0 10px 30px;
+}
