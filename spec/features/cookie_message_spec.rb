@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 feature 'Cookie message', js: true do
-  let(:message_text) { 'People Finder uses cookies' }
+  let(:message_text) { 'GOV.UK uses cookies to make the site simpler' }
 
   scenario 'first visit' do
     visit '/'
