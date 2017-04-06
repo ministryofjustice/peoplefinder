@@ -1,17 +1,22 @@
 .person-photo {
 
+    .upload-hint{
+      @include core-16;
+    }
     .file {
       margin-top: 15px;
-      border: 0;
       line-height: 0;
       font-size: 15px;
       cursor: pointer;
+      padding: 20px;
+      width: 100%;
+      border: 3px dashed $border-colour;
     }
     .media-object {
       width: 100%;
     }
 
-    .preview-box {
+    .preview-box, .upload-button-bar {
       position: relative;
       width: 300px;
     }
