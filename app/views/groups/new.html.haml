@@ -5,4 +5,8 @@
 %h1.heading-xlarge.with-border-lg
   = @page_title = 'Create a team'
 
+= GovukElementsErrorsHelper.error_summary @group,
+    "There is a problem with the form",
+    "Check below for more detail"
+
 = render 'form'
