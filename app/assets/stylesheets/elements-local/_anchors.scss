@@ -14,3 +14,13 @@ a:hover{
     margin-top: 13px;
     padding: 2px 0 10px 30px;
 }
+
+.pipe-right{
+	border-right: 1px solid $border-colour;
+    padding-right: $gutter/3;
+}
+
+.pipe-left{
+	border-left: 1px solid $border-colour;
+    padding-left: $gutter/3;
+}
