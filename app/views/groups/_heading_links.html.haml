@@ -1,4 +1,4 @@
 %span.pull-right
   - if @group.children.count > 0
-    = link_to "View #{pluralize_with_delimiter @group.children.count, 'sub-team'}", '#teams', class: 'font-xsmall'
+    = link_to "View #{pluralize_with_delimiter @group.children.count, 'sub-team'}", '#teams', class: 'font-xsmall pipe-right'
   = link_to 'Edit this team', edit_group_path(@group), { class: 'font-xsmall', data: edit_team_analytics_attributes(@group.id) }
