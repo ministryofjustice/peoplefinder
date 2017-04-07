@@ -1,10 +1,6 @@
 - @editing_mode = true
 = form_for @person, html: { multipart: true, class: person_form_class(@person, @activity) } do |f|
 
-  = GovukElementsErrorsHelper.error_summary @person,
-    "Message to alert the user to a problem goes here",
-    "Optional description of the errors and how to correct them"
-
   = f.text_field :given_name
   = f.text_field :surname
   = f.text_field :email
