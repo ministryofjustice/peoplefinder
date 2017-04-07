@@ -9,4 +9,8 @@
 %h1.heading-xlarge.with-border-lg
   = @page_title = (params[:page_title] || "Edit profile")
 
+= GovukElementsErrorsHelper.error_summary @person,
+  "There is a problem with the form",
+  "Check below for more detail"
+
 = render partial: 'form', locals: { building: false }
