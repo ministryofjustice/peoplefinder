@@ -5,6 +5,10 @@
 %h1.heading-xlarge
   = @page_title = 'Edit team'
 
+= GovukElementsErrorsHelper.error_summary @group,
+    "There is a problem with the form",
+    "Check below for more detail"
+
 = render 'form'
 
 .form-group.delete-actions
