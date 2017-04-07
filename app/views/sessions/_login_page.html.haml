@@ -24,24 +24,18 @@
     = t('.heading_other')
 
   = form_for (@token ||= Token.new) do |f|
-
     = f.text_field :user_email
     = f.hidden_field(:unauthorised_login, value: @unauthorised_login)
-
-
     = f.submit t('.log_in_email'), { class: 'button', data: token_request_analytics_attributes }
 
   %hr
-
 
 .grid-row
   .column-full
     %h2.heading-medium
       = t('.heading_google')
-
     %p
       = t('.body_google')
-
     %p
       = link_to t('.log_in_google'), "/auth/gplus", class: 'button login-button'
 
