@@ -10,39 +10,16 @@
 
   %h1.heading-xlarge.with-border-lg
     = "#{@group.short_name}’s organogram"
-
-  -# - if @group.leaderships.present?
-  -#   %div.inner-block
-  -#     %div.grid-wrapper.leaders
-  -#       %h2 Team #{'leader'.pluralize(@group.leaderships_by_person.size)}
-  -#       - @group.leaderships_by_person.each do |person, leaderships|
-  -#         %div.leader
-  -#           = render partial: 'leaderships', object: leaderships, locals: { person: person }
-  -#           .tel= person.primary_phone_number
-
-  -# - if @group.people_outside_subteams.present?
-  -#   %div.inner-block
-  -#     %div.grid-wrapper.people
-  -#       %h2 People
-  -#       - @group.people_outside_subteams.each do |person, summary|
-  -#         %div.person
-  -#           .image-background
-  -#             = profile_image_tag person
-  -#           %h4= link_to person, person
-  -#           .role= person.role_names
-  -#           .tel= person.primary_phone_number
-
   - if @group.children.present?
     %h2.heading-medium
       Teams
     .grid-row
-      .column-one-quarter
       - @group.children.each do |subgroup|
         .column-one-quarter
-          %div.team
-            .image-background
-              .maginot
-                = image_tag ('medium_team.png')
-            %a{ href: url_for(subgroup) }
-              %h3
-                = subgroup
+          .mod-media.card.team
+            .media
+              .media-left
+                = image_tag ('medium_team.png'), class: 'media-object'
+              .media-body
+                %h4.media-heading
+                  = link_to subgroup, group_path(subgroup)
