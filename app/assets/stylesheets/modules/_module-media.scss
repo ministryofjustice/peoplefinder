@@ -131,10 +131,7 @@
   }
 
   &.profile{
-    .media-object{
-
-      // @include setSize();
-    }
+    .media-object{}
 
     .media-left{
       padding-right:$gutter;
@@ -160,6 +157,16 @@
     .media-heading, .media-body{
       @include core-16;
     }
+
+    &.team{
+      img{
+        border-radius: 50%;
+      }
+      .media-heading{
+        margin-top: $gutter/6;
+        text-align: center;
+      }
+    }
   }
 
   &.leaders, &.leader{
@@ -173,15 +180,12 @@
   }
 
   &.leader{
-    // @include setSize();
     .maginot{
       margin-bottom: $gutter/2;
     }
   }
 
-  &.result-team{
-    // border: 1px solid green;
-  }
+  &.result-team{}
 
   &.result-person,
   &.result-team{
@@ -260,8 +264,3 @@
     }
   }
 }
-
-
-
-
-
