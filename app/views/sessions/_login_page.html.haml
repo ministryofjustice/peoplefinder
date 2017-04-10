@@ -1,4 +1,4 @@
-- @disable_logo_link  = true
+- @disable_logo_link = true
 - @page_title = 'Log in'
 - content_for :body_classes, 'login-page '
 
@@ -17,7 +17,6 @@
       -else
         - t('.intro').each_line do |line|
           = line
-
 
 - if feature_enabled?('token_auth')
   %h2.heading-medium
