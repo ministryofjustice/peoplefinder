@@ -234,9 +234,9 @@ en:
       invalid_domain: "you have entered can’t be used to access People Finder"
     models:
       token:
-        invalid_address: "Email address is not formatted correctly"
-        invalid_domain: "Email address can’t be used to access People Finder"
-        token_throttle_limit: "You’ve reached the limit of %{limit} tokens requested within an hour"
+        invalid_address: is not formatted correctly
+        invalid_domain: can’t be used to access People Finder
+        token_throttle_limit: "has reached the limit of %{limit} tokens requested within an hour"
       group:
         attributes:
           base:

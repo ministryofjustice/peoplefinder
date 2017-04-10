@@ -2,8 +2,6 @@ require 'secure'
 
 class TokenSender
 
-  attr_reader :user_email_error
-
   REPORT_EMAIL_ERROR_REGEXP = %r{(not formatted correctly|reached the limit|access People)}
 
   def initialize(user_email)
@@ -11,31 +9,26 @@ class TokenSender
   end
 
   def call view
-    token = obtain_token
-    if token
-      TokenMailer.new_token_email(token).deliver_later queue: :high_priority
-      view.render_create_view token: token
-    elsif report_user_email_error?
-      view.render_new_view user_email_error: user_email_error
+    obtain_token
+    if @token.valid?
+      TokenMailer.new_token_email(@token).deliver_later queue: :high_priority
+      view.render_create_view token: @token
+    elsif user_email_error?
+      view.render_new_view_with_errors token: @token
     else
       view.render_create_view token: nil
     end
   end
 
   def obtain_token
-    token = build_token
-    if token.save
-      token
-    else
-      @user_email_error = token.errors[:user_email].first
-      nil
-    end
+    @token = build_token
+    @token.save
   end
 
   private
 
-  def report_user_email_error?
-    user_email_error[REPORT_EMAIL_ERROR_REGEXP]
+  def user_email_error?
+    @token.errors[:user_email].first[REPORT_EMAIL_ERROR_REGEXP]
   end
 
   def build_token
