@@ -21,9 +21,9 @@ class TokensController < ApplicationController
     end
   end
 
-  def render_new_view user_email_error:
+  def render_new_view_with_errors token:
     @unauthorised_login = unauthorised_login
-    @user_email_error = user_email_error
+    @token = token
     render action: :new
   end
 
