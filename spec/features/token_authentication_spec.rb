@@ -33,7 +33,7 @@ feature 'Token Authentication' do
       visit '/'
       fill_in 'token_user_email', with: 'valid.email@digital.justice.gov.uk '
       expect { click_button 'Request link' }.not_to change { ActionMailer::Base.deliveries.count }
-      expect(page).to have_text('You’ve reached the limit of 8 tokens requested within an hour')
+      expect(page).to have_text('Email address has reached the limit of 8 tokens requested within an hour')
     end
   end
 
@@ -137,10 +137,10 @@ feature 'Token Authentication' do
       click_button 'Request link'
       if count < 9
         expect(page).to have_text('We’re just emailing you a link to access People Finder')
-        expect(page).to_not have_text("You’ve reached the limit of 8 tokens requested within an hour")
+        expect(page).to_not have_text('reached the limit')
       else
         expect(page).not_to have_text('We’re just emailing you a link to access People Finder')
-        expect(page).to have_text("You’ve reached the limit of 8 tokens requested within an hour")
+        expect(page).to have_text('Email address has reached the limit of 8 tokens requested within an hour')
       end
     end
   end

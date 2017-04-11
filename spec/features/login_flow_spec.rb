@@ -111,8 +111,8 @@ feature 'Login flow' do
           expect(confirm_page).to be_all_there
           expect(confirm_page.form).to be_all_there
           expect(confirm_page).to have_content "Create profile"
-          expect(confirm_page.search_results).to have_search_results count: 2
-          expect(confirm_page.search_results.name_links).to include '/people/john-doe'
+          expect(confirm_page.person_confirm_results).to have_confirmation_results count: 2
+          expect(confirm_page.person_confirm_results.name_links).to include '/people/john-doe'
         end
 
         scenario 'confirming I need a new profile signs me in and redirects to edit my profile' do
@@ -133,9 +133,9 @@ feature 'Login flow' do
           visit new_group_path
           token_login_step_with_expectation
           expect(confirm_page).to be_displayed
-          expect(confirm_page.search_results).to have_search_results count: 2
+          expect(confirm_page.person_confirm_results).to have_confirmation_results count: 2
           person = Person.find_by(email: 'john.doe@digital.justice.gov.uk')
-          confirm_page.search_results.select_buttons.first.click
+          confirm_page.person_confirm_results.select_buttons.first.click
           expect(profile_page).to be_displayed
           expect(profile_page).to have_profile_link person
           expect(profile_page).to have_flash_message
