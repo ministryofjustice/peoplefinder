@@ -57,7 +57,7 @@ feature 'Searching feature', elastic: true do
       within('.breadcrumbs ol') do
         expect(page).to have_text('Search results')
       end
-      within('.pagination') do
+      within('.search-result-summary') do
         expect(page).to have_text(/\d+ result(s)? found/)
       end
       within('.search-box') do
@@ -75,8 +75,8 @@ feature 'Searching feature', elastic: true do
     scenario 'retrieves the details of the matching group and people in that group' do
       fill_in 'query', with: 'HMP Wilsden'
       click_button 'Submit search'
-      expect(page).to have_selector('.details h3', text: 'HMP Wilsden')
-      expect(page).to have_selector('.details h3', text: 'Jon Browne')
+      expect(page).to have_selector('.cb-group-name', text: 'HMP Wilsden')
+      expect(page).to have_selector('.cb-person-name', text: 'Jon Browne')
     end
   end
 
