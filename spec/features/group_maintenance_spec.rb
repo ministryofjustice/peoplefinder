@@ -85,7 +85,8 @@ feature 'Group maintenance' do
       click_button 'Save'
 
       within('.breadcrumbs ol') do
-        expect(page).to have_content('Corporate Services Digital Services')
+        expect(page).to have_selector('li.breadcrumb-2', text: 'Corporate Services')
+        expect(page).to have_selector('li.breadcrumb-3', text: 'Digital Services')
       end
     end
 
