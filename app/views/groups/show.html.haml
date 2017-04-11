@@ -14,7 +14,7 @@
       = render partial: 'heading_links'
 
 .grid-row.mod-team-overview
-  .column-one-third
+  .column-one-third.cb-leaders
     - if @group.leaderships.count > 0
       %h3.heading-medium
         = "Team #{'leader'.pluralize(@group.leaderships.count)}"
