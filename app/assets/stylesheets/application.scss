@@ -70,6 +70,8 @@ $border-color: #bfc1c3;
 @import "elements-local/*";
 @import "modules/*";
 
+@import "print";
+
 
 .clearfix:before,
 .clearfix:after {
