@@ -4,6 +4,6 @@ module Pages
 
     element :generate_link, '.generate-link > a'
     element :download_link, '.download-link > a'
-    element :bulk_uploader_link, '.bulk-uploader > a'
+    element :bulk_uploader_link, '#bulk-uploader > a'
   end
 end

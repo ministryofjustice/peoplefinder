@@ -5,10 +5,11 @@
   .column-full
     %h1.heading-xlarge.mod-heading-border
       = t('management.header')
+
+    %h2.heading-medium.with-border-lg
       = t('management.report_header')
 
-
-    %h3.heading-medium.with-border-lg.report-name
+    %h3.heading-small
       = "User behaviour report"
 
     #user-behavior-report
@@ -17,8 +18,9 @@
       %span.download-link
         = link_to 'download', admin_user_behavior_report_path, class: "button"
 
-    %h3.heading-medium.with-border-lg.report-name
+    %h2.heading-medium.with-border-lg.tool-name
       = t('management.tools_header')
 
-    = link_to 'Bulk Uploader', new_admin_person_upload_path, class: "button"
+    #bulk-uploader
+      = link_to 'Bulk uploader', new_admin_person_upload_path, class: "button"
 
