@@ -20,7 +20,7 @@
   .pagination
     = pluralize(@people.length, "result") + ' found'
 
-  #results
+  #confirm-person-results
     = render partial: 'search/person_confirmation', collection: @people, as: :person
 
   = form_for @person, url: :sessions_people, method: :post do |f|

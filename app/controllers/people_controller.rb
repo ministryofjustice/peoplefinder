@@ -45,7 +45,6 @@ class PeopleController < ApplicationController
     if @person.valid?
       confirm_or_create
     else
-      # error :create_error
       render :new
     end
   end
