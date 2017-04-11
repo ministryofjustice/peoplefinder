@@ -166,6 +166,8 @@ RSpec.describe GroupsController, type: :controller do
     end
 
     describe 'with invalid params' do
+      render_views
+
       before do
         post :create, { group: invalid_attributes }, valid_session
       end
@@ -179,7 +181,7 @@ RSpec.describe GroupsController, type: :controller do
       end
 
       it 'shows an error message' do
-        expect(flash[:error]).to match(/created/)
+        expect(response.body).to have_selector('.error-summary', text: /Team name is required/)
       end
     end
 
@@ -222,6 +224,8 @@ RSpec.describe GroupsController, type: :controller do
     end
 
     describe 'with invalid params' do
+      render_views
+
       let(:group) { create(:group, valid_attributes) }
 
       before do
@@ -237,7 +241,7 @@ RSpec.describe GroupsController, type: :controller do
       end
 
       it 'shows an error message' do
-        expect(flash[:error]).to match(/updated/)
+        expect(response.body).to have_selector('.error-summary', text: /Team name is required/)
       end
     end
   end

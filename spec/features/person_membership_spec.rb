@@ -31,8 +31,10 @@ feature "Person maintenance" do
     expect(membership).to be_subscribed
 
     visit group_path(group)
-    expect(page).to have_selector('.group-leader h4', text: 'Taylor')
-    expect(page).to have_selector('.group-leader .leader-role', text: 'Head Honcho')
+    within('.cb-leaders') do
+      expect(page).to have_selector('h4', text: 'Taylor')
+      expect(page).to have_text('Head Honcho')
+    end
   end
 
   scenario 'Confirming an identical person with membership details', js: true do
@@ -145,7 +147,9 @@ feature "Person maintenance" do
   end
 
   def check_leader(choice = 'Yes')
-    within('.team-leader') { choose(choice) }
+    within('.team-leader') do
+      govuk_label_click(choice)
+    end
   end
 
   scenario 'Adding an additional leadership role in same team', js: true do
@@ -169,8 +173,10 @@ feature "Person maintenance" do
     click_button 'Save', match: :first
 
     visit group_path(Group.find_by_name('Digital Justice'))
-    expect(page).to have_selector('.group-leader h4', text: 'Samantha Taylor')
-    expect(page).to have_selector('.group-leader .leader-role', text: 'Head Honcho, Master of None')
+    within('.cb-leaders') do
+      expect(page).to have_selector('h4', text: 'Samantha Taylor')
+      expect(page).to have_text('Head Honcho, Master of None')
+    end
 
     visit person_path(person)
     expect(page).to have_selector('h3', text: 'Head Honcho, Master of None')
@@ -183,7 +189,7 @@ feature "Person maintenance" do
     visit edit_person_path(person)
 
     fill_in 'Job title', with: 'Head Honcho'
-    within('.team-subscribed') { choose('No') }
+    within('.team-subscribed') { govuk_label_click('No') }
     click_button 'Save', match: :first
 
     membership = Person.last.memberships.last
