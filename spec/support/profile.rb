@@ -35,7 +35,7 @@ module SpecSupport
       person.groups << create(:group)
     end
 
-    def govuk_checkbox_click locator
+    def govuk_label_click locator
       el = page.find("label[for='#{locator}']")
     rescue
       nil
@@ -57,18 +57,20 @@ module SpecSupport
       fill_in 'City', with: person_attributes[:city]
       fill_in 'Extra information', with: person_attributes[:description]
       fill_in 'Current project(s)', with: person_attributes[:current_project]
-      govuk_checkbox_click 'Monday'
-      govuk_checkbox_click 'Friday'
+      within_fieldset('working-days') do
+        govuk_label_click 'Monday'
+        govuk_label_click 'Friday'
+      end
     end
 
     def fill_in_membership_details(team_name)
       fill_in 'Job title', with: membership_attributes[:role]
       select_in_team_select(team_name)
       within '.team-leader' do
-        choose(membership_attributes[:leader] ? 'Yes' : 'No')
+        govuk_label_click(membership_attributes[:leader] ? 'Yes' : 'No')
       end
       within '.team-subscribed' do
-        choose membership_attributes[:subscribed] ? 'Yes' : 'No'
+        govuk_label_click(membership_attributes[:subscribed] ? 'Yes' : 'No')
       end
     end
 
