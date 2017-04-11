@@ -12,7 +12,7 @@
       %span.heading-secondary
         = "Select a team or person's name to view more details."
 
-.grid-row
+.grid-row.search-result-summary
   .column-full
     %hr/
     - if matches_exist?
@@ -22,12 +22,12 @@
       == found #{pluralize(@people_results.size + @team_results.size, "similar result")}
     %hr/
 
-.grid-row
+.grid-row.person-results
   #results.column-full
     - @people_results.each_with_hit.with_index do |(person, hit), idx|
       = render partial: 'search/person', locals: { person: person, hit: hit, index: idx }
 
-.grid-row
+.grid-row.team-results
   .column-full
     = render partial: 'search/team', collection: @team_results.set
 
