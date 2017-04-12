@@ -4,90 +4,62 @@
 %h1.heading-xlarge.with-border-lg
   Help improve this profile
 
-- if @suggestion.errors.any?
-  .alert.alert-error
-    %p= error_text('group.general_message')
-    %ul.form-error-list
-      -@suggestion.errors.full_messages.each do |error|
-        %li=error
+= GovukElementsErrorsHelper.error_summary @suggestion,
+  "There is a problem with the form",
+  "Check below for more detail"
 
-=form_for @suggestion, builder: ActionView::Helpers::FormBuilder, url: person_suggestions_path do |f|
+= form_for @suggestion, url: person_suggestions_path do |f|
 
+  - label_scope = [:helpers, :label, :suggestion]
   %fieldset
-    %legend Ask the person to:
+    %legend.form-label-bold Ask the person to:
 
-    .form-group.check-box
-      =f.check_box :missing_fields, target: '.missing-fields-info'
-      =f.label :missing_fields, 'fill missing fields'
+    .form-group
+      = f.label :missing_fields, class: 'block-label' do
+        = f.check_box :missing_fields, target: '.missing-fields-info'
+        = t(:missing_fields, scope: label_scope)
 
-    .missing-fields-info.extra-info{style: 'display: none;'}
-      %p Your message will be emailed to the person. You can make changes to the wording.
-      =f.label :missing_fields_info, class: 'visuallyhidden'
-      =f.text_area :missing_fields_info, class: 'form-control'
+      .missing-fields-info.extra-info{style: 'display: none;'}
+        = f.text_area :missing_fields_info
 
-    .form-group.check-box
-      =f.check_box :incorrect_fields, target: '.incorrect_fields_info'
-      =f.label :incorrect_fields, 'update incorrect fields'
+    .form-group
+      = f.label :incorrect_fields, class: 'block-label' do
+        = f.check_box :incorrect_fields, target: '.incorrect_fields_info'
+        = t(:incorrect_fields, scope: label_scope)
 
     .incorrect_fields_info.extra-info{style: 'display: none;'}
       %p Choose which information is incorrect
 
-      .form-group
-        =f.check_box :incorrect_first_name
-        =f.label :incorrect_first_name, 'First name'
-
-      .form-group
-        =f.check_box :incorrect_last_name
-        =f.label :incorrect_last_name, 'Last name'
-
-      .form-group
-        =f.check_box :incorrect_roles
-        =f.label :incorrect_roles, 'Roles'
-
-      .form-group
-        =f.check_box :incorrect_location_of_work
-        =f.label :incorrect_location_of_work, 'Location of work'
-
-      .form-group
-        =f.check_box :incorrect_working_days
-        =f.label :incorrect_working_days, 'Working days'
-
-      .form-group
-        =f.check_box :incorrect_phone_number
-        =f.label :incorrect_phone_number, 'Phone number'
-
-      .form-group
-        =f.check_box :incorrect_pager_number
-        =f.label :incorrect_pager_number, 'Pager number'
-
-      .form-group
-        =f.check_box :incorrect_image
-        =f.label :incorrect_image, 'Profile image'
-      &nbsp;
+      - Suggestion::POTENTIALLY_INCORRECT_FIELDS.each do |field|
+        .form-group
+          - incorrect_attr = "incorrect_#{field}".to_sym
+          = f.label incorrect_attr, class: 'block-label' do
+            = f.check_box incorrect_attr
+            = t(incorrect_attr, scope: label_scope)
 
   %fieldset
-    %legend Ask the team admin to:
-    .form-group.check-box
-      =f.check_box :duplicate_profile
-      =f.label :duplicate_profile, 'remove duplicate profile'
+    %legend.form-label-bold Ask the team admin to:
 
-    .form-group.check-box
-      =f.check_box :inappropriate_content, target: '.inappropriate-content-info'
-      =f.label :inappropriate_content, 'remove inappropriate content'
+    .form-group
+      = f.label :duplicate_profile, class: 'block-label' do
+        = f.check_box :duplicate_profile
+        = t(:duplicate_profile, scope: label_scope)
 
-    .inappropriate-content-info.extra-info{style: 'display: none;'}
-      %p Enter details of the content (mandatory)
-      =f.label :inappropriate_content_info, class: 'visuallyhidden'
-      =f.text_area :inappropriate_content_info, class: 'form-control'
+    .form-group
+      = f.label :inappropriate_content, class: 'block-label' do
+        = f.check_box :inappropriate_content, target: '.inappropriate-content-info'
+        = t(:inappropriate_content, scope: label_scope)
 
-    .form-group.check-box
-      =f.check_box :person_left, target: '.person-left-info'
-      =f.label :person_left, 'remove the profile as the person has left MOJ'
+      .inappropriate-content-info.extra-info{style: 'display: none;'}
+        = f.text_area :inappropriate_content_info
 
-    .person-left-info.extra-info{style: 'display: none;'}
-      %p Enter any additional information (optional)
-      =f.label :person_left_info, class: 'visuallyhidden'
-      =f.text_area :person_left_info, class: 'form-control'
+    .form-group
+      = f.label :person_left, class: 'block-label' do
+        = f.check_box :person_left, target: '.person-left-info'
+        = t(:person_left, scope: label_scope)
+
+      .person-left-info.extra-info{style: 'display: none;'}
+        =f.text_area :person_left_info
 
   .submit-button{style: 'display: none;'}
     =f.submit 'Submit', class: 'button'
