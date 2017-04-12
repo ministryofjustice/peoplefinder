@@ -9,6 +9,7 @@
 
   .extra-info {
     clear: both;
+    @extend %contain-floats;
     margin-bottom: 10px;
     border-left: 3px $grey-3 solid;
     padding-left: 20px;
