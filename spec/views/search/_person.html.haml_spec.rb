@@ -67,7 +67,7 @@ RSpec.describe 'search/person', type: :view do
     include_examples 'sets analytics attributes'
   end
 
-  describe 'team links', skip: 'THIS CAN BE REMOVED?' do
+  describe 'team links' do
     let(:div) { 'cb-person-memberships' }
     let(:list) do
       people_results.map do |person|
