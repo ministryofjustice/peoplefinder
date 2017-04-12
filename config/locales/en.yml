@@ -327,6 +327,7 @@ en:
     group:
       description: |
         Discover what this team is responsible for, who is in it and how you can get in touch with them.
+
   # the following translations are used by the govuk_elements_form_builder gem
   helpers:
     fieldset:
@@ -363,6 +364,23 @@ en:
         name: Team name
         acronym: Team initials (optional)
         description: Team description (optional)
+      suggestion:
+        missing_fields: Fill missing fields
+        missing_fields_info: Missing fields
+        incorrect_fields: Update incorrect fields
+        incorrect_first_name: First name
+        incorrect_last_name: Last name
+        incorrect_roles: Roles
+        incorrect_location_of_work: Location of work
+        incorrect_working_days: Working days
+        incorrect_phone_number: Phone number
+        incorrect_pager_number: Pager number
+        incorrect_image: Profile image
+        duplicate_profile: Remove duplicate profile
+        inappropriate_content: Remove inappropriate content
+        inappropriate_content_info: Inappropriate content
+        person_left: Remove the profile as the person has left MOJ
+        person_left_info: Additional information
 
     placeholder:
       group:
@@ -396,6 +414,10 @@ en:
         name: Write out the name of your team in full. Do not use initials
         acronym: If your team is also known by its initials (eg HMCTS) add them below
         description: What is the role and purpose of the team?
+      suggestion:
+        missing_fields_info: Your message will be emailed to the person. You can make changes to the wording
+        inappropriate_content_info: Enter details of the content (mandatory)
+        person_left_info: Where they went, why, other (optional). Your message will be sent to team leaders
 
   will_paginate:
     models:
