@@ -107,7 +107,7 @@ RSpec.describe PeopleController, type: :controller do
       end
 
       it 'shows an error message' do
-        expect(response.body).to match /Last name is required/
+        expect(response.body).to match(/Last name is required/)
       end
     end
 

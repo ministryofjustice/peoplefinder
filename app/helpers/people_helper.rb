@@ -17,7 +17,7 @@ module PeopleHelper
   end
 
   def profile_image_tag(person, options = {})
-    options.merge!(link: true) unless options.key?(:link)
+    options[:link] = true unless options.key?(:link)
     source = profile_image_source(person, options)
     alt_text = "Current photo of #{person}"
     profile_image_div source, alt_text, options.merge(person: person)
