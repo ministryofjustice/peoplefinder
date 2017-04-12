@@ -8,58 +8,34 @@
   "There is a problem with the form",
   "Check below for more detail"
 
-= form_for @suggestion, url: person_suggestions_path do |f|
+= form_for @suggestion, builder: SuggestionFormBuilder, url: person_suggestions_path do |f|
 
-  - label_scope = [:helpers, :label, :suggestion]
   %fieldset
     %legend.form-label-bold Ask the person to:
 
-    .form-group
-      = f.label :missing_fields, class: 'block-label' do
-        = f.check_box :missing_fields, target: '.missing-fields-info'
-        = t(:missing_fields, scope: label_scope)
+    = f.check_box :missing_fields, target: '.missing-fields-info'
+    .missing-fields-info.extra-info{style: 'display: none;'}
+      = f.text_area :missing_fields_info
 
-      .missing-fields-info.extra-info{style: 'display: none;'}
-        = f.text_area :missing_fields_info
-
-    .form-group
-      = f.label :incorrect_fields, class: 'block-label' do
-        = f.check_box :incorrect_fields, target: '.incorrect_fields_info'
-        = t(:incorrect_fields, scope: label_scope)
-
+    = f.check_box :incorrect_fields, target: '.incorrect_fields_info'
     .incorrect_fields_info.extra-info{style: 'display: none;'}
-      %p Choose which information is incorrect
-
+      %span.form-hint
+        Choose which information is incorrect
       - Suggestion::POTENTIALLY_INCORRECT_FIELDS.each do |field|
-        .form-group
-          - incorrect_attr = "incorrect_#{field}".to_sym
-          = f.label incorrect_attr, class: 'block-label' do
-            = f.check_box incorrect_attr
-            = t(incorrect_attr, scope: label_scope)
+        = f.check_box "incorrect_#{field}".to_sym
 
   %fieldset
     %legend.form-label-bold Ask the team admin to:
 
-    .form-group
-      = f.label :duplicate_profile, class: 'block-label' do
-        = f.check_box :duplicate_profile
-        = t(:duplicate_profile, scope: label_scope)
+    = f.check_box :duplicate_profile
 
-    .form-group
-      = f.label :inappropriate_content, class: 'block-label' do
-        = f.check_box :inappropriate_content, target: '.inappropriate-content-info'
-        = t(:inappropriate_content, scope: label_scope)
+    = f.check_box :inappropriate_content, target: '.inappropriate-content-info'
+    .inappropriate-content-info.extra-info{style: 'display: none;'}
+      = f.text_area :inappropriate_content_info
 
-      .inappropriate-content-info.extra-info{style: 'display: none;'}
-        = f.text_area :inappropriate_content_info
-
-    .form-group
-      = f.label :person_left, class: 'block-label' do
-        = f.check_box :person_left, target: '.person-left-info'
-        = t(:person_left, scope: label_scope)
-
-      .person-left-info.extra-info{style: 'display: none;'}
-        =f.text_area :person_left_info
+    = f.check_box :person_left, target: '.person-left-info'
+    .person-left-info.extra-info{style: 'display: none;'}
+      = f.text_area :person_left_info
 
   .submit-button{style: 'display: none;'}
     =f.submit 'Submit', class: 'button'

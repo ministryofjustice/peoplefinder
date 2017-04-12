@@ -416,7 +416,6 @@ en:
         description: What is the role and purpose of the team?
       suggestion:
         missing_fields_info: Your message will be emailed to the person. You can make changes to the wording
-        inappropriate_content_info: Enter details of the content (mandatory)
         person_left_info: Where they went, why, other (optional). Your message will be sent to team leaders
 
   will_paginate:
