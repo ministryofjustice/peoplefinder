@@ -80,7 +80,7 @@ RSpec.describe TokenSender, type: :service do
           expect(subject.obtain_token).to eq false
         end
 
-         it 'assigns token with errors' do
+        it 'assigns token with errors' do
           subject.obtain_token
           expect(assigned_token.errors[:user_email]).to include error_message
         end
