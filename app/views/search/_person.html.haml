@@ -10,12 +10,11 @@
 
         %ul
           - if person.memberships.present?
-            - person.memberships.each.with_index do |membership, idx|
-              - if hit.try(:highlight).try(:role_and_group)
-                %li.cb-person-memberships
+            %li.cb-person-memberships
+              - person.memberships.each.with_index do |membership, idx|
+                - if hit.try(:highlight).try(:role_and_group)
                   = link_to hit.highlight.role_and_group.join.html_safe, membership.group, { data: search_result_analytics_attributes(index) } if idx == 0
-              - else
-                %li
+                - else
                   = "#{ membership.role }, " if membership.role?
                   = link_to membership.group.name, membership.group, { data: search_result_analytics_attributes(index) }
 
