@@ -29,7 +29,7 @@
 
 
   .column-one-half
-    = form_for @person, builder: PersonFormBuilder, html: { multipart: true, class: person_form_class(@person, @activity) } do |f|
+    = form_for @person, builder: PersonFormBuilderOld, html: { multipart: true, class: person_form_class(@person, @activity) } do |f|
       = f.form_group :profile_photo_id, class: 'person-photo initial' do
         = f.hidden_field :profile_photo_id
         = f.hidden_field :crop_x

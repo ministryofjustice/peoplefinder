@@ -31,3 +31,21 @@
 .complete-your-profile.complete {
   background-color: $palegreen;
 }
+
+.completion-prompt {
+  border: 02px solid $green;
+  color: $green;
+  padding: 15px;
+
+  p {
+    margin: 0;
+    font-weight: bold;
+  }
+}
+
+.completing {
+  input.incomplete {
+    border: 2px solid $green;
+    border-left-width: 10px;
+  }
+}
