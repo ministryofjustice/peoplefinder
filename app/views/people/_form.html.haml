@@ -1,5 +1,5 @@
 - @editing_mode = true
-= form_for @person, html: { multipart: true, class: person_form_class(@person, @activity) } do |f|
+= form_for @person, builder: PersonFormBuilder, html: { multipart: true, class: person_form_class(@person, @activity) } do |f|
 
   = f.text_field :given_name
   = f.text_field :surname
@@ -45,9 +45,10 @@
       %ul
         - Person::DAYS_WORKED.each do |day|
           %li
-            = f.label day, class: 'block-label' do
-              = f.check_box day
-              = day_name(day)
+            = f.check_box day
+            / = f.label day, class: 'block-label' do
+            /   = f.check_box day
+            /   = day_name(day)
 
   %h3.heading-medium.with-border-lg
     = "Extra information"
