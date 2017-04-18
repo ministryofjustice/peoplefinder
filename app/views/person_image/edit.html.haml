@@ -29,8 +29,8 @@
 
 
   .column-one-half
-    = form_for @person, builder: PersonFormBuilderOld, html: { multipart: true, class: person_form_class(@person, @activity) } do |f|
-      = f.form_group :profile_photo_id, class: 'person-photo initial' do
+    = form_for @person, builder: PersonFormBuilder, html: { multipart: true, class: person_form_class(@person, @activity) } do |f|
+      .form-group.person-photo.initial
         = f.hidden_field :profile_photo_id
         = f.hidden_field :crop_x
         = f.hidden_field :crop_y
@@ -47,11 +47,10 @@
         %div.upload-button-bar
           %div.initial-state
             %label{ for: 'person-image', class: 'form-hint upload-hint' }
-              -# = info_text('photo_upload_hint')
             .js-photo-upload-error.error.hidden
             %p
 
-              = f.text_field :image, type: "file", id: 'person-image', class: 'form-control file', name: 'profile_photo[image]'
+              = f.file_field :image, id: 'person-image', class: 'form-control file', name: 'profile_photo[image]'
 
               %a{href: '#', class: 'reset-image-button'}
                 Reset to default
