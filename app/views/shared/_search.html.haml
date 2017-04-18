@@ -1,12 +1,20 @@
 .grid-row
   .column-two-thirds
-    = form_tag '/search', method: :get, class: 'search-box' do
-      .form-group
-        %label.form-hint{ for: :query }
-          = t('shared.search.hint')
-        = text_field_tag :query, @query, class: 'form-control'
-      .form-group
-        = submit_tag 'Submit search', class: 'button'
-  .column-one-third.new-profile
-    - if can_add_person_here?
-      = link_to 'Create a new profile', new_person_path, class: 'add-new-person'
+    .grid-row.mod-search
+      .column-full
+        = form_tag '/search', method: :get, class: 'mod-search-form', id: "mod-search-form" do
+
+          .form-group.header-search-content
+            %label{:for => "mod-search-input"}
+              = t('shared.search.hint')
+            .mod-search-input-wrapper
+              %input#mod-search-input.mod-search-input.js-search-focus{:name => "query", :title => "Search", :type => "search"}/
+
+            %input.mod-search-submit{:type => "submit", :value => "Search"}/
+
+      .column-one-third
+        - if can_add_person_here?
+          = link_to 'Create a new profile', new_person_path, class: 'add-new-person'
+
+  .column-one-third
+    -# SPACER COL

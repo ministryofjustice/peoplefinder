@@ -60,7 +60,7 @@ feature 'Searching feature', elastic: true do
       within('.search-result-summary') do
         expect(page).to have_text(/\d+ result(s)? found/)
       end
-      within('.search-box') do
+      within('.mod-search-form') do
         expect(page).to have_selector("input[value='Browne']")
       end
       expect(page).to have_text('Jon Browne')
