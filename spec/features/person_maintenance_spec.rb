@@ -345,16 +345,16 @@ feature 'Person maintenance' do
 
   scenario 'UI elements on the new/edit pages', user: :regular do
     visit new_person_path
-    expect(page).not_to have_selector('.search-box')
+    expect(page).not_to have_selector('.mod-search-form')
 
     fill_in 'First name', with: person_attributes[:given_name]
     fill_in 'Last name', with: person_attributes[:surname]
     fill_in 'Main email', with: person_attributes[:email]
     click_button 'Save', match: :first
-    expect(page).to have_selector('.search-box')
+    expect(page).to have_selector('.mod-search-form')
 
     click_link 'Edit this profile'
-    expect(page).not_to have_selector('.search-box')
+    expect(page).not_to have_selector('.mod-search-form')
   end
 
 end

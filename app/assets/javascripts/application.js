@@ -12,11 +12,26 @@
 // Eliminate console spam in test output
 moj.log = function() {};
 
+moj.Helpers.searchInput = function ($el) {
+  return !!$el.val() ? $el.addClass('focus') : $el.removeClass('focus');
+}
+
 $(function() {
   moj.init();
 
   var $buttons = $("label input[type='radio'], label input[type='checkbox']");
   var selectionButtons = new GOVUK.SelectionButtons($buttons);
+
+
+  $('#mod-search-input').on('click focus blur', function(e){
+    var $el = $(e.target);
+    return moj.Helpers.searchInput($el);
+  })
+
+  $('#mod-search-input').is(function (idx, el) {
+    var $el = $(el);
+    return moj.Helpers.searchInput($el);
+  });
 
 });
 
