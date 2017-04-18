@@ -8,7 +8,7 @@
             %label{:for => "mod-search-input"}
               = t('shared.search.hint')
             .mod-search-input-wrapper
-              = text_field_tag :query, @query, class: 'form-control mod-search-input js-search-focus', id: "mod-search-input"
+              = text_field_tag :query, @query, class: 'form-control mod-search-input js-search-focus focus', id: "mod-search-input"
 
             %input.mod-search-submit{:type => "submit", :value => "Search"}/
 
