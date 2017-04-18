@@ -2,12 +2,12 @@
   background-color: $grey-bg;
   // width: 300px;
   margin-top: 5px;
-  padding: 15px 0 1px 15px;
+  padding: $gutter/2 0 1px $gutter/2;
   font-weight: bold;
   .bar {
-    line-height: 15px;
+    line-height: $gutter/2;;
     width: 200px;
-    margin-top: 10px;
+    margin-top: $gutter/3;
     float: left;
     .on {
       background-color: $green;
@@ -20,7 +20,7 @@
   }
   .score {
     float: left;
-    margin-left: 15px;
+    margin-left: $gutter/2;
     color: $green;
     font-size: 24px;
   }
@@ -33,9 +33,9 @@
 }
 
 .completion-prompt {
-  border: 02px solid $green;
+  border: $gutter/15 solid $green;
   color: $green;
-  padding: 15px;
+  padding: $gutter/2;
 
   p {
     margin: 0;
@@ -45,7 +45,7 @@
 
 .completing {
   input.incomplete {
-    border: 2px solid $green;
-    border-left-width: 10px;
+    border: $gutter/15 solid $green;
+    border-left-width: $gutter/3;
   }
 }
