@@ -152,6 +152,19 @@
 
     .media-left{
       float: left;
+      overflow: hidden;
+    }
+
+    @include tablet(){
+      .media-left{
+        max-height: 207.5px;
+      }
+    }
+
+    @include desktop(){
+      .media-left{
+        max-height: 207.5px;
+      }
     }
 
     .media-heading, .media-body{
