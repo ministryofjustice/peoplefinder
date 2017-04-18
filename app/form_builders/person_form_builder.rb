@@ -11,7 +11,7 @@ class PersonFormBuilder < GovukElementsFormBuilder::FormBuilder
     end
   end
 
-  def text_field(attribute, options={})
+  def text_field(attribute, options = {})
     if needed_for_completion? attribute
       options[:class] ||= []
       options[:class] << 'incomplete'
