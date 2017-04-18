@@ -1,3 +1,23 @@
+$tablet-width: 768px;
+$desktop-width: 1025px;
+$blackish: #6F777B;
+$darkblue: #005EA5;
+$turqoise: rgba(#28A197, 0.5);
+$opaqueblue: rgba(#2B8CC4, 0.25);
+$paleblue: rgba(#9BB7CE, 0.5);
+$blueish: #27A097;
+$error-text: #DF3034;
+$error-border: $error-text;
+$error-bg: #FBE1E1;
+$palegreen: #c9d8bd;
+$notice-bg: $blueish;
+$paleorange: #FFBF47;
+$warning-bg: $paleorange;
+$pink-bg: #FEF7F7;
+$grey-bg: #DEE0E2;
+$green: #006435;
+$border-color: #bfc1c3;
+
 // Settings (variables)
 @import "colours";                                // Colour variables
 @import "font_stack";                             // Font family variables
@@ -43,29 +63,9 @@
 @import "elements/breadcrumbs";                   // Breadcrumbs
 @import "elements/phase-banner";                  // Alpha and beta banners and tags
 @import "elements/components";                    // GOV.UK prefixed styles - blue highlighted box
+@import "elements/shame";                         // Hacks and workarounds that will go away eventually
 
 @import "Jcrop/css/jquery.Jcrop.min";
-
-$tablet-width: 768px;
-$desktop-width: 1025px;
-$blackish: #6F777B;
-$darkblue: #005EA5;
-$turqoise: rgba(#28A197, 0.5);
-$opaqueblue: rgba(#2B8CC4, 0.25);
-$paleblue: rgba(#9BB7CE, 0.5);
-$blueish: #27A097;
-$error-text: #DF3034;
-$error-border: $error-text;
-$error-bg: #FBE1E1;
-$palegreen: #c9d8bd;
-$notice-bg: $blueish;
-$paleorange: #FFBF47;
-$warning-bg: $paleorange;
-$pink-bg: #FEF7F7;
-$grey-bg: #DEE0E2;
-$green: #006435;
-$border-color: #bfc1c3;
-
 
 @import "elements-local/*";
 @import "modules/*";
