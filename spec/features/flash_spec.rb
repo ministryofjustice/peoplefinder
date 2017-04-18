@@ -13,7 +13,7 @@ feature 'Flash messages feature' do
     let!(:dept) { create :department }
     let(:person) { create :person }
     let(:flash_messages) { 'flash-messages' }
-    let(:searchbox) { 'search-box' }
+    let(:searchbox) { 'mod-search-form' }
 
     before do
       omni_auth_log_in_as 'test.user@digital.justice.gov.uk'
