@@ -9,29 +9,12 @@
 //= require_tree ./peoplefinder
 //= require Jcrop/js/jquery.Jcrop.min
 
-// Eliminate console spam in test output
-moj.log = function() {};
-
-moj.Helpers.searchInput = function ($el) {
-  return !!$el.val() ? $el.addClass('focus') : $el.removeClass('focus');
-}
 
 $(function() {
   moj.init();
 
-  var $buttons = $("label input[type='radio'], label input[type='checkbox']");
-  var selectionButtons = new GOVUK.SelectionButtons($buttons);
-
-
-  $('#mod-search-input').on('click focus blur', function(e){
-    var $el = $(e.target);
-    return moj.Helpers.searchInput($el);
-  })
-
-  $('#mod-search-input').is(function (idx, el) {
-    var $el = $(el);
-    return moj.Helpers.searchInput($el);
-  });
+  // init the selection buttons
+  moj.Helpers.selectionButtons();
 
 });
 
@@ -56,6 +39,7 @@ $(function() {
         var el_to_add = $(data).html();
         $('#memberships').append(el_to_add);
         var team = new teamSelector(true, $('#memberships').find('.membership').last());
+        moj.Helpers.selectionButtons();
         team.initEvents();
       }
     });
