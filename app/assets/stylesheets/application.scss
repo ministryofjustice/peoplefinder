@@ -179,6 +179,10 @@ $border-color: #bfc1c3;
     margin-left: 25px;
   }
 
+  ul, ol{
+    margin-bottom: $gutter;
+  }
+
   h4{
     margin-top: $gutter;
     @include core-19;
