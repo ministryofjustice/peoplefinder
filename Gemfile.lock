@@ -679,7 +679,7 @@ DEPENDENCIES
   unf
   unicorn (~> 4.8.3)
   unicorn-worker-killer (~> 0.4.4)
-  useragent (~> 0.10.0)
+  useragent (~> 0.10)
   virtus
   webmock
   whenever
