@@ -1,0 +1,8 @@
+- if @person.persisted?
+  = link_to info_text('delete_this_profile'),
+    @person,
+    method: :delete,
+    class: "button button-secondary",
+    data: { confirm: "Are you sure you want to delete #{ @person }? #{ info_text('profile_deletable') }." }
+
+  = edit_person_link 'Edit this profile', @person, class: 'button'

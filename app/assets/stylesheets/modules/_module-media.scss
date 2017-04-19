@@ -52,52 +52,6 @@
   list-style: none;
 }
 
-@mixin mobile($orientation: landscape) {
-  @media (max-width: #{$tablet-width - 1px}) and (orientation: $orientation){
-    @content;
-  }
-}
-
-@mixin tablet($orientation: landscape) {
-  @media (min-width: #{$tablet-width}) and (max-width: #{$desktop-width - 1px}) and (orientation: $orientation){
-    @content;
-  }
-}
-
-@mixin tablet($orientation: landscape) {
-  @media (min-width: #{$tablet-width}) and (max-width: #{$desktop-width - 1px}) and (orientation: $orientation){
-    @content;
-  }
-}
-
-
-
-@mixin desktop($orientation: landscape)  {
-  @media (min-width: #{$desktop-width}) and (orientation: $orientation){
-    @content;
-  }
-}
-
-@mixin setSize($size:100%, $multiply:true){
-  width: $size;
-
-  @include mobile(landscape){
-    width: $size/4;
-  }
-
-  @include tablet(landscape){
-    width: $size/4;
-  }
-
-  @include tablet(portrait){
-    width: $size/4;
-  }
-
-  @include desktop{
-    width: $size/4;
-  }
-}
-
 .team-leader-list{
   @extend %contain-floats;
 }
@@ -136,6 +90,15 @@
     .media-left{
       padding-right:$gutter;
       width: 33%;
+
+      @include mobile(){
+
+      }
+
+      @include mobile(portrait){
+        display: block;
+        width: auto;
+      }
     }
     .heading-medium{
       margin-top:0;
@@ -147,6 +110,12 @@
 
   &.card{
     min-height: 305px;
+
+    @include mobile(portrait){
+      min-height: auto;
+    }
+
+
     margin: 0 10px 10px 0;
     @extend %contain-floats;
 
@@ -168,10 +137,15 @@
     }
 
     .media-heading, .media-body{
-      @include core-16;
+      // @include core-16;
     }
 
     &.team{
+      @include mobile(portrait){
+        width: 45%;
+        float: left;
+      }
+
       img{
         border-radius: 50%;
       }
