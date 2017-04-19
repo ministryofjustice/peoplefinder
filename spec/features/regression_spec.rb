@@ -11,8 +11,7 @@ feature 'Regression' do
 
   scenario 'Gracefully handle a session when the logged in person deletes their profile' do
     visit person_path(Person.last)
-    click_link 'Delete this profile'
-
+    click_delete_profile
     expect(login_page).to be_displayed
   end
 end

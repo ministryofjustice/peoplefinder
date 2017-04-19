@@ -49,7 +49,7 @@ feature 'Audit trail' do
     with_versioning do
       person = create(:person, surname: 'Dan', given_name: 'Greg')
       visit person_path(person)
-      click_link('Delete this profile')
+      click_delete_profile
 
       visit '/audit_trail'
       expect(page).to have_text('Deleted Person')

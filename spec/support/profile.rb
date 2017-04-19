@@ -63,6 +63,14 @@ module SpecSupport
       end
     end
 
+    def click_edit_profile(matcher = :first)
+      click_link('Edit this profile', match: matcher)
+    end
+
+    def click_delete_profile(matcher = :first)
+      click_link('Delete this profile', match: matcher)
+    end
+
     def fill_in_membership_details(team_name)
       fill_in 'Job title', with: membership_attributes[:role]
       select_in_team_select(team_name)
