@@ -1,6 +1,5 @@
 class HomeController < ApplicationController
   def show
-    @old_browser = true
     @group = Group.department
     unless @group
       notice :top_level_group_needed

@@ -3,12 +3,12 @@
 
 -# = link_to 'Create a new profile', new_person_path, class: 'add-new-person'
 
-- if @old_browser.present?
-  .error-summary{"aria-labelledby" => "error-summary-heading-example-1", :role => "group", :tabindex => "-1"}
-    %h1#error-summary-heading-example-1.heading-medium.error-summary-heading
-      People Finder is best viewed in Firefox.
+- if unsupported_browser?
+  .error-summary{"aria-labelledby" => "error-summary-heading", :role => "group", :tabindex => "-1"}
+    %h1#error-summary-heading.heading-medium.error-summary-heading
+      People Finder is best viewed in Firefox (or other modern browser).
     %p
-      Using Firefox allows you to sign-in and edit People Finder profiles
+      Using Firefox allows you to sign-in and edit People Finder profiles.
     %p
       Copy the URL above into Firefox.
 .grid-row
