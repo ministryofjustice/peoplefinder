@@ -3,15 +3,11 @@
     %h1.heading-xlarge.with-border-lg
       = @page_title = @person
 
-      .action-links
-        - if @person.persisted?
-          = link_to info_text('delete_this_profile'),
-            @person,
-            method: :delete,
-            class: "button-secondary",
-            data: { confirm: "Are you sure you want to delete #{ @person }? #{ info_text('profile_deletable') }." }
+      .action-links.mobile-hide
+        = render partial: "action_links", locals: { person: @person }
 
-          = edit_person_link 'Edit this profile', @person, class: 'button'
+    .mobile-show
+      = render partial: "action_links", locals: { person: @person }
 
 .grid-row.mod-media.profile
   .column-full

@@ -130,7 +130,7 @@ class SmokeTest
   def update_profile(name, uuid)
     desc = "Smoke test started at #{@start_time.iso8601}\n\nUnique identifier: #{uuid}"
     click_link name, match: :first
-    click_link 'Edit this profile'
+    click_edit_profile
     fill_in 'Extra information', with: desc
     click_button 'Save', match: :first
     fail "couldn't update profile" unless page.has_text?('Updated your profile')

@@ -35,7 +35,9 @@ $focus-color: #FFBF47;
       text-decoration: none;
       height: 220px;
       overflow: hidden;
-
+      @include mobile(portrait){
+        height: auto;
+      }
       h3 {
         color: $link-colour;
 

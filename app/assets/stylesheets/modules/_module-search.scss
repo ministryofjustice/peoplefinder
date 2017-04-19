@@ -70,6 +70,11 @@
         text-indent: 15px;
 
         color: $secondary-text-colour;
+
+        @include mobile(portrait){
+          @include core-14($line-height: 40px, $line-height-640: 40px);
+          left: -5px;
+        }
       }
 
       // Input is transparent and sits above the label

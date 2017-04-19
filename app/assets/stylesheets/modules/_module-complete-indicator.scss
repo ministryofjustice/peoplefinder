@@ -1,4 +1,7 @@
 .complete-your-profile {
+  @include mobile(portrait){
+    display: none;
+  }
   background-color: $grey-bg;
   // width: 300px;
   margin-top: 5px;

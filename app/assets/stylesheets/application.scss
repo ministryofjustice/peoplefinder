@@ -18,6 +18,52 @@ $grey-bg: #DEE0E2;
 $green: #006435;
 $border-color: #bfc1c3;
 
+@mixin mobile($orientation: landscape) {
+  @media (max-width: #{$tablet-width - 1px}) and (orientation: $orientation){
+    @content;
+  }
+}
+
+@mixin tablet($orientation: landscape) {
+  @media (min-width: #{$tablet-width}) and (max-width: #{$desktop-width - 1px}) and (orientation: $orientation){
+    @content;
+  }
+}
+
+@mixin tablet($orientation: landscape) {
+  @media (min-width: #{$tablet-width}) and (max-width: #{$desktop-width - 1px}) and (orientation: $orientation){
+    @content;
+  }
+}
+
+
+
+@mixin desktop($orientation: landscape)  {
+  @media (min-width: #{$desktop-width}) and (orientation: $orientation){
+    @content;
+  }
+}
+
+@mixin setSize($size:100%, $multiply:true){
+  width: $size;
+
+  @include mobile(landscape){
+    width: $size/4;
+  }
+
+  @include tablet(landscape){
+    width: $size/4;
+  }
+
+  @include tablet(portrait){
+    width: $size/4;
+  }
+
+  @include desktop{
+    width: $size/4;
+  }
+}
+
 // Settings (variables)
 @import "colours";                                // Colour variables
 @import "font_stack";                             // Font family variables
@@ -139,3 +185,38 @@ $border-color: #bfc1c3;
     font-weight: 700;
   }
 }
+
+.audit-log{
+  display: none;
+}
+
+.mobile-hide{
+  display: none;
+
+  @include tablet(landscape){
+    display: block;
+  }
+  @include tablet(portrait){
+    display: block;
+  }
+  @include desktop(landscape){
+    display: block;
+  }
+  @include desktop(portrait){
+    display: block;
+  }
+}
+
+.mobile-show{
+  display: none;
+  margin: -20px 10px 10px 0px;
+  @include mobile(landscape){
+    display: block;
+  }
+  @include mobile(portrait){
+    display: block;
+  }
+
+
+}
+

@@ -143,7 +143,7 @@ feature 'Person maintenance' do
     context 'for a read only user', user: :readonly do
       scenario 'is not allowed without login' do
         visit person_path(create(:person, person_attributes))
-        click_link 'Edit this profile'
+        click_edit_profile
 
         expect(login_page).to be_displayed
       end
@@ -152,7 +152,7 @@ feature 'Person maintenance' do
     context 'for a regular user', user: :regular do
       scenario 'Editing a person' do
         visit person_path(create(:person, person_attributes))
-        click_link 'Edit this profile'
+        click_edit_profile
 
         expect(page).to have_title("Edit profile - #{app_title}")
         expect(page).not_to have_text(completion_prompt_text)
@@ -168,7 +168,7 @@ feature 'Person maintenance' do
 
       scenario 'Editing my own profile from a normal edit link' do
         visit person_path(person)
-        click_link 'Edit this profile'
+        click_edit_profile
         expect(page).not_to have_text(completion_prompt_text)
       end
 
@@ -278,7 +278,7 @@ feature 'Person maintenance' do
         given_name = person.given_name
 
         visit person_path(person)
-        click_link('Delete this profile')
+        click_delete_profile
         expect { Person.find(person.id) }.to raise_error(ActiveRecord::RecordNotFound)
 
         expect(last_email.to).to include(email_address)
@@ -290,7 +290,7 @@ feature 'Person maintenance' do
         membership = create(:membership)
         person = membership.person
         visit person_path(person)
-        click_link('Delete this profile')
+        click_delete_profile
         expect { Membership.find(membership.id) }.to raise_error(ActiveRecord::RecordNotFound)
         expect { Person.find(person.id) }.to raise_error(ActiveRecord::RecordNotFound)
       end
@@ -353,7 +353,7 @@ feature 'Person maintenance' do
     click_button 'Save', match: :first
     expect(page).to have_selector('.mod-search-form')
 
-    click_link 'Edit this profile'
+    click_edit_profile
     expect(page).not_to have_selector('.mod-search-form')
   end
 
