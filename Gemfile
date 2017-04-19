@@ -36,7 +36,7 @@ gem 'uglifier', '>= 2.7.2'
 gem 'unf'
 gem 'unicorn', '~> 4.8.3'
 gem 'unicorn-worker-killer', '~> 0.4.4'
-gem 'useragent', '~> 0.10.0'
+gem 'useragent', '~> 0.10'
 gem 'virtus'
 gem 'whenever', require: false
 gem 'will_paginate', '~> 3.0', '>=3.0.3'
