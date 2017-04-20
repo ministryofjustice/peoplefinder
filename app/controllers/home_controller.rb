@@ -1,4 +1,7 @@
 class HomeController < ApplicationController
+
+  include UserAgentHelper
+
   def show
     @group = Group.department
     unless @group
