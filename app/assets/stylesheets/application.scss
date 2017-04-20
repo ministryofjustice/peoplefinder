@@ -179,6 +179,10 @@ $border-color: #bfc1c3;
     margin-left: 25px;
   }
 
+  ul, ol{
+    margin-bottom: $gutter;
+  }
+
   h4{
     margin-top: $gutter;
     @include core-19;
@@ -218,5 +222,12 @@ $border-color: #bfc1c3;
   }
 
 
+}
+
+#proposition-links{
+  width: 100%;
+  @include desktop(){
+    width: auto;
+  }
 }
 
