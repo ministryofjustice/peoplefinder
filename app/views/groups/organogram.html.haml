@@ -13,7 +13,7 @@
   - if @group.children.present?
     %h2.heading-medium
       Teams
-    .grid-row
+    .grid-row.mod-list.mod-list-groups
       - @group.children.each do |subgroup|
         .column-one-quarter
           .mod-media.card.team

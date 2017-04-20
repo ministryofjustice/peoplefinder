@@ -6,5 +6,5 @@
       %span.pull-right
         = link_to 'Add new sub-team', new_group_group_path(@group), class: 'font-xsmall'
 
-.grid-row
+.grid-row.mod-list.mod-list-people
   = render partial: "memberships/summary", collection: @group.distinct_non_leaderships

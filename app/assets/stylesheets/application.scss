@@ -224,3 +224,10 @@ $border-color: #bfc1c3;
 
 }
 
+#proposition-links{
+  width: 100%;
+  @include desktop(){
+    width: auto;
+  }
+}
+
