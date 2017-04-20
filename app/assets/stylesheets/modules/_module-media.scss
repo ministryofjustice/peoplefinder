@@ -110,15 +110,8 @@
 
   &.card{
     min-height: 305px;
-
-    @include mobile(portrait){
-      min-height: auto;
-      width: 50%;
-    }
-
-
     margin: 0 10px 10px 0;
-    @extend %contain-floats;
+    @extend %contains-floats;
 
     .media-left{
       float: left;
@@ -137,16 +130,11 @@
       }
     }
 
-    .media-heading, .media-body{
-      // @include core-16;
+    .media-body{
+      @include core-16();
     }
 
     &.team{
-      @include mobile(portrait){
-        width: 45%;
-        float: left;
-      }
-
       img{
         border-radius: 50%;
       }
