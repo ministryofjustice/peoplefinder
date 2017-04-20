@@ -45,18 +45,30 @@ RSpec.describe SessionsController, type: :controller do
   end
 
   describe 'GET new' do
-    context 'with unsupportedbrowser' do
+    let(:ff31) { 'Mozilla/5.0 (Windows NT 5.2; rv:31.0) Gecko/20100101 Firefox/31.0' }
+    let(:ie7) { 'Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.2; .NET CLR 1.1.4322; .NET CLR 2.0.50727; .NET CLR 3.0.04506.648; .NET CLR 3.5.21022)' }
+
+    context 'with supported browser' do
       before do
+        allow(request).to receive(:user_agent).and_return(ff31)
+        get :new
+      end
+      it 'renders new' do
+        expect(response).to render_template :new
+      end
+    end
+    context 'with unsupported browser' do
+      before do
+        allow(request).to receive(:user_agent).and_return(ie7)
         get :new
       end
       it 'redirects to warning page' do
-        expect(response).to redirect_to unsupported_browser_path
+        expect(response).to redirect_to unsupported_browser_new_sessions_path
       end
     end
   end
 
   describe 'POST create' do
-
     context 'with omniauth' do
       context 'when person already exists' do
         before do

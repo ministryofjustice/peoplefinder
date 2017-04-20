@@ -29,7 +29,9 @@ Rails.application.routes.draw do
     resources :suggestions, only: [:new, :create]
   end
   resources :memberships, only: [:destroy]
-  resource :sessions, only: [:new, :create, :destroy]
+  resource :sessions, only: [:new, :create, :destroy] do
+    get :unsupported_browser, on: :new
+  end
   resources :tokens, only: [:create, :destroy, :show]
 
   match '/sessions/people', to: 'sessions#create_person', via: :post
