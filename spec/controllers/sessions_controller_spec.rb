@@ -44,6 +44,17 @@ RSpec.describe SessionsController, type: :controller do
     )
   end
 
+  describe 'GET new' do
+    context 'with unsupportedbrowser' do
+      before do
+        get :new
+      end
+      it 'redirects to warning page' do
+        expect(response).to redirect_to unsupported_browser_path
+      end
+    end
+  end
+
   describe 'POST create' do
 
     context 'with omniauth' do
