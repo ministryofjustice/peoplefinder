@@ -50,6 +50,23 @@ en:
       heading_other: Enter your MOJ email address
       log_in_google: Log in
       log_in_email: Request link
+    unsupported_browser:
+      unsupported_browser_warning_html: |
+        <h1 id='error-summary-heading' class='heading-medium error-summary-heading'>
+          Great - you want to edit a profile or sign-in!
+        </h1>
+        <p>
+          Please use Firefox to continue. This browser does not
+          support profile editing.
+        </p>
+        <p>
+          Copy the link below into Firefox to sign-in and edit profiles.
+        </p>
+        <p>
+          <h4 class='heading-small'>
+            %{sign_in_url}
+          </h4>
+        </p>
   tokens:
     show:
       token_auth_disabled: "Sorry, that login link is invalid. Please login using your Google account."
@@ -268,7 +285,7 @@ en:
     show:
       unsupported_browser_warning_html: |
         <h1 id='error-summary-heading' class='heading-medium error-summary-heading'>
-          People Finder is best viewed in Firefox (or other modern browser).
+          People Finder is best viewed in Firefox.
         </h1>
         <p>
           Using Firefox allows you to sign-in and edit People Finder profiles.
