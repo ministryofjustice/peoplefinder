@@ -5,12 +5,8 @@
 
 - if unsupported_browser?
   .error-summary{"aria-labelledby" => "error-summary-heading", :role => "group", :tabindex => "-1"}
-    %h1#error-summary-heading.heading-medium.error-summary-heading
-      People Finder is best viewed in Firefox (or other modern browser).
-    %p
-      Using Firefox allows you to sign-in and edit People Finder profiles.
-    %p
-      Copy the URL above into Firefox.
+    = t('.unsupported_browser_warning_html')
+
 .grid-row
   .column-full
     %h1.heading-xlarge.cb-page-title
