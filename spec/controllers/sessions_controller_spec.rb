@@ -50,7 +50,7 @@ RSpec.describe SessionsController, type: :controller do
 
     context 'with supported browser' do
       before do
-        allow(request).to receive(:user_agent).and_return(ff31)
+        allow_any_instance_of(described_class).to receive(:supported_browser?).and_return true
         get :new
       end
       it 'renders new' do
@@ -59,7 +59,7 @@ RSpec.describe SessionsController, type: :controller do
     end
     context 'with unsupported browser' do
       before do
-        allow(request).to receive(:user_agent).and_return(ie7)
+        allow_any_instance_of(described_class).to receive(:supported_browser?).and_return false
         get :new
       end
       it 'redirects to warning page' do
