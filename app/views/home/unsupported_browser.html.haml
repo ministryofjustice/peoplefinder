@@ -1,0 +1,12 @@
+.cb-unsupported-browser-warning.error-summary{"aria-labelledby" => "error-summary-heading", :role => "group", :tabindex => "-1"}
+  = t('.unsupported_browser_warning_html', home_page_url: home_url)
+
+.grid-row
+  .column-full
+    = link_to 'Help with finding firefox on your PC', '#'
+.grid-row
+  .column-full
+    = link_to 'Help with copy and paste', '#'
+.grid-row
+  .column-full
+    = link_to "Continue using #{user_agent.browser} #{user_agent.version} (not recommended) ", unsupported_browser_continue_path

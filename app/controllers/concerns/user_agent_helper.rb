@@ -11,7 +11,7 @@ module UserAgentHelper
   ].freeze
 
   included do
-    helper_method :unsupported_browser?
+    helper_method :unsupported_browser?, :user_agent
 
     def user_agent
       @ua ||= UserAgent.parse(request.user_agent)
