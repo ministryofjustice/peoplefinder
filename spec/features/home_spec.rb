@@ -16,8 +16,6 @@ feature 'Home page' do
   context 'page structure' do
     let(:user_agent) { ff31 }
     before do
-      #unstub method to allow user-agent emulation
-      allow_any_instance_of(HomeController).to receive(:supported_browser?).and_call_original
       page.driver.headers = { "User-Agent" => user_agent }
       mock_readonly_user
       visit '/'
@@ -40,9 +38,20 @@ feature 'Home page' do
     context 'using an unsupported browser', js: true do
       let(:user_agent) { ie6 }
 
-      it 'redirects to unsupported browser landing page' do
-        expect(unsupported_browser_page).to be_displayed
-        expect(unsupported_browser_page).to have_unsupported_browser_continue_link
+      context 'Internet Explorer 6.0' do
+        let(:user_agent) { ie6 }
+        it 'redirects to unsupported browser landing page' do
+          expect(unsupported_browser_page).to be_displayed
+          expect(unsupported_browser_page).to have_unsupported_browser_continue_link
+        end
+      end
+
+      context 'Internet Explorer 7.0' do
+        let(:user_agent) { ie7 }
+        it 'redirects to unsupported browser landing page' do
+          expect(unsupported_browser_page).to be_displayed
+          expect(unsupported_browser_page).to have_unsupported_browser_continue_link
+        end
       end
 
       context 'but choosing to continue' do

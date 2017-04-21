@@ -3,11 +3,8 @@ module UserAgentHelper
 
   Browser = Struct.new(:browser, :version)
 
-  SUPPORTED_BROWSERS = [
-    Browser.new('Safari', '4.0'),
-    Browser.new('Firefox', '19.0'),
-    Browser.new('Internet Explorer', '8.0'),
-    Browser.new('Chrome', '25.0')
+  SUPPORTED_BROWSER_BLACKLIST = [
+    Browser.new(UserAgent::Browsers::InternetExplorer.new.browser, UserAgent::Version.new('7.0'))
   ].freeze
 
   included do
@@ -18,8 +15,8 @@ module UserAgentHelper
     end
 
     def supported_browser?
-      SUPPORTED_BROWSERS.any? do |browser|
-        user_agent >= browser
+      SUPPORTED_BROWSER_BLACKLIST.none? do |black_listed_user_agent|
+        user_agent <= black_listed_user_agent
       end
     end
 
