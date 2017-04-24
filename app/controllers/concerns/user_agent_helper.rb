@@ -3,7 +3,7 @@ module UserAgentHelper
 
   Browser = Struct.new(:browser, :version)
 
-  SUPPORTED_BROWSER_BLACKLIST = [
+  UNSUPPORTED_BROWSER = [
     Browser.new(UserAgent::Browsers::InternetExplorer.new.browser, UserAgent::Version.new('7.0'))
   ].freeze
 
@@ -15,8 +15,8 @@ module UserAgentHelper
     end
 
     def supported_browser?
-      SUPPORTED_BROWSER_BLACKLIST.none? do |black_listed_user_agent|
-        user_agent <= black_listed_user_agent
+      UNSUPPORTED_BROWSER.none? do |unsupported_user_agent|
+        user_agent <= unsupported_user_agent
       end
     end
 
