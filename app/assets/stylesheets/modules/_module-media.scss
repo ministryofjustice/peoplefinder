@@ -120,13 +120,13 @@
 
     @include tablet(){
       .media-left{
-        max-height: 207.5px;
+        max-height: 240px;
       }
     }
 
     @include desktop(){
       .media-left{
-        max-height: 207.5px;
+        max-height: 240px;
       }
     }
 

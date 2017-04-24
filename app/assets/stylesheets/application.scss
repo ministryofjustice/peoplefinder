@@ -195,7 +195,14 @@ $border-color: #bfc1c3;
 }
 
 .mobile-hide{
-  display: none;
+  display: block;
+
+  @include mobile(landscape){
+    display: none;
+  }
+  @include mobile(portrait){
+    display: none;
+  }
 
   @include tablet(landscape){
     display: block;
