@@ -70,6 +70,29 @@ en:
   tokens:
     show:
       token_auth_disabled: "Sorry, that login link is invalid. Please login using your Google account."
+    unsupported_browser:
+      unsupported_browser_warning_html: |
+        <h1 id='error-summary-heading' class='heading-medium error-summary-heading'>
+          You are nearly there...
+        </h1>
+        <p>
+          You have clicked the link in the
+          <span style="font-weight: bold">
+            Access request to MoJ People finder
+          </span>
+          email and this has opened %{browser_name}.
+        </p>
+        <p>
+          However, to sign-in to People finder you must use Firefox.
+        </p>
+        <p>
+          Please copy the link below and paste into Firefox.
+        </p>
+        <p>
+          <h4 class='heading-small'>
+            %{token_url}
+          </h4>
+        </p>
     create:
       title: Link sent — check your email
       body_intro: We’re just emailing you a link to access People Finder. This can take up to 5 minutes.

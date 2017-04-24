@@ -1,5 +1,5 @@
 .cb-unsupported-browser-warning.error-summary{"aria-labelledby" => "error-summary-heading", :role => "group", :tabindex => "-1"}
-  = t('.unsupported_browser_warning_html', sign_in_url: new_sessions_url)
+  = t('.unsupported_browser_warning_html', browser_name: "#{user_agent.browser} #{user_agent.version}", token_url: token_url(@token))
 
 .grid-row
   .column-full
