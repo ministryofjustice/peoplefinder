@@ -32,7 +32,11 @@ Rails.application.routes.draw do
   resource :sessions, only: [:new, :create, :destroy] do
     get :unsupported_browser, on: :new
   end
-  resources :tokens, only: [:create, :destroy, :show]
+  resources :tokens, only: [:create, :destroy, :show] do
+    member do
+      get 'unsupported_browser'
+    end
+  end
 
   match '/sessions/people', to: 'sessions#create_person', via: :post
   match '/auth/:provider/callback', to: 'sessions#create', via: [:get, :post]
