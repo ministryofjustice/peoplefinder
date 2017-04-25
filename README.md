@@ -157,7 +157,7 @@ will allow them to login.
 
 ## E-mails
 
-People finder sends a few types of e-mail. E-mails are delivered using `delayed_job` adapter for `activejob`.
+People Finder sends a few types of e-mail. E-mails are delivered using `delayed_job` adapter for `activejob`.
 
 Run `bundle exec rake jobs:work` to activate the worker.
 
