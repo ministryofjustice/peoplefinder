@@ -43,7 +43,7 @@ class TokensController < ApplicationController
     redirect_to new_sessions_path
   end
 
-  def redirect_to_unsupported_browser_token_path
+  def redirect_to_unsupported_browser_warning
     redirect_to unsupported_browser_token_path
   end
 
