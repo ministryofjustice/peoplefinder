@@ -78,7 +78,7 @@ en:
         <p>
           You have clicked the link in the
           <span style="font-weight: bold">
-            Access request to MoJ People finder
+            Access request to MoJ People Finder
           </span>
           email and this has opened %{browser_name}.
         </p>
