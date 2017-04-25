@@ -14,7 +14,7 @@ class TokenLogin
       if view.supported_browser?
         login_and_render(view)
       else
-        view.redirect_to_unsupported_browser_token_path
+        view.redirect_to_unsupported_browser_warning
       end
     else
       view.render_new_sessions_path_with_expired_token_message
