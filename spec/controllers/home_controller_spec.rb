@@ -3,6 +3,8 @@ require 'rails_helper'
 RSpec.describe HomeController, type: :controller do
   include PermittedDomainHelper
 
+  it_behaves_like 'user_agent_helpable'
+
   before do
     mock_logged_in_user
   end

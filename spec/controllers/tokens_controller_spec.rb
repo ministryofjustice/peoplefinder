@@ -1,10 +1,10 @@
 require 'rails_helper'
-require Rails.root.join('spec', 'controllers', 'concerns', 'shared_examples_for_session_person_creator.rb')
 
 describe TokensController, type: :controller do
   include PermittedDomainHelper
 
   it_behaves_like 'session_person_creatable'
+  it_behaves_like 'user_agent_helpable'
 
   describe 'GET show' do
     let(:person) { create(:person) }
@@ -28,24 +28,24 @@ describe TokensController, type: :controller do
           expect(response).to redirect_to new_group_path
         end
       end
+    end
 
-      context 'user is not logged in' do
-        before do
-          allow(controller).to receive(:current_user).and_return nil
-          allow(controller).to receive(:logged_in_regular?).and_return false
-        end
+    context 'user is not logged in' do
+      before do
+        allow(controller).to receive(:current_user).and_return nil
+        allow(controller).to receive(:logged_in_regular?).and_return false
+      end
 
-        it 'redirects to person profile' do
+      it 'redirects to person profile' do
+        get :show, id: token
+        expect(response).to redirect_to person_path(person, prompt: 'profile')
+      end
+
+      context 'when desired path is set' do
+        before { request.session[:desired_path] = new_group_path }
+        it 'redirects to desired path' do
           get :show, id: token
-          expect(response).to redirect_to person_path(person, prompt: 'profile')
-        end
-
-        context 'when desired path is set' do
-          before { request.session[:desired_path] = new_group_path }
-          it 'redirects to desired path' do
-            get :show, id: token
-            expect(response).to redirect_to new_group_path
-          end
+          expect(response).to redirect_to new_group_path
         end
       end
     end
@@ -76,5 +76,14 @@ describe TokensController, type: :controller do
         expect { get :show, id: token.value; }.to change { Token.unspent.count }.by(-1)
       end
     end
+  end
+
+  describe 'GET unsupported_browser' do
+    before do
+      get :unsupported_browser, id: 'my-token'
+    end
+
+    it { expect(assigns(:token)).to eql 'my-token' }
+    it { expect(response).to render_template :unsupported_browser }
   end
 end

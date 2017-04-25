@@ -91,6 +91,37 @@ feature 'Token Authentication' do
     expect(page).to have_text("The authentication token has expired.")
   end
 
+  context "logging in with a valid token" do
+    let(:ff31) { 'Mozilla/5.0 (Windows NT 5.2; rv:31.0) Gecko/20100101 Firefox/31.0' }
+    let(:ie6) { 'Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.2; SV1; .NET CLR 1.1.4322; .NET CLR 2.0.50727; .NET CLR 3.0.04506.648; .NET CLR 3.5.21022)' }
+    let(:token) { create(:token) }
+
+    context "on an unsupported browser", js: true do
+      before do
+        page.driver.headers = { "User-Agent" => ie6 }
+        visit token_path(token)
+      end
+
+      scenario "displays unsupported browser warning page" do
+        expect(page.current_path).to eql unsupported_browser_token_path(token)
+        expect(page).to have_text 'You are nearly there...'
+        expect(page).to have_text 'Internet Explorer 6.0'
+        expect(page).to have_text token_path(token)
+      end
+    end
+
+    context "on supported browser", js: true do
+      before do
+        page.driver.headers = { "User-Agent" => ff31 }
+        visit token_path(token)
+      end
+
+      scenario "does not redirect to unsupported browser warning page" do
+        expect(edit_profile_page).to be_displayed
+      end
+    end
+  end
+
   scenario "requesting token more than once within 3 hours sends same token url in email" do
     create(:person, given_name: 'Bob', surname: 'Smith', email: 'test.user@digital.justice.gov.uk')
 

@@ -40,6 +40,8 @@ end
 
 Dir[File.expand_path('../support/**/*.rb', __FILE__)].each { |f| require f }
 
+Dir[File.expand_path('../controllers/concerns/shared_examples*.rb', __FILE__)].each { |f| require f }
+
 ActiveRecord::Migration.maintain_test_schema!
 
 RSpec.configure do |config|
