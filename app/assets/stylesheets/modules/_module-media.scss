@@ -70,7 +70,7 @@
 }
 .mod-media{
   a{
-    @extend %contains-floats;
+    @extend %contain-floats;
     display:block;
   }
   .media-object{
@@ -111,7 +111,7 @@
   &.card{
     min-height: 305px;
     margin: 0 10px 10px 0;
-    @extend %contains-floats;
+    @extend %contain-floats;
 
     .media-left{
       float: left;
