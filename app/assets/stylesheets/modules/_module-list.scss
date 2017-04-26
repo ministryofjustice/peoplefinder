@@ -11,7 +11,7 @@
   }
   &.mod-list-groups{
     .column-one-quarter{
-      @extend %contains-floats;
+      @extend %contain-floats;
       @include grid-column( 1/4 );
     }
   }
