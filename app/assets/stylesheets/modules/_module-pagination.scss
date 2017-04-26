@@ -1,6 +1,6 @@
 .mod-pagination {
   margin-bottom: $gutter/2;
-  @extend %contains-floats;
+  @extend %contain-floats;
   .page-information {
     color: grey;
     padding: 4px 6px;
