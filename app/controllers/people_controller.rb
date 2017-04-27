@@ -46,6 +46,7 @@ class PeopleController < ApplicationController
       confirm_or_create
     else
       error :create_error
+      @person.memberships.build unless @person.memberships.present?
       render :new
     end
   end
