@@ -36,7 +36,7 @@ module SpecSupport
 
     def javascript_log_in
       visit '/'
-      click_link 'Log in'
+      click_link 'Log in using Google+'
     end
   end
 end
