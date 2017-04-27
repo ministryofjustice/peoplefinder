@@ -1,6 +1,7 @@
 require 'secure'
 class TokensController < ApplicationController
   include SessionPersonCreator
+  include UserAgentHelper
 
   skip_before_action :ensure_user
   before_action :ensure_token_auth_enabled!
@@ -21,6 +22,10 @@ class TokensController < ApplicationController
     end
   end
 
+  def unsupported_browser
+    @token = params[:id]
+  end
+
   def render_new_view_with_errors token:
     @unauthorised_login = unauthorised_login
     @token = token
@@ -36,6 +41,10 @@ class TokensController < ApplicationController
   def render_new_sessions_path_with_expired_token_message
     error :expired_token
     redirect_to new_sessions_path
+  end
+
+  def redirect_to_unsupported_browser_warning
+    redirect_to unsupported_browser_token_path
   end
 
   private

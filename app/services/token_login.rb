@@ -11,7 +11,11 @@ class TokenLogin
 
   def call view
     if token && token.active?
-      login_and_render(view)
+      if view.supported_browser?
+        login_and_render(view)
+      else
+        view.redirect_to_unsupported_browser_warning
+      end
     else
       view.render_new_sessions_path_with_expired_token_message
     end

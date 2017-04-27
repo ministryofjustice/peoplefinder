@@ -1,5 +1,6 @@
 class SessionsController < ApplicationController
   include SessionPersonCreator
+  include UserAgentHelper
 
   skip_before_action :ensure_user
 
@@ -12,6 +13,7 @@ class SessionsController < ApplicationController
 
   def new
     @unauthorised_login = session.delete(:unauthorised_login)
+    redirect_to unsupported_browser_new_sessions_path if unsupported_browser?
   end
 
   def destroy

@@ -7,6 +7,8 @@ RSpec.describe HomeController, type: :controller do
     mock_logged_in_user
   end
 
+  it_behaves_like 'user_agent_helpable'
+
   describe 'GET show' do
     context 'when there is no top-level group' do
       it 'redirects to the new group page' do
