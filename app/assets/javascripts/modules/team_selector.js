@@ -1,3 +1,4 @@
+console.log('TS file load');
 var teamSelector = function teamSelector(isPerson, obj) {
 
   this.isPerson = isPerson;
@@ -158,7 +159,7 @@ var teamSelector = function teamSelector(isPerson, obj) {
 
   /* Set the 'selected' class on the last visible team */
   this.init = function() {
-
+    console.log('TS.init');
     var self = this;
     this.orgBrowser.find('.team-back').first().remove();
     if (this.orgBrowser.hasClass('has-form')) {
@@ -409,12 +410,14 @@ var teamSelector = function teamSelector(isPerson, obj) {
 };
 
 $(function() {
-
   // Is this the person profile page?
   var isPerson = $('#memberships').length === 1 ? true : false;
   // Which element should we be targeting?
   var selector = isPerson ? '#memberships .membership' : '.editable-container';
   // For each element, set the team name on team leader text and create a new teamSelector
+
+  console.log('TS $ callback', [isPerson, selector, $(selector)]);
+
   $(selector).each(function(i, obj) {
     $(obj).addClass('index' + i);
     var team = new teamSelector(isPerson, obj);
