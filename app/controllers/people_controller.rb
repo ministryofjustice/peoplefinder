@@ -45,6 +45,7 @@ class PeopleController < ApplicationController
     if @person.valid?
       confirm_or_create
     else
+      @person.memberships.build unless @person.memberships.present?
       render :new
     end
   end

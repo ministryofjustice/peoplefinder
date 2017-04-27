@@ -3,6 +3,11 @@
     .media
       .media-left
         = profile_image_tag person
+        - if Rails.env.development? || current_user.super_admin?
+          %div.core-16
+            Score:
+            = hit._score
+
       .media-body
         %h4.media-heading.cb-person-name
           = link_to es_highlighter(hit, person, :name), person,
@@ -29,11 +34,6 @@
                 Current project(s)
               %br/
               = es_highlighter(hit, person, :current_project)
-
-          - if Rails.env.development? || current_user.super_admin?
-            %span{style: "float: right; font-size: 10px;"}
-              Score:
-              = hit._score
 
   .column-one-third
     - if ['sessions','tokens', 'people'].include? controller_name
