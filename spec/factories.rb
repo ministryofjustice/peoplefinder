@@ -68,9 +68,11 @@ FactoryGirl.define do
     trait :member_of do
       transient do
         team nil
+        leader false
+        role 'leader'
       end
       after(:create) do |peep, evaluator|
-        create(:membership, person: peep, group: evaluator.team)
+        create(:membership, person: peep, group: evaluator.team, leader: evaluator.leader, role: evaluator.role)
       end
     end
 

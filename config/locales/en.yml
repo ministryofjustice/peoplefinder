@@ -245,6 +245,8 @@ en:
       file_size_validator:
         too_big: "file size, %{size}, is too large"
         not_in_range: "file size, %{size}, is not in expected range"
+      permanent_secretary_unique_validator:
+        leader: can't have more than one Permanent Secretary
   activerecord:
     errors:
       <<: *errors
@@ -255,6 +257,8 @@ en:
         given_name: "First name"
         email: Main email
         secondary_email: Alternative work email
+      memberships:
+        leader: "Are you the Permanent Secretary?"
   shared:
     search:
       hint: 'Search name, job title, team name or location'
