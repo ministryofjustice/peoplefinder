@@ -50,9 +50,49 @@ en:
       heading_other: Enter your MOJ email address
       log_in_google: Log in
       log_in_email: Request link
+    unsupported_browser:
+      unsupported_browser_warning_html: |
+        <h1 id='error-summary-heading' class='heading-medium error-summary-heading'>
+          Great - you want to edit a profile or sign-in!
+        </h1>
+        <p>
+          Please use Firefox to continue. This browser does not
+          support profile editing.
+        </p>
+        <p>
+          Copy the link below into Firefox to sign-in and edit profiles.
+        </p>
+        <p>
+          <h4 class='heading-small'>
+            %{sign_in_url}
+          </h4>
+        </p>
   tokens:
     show:
       token_auth_disabled: "Sorry, that login link is invalid. Please login using your Google account."
+    unsupported_browser:
+      unsupported_browser_warning_html: |
+        <h1 id='error-summary-heading' class='heading-medium error-summary-heading'>
+          You are nearly there...
+        </h1>
+        <p>
+          You have clicked the link in the
+          <span style="font-weight: bold">
+            Access request to MoJ People Finder
+          </span>
+          email and this has opened %{browser_name}.
+        </p>
+        <p>
+          However, to sign-in to People finder you must use Firefox.
+        </p>
+        <p>
+          Please copy the link below and paste into Firefox.
+        </p>
+        <p>
+          <h4 class='heading-small'>
+            %{token_url}
+          </h4>
+        </p>
     create:
       title: Link sent — check your email
       body_intro: We’re just emailing you a link to access People Finder. This can take up to 5 minutes.
@@ -265,6 +305,33 @@ en:
       People Finder uses cookies to make the site simpler.
       <a href="/cookies">Find out more about cookies</a>
   home:
+    show:
+      unsupported_browser_warning_html: |
+        <h1 id='error-summary-heading' class='heading-medium error-summary-heading'>
+          People Finder is best viewed in Firefox.
+        </h1>
+        <p>
+          Using Firefox allows you to sign-in and edit People Finder profiles.
+        </p>
+        <p>
+          Copy the URL above into Firefox.
+        </p>
+    unsupported_browser:
+      unsupported_browser_warning_html:
+        <h1 id='error-summary-heading' class='heading-medium error-summary-heading'>
+          Please use Firefox to view People Finder.
+        </h1>
+        <p>
+          Using Firefox allows you to sign-in and edit People Finder profiles.
+        </p>
+        <p>
+          Copy and paste the link below into Firefox
+        </p>
+        <p>
+         <h4 class='heading-small'>
+           %{home_page_url}
+         </h4>
+       </p>
     heading: Welcome to People Finder
     explanation: |
       Find out how to contact people, what team they’re in, where and when

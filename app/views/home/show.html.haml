@@ -2,6 +2,9 @@
   = 'home-page '
 
 -# = link_to 'Create a new profile', new_person_path, class: 'add-new-person'
+- if unsupported_browser?
+  .cb-unsupported-browser-warning.error-summary{"aria-labelledby" => "error-summary-heading", :role => "group", :tabindex => "-1"}
+    = t('.unsupported_browser_warning_html')
 
 .grid-row
   .column-full

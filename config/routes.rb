@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
   root 'home#show', as: :home
+  get 'unsupported_browser', to: 'home#unsupported_browser'
+  match 'unsupported_browser/continue', to: 'home#unsupported_browser_continue', via: :get
+
   get 'ping', to: 'ping#index'
   get 'healthcheck', to: 'health_check#index'
 
@@ -29,8 +32,14 @@ Rails.application.routes.draw do
     resources :suggestions, only: [:new, :create]
   end
   resources :memberships, only: [:destroy]
-  resource :sessions, only: [:new, :create, :destroy]
-  resources :tokens, only: [:create, :destroy, :show]
+  resource :sessions, only: [:new, :create, :destroy] do
+    get :unsupported_browser, on: :new
+  end
+  resources :tokens, only: [:create, :destroy, :show] do
+    member do
+      get 'unsupported_browser'
+    end
+  end
 
   match '/sessions/people', to: 'sessions#create_person', via: :post
   match '/auth/:provider/callback', to: 'sessions#create', via: [:get, :post]
