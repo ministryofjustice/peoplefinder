@@ -92,6 +92,8 @@ RSpec.describe PeopleController, type: :controller do
     end
 
     describe 'with invalid params' do
+      render_views
+
       before do
         post :create, person: invalid_attributes
       end
@@ -105,7 +107,7 @@ RSpec.describe PeopleController, type: :controller do
       end
 
       it 'shows an error message' do
-        expect(flash[:error]).to match(/created/)
+        expect(response.body).to match(/Last name is required/)
       end
     end
 

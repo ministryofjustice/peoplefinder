@@ -36,8 +36,8 @@ feature 'Make a suggestion about a profile', js: true do
   end
 
   scenario 'Ask a person to complete missing fields', user: :regular do
-    check 'fill missing fields'
-    fill_in 'Missing fields info', with: 'Write more stuff'
+    govuk_label_click 'Fill missing fields'
+    fill_in 'Missing fields', with: 'Write more stuff'
     click_button 'Submit'
 
     expect(page).to have_text('We’ve sent an email to the relevant person')
@@ -47,8 +47,8 @@ feature 'Make a suggestion about a profile', js: true do
   end
 
   scenario 'Ask a person to update incorrect fields', user: :regular do
-    check 'update incorrect fields'
-    check 'Last name'
+    govuk_label_click 'Update incorrect fields'
+    govuk_label_click 'Last name'
     click_button 'Submit'
 
     expect(page).to have_text('We’ve sent an email to the relevant person')
@@ -58,7 +58,7 @@ feature 'Make a suggestion about a profile', js: true do
   end
 
   scenario 'Ask an admin to remove duplicate profile', user: :regular do
-    check 'remove duplicate profile'
+    govuk_label_click 'Remove duplicate profile'
     click_button 'Submit'
 
     expect(page).to have_text('We’ve sent an email to the relevant person')
@@ -68,8 +68,8 @@ feature 'Make a suggestion about a profile', js: true do
   end
 
   scenario 'Ask an admin to remove inappropriate content', user: :regular do
-    check 'remove inappropriate content'
-    fill_in 'Inappropriate content info', with: 'Outrageous!'
+    govuk_label_click 'Remove inappropriate content'
+    fill_in 'Inappropriate content', with: 'Outrageous!'
     click_button 'Submit'
 
     expect(page).to have_text('We’ve sent an email to the relevant person')
@@ -79,8 +79,8 @@ feature 'Make a suggestion about a profile', js: true do
   end
 
   scenario 'Ask an admin to remove the profile', user: :regular do
-    check 'remove the profile as the person has left MOJ'
-    fill_in 'Person left info', with: 'They have left to become a goatherd'
+    govuk_label_click 'Remove the profile as the person has left MOJ'
+    fill_in 'Additional information', with: 'They have left to become a goatherd'
     click_button 'Submit'
 
     expect(page).to have_text('We’ve sent an email to the relevant person')
@@ -93,10 +93,10 @@ feature 'Make a suggestion about a profile', js: true do
     another_leader = create(:person)
     create(:membership, person: another_leader, group: group, leader: true)
 
-    check 'fill missing fields'
-    fill_in 'Missing fields info', with: 'Write more stuff'
-    check 'remove inappropriate content'
-    fill_in 'Inappropriate content info', with: 'Outrageous!'
+    govuk_label_click 'Fill missing fields'
+    fill_in 'Missing fields', with: 'Write more stuff'
+    govuk_label_click 'Remove inappropriate content'
+    fill_in 'Inappropriate content', with: 'Outrageous!'
     click_button 'Submit'
 
     expect(page).to have_text('We’ve sent emails to the relevant people')
