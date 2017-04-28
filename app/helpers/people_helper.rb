@@ -17,9 +17,10 @@ module PeopleHelper
   end
 
   def profile_image_tag(person, options = {})
+    options[:link] = true unless options.key?(:link)
     source = profile_image_source(person, options)
     alt_text = "Current photo of #{person}"
-    profile_image_div source, alt_text, options
+    profile_image_div source, alt_text, options.merge(person: person)
   end
 
   def team_image_tag team, options = {}
@@ -36,8 +37,13 @@ module PeopleHelper
 
   def profile_image_div source, alt_text, options
     content_tag(:div, class: 'maginot') do
-      image_tag(source, options.merge(alt: alt_text)) +
-        content_tag(:div, class: 'barrier') {}
+      if options[:link]
+        content_tag(:a, href: person_path(options[:person])) do
+          image_tag(source, options.merge(alt: alt_text, class: 'media-object'))
+        end
+      else
+        image_tag(source, options.merge(alt: alt_text, class: 'media-object'))
+      end
     end
   end
 

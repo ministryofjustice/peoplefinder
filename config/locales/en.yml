@@ -20,6 +20,9 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
+  groups:
+    form:
+      placeholder: Discover what this team is responsible for, who is in it and how you can get in touch with them.
   shared:
     finish_profile_request: &finish_profile_request "You need to create a People Finder account to finish signing in"
     unauthorised: &unauthorised Unauthorised, insufficient privileges
@@ -122,14 +125,14 @@ en:
         add a new sub-team when viewing a team on People Finder.
     leader:
       mine: |
-        Are you the leader of the <span class="team-led">team above</span>?
+        Are you the leader of the <span class="team-led">team above</span>? (optional)
       other: |
-        Is this person the leader of the <span class="team-led">team above</span>?
+        Is this person the leader of the <span class="team-led">team above</span>? (optional)
     subscribed:
       mine: |
-        Do you want to be notified by email when changes are made to the team above?
+        Do you want to be notified by email when changes are made to the team above? (optional)
       other: |
-        Do you want this person to be notified by email when changes are made to the team above?
+        Do you want this person to be notified by email when changes are made to the team above? (optional)
   people:
     day_names:
       works_monday: "Monday"
@@ -231,9 +234,9 @@ en:
       invalid_domain: "you have entered can’t be used to access People Finder"
     models:
       token:
-        invalid_address: "Email address is not formatted correctly"
-        invalid_domain: "Email address can’t be used to access People Finder"
-        token_throttle_limit: "You’ve reached the limit of %{limit} tokens requested within an hour"
+        invalid_address: is not formatted correctly
+        invalid_domain: can’t be used to access People Finder
+        token_throttle_limit: "has reached the limit of %{limit} tokens requested within an hour"
       group:
         attributes:
           base:
@@ -294,9 +297,9 @@ en:
       hint_person_upload_group: |
         You can only upload people’s details to an existing team.
       information_request_label: "Enter your message"
-      location_in_building_hint: "(eg 10.30)"
-      building_hint: "(eg 102 Petty France)"
-      city_hint: "(eg London)"
+      location_in_building_hint: "For example, 10.30"
+      building_hint: "For example, 102 Petty France"
+      city_hint: "For example, London"
       current_project_hint:
         mine: |
           List the names of current projects you’re working on. Use a comma to separate project names.
@@ -310,18 +313,74 @@ en:
 
       photo_upload_hint: "Add or replace an image (no files over 6MB.)"
       photo_crop_hint: "Move and resize the box to crop your profile image."
-      profile_deletable: "(Note that deleting a profile cannot be undone.)"
+      profile_deletable: "Note that deleting a profile cannot be undone."
       reported_profile_additional_details_label: "Additional details (optional)"
       request_information: "Incorrect or missing information? Has this person left the department or is this a duplicate?"
       request_information_link: "Help improve this profile"
       team_deletable: "Note that team deletion cannot be undone."
-      team_not_deletable: "Team deletion is only possible if there are no people associated with it."
+      team_not_deletable: "Team deletion is only possible if there are no people or subteams associated with it."
   placeholders:
     group:
       description: |
         Discover what this team is responsible for, who is in it and how you can get in touch with them.
 
+  # the following translations are used by the govuk_elements_form_builder gem
   helpers:
+    fieldset:
+      person:
+        working_days: Which days of the week do you work?
+    label:
+      person:
+        given_name: First name
+        surname: Last name
+        email: Main email
+        secondary_email: Alternative work email (optional)
+        primary_phone_number: Main phone number (optional)
+        secondary_phone_number: Alternative phone number (optional)
+        pager_number: Pager number (optional)
+        location_in_building: Location in building (optional)
+        building: Building (optional)
+        city: City (optional)
+        current_project: Current project(s) (optional)
+        works_monday: Monday
+        works_tuesday: Tuesday
+        works_wednesday: Wednesday
+        works_thursday: Thursday
+        works_friday: Friday
+        works_saturday: Saturday
+        works_sunday: Sunday
+        description: Extra information
+      membership:
+        role: "Job title (optional)"
+      problem_report:
+        goal: "What were you trying to do?"
+        problem: "What went wrong?"
+        person_email: "Your email"
+      group:
+        name: Team name
+        acronym: Team initials (optional)
+        description: Team description (optional)
+      suggestion:
+        missing_fields: Fill missing fields
+        missing_fields_info: Missing fields
+        incorrect_fields: Update incorrect fields
+        incorrect_first_name: First name
+        incorrect_last_name: Last name
+        incorrect_roles: Roles
+        incorrect_location_of_work: Location of work
+        incorrect_working_days: Working days
+        incorrect_phone_number: Phone number
+        incorrect_pager_number: Pager number
+        incorrect_image: Profile image
+        duplicate_profile: Remove duplicate profile
+        inappropriate_content: Remove inappropriate content
+        inappropriate_content_info: Inappropriate content
+        person_left: Remove the profile as the person has left MOJ
+        person_left_info: Additional information
+
+    placeholder:
+      group:
+          description: sdfsdf
     submit:
       person:
         create: "Save"
@@ -339,6 +398,21 @@ en:
     person_uploads:
       group_id: Choose your team
       file: Upload CSV file
+    hint:
+      person:
+        location_in_building: "For example, 10.30"
+        building: "For example, 102 Petty France"
+        city: "For example, London"
+        current_project: List the names of current projects this person is working on. Use a comma to separate project names.
+        working_days: Select all that apply
+        description: Include details about where this person works on different days, any days out of the office, and if this person starts early or late.
+      group:
+        name: Write out the name of your team in full. Do not use initials
+        acronym: If your team is also known by its initials (eg HMCTS) add them below
+        description: What is the role and purpose of the team?
+      suggestion:
+        missing_fields_info: Your message will be emailed to the person. You can make changes to the wording
+        person_left_info: Where they went, why, other (optional). Your message will be sent to team leaders
 
   will_paginate:
     models:
