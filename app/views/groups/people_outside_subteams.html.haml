@@ -1,6 +1,16 @@
 - content_for :breadcrumbs do
   = breadcrumbs(Home.path + @group.path + ['People not assigned to a sub-team'])
 
-%h1= @page_title = "People in #{ @group.name } not assigned to a sub-team"
-.grid-wrapper
+= render partial: 'shared/search'
+
+%h1.heading-xlarge.with-border-lg
+  = @page_title = "People in #{ @group.name }"
+  .heading-secondary
+    = "not assigned to a sub-team"
+
+.grid-row.mod-list.mod-list-people
   = render partial: "people/summary", collection: @group.people_outside_subteams
+
+.grid-row
+  .column-full
+    = link_to 'Back', './'

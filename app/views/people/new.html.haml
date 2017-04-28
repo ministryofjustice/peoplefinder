@@ -1,5 +1,13 @@
-- content_for :body_classes, 'new-profile-page'
+- content_for :body_classes, 'new-profile-page '
 
-%h1= @page_title = 'New profile'
+= render partial: 'breadcrumbs'
+
+%h1.heading-xlarge.with-border-lg
+  = @page_title = 'New profile'
+
+= GovukElementsErrorsHelper.error_summary @person,
+  "There is a problem with the form",
+  "Check below for more detail"
+
 
 = render partial: 'form', locals: { building: true }
