@@ -35,9 +35,18 @@ module SpecSupport
       person.groups << create(:group)
     end
 
+    def govuk_label_click locator
+      el = page.find("label[for='#{locator}']")
+    rescue
+      nil
+    ensure
+      el ||= page.find('label', text: locator)
+      el.click
+    end
+
     def fill_in_complete_profile_details
       fill_in 'First name', with: person_attributes[:given_name]
-      fill_in 'Surname', with: person_attributes[:surname]
+      fill_in 'Last name', with: person_attributes[:surname]
       select_in_team_select 'Digital'
       fill_in 'Main email', with: person_attributes[:email]
       fill_in 'Main phone number', with: person_attributes[:primary_phone_number]
@@ -48,18 +57,28 @@ module SpecSupport
       fill_in 'City', with: person_attributes[:city]
       fill_in 'Extra information', with: person_attributes[:description]
       fill_in 'Current project(s)', with: person_attributes[:current_project]
-      uncheck('Monday')
-      uncheck('Friday')
+      within_fieldset('working-days') do
+        govuk_label_click 'Monday'
+        govuk_label_click 'Friday'
+      end
+    end
+
+    def click_edit_profile(matcher = :first)
+      click_link('Edit this profile', match: matcher)
+    end
+
+    def click_delete_profile(matcher = :first)
+      click_link('Delete this profile', match: matcher)
     end
 
     def fill_in_membership_details(team_name)
       fill_in 'Job title', with: membership_attributes[:role]
       select_in_team_select(team_name)
       within '.team-leader' do
-        choose(membership_attributes[:leader] ? 'Yes' : 'No')
+        govuk_label_click(membership_attributes[:leader] ? 'Yes' : 'No')
       end
       within '.team-subscribed' do
-        choose membership_attributes[:subscribed] ? 'Yes' : 'No'
+        govuk_label_click(membership_attributes[:subscribed] ? 'Yes' : 'No')
       end
     end
 

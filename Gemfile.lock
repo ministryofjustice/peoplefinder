@@ -270,10 +270,16 @@ GEM
       kramdown (~> 1.4.1)
       nokogiri (~> 1.5)
       sanitize (~> 2.1.0)
-    govuk_frontend_toolkit (1.3.0)
+    govuk_elements_form_builder (0.0.3)
+      rails (>= 4.2)
+    govuk_elements_rails (2.2.1)
+      govuk_frontend_toolkit (>= 5.0.2)
+      rails (>= 4.1.0)
+      sass (>= 3.2.0)
+    govuk_frontend_toolkit (5.2.0)
       rails (>= 3.1.0)
       sass (>= 3.2.0)
-    govuk_template (0.8.1)
+    govuk_template (0.19.2)
       rails (>= 3.1)
     guard (2.13.0)
       formatador (>= 0.2.4)
@@ -372,10 +378,6 @@ GEM
     mini_magick (4.2.0)
     mini_portile2 (2.1.0)
     minitest (5.9.0)
-    moj_internal_template (0.1.9)
-      govuk_frontend_toolkit (= 1.3.0)
-      govuk_template (= 0.8.1)
-      rails (~> 4)
     multi_json (1.12.1)
     multi_xml (0.5.5)
     multipart-post (2.0.0)
@@ -411,10 +413,9 @@ GEM
       ast (~> 2.2)
     pg (0.18.1)
     phantomjs (1.9.8.0)
-    poltergeist (1.6.0)
+    poltergeist (1.14.0)
       capybara (~> 2.1)
       cliver (~> 0.3.1)
-      multi_json (~> 1.0)
       websocket-driver (>= 0.2.0)
     powerpack (0.1.1)
     premailer (1.8.7)
@@ -582,7 +583,7 @@ GEM
       addressable (>= 2.3.6)
       crack (>= 0.3.2)
       hashdiff
-    websocket-driver (0.6.2)
+    websocket-driver (0.6.5)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.2)
     whenever (0.9.4)
@@ -625,8 +626,10 @@ DEPENDENCIES
   friendly_id (~> 5.0.0)
   geckoboard-ruby (~> 0.3.0)
   govspeak
-  govuk_frontend_toolkit
-  govuk_template
+  govuk_elements_form_builder (~> 0.0, >= 0.0.3)
+  govuk_elements_rails (>= 1.1.2)
+  govuk_frontend_toolkit (>= 5.2.0)
+  govuk_template (~> 0.19.2)
   guard-jasmine
   haml-rails
   jasmine-rails
@@ -640,7 +643,6 @@ DEPENDENCIES
   meta_request
   mini_magick
   minitest
-  moj_internal_template (~> 0.1.7)
   netaddr
   omniauth-gplus!
   paper_trail (~> 4.0.2)

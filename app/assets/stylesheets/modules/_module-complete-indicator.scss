@@ -1,0 +1,54 @@
+.complete-your-profile {
+  @include mobile(portrait){
+    display: none;
+  }
+  background-color: $grey-bg;
+  // width: 300px;
+  margin-top: 5px;
+  padding: $gutter/2 0 1px $gutter/2;
+  font-weight: bold;
+  .bar {
+    line-height: $gutter/2;;
+    width: 200px;
+    margin-top: $gutter/3;
+    float: left;
+    .on {
+      background-color: $green;
+      float: left;
+    }
+    .off {
+      background-color: $border-color;
+      float: left;
+    }
+  }
+  .score {
+    float: left;
+    margin-left: $gutter/2;
+    color: $green;
+    font-size: 24px;
+  }
+  a {
+    font-weight: normal;
+  }
+}
+.complete-your-profile.complete {
+  background-color: $palegreen;
+}
+
+.completion-prompt {
+  border: $gutter/15 solid $green;
+  color: $green;
+  padding: $gutter/2;
+
+  p {
+    margin: 0;
+    font-weight: bold;
+  }
+}
+
+.completing {
+  input.incomplete {
+    border: $gutter/15 solid $green;
+    border-left-width: $gutter/3;
+  }
+}

@@ -1,19 +1,14 @@
-.login-bar
+%ul#proposition-links
   - if logged_in_regular?
-    %span.profile-link
-      Signed in as
-      %span
-        = link_to current_user, person_path(current_user)
-      - if super_admin?
-        %span.manage-link
-          = link_to 'Manage', admin_home_path
-      %span.logout-link
-        = link_to "Sign out", sessions_path, :method => :delete
+    %li
+      = link_to "Signed in as #{current_user}", person_path(current_user)
+
+    - if super_admin?
+      %li
+        = link_to 'Manage', admin_home_path, class: "manage-link"
+
+    %li
+      = link_to "Sign out", sessions_path, :method => :delete
   - elsif logged_in_readonly? && !@login_screen
-    %span.login-link
-      %span
-        To update People Finder,&nbsp;
-      %span
-        = link_to('sign in now', new_sessions_path )
-      %span
-        \.
+    %li
+      = link_to('To update People Finder, Sign in now', new_sessions_path )

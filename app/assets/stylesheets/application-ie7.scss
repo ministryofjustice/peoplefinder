@@ -1,0 +1,40 @@
+
+$is-ie: true;
+$ie-version: 7;
+
+@import "application";
+
+//SEARCH tweaks
+.js-enabled .mod-search .mod-search-form{
+  .mod-search-input {
+    BACKGROUND: none;
+  }
+
+  .mod-search-input {
+    border-width: 2px;
+    height: auto;
+
+  }
+  .mod-search-submit {
+    background: none;
+    text-indent: 0;
+    width: auto;
+    height: auto;
+    @include button;
+  }
+
+  .mod-search-input {}
+
+  LABEL {
+    FONT-WEIGHT: 400;
+    FONT-SIZE: 16px;
+    Z-INDEX: 5; LEFT: 0px;
+    TEXT-TRANSFORM: none;
+    COLOR: $text-colour;
+    TEXT-INDENT: 0;
+    LINE-HEIGHT: 40px;
+    FONT-FAMILY: "nta", Arial, sans-serif;
+    POSITION: relative;
+    TOP: auto;
+  }
+}

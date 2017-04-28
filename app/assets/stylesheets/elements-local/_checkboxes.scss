@@ -1,0 +1,8 @@
+#working-days {
+  ul,li{
+    @extend %contain-floats;
+  }
+  li{
+    margin-bottom: $gutter/2;
+  }
+}

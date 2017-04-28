@@ -1,0 +1,37 @@
+.with-border-lg{
+  margin: 30px 0;
+  border-bottom: 1px solid #6f777b;
+}
+
+.action-links{
+  .button-secondary{
+    margin-right: $gutter/2;
+  }
+  @include core-19;
+  float: right;
+}
+
+.core-16{
+  @include core-16;
+}
+
+.query-term{
+  font-weight: 700;
+}
+
+#content{
+  form .form-label{
+    font-weight: 700;
+  }
+}
+
+.edit-profile-image-page{
+  h3.heading-medium{
+    margin-top:0;
+  }
+}
+
+.js-photo-upload-error{
+  margin: 5px;
+  @include core-16;
+}

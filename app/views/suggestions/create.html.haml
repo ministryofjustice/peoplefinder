@@ -1,2 +1,7 @@
-%h1= t('suggestions.thank_you_intro')
-%p= t('suggestions.thank_you_detail', count: @delivery_details.recipient_count)
+%br/
+= render 'shared/search'
+
+%h1.heading-xlarge.with-border-lg
+  = t('suggestions.thank_you_intro')
+%p
+  = t('suggestions.thank_you_detail', count: @delivery_details.recipient_count)

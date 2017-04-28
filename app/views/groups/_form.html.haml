@@ -1,78 +1,69 @@
 - @editing_mode = true
 = form_for @group do |f|
 
-  - if @group.errors.any?
-    .alert.alert-error
-      %p= error_text('group.general_message')
-      %ol.form-error-list
-        - @group.errors.each do |field, error|
-          %li
-            = link_to "#{Group.human_attribute_name(field)} #{error.downcase}", "#group_#{field}"
+  = f.text_field :name
+  = f.text_field :acronym
 
-  .form-group{ :class => ('gov-uk-field-error' if @group.errors.include?(:name)) }
-    = f.label :name, class: 'form-label-bold' do
-      Team name
-      %p.form-hint= info_text('hint_team_name')
-      %span.error= @group.errors[:name].first if @group.errors.include?(:name)
-    = f.text_field :name, class: 'form-control'
+  .grid-row
+    .column-two-thirds
+      = f.text_area :description, placeholder: t('.placeholder'), rows: 10, "data-limit": 1000
 
-  .form-group{ :class => ('gov-uk-field-error' if @group.errors.include?(:acronym)) }
-    = f.label :acronym, class: 'form-label-bold' do
-      Team initials
-      %p.form-hint= info_text('hint_team_acronym')
-      %span.error= @group.errors[:acronym].first if @group.errors.include?(:acronym)
-    = f.text_field :acronym, class: 'form-control'
+    .column-one-third
+      .form-group.help-area
+        %h3.heading-medium
+          Formatting
+        %p
+          Click each heading below to find out how you can add formatting to your text.
+        %details
+          %summary
+            %span.summary
+              Bullet point list
+          .panel
+            Copy and paste the formatting below then replace each item with the text you want
+            %br
+            * bullet point copy here
+            %br
+            * bullet point copy here
+            %br
+            &nbsp;&nbsp;* sub bullet point copy here
+            %br
+            &nbsp;&nbsp;* sub bullet point copy here
 
-  .form-group.has-parallel-help
-    = f.label :description, class: 'form-label-bold' do
-      Team description
-      %p.form-hint= info_text('hint_team_description')
-    - text_limit = Group::MAX_DESCRIPTION # to be replaced with a variable
-    = f.text_area :description, class: 'form-control', placeholder: f.object.placeholder(:description), "data-limit" => text_limit
-  .help-area
-    %h3
-      Formatting
-    %p
-      Click each heading below to find out how you can add formatting to your text.
-    %p.help-toggle
-      Bullet point list
-    .help-content
-      Copy and paste the formatting below then replace each item with the text you want
-      %br
-      * bullet point copy here
-      %br
-      * bullet point copy here
-      %br
-      &nbsp;&nbsp;* sub bullet point copy here
-      %br
-      &nbsp;&nbsp;* sub bullet point copy here
-    %p.help-toggle
-      Numbered list
-    .help-content
-      Copy and paste the formatting below then replace each item with the text you want
-      %br
-      1. point 1 copy here
-      %br
-      2. point 2 copy here
-      %br
-      3. point 3 copy here
-    %p.help-toggle
-      Line space
-    .help-content
-      To add a line space press the spacebar twice
+        %details
+          %summary
+            %span.summary
+              Numbered list
+          .panel
+            Copy and paste the formatting below then replace each item with the text you want
+            %br
+            1. point 1 copy here
+            %br
+            2. point 2 copy here
+            %br
+            3. point 3 copy here
+
+        %details
+          %summary
+            %span.summary
+              Line space
+          .panel
+            To add a line space press enter
 
   - if @group.editable_parent?
     .form-group.group-parent.editable-container
       - if params[:group_id]
         = f.hidden_field :parent_id
       - else
-        %label.form-label-bold Team parent
-        %p.form-hint Use this to change where in the organisation this team is located.
+        %label.form-label-bold
+          Team parent
+        %p#error_group_base.form-hint
+          Use this to change where in the organisation this team is located.
 
         -unless @group.new_record?
           .editable-summary.parent-summary
             - if @group.parent
-              .title= breadcrumbs(@group.parent.path, show_links: false)
+              .title
+                = breadcrumbs(@group.parent.path, show_links: false)
             = link_to 'Edit team parent', '#', class: 'show-editable-fields button-secondary'
 
         .editable-fields{ style: ('display:none' unless @group.new_record?) }
@@ -82,6 +73,8 @@
 
   .form-group
     = f.submit class: 'button'
+
+  .form-group
     .cancel
       - if @group.new_record?
         = link_to 'Cancel', :back

@@ -13,7 +13,7 @@ feature 'Flash messages feature' do
     let!(:dept) { create :department }
     let(:person) { create :person }
     let(:flash_messages) { 'flash-messages' }
-    let(:searchbox) { 'search-box' }
+    let(:searchbox) { 'mod-search-form' }
 
     before do
       omni_auth_log_in_as 'test.user@digital.justice.gov.uk'
@@ -21,7 +21,7 @@ feature 'Flash messages feature' do
 
     scenario 'display flash messages above search box for home page' do
       visit person_path(person)
-      click_link 'Delete this profile'
+      click_delete_profile
       expect(current_path).to eql '/'
       expect(flash_messages).to appear_before searchbox
       expect(searchbox).not_to appear_before flash_messages
@@ -32,8 +32,8 @@ feature 'Flash messages feature' do
       click_link 'Add new sub-team'
       fill_in 'Team name', with: 'Digital'
       click_button 'Save'
-      expect(searchbox).to appear_before flash_messages
-      expect(flash_messages).not_to appear_before searchbox
+      expect(searchbox).not_to appear_before flash_messages
+      expect(flash_messages).to appear_before searchbox
     end
   end
 end

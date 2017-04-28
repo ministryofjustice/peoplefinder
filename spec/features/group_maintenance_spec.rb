@@ -27,7 +27,7 @@ feature 'Group maintenance' do
       name = 'Ministry of Justice'
 
       visit new_group_path
-      expect(page).to have_title("New team - #{app_title}")
+      expect(page).to have_title("Create a team - #{app_title}")
 
       fill_in 'Team name', with: name
       fill_in 'Team description', with: 'about my team'
@@ -85,7 +85,8 @@ feature 'Group maintenance' do
       click_button 'Save'
 
       within('.breadcrumbs ol') do
-        expect(page).to have_content('Corporate Services Digital Services')
+        expect(page).to have_selector('li.breadcrumb-2', text: 'Corporate Services')
+        expect(page).to have_selector('li.breadcrumb-3', text: 'Digital Services')
       end
     end
 
@@ -128,14 +129,14 @@ feature 'Group maintenance' do
       visit_edit_view(group)
 
       expect(page).to have_title("Edit team - #{app_title}")
-      expect(page).not_to have_selector('.search-box')
+      expect(page).not_to have_selector('.mod-search-form')
       new_name = 'Cyberdigital Cyberservices'
       fill_in 'Team name', with: new_name
 
       click_button 'Save'
 
       expect(page).to have_content('Updated Cyberdigital Cyberservices')
-      expect(page).to have_selector('.search-box')
+      expect(page).to have_selector('.mod-search-form')
       group.reload
       expect(group.name).to eql(new_name)
 
@@ -183,7 +184,7 @@ feature 'Group maintenance' do
       expect(group.parent).to eql(sibling_group)
     end
 
-    scenario 'Changing a team parent via clicking sibling team\'s subteam name', js: true, skip: 'skip until we can work out how to stop it flickering' do
+    scenario 'Changing a team parent via clicking sibling team\'s subteam name', js: true do
       group = setup_three_level_group
       subteam_group = create(:group, name: 'Test team', parent: sibling_group)
       setup_group_member group
@@ -220,7 +221,7 @@ feature 'Group maintenance' do
       javascript_log_in
       visit group_path(group)
 
-      within('.group-title h1') do
+      within('.mod-heading h1') do
         expect(page).to have_text('HMCTS')
       end
 
@@ -254,14 +255,14 @@ feature 'Group maintenance' do
 
     scenario 'UI elements on the new/edit pages' do
       visit new_group_path
-      expect(page).not_to have_selector('.search-box')
+      expect(page).not_to have_selector('.mod-search-form')
 
       fill_in 'Team name', with: 'Digital'
       click_button 'Save'
-      expect(page).to have_selector('.search-box')
+      expect(page).to have_selector('.mod-search-form')
 
       click_link 'Edit this team'
-      expect(page).not_to have_selector('.search-box')
+      expect(page).not_to have_selector('.mod-search-form')
     end
 
     scenario 'Cancelling an edit' do
