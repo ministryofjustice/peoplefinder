@@ -1,3 +1,43 @@
+.column-three-quarters {
+  @include grid-column(6.8/10);
+  padding:0;
+}
+
+.team-leader-list{
+  @extend %contain-floats;
+}
+
+.complete-your-profile {
+  .grid-row{
+    margin:0;
+  }
+  .column-one-quarter{
+    padding: 0;
+  }
+}
+
+.mod-complete{
+
+  @extend %contain-floats;
+  // border: 1px solid red;
+  line-height: 15px;
+  margin-top: 5px;
+  .on{
+    // border: 1px solid red;
+    background-color: $green;
+    float: left;
+  }
+  .off{
+    // border: 1px solid red;
+    background-color: $border-color;
+    float: left;
+  }
+  .score{
+    @include core-24();
+    color: $green;
+  }
+}
+
 .complete-your-profile {
   @include mobile(portrait){
     display: none;
@@ -8,6 +48,7 @@
   padding: $gutter/2 0 1px $gutter/2;
   font-weight: bold;
   .bar {
+    @extend %contain-floats;
     line-height: $gutter/2;;
     width: 200px;
     margin-top: $gutter/3;
