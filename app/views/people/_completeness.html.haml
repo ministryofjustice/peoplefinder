@@ -1,11 +1,22 @@
+
 .complete-your-profile{class: ('complete' if person.complete?) }
+
   Profile completeness
-  .bar
-    .on{ style: "width: #{ person.completion_score }%" } &nbsp;
-    .off{ style: "width: #{ 100 - person.completion_score }%" } &nbsp;
-  .score #{person.completion_score}%
+  .grid-row
+    .column-three-quarters
+      .mod-complete
+        .on{ style: "width: #{ person.completion_score }%" }
+          &nbsp;
+        .off{ style: "width: #{ 100 - person.completion_score }%" }
+          &nbsp;
+    .column-one-quarter
+      .score
+        = "#{person.completion_score}%"
+
   - if person.incomplete?
     - complete_text = (current_user == person) ? 'complete your profile' : 'complete this profile'
-    %p= edit_person_link(complete_text, person, activity: 'complete')
+    %p
+      = edit_person_link(complete_text, person, activity: 'complete')
   - else
-    %p Thanks for improving People Finder for everyone!
+    %p.clear-both
+      = "Thanks for improving People Finder for everyone!"

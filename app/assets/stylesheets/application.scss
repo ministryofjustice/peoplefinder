@@ -1,3 +1,12 @@
+
+%contain-floats {
+  &:after {
+    content: "";
+    display: block;
+    clear: both;
+  }
+}
+
 $tablet-width: 768px;
 $desktop-width: 1025px;
 $blackish: #6F777B;
@@ -161,6 +170,9 @@ $border-color: #bfc1c3;
   position: fixed;
 }
 
+.clear-both{
+  clear:both;
+}
 .audit {
   td, th{
   @include core-16;
