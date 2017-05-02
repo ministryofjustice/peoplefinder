@@ -9,17 +9,24 @@ $ie-version: 7;
     BACKGROUND: none;
   }
 
+  .mod-search-input-wrapper {
+    width: 590px;
+  }
+
   .mod-search-input {
     border-width: 2px;
     height: auto;
+    float: left;
   }
 
   .mod-search-submit {
     background: $black image-url("search-button.png") no-repeat 2px 50%;
-    text-indent: 0;
-    line-height: 0;
-    width: 40px;
-    height: 40px;
+    width: $search-button-size;
+    height: $search-button-size - 2;
+    position: absolute;
+    top: $search-button-size;
+    left: 604px;
+    line-height: 0; // hack to hide submit button value
   }
 
   .mod-search-input {}
