@@ -13,14 +13,14 @@ $mobile-ie6: false;
   .mod-search-input {
     border-width: 2px;
     height: auto;
-
   }
+
   .mod-search-submit {
-    background: none;
+    background: $black image-url("search-button.png") no-repeat 2px 50%;
     text-indent: 0;
-    width: auto;
-    height: auto;
-    @include button;
+    line-height: 0;
+    width: 40px;
+    height: 40px;
   }
 
   .mod-search-input {}
