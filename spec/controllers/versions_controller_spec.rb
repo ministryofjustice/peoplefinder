@@ -2,11 +2,38 @@ require 'rails_helper'
 
 RSpec.describe VersionsController, type: :controller do
   include PermittedDomainHelper
-  before do
-    mock_logged_in_user
+
+  describe '#index' do
+
+    context 'readonly user' do
+      before do
+        mock_readonly_user
+        get :index
+      end
+
+      it 'redirects to login' do
+        expect(response).to redirect_to new_sessions_path
+      end
+    end
+
+    context 'regular user' do
+      before do
+        mock_logged_in_user
+        get :index
+      end
+
+      it 'redirects to login' do
+        expect(response).to render_template :index
+      end
+    end
+
   end
 
   describe '.undo' do
+    before do
+      mock_logged_in_user
+    end
+
     it 'undoes a new person - by deleting it' do
       with_versioning do
         person = create(:person)
