@@ -14,7 +14,6 @@
 
 require 'rails_helper'
 
-
 RSpec.describe Membership, type: :model do
   include PermittedDomainHelper
   let(:moj) { create :department, name: 'Ministry of Justice' }
