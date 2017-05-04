@@ -51,8 +51,6 @@ feature 'Person maintenance' do
 
         click_link cta_text
         expect(page.current_path).to eq(new_person_path)
-
-        # TODO: Should we set the group ID?
       end
 
       scenario 'Creating a person with a complete profile', js: true do

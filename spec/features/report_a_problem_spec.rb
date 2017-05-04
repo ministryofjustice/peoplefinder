@@ -7,7 +7,7 @@ feature 'Report a problem', js: true do
   before(:all) { Timecop.travel(Time.at(1_410_298_020)) }
   after(:all) { Timecop.return }
 
-  before(:each) do
+  before do
     ActionMailer::Base.deliveries.clear
   end
 
