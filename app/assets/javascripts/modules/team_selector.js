@@ -27,6 +27,7 @@ var teamSelector = function teamSelector(isPerson, obj) {
       self.selector.find('.editable-fields').show();
       self.init();
     });
+
     /* Clicking the 'Done' button to hide the team selector */
 
     this.selector.on('click', '.hide-editable-fields', function(e) {
@@ -36,6 +37,7 @@ var teamSelector = function teamSelector(isPerson, obj) {
       self.selector.find('.editable-fields').hide();
       self.selector.find('.team-leader label:first').focus();
     });
+
     /* Clicking on the 'Back' link */
 
     this.orgBrowser.on('click', '.team-back', function(e) {
@@ -44,6 +46,7 @@ var teamSelector = function teamSelector(isPerson, obj) {
       self.currentTarget = $(e.currentTarget);
       self.back();
     });
+
     /* Clicking on a team with subteams */
 
     this.orgBrowser.on('click', 'li:not(.disabled) .subteam-link', function(e) {
@@ -52,6 +55,7 @@ var teamSelector = function teamSelector(isPerson, obj) {
       self.currentTarget = $(e.currentTarget);
       self.forward();
     });
+
     /* Clicking on a team with no subteams */
 
     this.orgBrowser.on('click', '.team-link', function(e) {
@@ -65,6 +69,7 @@ var teamSelector = function teamSelector(isPerson, obj) {
         self.currentTarget.closest('h3').children('input').prop('checked', 'checked').trigger('change');
       }
     });
+
     /* Clicking directly on a radio button */
 
     this.orgBrowser.on('change', 'input[type=radio]', function(e) {
@@ -174,7 +179,6 @@ var teamSelector = function teamSelector(isPerson, obj) {
   this.init = function() {
 
     var self = this;
-    this.orgBrowser.find('.team-back').first().remove();
     if (this.orgBrowser.hasClass('has-form')) {
       var $checked = this.orgBrowser.find('input:checked');
       if ($checked.length > 0) {
@@ -318,7 +322,6 @@ var teamSelector = function teamSelector(isPerson, obj) {
   /* Set the last 'visible' element to be 'selected' and check the radio button, then set the team name */
 
   this.selectCurrent = function() {
-
     var teamText, $current;
     this.removeSelected();
     var visible = this.getLastVisible();
