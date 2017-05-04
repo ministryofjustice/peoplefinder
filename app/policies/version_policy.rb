@@ -1,9 +1,9 @@
 class VersionPolicy < ApplicationPolicy
   def index?
-    regular_user?
+    admin_user?
   end
 
   def undo?
-    regular_user?
+    admin_user?
   end
 end

@@ -3,8 +3,9 @@ require 'rails_helper'
 feature 'Audit trail' do
   include PermittedDomainHelper
 
+  let(:person) { create(:super_admin, email: 'test.user@digital.justice.gov.uk') }
   before do
-    omni_auth_log_in_as 'test.user@digital.justice.gov.uk'
+    omni_auth_log_in_as person.email
   end
 
   scenario 'Auditing an edit of a person' do

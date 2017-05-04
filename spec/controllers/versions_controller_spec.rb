@@ -22,6 +22,17 @@ RSpec.describe VersionsController, type: :controller do
         get :index
       end
 
+      it 'redirects to home' do
+        expect(response).to redirect_to home_path
+      end
+    end
+
+    context 'for a super admin' do
+      before do
+        mock_logged_in_user super_admin: true
+        get :index
+      end
+
       it 'redirects to login' do
         expect(response).to render_template :index
       end
@@ -31,7 +42,7 @@ RSpec.describe VersionsController, type: :controller do
 
   describe '.undo' do
     before do
-      mock_logged_in_user
+      mock_logged_in_user super_admin: true
     end
 
     it 'undoes a new person - by deleting it' do
