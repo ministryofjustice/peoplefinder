@@ -8,9 +8,10 @@ feature 'Home page' do
   let(:ie8) { 'Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 5.2; Trident/4.0; .NET CLR 1.1.4322; .NET CLR 2.0.50727; .NET CLR 3.0.04506.648; .NET CLR 3.5.21022)' }
   let(:ie7) { 'Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.2; .NET CLR 1.1.4322; .NET CLR 2.0.50727; .NET CLR 3.0.04506.648; .NET CLR 3.5.21022)' }
   let(:ie6) { 'Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.2; SV1; .NET CLR 1.1.4322; .NET CLR 2.0.50727; .NET CLR 3.0.04506.648; .NET CLR 3.5.21022)' }
+  let(:department) { create(:department) }
 
   before do
-    create(:department)
+    create(:person, :member_of, team: department, leader: true, role: 'Permanent Secretary', given_name: 'Richard', surname: 'Heaton')
   end
 
   context 'page structure' do
@@ -26,8 +27,15 @@ feature 'Home page' do
       it 'is all there' do
         expect(home_page).to be_displayed
         expect(home_page).to have_page_title
-        expect(home_page).to have_search_form
         expect(home_page.page_title).to have_text('Welcome to People Finder')
+        expect(home_page).to have_leader_profile_image
+        expect(home_page).to have_search_form
+      end
+
+      it 'displays perm sec\' image but not name and role' do
+        expect(home_page).to have_leader_profile_image
+        expect(home_page.leader_profile_image[:alt]).to eql 'Current photo of Richard Heaton'
+        expect(home_page).not_to have_text 'Richard Heaton'
       end
 
       context 'Firefox 31+' do

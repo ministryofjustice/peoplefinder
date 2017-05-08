@@ -28,8 +28,6 @@
 .grid-row.mod-team-overview
   .column-one-third
     - if @group.leaderships.count > 0
-      -# %h3.heading-medium
-      -#   = "Team #{'leader'.pluralize(@group.leaderships.count)}"
       - @group.leaderships_by_person.each do |person, leaderships|
         = render partial: 'groups/leaderships', object: leaderships, locals: { person: person, counter: @group.leaderships.count }
 
