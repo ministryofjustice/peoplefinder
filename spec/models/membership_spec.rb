@@ -80,7 +80,7 @@ RSpec.describe Membership, type: :model do
       it 'adds appropriate error message to leader attribute' do
         membership = build(:membership, person: person, group: moj, leader: true, role: 'another perm sec')
         membership.valid?
-        expect(membership.errors[:leader]).to include 'can\'t have more than one Permanent Secretary'
+        expect(membership.errors[:leader]).to include 'Please select "No"'
       end
     end
 

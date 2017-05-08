@@ -1,54 +1,55 @@
+- content_for :body_classes, 'edit-profile-page '
 - @editing_mode = true
-#search_results
-  %h1.noborder= @page_title = 'Duplicate names found'
-  .spacer-45
 
-  .validation-summary{role: "group", "aria-labelledby": "error-summary-heading-example-1",  tabindex: "-1"}
+%h1.heading-xlarge.with-border-lg
+  = @page_title = 'Duplicate names found'
 
-    %h3.heading-small#error-summary-heading-example-1
-      = "Your details match one or more existing profiles."
+.error-summary{"aria-labelledby" => "error-summary-heading", :role => "group", :tabindex => "-1"}
+  %h1#error-summary-heading.heading-medium.error-summary-heading
+    = "Your details match one or more existing profiles."
+  %p
+    = "Select a profile below to update it with your new details,"
+    %br/
+    = "or click continue to create a new profile."
 
-    .duplicate-hint
-      = "Select a profile below to update it with your new details,"
-      %br/
-      = "or click continue to create a new profile."
+.pagination
+  = pluralize(@people.length, "result") + ' found'
 
-  .pagination= pluralize(@people.length, "result") + ' found'
+#confirm-person-results
+  = render partial: 'search/person_confirmation', collection: @people, as: :person, locals: { search_result: true }
 
-  = render partial: 'search/person_confirmation', collection: @people, as: :person
+= form_for @person, :html => {:multipart => true} do |f|
 
-  = form_for @person, :html => {:multipart => true} do |f|
+  = f.hidden_field :given_name
+  = f.hidden_field :surname
 
-    = f.hidden_field :given_name
-    = f.hidden_field :surname
+  = f.fields_for :memberships do |membership_f|
+    = membership_f.hidden_field :role
+    = membership_f.hidden_field :group_id
+    = membership_f.hidden_field :leader
+    = membership_f.hidden_field :subscribed
 
-    = f.fields_for :memberships do |membership_f|
-      = membership_f.hidden_field :role
-      = membership_f.hidden_field :group_id
-      = membership_f.hidden_field :leader
-      = membership_f.hidden_field :subscribed
+  = f.hidden_field :location_in_building
+  = f.hidden_field :building
+  = f.hidden_field :city
+  = f.hidden_field :primary_phone_number
+  = f.hidden_field :secondary_phone_number
+  = f.hidden_field :pager_number
+  = f.hidden_field :email
+  = f.hidden_field :secondary_email
+  = f.hidden_field :description
+  = f.hidden_field :current_project
+  = f.hidden_field :profile_photo_id
+  = f.hidden_field :crop_x
+  = f.hidden_field :crop_y
+  = f.hidden_field :crop_w
+  = f.hidden_field :crop_h
 
-    = f.hidden_field :location_in_building
-    = f.hidden_field :building
-    = f.hidden_field :city
-    = f.hidden_field :primary_phone_number
-    = f.hidden_field :secondary_phone_number
-    = f.hidden_field :pager_number
-    = f.hidden_field :email
-    = f.hidden_field :secondary_email
-    = f.hidden_field :description
-    = f.hidden_field :current_project
-    = f.hidden_field :profile_photo_id
-    = f.hidden_field :crop_x
-    = f.hidden_field :crop_y
-    = f.hidden_field :crop_w
-    = f.hidden_field :crop_h
+  - Person::DAYS_WORKED.each do |day|
+    = f.hidden_field day
 
-    - Person::DAYS_WORKED.each do |day|
-      = f.hidden_field day
 
-    .spacer-45
-    .form-group
-      = f.submit 'Continue, it is not one of these', class: 'button', name: 'continue_from_duplication'
-      .cancel
-        = link_to 'Return to home page', home_path
+  .form-group
+    = f.submit 'Continue, it is not one of these', class: 'button', name: 'continue_from_duplication'
+  .form-group
+    = link_to 'Return to home page', home_path

@@ -1,121 +1,62 @@
 - @editing_mode = true
 = form_for @person, builder: PersonFormBuilder, html: { multipart: true, class: person_form_class(@person, @activity) } do |f|
 
-  - if @person.errors.any?
-    .alert.alert-error
-      %p= error_text('person.general_message')
-      %ol.form-error-list
-        - @person.errors.each do |field, error|
-          %li
-            = link_to "#{Person.human_attribute_name(field)} #{error.downcase}", "#person_#{field}"
+  = f.text_field :given_name
+  = f.text_field :surname
+  = f.text_field :email
 
-  = f.submit class: 'button top-button'
+  .form-group.mod-media.card
+    = f.label :profile_image, class: 'form-label'
+    .media
+      .media-left
+        = profile_image_tag @person, link: false
+    %br/
+    = f.submit 'Edit this picture', name: 'edit-picture-button', class: 'button'
 
-  %p * mandatory field
-
-  = f.form_group :given_name do
-    = f.label :given_name, class: 'form-label-bold' do
-      First name
-      - if @person.errors.include?(:given_name)
-        %span.error
-          = @person.errors[:given_name].first
-    = f.text_field :given_name, class: 'form-control'
-
-  = f.form_group :surname do
-    = f.label :surname, class: 'form-label-bold' do
-      Surname
-      - if @person.errors.include?(:surname)
-        %span.error
-          = @person.errors[:surname].first
-    = f.text_field :surname, class: 'form-control'
-
-  = f.form_group :email do
-    = f.label :email, class: 'form-label-bold' do
-      = t(:email, scope: 'activerecord.attributes.person')
-      - if @person.errors.include?(:email)
-        %span.error= @person.errors[:email].first
-    = f.text_field :email, class: 'form-control'
-
-  .form-group
-    = f.label :profile_image, class: 'form-label-bold' do
-      Photo
-    .edit-preview
-      = profile_image_tag @person
-    .form-group
-      %br
-      = f.submit 'Edit this picture', name: 'edit-picture-button', class: 'button'
-
-  .form-group
-    #contact-details
-      %h2.line-above Contact details
-
-      .phone_numbers
-        = f.form_group :primary_phone_number do
-          = f.label :primary_phone_number, 'Main phone number', class: 'form-label-bold'
-          = f.text_field :primary_phone_number, class: 'form-control'
-        = f.form_group :secondary_phone_number do
-          = f.label :secondary_phone_number, 'Alternative phone number', class: 'form-label-bold'
-          = f.text_field :secondary_phone_number, class: 'form-control'
-        = f.form_group :pager_number do
-          = f.label :pager_number, 'Pager number', class: 'form-label-bold'
-          = f.text_field :pager_number, class: 'form-control'
-
-      .emails
-        = f.form_group :secondary_email do
-          = f.label :secondary_email, class: 'form-label-bold'
-          = f.text_field :secondary_email, class: 'form-control'
-
-      = f.form_group :location_in_building do
-        = f.label :location_in_building, class: 'form-label-bold' do
-          Location in building
-          %p.form-hint= info_text('location_in_building_hint')
-        = f.text_field :location_in_building, class: 'form-control'
-
-      = f.form_group :building do
-        = f.label :building, class: 'form-label-bold' do
-          Building
-          %p.form-hint= info_text('building_hint')
-        = f.text_field :building, class: 'form-control'
-
-      = f.form_group :city do
-        = f.label :city, class: 'form-label-bold' do
-          City
-          %p.form-hint= info_text('city_hint')
-        = f.text_field :city, class: 'form-control'
+  %h3.heading-medium.with-border-lg
+    = "Contact details"
+  = f.text_field :primary_phone_number
+  = f.text_field :secondary_phone_number
+  = f.text_field :pager_number
+  = f.text_field :secondary_email
+  = f.text_field :location_in_building
+  = f.text_field :building
+  = f.text_field :city
 
   .form-group
     #memberships
-      %h2.line-above Role
+      %h3.heading-medium.with-border-lg
+        = "Roles"
       = f.fields_for :memberships do |membership_f|
         = render 'membership_fields', membership_f: membership_f, org_structure: @org_structure, person: @person
 
     = link_to 'Add another role', add_membership_people_path(id: @person.to_param),
       id: 'add_membership', class: 'button-secondary'
 
-  .form-group.line-above
-    = f.label :current_project, class: 'form-label-bold' do
-      Current project(s)
-      %p.form-hint= role_translate(@person, 'views.info_text.current_project_hint')
-    = f.text_field :current_project, class: 'form-control'
+  %h3.heading-medium.with-border-lg
+    = "Current Projects"
+  = f.text_field :current_project
 
   .form-group
+    %h3.heading-medium.with-border-lg
+      = "Working days"
     %fieldset#working-days
-      %legend.form-label-bold Working days
-
+      %legend.form-label-bold.visually-hidden Working days
       %ul
         - Person::DAYS_WORKED.each do |day|
           %li
-            = f.label day do
-              = f.check_box day
-              = day_name(day)
+            = f.check_box day
 
-  = f.form_group :description do
-    = f.label :description, class: 'form-label-bold' do
-      Extra information
-      %p.form-hint= role_translate(@person, 'views.info_text.notes_field_hint')
-    = f.text_area :description, class: 'form-control'
+  %h3.heading-medium.with-border-lg
+    = "Extra information"
+  = f.text_area :description
 
-  .form-group.save-cancel-actions
-    = f.submit class: 'button'
+
+  .form-group
+    = f.submit 'Save', class: 'button'
+
+  .form-group
     .cancel
-      = link_to 'Cancel and go to profile page', @person.new_record? ? :back : @person
+      = link_to 'Cancel and go back', @person.new_record? ? :back : @person
+
+

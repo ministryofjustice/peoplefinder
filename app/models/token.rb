@@ -26,7 +26,7 @@ class Token < ActiveRecord::Base
   DEFAULT_TTL = 10_800
   DEFAULT_MAX_TOKENS_PER_HOUR = 8
 
-  scope :spent,            -> { where(spent: true)  }
+  scope :spent,            -> { where(spent: true) }
   scope :unspent,          -> { where(spent: false) }
   scope :unexpired,        -> { where('created_at > ?', ttl.seconds.ago) }
   scope :expired,          -> { where('created_at < ?', ttl.seconds.ago) }

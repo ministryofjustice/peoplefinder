@@ -1,0 +1,18 @@
+#flash-messages {
+  text-align: left;
+  font-weight: bold;
+  .flash-message {
+    margin: 15px 0;
+    padding: 15px;
+  }
+  .notice {
+    background-color: $notice-bg;
+    color: white;
+  }
+  .warning {
+    background-color: $warning-bg;
+  }
+  .error {
+    background-color: $error-bg;
+  }
+}

@@ -30,7 +30,7 @@ feature 'Login page' do
       person = create(:person)
 
       visit person_path(person)
-      click_link 'Edit this profile'
+      click_edit_profile
 
       expect(login_page).to be_displayed
       expect(login_page.description).to have_text('For security reasons, you have to be logged in to People Finder to make any changes.')

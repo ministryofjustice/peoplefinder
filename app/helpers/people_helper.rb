@@ -16,14 +16,20 @@ module PeopleHelper
     I18n.t(symbol, scope: [:people, :day_symbols])
   end
 
+  # display without link
+  # e.g. profile_image_tag person, link: false
   def profile_image_tag(person, options = {})
     source = profile_image_source(person, options)
-    alt_text = "Current photo of #{person}"
-    profile_image_div source, alt_text, options
+    options[:link_uri] = person_path(person) if add_image_link?(options)
+    options[:alt_text] = "Current photo of #{person}"
+    profile_or_team_image_div source, options
   end
 
   def team_image_tag team, options = {}
-    profile_image_div 'medium_team.png', "Team icon for #{team.name}", options
+    source = 'medium_team.png'
+    options[:link_uri] = group_path(team) if add_image_link?(options)
+    options[:alt_text] = "Team icon for #{team.name}"
+    profile_or_team_image_div source, options
   end
 
   def edit_person_link(name, person, options = {})
@@ -32,13 +38,6 @@ module PeopleHelper
       options.
       except(:activity).
       merge(data: edit_profile_analytics_attributes(person.id))
-  end
-
-  def profile_image_div source, alt_text, options
-    content_tag(:div, class: 'maginot') do
-      image_tag(source, options.merge(alt: alt_text)) +
-        content_tag(:div, class: 'barrier') {}
-    end
   end
 
   # Why do we need to go to this trouble to repeat new_person/edit_person? you
@@ -52,6 +51,32 @@ module PeopleHelper
   end
 
   private
+
+  def image_tag_wrapper source, options
+    image_tag(
+      source,
+      options.
+        except(:link, :link_uri, :alt_text).
+        merge(alt: options[:alt_text], class: 'media-object')
+    )
+  end
+
+  def profile_or_team_image_div source, options
+    content_tag(:div, class: 'maginot') do
+      if options.key?(:link_uri)
+        content_tag(:a, href: options[:link_uri]) do
+          image_tag_wrapper(source, options)
+        end
+      else
+        image_tag_wrapper(source, options)
+      end
+    end
+  end
+
+  # default to having an image link unless 'link: false' passed explicitly
+  def add_image_link? options
+    !options.key?(:link) || options[:link]
+  end
 
   def profile_image_source(person, options)
     version = options.fetch(:version, :medium)

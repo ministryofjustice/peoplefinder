@@ -3,15 +3,16 @@ require 'rails_helper'
 feature 'Audit trail' do
   include PermittedDomainHelper
 
+  let(:person) { create(:super_admin, email: 'test.user@digital.justice.gov.uk') }
   before do
-    omni_auth_log_in_as 'test.user@digital.justice.gov.uk'
+    omni_auth_log_in_as person.email
   end
 
   scenario 'Auditing an edit of a person' do
     with_versioning do
       person = create(:person, surname: 'original surname')
       visit edit_person_path(person)
-      fill_in 'Surname', with: 'something else'
+      fill_in 'Last name', with: 'something else'
       click_button 'Save', match: :first
 
       visit '/audit_trail'
@@ -29,7 +30,7 @@ feature 'Audit trail' do
     with_versioning do
       visit new_person_path
       fill_in 'First name', with: 'Jon'
-      fill_in 'Surname', with: 'Smith'
+      fill_in 'Last name', with: 'Smith'
       fill_in 'Main email', with: person_attributes[:email]
       click_button 'Save', match: :first
 
@@ -49,7 +50,7 @@ feature 'Audit trail' do
     with_versioning do
       person = create(:person, surname: 'Dan', given_name: 'Greg')
       visit person_path(person)
-      click_link('Delete this profile')
+      click_delete_profile
 
       visit '/audit_trail'
       expect(page).to have_text('Deleted Person')

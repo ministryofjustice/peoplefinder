@@ -1,5 +1,4 @@
 require 'rails_helper'
-require Rails.root.join('spec', 'controllers', 'concerns', 'shared_examples_for_session_person_creator.rb')
 
 RSpec.describe SessionsController, type: :controller do
   include PermittedDomainHelper
@@ -44,8 +43,28 @@ RSpec.describe SessionsController, type: :controller do
     )
   end
 
-  describe 'POST create' do
+  describe 'GET new' do
+    context 'with supported browser' do
+      before do
+        allow_any_instance_of(described_class).to receive(:supported_browser?).and_return true
+        get :new
+      end
+      it 'renders new' do
+        expect(response).to render_template :new
+      end
+    end
+    context 'with unsupported browser' do
+      before do
+        allow_any_instance_of(described_class).to receive(:supported_browser?).and_return false
+        get :new
+      end
+      it 'redirects to warning page' do
+        expect(response).to redirect_to unsupported_browser_new_sessions_path
+      end
+    end
+  end
 
+  describe 'POST create' do
     context 'with omniauth' do
       context 'when person already exists' do
         before do
