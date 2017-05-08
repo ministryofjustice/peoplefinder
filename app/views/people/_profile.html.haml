@@ -13,7 +13,7 @@
   .column-full
     .media
       .media-left
-        = profile_image_tag @person, class: 'profile-page', link: false
+        = profile_image_tag @person, link: false
         - if @person.email.present? && !@preview
           - if current_user == @person
             = render partial: "completeness", locals: { person: @person }

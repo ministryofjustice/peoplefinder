@@ -9,7 +9,7 @@
     = f.label :profile_image, class: 'form-label'
     .media
       .media-left
-        = profile_image_tag @person, class: 'team-members', link: false
+        = profile_image_tag @person, link: false
     %br/
     = f.submit 'Edit this picture', name: 'edit-picture-button', class: 'button'
 
