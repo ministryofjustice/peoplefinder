@@ -355,7 +355,7 @@ GEM
     loofah (2.0.3)
       nokogiri (>= 1.5.9)
     lumberjack (1.0.9)
-    mail (2.6.5)
+    mail (2.6.6.rc1)
       mime-types (>= 1.16, < 4)
     mailcatcher (0.6.5)
       eventmachine (= 1.0.9.1)
@@ -637,7 +637,7 @@ DEPENDENCIES
   keen
   launchy
   logstasher (~> 0.6.2)
-  mail
+  mail (~> 2.6.6.rc1)
   mailcatcher
   meta_request
   mini_magick
