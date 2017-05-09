@@ -1,4 +1,4 @@
-//= require analytics/analytics_event
+//= require modules/analytics_event
 
 describe 'AnalyticsEvent', ->
   element = null

@@ -32,13 +32,13 @@ RSpec.describe PersonFormBuilder, type: :form_builder do
 
     let(:output) do
       <<~HTML.squish_heredoc
-      <div class="form-group">
-        <label class="block-label selection-button-checkbox" for="person_works_monday">
-          <input name="person[works_monday]" type="hidden" value="0" />
-          <input type="checkbox" value="1" name="person[works_monday]" id="person_works_monday" />
-          Monday
-        </label>
-      </div>
+        <div class="form-group">
+          <label class="block-label selection-button-checkbox" for="person_works_monday">
+            <input name="person[works_monday]" type="hidden" value="0" />
+            <input type="checkbox" value="1" name="person[works_monday]" id="person_works_monday" />
+            Monday
+          </label>
+        </div>
       HTML
     end
 
@@ -65,9 +65,9 @@ RSpec.describe PersonFormBuilder, type: :form_builder do
   end
 
   describe '#text_field' do
-    let(:object) { double 'object' }
     subject { builder.text_field(:test_field) }
 
+    let(:object) { double 'object' }
     let(:output) do
       <<~HTML.squish_heredoc
         <div class=\"form-group\">

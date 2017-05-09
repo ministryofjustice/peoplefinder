@@ -1,4 +1,4 @@
-//= require analytics/virtual_pageview
+//= require modules/virtual_pageview
 
 describe 'VirtualPageview', ->
   element = null
