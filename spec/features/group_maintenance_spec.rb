@@ -184,7 +184,7 @@ feature 'Group maintenance' do
       expect(group.parent).to eql(sibling_group)
     end
 
-    scenario 'Changing a team parent via clicking sibling team\'s subteam name', js: true do
+    scenario 'Changing a team parent via clicking sibling team\'s subteam name', js: true, skip: 'skip until capybara/poltegeist update to try and fix as flickers regularly after site_prism bump to 2.9' do
       group = setup_three_level_group
       subteam_group = create(:group, name: 'Test team', parent: sibling_group)
       setup_group_member group
@@ -204,11 +204,10 @@ feature 'Group maintenance' do
         click_link 'Done', wait: 6
       end
 
-      # FIXME: skip until capybara/poltegeist update to try and fix as flickers regularly after site_prism bump to 2.9
-      # using_wait_time 6 do
-      #   expect(page).to have_selector('.show-editable-fields', visible: :visible)
-      #   expect(page).to have_selector('.parent-summary', text: /Test team/)
-      # end
+      using_wait_time 6 do
+        expect(page).to have_selector('.show-editable-fields', visible: :visible)
+        expect(page).to have_selector('.parent-summary', text: /Test team/)
+      end
 
       click_button 'Save'
 
