@@ -5,7 +5,7 @@
 .grid-row.mod-heading
   .column-full
     %h1.heading-xlarge.mod-heading-border
-      = @page_title = "Edit profile picture"
+      = @page_title = @person.profile_image.present? ? "Change the photo" : "Add a photo"
       %span.pull-right
         = link_to 'Cancel and go to profile page', @person.new_record? ? :back : @person,{ class: 'font-xsmall' }
 
@@ -23,7 +23,7 @@
       %li
         Use your mouse to adjust the crop lines
       %li
-        Click the Crop picture button
+        Click the Crop photo button
       %li
         Click the Save button
 
@@ -62,7 +62,7 @@
               Uploading
 
             %button.crop-finished-button.button-secondary
-              Crop picture
+              Crop photo
 
         .form-group.save-cancel-actions
           = f.submit class: 'button'
