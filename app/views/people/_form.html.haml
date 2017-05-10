@@ -6,7 +6,7 @@
   = f.text_field :email
 
   .form-group.mod-media.card
-    = f.label :profile_image, class: 'form-label'
+    = f.label :profile_image, 'Profile photo', class: 'form-label'
     .media
       .media-left
         = profile_image_tag @person, link: false
