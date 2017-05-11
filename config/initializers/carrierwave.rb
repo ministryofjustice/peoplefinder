@@ -8,6 +8,7 @@ CarrierWave.configure do |config|
       region: ENV['S3_REGION']
     }
     config.fog_directory = ENV['S3_BUCKET_NAME']
+    config.fog_public = false
   elsif Rails.env.test?
     config.storage = :file
     config.enable_processing = false
