@@ -37,7 +37,7 @@ module S3
     end
 
     def respond_to_missing?(method_name, include_private = false)
-      @bucket.respond_to?(method_name.to_sym) || super
+      @bucket.respond_to?(method_name.to_sym, include_private) || super
     end
 
     private
