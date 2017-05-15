@@ -59,8 +59,8 @@ RSpec.describe PeopleHelper, type: :helper do
       expect(profile_image_tag(person, options)).to match(/.*profile_photo.*\/croppable.*/)
     end
 
-    it 'adds a link_uri and alt_text to options hash and removes the version element' do
-      expect { profile_image_tag(person, options) }.to change { options.keys }.from([:class, :version]).to([:class, :link_uri, :alt_text])
+    it 'adds a link_uri and alt_text to options hash' do
+      expect { profile_image_tag(person, options) }.to change { options.keys }.from([:class, :version]).to([:class, :version, :link_uri, :alt_text])
     end
 
     it 'does not output internally used options' do
@@ -68,6 +68,7 @@ RSpec.describe PeopleHelper, type: :helper do
       expect(html).not_to match(/.*link=.*/)
       expect(html).not_to match(/.*link_uri=.*/)
       expect(html).not_to match(/.*alt_text=.*/)
+      expect(html).not_to match(/.*version=.*/)
     end
 
     it 'defaults to using the medium image version' do
@@ -78,6 +79,43 @@ RSpec.describe PeopleHelper, type: :helper do
     it 'fallsback to using medium_no_photo.png' do
       person.profile_photo_id = nil
       expect(profile_image_tag(person, options)).to match(/.*\/medium_no_photo.png.*/)
+    end
+
+    context 'environments using local storage' do
+      subject { profile_image_tag(person, options) }
+
+      before do
+        options.delete(:version)
+      end
+
+      it 'uses local file as image src' do
+        is_expected.to match(/.*src=\".*\/uploads\/peoplefinder\/profile_photo\/image\/[\d]+\/medium_.*\.png\".*/)
+      end
+    end
+
+    context 'environments using S3 storage' do
+      subject { profile_image_tag(person, options) }
+
+      let(:version) do
+        double 'version',
+          file: file
+      end
+
+      let(:file) do
+        double 'file',
+          authenticated_url: 'https://my-prod-bucket.s3.amazonaws.com/dir1/dir2/medium_photo_1.jpg?X-Amz-Signature=XnXXX12345xxx'
+      end
+
+      before do
+        options.delete(:version)
+        expect(person.profile_image).to receive(:medium).and_return version
+        expect(version).to receive(:file).and_return file
+      end
+
+      it 'uses pre-signed, time-limited, url for image src' do
+        expect(file).to receive(:authenticated_url)
+        is_expected.to include file.authenticated_url
+      end
     end
   end
 

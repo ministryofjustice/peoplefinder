@@ -16,7 +16,6 @@ module PeopleHelper
     I18n.t(symbol, scope: [:people, :day_symbols])
   end
 
-  # display without link
   # e.g. profile_image_tag person, link: false
   def profile_image_tag(person, options = {})
     source = profile_image_source(person, options)
@@ -56,7 +55,7 @@ module PeopleHelper
     image_tag(
       source,
       options.
-        except(:link, :link_uri, :alt_text).
+        except(:version, :link, :link_uri, :alt_text).
         merge(alt: options[:alt_text], class: 'media-object')
     )
   end
@@ -80,8 +79,15 @@ module PeopleHelper
 
   def profile_image_source(person, options)
     version = options.fetch(:version, :medium)
-    options.delete(:version)
-    person.profile_image.try(version) || 'medium_no_photo.png'
+    url_for_image person.profile_image.try(version)
+  end
+
+  def url_for_image image
+    if image.try(:file).respond_to? :authenticated_url
+      image.file.authenticated_url
+    else
+      image || 'medium_no_photo.png'
+    end
   end
 
 end
