@@ -3,8 +3,6 @@
 - content_for :breadcrumbs do
   = breadcrumbs(Home.path + ['Search results'])
 
-= render partial: 'shared/search'
-
 .grid-row
   .column-full
     %h1.heading-xlarge
@@ -12,27 +10,32 @@
       %span.heading-secondary
         = "Select a team or person's name to view more details."
 
-.grid-row.search-result-summary
-  .column-full
-    %hr/
-    - if matches_exist?
-      = pluralize(@team_results.size + @people_results.size, "result") + ' found'
-    - else
-      == <span class="query-term">#{@query}</span> not found —
-      == found #{pluralize(@people_results.size + @team_results.size, "similar result")}
-    %hr/
-
-.grid-row.person-results
-  #results.column-full
-    - @people_results.each_with_hit.with_index do |(person, hit), idx|
-      = render partial: 'search/person', locals: { person: person, hit: hit, index: idx }
-
-.grid-row.team-results
-  .column-full
-    = render partial: 'search/team', collection: @team_results.set
-
+= render partial: 'shared/search'
+%br/
+%br/
 
 .grid-row
+  .column-one-third.cb-search-filter-sidebar
+    = render partial: 'filter_sidebar'
+    %br/
+
+  .column-two-thirds
+    .grid-row.cb-search-result-summary
+      .column-full
+        = result_summary
+        %br/
+        %br/
+    .cb-search-results
+      - if people_filter?
+        #person-results
+          - @people_results.each_with_hit.with_index do |(person, hit), idx|
+            = render partial: 'search/person', locals: { person: person, hit: hit, index: idx }
+
+      - if teams_filter?
+        #team-results
+          = render partial: 'search/team', collection: @team_results.set
+
+.grid-row.cb-search-footer
   .column-full
-    Can't find the person you're looking for? Why not
-    = link_to 'add them', new_person_path
+    %br/
+    = t('.results_footer_html', new_profile_link: link_to('add them', new_person_path))

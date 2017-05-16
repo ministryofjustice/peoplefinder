@@ -35,6 +35,15 @@ en:
   time:
     formats:
       default: "%d %b %Y %H:%M"
+  search:
+    index:
+      results_footer_html: "Can't find the person you're looking for? Why not %{new_profile_link}"
+    filter_sidebar:
+        filter_results_heading: Filter results
+        filter_results_hint: The results will update automatically based on your selection
+        people_team_filter_heading: People and teams
+        people_checkbox_label: People
+        teams_checkbox_label: Teams
   sessions:
     login_page:
       heading: Request link to access People Finder

@@ -50,6 +50,25 @@ RSpec.describe ApplicationHelper, type: :helper do
     end
   end
 
+  describe '#bold_tag' do
+    subject { bold_tag('bold text', options) }
+
+    let(:options) { {} }
+
+    it 'applies span around the term' do
+      is_expected.to have_selector('span', text: 'bold text')
+    end
+
+    it 'applies bold-term class to span around the term' do
+      is_expected.to have_selector('span.bold-term', text: 'bold text')
+    end
+
+    it 'appends bold-term to other classes passed in' do
+      options[:class] = 'my-other-class'
+      is_expected.to include('bold-term', 'my-other-class')
+    end
+  end
+
   context '#breadcrumbs' do
     it 'builds linked breadcrumbs' do
       justice = create(:department)

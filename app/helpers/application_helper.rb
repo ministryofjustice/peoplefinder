@@ -101,6 +101,12 @@ module ApplicationHelper
     I18n.t([key, subkey].join('.'), options.merge(name: user))
   end
 
+  def bold_tag term, options = {}
+    classes = options[:class] || ''
+    options[:class] = classes.split.push('bold-term')
+    content_tag(:span, options) { |_tag| term }
+  end
+
   private
 
   def updated_at(datetime)

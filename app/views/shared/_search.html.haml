@@ -7,7 +7,9 @@
           = t('shared.search.hint')
 
         .mod-search-input-wrapper
-          = text_field_tag :query, @query, class: 'form-control mod-search-input js-search-focus focus', id: "mod-search-input"
+          = search_field_tag :query, @query, class: 'form-control mod-search-input js-search-focus focus', id: "mod-search-input"
+          - SearchHelper::FILTERS.each_value do |value|
+            = hidden_field_tag 'search_filters[]', value
         = submit_tag 'Search', class: 'mod-search-submit'
 
   .column-one-third.new-profile

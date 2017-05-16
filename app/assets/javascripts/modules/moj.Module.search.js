@@ -10,6 +10,5 @@ moj.Modules.search = {
       var $el = $(el);
       return moj.Helpers.searchInput($el);
     });
-
   }
 }

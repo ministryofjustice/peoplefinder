@@ -57,7 +57,7 @@ feature 'Searching feature', elastic: true do
       within('.breadcrumbs ol') do
         expect(page).to have_text('Search results')
       end
-      within('.search-result-summary') do
+      within('.cb-search-result-summary') do
         expect(page).to have_text(/\d+ result(s)? found/)
       end
       within('.mod-search-form') do
@@ -102,7 +102,7 @@ feature 'Searching feature', elastic: true do
     scenario 'highlights individual name terms' do
       fill_in 'query', with: 'Jon Browne'
       click_button 'Search'
-      within '.cb-person-name' do
+      within '#person-results' do
         expect(page).to have_selector('.es-highlight', text: 'Browne')
         expect(page).to have_selector('.es-highlight', text: 'Jon')
       end
