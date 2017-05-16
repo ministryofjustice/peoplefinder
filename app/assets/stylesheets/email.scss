@@ -20,15 +20,45 @@ table {
   border-spacing: 0;
   margin: auto;
 }
-table.banner {
-   background-color: #000000;
-   width: 600px;
-}
+
 table.main {
   padding: 0;
-  width:100% !important;
+  width: 100% !important;
   line-height:100% !important;
 }
+
+table.banner {
+  background-color: #000000;
+  line-height: normal;
+  width: 600px;
+}
+
+td.govuk-logo {
+  width: 100%;
+  color: white;
+  background-color: #000000;
+  padding: 5px 0 5px 20px;
+  .text-vertical-left {
+    padding: 5px 0 5px 35px;
+    font-size: 20px;
+  }
+  img {
+    width: 32px;
+    height: 32px;
+    float: left;
+    -ms-interpolation-mode:bicubic;
+  }
+}
+
+#global-header-bar {
+  height: 5px;
+  background-color: #005ea5;
+  width: 560px;
+  padding: 0;
+  border-spacing: 0;
+  margin: auto;
+}
+
 table.footer {
   border-top-width: 1px;
   border-top-style: solid;
@@ -41,6 +71,7 @@ td {
   min-width:10px;
   color: #434343;
 }
+
 td.title-header{
   padding-left: 20px;
   width: 560px;
@@ -51,15 +82,7 @@ td.title-header{
   line-height: 200%;
   }
 }
-td#moj-logo {
-  width: 100%;
-  background-color: #000000;
-  padding: 5px 0 5px 20px;
-  img {
-    width: 40%;
-    height: auto;
-  }
-}
+
 td.footer-text {
   font-size: 14px;
   font-weight: normal;
