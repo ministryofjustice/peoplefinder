@@ -2,7 +2,7 @@ module Pages
   module Sections
     class PersonConfirmSearchResultSection < SitePrism::Section
       element :name_link, ".cb-person-name > a"
-      element :select_button, "input[type='submit'][value='Select']"
+      element :select_button, ".cb-confirmation-select"
     end
   end
 end

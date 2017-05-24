@@ -1,0 +1,30 @@
+- content_for :body_classes, 'edit-profile-email-page '
+
+.grid-row.mod-heading
+  .column-full
+    %h1.heading-xlarge.mod-heading-border
+      = @page_title = 'Email change confirmation'
+
+.grid-row
+  .column-full
+    %h2.heading-medium.with-border-lg
+      You have signed-in with a new email address
+
+.grid-row
+  .column-full
+    Your main and alternative email address are now:
+
+.grid-row
+  .column-two-thirds
+    = form_for @person, url: person_email_path(@person), method: :put, builder: PersonFormBuilder do |f|
+      .form-group
+        = f.text_field :email, value: @new_email || @person.email
+        = f.text_field :secondary_email, value: @new_secondary_email || @person.secondary_email
+
+      .form-group
+        = f.submit 'Continue', class: 'button'
+
+  .column-one-third
+    .cb-email-update-info
+      = email_update_info_message @person
+

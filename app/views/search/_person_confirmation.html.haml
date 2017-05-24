@@ -28,8 +28,7 @@
                 Current project(s)
               %br/
               = person.current_project
+
   .column-one-third
     - if ['sessions','tokens', 'people'].include? controller_name
-      = form_for person, url: update_email_person_path(person) do |f|
-        = f.hidden_field :email, value: @person.email
-        = f.submit 'Select', class: 'button'
+      = link_to 'Select', edit_person_email_path(person_id: person, new_email: @person.email), class: 'button cb-confirmation-select'

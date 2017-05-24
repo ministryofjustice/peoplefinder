@@ -14,6 +14,7 @@ feature 'Login flow' do
   let(:profile_page) { Pages::Profile.new }
   let(:login_page) { Pages::Login.new }
   let(:confirm_page) { Pages::PersonConfirm.new }
+  let(:email_confirm_page) { Pages::PersonEmailConfirm.new }
   let(:base_page) { Pages::Base.new }
 
   let(:profile_created_from_login_html) { "Your profile did not exist so we created it for you." }
@@ -128,18 +129,94 @@ feature 'Login flow' do
           expect(edit_profile_page).to have_profile_link person
         end
 
-        scenario 'selecting an existing profile updates the primary email address of the selectee, logins in and redirects to profile page' do
+        def when_i_am_prompted_to_login
           visit new_group_path
+        end
+
+        def and_i_login_using_token
           token_login_step_with_expectation
+        end
+
+        def then_the_confirmation_list_is_displayed_with count: 2
           expect(confirm_page).to be_displayed
-          expect(confirm_page.person_confirm_results).to have_confirmation_results count: 2
-          person = Person.find_by(email: 'john.doe@digital.justice.gov.uk')
+          expect(confirm_page.person_confirm_results).to have_confirmation_results count: count
+        end
+
+        def and_i_select_first_namesake
           confirm_page.person_confirm_results.select_buttons.first.click
+        end
+
+        def then_the_email_confirmation_page_is_displayed
+          expect(email_confirm_page).to be_displayed
+          expect(email_confirm_page).to have_form
+          expect(email_confirm_page.form).to have_email_field
+          expect(email_confirm_page.form).to have_secondary_email_field
+          expect(email_confirm_page.form).to have_continue_button
+        end
+
+        def and_the_email_is_prefilled_with email
+          expect(email_confirm_page.form.email_field.value).to eql email
+        end
+
+        def and_the_alternative_email_is_prefilled_with email
+          expect(email_confirm_page.form.secondary_email_field.value).to eql email
+        end
+
+        def and_info_is_displayed message_includes:
+          if message_includes.is_a?(Regexp)
+            expect(email_confirm_page.info.text).to match(message_includes)
+          else
+            expect(email_confirm_page.info.text).to include message_includes
+          end
+        end
+
+        def when_i_continue
+          click_button 'Continue'
+        end
+
+        def then_profile_page_is_displayed_with_message_for person:, message:
           expect(profile_page).to be_displayed
           expect(profile_page).to have_profile_link person
           expect(profile_page).to have_flash_message
-          expect(profile_page.flash_message).to have_selector('.notice', text: /Your primary email has been updated to/)
-          expect(person.reload.email).to eql email
+          expect(profile_page.flash_message).to have_selector('.notice', text: message)
+        end
+
+        context 'selecting an existing namesake' do
+          background do
+            when_i_am_prompted_to_login
+            and_i_login_using_token
+          end
+
+          scenario 'with an alternative email' do
+            person = Person.find_by(email: 'john.doe@digital.justice.gov.uk')
+            person.update(secondary_email: 'john.doe+1@digital.justice.gov.uk')
+
+            then_the_confirmation_list_is_displayed_with count: 2
+            and_i_select_first_namesake
+            then_the_email_confirmation_page_is_displayed
+            and_the_email_is_prefilled_with email
+            and_the_alternative_email_is_prefilled_with person.secondary_email
+            and_info_is_displayed message_includes: person.email
+            when_i_continue
+            then_profile_page_is_displayed_with_message_for person: person, message: 'Your primary email has been updated to'
+
+            expect(person.reload.email).to eql email
+          end
+
+          scenario 'without and alternative email' do
+            person = Person.find_by(email: 'john.doe@digital.justice.gov.uk')
+
+            then_the_confirmation_list_is_displayed_with count: 2
+            and_i_select_first_namesake
+            then_the_email_confirmation_page_is_displayed
+            and_the_email_is_prefilled_with email
+            and_the_alternative_email_is_prefilled_with person.email
+            and_info_is_displayed message_includes: /main or alternative/i
+            when_i_continue
+            then_profile_page_is_displayed_with_message_for person: person, message: 'Your primary email has been updated to'
+
+            expect(person.reload.email).to eql email
+          end
         end
       end
     end
