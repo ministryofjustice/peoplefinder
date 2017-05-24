@@ -1,8 +1,10 @@
 - content_for :body_classes, 'edit-profile-page '
 - @editing_mode = true
 
-%h1.heading-xlarge.with-border-lg
-  = @page_title = 'Duplicate names found'
+.grid-row
+  .column-full
+    %h1.heading-xlarge.with-border-lg
+      = @page_title = 'Duplicate names found'
 
 .error-summary{"aria-labelledby" => "error-summary-heading", :role => "group", :tabindex => "-1"}
   %h1#error-summary-heading.heading-medium.error-summary-heading
@@ -12,8 +14,10 @@
     %br/
     = "or click continue to create a new profile."
 
-.pagination
-  = pluralize(@people.length, "result") + ' found'
+.grid-row
+  .column-full
+    %h2.heading-small
+      = pluralize(@people.length, "result") + ' found'
 
 #confirm-person-results
   = render partial: 'search/person_confirmation', collection: @people, as: :person, locals: { search_result: true }

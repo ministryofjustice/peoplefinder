@@ -8,7 +8,6 @@
         %span.heading-secondary
           = "Select a team or person's name to view more details."
 
-
   .error-summary{"aria-labelledby" => "error-summary-heading", :role => "group", :tabindex => "-1"}
     %h1#error-summary-heading.heading-medium.error-summary-heading
       = "Your details match one or more existing profiles."
@@ -17,8 +16,10 @@
       %br/
       = "or click continue to create a new profile."
 
-  .pagination
-    = pluralize(@people.length, "result") + ' found'
+  .grid-row
+    .column-full
+      %h2.heading-small
+        = pluralize(@people.length, "result") + ' found'
 
   #confirm-person-results
     = render partial: 'search/person_confirmation', collection: @people, as: :person

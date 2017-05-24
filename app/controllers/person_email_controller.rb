@@ -6,7 +6,9 @@ class PersonEmailController < ApplicationController
   before_action :set_new_emails, only: [:edit]
   skip_before_action :ensure_user, only: [:edit, :update]
 
-  def edit; end
+  def edit
+    warning :person_email_confirm
+  end
 
   def update
     @person.assign_attributes(person_email_params)

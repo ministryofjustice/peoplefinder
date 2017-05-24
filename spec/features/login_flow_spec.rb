@@ -76,7 +76,7 @@ feature 'Login flow' do
   describe 'Prompted to login' do
     let(:group) { create :group }
     let(:other_person) { create :person }
-    let(:create_profile_warning) { 'You need to create a People Finder account to finish signing in' }
+    let(:create_profile_warning) { 'You need to create or update a People Finder account to finish signing in' }
 
     context 'when I have a profile' do
       scenario 'attempting a new|edit action redirects via login back to that action\'s template page with NO flash notice' do
@@ -211,7 +211,7 @@ feature 'Login flow' do
             then_the_email_confirmation_page_is_displayed
             and_the_email_is_prefilled_with email
             and_the_alternative_email_is_prefilled_with person.email
-            and_info_is_displayed message_includes: /main or alternative/i
+            and_info_is_displayed message_includes: /new email.*old email.*change this now/i
             when_i_continue
             then_profile_page_is_displayed_with_message_for person: person, message: 'Your primary email has been updated to'
 
