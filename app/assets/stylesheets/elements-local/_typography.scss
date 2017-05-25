@@ -1,3 +1,5 @@
+$bold: 700;
+
 .with-border-lg{
   margin: 30px 0;
   border-bottom: 1px solid #6f777b;
@@ -15,8 +17,8 @@
   @include core-16;
 }
 
-.query-term{
-  font-weight: 700;
+.bold-term{
+  font-weight: $bold;
 }
 
 #content{

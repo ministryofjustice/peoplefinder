@@ -1,11 +1,11 @@
 class SearchController < ApplicationController
+  include SearchHelper
 
-  helper_method :matches_exist?
+  before_action :set_search_args
 
   def index
-    @query = query
-    @team_results = search(GroupSearch)
-    @people_results = search(PersonSearch)
+    @team_results = search(GroupSearch) if teams_filter?
+    @people_results = search(PersonSearch) if people_filter?
   end
 
   private
@@ -13,10 +13,6 @@ class SearchController < ApplicationController
   def search(klass)
     search = klass.new(@query, SearchResults.new)
     search.perform_search
-  end
-
-  def matches_exist?
-    @team_results.contains_exact_match || @people_results.contains_exact_match
   end
 
   def can_add_person_here?
@@ -30,4 +26,10 @@ class SearchController < ApplicationController
   rescue Encoding::InvalidByteSequenceError
     ''
   end
+
+  def set_search_args
+    @query = query
+    @search_filters = (params[:search_filters] || [])
+  end
+
 end

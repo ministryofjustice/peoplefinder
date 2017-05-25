@@ -1,0 +1,22 @@
+%h2.heading-small{ style: 'margin-top: 0;' }
+  = t('.filter_results_heading')
+= t('.filter_results_hint')
+
+= form_tag '/search', method: :get, id: 'mod-search-filter-form' do
+  = hidden_field_tag :query, @query
+
+  %h3.heading-small
+    = t('.people_team_filter_heading')
+  .grid-row
+    .column-two-thirds
+      = check_box_tag 'search_filters[]', :people, people_filter?, id: :people, :onclick => "javascript: submit_search();"
+      = label_tag :people, t('.people_checkbox_label')
+  .grid-row
+    .column-two-thirds
+      = check_box_tag 'search_filters[]', :teams, teams_filter?, id: :teams, :onclick => "javascript: submit_search();"
+      = label_tag :teams, t('.teams_checkbox_label')
+
+:javascript
+  function submit_search(){
+    document.getElementById('mod-search-filter-form').submit();
+  }

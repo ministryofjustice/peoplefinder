@@ -13,7 +13,6 @@ feature 'Login flow' do
   let(:edit_group_page) { Pages::EditGroup.new }
   let(:profile_page) { Pages::Profile.new }
   let(:login_page) { Pages::Login.new }
-  let(:search_page) { Pages::Search.new }
   let(:confirm_page) { Pages::PersonConfirm.new }
   let(:base_page) { Pages::Base.new }
 
