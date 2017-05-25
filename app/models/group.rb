@@ -142,7 +142,7 @@ class Group < ActiveRecord::Base
   def not_second_root_group
     if parent_id.nil?
       department = Group.department
-      root_group_exists = department.present? && self != department
+      root_group_exists = department.present? && department != self
       errors.add(:parent_id, 'is required') if root_group_exists
     end
   end
