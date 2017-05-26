@@ -33,7 +33,3 @@
                 Current project(s)
               %br/
               = es_highlighter(hit, person, :current_project)
-
-  .column-one-third
-    - if ['sessions','tokens', 'people'].include? controller_name
-      = link_to 'Select', edit_person_email_path(person_id: person, new_email: @person.email), class: 'button button-link cb-confirmation-select'

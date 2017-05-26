@@ -1,4 +1,4 @@
-# FIXME: Refactor this controller - it's too long and mailing shouldn't be done in models
+# FIXME: Refactor this controller - it's too long
 class PeopleController < ApplicationController
 
   include StateCookieHelper

@@ -24,6 +24,7 @@ class TokenLogin
   private
 
   def find_token_securely
+    # OPTIMIZE: duplicate - see person email controller
     Token.find_each do |token|
       return token if Secure.compare(token.value, @token_value)
     end

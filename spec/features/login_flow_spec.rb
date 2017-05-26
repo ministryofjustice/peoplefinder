@@ -24,21 +24,6 @@ feature 'Login flow' do
     token_log_in_as(email)
   end
 
-  RSpec::Matchers.define :have_profile_link do |expected|
-    match do |actual|
-      begin
-        within '.profile-link' do
-          actual.find_link(expected.name, href: person_path(expected)).present?
-        end
-      rescue
-        false
-      end
-    end
-    failure_message do |actual|
-      "expected that #{actual} would have profile link for #{person_path(expected)}."
-    end
-  end
-
   describe 'Choosing to login' do
     scenario 'When a user logs in for the first time, they are directed to edit their profile' do
       omni_auth_log_in_as(email)
@@ -203,7 +188,7 @@ feature 'Login flow' do
             expect(person.reload.email).to eql email
           end
 
-          scenario 'without and alternative email' do
+          scenario 'without an alternative email' do
             person = Person.find_by(email: 'john.doe@digital.justice.gov.uk')
 
             then_the_confirmation_list_is_displayed_with count: 2
@@ -211,7 +196,7 @@ feature 'Login flow' do
             then_the_email_confirmation_page_is_displayed
             and_the_email_is_prefilled_with email
             and_the_alternative_email_is_prefilled_with person.email
-            and_info_is_displayed message_includes: /new email.*old email.*change this now/i
+            and_info_is_displayed message_includes: /new email.*old email.*change this/i
             when_i_continue
             then_profile_page_is_displayed_with_message_for person: person, message: 'Your primary email has been updated to'
 

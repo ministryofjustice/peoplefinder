@@ -15,23 +15,91 @@ RSpec.describe PersonEmailController, type: :controller do
     let(:person) { create(:person, valid_attributes) }
     let(:new_email) { 'my-new-email@digital.justice.gov.uk' }
 
-    before do
-      get :edit, person_id: person.to_param, new_email: new_email
+    shared_examples 'renders edit template' do
+      it { expect(response).to render_template :edit }
+
+      it 'assigns the requested person as @person' do
+        expect(assigns(:person)).to eq(person)
+      end
+
+      it 'assigns new email as @new_email' do
+        expect(assigns(:new_email)).to eq(new_email)
+      end
+
+      it 'assigns existing primary email as @new_secondary_email' do
+        expect(assigns(:new_secondary_email)).to eq(person.email)
+      end
     end
 
-    it 'assigns the requested person as @person' do
-      expect(assigns(:person)).to eq(person)
+    context 'without authentication' do
+      let(:request) do
+        get :edit, person_id: person.to_param
+      end
+
+      it 'raises routing error for handling by server as Not Found' do
+        expect { request }.to raise_error ActionController::RoutingError, 'Not Found'
+      end
     end
 
-    it 'assigns existing email as @new_email' do
-      expect(assigns(:new_email)).to eq(new_email)
+    context 'with logged in user' do
+      before do
+        controller.singleton_class.class_eval do
+          def current_user
+            Person.first
+          end
+          helper_method :current_user
+        end
+      end
+
+      let(:request) do
+        get :edit, person_id: person.to_param
+      end
+
+      it 'raises routing error for handling by server as Not Found' do
+        expect { request }.to raise_error ActionController::RoutingError, 'Not Found'
+      end
     end
 
-    it 'assigns existing primary email as @new_secondary_email' do
-      expect(assigns(:new_secondary_email)).to eq(person.email)
+    context 'with token authentication' do
+      context 'with a valid token' do
+        let(:token) { create(:token, user_email: new_email, spent: true) }
+
+        before do
+          get :edit, person_id: person.to_param, token_value: token.value
+        end
+
+        include_examples 'renders edit template'
+      end
+
+      context 'with an expired token' do
+        let(:token) { create(:token, user_email: new_email, spent: true, created_at: (Token::DEFAULT_EXTRA_EXPIRY_PERIOD+1).ago) }
+        let(:request) { get :edit, person_id: person.to_param, token_value: token.value }
+
+        it 'raises routing error for handling by server as Not Found' do
+          expect { request }.to raise_error ActionController::RoutingError, 'Not Found'
+        end
+      end
     end
 
-    it { expect(response).to render_template :edit }
+    context 'with oauth authentication' do
+      let(:oauth_hash) do
+        OmniAuth::AuthHash.new(
+          provider: 'gplus',
+          info: {
+            email: new_email,
+            first_name: 'John',
+            last_name: 'Doe',
+            name: 'John Doe'
+          }
+        )
+      end
+
+      before do
+        get :edit, person_id: person.to_param, oauth_hash: oauth_hash
+      end
+
+      include_examples 'renders edit template'
+    end
   end
 
   describe 'PUT update' do

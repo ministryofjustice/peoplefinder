@@ -17,7 +17,9 @@ feature 'Person maintenance' do
 
   let(:edit_profile_page) { Pages::EditProfile.new }
   let(:new_profile_page) { Pages::NewProfile.new }
+  let(:profile_page) { Pages::Profile.new }
   let(:login_page) { Pages::Login.new }
+  let(:email_confirm_page) { Pages::PersonEmailConfirm.new }
 
   let(:completion_prompt_text) do
     'Fill in the highlighted fields to achieve 100% profile completion'
@@ -110,9 +112,14 @@ feature 'Person maintenance' do
 
         click_button 'Save', match: :first
 
+        expect(page).to have_selector('.error-summary', text: 'The profile you are creating matches one or more existing profiles')
         expect(page).to have_text('1 result found')
-
+        expect(page).to_not have_link('Select')
+        expect(page).to_not have_selector('.cb-confirmation-select')
         click_button 'Continue, it is not one of these'
+
+        expect(profile_page).to be_displayed
+        expect(profile_page.flash_message).to have_selector('.notice', text: /Created .* profile/)
         check_creation_of_profile_details
         expect(Person.where(surname: person_attributes[:surname]).count).to eql(2)
       end
