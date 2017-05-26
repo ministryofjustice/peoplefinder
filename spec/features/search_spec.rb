@@ -58,7 +58,7 @@ feature 'Searching feature', elastic: true do
         expect(page).to have_text('Search results')
       end
       within('.cb-search-result-summary') do
-        expect(page).to have_text(/\d+ result(s)? found/)
+        expect(page).to have_text(/\d+ result(s)?/)
       end
       within('.mod-search-form') do
         expect(page).to have_selector("input[value='Browne']")

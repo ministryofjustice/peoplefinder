@@ -65,7 +65,7 @@ RSpec.describe SearchHelper, type: :helper do
 
       context 'unfiltered' do
         it 'outputs expected text including sub-counts' do
-          expect(helper.result_summary).to match(/\A.*4 results.* found from people \(3\) and teams \(1\)\z/)
+          expect(helper.result_summary).to match(/\A.*4 results.* from people \(3\) and teams \(1\)\z/)
         end
       end
 
@@ -75,7 +75,7 @@ RSpec.describe SearchHelper, type: :helper do
           @search_filters = ['people']
         end
         it 'outputs expected text, not including sub counts' do
-          expect(helper.result_summary).to match(/\A.*3 results.* found from people\z/)
+          expect(helper.result_summary).to match(/\A.*3 results.* from people\z/)
         end
       end
 
@@ -85,7 +85,7 @@ RSpec.describe SearchHelper, type: :helper do
           @search_filters = ['teams']
         end
         it 'outputs expected text, not including sub counts' do
-          expect(helper.result_summary).to match(/\A.*1 result.* found from teams\z/)
+          expect(helper.result_summary).to match(/\A.*1 result.* from teams\z/)
         end
       end
     end

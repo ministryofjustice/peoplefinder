@@ -66,7 +66,7 @@ feature 'Search results page' do
 
     scenario 'on people', js: true do
       uncheck 'Teams'
-      expect(search_page.search_result_summary).to have_text('2 results found from people')
+      expect(search_page.search_result_summary).to have_text('2 results from people')
       expect(search_page.search_results).to have_people_results count: 2
       expect(search_page.search_results).to have_team_results count: 0
       expect(search_page.search_results.people_result_names).to include 'Jon Browne', 'Jim Browne'

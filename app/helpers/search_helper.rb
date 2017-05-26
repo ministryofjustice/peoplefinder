@@ -22,7 +22,7 @@ module SearchHelper
   def result_summary
     options = { style: 'font-size: 25px;' }
     summary = if matches_exist?
-                [bold_tag(pluralize(result_count, 'result'), options), 'found', filter_text]
+                [bold_tag(pluralize(result_count, 'result'), options), filter_text]
               else
                 [
                   bold_tag(@query, options),
