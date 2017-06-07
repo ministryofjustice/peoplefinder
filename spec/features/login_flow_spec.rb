@@ -159,6 +159,11 @@ feature 'Login flow' do
           click_button 'Continue'
         end
 
+        def then_persons_email_is_updated person:, new_email:
+          person.reload
+          expect(person.email).to eql new_email
+        end
+
         def then_profile_page_is_displayed_with_message_for person:, message:
           expect(profile_page).to be_displayed
           expect(profile_page).to have_profile_link person
@@ -183,9 +188,9 @@ feature 'Login flow' do
             and_the_alternative_email_is_prefilled_with person.secondary_email
             and_info_is_displayed message_includes: person.email
             when_i_continue
-            then_profile_page_is_displayed_with_message_for person: person, message: 'Your primary email has been updated to'
-
-            expect(person.reload.email).to eql email
+            then_persons_email_is_updated person: person, new_email: email
+            then_profile_page_is_displayed_with_message_for person: person, message: "Your main email has been updated to #{person.email}"
+            expect(person.email).to eql email
           end
 
           scenario 'without an alternative email' do
@@ -198,9 +203,8 @@ feature 'Login flow' do
             and_the_alternative_email_is_prefilled_with person.email
             and_info_is_displayed message_includes: /new email.*old email.*change this/i
             when_i_continue
-            then_profile_page_is_displayed_with_message_for person: person, message: 'Your primary email has been updated to'
-
-            expect(person.reload.email).to eql email
+            then_persons_email_is_updated person: person, new_email: email
+            then_profile_page_is_displayed_with_message_for person: person, message: "Your main email has been updated to #{person.email}"
           end
         end
       end

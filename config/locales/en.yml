@@ -157,7 +157,7 @@ en:
       update_error: "There was an error updating the image"
     person_email:
       person_email_confirm: "You need to update your People Finder account to finish signing in"
-      profile_email_updated: "Your primary email has been updated to %{email}"
+      profile_email_updated: "Your main email has been updated to %{email}"
       original_email_info_html: |
         You have signed in with a new email address which will now be used as your main email.
         Your previous email address was
