@@ -28,8 +28,10 @@
                 Current project(s)
               %br/
               = person.current_project
+
   .column-one-third
-    - if ['sessions','tokens', 'people'].include? controller_name
-      = form_for person, url: update_email_person_path(person) do |f|
-        = f.hidden_field :email, value: @person.email
-        = f.submit 'Select', class: 'button'
+    - if ['sessions','tokens'].include? controller_name
+      - if controller_name == 'tokens'
+        = link_to 'Select', edit_person_email_path(person_id: person, token_value: params[:id]), class: 'button button-link cb-confirmation-select'
+      - elsif controller_name == 'sessions'
+        = link_to 'Select', edit_person_email_path(person_id: person, oauth_hash: request.env['omniauth.auth']), class: 'button button-link cb-confirmation-select'

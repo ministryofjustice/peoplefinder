@@ -33,9 +33,3 @@
                 Current project(s)
               %br/
               = es_highlighter(hit, person, :current_project)
-
-  .column-one-third
-    - if ['sessions','tokens', 'people'].include? controller_name
-      = form_for person, url: update_email_person_path(person) do |f|
-        = f.hidden_field :email, value: @person.email
-        = f.submit 'Select', class: 'button'

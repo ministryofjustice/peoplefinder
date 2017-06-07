@@ -24,7 +24,7 @@ en:
     form:
       placeholder: Discover what this team is responsible for, who is in it and how you can get in touch with them.
   shared:
-    finish_profile_request: &finish_profile_request "You need to create a People Finder account to finish signing in"
+    finish_profile_request: &finish_profile_request "You need to create or update a People Finder account to finish signing in"
     unauthorised: &unauthorised Unauthorised, insufficient privileges
     firefox_message: &firefox_message |
         <strong style="font-weight: 700">Internet Explorer 6 and 7 users:</strong>
@@ -149,13 +149,26 @@ en:
         other: |
           Thank you for helping to improve People Finder.
           We have let %{person} know that you’ve made changes
-      profile_email_updated: "Your primary email has been updated to %{email}"
       profile_deleted: "Deleted %{person}’s profile"
       create_error: "The profile was not created. Please check the errors below"
     person_image:
       no_image_uploaded: "No image has been uploaded for %{person}"
       image_cropped: "Cropped %{person}’s image"
       update_error: "There was an error updating the image"
+    person_email:
+      person_email_confirm: "You need to update your People Finder account to finish signing in"
+      profile_email_updated: "Your main email has been updated to %{email}"
+      original_email_info_html: |
+        You have signed in with a new email address which will now be used as your main email.
+        Your previous email address was
+        <div style="font-weight: 700; padding: 5px 0; display: inline">
+          %{email}
+        </div>
+        and will no longer be included in your profile.
+        You can change this if you wish.
+      info_message: |
+        You have signed in with a new email address which will now be used as your main email.
+        We have added your old email address as an alternative. You can change this if you wish.
     problem_reports:
       report_sent: Your report has been sent. Thank you for reporting a problem.
     reported_profiles:
