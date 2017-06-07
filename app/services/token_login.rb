@@ -1,12 +1,9 @@
-require 'secure'
-
 class TokenLogin
 
   attr_reader :token
 
   def initialize(token_value)
-    @token_value = token_value
-    @token = find_token_securely
+    @token = find_token_securely token_value
   end
 
   def call view
@@ -23,11 +20,8 @@ class TokenLogin
 
   private
 
-  def find_token_securely
-    # OPTIMIZE: duplicate - see person email controller
-    Token.find_each do |token|
-      return token if Secure.compare(token.value, @token_value)
-    end
+  def find_token_securely token_value
+    Token.find_securely token_value
   end
 
   def login_and_render view

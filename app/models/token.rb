@@ -9,6 +9,7 @@
 #  updated_at :datetime
 #  spent      :boolean          default(FALSE)
 #
+require 'secure'
 
 class Token < ActiveRecord::Base
   class TTLRaceCondition < StandardError; end
@@ -36,6 +37,12 @@ class Token < ActiveRecord::Base
 
   def self.find_unspent_by_user_email user_email
     unspent.find_by_user_email(user_email)
+  end
+
+  def self.find_securely token_value
+    find_each do |token|
+      return token if Secure.compare(token.value, token_value)
+    end
   end
 
   def to_param

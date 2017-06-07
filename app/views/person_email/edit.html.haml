@@ -13,6 +13,8 @@
       .column-full
         = f.text_field :email, value: @new_email || @person.email
         = f.text_field :secondary_email, value: @new_secondary_email || @person.secondary_email
+        = f.hidden_field :token_value, value: @token&.value
+        = f.hidden_field :oauth_hash, value: @oauth_hash
     .grid-row.cb-email-update-info
       .column-full
         .form-group

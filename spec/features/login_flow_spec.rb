@@ -89,7 +89,7 @@ feature 'Login flow' do
           create(:person, given_name: 'Johnny', surname: 'Doe-Smyth', email: 'john.doe2@digital.justice.gov.uk')
         end
 
-        scenario 'I am redirected to the profile creation confirmation page' do
+        scenario 'I am redirected to person confirmation page' do
           visit new_group_path
           token_login_step_with_expectation
           expect(confirm_page).to be_displayed
@@ -120,6 +120,10 @@ feature 'Login flow' do
 
         def and_i_login_using_token
           token_login_step_with_expectation
+        end
+
+        def when_i_login_using_oauth
+          omni_auth_log_in_as(email)
         end
 
         def then_the_confirmation_list_is_displayed_with count: 2
@@ -171,42 +175,68 @@ feature 'Login flow' do
           expect(profile_page.flash_message).to have_selector('.notice', text: message)
         end
 
+        def without_alternative_email_scenario
+          person = Person.find_by(email: 'john.doe@digital.justice.gov.uk')
+          then_the_confirmation_list_is_displayed_with count: 2
+          and_i_select_first_namesake
+          then_the_email_confirmation_page_is_displayed
+          and_the_email_is_prefilled_with email
+          and_the_alternative_email_is_prefilled_with person.email
+          and_info_is_displayed message_includes: /new email.*old email.*change this/i
+          when_i_continue
+          then_persons_email_is_updated person: person, new_email: email
+          then_profile_page_is_displayed_with_message_for person: person, message: "Your main email has been updated to #{person.email}"
+          expect(person.email).to eql email
+        end
+
+        def with_alternative_email_scenario
+          person = Person.find_by(email: 'john.doe@digital.justice.gov.uk')
+          person.update(secondary_email: 'john.doe+1@digital.justice.gov.uk')
+
+          then_the_confirmation_list_is_displayed_with count: 2
+          and_i_select_first_namesake
+          then_the_email_confirmation_page_is_displayed
+          and_the_email_is_prefilled_with email
+          and_the_alternative_email_is_prefilled_with person.secondary_email
+          and_info_is_displayed message_includes: person.email
+          when_i_continue
+          then_persons_email_is_updated person: person, new_email: email
+          then_profile_page_is_displayed_with_message_for person: person, message: "Your main email has been updated to #{person.email}"
+          expect(person.email).to eql email
+        end
+
         context 'selecting an existing namesake' do
-          background do
-            when_i_am_prompted_to_login
-            and_i_login_using_token
+
+          context 'using token login' do
+            background do
+              when_i_am_prompted_to_login
+              and_i_login_using_token
+            end
+
+            scenario 'with an alternative email' do
+              with_alternative_email_scenario
+            end
+
+            scenario 'without an alternative email' do
+              without_alternative_email_scenario
+            end
           end
 
-          scenario 'with an alternative email' do
-            person = Person.find_by(email: 'john.doe@digital.justice.gov.uk')
-            person.update(secondary_email: 'john.doe+1@digital.justice.gov.uk')
+          context 'using oauth login' do
+            background do
+              when_i_login_using_oauth
+            end
 
-            then_the_confirmation_list_is_displayed_with count: 2
-            and_i_select_first_namesake
-            then_the_email_confirmation_page_is_displayed
-            and_the_email_is_prefilled_with email
-            and_the_alternative_email_is_prefilled_with person.secondary_email
-            and_info_is_displayed message_includes: person.email
-            when_i_continue
-            then_persons_email_is_updated person: person, new_email: email
-            then_profile_page_is_displayed_with_message_for person: person, message: "Your main email has been updated to #{person.email}"
-            expect(person.email).to eql email
-          end
+            scenario 'without an alternative email' do
+              without_alternative_email_scenario
+            end
 
-          scenario 'without an alternative email' do
-            person = Person.find_by(email: 'john.doe@digital.justice.gov.uk')
-
-            then_the_confirmation_list_is_displayed_with count: 2
-            and_i_select_first_namesake
-            then_the_email_confirmation_page_is_displayed
-            and_the_email_is_prefilled_with email
-            and_the_alternative_email_is_prefilled_with person.email
-            and_info_is_displayed message_includes: /new email.*old email.*change this/i
-            when_i_continue
-            then_persons_email_is_updated person: person, new_email: email
-            then_profile_page_is_displayed_with_message_for person: person, message: "Your main email has been updated to #{person.email}"
+            scenario 'with an alternative email' do
+              with_alternative_email_scenario
+            end
           end
         end
+
       end
     end
 

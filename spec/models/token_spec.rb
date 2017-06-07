@@ -74,16 +74,38 @@ RSpec.describe Token, type: :model do
     let!(:half_hour_ago) { create(:token, created_at: 30.minutes.ago) }
     let!(:expired) { create(:token, created_at: 1.month.ago) }
 
-    it { expect(described_class.spent).to match_array([spent]) }
-    it { expect(described_class.unspent).to match_array([token, expired, half_hour_ago]) }
-    it { expect(described_class.unexpired).to match_array([token, spent, half_hour_ago]) }
-    it { expect(described_class.expired).to match_array([expired]) }
-    it { expect(described_class.in_the_last_hour).to match_array([token, spent, half_hour_ago]) }
+    it '.spent' do
+      expect(described_class.spent).to match_array([spent])
+    end
+    it '.unspent' do
+      expect(described_class.unspent).to match_array([token, expired, half_hour_ago])
+    end
+    it '.unexpired' do
+      expect(described_class.unexpired).to match_array([token, spent, half_hour_ago])
+    end
+    it '.expired' do
+      expect(described_class.expired).to match_array([expired])
+    end
+    it '.in_the_last_hour' do
+      expect(described_class.in_the_last_hour).to match_array([token, spent, half_hour_ago])
+    end
 
-    it do
+    it '.find_unspent_by_user_email' do
       email = half_hour_ago.user_email
       unspent = described_class.find_unspent_by_user_email(email)
       expect(unspent).to eq(half_hour_ago)
+    end
+
+    context '.find_securely' do
+      it 'uses constant-time comparison alogrithm to prevent timing attacks' do
+        expect(Secure).to receive(:compare).at_least(:once)
+        described_class.find_securely(spent.value)
+      end
+
+      it 'returns first matching token' do
+        token = described_class.find_securely(spent.value)
+        expect(token).to eql spent
+      end
     end
   end
 

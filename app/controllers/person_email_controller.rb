@@ -2,12 +2,13 @@ class PersonEmailController < ApplicationController
 
   include PersonEmailHelper
 
-  before_action :set_person_and_auth, only: [:edit, :update]
+  before_action :set_person, only: [:edit, :update]
+  before_action :set_auth, only: [:edit, :update]
+  before_action :ensure_auth
   before_action :set_new_emails_from_auth, only: [:edit]
   skip_before_action :ensure_user, only: [:edit, :update]
 
   def edit
-    not_found unless authenticated_login?
     warning :person_email_confirm
   end
 
@@ -22,10 +23,25 @@ class PersonEmailController < ApplicationController
 
   private
 
-  def set_person_and_auth
+  def set_person
     @person = Person.friendly.find(params[:person_id])
-    @token = find_token(params[:token_value])
-    @oauth_hash = params[:oauth_hash]
+  end
+
+  def set_auth
+    @token = Token.find_securely(token_value_param)
+    @oauth_hash = oauth_hash_param
+  end
+
+  def token_value_param
+    params[:token_value] || params.dig(:person, :token_value)
+  end
+
+  def oauth_hash_param
+    params[:oauth_hash] || params.dig(:person, :oauth_hash)
+  end
+
+  def ensure_auth
+    not_found unless authenticated_login?
   end
 
   def authenticated_login?
@@ -62,13 +78,6 @@ class PersonEmailController < ApplicationController
     session.delete(:desired_path)
     notice :profile_email_updated, email: person.email
     login_person person
-  end
-
-  def find_token token_value
-    # OPTIMIZE: duplicate - see token_login service class
-    Token.find_each do |token|
-      return token if Secure.compare(token.value, token_value)
-    end
   end
 
   def not_found
