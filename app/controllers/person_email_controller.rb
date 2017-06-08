@@ -2,11 +2,9 @@ class PersonEmailController < ApplicationController
 
   include PersonEmailHelper
 
-  before_action :set_person, only: [:edit, :update]
-  before_action :set_auth, only: [:edit, :update]
-  before_action :ensure_auth
-  before_action :set_new_emails_from_auth, only: [:edit]
   skip_before_action :ensure_user, only: [:edit, :update]
+  before_action :set_person, :set_auth, :ensure_auth, only: [:edit, :update]
+  before_action :set_new_emails, only: [:edit]
 
   def edit
     warning :person_email_confirm
@@ -23,32 +21,32 @@ class PersonEmailController < ApplicationController
 
   private
 
+  def token_value
+    params[:token_value] || params.dig(:person, :token_value)
+  end
+
+  def oauth_hash
+    params[:oauth_hash] || params.dig(:person, :oauth_hash)
+  end
+
   def set_person
     @person = Person.friendly.find(params[:person_id])
   end
 
   def set_auth
-    @token = Token.find_securely(token_value_param)
-    @oauth_hash = oauth_hash_param
-  end
-
-  def token_value_param
-    params[:token_value] || params.dig(:person, :token_value)
-  end
-
-  def oauth_hash_param
-    params[:oauth_hash] || params.dig(:person, :oauth_hash)
+    @token = Token.find_securely(token_value)
+    @oauth_hash = oauth_hash
   end
 
   def ensure_auth
-    not_found unless authenticated_login?
+    not_found unless authenticated?
   end
 
-  def authenticated_login?
+  def authenticated?
     @token&.within_validity_period? || @oauth_hash.present?
   end
 
-  def set_new_emails_from_auth
+  def set_new_emails
     @new_email = new_email
     @new_secondary_email = alternative_email
   end
@@ -82,10 +80,6 @@ class PersonEmailController < ApplicationController
 
   def not_found
     raise ActionController::RoutingError, 'Not Found'
-  end
-
-  def auth_hash
-    request.env['omniauth.auth']
   end
 
 end
