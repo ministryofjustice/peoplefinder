@@ -4,7 +4,7 @@ module PersonEmailHelper
     if person.secondary_email.present?
       t('original_email_info_html', scope: [:controllers, :person_email], email: Person.find(person.id).email)
     else
-      t('info_message', scope: [:controllers, :person_email])
+      t('info_message_html', scope: [:controllers, :person_email])
     end
   end
 

@@ -159,16 +159,21 @@ en:
       person_email_confirm: "You need to update your People Finder account to finish signing in"
       profile_email_updated: "Your main email has been updated to %{email}"
       original_email_info_html: |
-        You have signed in with a new email address which will now be used as your main email.
-        Your previous email address was
+        Your main email address will be updated.
+        <br/>
+        <br/>
+        Your previous main address
         <div style="font-weight: 700; padding: 5px 0; display: inline">
           %{email}
         </div>
-        and will no longer be included in your profile.
-        You can change this if you wish.
-      info_message: |
-        You have signed in with a new email address which will now be used as your main email.
-        We have added your old email address as an alternative. You can change this if you wish.
+        will no longer be included in your profile.
+        <br/>
+        <br/>
+      info_message_html: |
+        Your new email address will be used as your main email and your
+        old email address as an alternative.
+        <br/>
+        <br/>
     problem_reports:
       report_sent: Your report has been sent. Thank you for reporting a problem.
     reported_profiles:
@@ -411,8 +416,8 @@ en:
       person:
         given_name: First name
         surname: Last name
-        email: Main email
-        secondary_email: Alternative work email (optional)
+        email: Main email address
+        secondary_email: Alternative work email address (optional)
         primary_phone_number: Main phone number (optional)
         secondary_phone_number: Alternative phone number (optional)
         pager_number: Pager number (optional)
