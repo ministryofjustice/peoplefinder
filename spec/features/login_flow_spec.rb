@@ -182,7 +182,7 @@ feature 'Login flow' do
           then_the_email_confirmation_page_is_displayed
           and_the_email_is_prefilled_with email
           and_the_alternative_email_is_prefilled_with person.email
-          and_info_is_displayed message_includes: /new email.*old email.*change this/i
+          and_info_is_displayed message_includes: /new email .* old email/i
           when_i_continue
           then_persons_email_is_updated person: person, new_email: email
           then_profile_page_is_displayed_with_message_for person: person, message: "Your main email has been updated to #{person.email}"

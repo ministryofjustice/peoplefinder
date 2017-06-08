@@ -3,11 +3,12 @@
 .grid-row
   .column-full
     %h1.heading-xlarge.with-border-lg
-      = @page_title = 'Email change confirmation'
-      %span.heading-secondary
-        Confirm or change your main and alternative email addresses
+      = @page_title = 'Confirm your email address'
 
 = form_for @person, url: person_email_path(@person), method: :put, builder: PersonFormBuilder do |f|
+  .grid-row.cb-email-update-info
+    .column-full
+      = email_update_info_message @person
   .form-group
     .grid-row
       .column-full
@@ -15,11 +16,6 @@
         = f.text_field :secondary_email, value: @new_secondary_email || @person.secondary_email
         = f.hidden_field :token_value, value: @token&.value
         = f.hidden_field :oauth_hash, value: @oauth_hash
-    .grid-row.cb-email-update-info
-      .column-full
-        .form-group
-          .form-control{ style: 'border: 0; padding: 5px 2px 4px;' }
-            = email_update_info_message @person
 
     .grid-row
       .column-full
