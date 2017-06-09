@@ -17,36 +17,3 @@
       = t('home.explanation')
 
 = render 'shared/search'
-
-.grid-row.mod-heading
-  .column-full
-    %h1.heading-xlarge.mod-heading-border
-      %span.heading-secondary
-        = @group.acronym
-      = @group.name
-
-.grid-row.mod-team-overview
-  .column-one-third
-    - if @group.leaderships.count > 0
-      - @group.leaderships_by_person.each do |person, leaderships|
-        = render partial: 'groups/leaderships', object: leaderships, locals: { person: person, counter: @group.leaderships.count }
-
-  .column-two-thirds
-    %h3.heading-medium
-      = "About the team"
-    .mod-wrap-text.formatted-text
-      = govspeak(@group.with_placeholder_default(:description))
-
-    - if @group.children.present?
-      = link_to "View printable organogram", organogram_group_path(@group)
-    - unless @group.leaf_node?
-      - if @all_people_count > 0 && @group.parent.present?
-        = link_to "View #{ @all_people_count > 1 ? 'all' : '' } people", people_group_path(@group), class: 'view-all-people'
-
-.grid-row.mod-heading
-  .column-full
-    %h1.heading-large.mod-heading-border
-      = "Teams within #{@group.name}"
-
-#teams.grid-row.mod-subgroups
-  = render partial: "groups/subgroup", collection: @group.children
