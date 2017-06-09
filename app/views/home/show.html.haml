@@ -14,12 +14,12 @@
       = t('.explanation')
 
   .column-one-third
-    .heading-medium.mod-home-info
+    .heading-medium.mod-home-info.cb-about-usage
       = t('.about_usage')
 
 = render 'shared/search'
 
 .grid-row
   .column-full
-    .heading-small.mod-link
+    .heading-small.mod-link.cb-browse-teams
       = link_to "Browse #{Group.department.short_name} teams", browse_path

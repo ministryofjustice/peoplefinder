@@ -7,13 +7,14 @@
 
 .grid-row
   .column-two-thirds
-    %h1.heading-xlarge.cb-page-title
-      = t('.heading', department: @department.name)
+    %h1.heading-xlarge.with-border-lg.cb-page-title
+      = @page_title = t('.heading', department: @department.name)
+
   .column-one-third
-    .heading-medium.mod-home-info
+    .heading-medium.mod-home-info.cb-about-usage
       = t('.about_usage')
     .new-profile
-      = link_to 'Create a new team', new_group_path, class: 'add-new-person'
+      = link_to 'Create a new team', new_group_path, class: 'add-new-team'
 
 .grid-row.mod-team-overview
   .column-one-third

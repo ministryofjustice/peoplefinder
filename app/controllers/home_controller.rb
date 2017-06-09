@@ -12,7 +12,7 @@ class HomeController < ApplicationController
   end
 
   def can_add_person_here?
-    true
+    params['action'] == 'show'
   end
 
   private
