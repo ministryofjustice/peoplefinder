@@ -1,0 +1,35 @@
+.grid-row
+  .column-two-thirds
+    %h1.heading-xlarge.cb-page-title
+      = t('.heading', department: @department.name)
+  .column-one-third
+    .heading-medium.mod-home-info
+      = t('.about_usage')
+    .new-profile
+      = link_to 'Create a new team', new_group_path, class: 'add-new-person'
+
+.grid-row.mod-team-overview
+  .column-one-third
+    - if @department.leaderships.count > 0
+      - @department.leaderships_by_person.each do |person, leaderships|
+        = render partial: 'groups/leaderships', object: leaderships, locals: { person: person, counter: @department.leaderships.count }
+
+  .column-two-thirds
+    %h3.heading-medium
+      = "About the team"
+    .mod-wrap-text.formatted-text
+      = govspeak(@department.with_placeholder_default(:description))
+
+    - if @department.children.present?
+      = link_to "View printable organogram", organogram_group_path(@department)
+    - unless @department.leaf_node?
+      - if @all_people_count > 0 && @department.parent.present?
+        = link_to "View #{ @all_people_count > 1 ? 'all' : '' } people", people_group_path(@department), class: 'view-all-people'
+
+.grid-row.mod-heading
+  .column-full
+    %h1.heading-large.mod-heading-border
+      = "Teams within #{@department.name}"
+
+#teams.grid-row.mod-subgroups
+  = render partial: "groups/subgroup", collection: @department.children
