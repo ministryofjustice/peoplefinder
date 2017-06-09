@@ -1,3 +1,10 @@
+
+- content_for :body_classes do
+  = 'browse-teams-page '
+
+- content_for :breadcrumbs do
+  = breadcrumbs(Home.path + ['Browse'])
+
 .grid-row
   .column-two-thirds
     %h1.heading-xlarge.cb-page-title
