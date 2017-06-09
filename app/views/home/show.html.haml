@@ -8,13 +8,16 @@
     = t('.unsupported_browser_warning_html')
 
 .grid-row
-  .column-full
+  .column-two-thirds
     %h1.heading-xlarge.cb-page-title
-
       = t('home.heading', group_name: @group.name)
 
     %p.lede
       = t('home.explanation')
+
+  .column-one-third
+    .usage.heading-medium.cb-usage{ style: 'border-top: 10px solid #005EA5; font-weight: normal; margin-right: 40px; padding-top: 5px' }
+      = t('.usage')
 
 = render 'shared/search'
 

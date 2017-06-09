@@ -11,4 +11,9 @@ class HomeController < ApplicationController
     @all_people_count = @group.all_people_count
     @org_structure = Group.hierarchy_hash
   end
+
+  def can_add_person_here?
+    true
+  end
+
 end
