@@ -1,97 +1,98 @@
-.title
-  %h1
-    = @page_title = @person
-    - if @person.persisted?
-      %div.heading-links
-        = link_to info_text('delete_this_profile'),
-          @person,
-          method: :delete,
-          style: "display: inline-block;margin:0 20px 0 0;",
-          class: "small button-secondary",
-          data: { confirm: "Are you sure you want to delete #{ @person }? #{ info_text('profile_deletable') }." }
-        = edit_person_link 'Edit this profile', @person, class: 'button small'
+.grid-row
+  .column-full
+    %h1.heading-xlarge.with-border-lg
+      = @page_title = @person
 
-.grid-wrapper.profile
-  .grid.grid-1-3
-    .inner-block
-      .image-background
-        = profile_image_tag @person, class: 'profile-page'
-      .spacer-15
-      .no-mobile
-        - if @person.email.present?
+      .action-links.mobile-hide
+        = render partial: "action_links", locals: { person: @person }
+
+    .mobile-show
+      = render partial: "action_links", locals: { person: @person }
+
+.grid-row.mod-media.profile
+  .column-full
+    .media
+      .media-left
+        = profile_image_tag @person, link: false
+        - if @person.email.present? && !@preview
           - if current_user == @person
             = render partial: "completeness", locals: { person: @person }
           - else
             - if @person.incomplete?
               = render partial: "completeness", locals: { person: @person }
             = render partial: "request_information", locals: { person: @person }
+      .media-body
+        %h4.media-heading
+        - @person.memberships.group_by(&:group).each do |group, memberships|
+          -if memberships.first.role.present?
+            %h3.heading-medium.cb-job-title
+              #{memberships.map(&:role).select(&:present?).sort.join(', ')}
+              %small
+                in
+                %a{ href: url_for(group) }
+                  = group
 
-  .grid.grid-2-3
-    .inner-block
-      - @person.memberships.group_by(&:group).each do |group, memberships|
-        -if memberships.first.role.present?
-          %h3.job-title
-            #{memberships.map(&:role).select(&:present?).sort.join(', ')}
-            %small
-              in
-              %a{ href: url_for(group) }
-                = group
-        - path = memberships.first.path
-        - if path.length > 1
-          %dl.inline-labels.role-and-location
-            %dt Team
-            %dd.breadcrumbs= breadcrumbs(path.drop(1))
-
-      %dl.inline-labels
         - if @person.location.present?
-          %dt Location
-          %dd= @person.location
+          %dl.inline-labels
+            %dt
+              Location
+            %dd
+              = @person.location
 
-      %dl.inline-labels
         - if @person.email.present?
-          %dt= t(:email, scope: 'activerecord.attributes.person')
-          %dd= mail_to(@person.email)
-        - if @person.secondary_email.present?
-          %dt= t(:secondary_email, scope: 'activerecord.attributes.person')
-          %dd= mail_to(@person.secondary_email)
+          %dl.inline-labels
+            %dt
+              = t(:email, scope: 'activerecord.attributes.person')
+            %dd
+              = mail_to(@person.email)
 
-      %dl.inline-labels
+        - if @person.secondary_email.present?
+          %dl.inline-labels
+            %dt
+              = t(:secondary_email, scope: 'activerecord.attributes.person')
+            %dd
+              = mail_to(@person.secondary_email)
+
         - if @person.primary_phone_number.present?
-          %dt Primary phone number
-          %dd= call_to(@person.primary_phone_number)
+          %dl.inline-labels
+            %dt
+              Primary phone number
+            %dd
+              = call_to(@person.primary_phone_number)
 
         - if @person.secondary_phone_number.present?
-          %dt Other phone number
-          %dd= call_to(@person.secondary_phone_number)
+          %dl.inline-labels
+            %dt
+              Other phone number
+            %dd
+              = call_to(@person.secondary_phone_number)
 
         - if @person.pager_number.present?
-          %dt Pager number
-          %dd= call_to(@person.pager_number)
+          %dl.inline-labels
+            %dt
+              Pager number
+            %dd
+              = call_to(@person.pager_number)
 
-      %dl.inline-labels
         - if @person.current_project.present?
-          %dt Current project(s)
-          %dd= @person.current_project
+          %dl.inline-labels
+            %dt
+              Current project(s)
+            %dd
+              = @person.current_project
 
-      - if @person.description.present?
-        %h5 Extra information:
-        %p= @person.description
+        - if @person.description.present?
+          %dl.inline-labels
+            %dt
+              Extra information
+            %dd
+              = @person.description
 
-      %h4 Days worked
-      %ul.working_days
-        = render 'working_days'
+        %h4.heading-small
+          = "Days worked"
 
-  .grid.grid-1-3.no-desk
-    .inner-block
-      - if @person.email.present?
-        - if current_user == @person
-          = render partial: "completeness", locals: { person: @person }
-        - else
-          = render partial: "request_information", locals: { person: @person }
-          - if @person.incomplete?
-            = render partial: "completeness", locals: { person: @person }
-
+        %ul.working_days
+          = render 'working_days'
 
 - unless @versions.nil?
-  %h1 Audit Log
-  =render 'shared/audit', versions: @versions
+  = render 'shared/audit', versions: @versions

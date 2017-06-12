@@ -1,23 +1,27 @@
 - @editing_mode = true
+
 #search_results
-  %h1.noborder= @page_title = 'Create profile'
-  .spacer-5
-  %hr
-  .spacer-10
+  .grid-row
+    .column-full
+      %h1.heading-xlarge.with-border-lg
+        = @page_title = 'Create profile'
+        %span.heading-secondary
+          = "Select a team or person's name to view more details."
 
-  .validation-summary{role: "group", "aria-labelledby": "error-summary-heading-example-1",  tabindex: "-1"}
-
-    %h3.heading-small#error-summary-heading-example-1
+  .error-summary{"aria-labelledby" => "error-summary-heading", :role => "group", :tabindex => "-1"}
+    %h1#error-summary-heading.heading-medium.error-summary-heading
       = "Your details match one or more existing profiles."
-
-    .duplicate-hint
+    %p
       = "Select a profile below to update it with your new details,"
       %br/
       = "or click continue to create a new profile."
 
-  .pagination= pluralize(@people.length, "result") + ' found'
+  .grid-row
+    .column-full
+      %h2.heading-small
+        = pluralize(@people.length, "result") + ' found'
 
-  #results
+  #confirm-person-results
     = render partial: 'search/person_confirmation', collection: @people, as: :person
 
   = form_for @person, url: :sessions_people, method: :post do |f|

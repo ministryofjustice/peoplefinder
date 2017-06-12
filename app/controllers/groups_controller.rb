@@ -74,7 +74,7 @@ class GroupsController < ApplicationController
       notice :group_updated, group: @group
       redirect_to @group
     else
-      error :update_error
+      # error :update_error
       render :edit
     end
   end
@@ -103,7 +103,7 @@ class GroupsController < ApplicationController
 
   def create_failure_response format
     format.html do
-      error :create_error
+      # error :create_error
       render :new
     end
     format.json do

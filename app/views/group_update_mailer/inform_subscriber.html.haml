@@ -1,3 +1,4 @@
+= render partial: "shared/email_flash_message", locals: { link_url: @group_url }
 %tr
   %td{ align:"left", valign: "top", style: "padding-bottom: 20px;", width: "560" }
     Hello,
@@ -6,7 +7,7 @@
     %p
       The #{@group} page on People Finder has been edited by #{@person_responsible}.
     %p
-      To see the updated page, visit #{link_to @group_url, @group_url}.
+      To see the updated page, visit #{link_to @group_url, @group_url}
 %tr
   %td{ align: "center", valign: "top", style: "padding-bottom: 40px;", width: "560" }
     %table.button-container{ cellpadding: "15", cellspacing: "0", border: "0", align: "left", bgcolor: "#00823b" }

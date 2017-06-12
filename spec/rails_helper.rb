@@ -26,7 +26,12 @@ unless ENV['SKIP_SIMPLECOV']
   SimpleCov.minimum_coverage 95
 end
 
-Capybara.javascript_driver = :poltergeist
+Capybara.register_driver :poltergeist_silent do |app|
+  Capybara::Poltergeist::Driver.new(app, phantomjs_logger: File::NULL)
+end
+
+# Capybara.javascript_driver = :poltergeist # uncomment to enable console.log
+Capybara.javascript_driver = :poltergeist_silent # uncomment this to disable console.log (including warn)
 Capybara.default_max_wait_time = 3
 
 Dir[File.expand_path('../../{lib,app/*}', __FILE__)].each do |path|
@@ -34,6 +39,8 @@ Dir[File.expand_path('../../{lib,app/*}', __FILE__)].each do |path|
 end
 
 Dir[File.expand_path('../support/**/*.rb', __FILE__)].each { |f| require f }
+
+Dir[File.expand_path('../controllers/concerns/shared_examples*.rb', __FILE__)].each { |f| require f }
 
 ActiveRecord::Migration.maintain_test_schema!
 

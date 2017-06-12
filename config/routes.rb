@@ -20,17 +20,20 @@ Rails.application.routes.draw do
     collection do
       get :add_membership
     end
-    member do
-      put :update_email
-      patch :update_email
-    end
 
     resource :image, controller: 'person_image', only: [:edit, :update]
+    resource :email, controller: 'person_email', only: [:edit, :update]
     resources :suggestions, only: [:new, :create]
   end
   resources :memberships, only: [:destroy]
-  resource :sessions, only: [:new, :create, :destroy]
-  resources :tokens, only: [:create, :destroy, :show]
+  resource :sessions, only: [:new, :create, :destroy] do
+    get :unsupported_browser, on: :new
+  end
+  resources :tokens, only: [:create, :destroy, :show] do
+    member do
+      get 'unsupported_browser'
+    end
+  end
 
   match '/sessions/people', to: 'sessions#create_person', via: :post
   match '/auth/:provider/callback', to: 'sessions#create', via: [:get, :post]

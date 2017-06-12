@@ -17,7 +17,9 @@ feature 'Person maintenance' do
 
   let(:edit_profile_page) { Pages::EditProfile.new }
   let(:new_profile_page) { Pages::NewProfile.new }
+  let(:profile_page) { Pages::Profile.new }
   let(:login_page) { Pages::Login.new }
+  let(:email_confirm_page) { Pages::PersonEmailConfirm.new }
 
   let(:completion_prompt_text) do
     'Fill in the highlighted fields to achieve 100% profile completion'
@@ -51,8 +53,6 @@ feature 'Person maintenance' do
 
         click_link cta_text
         expect(page.current_path).to eq(new_person_path)
-
-        # TODO: Should we set the group ID?
       end
 
       scenario 'Creating a person with a complete profile', js: true do
@@ -72,20 +72,18 @@ feature 'Person maintenance' do
         new_profile_page.load
         new_profile_page.form.save.click
 
-        expect(new_profile_page.form).to have_global_error
-        expect(new_profile_page.form).to have_given_name_error
-        expect(new_profile_page.form).to have_surname_error
-        expect(new_profile_page.form).to have_email_error
+        expect(new_profile_page).to have_error_summary
+        expect(new_profile_page.error_summary).to have_given_name_error
+        expect(new_profile_page.error_summary).to have_surname_error
+        expect(new_profile_page.error_summary).to have_email_error
       end
 
       scenario 'Creating a person with existing e-mail raises an error' do
         existing_person = create(:person)
-
         new_profile_page.load
         new_profile_page.form.email.set existing_person.email
         new_profile_page.form.save.click
-
-        expect(new_profile_page.form).to have_email_error
+        expect(new_profile_page.error_summary).to have_email_error
       end
 
       scenario 'Creating a person with invalid e-mail raises an error' do
@@ -93,7 +91,7 @@ feature 'Person maintenance' do
         new_profile_page.form.email.set 'invalid email@digital.justice.gov.uk'
         new_profile_page.form.save.click
 
-        expect(new_profile_page.form).to have_email_error
+        expect(new_profile_page.error_summary).to have_email_error
       end
 
       scenario 'Creating a person with e-mail from an unsupported domain raises an error' do
@@ -101,7 +99,7 @@ feature 'Person maintenance' do
         new_profile_page.form.email.set 'name.surname@example.com'
         new_profile_page.form.save.click
 
-        expect(new_profile_page.form).to have_email_error
+        expect(new_profile_page.error_summary).to have_email_error
       end
 
       scenario 'Creating a person with an identical name', js: true do
@@ -114,9 +112,14 @@ feature 'Person maintenance' do
 
         click_button 'Save', match: :first
 
+        expect(page).to have_selector('.error-summary', text: 'The profile you are creating matches one or more existing profiles')
         expect(page).to have_text('1 result found')
-
+        expect(page).to_not have_link('Select')
+        expect(page).to_not have_selector('.cb-confirmation-select')
         click_button 'Continue, it is not one of these'
+
+        expect(profile_page).to be_displayed
+        expect(profile_page.flash_message).to have_selector('.notice', text: /Created .* profile/)
         check_creation_of_profile_details
         expect(Person.where(surname: person_attributes[:surname]).count).to eql(2)
       end
@@ -126,7 +129,7 @@ feature 'Person maintenance' do
         visit new_person_path
 
         fill_in 'First name', with: person_attributes[:given_name]
-        fill_in 'Surname', with: person_attributes[:surname]
+        fill_in 'Last name', with: person_attributes[:surname]
         fill_in 'Main email', with: person_attributes[:email]
         click_button 'Save', match: :first
 
@@ -145,7 +148,7 @@ feature 'Person maintenance' do
     context 'for a read only user', user: :readonly do
       scenario 'is not allowed without login' do
         visit person_path(create(:person, person_attributes))
-        click_link 'Edit this profile'
+        click_edit_profile
 
         expect(login_page).to be_displayed
       end
@@ -154,12 +157,12 @@ feature 'Person maintenance' do
     context 'for a regular user', user: :regular do
       scenario 'Editing a person' do
         visit person_path(create(:person, person_attributes))
-        click_link 'Edit this profile'
+        click_edit_profile
 
         expect(page).to have_title("Edit profile - #{app_title}")
         expect(page).not_to have_text(completion_prompt_text)
         fill_in 'First name', with: 'Jane'
-        fill_in 'Surname', with: 'Doe'
+        fill_in 'Last name', with: 'Doe'
         click_button 'Save', match: :first
 
         expect(page).to have_content('We have let Jane Doe know that you’ve made changes')
@@ -170,7 +173,7 @@ feature 'Person maintenance' do
 
       scenario 'Editing my own profile from a normal edit link' do
         visit person_path(person)
-        click_link 'Edit this profile'
+        click_edit_profile
         expect(page).not_to have_text(completion_prompt_text)
       end
 
@@ -195,10 +198,10 @@ feature 'Person maintenance' do
         edit_profile_page.form.email.set ''
         edit_profile_page.form.save.click
 
-        expect(edit_profile_page.form).to have_global_error
-        expect(edit_profile_page.form).to have_given_name_error
-        expect(edit_profile_page.form).to have_surname_error
-        expect(edit_profile_page.form).to have_email_error
+        expect(edit_profile_page).to have_error_summary
+        expect(edit_profile_page.error_summary).to have_given_name_error
+        expect(edit_profile_page.error_summary).to have_surname_error
+        expect(edit_profile_page.error_summary).to have_email_error
       end
 
       scenario 'Editing a person to have an existing e-mail raises an error' do
@@ -207,8 +210,7 @@ feature 'Person maintenance' do
         edit_profile_page.load(slug: person.slug)
         edit_profile_page.form.email.set existing_person.email
         edit_profile_page.form.save.click
-
-        expect(edit_profile_page.form).to have_email_error
+        expect(edit_profile_page.error_summary).to have_email_error
       end
 
       scenario 'Editing a person to have an unpermitted e-mail raises an error' do
@@ -216,7 +218,7 @@ feature 'Person maintenance' do
         edit_profile_page.form.email.set 'whatevers@big.blackhole.com'
         edit_profile_page.form.save.click
 
-        expect(edit_profile_page.form).to have_email_error
+        expect(edit_profile_page.error_summary).to have_email_error
       end
 
       scenario 'Recording audit details' do
@@ -245,7 +247,7 @@ feature 'Person maintenance' do
         visit edit_person_path(person)
 
         fill_in 'First name', with: person_attributes[:given_name]
-        fill_in 'Surname', with: person_attributes[:surname]
+        fill_in 'Last name', with: person_attributes[:surname]
         click_button 'Save', match: :first
 
         expect(page).to have_title("Duplicate names found - #{app_title}")
@@ -261,8 +263,8 @@ feature 'Person maintenance' do
         edit_profile_page.form.surname.set ''
         edit_profile_page.form.save.click
 
-        expect(edit_profile_page.form).to have_global_error
-        expect(edit_profile_page.form).to have_surname_error
+        expect(edit_profile_page).to have_error_summary
+        expect(edit_profile_page.error_summary).to have_surname_error
       end
 
       scenario 'Cancelling an edit' do
@@ -281,7 +283,7 @@ feature 'Person maintenance' do
         given_name = person.given_name
 
         visit person_path(person)
-        click_link('Delete this profile')
+        click_delete_profile
         expect { Person.find(person.id) }.to raise_error(ActiveRecord::RecordNotFound)
 
         expect(last_email.to).to include(email_address)
@@ -293,7 +295,7 @@ feature 'Person maintenance' do
         membership = create(:membership)
         person = membership.person
         visit person_path(person)
-        click_link('Delete this profile')
+        click_delete_profile
         expect { Membership.find(membership.id) }.to raise_error(ActiveRecord::RecordNotFound)
         expect { Person.find(person.id) }.to raise_error(ActiveRecord::RecordNotFound)
       end
@@ -348,16 +350,16 @@ feature 'Person maintenance' do
 
   scenario 'UI elements on the new/edit pages', user: :regular do
     visit new_person_path
-    expect(page).not_to have_selector('.search-box')
+    expect(page).not_to have_selector('.mod-search-form')
 
     fill_in 'First name', with: person_attributes[:given_name]
-    fill_in 'Surname', with: person_attributes[:surname]
+    fill_in 'Last name', with: person_attributes[:surname]
     fill_in 'Main email', with: person_attributes[:email]
     click_button 'Save', match: :first
-    expect(page).to have_selector('.search-box')
+    expect(page).to have_selector('.mod-search-form')
 
-    click_link 'Edit this profile'
-    expect(page).not_to have_selector('.search-box')
+    click_edit_profile
+    expect(page).not_to have_selector('.mod-search-form')
   end
 
 end

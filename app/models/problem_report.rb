@@ -17,6 +17,7 @@ class ProblemReport
   def initialize(*)
     super
     self.timestamp ||= Time.now.to_i
+    @errors = ActiveModel::Errors.new(self)
   end
 
   def persisted?

@@ -20,12 +20,28 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
+  groups:
+    form:
+      placeholder: Discover what this team is responsible for, who is in it and how you can get in touch with them.
   shared:
-    finish_profile_request: &finish_profile_request "You need to create a People Finder account to finish signing in"
+    finish_profile_request: &finish_profile_request "You need to create or update a People Finder account to finish signing in"
     unauthorised: &unauthorised Unauthorised, insufficient privileges
+    firefox_message: &firefox_message |
+        <strong style="font-weight: 700">Internet Explorer 6 and 7 users:</strong>
+        <br/>
+        We recommend the <strong style="font-weight: 700">Firefox</strong> web browser for a more enhanced experience.
+        <br/><br/>
+        <strong style="font-weight: 700">Copy and paste</strong> the link below to use in <strong style="font-weight: 700">Firefox</strong>
   time:
     formats:
       default: "%d %b %Y %H:%M"
+  search:
+    index:
+      results_footer_html: "Can't find the person you're looking for? Why not %{new_profile_link}"
+    filter_sidebar:
+        filter_results_heading: "Filter by:"
+        people_checkbox_label: People
+        teams_checkbox_label: Teams
   sessions:
     login_page:
       heading: Request link to access People Finder
@@ -41,9 +57,49 @@ en:
       heading_other: Enter your MOJ email address
       log_in_google: Log in
       log_in_email: Request link
+    unsupported_browser:
+      unsupported_browser_warning_html: |
+        <h1 id='error-summary-heading' class='heading-medium error-summary-heading'>
+          Great - you want to edit a profile or sign-in!
+        </h1>
+        <p>
+          Please use Firefox to continue. This browser does not
+          support profile editing.
+        </p>
+        <p>
+          Copy the link below into Firefox to sign-in and edit profiles.
+        </p>
+        <p>
+          <h4 class='heading-small'>
+            %{sign_in_url}
+          </h4>
+        </p>
   tokens:
     show:
       token_auth_disabled: "Sorry, that login link is invalid. Please login using your Google account."
+    unsupported_browser:
+      unsupported_browser_warning_html: |
+        <h1 id='error-summary-heading' class='heading-medium error-summary-heading'>
+          You are nearly there...
+        </h1>
+        <p>
+          You have clicked the link in the
+          <span style="font-weight: bold">
+            Access request to MoJ People Finder
+          </span>
+          email and this has opened %{browser_name}.
+        </p>
+        <p>
+          However, to sign-in to People Finder you must use Firefox.
+        </p>
+        <p>
+          Please copy the link below and paste into Firefox.
+        </p>
+        <p>
+          <h4 class='heading-small'>
+            %{token_url}
+          </h4>
+        </p>
     create:
       title: Link sent — check your email
       body_intro: We’re just emailing you a link to access People Finder. This can take up to 5 minutes.
@@ -61,6 +117,9 @@ en:
         unauthorised: *unauthorised
         generate_user_behavior_report: User behaviour report will be processed shortly. Try downloading in 2 minutes
         file_not_generated: User behaviour report has not been generated. Generate first
+    versions:
+      unauthorised: *unauthorised
+
     groups:
       group_created: "Created %{group}"
       group_updated: "Updated %{group}"
@@ -90,13 +149,31 @@ en:
         other: |
           Thank you for helping to improve People Finder.
           We have let %{person} know that you’ve made changes
-      profile_email_updated: "Your primary email has been updated to %{email}"
       profile_deleted: "Deleted %{person}’s profile"
       create_error: "The profile was not created. Please check the errors below"
     person_image:
       no_image_uploaded: "No image has been uploaded for %{person}"
       image_cropped: "Cropped %{person}’s image"
       update_error: "There was an error updating the image"
+    person_email:
+      person_email_confirm: "You need to update your People Finder account to finish signing in"
+      profile_email_updated: "Your main email has been updated to %{email}"
+      original_email_info_html: |
+        Your main email address will be updated.
+        <br/>
+        <br/>
+        Your previous main address
+        <div style="font-weight: 700; padding: 5px 0; display: inline">
+          %{email}
+        </div>
+        will no longer be included in your profile.
+        <br/>
+        <br/>
+      info_message_html: |
+        Your new email address will be used as your main email and your
+        old email address as an alternative.
+        <br/>
+        <br/>
     problem_reports:
       report_sent: Your report has been sent. Thank you for reporting a problem.
     reported_profiles:
@@ -116,14 +193,14 @@ en:
         add a new sub-team when viewing a team on People Finder.
     leader:
       mine: |
-        Are you the leader of the <span class="team-led">team above</span>?
+        Are you the leader of the <span class="team-led">team above</span>? (optional)
       other: |
-        Is this person the leader of the <span class="team-led">team above</span>?
+        Is this person the leader of the <span class="team-led">team above</span>? (optional)
     subscribed:
       mine: |
-        Do you want to be notified by email when changes are made to the team above?
+        Do you want to be notified by email when changes are made to the team above? (optional)
       other: |
-        Do you want this person to be notified by email when changes are made to the team above?
+        Do you want this person to be notified by email when changes are made to the team above? (optional)
   people:
     day_names:
       works_monday: "Monday"
@@ -167,37 +244,51 @@ en:
   problem_report_mailer:
     problem_report:
       subject: "Problem reported by People Finder user"
+      firefox_message: *firefox_message
   reminder_mailer:
     information_request:
       subject: "Request to update your People Finder profile"
+      firefox_message: *firefox_message
     never_logged_in:
       subject: 'Are your People Finder details up to date?'
+      firefox_message: *firefox_message
     person_profile_update:
       subject: 'Are your People Finder details up to date?'
+      firefox_message: *firefox_message
     team_description_missing:
       subject: 'Improve your team’s profile on People Finder'
+      firefox_message: *firefox_message
   suggestion_mailer:
     person_email:
       subject: "Your People Finder profile"
+      firefox_message: *firefox_message
     team_admin_email:
       subject: "People Finder profile improvements"
+      firefox_message: *firefox_message
   user_update_mailer:
     new_profile_email:
       subject: "You’re on MOJ People Finder, check your profile today"
+      firefox_message: *firefox_message
     updated_profile_email:
       subject: "Your profile on MOJ People Finder has been edited"
+      firefox_message: *firefox_message
     deleted_profile_email:
       subject: "Your profile on MOJ People Finder has been deleted"
+      firefox_message: *firefox_message
     updated_address_from_email:
       subject: "This email address has been removed from a profile on MOJ People Finder"
+      firefox_message: *firefox_message
     updated_address_to_email:
       subject: "This email address has been added to a profile on MOJ People Finder"
+      firefox_message: *firefox_message
   group_update_mailer:
     inform_subscriber:
       subject: "People Finder team updated"
+      firefox_message: *firefox_message
   token_mailer:
     new_token_email:
       subject: 'Access request to MOJ People Finder'
+      firefox_message: *firefox_message
   errors: &errors
     information_request:
       message_required: "You must enter a message to be sent to the person"
@@ -211,9 +302,9 @@ en:
       invalid_domain: "you have entered can’t be used to access People Finder"
     models:
       token:
-        invalid_address: "Email address is not formatted correctly"
-        invalid_domain: "Email address can’t be used to access People Finder"
-        token_throttle_limit: "You’ve reached the limit of %{limit} tokens requested within an hour"
+        invalid_address: is not formatted correctly
+        invalid_domain: can’t be used to access People Finder
+        token_throttle_limit: "has reached the limit of %{limit} tokens requested within an hour"
       group:
         attributes:
           base:
@@ -221,9 +312,12 @@ en:
     validators:
       image_dimensions_validator:
         too_small: "is %{actual_dimensions} pixels. The minimum requirement is %{expected_dimensions} pixels"
+        too_big: "is %{actual_dimensions} pixels. The maximum permitted is %{expected_dimensions} pixels"
       file_size_validator:
         too_big: "file size, %{size}, is too large"
         not_in_range: "file size, %{size}, is not in expected range"
+      permanent_secretary_unique_validator:
+        leader: Please select "No"
   activerecord:
     errors:
       <<: *errors
@@ -234,6 +328,8 @@ en:
         given_name: "First name"
         email: Main email
         secondary_email: Alternative work email
+      memberships:
+        leader: "Are you the Permanent Secretary of the Ministry of Justice?"
   shared:
     search:
       hint: 'Search name, job title, team name or location'
@@ -241,6 +337,17 @@ en:
       People Finder uses cookies to make the site simpler.
       <a href="/cookies">Find out more about cookies</a>
   home:
+    show:
+      unsupported_browser_warning_html: |
+        <h1 id='error-summary-heading' class='heading-medium error-summary-heading'>
+          People Finder is best viewed in Firefox.
+        </h1>
+        <p>
+          Using Firefox allows you to sign-in and edit People Finder profiles.
+        </p>
+        <p>
+          Copy the URL above into Firefox.
+        </p>
     heading: Welcome to People Finder
     explanation: |
       Find out how to contact people, what team they’re in, where and when
@@ -273,9 +380,9 @@ en:
       hint_person_upload_group: |
         You can only upload people’s details to an existing team.
       information_request_label: "Enter your message"
-      location_in_building_hint: "(eg 10.30)"
-      building_hint: "(eg 102 Petty France)"
-      city_hint: "(eg London)"
+      location_in_building_hint: "For example, 10.30"
+      building_hint: "For example, 102 Petty France"
+      city_hint: "For example, London"
       current_project_hint:
         mine: |
           List the names of current projects you’re working on. Use a comma to separate project names.
@@ -289,18 +396,74 @@ en:
 
       photo_upload_hint: "Add or replace an image (no files over 6MB.)"
       photo_crop_hint: "Move and resize the box to crop your profile image."
-      profile_deletable: "(Note that deleting a profile cannot be undone.)"
+      profile_deletable: "Note that deleting a profile cannot be undone."
       reported_profile_additional_details_label: "Additional details (optional)"
       request_information: "Incorrect or missing information? Has this person left the department or is this a duplicate?"
       request_information_link: "Help improve this profile"
       team_deletable: "Note that team deletion cannot be undone."
-      team_not_deletable: "Team deletion is only possible if there are no people associated with it."
+      team_not_deletable: "Team deletion is only possible if there are no people or subteams associated with it."
   placeholders:
     group:
       description: |
         Discover what this team is responsible for, who is in it and how you can get in touch with them.
 
+  # the following translations are used by the govuk_elements_form_builder gem
   helpers:
+    fieldset:
+      person:
+        working_days: Which days of the week do you work?
+    label:
+      person:
+        given_name: First name
+        surname: Last name
+        email: Main email address
+        secondary_email: Alternative work email address (optional)
+        primary_phone_number: Main phone number (optional)
+        secondary_phone_number: Alternative phone number (optional)
+        pager_number: Pager number (optional)
+        location_in_building: Location in building (optional)
+        building: Building (optional)
+        city: City (optional)
+        current_project: Current project(s) (optional)
+        works_monday: Monday
+        works_tuesday: Tuesday
+        works_wednesday: Wednesday
+        works_thursday: Thursday
+        works_friday: Friday
+        works_saturday: Saturday
+        works_sunday: Sunday
+        description: Extra information
+      membership:
+        role: "Job title (optional)"
+      problem_report:
+        goal: "What were you trying to do?"
+        problem: "What went wrong?"
+        person_email: "Your email"
+      group:
+        name: Team name
+        acronym: Team initials (optional)
+        description: Team description (optional)
+      suggestion:
+        missing_fields: Fill missing fields
+        missing_fields_info: Missing fields
+        incorrect_fields: Update incorrect fields
+        incorrect_first_name: First name
+        incorrect_last_name: Last name
+        incorrect_roles: Roles
+        incorrect_location_of_work: Location of work
+        incorrect_working_days: Working days
+        incorrect_phone_number: Phone number
+        incorrect_pager_number: Pager number
+        incorrect_image: Profile image
+        duplicate_profile: Remove duplicate profile
+        inappropriate_content: Remove inappropriate content
+        inappropriate_content_info: Inappropriate content
+        person_left: Remove the profile as the person has left MOJ
+        person_left_info: Additional information
+
+    placeholder:
+      group:
+          description: sdfsdf
     submit:
       person:
         create: "Save"
@@ -318,6 +481,21 @@ en:
     person_uploads:
       group_id: Choose your team
       file: Upload CSV file
+    hint:
+      person:
+        location_in_building: "For example, 10.30"
+        building: "For example, 102 Petty France"
+        city: "For example, London"
+        current_project: List the names of current projects this person is working on. Use a comma to separate project names.
+        working_days: Select all that apply
+        description: Include details about where this person works on different days, any days out of the office, and if this person starts early or late.
+      group:
+        name: Write out the name of your team in full. Do not use initials
+        acronym: If your team is also known by its initials (eg HMCTS) add them below
+        description: What is the role and purpose of the team?
+      suggestion:
+        missing_fields_info: Your message will be emailed to the person. You can make changes to the wording
+        person_left_info: Where they went, why, other (optional). Your message will be sent to team leaders
 
   will_paginate:
     models:

@@ -268,7 +268,7 @@ RSpec.describe QueuedNotification, type: :model do
       it 'returns all records in the group' do
         records = described_class.start_processing_grouped_item(grouped_item)
         expect(records.size).to eq 3
-        expect(records).to eq [@qn1, @qn2, @qn3]
+        expect(records).to include(@qn1, @qn2, @qn3)
       end
 
       it 'timestamps all records in the group' do

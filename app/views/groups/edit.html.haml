@@ -1,8 +1,13 @@
-- content_for :body_classes, 'edit-team-page'
+- content_for :body_classes, 'edit-team-page '
 
 = render partial: 'breadcrumbs'
 
-%h1= @page_title = 'Edit team'
+%h1.heading-xlarge
+  = @page_title = 'Edit team'
+
+= GovukElementsErrorsHelper.error_summary @group,
+    "There is a problem with the form",
+    "Check below for more detail"
 
 = render 'form'
 
@@ -15,4 +20,5 @@
   - else
     .deletable.opaque
       = info_text('delete_this_team')
-    %p.form-hint= info_text('team_not_deletable')
+    %p.form-hint
+      = info_text('team_not_deletable')

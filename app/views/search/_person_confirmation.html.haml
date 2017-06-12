@@ -1,24 +1,37 @@
-.search-result
-  .grid-wrapper
-    .grid
-      .inner-block
-        .image-background
-          = profile_image_tag person
-        .details
-          %h3= link_to person.name, person
+.grid-row.mod-media.result-person.cb-confirm-search-result
+  .column-two-thirds
+    .media
+      .media-left
+        = profile_image_tag person
+      .media-body
+        %h4.media-heading.cb-person-name
+          - index = person_iteration.index
+          = link_to person.name, person
 
-          - if person.memberships.present?
+        %ul
+          - if person.memberships.empty?
+
+          - else
             - person.memberships.each do |membership|
-              = "#{ membership.role }, " if membership.role?
-              = link_to membership.group.name, membership.group
+              %li.cb-person-memberships
+                = "#{ membership.role }, " if membership.role?
+                = link_to membership.group.name, membership.group
 
-          .meta= call_to(person.phone)
-          .meta= mail_to(person.email, nil)
+          %li.cb-person-phone
+            = call_to(person.phone)
+          %li.cb-result-email
+            = mail_to(person.email, nil, data: search_result_analytics_attributes(index) )
 
           - if person.current_project.present?
-            .meta= "Current project(s): #{person.current_project}"
+            %li.core-16
+              %span.bold
+                Current project(s)
+              %br/
+              = person.current_project
 
-        .select-person
-          = form_for person, url: update_email_person_path(person) do |f|
-            = f.hidden_field :email, value: @person.email
-            = f.submit 'Select', class: 'button'
+  .column-one-third
+    - if ['sessions','tokens'].include? controller_name
+      - if controller_name == 'tokens'
+        = link_to 'Select', edit_person_email_path(person_id: person, token_value: params[:id]), class: 'button button-link cb-confirmation-select'
+      - elsif controller_name == 'sessions'
+        = link_to 'Select', edit_person_email_path(person_id: person, oauth_hash: request.env['omniauth.auth']), class: 'button button-link cb-confirmation-select'

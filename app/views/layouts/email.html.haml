@@ -5,8 +5,8 @@
     %meta{content: "width=device-width, initial-scale=1.0", name: "viewport"}/
     %meta{content: "noindex,nofollow", name: "robots"}/
     %meta{content: "MOJ People Finder", property: "og:title"}/
-    %title Ministry of Justice - People finder
-    = stylesheet_link_tag "peoplefinder/email", media: "all"
+    %title Ministry of Justice - People Finder
+    = stylesheet_link_tag "email", media: "all"
     :css
       @media only screen and (max-device-width: 600px) {
           table[class="body"] {
@@ -22,8 +22,11 @@
             %table.banner
               %tbody
                 %tr
-                  %td#moj-logo
-                    = image_tag image_url('moj_logo_email.png'), alt: 'Ministry of Justice'
+                  %td.govuk-logo
+                    = image_tag image_url('gov.uk_logo_crown_invert_trans-64x64.png'), alt: 'GOV.UK'
+                    .text-vertical-left
+                      Ministry of Justice
+            #global-header-bar
             %table
               %tbody
                 %tr
@@ -31,7 +34,7 @@
                 %tr
                   %td.title-header
                     %strong
-                      People finder
+                      People Finder
                 %tr
                   %td
 
@@ -43,6 +46,7 @@
                     %table{ cellpadding: "0", cellspacing: "0", border: "0", align: "center" }
                       %tbody
                         = yield
+
                   %td{width: "20"}
 
             %table

@@ -1,0 +1,12 @@
+$is-ie: true;
+$ie-version: 8;
+
+@import "application";
+
+.js-enabled .block-label input {
+  filter: none;
+}
+
+.form-group.mod-media.card .media-left{
+  width: 240px;
+}

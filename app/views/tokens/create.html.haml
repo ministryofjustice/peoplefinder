@@ -1,7 +1,14 @@
-%h1.no-line= t('tokens.create.title')
-%div.login-email-info.grid-2-3
-  %p= t('tokens.create.body_intro')
-  - if @unauthorised_login
-    %p= t('tokens.create.body_unauthorised')
-  %p= t('tokens.create.body_informative_html')
-  %p= t('tokens.create.body_dont_panic')
+.grid-row.mod-heading
+  .column-full.cb-login-email-info
+    %h1.heading-xlarge.mod-heading-border
+      = t('tokens.create.title')
+
+    %p.lede
+      = t('tokens.create.body_intro')
+    - if @unauthorised_login
+      %p
+        = t('tokens.create.body_unauthorised')
+    %p
+      = t('tokens.create.body_informative_html')
+    %p
+      = t('tokens.create.body_dont_panic')

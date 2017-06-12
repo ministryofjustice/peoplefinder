@@ -9,6 +9,7 @@
 #  updated_at :datetime
 #  spent      :boolean          default(FALSE)
 #
+require 'secure'
 
 class Token < ActiveRecord::Base
   class TTLRaceCondition < StandardError; end
@@ -25,8 +26,9 @@ class Token < ActiveRecord::Base
 
   DEFAULT_TTL = 10_800
   DEFAULT_MAX_TOKENS_PER_HOUR = 8
+  DEFAULT_EXTRA_EXPIRY_PERIOD = 10.minutes
 
-  scope :spent,            -> { where(spent: true)  }
+  scope :spent,            -> { where(spent: true) }
   scope :unspent,          -> { where(spent: false) }
   scope :unexpired,        -> { where('created_at > ?', ttl.seconds.ago) }
   scope :expired,          -> { where('created_at < ?', ttl.seconds.ago) }
@@ -35,6 +37,12 @@ class Token < ActiveRecord::Base
 
   def self.find_unspent_by_user_email user_email
     unspent.find_by_user_email(user_email)
+  end
+
+  def self.find_securely token_value
+    find_each do |token|
+      return token if Secure.compare(token.value, token_value)
+    end
   end
 
   def to_param
@@ -86,12 +94,16 @@ class Token < ActiveRecord::Base
     end
   end
 
+  def within_validity_period?
+    spent? && created_at > DEFAULT_EXTRA_EXPIRY_PERIOD.ago
+  end
+
   private
 
   # NOTE: dev and staging mails are scanned (possibly because they are not gov.uk)
   # and this will spend them so
   def scanned_token_active?
-    token_active? || (spent? && created_at > 10.minutes.ago)
+    token_active? || within_validity_period?
   end
 
   def token_active?

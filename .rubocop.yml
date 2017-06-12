@@ -22,13 +22,14 @@ AllCops:
     - 'spec/mailers/previews/*'
     - 'lib/generators/**/*'
   TargetRubyVersion: 2.3
+  TargetRailsVersion: 4.2
 
 Rails:
   Enabled: true
 
 # Just indent parameters by two spaces. It's less volatile if methods change,
 # and there's less busy work lining things up.
-Style/AlignParameters:
+Layout/AlignParameters:
   EnforcedStyle: with_fixed_indentation
 
 Style/CollectionMethods:
@@ -37,7 +38,7 @@ Style/CollectionMethods:
     reduce: 'inject'
 
 # Chain methods with trailing dots.
-Style/DotPosition:
+Layout/DotPosition:
   EnforcedStyle: trailing
 
 # Percent-formatting and hash interpolation both have their place. Don't
@@ -94,19 +95,19 @@ require: rubocop-rspec
 Style/RegexpLiteral:
   Enabled: false
 
-Style/EmptyLinesAroundBlockBody:
+Layout/EmptyLinesAroundBlockBody:
   Enabled: false
 
-Style/EmptyLinesAroundClassBody:
+Layout/EmptyLinesAroundClassBody:
   Enabled: false
 
-Style/EmptyLinesAroundModuleBody:
+Layout/EmptyLinesAroundModuleBody:
   Enabled: false
 
 Style/MethodDefParentheses:
   Enabled: false
 
-Style/AlignHash:
+Layout/AlignHash:
   Enabled: false
 
 Style/BlockDelimiters:
@@ -150,10 +151,11 @@ Style/ClassVars:
   Exclude:
     - 'spec/**/*'
 
-Style/IndentArray:
+Layout/IndentArray:
   Exclude:
     - 'spec/**/*'
-Style/SpaceAroundOperators:
+
+Layout/SpaceAroundOperators:
   Enabled: false
 
 Performance/TimesMap:

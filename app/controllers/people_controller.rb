@@ -1,11 +1,10 @@
-# FIXME: Refactor this controller - it's too long and mailing shouldn't be done in models
+# FIXME: Refactor this controller - it's too long
 class PeopleController < ApplicationController
 
   include StateCookieHelper
 
-  before_action :set_person, only: [:show, :edit, :update, :update_email, :destroy]
-  before_action :set_org_structure,
-    only: [:new, :edit, :create, :update, :add_membership]
+  before_action :set_person, only: [:show, :edit, :update, :destroy]
+  before_action :set_org_structure, only: [:new, :edit, :create, :update, :add_membership]
   before_action :load_versions, only: [:show]
 
   # GET /people
@@ -45,7 +44,7 @@ class PeopleController < ApplicationController
     if @person.valid?
       confirm_or_create
     else
-      error :create_error
+      @person.memberships.build unless @person.memberships.present?
       render :new
     end
   end
@@ -61,21 +60,6 @@ class PeopleController < ApplicationController
       confirm_or_update
     else
       render :edit
-    end
-  end
-
-  def update_email
-    @person.assign_attributes(person_email_update_params)
-    authorize @person
-    if @person.valid?
-      updater = PersonUpdater.new(person: @person,
-                                  current_user: current_user,
-                                  state_cookie: StateManagerCookie.new(cookies),
-                                  session_id: session.id)
-      updater.update!
-      session.delete(:desired_path)
-      notice :profile_email_updated, email: @person.email
-      login_person @person
     end
   end
 
@@ -120,10 +104,6 @@ class PeopleController < ApplicationController
       *Person::DAYS_WORKED,
       memberships_attributes: [:id, :role, :group_id, :leader, :subscribed]
     ]
-  end
-
-  def person_email_update_params
-    params.require(:person).permit(:email)
   end
 
   def set_org_structure

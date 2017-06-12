@@ -1,22 +1,26 @@
-%h1= t('management.header')
+- content_for :body_classes do
+  = 'admin-page '
 
-.grid-row
-  %h2= t('management.report_header')
-.grid-row{ style: "display: inline-block;"}
-  .grid
+.grid-row.mod-heading
+  .column-full
+    %h1.heading-xlarge.mod-heading-border
+      = t('management.header')
+
+    %h2.heading-medium.with-border-lg
+      = t('management.report_header')
+
+    %h3.heading-small
+      = "User behaviour report"
+
     #user-behavior-report
-      .report-name
-        User behaviour report
-      .generate-link
-        = link_to 'generate', admin_generate_user_behavior_report_path
-      .download-link
-        = link_to 'download', admin_user_behavior_report_path
+      %span.generate-link
+        = link_to 'generate', admin_generate_user_behavior_report_path, class: "button"
+      %span.download-link
+        = link_to 'download', admin_user_behavior_report_path, class: "button"
 
-.grid-row
-  .grid
-    %h2= t('management.tools_header')
-.grid-row
-  .grid
-    .bulk-uploader
-      = link_to 'Bulk Uploader', new_admin_person_upload_path
+    %h2.heading-medium.with-border-lg.tool-name
+      = t('management.tools_header')
+
+    #bulk-uploader
+      = link_to 'Bulk uploader', new_admin_person_upload_path, class: "button"
 

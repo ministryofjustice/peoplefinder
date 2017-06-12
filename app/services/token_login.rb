@@ -1,17 +1,18 @@
-require 'secure'
-
 class TokenLogin
 
   attr_reader :token
 
   def initialize(token_value)
-    @token_value = token_value
-    @token = find_token_securely
+    @token = find_token_securely token_value
   end
 
   def call view
     if token && token.active?
-      login_and_render(view)
+      if view.supported_browser?
+        login_and_render(view)
+      else
+        view.redirect_to_unsupported_browser_warning
+      end
     else
       view.render_new_sessions_path_with_expired_token_message
     end
@@ -19,10 +20,8 @@ class TokenLogin
 
   private
 
-  def find_token_securely
-    Token.find_each do |token|
-      return token if Secure.compare(token.value, @token_value)
-    end
+  def find_token_securely token_value
+    Token.find_securely token_value
   end
 
   def login_and_render view

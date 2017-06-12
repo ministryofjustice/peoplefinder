@@ -4,9 +4,9 @@ module SpecSupport
       allow(ReadonlyUser).to receive(:from_request).and_return ReadonlyUser.new
     end
 
-    def mock_logged_in_user
+    def mock_logged_in_user super_admin: false
       controller.session[::Login::SESSION_KEY] =
-        create(:person, email: 'test.user@digital.justice.gov.uk').id
+        create(:person, email: 'test.user@digital.justice.gov.uk', super_admin: super_admin).id
     end
 
     def current_user

@@ -92,6 +92,8 @@ RSpec.describe PeopleController, type: :controller do
     end
 
     describe 'with invalid params' do
+      render_views
+
       before do
         post :create, person: invalid_attributes
       end
@@ -105,7 +107,7 @@ RSpec.describe PeopleController, type: :controller do
       end
 
       it 'shows an error message' do
-        expect(flash[:error]).to match(/created/)
+        expect(response.body).to match(/Last name is required/)
       end
     end
 
@@ -260,34 +262,6 @@ RSpec.describe PeopleController, type: :controller do
         person.reload
         expect(person).not_to be_super_admin
       end
-    end
-  end
-
-  describe 'PUT update_email' do
-    let(:person) { create(:person, given_name: "John", surname: "Doe", email: 'john.doe@digital.justice.gov.uk') }
-    let(:new_attributes) { { email: 'john.doe2@digital.justice.gov.uk' } }
-    subject do
-      put :update_email, id: person.to_param, person: new_attributes
-    end
-
-    it 'assigns person' do
-      subject
-      expect(assigns(:person)).to eql person
-    end
-
-    it 'updates email only' do
-      subject
-      expect(person.reload.email).to eql new_attributes[:email]
-    end
-
-    it 'redirects to SHOW action, ignoring desired path' do
-      request.session[:desired_path] = new_group_path
-      is_expected.to redirect_to person_path(person, prompt: 'profile')
-    end
-
-    it 'sets a flash message' do
-      subject
-      expect(flash[:notice]).to include("Your primary email has been updated to #{new_attributes[:email]}")
     end
   end
 

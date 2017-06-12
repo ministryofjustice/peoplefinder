@@ -62,13 +62,13 @@ RSpec.describe 'search/person', type: :view do
 
   describe 'people links' do
     let(:list) { people_results.map(&:name) }
-    let(:div) { 'result-name' }
+    let(:div) { 'cb-person-name' }
 
     include_examples 'sets analytics attributes'
   end
 
   describe 'team links' do
-    let(:div) { 'result-memberships' }
+    let(:div) { 'cb-person-memberships' }
     let(:list) do
       people_results.map do |person|
         person.memberships.map do |membership|
@@ -81,7 +81,7 @@ RSpec.describe 'search/person', type: :view do
   end
 
   describe 'email links' do
-    let(:div) { 'result-email' }
+    let(:div) { 'cb-person-email' }
     let(:list) { people_results.map(&:email) }
 
     include_examples 'sets analytics attributes'

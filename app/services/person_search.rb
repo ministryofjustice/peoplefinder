@@ -2,6 +2,9 @@ class PersonSearch
 
   attr_reader :query, :results, :matches
 
+  PRE_TAGS = ['<span class="es-highlight">'].freeze
+  POST_TAGS = ['</span>'].freeze
+
   def initialize query, results
     @query = clean_query query
     @query_regexp = /#{@query.downcase}/i
@@ -188,8 +191,8 @@ class PersonSearch
 
   def highlighter
     {
-      pre_tags: ['<span class="es-highlight">'],
-      post_tags: ['</span>'],
+      pre_tags: PRE_TAGS,
+      post_tags: POST_TAGS,
       fields: fields_to_highlight
     }
   end
