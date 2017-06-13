@@ -242,3 +242,10 @@ $border-color: #bfc1c3;
     width: auto;
   }
 }
+
+
+.root-node .team-link:first-child{
+  color: $text-colour !important;
+  padding-top: 4px;
+  padding-left: $gutter/2 !important;
+}

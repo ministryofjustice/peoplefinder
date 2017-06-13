@@ -1,6 +1,7 @@
-- group_disabled = (@group && @group.id == group.id)
+- group_disabled = (@group && @group.id == group.id) || (group == Group.department)
 
 %a{href:'#', :class => 'team-back'} Back
+
 
 %h3{class: (group_disabled ? 'disabled' : '')}
   - if form && !group_disabled
@@ -8,3 +9,5 @@
 
   %a{href: group_path(group['id']), :class => 'team-link', title: group.name }<
     = group['name']
+
+
