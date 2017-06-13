@@ -32,6 +32,7 @@ en:
         We recommend the <strong style="font-weight: 700">Firefox</strong> web browser for a more enhanced experience.
         <br/><br/>
         <strong style="font-weight: 700">Copy and paste</strong> the link below to use in <strong style="font-weight: 700">Firefox</strong>
+    about_usage: &about_usage People Finder relies on contributions from everyone to help keep it up-to-date.
   time:
     formats:
       default: "%d %b %Y %H:%M"
@@ -338,6 +339,9 @@ en:
       <a href="/cookies">Find out more about cookies</a>
   home:
     show:
+      heading: People Finder
+      explanation: Search for a person or team in the Ministry of Justice
+      about_usage: *about_usage
       unsupported_browser_warning_html: |
         <h1 id='error-summary-heading' class='heading-medium error-summary-heading'>
           People Finder is best viewed in Firefox.
@@ -348,19 +352,6 @@ en:
         <p>
           Copy the URL above into Firefox.
         </p>
-    heading: Welcome to People Finder
-    explanation: |
-      Find out how to contact people, what team they’re in, where and when
-      they work.
-    search_heading: Search
-    search_hint: |
-      You can search by job title, location, phone number,
-      or by name.
-    usage_heading: Help keep People Finder up to date.
-    usage: |
-      Edit your profile to make sure your information is current and accurate.
-      You can also make changes to other people’s profiles. They will receive
-      an email notifying them of changes.
     org_heading: Browse the organisation
     org_sub_heading: Browse by team
     org_hint_html: |

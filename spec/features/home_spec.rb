@@ -27,15 +27,28 @@ feature 'Home page' do
       it 'is all there' do
         expect(home_page).to be_displayed
         expect(home_page).to have_page_title
-        expect(home_page.page_title).to have_text('Welcome to People Finder')
-        expect(home_page).to have_leader_profile_image
+        expect(home_page).to have_about_usage
+        expect(home_page).to have_create_profile_link
         expect(home_page).to have_search_form
+        expect(home_page).to have_department_overview
       end
 
-      it 'displays perm sec\' image but not name and role' do
-        expect(home_page).to have_leader_profile_image
-        expect(home_page.leader_profile_image[:alt]).to eql 'Current photo of Richard Heaton'
-        expect(home_page).not_to have_text 'Richard Heaton'
+      it 'has page title' do
+        expect(home_page).to have_page_title
+        expect(home_page.page_title).to have_text('People Finder')
+      end
+
+      it 'has about usage section' do
+        expect(home_page).to have_about_usage
+        expect(home_page.about_usage).to have_text 'People Finder relies on contributions from everyone to help keep it up-to-date'
+      end
+
+      it 'has department overview section' do
+        expect(home_page).to have_department_overview
+        expect(home_page.department_overview).to have_department_name
+        expect(home_page.department_overview).to have_leader_profile_image
+        expect(home_page.department_overview).to have_text 'About the team'
+        expect(home_page.department_overview).to have_text "Teams within #{department}"
       end
 
       context 'Firefox 31+' do
