@@ -42,19 +42,4 @@ RSpec.describe HomeController, type: :controller do
     end
   end
 
-  describe 'GET index' do
-    before do
-      create(:department)
-      get :index
-    end
-
-    it '#can_add_person_here? returns false' do
-      expect(controller.can_add_person_here?).to eql false
-    end
-
-    it 'assigns the group to the top_level_group' do
-      expect(assigns(:department).name).to eql('Ministry of Justice')
-    end
-  end
-
 end

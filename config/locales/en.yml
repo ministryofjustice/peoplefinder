@@ -352,9 +352,6 @@ en:
         <p>
           Copy the URL above into Firefox.
         </p>
-    index:
-      heading: Browse %{department} teams
-      about_usage: *about_usage
     org_heading: Browse the organisation
     org_sub_heading: Browse by team
     org_hint_html: |

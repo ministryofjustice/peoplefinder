@@ -2,11 +2,9 @@ class HomeController < ApplicationController
 
   include UserAgentHelper
 
-  before_action :set_department_or_redirect, only: [:show, :index]
+  before_action :set_department_or_redirect, only: [:show]
 
-  def show; end
-
-  def index
+  def show
     @all_people_count = @department.all_people_count
     @org_structure = Group.hierarchy_hash
   end
