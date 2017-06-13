@@ -97,15 +97,15 @@ feature "Person maintenance" do
     expect(page).to have_selector('.hide-editable-fields', visible: :visible)
 
     within('.team.selected') { click_link 'Back' }
-    expect(page).to have_selector('a.team-link', text: /#{Group.department.name}/, visible: :visible)
-
+    expect(page).to have_selector('a.subteam-link', text: /CSG/, visible: :visible)
+    within('.team.selected') { click_link 'CSG' }
     click_link 'Done'
     expect(page).to have_selector('.editable-fields', visible: :hidden)
 
     click_button 'Save', match: :first
 
     person.reload
-    expect(person.memberships.last.group).to eql(Group.department)
+    expect(person.memberships.last.group).to eql(Group.find_by(name: 'CSG'))
   end
 
   scenario 'Adding a new team', js: true do

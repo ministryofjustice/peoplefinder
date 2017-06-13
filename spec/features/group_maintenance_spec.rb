@@ -146,7 +146,7 @@ feature 'Group maintenance' do
       expect(last_email.body.encoded).to match(group_url(group))
     end
 
-    scenario 'Changing a team parent via clicking "Back"', js: true do
+    scenario 'Change parent to department via clicking "Back"', js: true do
       group = setup_three_level_group
       setup_group_member group
       expect(dept.name).to eq 'Ministry of Justice'
