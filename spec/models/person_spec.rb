@@ -102,6 +102,19 @@ RSpec.describe Person, type: :model do
     end
   end
 
+  describe '.non_team_members' do
+    before do
+      person.memberships.build(group: create(:department))
+      person.save!
+    end
+
+    it 'returns people in no team' do
+      expect(described_class.non_team_members).to_not include(person)
+      person.memberships.destroy_all
+      expect(described_class.non_team_members).to include(person)
+    end
+  end
+
   describe '#name' do
     context 'with a given_name and surname' do
       let(:person) { build(:person, given_name: 'Jon', surname: 'von Brown') }

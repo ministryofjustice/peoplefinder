@@ -99,6 +99,20 @@ namespace :peoplefinder do
       end
     end
 
+    desc 'adding people not in a team to the Department level team'
+    task :move_unassigned_to_department => :environment do
+      department = Group.department
+      puts "Assign #{Person.non_team_members.count} people not in a team to #{department}"
+      Person.non_team_members.each do |person|
+        begin
+          person.memberships.create(group: department)
+          print '.'
+        rescue => err
+          puts "Failed to assign #{person.name} to #{department}: #{err}"
+        end
+      end
+    end
+
     def csv_header
       PersonCsvImporter::REQUIRED_COLUMNS + PersonCsvImporter::OPTIONAL_COLUMNS
     end

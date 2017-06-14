@@ -43,6 +43,7 @@ class Person < ActiveRecord::Base
   include Concerns::ExposeMandatoryFields
   include Concerns::GeckoboardDatasets
   include Concerns::PersonChangesTracker
+  include Concerns::DataMigrationUtils
 
   belongs_to :profile_photo
 
@@ -123,11 +124,9 @@ class Person < ActiveRecord::Base
 
   scope :never_logged_in, PeopleNeverLoggedInQuery.new
   scope :logged_in_at_least_once, PeopleLoggedInAtLeastOnceQuery.new
-  scope :last_reminder_email_older_than, ->(within) { ReminderMailOlderThanQuery.new(within).call }
+  scope :last_reminder_email_older_than, -> (within) { ReminderMailOlderThanQuery.new(within).call }
   scope :updated_at_older_than, -> (within) { PeopleUpdatedOlderThanQuery.new(within).call }
-
   scope :updated_at_older_than, -> (within) { where('updated_at < ?', within) }
-
   scope :created_at_older_than, -> (within) { where('created_at < ?', within) }
 
   scope :namesakes, -> (person) { NamesakesQuery.new(person).call }
