@@ -320,10 +320,3 @@ form .org-browser {
     padding: 8px;
   }
 }
-
-// Target the top level node
-.root-node .team-link:first-child{
-  color: $text-colour !important;
-  padding-top: 4px;
-  padding-left: $gutter/2 !important;
-}
