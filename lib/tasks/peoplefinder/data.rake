@@ -99,20 +99,6 @@ namespace :peoplefinder do
       end
     end
 
-    desc 'adding people not in a team to the Department level team'
-    task :move_unassigned_to_department => :environment do
-      department = Group.department
-      puts "Assign #{Person.non_team_members.count} people not in a team to #{department}"
-      Person.non_team_members.each do |person|
-        begin
-          person.memberships.create(group: department)
-          print '.'
-        rescue => err
-          puts "Failed to assign #{person.name} to #{department}: #{err}"
-        end
-      end
-    end
-
     def csv_header
       PersonCsvImporter::REQUIRED_COLUMNS + PersonCsvImporter::OPTIONAL_COLUMNS
     end
@@ -125,6 +111,35 @@ namespace :peoplefinder do
         record += [person.__send__(attribute)]
       end
       record
+    end
+
+    namespace :migration do
+
+      def department
+        @department ||= Group.department
+      end
+
+      desc 'Adds people not in a team to the Department level team'
+      task :move_unassigned_to_department => :environment do
+        puts "Assign #{Person.non_team_members.count} people not in a team to #{department}"
+        Person.non_team_members.each do |person|
+          begin
+            person.memberships.create(group: department)
+            print '.'
+          rescue => err
+            puts "Failed to assign #{person.name} to #{department}: #{err}"
+          end
+        end
+      end
+
+      desc 'Deletes department level team memberships for those in another team'
+      task :remove_unnecessary_department_memberships => :environment do
+        puts "Remove #{Person.department_members_in_other_teams.count} unnecessary #{department} memberships"
+        Person.department_members_in_other_teams.each do |person|
+          puts "Testing: removing #{person} from #{department}"
+          # person.memberships.find_by(group_id: department).destroy_all
+        end
+      end
     end
 
   end

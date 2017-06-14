@@ -101,7 +101,9 @@ Metrics/AbcSize:
 # Offense count: 227
 # Configuration parameters: CountComments, ExcludedMethods.
 Metrics/BlockLength:
-  Max: 430
+  Max: 400
+  Exclude:
+    - 'spec/models/person_spec.rb'
 
 # Offense count: 4
 # Configuration parameters: CountComments.
