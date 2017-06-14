@@ -1,7 +1,6 @@
 - membership = membership_f.object
 .membership.panel
   .form-group
-    -# = membership_f.label :role, 'Job title', class: 'form-label-bold'
     = membership_f.text_field :role
 
   .form-group
@@ -11,8 +10,6 @@
     %p.form-hint
       = role_translate(person, 'memberships.team_creation_hint')
     .editable-container
-
-      / - unless membership.new_record?
       .editable-summary.parent-summary
         - if membership.group
           .title.breadcrumbs= breadcrumbs(membership.path, show_links: false)

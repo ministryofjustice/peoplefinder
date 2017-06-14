@@ -102,6 +102,56 @@ RSpec.describe Person, type: :model do
     end
   end
 
+  describe '.non_team_members' do
+    before do
+      person.memberships.build(group: create(:department))
+      person.save!
+    end
+
+    it 'does not return people in one or more teams' do
+      expect(described_class.non_team_members).to_not include(person)
+    end
+
+    it 'returns people in no team' do
+      person.memberships.destroy_all
+      expect(described_class.non_team_members).to include(person)
+    end
+  end
+
+  describe '.department_members_in_other_teams' do
+    before do
+      person.save!
+      person.memberships.create(group: create(:department))
+    end
+
+    it 'returns people in department who are also in another team' do
+      person.memberships.create(group: create(:group, name: 'Technology'))
+      expect(described_class.department_members_in_other_teams).to include(person)
+    end
+
+    it 'does not return people in no team' do
+      person.memberships.destroy_all
+      expect(described_class.department_members_in_other_teams).to_not include(person)
+    end
+
+    it 'does not return people only in one team' do
+      expect(described_class.department_members_in_other_teams).to_not include(person)
+    end
+
+    it 'does not return people in department who are also in another team if they are the department leader' do
+      person.memberships.find_by(group_id: Group.department).update(leader: true)
+      person.memberships.create(group: create(:group, name: 'Technology'))
+      expect(described_class.department_members_in_other_teams).to_not include(person)
+    end
+
+    it 'does not return people in multiple non-department teams' do
+      person.memberships.destroy_all
+      person.memberships.create(group: create(:group, name: 'Technology'))
+      person.memberships.create(group: create(:group, name: 'Digital'))
+      expect(described_class.department_members_in_other_teams).to_not include(person)
+    end
+  end
+
   describe '#name' do
     context 'with a given_name and surname' do
       let(:person) { build(:person, given_name: 'Jon', surname: 'von Brown') }
