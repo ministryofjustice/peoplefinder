@@ -50,7 +50,8 @@ feature 'Person edit notifications' do
   end
 
   scenario 'Editing a person with different email' do
-    person = create(:person, given_name: 'Bob', surname: 'Smith', email: 'bob.smith@digital.justice.gov.uk')
+    digital = create(:group, name: 'Digital')
+    person = create(:person, :member_of, team: digital, given_name: 'Bob', surname: 'Smith', email: 'bob.smith@digital.justice.gov.uk')
     visit person_path(person)
     click_edit_profile
     fill_in 'Last name', with: 'Smelly Pants'

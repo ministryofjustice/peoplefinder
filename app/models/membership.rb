@@ -20,7 +20,7 @@ class Membership < ActiveRecord::Base
   belongs_to :group, touch: true
 
   validates :person, presence: true, on: :update
-  validates :group, presence: true, on: :update
+  validates :group, presence: true, on: [:create, :update]
   validates_with PermanentSecretaryUniqueValidator
 
   delegate :name, to: :person, prefix: true

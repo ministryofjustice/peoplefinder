@@ -310,6 +310,7 @@ en:
         attributes:
           base:
             memberships_exist: "cannot be deleted until all the memberships have been removed"
+
     validators:
       image_dimensions_validator:
         too_small: "is %{actual_dimensions} pixels. The minimum requirement is %{expected_dimensions} pixels"
@@ -331,6 +332,8 @@ en:
         secondary_email: Alternative work email
       memberships:
         leader: "Are you the Permanent Secretary of the Ministry of Justice?"
+        group: Team
+
   shared:
     search:
       hint: 'Search name, job title, team name or location'
@@ -452,9 +455,6 @@ en:
         person_left: Remove the profile as the person has left MOJ
         person_left_info: Additional information
 
-    placeholder:
-      group:
-          description: sdfsdf
     submit:
       person:
         create: "Save"

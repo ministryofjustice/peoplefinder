@@ -10,7 +10,7 @@ feature 'Audit trail' do
 
   scenario 'Auditing an edit of a person' do
     with_versioning do
-      person = create(:person, surname: 'original surname')
+      person = create(:person, :member_of, team: create(:department), surname: 'original surname')
       visit edit_person_path(person)
       fill_in 'Last name', with: 'something else'
       click_button 'Save', match: :first
@@ -131,8 +131,8 @@ feature 'Audit trail' do
       person.memberships.create(group: group, role: 'Jefe', leader: true)
 
       visit edit_person_path(person)
-      within('.membership') do
-        click_link('Delete')
+      within last_membership do
+        click_link('Leave team')
       end
 
       visit '/audit_trail'

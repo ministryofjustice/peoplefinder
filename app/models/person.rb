@@ -117,8 +117,14 @@ class Person < ActiveRecord::Base
   has_many :memberships, -> { includes(:group).order('groups.name') }, dependent: :destroy
   has_many :groups, through: :memberships
 
-  accepts_nested_attributes_for :memberships, allow_destroy: true,
-    reject_if: proc { |membership| membership['group_id'].blank? }
+  accepts_nested_attributes_for :memberships, allow_destroy: true, reject_if: :team_membersip_not_supplied?
+
+  def team_membersip_not_supplied?(membership)
+    membership['group_id'].blank? && new_record?
+    # TODO: remove or implement for edit flow
+    # ||
+    # membership['group_id'].blank? && memberships.find_by(id: membership['id'])&.group_id.blank?
+  end
 
   default_scope { order(surname: :asc, given_name: :asc) }
 

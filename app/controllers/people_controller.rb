@@ -21,16 +21,15 @@ class PeopleController < ApplicationController
   # GET /people/new
   def new
     @person = Person.new
+    build_membership @person
     authorize @person
-
-    @person.memberships.build
   end
 
   # GET /people/1/edit
   def edit
     authorize @person
     @activity = params[:activity]
-    @person.memberships.build if @person.memberships.empty?
+    build_membership @person
   end
 
   # POST /people
@@ -44,7 +43,7 @@ class PeopleController < ApplicationController
     if @person.valid?
       confirm_or_create
     else
-      @person.memberships.build unless @person.memberships.present?
+      build_membership @person
       render :new
     end
   end
@@ -110,6 +109,10 @@ class PeopleController < ApplicationController
     @org_structure = Group.hierarchy_hash
   end
 
+  def build_membership person
+    person.memberships.build unless person.memberships.present?
+  end
+
   def namesakes?
     return false if params['continue_from_duplication'].present?
     @people = Person.namesakes(@person)
@@ -138,6 +141,7 @@ class PeopleController < ApplicationController
     if namesakes_check_required_and_found?
       render(:confirm)
     else
+
       updater = PersonUpdater.new(person: @person,
                                   current_user: current_user,
                                   state_cookie: StateManagerCookie.new(cookies),

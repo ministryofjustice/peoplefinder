@@ -1,6 +1,5 @@
 - blank_person = Person.new
 - blank_person.memberships.build
-- blank_person.memberships.last.group = Group.department
 
 = form_for blank_person, authenticity_token: false do |f|
   = f.fields_for :memberships, child_index: blank_person.object_id do |membership_f|

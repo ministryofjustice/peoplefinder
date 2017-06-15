@@ -6,6 +6,16 @@ module SpecSupport
       end
     end
 
+    def last_membership
+      all('#memberships .membership').last
+    end
+
+    def leader_question
+      within last_membership do
+        find('.team-leader fieldset legend').text
+      end
+    end
+
     def click_on_team_in_org_browser(text)
       find('.org-browser .team-link', text: text).trigger(:click)
     end
