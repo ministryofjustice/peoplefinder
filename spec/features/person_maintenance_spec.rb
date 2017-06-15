@@ -218,6 +218,14 @@ feature 'Person maintenance' do
         expect(edit_profile_page.error_summary).to have_team_required_error
       end
 
+      scenario 'Validates team membership presence' do
+        visit person_path(another_person)
+        click_edit_profile
+        click_link 'Leave team', match: :first
+        click_button 'Save', match: :first
+        expect(edit_profile_page.error_summary).to have_team_membership_required_error
+      end
+
       scenario 'Editing a person to have an existing e-mail raises an error' do
         existing_person = create(:person)
 
