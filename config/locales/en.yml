@@ -192,6 +192,9 @@ en:
       other: |
         If this person’s team doesn’t exist, you’ll need to save your changes and
         add a new sub-team when viewing a team on People Finder.
+    team_selector_hint:
+      mine: Select your team
+      other: Select the person's team
     leader:
       mine: |
         Are you the leader of the <span class="team-led">team above</span>? (optional)

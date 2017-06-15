@@ -1,20 +1,15 @@
 - membership = membership_f.object
 .membership.panel
-  .form-group
-    = membership_f.text_field :role
 
   .form-group
-    = membership_f.label :group_id, 'Team', class: 'form-label-bold'
     %p.form-hint
-      = role_translate(person, 'memberships.team_hint')
-    %p.form-hint
-      = role_translate(person, 'memberships.team_creation_hint')
+      = role_translate(person, 'memberships.team_selector_hint')
     .editable-container
       .editable-summary.parent-summary
         - if membership.group
           .title.breadcrumbs= breadcrumbs(membership.path, show_links: false)
         - unless membership.new_record?
-          = link_to 'Edit team membership', '#', class: 'show-editable-fields button-secondary'
+          = link_to 'Change team', '#', class: 'show-editable-fields button-secondary'
 
       .editable-fields{ style: ('display:none' unless membership.new_record?) }
         - if @org_structure
@@ -32,6 +27,9 @@
       = membership_f.collection_select :group_id,
         GroupLister.new.list.sort_by { |g| g.path.map(&:to_s) },
         :id, :name_with_path, {}, class: 'form-control select-autocomplete team-select'
+
+  .form-group
+    = membership_f.text_field :role
 
   .form-group.team-leader
     %fieldset.inline
@@ -56,10 +54,10 @@
   .form-group
     .remove-link
       - if membership.new_record?
-        = link_to 'Delete role', '#', class: 'remove-new-membership button-secondary'
+        = link_to 'Leave team', '#', class: 'remove-new-membership button-secondary'
 
       - else
-        = link_to 'Delete role', membership_path(membership, referer: request.path),
+        = link_to 'Leave team', membership_path(membership, referer: request.path),
           method: :delete,
           class: 'button-secondary',
           data: {confirm: "Are you sure you want to remove #{person} from #{membership.group}? " }
