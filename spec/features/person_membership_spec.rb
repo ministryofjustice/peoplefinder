@@ -61,8 +61,7 @@ feature "Person maintenance" do
     visit edit_person_path(person)
     expect(page).to have_selector('.team-led', text: 'Digital Justice team')
 
-    fill_in 'Job title', with: 'Head Honcho'
-
+    fill_in 'Job title', match: :first, with: 'Head Honcho'
     click_button 'Save', match: :first
 
     membership = Person.last.memberships.last
@@ -240,12 +239,11 @@ feature "Person maintenance" do
     expect(page).to have_selector('#memberships .membership', count: 1)
   end
 
-  scenario 'Removing a group' do
+  scenario 'Removing a group', js: true do
     person = create_person_in_digital_justice
-
+    javascript_log_in
     visit edit_person_path(person)
-
-    within('#memberships') do
+    within last_membership do
       click_link('Leave team')
     end
     expect(page).to have_content("Removed #{person.name} from Digital Justice")
@@ -257,22 +255,19 @@ end
 def create_person_in_digital_justice
   department = create(:department, name: 'Ministry of Justice')
   group = create(:group, name: 'Digital Justice', parent: department)
-  person = create(:person)
-  person.memberships.create(group: group)
+  person = create(:person, :member_of, team: group, sole_membership: true)
   person
 end
 
 def setup_three_level_team
-  dept = create(:department, name: 'Ministry of Justice')
-  parent_group = create(:group, name: 'CSG', parent: dept)
-  @technology = create(:group, name: 'Technology', parent: parent_group)
+  department = create(:department, name: 'Ministry of Justice')
+  parent_group = create(:group, name: 'CSG', parent: department)
+  create(:group, name: 'Technology', parent: parent_group)
   create(:group, name: 'Digital Services', parent: parent_group)
 end
 
 def setup_team_member group
-  subscriber = create(:person)
-  create :membership, person: subscriber, group: group, subscribed: true
-  subscriber
+  create(:person, :member_of, team: group, subscribed: true, sole_membership: true)
 end
 
 def visit_edit_view group

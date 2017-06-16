@@ -10,17 +10,24 @@ describe UserBehaviorQuery, versioning: true do
 
   let!(:person1) do
     person = create :person, given_name: 'Joel', surname: 'Sugarman', email: 'joel.sugarman@digital.justice.gov.uk'
+    person.memberships.destroy_all
     person.memberships.create(group: ds, role: 'Developer')
     person.memberships.create(group: ds, role: 'Tester')
     person.memberships.create(group: csg, role: 'Business Analyst')
     person
   end
 
-  let!(:person2) { create :person, given_name: 'John', surname: 'Smith', email: 'john.smith@digital.justice.gov.uk', login_count: 2, last_login_at: Time.new(2017, 05, 22, 2, 2, 2, "+00:00") }
+  let!(:person2) do
+    person = create(:person, given_name: 'John', surname: 'Smith', email: 'john.smith@digital.justice.gov.uk', login_count: 2, last_login_at: Time.new(2017, 05, 22, 2, 2, 2, "+00:00"))
+    person.memberships.destroy_all
+    person
+  end
+
   let!(:person3) do
     person = create :person, given_name: 'Adrian', surname: 'Smith', email: 'adrian.smith@digital.justice.gov.uk', login_count: 3, last_login_at: Time.new(2016, 05, 21, 3, 3, 3, "+00:00")
     person.update! location_in_building: '10.51', building: 'Fleet Street', city: 'Vancouver'
     person.update! location_in_building: '10.52', building: 'Fleet Street', city: 'Vancouver'
+    person.memberships.destroy_all
     person
   end
 

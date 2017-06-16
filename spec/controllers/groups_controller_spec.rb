@@ -23,6 +23,7 @@ RSpec.describe GroupsController, type: :controller do
 
   before do
     mock_logged_in_user
+    Group.destroy_all
   end
 
   # This should return the minimal set of attributes required to create a valid
@@ -116,22 +117,54 @@ RSpec.describe GroupsController, type: :controller do
   end
 
   describe 'POST create' do
-    describe 'with valid params' do
-      it 'creates a new Group' do
-        expect do
+    context 'when no top level group exists' do
+      describe 'with valid params' do
+        it 'creates a new Group' do
+          expect do
+            post :create, { group: valid_attributes }, valid_session
+          end.to change(Group, :count).by(1)
+        end
+
+        it 'assigns a newly created group as @group' do
           post :create, { group: valid_attributes }, valid_session
-        end.to change(Group, :count).by(1)
-      end
+          expect(assigns(:group)).to be_a(Group)
+          expect(assigns(:group)).to be_persisted
+        end
 
-      it 'assigns a newly created group as @group' do
-        post :create, { group: valid_attributes }, valid_session
-        expect(assigns(:group)).to be_a(Group)
-        expect(assigns(:group)).to be_persisted
+        it 'redirects to the created group' do
+          group_attrs = valid_attributes
+          post :create, { group: group_attrs }, valid_session
+          expect(response).to redirect_to(Group.find_by(name: group_attrs[:name]))
+        end
       end
+    end
 
-      it 'redirects to the created group' do
-        post :create, { group: valid_attributes }, valid_session
-        expect(response).to redirect_to(Group.last)
+    context 'when top level groups exists' do
+      describe 'with valid params' do
+        before do
+          department
+        end
+
+        let(:department) { create(:department) }
+        let(:valid_attributes) { attributes_for(:group).merge(parent_id: department.id) }
+
+        it 'creates a new Group' do
+          expect do
+            post :create, { group: valid_attributes }, valid_session
+          end.to change(Group, :count).by(1)
+        end
+
+        it 'assigns a newly created group as @group' do
+          post :create, { group: valid_attributes }, valid_session
+          expect(assigns(:group)).to be_a(Group)
+          expect(assigns(:group)).to be_persisted
+        end
+
+        it 'redirects to the created group' do
+          group_attrs = valid_attributes
+          post :create, { group: group_attrs }, valid_session
+          expect(response).to redirect_to(Group.find_by(name: group_attrs[:name]))
+        end
       end
     end
 

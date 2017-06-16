@@ -11,7 +11,10 @@ RSpec.describe HomeController, type: :controller do
 
   describe 'GET show' do
     context 'when there is no top-level group' do
-      before { get :show }
+      before do
+        Group.destroy_all
+        get :show
+      end
 
       it 'redirects to the new group page' do
         expect(response).to redirect_to(new_group_path)

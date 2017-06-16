@@ -134,7 +134,6 @@ RSpec.describe Person, type: :model do
   describe '.department_members_in_other_teams' do
     before do
       person.save!
-      person.memberships.create(group: create(:department))
     end
 
     it 'returns people in department who are also in another team' do
@@ -322,6 +321,7 @@ RSpec.describe Person, type: :model do
   context 'with two memberships in the same group' do
     before do
       person.save!
+      person.memberships.destroy_all
       digital_services = create(:group, name: 'Digital Services')
       person.memberships.create(group: digital_services, role: 'Service Assessments Lead')
       person.memberships.create(group: digital_services, role: 'Head of Delivery')

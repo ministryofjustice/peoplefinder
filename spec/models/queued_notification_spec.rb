@@ -56,9 +56,11 @@ RSpec.describe QueuedNotification, type: :model do
       let(:person) { create :person, given_name: 'Stephen', surname: 'Jones', slug: 'stephen-richards', email: 'sr@digital.justice.gov.uk' }
       let(:creator) { double(PersonCreator, person: person, current_user: current_user, session_id: session_id) }
 
-      before(:each) { allow(creator).to receive(:is_a?).with(PersonCreator).and_return(true) }
+      before(:each) do
+        allow(creator).to receive(:is_a?).with(PersonCreator).and_return(true)
+      end
 
-      context 'no group changes' do
+      context 'no group changes (except default)' do
         context 'not final edit' do
           it 'creates a new email template with edit finalised false' do
             allow(creator).to receive(:edit_finalised?).and_return(false)
@@ -119,7 +121,10 @@ RSpec.describe QueuedNotification, type: :model do
                'given_name' => [nil, 'Stephen'],
                'surname' => [nil, 'Jones'],
                'email' => [nil, 'sr@digital.justice.gov.uk'],
-               'slug' => [nil, 'stephen-richards']
+               'slug' => [nil, 'stephen-richards'],
+               "membership_#{@moj.id}" => {
+                "group_id" => [nil, @moj.id]
+              }
              }
            }
         }
@@ -135,6 +140,9 @@ RSpec.describe QueuedNotification, type: :model do
               'email'=>[nil, 'john.jones@digital.justice.gov.uk'],
               'slug'=>[nil, 'stephen-richards'],
               'works_friday'=>[true, false],
+              "membership_#{@moj.id}" => {
+                "group_id" => [nil, @moj.id]
+              },
               "membership_#{devs.id}"=>{
                 'group_id'=>[nil, devs.id]
               },

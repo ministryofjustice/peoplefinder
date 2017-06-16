@@ -28,9 +28,17 @@ FactoryGirl.define do
     association :parent, factory: :department
   end
 
+
   factory :membership do
     person
     group
+
+    factory :membership_default do
+      role nil
+      leader false
+      subscribed true
+      group_id { create(:department).id }
+    end
   end
 
   factory :person do
@@ -39,7 +47,7 @@ FactoryGirl.define do
     email
 
     # validation requires team membership existence
-    before :create do |peep, evaluator|
+    after :build do |peep, evaluator|
       department = create(:department)
       peep.memberships << build(:membership, group: department, person: nil) unless peep.memberships.present?
     end
@@ -80,20 +88,20 @@ FactoryGirl.define do
       transient do
         team nil
         leader false
-        role 'leader'
+        subscribed true
+        role nil
+        sole_membership false
       end
-      before(:create) do |peep, evaluator|
-        # binding.pry
+      after(:build) do |peep, evaluator|
         if peep.memberships.map(&:group).include? evaluator.team
-          # memberships = peep.memberships.select { |m| m.group == evaluator.team }
-          # memberships.each do |membership|
-          #   assign_attributes(leader: evaluator.leader, role: evaluator.role)
-          # end
-          raise "Already a member of #{evaluator.team}"
+          memberships = peep.memberships.select { |m| m.group == evaluator.team }
+          memberships.each do |membership|
+            membership.assign_attributes(leader: evaluator.leader, subscribed: evaluator.subscribed, role: evaluator.role)
+          end
         else
-          peep.memberships << build(:membership, group: evaluator.team, person: peep, leader: evaluator.leader, role: evaluator.role)
-          # create(:membership, person: peep, group: evaluator.team, leader: evaluator.leader, role: evaluator.role)
+          peep.memberships << build(:membership, group: evaluator.team, person: peep, leader: evaluator.leader, subscribed: evaluator.subscribed, role: evaluator.role)
         end
+        peep.memberships = peep.memberships.select {|m| m.group_id == evaluator.team.id } if evaluator.sole_membership
       end
     end
 

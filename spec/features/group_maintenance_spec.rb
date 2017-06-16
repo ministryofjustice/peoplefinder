@@ -22,26 +22,31 @@ feature 'Group maintenance' do
     click_link 'Edit'
   end
 
-  context 'for a regular user', user: :regular do
-    scenario 'Creating a top-level department' do
-      name = 'Ministry of Justice'
-
-      visit new_group_path
-      expect(page).to have_title("Create a team - #{app_title}")
-
-      fill_in 'Team name', with: name
-      fill_in 'Team description', with: 'about my team'
-      click_button 'Save'
-
-      expect(page).to have_content('Created Ministry of Justice')
-
-      dept = Group.find_by_name(name)
-      expect(dept.name).to eql(name)
-      expect(dept.description).to eql('about my team')
-      expect(dept.parent).to be_nil
+  context 'for a regular user', user: :regular, js: true do
+    background do
+      dept
     end
+    # TODO: remove - there is no way we can validate presence of a team AND allow someone to login when there are no teams
+    # since these two behaviours are incompatable
+    #
+    # scenario 'Creating a top-level department'do
+    #   name = 'Ministry of Justice'
+    #   visit new_group_path
+    #   expect(page).to have_title("Create a team - #{app_title}")
 
-    scenario 'Creating a team inside the department', js: true do
+    #   fill_in 'Team name', with: name
+    #   fill_in 'Team description', with: 'about my team'
+    #   click_button 'Save'
+
+    #   expect(page).to have_content('Created Ministry of Justice')
+
+    #   dept = Group.find_by_name(name)
+    #   expect(dept.name).to eql(name)
+    #   expect(dept.description).to eql('about my team')
+    #   expect(dept.parent).to be_nil
+    # end
+
+    scenario 'Creating a team inside the department' do
       javascript_log_in
       visit group_path(dept)
       click_link 'Add new sub-team'
@@ -59,7 +64,7 @@ feature 'Group maintenance' do
 
     scenario 'Creating a subteam inside a team from that team\'s page' do
       team = create(:group, parent: dept, name: 'Corporate Services')
-
+      javascript_log_in
       visit group_path(team)
       click_link 'Add new sub-team'
 
@@ -74,7 +79,7 @@ feature 'Group maintenance' do
       expect(subteam.parent).to eql(team)
     end
 
-    scenario 'Creating a team and choosing the parent from the org browser', js: true do
+    scenario 'Creating a team and choosing the parent from the org browser' do
       create(:group, name: 'Corporate Services')
 
       javascript_log_in
@@ -92,6 +97,7 @@ feature 'Group maintenance' do
 
     scenario 'Deleting a team' do
       group = create(:group)
+      javascript_log_in
       visit edit_group_path(group)
       expect(page).to have_text('cannot be undone')
       click_link('Delete this team')
@@ -103,6 +109,7 @@ feature 'Group maintenance' do
     scenario 'Prevent deletion of a team that has memberships' do
       membership = create(:membership)
       group = membership.group
+      javascript_log_in
       visit edit_group_path(group)
       expect(page).not_to have_link('Delete this team')
       expect(page).to have_text('deletion is only possible if there are no people')
@@ -123,7 +130,7 @@ feature 'Group maintenance' do
       user
     end
 
-    scenario 'Editing a team name', js: true do
+    scenario 'Editing a team name' do
       group = setup_three_level_group
       user = setup_group_member group
       visit_edit_view(group)
@@ -146,7 +153,7 @@ feature 'Group maintenance' do
       expect(last_email.body.encoded).to match(group_url(group))
     end
 
-    scenario 'Change parent to department via clicking "Back"', js: true do
+    scenario 'Change parent to department via clicking "Back"' do
       group = setup_three_level_group
       setup_group_member group
       expect(dept.name).to eq 'Ministry of Justice'
@@ -164,7 +171,7 @@ feature 'Group maintenance' do
       expect(group.parent).to eql(dept)
     end
 
-    scenario 'Changing a team parent via clicking sibling team name', js: true do
+    scenario 'Changing a team parent via clicking sibling team name' do
       group = setup_three_level_group
       setup_group_member group
       visit_edit_view(group)
@@ -184,7 +191,7 @@ feature 'Group maintenance' do
       expect(group.parent).to eql(sibling_group)
     end
 
-    scenario 'Changing a team parent via clicking sibling team\'s subteam name', js: true, skip: 'skip until capybara/poltegeist update to try and fix as flickers regularly after site_prism bump to 2.9' do
+    scenario 'Changing a team parent via clicking sibling team\'s subteam name', skip: 'skip until capybara/poltegeist update to try and fix as flickers regularly after site_prism bump to 2.9' do
       group = setup_three_level_group
       subteam_group = create(:group, name: 'Test team', parent: sibling_group)
       setup_group_member group
@@ -215,7 +222,7 @@ feature 'Group maintenance' do
       expect(group.parent).to eql(subteam_group)
     end
 
-    scenario 'Showing the acronym', js: true do
+    scenario 'Showing the acronym' do
       group = create(:group, name: 'HM Courts and Tribunal Service', acronym: 'HMCTS')
 
       javascript_log_in
@@ -233,7 +240,7 @@ feature 'Group maintenance' do
       expect(page).not_to have_selector('.group-title h2')
     end
 
-    scenario 'Not responding to the selection of impossible parent nodes', js: true do
+    scenario 'Not responding to the selection of impossible parent nodes' do
       parent_group = create(:group, name: 'CSG', parent: dept)
       group = create(:group, name: 'Digital Services', parent: parent_group)
       visit_edit_view(group)
@@ -254,10 +261,12 @@ feature 'Group maintenance' do
     end
 
     scenario 'UI elements on the new/edit pages' do
+      javascript_log_in
       visit new_group_path
       expect(page).not_to have_selector('.mod-search-form')
 
       fill_in 'Team name', with: 'Digital'
+      select_in_parent_team_select 'Ministry of Justice'
       click_button 'Save'
       expect(page).to have_selector('.mod-search-form')
 
@@ -267,11 +276,13 @@ feature 'Group maintenance' do
 
     scenario 'Cancelling an edit' do
       group = create(:group)
+      javascript_log_in
       visit edit_group_path(group)
       expect(page).to have_link('Cancel', href: group_path(group))
     end
 
     scenario 'Cancelling a new form' do
+      javascript_log_in
       visit new_group_path
       expect(page).to have_link('Cancel', href: 'javascript:history.back()')
     end
@@ -288,15 +299,12 @@ feature 'Group maintenance' do
     scenario 'Is not allowed to create a new team' do
       visit group_path(dept)
       click_link 'Add new sub-team'
-
       expect(login_page).to be_displayed
     end
 
     scenario 'Is not allowed to edit a team' do
       group = create(:group, name: 'Digital Services', parent: dept)
-
       visit edit_group_path(group)
-
       expect(login_page).to be_displayed
     end
   end

@@ -3,7 +3,9 @@ require 'rails_helper'
 feature 'Person browsing' do
   include PermittedDomainHelper
 
+  let(:department) { create(:department) }
   before do
+    department
     omni_auth_log_in_as 'test.user@digital.justice.gov.uk'
   end
 

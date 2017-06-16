@@ -11,7 +11,11 @@ RSpec.describe PeopleController, type: :controller do
   # Person. As you add validations to Person, be sure to
   # adjust the attributes here as well.
   let(:valid_attributes) do
-    attributes_for(:person)
+    attributes_for(:person).merge(default_membership_attributes)
+  end
+
+  let(:default_membership_attributes) do
+    { memberships_attributes: [attributes_for(:membership_default)] }
   end
 
   let(:invalid_attributes) do
@@ -62,7 +66,6 @@ RSpec.describe PeopleController, type: :controller do
       end
 
       it 'does not build a membership when there is one already' do
-        person.memberships.create(group: group)
         get :edit, id: person.to_param
         expect(assigns(:person).memberships.length).to eql(1)
       end
@@ -114,7 +117,8 @@ RSpec.describe PeopleController, type: :controller do
     describe 'with duplicate name' do
       it 'renders the confirm template' do
         create(:person, given_name: 'Bo', surname: 'Diddley')
-        post :create, person: { given_name: 'Bo', surname: 'Diddley', email: person_attributes[:email] }
+        duplicate_person_params = valid_attributes.merge(given_name: 'Bo', surname: 'Diddley', email: 'bo.diddley@digital.justice.gov.uk')
+        post :create, person: duplicate_person_params
         expect(response).to render_template('confirm')
       end
     end
@@ -122,7 +126,7 @@ RSpec.describe PeopleController, type: :controller do
     describe 'when trying to create a super admin' do
       subject { assigns(:person) }
       before do
-        post :create, person: attributes_for(:super_admin)
+        post :create, person: attributes_for(:super_admin).merge(default_membership_attributes)
       end
 
       it 'creates the person' do
@@ -273,12 +277,6 @@ RSpec.describe PeopleController, type: :controller do
       end.to change(Person, :count).by(-1)
     end
 
-    it 'redirects to the people list' do
-      person = create(:person, valid_attributes)
-      delete :destroy, id: person.to_param
-      expect(response).to redirect_to(home_path)
-    end
-
     context 'when person member of teams' do
       it 'redirects to first team page' do
         person = create(:person, valid_attributes)
@@ -321,49 +319,32 @@ RSpec.describe PeopleController, type: :controller do
     context 'create' do
       context 'save button pressed' do
         it 'updates and shows the edit person page' do
-          post :create, minimal_create_params
+          post :create, person: valid_attributes.merge(given_name: 'Francis', surname: 'Drake', email: 'francis.drake@digital.justice.gov.uk')
           person = Person.friendly.find('francis-drake')
-          expect(response).to redirect_to(person_path(person))
+          expect(response).to redirect_to person_path(person)
         end
       end
-
-      context 'save button presssed with duplicate person in database' do
-        it 'displays duplicate confirmation page' do
+      context 'with duplicates in database' do
+        before do
           create :person, given_name: 'Francis', surname: 'Drake', email: 'fd@digital.justice.gov.uk'
-          post :create, minimal_create_params
-          expect(response).to render_template(:confirm)
         end
-      end
 
-      context 'pressing confirm on duplicate confirmation page' do
-        it 'updates and shows the person edit page' do
-          post :create, minimal_dupe_confirmation_params
-          person = Person.friendly.find('francis-drake')
-          expect(response).to redirect_to(person_path(person))
+        context 'save button presssed with duplicate person in database' do
+          it 'displays duplicate confirmation page' do
+            post :create, person: valid_attributes.merge(given_name: 'Francis', surname: 'Drake', email: 'francis.drake@digital.justice.gov.uk')
+            expect(response).to render_template(:confirm)
+          end
+        end
+
+        context 'pressing confirm on duplicate confirmation page' do
+          it 'updates and shows the person edit page' do
+            post :create, person: valid_attributes.merge(given_name: 'Francis', surname: 'Drake', email: 'francis.drake@digital.justice.gov.uk'), continue_from_duplication: '1'
+            person = Person.friendly.find('francis-drake')
+            expect(response).to redirect_to person_path(person)
+          end
         end
       end
     end
   end
 
-  def minimal_create_params
-    {
-      'person'=>{
-        'given_name'=>'Francis',
-        'surname'=>'Drake',
-        'email'=>'francis.drake@digital.justice.gov.uk'
-      },
-      'commit'=>'Save'
-    }
-  end
-
-  def minimal_dupe_confirmation_params
-    {
-      'person'=>{
-        'given_name'=>'Francis',
-        'surname'=>'Drake',
-        'email'=>'francis.drake@digital.justice.gov.uk'
-      },
-      'commit'=>'Continue'
-    }
-  end
 end
