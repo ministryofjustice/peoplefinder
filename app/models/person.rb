@@ -116,6 +116,7 @@ class Person < ActiveRecord::Base
 
   has_many :memberships, -> { includes(:group).order('groups.name') }, dependent: :destroy
   has_many :groups, through: :memberships
+  validate :must_have_team
 
   accepts_nested_attributes_for :memberships, allow_destroy: true, reject_if: :team_membersip_not_supplied?
 
@@ -219,6 +220,14 @@ class Person < ActiveRecord::Base
     address = Mail::Address.new email
     address.display_name = name
     address.format
+  end
+
+  private
+
+  def must_have_team
+    if memberships.empty? or memberships.all? { |membership| membership.marked_for_destruction? }
+      errors.add(:membership, 'of a team is required')
+    end
   end
 
 end

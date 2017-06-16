@@ -1,13 +1,14 @@
 module SpecSupport
   module OrgBrowser
-    def select_in_team_select(text)
-      within all('#memberships .membership').last do
-        click_link text
-      end
-    end
 
     def last_membership
       all('#memberships .membership').last
+    end
+
+    def select_in_team_select(text)
+      within last_membership do
+        click_link text
+      end
     end
 
     def leader_question

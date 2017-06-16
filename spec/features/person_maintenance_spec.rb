@@ -35,7 +35,6 @@ feature 'Person maintenance' do
     context 'for a read only user', user: :readonly do
       scenario 'is not allowed without login' do
         new_profile_page.load
-
         expect(login_page).to be_displayed
       end
     end
@@ -153,7 +152,6 @@ feature 'Person maintenance' do
       scenario 'is not allowed without login' do
         visit person_path(create(:person, person_attributes))
         click_edit_profile
-
         expect(login_page).to be_displayed
       end
     end
@@ -168,6 +166,7 @@ feature 'Person maintenance' do
         expect(page).not_to have_text(completion_prompt_text)
         fill_in 'First name', with: 'Jane'
         fill_in 'Last name', with: 'Doe'
+        click_link 'Change team'
         select_in_team_select 'Ministry of Justice'
         click_button 'Save', match: :first
 
@@ -214,13 +213,18 @@ feature 'Person maintenance' do
         visit person_path(another_person)
         click_edit_profile
         click_link 'Join another team'
+        expect(edit_profile_page).to have_selector('div.membership.panel', count: 2)
         click_button 'Save', match: :first
         expect(edit_profile_page.error_summary).to have_team_required_error
       end
 
-      scenario 'Validates team membership presence' do
+      scenario 'Validates existence of at least one team membership', js: true do
+        javascript_log_in
         visit person_path(another_person)
         click_edit_profile
+        click_link 'Leave team', match: :first
+        click_button 'Save', match: :first
+        expect(edit_profile_page.error_summary).to have_team_required_error
         click_link 'Leave team', match: :first
         click_button 'Save', match: :first
         expect(edit_profile_page.error_summary).to have_team_membership_required_error

@@ -6,10 +6,10 @@ module Pages
       element :given_name_error, "a[href='#error_person_given_name']"
       element :surname_error, "a[href='#error_person_surname']"
       element :email_error, "a[href='#error_person_email']"
-      element :team_required_error, "a[href='#error_person_memberships.group']"
-      element :team_membership_required_error, "a[href='#error_person.membership']"
 
-      # group errors (as needed)
+      # membership errors
+      element :team_required_error, "a[href='#error_person_memberships.group']"
+      element :team_membership_required_error, "a[href='#error_person_membership']"
     end
   end
 end

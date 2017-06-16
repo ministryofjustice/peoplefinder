@@ -48,6 +48,19 @@ RSpec.describe Person, type: :model do
   it { should respond_to(:pager_number) }
   it { should respond_to(:skip_group_completion_score_updates) }
 
+  context 'test factory' do
+    describe '#create(:person)' do
+      let(:person) { create(:person) }
+      it 'creates a valid person' do
+        expect(person).to be_valid
+      end
+
+      it 'defaults team membership to department level' do
+        expect(person.memberships.map(&:group)).to include Group.department
+      end
+    end
+  end
+
   describe '#email' do
 
     it 'does not raise an invalid format error if blank' do

@@ -28,10 +28,21 @@ FactoryGirl.define do
     association :parent, factory: :department
   end
 
+  factory :membership do
+    person
+    group
+  end
+
   factory :person do
     given_name
     surname
     email
+
+    # validation requires team membership existence
+    before :create do |peep, evaluator|
+      department = create(:department)
+      peep.memberships << build(:membership, group: department, person: nil) unless peep.memberships.present?
+    end
 
     trait :with_details do
       primary_phone_number
@@ -71,15 +82,25 @@ FactoryGirl.define do
         leader false
         role 'leader'
       end
-      after(:create) do |peep, evaluator|
-        create(:membership, person: peep, group: evaluator.team, leader: evaluator.leader, role: evaluator.role)
+      before(:create) do |peep, evaluator|
+        # binding.pry
+        if peep.memberships.map(&:group).include? evaluator.team
+          # memberships = peep.memberships.select { |m| m.group == evaluator.team }
+          # memberships.each do |membership|
+          #   assign_attributes(leader: evaluator.leader, role: evaluator.role)
+          # end
+          raise "Already a member of #{evaluator.team}"
+        else
+          peep.memberships << build(:membership, group: evaluator.team, person: peep, leader: evaluator.leader, role: evaluator.role)
+          # create(:membership, person: peep, group: evaluator.team, leader: evaluator.leader, role: evaluator.role)
+        end
       end
     end
 
     # i.e. unassigned person - person in group with ancestry of 0 (i.e. MoJ)
     trait :department_member do
       after(:create) do |p|
-        department = Group.where(ancestry_depth: 0).first_or_create(name: 'Ministry of Justice')
+        department = create(:department)
         create(:membership, person: p, group: department)
       end
     end
@@ -99,10 +120,7 @@ FactoryGirl.define do
     message "This is the information request message body"
   end
 
-  factory :membership do
-    person
-    group
-  end
+
 
   factory :token do
     user_email { generate(:email) }
