@@ -114,9 +114,11 @@ class Person < ActiveRecord::Base
   validates :email, presence: true, uniqueness: { case_sensitive: false }, email: true
   validates :secondary_email, email: true, allow_blank: true
 
+
   has_many :memberships, -> { includes(:group).order('groups.name') }, dependent: :destroy
   has_many :groups, through: :memberships
-  validate :must_have_team
+  attr_accessor :skip_must_have_team
+  validate :must_have_team, unless: :skip_must_have_team
 
   accepts_nested_attributes_for :memberships, allow_destroy: true, reject_if: :team_membersip_not_supplied?
 

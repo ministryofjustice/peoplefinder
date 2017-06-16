@@ -16,7 +16,6 @@ class PersonCreator
   def create!
     Person.transaction do
       person.save!
-      default_membership!(person) if person.memberships.empty?
       QueuedNotification.queue!(self) if person.notify_of_change?(@current_user)
     end
   end
@@ -28,11 +27,4 @@ class PersonCreator
   def flash_message
     :profile_created
   end
-
-  private
-
-  def default_membership! person
-    person.memberships.create!(group: Group.department) if Group.department.present?
-  end
-
 end

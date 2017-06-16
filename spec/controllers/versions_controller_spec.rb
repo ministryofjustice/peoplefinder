@@ -48,7 +48,7 @@ RSpec.describe VersionsController, type: :controller do
     it 'undoes a new person - by deleting it' do
       with_versioning do
         person = create(:person)
-        version = PaperTrail::Version.last
+        version = PaperTrail::Version.where(item_type: 'Person').last
         put :undo, id: version.id
 
         expect { Person.find(person.id) }.
@@ -60,7 +60,7 @@ RSpec.describe VersionsController, type: :controller do
       with_versioning do
         person = create(:person, surname: 'Necro')
         person.destroy
-        version = PaperTrail::Version.last
+        version = PaperTrail::Version.where(item_type: 'Person').last
         put :undo, id: version.id
 
         expect(Person.find_by_surname('Necro')).to be_present
