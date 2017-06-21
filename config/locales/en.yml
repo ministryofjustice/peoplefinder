@@ -336,6 +336,8 @@ en:
       memberships:
         leader: "Are you the Permanent Secretary of the Ministry of Justice?"
         group: Team
+      membership:
+        group: Team
 
   shared:
     search:
@@ -432,6 +434,7 @@ en:
         description: Extra information
       membership:
         role: "Job title (optional)"
+        group: Team
       problem_report:
         goal: "What were you trying to do?"
         problem: "What went wrong?"

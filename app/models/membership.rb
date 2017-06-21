@@ -25,7 +25,7 @@ class Membership < ActiveRecord::Base
 
   delegate :name, to: :person, prefix: true
   delegate :image, to: :person, prefix: true
-  delegate :name, to: :group, prefix: true
+  delegate :name, to: :group, prefix: true, allow_nil: true
   delegate :path, to: :group
 
   include Concerns::ConcatenatedFields

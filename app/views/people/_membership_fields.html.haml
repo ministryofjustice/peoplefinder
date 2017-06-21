@@ -1,26 +1,13 @@
 - membership = membership_f.object
+
 .membership.panel
 
-  .form-group
-    %p.form-hint
-      = role_translate(person, 'memberships.team_selector_hint')
-    .editable-container
-      .editable-summary.parent-summary
-        - if membership.group
-          .title.breadcrumbs= breadcrumbs(membership.path, show_links: false)
-        - unless membership.new_record?
-          = link_to 'Change team', '#', class: 'show-editable-fields button-secondary'
-
-      .editable-fields{ style: ('display:none' unless membership.new_record?) }
-        - if @org_structure
-          = render 'shared/org_browser', org_structure: @org_structure, form: membership_f, field_name: :group_id
-          - unless membership.new_record?
-            = link_to 'Done', '#', class: 'hide-editable-fields button-secondary'
-            = link_to 'Add new sub-team to the <span class="team-led"></span>'.html_safe, '#', class: 'button-add-team'
-          %div.new-team
-            = membership_f.label 'addteam', 'Add new sub-team to the <span class="team-led"></span>'.html_safe, class: 'form-label-bold'
-            %input.form-control.new-team-name#AddTeam
-            = link_to 'Create', '#', class: 'button'
+  - if membership.errors.keys.include?(:group)
+    .form-group.error
+      = render partial: 'team_selector', locals: { person: person, membership_f: membership_f }
+  - else
+    .form-group
+      = render partial: 'team_selector', locals: { person: person, membership_f: membership_f }
 
   %noscript
     .form-group

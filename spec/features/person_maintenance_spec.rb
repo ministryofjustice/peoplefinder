@@ -105,6 +105,38 @@ feature 'Person maintenance' do
         expect(new_profile_page.error_summary).to have_email_error
       end
 
+      scenario 'Creating a person with no team membership raises a membership required error and builds empty membership', js: true do
+        javascript_log_in
+        visit new_person_path
+        expect(new_profile_page).to be_displayed
+        fill_in 'First name', with: person_attributes[:given_name]
+        fill_in 'Last name', with: person_attributes[:surname]
+        fill_in 'Main email', with: person_attributes[:email]
+        within last_membership do
+          click_link 'Leave team'
+        end
+        expect(new_profile_page.form).to have_membership_panels count: 0
+        click_button 'Save', match: :first
+        expect(new_profile_page.form).to have_membership_panels count: 1
+        save_screenshot('tmp/capybara/new_profile_page_error.png', full: true)
+        expect(new_profile_page).to have_error_summary
+        expect(new_profile_page.error_summary).to have_team_membership_required_error
+      end
+
+      scenario 'Creating a person with a team membership but no team chosen raises a team required error', js: true do
+        javascript_log_in
+        visit new_person_path
+        expect(new_profile_page).to be_displayed
+        fill_in 'First name', with: person_attributes[:given_name]
+        fill_in 'Last name', with: person_attributes[:surname]
+        fill_in 'Main email', with: person_attributes[:email]
+        fill_in 'Job title', match: :first, with: 'dude'
+
+        click_button 'Save', match: :first
+        expect(new_profile_page).to have_error_summary
+        expect(new_profile_page.error_summary).to have_team_required_error
+      end
+
       scenario 'Creating a person with an identical name', js: true do
         create(:group, name: 'Digital')
         create(:person, given_name: person_attributes[:given_name], surname: person_attributes[:surname])
@@ -213,9 +245,10 @@ feature 'Person maintenance' do
         visit person_path(another_person)
         click_edit_profile
         click_link 'Join another team'
-        expect(edit_profile_page).to have_selector('div.membership.panel', count: 2)
+        expect(edit_profile_page).to have_selector('.membership.panel', count: 2)
         click_button 'Save', match: :first
-        expect(edit_profile_page.error_summary).to have_team_required_error
+        expect(edit_profile_page.error_summary).to have_team_required_error text: 'Team is required', count: 1
+        expect(edit_profile_page.form).to have_team_required_field_errors text: 'Team is required', count: 1
       end
 
       scenario 'Validates existence of at least one team membership', js: true do
@@ -223,11 +256,11 @@ feature 'Person maintenance' do
         visit person_path(another_person)
         click_edit_profile
         click_link 'Leave team', match: :first
-        click_button 'Save', match: :first
-        expect(edit_profile_page.error_summary).to have_team_required_error
         click_link 'Leave team', match: :first
+        expect(edit_profile_page).to have_selector('.membership.panel', count: 0)
         click_button 'Save', match: :first
-        expect(edit_profile_page.error_summary).to have_team_membership_required_error
+        expect(edit_profile_page.error_summary).to have_team_membership_required_error text: 'Membership of a team is required'
+        expect(edit_profile_page.form).to have_team_membership_error_destination_anchor
       end
 
       scenario 'Editing a person to have an existing e-mail raises an error' do

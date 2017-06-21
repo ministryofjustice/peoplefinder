@@ -119,14 +119,7 @@ class Person < ActiveRecord::Base
   attr_accessor :skip_must_have_team
   validate :must_have_team, unless: :skip_must_have_team
 
-  accepts_nested_attributes_for :memberships, allow_destroy: true, reject_if: :team_membersip_not_supplied?
-
-  def team_membersip_not_supplied?(membership)
-    membership['group_id'].blank? && new_record?
-    # TODO: remove or implement for edit flow
-    # ||
-    # membership['group_id'].blank? && memberships.find_by(id: membership['id'])&.group_id.blank?
-  end
+  accepts_nested_attributes_for :memberships, allow_destroy: true
 
   default_scope { order(surname: :asc, given_name: :asc) }
 
