@@ -28,7 +28,6 @@ FactoryGirl.define do
     association :parent, factory: :department
   end
 
-
   factory :membership do
     person
     group
@@ -47,9 +46,9 @@ FactoryGirl.define do
     email
 
     # validation requires team membership existence
-    after :build do |peep, evaluator|
+    after :build do |peep, _evaluator|
       department = create(:department)
-      peep.memberships << build(:membership, group: department, person: nil) unless peep.memberships.present?
+      peep.memberships << build(:membership, group: department, person: nil) if peep.memberships.empty?
     end
 
     trait :with_details do
@@ -101,7 +100,7 @@ FactoryGirl.define do
         else
           peep.memberships << build(:membership, group: evaluator.team, person: peep, leader: evaluator.leader, subscribed: evaluator.subscribed, role: evaluator.role)
         end
-        peep.memberships = peep.memberships.select {|m| m.group_id == evaluator.team.id } if evaluator.sole_membership
+        peep.memberships = peep.memberships.select { |m| m.group_id == evaluator.team.id } if evaluator.sole_membership
       end
     end
 
@@ -127,8 +126,6 @@ FactoryGirl.define do
   factory :information_request do
     message "This is the information request message body"
   end
-
-
 
   factory :token do
     user_email { generate(:email) }

@@ -22,8 +22,6 @@ RSpec.describe PeopleController, type: :controller do
     { surname: '' }
   end
 
-  let!(:group) { create(:group) }
-
   describe 'GET index' do
     it 'redirects to the root' do
       get :index, {}
@@ -61,11 +59,14 @@ RSpec.describe PeopleController, type: :controller do
 
     context 'building memberships' do
       it 'builds a membership if there isn\'t one already' do
+        person.memberships.destroy_all
+        expect(person.memberships.count).to eq 0
         get :edit, id: person.to_param
         expect(assigns(:person).memberships.length).to eql(1)
       end
 
       it 'does not build a membership when there is one already' do
+        expect(person.memberships.count).to eq 1
         get :edit, id: person.to_param
         expect(assigns(:person).memberships.length).to eql(1)
       end

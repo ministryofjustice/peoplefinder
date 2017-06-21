@@ -111,22 +111,22 @@ RSpec.describe QueuedNotification, type: :model do
             expect(described_class.first.changes_hash).to eq expected_create_changes_with_groups(@devs, @archs)
           end
         end
-      end # cotnext with group changes
+      end
 
       def expected_create_changes_hash
         {
           'json_class' => 'ProfileChangesPresenter',
-           'data' => {
-             'raw' => {
-               'given_name' => [nil, 'Stephen'],
-               'surname' => [nil, 'Jones'],
-               'email' => [nil, 'sr@digital.justice.gov.uk'],
-               'slug' => [nil, 'stephen-richards'],
-               "membership_#{@moj.id}" => {
+          'data' => {
+            'raw' => {
+              'given_name' => [nil, 'Stephen'],
+              'surname' => [nil, 'Jones'],
+              'email' => [nil, 'sr@digital.justice.gov.uk'],
+              'slug' => [nil, 'stephen-richards'],
+              "membership_#{@moj.id}" => {
                 "group_id" => [nil, @moj.id]
               }
-             }
-           }
+            }
+          }
         }
       end
 
@@ -154,7 +154,7 @@ RSpec.describe QueuedNotification, type: :model do
         }
       end
 
-    end # context called by person creator
+    end
 
     context 'called by person updater' do
       let(:person) { create :person, given_name: 'Stephen', surname: 'Jones', slug: 'stephen-richards', email: 'sr@digital.justice.gov.uk' }

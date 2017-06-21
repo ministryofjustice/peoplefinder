@@ -114,7 +114,6 @@ class Person < ActiveRecord::Base
   validates :email, presence: true, uniqueness: { case_sensitive: false }, email: true
   validates :secondary_email, email: true, allow_blank: true
 
-
   has_many :memberships, -> { includes(:group).order('groups.name') }, dependent: :destroy
   has_many :groups, through: :memberships
   attr_accessor :skip_must_have_team
@@ -227,7 +226,7 @@ class Person < ActiveRecord::Base
   private
 
   def must_have_team
-    if memberships.empty? or memberships.all? { |membership| membership.marked_for_destruction? }
+    if memberships.empty? || memberships.all?(&:marked_for_destruction?)
       errors.add(:membership, 'of a team is required')
     end
   end

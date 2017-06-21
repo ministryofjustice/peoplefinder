@@ -92,7 +92,7 @@ RSpec.describe 'Completion' do # rubocop:disable RSpec/DescribeClass
 
     it 'returns average of two profiles completion scores' do
       2.times do
-        person = create(
+        create(
           :person,
           given_name: generate(:given_name),
           surname: generate(:surname),

@@ -5,6 +5,6 @@ module Pages
       element :surname, '#person_surname'
       element :email, '#person_email'
       element :save, "input[type=submit][value='Save']"
-     end
+    end
   end
 end
