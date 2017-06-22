@@ -302,15 +302,14 @@ form .org-browser {
   clear: both;
   .title {
     @include core-16;
-    background-color: $darkblue;
-    color: $white;
-    cursor: pointer;
+    background-color: $white;
     padding: 8px 15px 8px 8px;
     margin-right: 0;
-    margin-bottom: 20px;
+    margin-bottom: 0px;
     width: 50%;
+    padding: 0;
     strong {
-      padding-right: 15px;
+      padding-right: 0px;
     }
     @media (max-width: 980px) {
       margin-right: 0;
@@ -319,5 +318,8 @@ form .org-browser {
   }
   .cta {
     padding: 8px;
+  }
+  .breadcrumbs li:last-child {
+    @extend .bold-term;
   }
 }

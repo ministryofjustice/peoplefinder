@@ -8,9 +8,10 @@
       %span.error-message{ id: GovukElementsErrorsHelper.dom_id_for_nested_error(membership.class.name.downcase, membership_f.index, :group) }
         = membership.errors.full_messages_for(:group).first
     - if membership.group
-      .title.breadcrumbs= breadcrumbs(membership.path, show_links: false)
+      .title.breadcrumbs
+        = breadcrumbs(membership.path, show_links: false)
     - unless membership.new_record?
-      = link_to 'Change team', '#', class: 'show-editable-fields button-secondary'
+      = link_to 'Change team', '#', class: 'show-editable-fields'
 
   .editable-fields{ style: ('display:none' unless membership.new_record?) }
     - if @org_structure

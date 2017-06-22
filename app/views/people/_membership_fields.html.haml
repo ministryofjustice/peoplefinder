@@ -41,11 +41,10 @@
   .form-group
     .remove-link
       - if membership.new_record?
-        = link_to 'Leave team', '#', class: 'remove-new-membership button-secondary'
+        = link_to 'Leave team', '#', class: 'remove-new-membership'
 
       - else
         = link_to 'Leave team', membership_path(membership, referer: request.path),
           method: :delete,
-          class: 'button-secondary',
           data: {confirm: "Are you sure you want to remove #{person} from #{membership.group}? " }
 
