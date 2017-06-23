@@ -15,7 +15,9 @@ module PreviewHelper
       location_in_building: 'room 101',
       building: '',
       description: 'old info'
-    )
+    ) do | person |
+      person.memberships << Membership.new(group_id: Group.department.id)
+    end
   end
 
   def dirty_recipient
@@ -69,6 +71,10 @@ module PreviewHelper
           role: 'Chief Executive Officer',
           leader: true,
           subscribed: false
+        },
+        '2' => {
+          id: person.memberships.find_by(group_id: Group.department.id).id,
+          _destroy: '1'
         }
       }
     }

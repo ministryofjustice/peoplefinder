@@ -67,6 +67,8 @@
             = link_to 'Change team parent', '#', class: 'show-editable-fields'
 
         .editable-fields{ style: ('display:none' unless @group.new_record?) }
+          %p.form-hint
+            = t('.team_selector_hint')
           - if @org_structure
             = render 'shared/org_browser', org_structure: @org_structure, form: f, field_name: :parent_id
             = link_to 'Done', '#', class: 'hide-editable-fields button-secondary'

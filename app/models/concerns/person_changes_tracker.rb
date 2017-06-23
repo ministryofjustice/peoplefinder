@@ -8,7 +8,11 @@ module Concerns::PersonChangesTracker
     before_save do
       @person_changes = changes
       @membership_changes = memberships.each_with_object({}) do |membership, h|
-        h[membership_key(membership)] = membership.changes if membership.changed?
+        if membership.marked_for_destruction?
+          h[membership_key(membership)] = { group_id: [membership.group_id, nil] }
+        elsif membership.changed?
+          h[membership_key(membership)] = membership.changes
+        end
       end
     end
 

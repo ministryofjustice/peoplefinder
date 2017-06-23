@@ -1,6 +1,6 @@
 - blank_person = Person.new
 - blank_person.memberships.build
 
-= form_for blank_person, builder: PersonFormBuilder, authenticity_token: false do |f|
+= form_for blank_person, authenticity_token: false do |f|
   = f.fields_for :memberships, child_index: blank_person.object_id do |membership_f|
     = render 'membership_fields', org_structure: @org_structure, membership_f: membership_f, person: @person

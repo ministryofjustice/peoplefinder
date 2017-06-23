@@ -7,6 +7,8 @@ feature "Person maintenance" do
     omni_auth_log_in_as 'test.user@digital.justice.gov.uk'
   end
 
+  let(:edit_profile_page) { Pages::EditProfile.new }
+
   scenario 'Creating a person and making them the leader of a group', js: true do
     group = create(:group, name: 'Digital Justice')
     javascript_log_in
@@ -234,21 +236,46 @@ feature "Person maintenance" do
 
     click_link('Join another team')
     expect(page).to have_selector('#memberships .membership', count: 2)
-
-    click_link('Leave team', match: :first)
-    expect(page).to have_selector('#memberships .membership', count: 1)
   end
 
-  scenario 'Removing a group', js: true do
+  scenario 'Clicking Leave team', js: true do
+    create(:group)
+
+    javascript_log_in
+    visit new_person_path
+
+    click_link('Leave team', match: :first)
+    expect(page).to have_selector('#memberships .membership', count: 0)
+  end
+
+  scenario 'Leaving a team', js: true do
+    ds = create(:group, name: 'Digital Justice')
+    person = create(:person, :member_of, team: ds, role: 'tester', sole_membership: false)
+
+    javascript_log_in
+    visit edit_person_path(person)
+    expect(person.memberships.count).to eql 2
+    expect(edit_profile_page).to have_selector('.membership.panel', visible: true, count: 2)
+    within last_membership do
+      click_link 'Leave team'
+    end
+    expect(edit_profile_page).to have_selector('.membership.panel', visible: true, count: 1)
+    click_button 'Save'
+    expect(current_path).to eql(person_path(person))
+    expect(page).to have_content("Thank you for helping to improve People Finder")
+    expect(person.reload.memberships.count).to eql 1
+  end
+
+  scenario 'Leaving all teams', js: true do
     person = create_person_in_digital_justice
     javascript_log_in
     visit edit_person_path(person)
-    within last_membership do
-      click_link('Leave team')
-    end
-    expect(page).to have_content("Removed #{person.name} from Digital Justice")
-    expect(person.reload.memberships).to be_empty
-    expect(current_path).to eql(edit_person_path(person))
+    click_link('Leave team')
+    click_button 'Save'
+    expect(edit_profile_page).to have_error_summary
+    expect(edit_profile_page.error_summary).to have_team_membership_required_error text: 'Membership of a team is required'
+    expect(edit_profile_page.form).to have_team_membership_error_destination_anchor
+    expect(person.reload.memberships.count).to eql 1
   end
 end
 

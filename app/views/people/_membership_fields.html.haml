@@ -9,12 +9,6 @@
     .form-group
       = render partial: 'team_selector', locals: { person: person, membership_f: membership_f }
 
-  %noscript
-    .form-group
-      = membership_f.collection_select :group_id,
-        GroupLister.new.list.sort_by { |g| g.path.map(&:to_s) },
-        :id, :name_with_path, {}, class: 'form-control select-autocomplete team-select'
-
   .form-group
     = membership_f.text_field :role
 
@@ -41,10 +35,7 @@
   .form-group
     .remove-link
       - if membership.new_record?
-        = link_to 'Leave team', '#', class: 'remove-new-membership'
-
+        = link_to 'Leave team', '#', class: 'remove-new-membership button-secondary'
       - else
-        = link_to 'Leave team', membership_path(membership, referer: request.path),
-          method: :delete,
-          data: {confirm: "Are you sure you want to remove #{person} from #{membership.group}? " }
-
+        = membership_f.hidden_field :_destroy, value: false
+        = link_to('Leave team','#', class: 'remove-existing-membership button-secondary')

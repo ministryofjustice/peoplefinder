@@ -101,7 +101,7 @@ class PeopleController < ApplicationController
       :profile_photo_id, :crop_x, :crop_y, :crop_w, :crop_h,
       :description, :current_project,
       *Person::DAYS_WORKED,
-      memberships_attributes: [:id, :role, :group_id, :leader, :subscribed]
+      memberships_attributes: [:id, :role, :group_id, :leader, :subscribed, :_destroy]
     ]
   end
 

@@ -219,7 +219,7 @@ class Person < ActiveRecord::Base
   private
 
   def must_have_team
-    if memberships.empty? || memberships.all?(&:marked_for_destruction?)
+    if memberships.reject(&:marked_for_destruction?).empty?
       errors.add(:membership, 'of a team is required')
     end
   end

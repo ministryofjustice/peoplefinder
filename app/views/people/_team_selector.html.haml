@@ -1,7 +1,8 @@
 - membership = membership_f.object
 
-%p.form-hint
-  = role_translate(person, 'memberships.team_selector_hint')
+%label.form-label{for: "person_memberships_attributes_#{membership_f.index}_group_id"}
+  = t(:group, scope: [:helpers, :label, :membership])
+
 .editable-container
   .editable-summary.parent-summary
     - if membership.errors.keys.include?(:group)
@@ -14,6 +15,8 @@
       = link_to 'Change team', '#', class: 'show-editable-fields'
 
   .editable-fields{ style: ('display:none' unless membership.new_record?) }
+    %p.form-hint
+      = role_translate(@person, 'memberships.team_selector_hint')
     - if @org_structure
       = render 'shared/org_browser', org_structure: @org_structure, form: membership_f, field_name: :group_id
       - unless membership.new_record?
@@ -23,3 +26,9 @@
         = membership_f.label 'addteam', 'Add new sub-team to the <span class="team-led"></span>'.html_safe, class: 'form-label-bold'
         %input.form-control.new-team-name#AddTeam
         = link_to 'Create', '#', class: 'button'
+
+  %noscript
+    .form-group
+      = membership_f.collection_select :group_id,
+        GroupLister.new.list.sort_by { |g| g.path.map(&:to_s) },
+        :id, :name_with_path, {}, class: 'form-control select-autocomplete team-select'

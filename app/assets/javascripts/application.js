@@ -49,4 +49,12 @@ $(function() {
     e.preventDefault();
     $(this).parents('.membership').remove();
   });
+
+  // set val of _destroy param to 1 and hide the membership
+  $(document).on('click', 'a.remove-existing-membership', function(e) {
+    e.preventDefault();
+    $(this).prev("input[type=hidden]").val("1");
+    $(this).parents('.membership').hide();
+  });
+
 });
