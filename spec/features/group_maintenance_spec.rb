@@ -26,25 +26,25 @@ feature 'Group maintenance' do
     background do
       dept
     end
-    # TODO: remove - there is no way we can validate presence of a team AND allow someone to login when there are no teams
-    # since these two behaviours are incompatable
-    #
-    # scenario 'Creating a top-level department'do
-    #   name = 'Ministry of Justice'
-    #   visit new_group_path
-    #   expect(page).to have_title("Create a team - #{app_title}")
 
-    #   fill_in 'Team name', with: name
-    #   fill_in 'Team description', with: 'about my team'
-    #   click_button 'Save'
+    scenario 'Creating a top-level department' do
+      Group.destroy_all
+      name = 'Ministry of Justice'
+      javascript_log_in
+      visit new_group_path
+      expect(page).to have_title("Create a team - #{app_title}")
 
-    #   expect(page).to have_content('Created Ministry of Justice')
+      fill_in 'Team name', with: name
+      fill_in 'Team description', with: 'about my team'
+      click_button 'Save'
 
-    #   dept = Group.find_by_name(name)
-    #   expect(dept.name).to eql(name)
-    #   expect(dept.description).to eql('about my team')
-    #   expect(dept.parent).to be_nil
-    # end
+      expect(page).to have_content('Created Ministry of Justice')
+
+      dept = Group.find_by_name(name)
+      expect(dept.name).to eql(name)
+      expect(dept.description).to eql('about my team')
+      expect(dept.parent).to be_nil
+    end
 
     scenario 'Creating a team inside the department' do
       javascript_log_in
@@ -160,7 +160,7 @@ feature 'Group maintenance' do
       visit_edit_view(group)
 
       expect(page).to have_selector('.editable-fields', visible: :hidden)
-      within('.group-parent') { click_link 'Edit' }
+      within('.group-parent') { click_link 'Change team parent' }
       expect(page).to have_selector('.editable-fields', visible: :visible)
 
       within('.team.selected') { click_link 'Back' }
@@ -176,7 +176,7 @@ feature 'Group maintenance' do
       setup_group_member group
       visit_edit_view(group)
 
-      within('.group-parent') { click_link 'Edit' }
+      within('.group-parent') { click_link 'Change team parent' }
       within('.team.selected') do
         expect(page).to have_link(sibling_group.name)
         click_link sibling_group.name
@@ -198,7 +198,7 @@ feature 'Group maintenance' do
       group.memberships.reload # seems to help flicker
       visit_edit_view(group)
 
-      within('.group-parent') { click_link 'Edit' }
+      within('.group-parent') { click_link 'Change team parent' }
 
       within('.team.selected') do
         expect(page).to have_link("#{sibling_group.name} 1 sub-team")
@@ -249,7 +249,7 @@ feature 'Group maintenance' do
       fill_in 'Team name', with: new_name
 
       within('.group-parent') do
-        click_link 'Edit'
+        click_link 'Change team parent'
       end
 
       click_on_subteam_in_org_browser 'Digital Services'
