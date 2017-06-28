@@ -48,6 +48,19 @@ RSpec.describe Person, type: :model do
   it { should respond_to(:pager_number) }
   it { should respond_to(:skip_group_completion_score_updates) }
 
+  context 'test factory' do
+    describe '#create(:person)' do
+      let(:person) { create(:person) }
+      it 'creates a valid person' do
+        expect(person).to be_valid
+      end
+
+      it 'defaults team membership to department level' do
+        expect(person.memberships.map(&:group)).to include Group.department
+      end
+    end
+  end
+
   describe '#email' do
 
     it 'does not raise an invalid format error if blank' do
@@ -121,7 +134,6 @@ RSpec.describe Person, type: :model do
   describe '.department_members_in_other_teams' do
     before do
       person.save!
-      person.memberships.create(group: create(:department))
     end
 
     it 'returns people in department who are also in another team' do
@@ -309,6 +321,7 @@ RSpec.describe Person, type: :model do
   context 'with two memberships in the same group' do
     before do
       person.save!
+      person.memberships.destroy_all
       digital_services = create(:group, name: 'Digital Services')
       person.memberships.create(group: digital_services, role: 'Service Assessments Lead')
       person.memberships.create(group: digital_services, role: 'Head of Delivery')

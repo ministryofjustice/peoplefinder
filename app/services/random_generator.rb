@@ -55,9 +55,10 @@ class RandomGenerator
   end
 
   def create_person(group)
-    group.people.create!(
-      person_attributes.merge(work_days_attributes).merge(location_attributes)
-    )
+    Person.new(person_attributes.merge(work_days_attributes).merge(location_attributes)).tap do |person|
+      person.memberships << Membership.new(group_id: group.id)
+      person.save!
+    end
   end
 
   def person_attributes

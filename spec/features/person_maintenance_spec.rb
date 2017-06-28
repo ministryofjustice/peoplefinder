@@ -4,8 +4,13 @@ feature 'Person maintenance' do
   include PermittedDomainHelper
   include ActiveJobHelper
 
+  let(:department) { create(:department) }
   let(:person) { create(:person, email: 'test.user@digital.justice.gov.uk') }
   let(:another_person) { create(:person, email: 'someone.else@digital.justice.gov.uk') }
+
+  before do
+    department
+  end
 
   before(:each, user: :regular) do
     omni_auth_log_in_as person.email
@@ -30,15 +35,13 @@ feature 'Person maintenance' do
     context 'for a read only user', user: :readonly do
       scenario 'is not allowed without login' do
         new_profile_page.load
-
         expect(login_page).to be_displayed
       end
     end
 
     context 'for a regular user', user: :regular do
       scenario 'Creating a person from a group' do
-        department = create(:department)
-        team = create(:group, parent: department)
+        team = create(:group)
         subteam = create(:group, parent: team)
 
         cta_text = 'Create a new profile'
@@ -102,6 +105,37 @@ feature 'Person maintenance' do
         expect(new_profile_page.error_summary).to have_email_error
       end
 
+      scenario 'Creating a person with no team membership raises a membership required error and builds empty membership', js: true do
+        javascript_log_in
+        visit new_person_path
+        expect(new_profile_page).to be_displayed
+        fill_in 'First name', with: person_attributes[:given_name]
+        fill_in 'Last name', with: person_attributes[:surname]
+        fill_in 'Main email', with: person_attributes[:email]
+        within last_membership do
+          click_link 'Leave team'
+        end
+        expect(new_profile_page.form).to have_membership_panels count: 0
+        click_button 'Save', match: :first
+        expect(new_profile_page.form).to have_membership_panels count: 1
+        expect(new_profile_page).to have_error_summary
+        expect(new_profile_page.error_summary).to have_team_membership_required_error
+      end
+
+      scenario 'Creating a person with a team membership but no team chosen raises a team required error', js: true do
+        javascript_log_in
+        visit new_person_path
+        expect(new_profile_page).to be_displayed
+        fill_in 'First name', with: person_attributes[:given_name]
+        fill_in 'Last name', with: person_attributes[:surname]
+        fill_in 'Main email', with: person_attributes[:email]
+        fill_in 'Job title', match: :first, with: 'dude'
+
+        click_button 'Save', match: :first
+        expect(new_profile_page).to have_error_summary
+        expect(new_profile_page.error_summary).to have_team_required_error
+      end
+
       scenario 'Creating a person with an identical name', js: true do
         create(:group, name: 'Digital')
         create(:person, given_name: person_attributes[:given_name], surname: person_attributes[:surname])
@@ -149,13 +183,13 @@ feature 'Person maintenance' do
       scenario 'is not allowed without login' do
         visit person_path(create(:person, person_attributes))
         click_edit_profile
-
         expect(login_page).to be_displayed
       end
     end
 
     context 'for a regular user', user: :regular do
-      scenario 'Editing a person' do
+      scenario 'Editing a person', js: true do
+        javascript_log_in
         visit person_path(create(:person, person_attributes))
         click_edit_profile
 
@@ -163,6 +197,8 @@ feature 'Person maintenance' do
         expect(page).not_to have_text(completion_prompt_text)
         fill_in 'First name', with: 'Jane'
         fill_in 'Last name', with: 'Doe'
+        click_link 'Change team'
+        select_in_team_select 'Ministry of Justice'
         click_button 'Save', match: :first
 
         expect(page).to have_content('We have let Jane Doe know that you’ve made changes')
@@ -189,19 +225,43 @@ feature 'Person maintenance' do
         expect(page).to have_text(completion_prompt_text)
       end
 
-      scenario 'Validates required fields' do
-        person = create(:person, person_attributes)
-        edit_profile_page.load(slug: person.slug)
-
-        edit_profile_page.form.given_name.set ''
-        edit_profile_page.form.surname.set ''
-        edit_profile_page.form.email.set ''
-        edit_profile_page.form.save.click
+      scenario 'Validates required fields on person' do
+        visit person_path(another_person)
+        click_edit_profile
+        fill_in 'First name', with: ''
+        fill_in 'Last name', with: ''
+        fill_in 'Main email address', with: ''
+        click_button 'Save', match: :first
 
         expect(edit_profile_page).to have_error_summary
         expect(edit_profile_page.error_summary).to have_given_name_error
         expect(edit_profile_page.error_summary).to have_surname_error
         expect(edit_profile_page.error_summary).to have_email_error
+      end
+
+      scenario 'Validates required fields on team memberships', js: true do
+        javascript_log_in
+        visit person_path(another_person)
+        click_edit_profile
+        click_link 'Join another team'
+        expect(edit_profile_page).to have_selector('.membership.panel', count: 2)
+        click_button 'Save', match: :first
+        expect(edit_profile_page.error_summary).to have_team_required_error text: 'Team is required', count: 1
+        expect(edit_profile_page.form).to have_team_required_field_errors text: 'Team is required', count: 1
+      end
+
+      scenario 'Validates existence of at least one team membership', js: true do
+        javascript_log_in
+        visit person_path(another_person)
+        expect(another_person.memberships.count).to eql 1
+        click_edit_profile
+        expect(edit_profile_page).to have_selector('.membership.panel', visible: true, count: 1)
+        click_link 'Leave team'
+        expect(edit_profile_page).to have_selector('.membership.panel', visible: true, count: 0)
+        click_button 'Save', match: :first
+        expect(edit_profile_page.error_summary).to have_team_membership_required_error text: 'Membership of a team is required'
+        expect(edit_profile_page.form).to have_team_membership_error_destination_anchor
+        expect(another_person.reload.memberships.count).to eql 1
       end
 
       scenario 'Editing a person to have an existing e-mail raises an error' do

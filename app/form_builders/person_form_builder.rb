@@ -19,6 +19,12 @@ class PersonFormBuilder < GovukElementsFormBuilder::FormBuilder
     super
   end
 
+  # patch GovukElementsFormBuilder::FormBuilder#localized
+  # as it does not work for hints on nested attributes.
+  def localized scope, attribute, default
+    self.class.localized scope, attribute, default, object.class.name.downcase
+  end
+
   private
 
   def needed_for_completion?(field)

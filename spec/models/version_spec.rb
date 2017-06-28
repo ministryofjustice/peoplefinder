@@ -19,7 +19,7 @@ require 'rails_helper'
 RSpec.describe Version, type: :model do
   include PermittedDomainHelper
 
-  context 'whodunnit' do
+  context '#whodunnit' do
     let(:author) { create(:person) }
 
     it 'returns a string for the user when a string was stored' do
@@ -36,6 +36,27 @@ RSpec.describe Version, type: :model do
       subject = described_class.new(whodunnit: author.id.to_s)
       author.destroy
       expect(subject.whodunnit).to be_nil
+    end
+  end
+
+  describe '#reify' do
+
+    before do
+      with_versioning do
+        person = create(:person, surname: 'Necro')
+        person.destroy
+      end
+    end
+
+    let(:version) { described_class.where(item_type: 'Person').last }
+
+    it 'returns instance of reified object' do
+      expect(version.reify).to be_instance_of Person
+    end
+
+    it 'skips must_have_team validation on person' do
+      expect_any_instance_of(Person).to receive(:skip_must_have_team=).with(true)
+      version.reify
     end
   end
 end

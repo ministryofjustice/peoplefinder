@@ -116,9 +116,10 @@ class Person < ActiveRecord::Base
 
   has_many :memberships, -> { includes(:group).order('groups.name') }, dependent: :destroy
   has_many :groups, through: :memberships
+  attr_accessor :skip_must_have_team
+  validate :must_have_team, unless: :skip_must_have_team
 
-  accepts_nested_attributes_for :memberships, allow_destroy: true,
-    reject_if: proc { |membership| membership['group_id'].blank? }
+  accepts_nested_attributes_for :memberships, allow_destroy: true
 
   default_scope { order(surname: :asc, given_name: :asc) }
 
@@ -213,6 +214,14 @@ class Person < ActiveRecord::Base
     address = Mail::Address.new email
     address.display_name = name
     address.format
+  end
+
+  private
+
+  def must_have_team
+    if memberships.reject(&:marked_for_destruction?).empty?
+      errors.add(:membership, 'of a team is required')
+    end
   end
 
 end

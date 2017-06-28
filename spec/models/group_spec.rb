@@ -170,6 +170,7 @@ RSpec.describe Group, type: :model do
 
     context 'with bob in the team' do
       before do
+        bob.memberships.destroy_all
         team.people << bob
         bob.reload
       end

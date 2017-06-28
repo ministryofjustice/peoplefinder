@@ -28,10 +28,28 @@ FactoryGirl.define do
     association :parent, factory: :department
   end
 
+  factory :membership do
+    person
+    group
+
+    factory :membership_default do
+      role nil
+      leader false
+      subscribed true
+      group_id { create(:department).id }
+    end
+  end
+
   factory :person do
     given_name
     surname
     email
+
+    # validation requires team membership existence
+    after :build do |peep, _evaluator|
+      department = create(:department)
+      peep.memberships << build(:membership, group: department, person: nil) if peep.memberships.empty?
+    end
 
     trait :with_details do
       primary_phone_number
@@ -69,17 +87,27 @@ FactoryGirl.define do
       transient do
         team nil
         leader false
-        role 'leader'
+        subscribed true
+        role nil
+        sole_membership false
       end
-      after(:create) do |peep, evaluator|
-        create(:membership, person: peep, group: evaluator.team, leader: evaluator.leader, role: evaluator.role)
+      after(:build) do |peep, evaluator|
+        if peep.memberships.map(&:group).include? evaluator.team
+          memberships = peep.memberships.select { |m| m.group == evaluator.team }
+          memberships.each do |membership|
+            membership.assign_attributes(leader: evaluator.leader, subscribed: evaluator.subscribed, role: evaluator.role)
+          end
+        else
+          peep.memberships << build(:membership, group: evaluator.team, person: peep, leader: evaluator.leader, subscribed: evaluator.subscribed, role: evaluator.role)
+        end
+        peep.memberships = peep.memberships.select { |m| m.group_id == evaluator.team.id } if evaluator.sole_membership
       end
     end
 
     # i.e. unassigned person - person in group with ancestry of 0 (i.e. MoJ)
     trait :department_member do
       after(:create) do |p|
-        department = Group.where(ancestry_depth: 0).first_or_create(name: 'Ministry of Justice')
+        department = create(:department)
         create(:membership, person: p, group: department)
       end
     end
@@ -97,11 +125,6 @@ FactoryGirl.define do
 
   factory :information_request do
     message "This is the information request message body"
-  end
-
-  factory :membership do
-    person
-    group
   end
 
   factory :token do

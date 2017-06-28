@@ -8,8 +8,8 @@ feature 'Upload CSV' do
   let(:email) { 'test.user@digital.justice.gov.uk' }
 
   before do
+    create(:person, email: email, super_admin: true)
     omni_auth_log_in_as email
-    Person.find_by(email: email).update(super_admin: true)
     visit new_admin_person_upload_path
     select group.name, from: 'Choose your team'
   end

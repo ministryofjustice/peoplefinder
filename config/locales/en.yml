@@ -23,6 +23,7 @@ en:
   groups:
     form:
       placeholder: Discover what this team is responsible for, who is in it and how you can get in touch with them.
+      team_selector_hint: Select the teams parent
   shared:
     finish_profile_request: &finish_profile_request "You need to create or update a People Finder account to finish signing in"
     unauthorised: &unauthorised Unauthorised, insufficient privileges
@@ -132,8 +133,6 @@ en:
     information_requests:
       default_message: "Hello %{recipient}\n\nI’ve just seen your profile on People Finder and think it’s missing some details.\n\nWhy not help me, colleagues and other co-workers view the latest information on you by completing your profile.\n\nThanks,\n%{sender}"
       message_sent: "Your message has been sent to %{person}"
-    memberships:
-      member_removed: "Removed %{person} from %{group}"
     sessions:
       person_confirm: *finish_profile_request
       complete_profile: *finish_profile_request
@@ -180,18 +179,11 @@ en:
     reported_profiles:
       message_sent: "Your message has been sent"
   memberships:
-    team_hint:
-      mine: |
-        Use this to select the team you are in in the organisation.
-      other: |
-        Use this to select the team this person is in in the organisation.
-    team_creation_hint:
-      mine: |
-        If your team doesn’t exist, you’ll need to save your changes and add a new
-        sub-team when viewing a team on People Finder.
-      other: |
-        If this person’s team doesn’t exist, you’ll need to save your changes and
-        add a new sub-team when viewing a team on People Finder.
+    team_selector_label:
+      group: Team
+    team_selector_hint:
+      mine: Select your new team
+      other: Select the person's new team
     leader:
       mine: |
         Are you the leader of the <span class="team-led">team above</span>? (optional)
@@ -310,6 +302,7 @@ en:
         attributes:
           base:
             memberships_exist: "cannot be deleted until all the memberships have been removed"
+
     validators:
       image_dimensions_validator:
         too_small: "is %{actual_dimensions} pixels. The minimum requirement is %{expected_dimensions} pixels"
@@ -331,6 +324,10 @@ en:
         secondary_email: Alternative work email
       memberships:
         leader: "Are you the Permanent Secretary of the Ministry of Justice?"
+        group: Team
+      membership:
+        group: Team
+
   shared:
     search:
       hint: 'Search name, job title, team name or location'
@@ -426,6 +423,7 @@ en:
         description: Extra information
       membership:
         role: "Job title (optional)"
+        group: Team
       problem_report:
         goal: "What were you trying to do?"
         problem: "What went wrong?"
@@ -452,9 +450,6 @@ en:
         person_left: Remove the profile as the person has left MOJ
         person_left_info: Additional information
 
-    placeholder:
-      group:
-          description: sdfsdf
     submit:
       person:
         create: "Save"
@@ -480,6 +475,8 @@ en:
         current_project: List the names of current projects this person is working on. Use a comma to separate project names.
         working_days: Select all that apply
         description: Include details about where this person works on different days, any days out of the office, and if this person starts early or late.
+      membership:
+        role: Role within this team
       group:
         name: Write out the name of your team in full. Do not use initials
         acronym: If your team is also known by its initials (eg HMCTS) add them below

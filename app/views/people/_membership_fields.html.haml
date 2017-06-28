@@ -1,37 +1,16 @@
 - membership = membership_f.object
+
 .membership.panel
+
+  - if membership.errors.keys.include?(:group)
+    .form-group.error
+      = render partial: 'team_selector', locals: { person: person, membership_f: membership_f }
+  - else
+    .form-group
+      = render partial: 'team_selector', locals: { person: person, membership_f: membership_f }
+
   .form-group
     = membership_f.text_field :role
-
-  .form-group
-    = membership_f.label :group_id, 'Team', class: 'form-label-bold'
-    %p.form-hint
-      = role_translate(person, 'memberships.team_hint')
-    %p.form-hint
-      = role_translate(person, 'memberships.team_creation_hint')
-    .editable-container
-      .editable-summary.parent-summary
-        - if membership.group
-          .title.breadcrumbs= breadcrumbs(membership.path, show_links: false)
-        - unless membership.new_record?
-          = link_to 'Edit team membership', '#', class: 'show-editable-fields button-secondary'
-
-      .editable-fields{ style: ('display:none' unless membership.new_record?) }
-        - if @org_structure
-          = render 'shared/org_browser', org_structure: @org_structure, form: membership_f, field_name: :group_id
-          - unless membership.new_record?
-            = link_to 'Done', '#', class: 'hide-editable-fields button-secondary'
-            = link_to 'Add new sub-team to the <span class="team-led"></span>'.html_safe, '#', class: 'button-add-team'
-          %div.new-team
-            = membership_f.label 'addteam', 'Add new sub-team to the <span class="team-led"></span>'.html_safe, class: 'form-label-bold'
-            %input.form-control.new-team-name#AddTeam
-            = link_to 'Create', '#', class: 'button'
-
-  %noscript
-    .form-group
-      = membership_f.collection_select :group_id,
-        GroupLister.new.list.sort_by { |g| g.path.map(&:to_s) },
-        :id, :name_with_path, {}, class: 'form-control select-autocomplete team-select'
 
   .form-group.team-leader
     %fieldset.inline
@@ -56,11 +35,7 @@
   .form-group
     .remove-link
       - if membership.new_record?
-        = link_to 'Delete role', '#', class: 'remove-new-membership button-secondary'
-
+        = link_to 'Leave team', '#', class: 'remove-new-membership button-secondary'
       - else
-        = link_to 'Delete role', membership_path(membership, referer: request.path),
-          method: :delete,
-          class: 'button-secondary',
-          data: {confirm: "Are you sure you want to remove #{person} from #{membership.group}? " }
-
+        = membership_f.hidden_field :_destroy, value: false
+        = link_to('Leave team','#', class: 'remove-existing-membership button-secondary')

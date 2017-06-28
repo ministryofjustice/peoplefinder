@@ -29,7 +29,6 @@ feature 'Management flow' do
   end
 
   describe 'Reports' do
-
     before { delete_report }
     after { delete_report }
 

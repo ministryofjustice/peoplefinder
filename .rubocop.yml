@@ -57,7 +57,7 @@ Metrics/LineLength:
 
 # Don't worry about long methods in specs.
 Metrics/MethodLength:
-  Max: 12
+  Max: 15
   Exclude:
     - 'spec/**/*'
 

@@ -15,8 +15,8 @@ describe PeopleUpdatedOlderThanQuery do
 
     it 'returns expected records' do
       create :person, :with_random_dets
-      p1 = create :person, :with_random_dets, updated_at: 5.days.ago
-      p2 = create :person, :with_random_dets, updated_at: 7.days.ago
+      p1 = Timecop.freeze(5.days.ago) { create :person, :with_random_dets }
+      p2 = Timecop.freeze(7.days.ago) { create :person, :with_random_dets }
       expect(described_class.new(2.days.ago).call).to match_array([p1, p2])
     end
 

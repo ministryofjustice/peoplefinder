@@ -39,6 +39,7 @@ module SessionPersonCreator
 
     def confirm_or_create person
       @person = person
+      @person.skip_must_have_team = true
       if @person.valid?
         if namesakes?
           warning :person_confirm

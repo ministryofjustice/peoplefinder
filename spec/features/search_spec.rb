@@ -6,19 +6,23 @@ feature 'Searching feature', elastic: true do
   def create_test_data
     PermittedDomain.find_or_create_by(domain: 'digital.justice.gov.uk')
     group = create(:group, name: 'HMP Wilsden')
-    person = create(:person,
+    create(
+      :person,
+      :member_of, team: group, sole_membership: true,
       given_name: 'Jon',
       surname: 'Browne',
       email: 'jon.browne@digital.justice.gov.uk',
       primary_phone_number: '0711111111',
-      current_project: 'Digital Prisons')
-    create(:membership, person: person, group: group)
-    create(:person,
+      current_project: 'Digital Prisons'
+    )
+    create(
+      :person,
       given_name: 'Dodgy<script> alert(\'XSS\'); </script>',
       surname: 'Bloke',
       email: 'dodgy.bloke@digital.justice.gov.uk',
       primary_phone_number: '0711111111',
-      current_project: 'Digital Prisons')
+      current_project: 'Digital Prisons'
+    )
   end
 
   before(:all) do

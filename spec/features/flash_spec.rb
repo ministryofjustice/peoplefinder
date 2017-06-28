@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-feature 'Flash messages feature' do
+feature 'Flash messages' do
   include PermittedDomainHelper
 
   RSpec::Matchers.define :appear_before do |later_content|
@@ -17,6 +17,7 @@ feature 'Flash messages feature' do
 
     before do
       omni_auth_log_in_as 'test.user@digital.justice.gov.uk'
+      person.memberships.destroy_all
     end
 
     scenario 'display flash messages above search box for home page' do

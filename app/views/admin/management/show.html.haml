@@ -21,6 +21,8 @@
     %h2.heading-medium.with-border-lg.tool-name
       = t('management.tools_header')
 
-    #bulk-uploader
-      = link_to 'Bulk uploader', new_admin_person_upload_path, class: "button"
-
+    %ul
+      %li#bulk-uploader
+        = link_to 'Bulk uploader', new_admin_person_upload_path
+      %li#audit-trail
+        = link_to 'Audit trail', audit_trail_path

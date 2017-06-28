@@ -6,16 +6,9 @@ RSpec.describe 'search/person', type: :view do
   before(:all) do
     clean_up_indexes_and_tables
     PermittedDomain.find_or_create_by(domain: 'digital.justice.gov.uk')
-
-    teams = create_list(:group, 4)
-    people = [
-      create(:person),
-      create(:person),
-      create(:person),
-      create(:person)
-    ]
-    people.each_with_index { |p, i| teams[i].people << p }
-
+    create_list(:group, 4).each do |team|
+      create(:person, :member_of, team: team, sole_membership: true)
+    end
     Person.import force: true
     Person.__elasticsearch__.refresh_index!
   end

@@ -23,7 +23,7 @@ feature 'Person edit notifications' do
     expect(notification.current_user_id).to eq person.id
     expect(notification.sent).to be false
     expect(notification.edit_finalised).to be true
-    expect(notification.changes_hash['data']['raw']).to eq(
+    expect(notification.changes_hash['data']['raw']).to include(
       'given_name' => [nil, 'Bob'],
       'surname' => [nil, 'Smith'],
       'location_in_building' => [nil, ''],
@@ -50,7 +50,8 @@ feature 'Person edit notifications' do
   end
 
   scenario 'Editing a person with different email' do
-    person = create(:person, given_name: 'Bob', surname: 'Smith', email: 'bob.smith@digital.justice.gov.uk')
+    digital = create(:group, name: 'Digital')
+    person = create(:person, :member_of, team: digital, given_name: 'Bob', surname: 'Smith', email: 'bob.smith@digital.justice.gov.uk')
     visit person_path(person)
     click_edit_profile
     fill_in 'Last name', with: 'Smelly Pants'

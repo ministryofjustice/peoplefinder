@@ -25,14 +25,15 @@
   = f.text_field :city
 
   .form-group
-    #memberships
-      %h3.heading-medium.with-border-lg
-        = "Roles"
-      = f.fields_for :memberships do |membership_f|
-        = render 'membership_fields', membership_f: membership_f, org_structure: @org_structure, person: @person
+    #error_person_membership
+      #memberships
+        %h3.heading-medium.with-border-lg
+          = "Teams and roles"
+        = f.fields_for :memberships do |membership_f|
+          = render 'membership_fields', membership_f: membership_f, org_structure: @org_structure, person: @person
 
-    = link_to 'Add another role', add_membership_people_path(id: @person.to_param),
-      id: 'add_membership', class: 'button-secondary'
+      = link_to 'Join another team', add_membership_people_path(id: @person.to_param),
+        id: 'add_membership', class: 'button-secondary'
 
   %h3.heading-medium.with-border-lg
     = "Current Projects"

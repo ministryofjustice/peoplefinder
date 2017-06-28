@@ -40,12 +40,12 @@ class MembershipChangeSet
 
   def added_sentence
     role_addendum = " as #{role}" if role?
-    leader_addendum = ' You are a leader of the team.' if leader?
-    "Added you to #{team_name} team#{role_addendum}.#{leader_addendum}"
+    leader_addendum = '. You are a leader of the team' if leader?
+    "Added you to #{team_name} team#{role_addendum}#{leader_addendum}"
   end
 
   def removed_sentence
-    "Removed you from the #{team_name} team"
+    "Removed you from #{team_name} team"
   end
 
   private

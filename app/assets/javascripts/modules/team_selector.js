@@ -18,9 +18,9 @@ var teamSelector = function teamSelector(isPerson, obj) {
       self.setTeamName(teamName);
     }
 
-    /* Clicking the 'Edit' link to show the team selector */
+    /* Clicking the 'Change team' link to show the team selector */
 
-    this.selector.on('click', '.show-editable-fields, .editable-summary .title', function(e) {
+    this.selector.on('click', '.show-editable-fields', function(e) {
 
       self.onClick(e);
       self.editButton.hide();

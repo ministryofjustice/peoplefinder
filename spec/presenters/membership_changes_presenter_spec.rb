@@ -4,6 +4,7 @@ RSpec.describe MembershipChangesPresenter, type: :presenter do
   include PermittedDomainHelper
 
   let(:person) { create(:person) }
+  let(:moj) { create(:department) }
   let(:ds) { create(:group, name: 'Digital Services') }
   let(:csg) { create(:group, name: 'Corporate Services Group') }
 
@@ -25,6 +26,10 @@ RSpec.describe MembershipChangesPresenter, type: :presenter do
           group_id: csg.id,
           leader: false,
           subscribed: true
+        },
+        '2' => {
+          id: person.memberships.find_by(group_id: moj.id).id,
+          _destroy: '1'
         }
       }
     }
@@ -39,19 +44,29 @@ RSpec.describe MembershipChangesPresenter, type: :presenter do
     subject { described_class.new(person.membership_changes).raw }
 
     let(:membership_changes) do
-      {
-        person_id: [nil, person.id],
-        group_id: [nil, ds.id],
-        role: [nil, "Lead Developer"],
-        leader: [false, true],
-        subscribed: [true, false]
-      }
+      [
+        {
+          group_id: [moj.id, nil]
+        },
+        {
+          person_id: [nil, person.id],
+          group_id: [nil, ds.id],
+          role: [nil, "Lead Developer"],
+          leader: [false, true],
+          subscribed: [true, false]
+        },
+        {
+          person_id: [nil, person.id],
+          group_id: [nil, csg.id],
+          role: [nil, "Senior Developer"]
+        }
+      ]
     end
 
-    it 'returns all orginal changes' do
+    it 'returns all original changes' do
       is_expected.to be_a Hash
-      expect(subject.size).to eq 2
-      expect(subject.first).to include membership_changes
+      expect(subject.size).to eq 3
+      expect(subject.values).to include(*membership_changes)
     end
   end
 
@@ -69,7 +84,20 @@ RSpec.describe MembershipChangesPresenter, type: :presenter do
               leader: [false, true],
               subscribed: [true, false]
             },
-            message: "Added you to the Digital Services team as Lead Developer. You are a leader of the team."
+            message: "Added you to the Digital Services team as Lead Developer. You are a leader of the team"
+          }
+        }
+      }
+    end
+
+    let(:membership_changes_for_moj) do
+      {
+        "membership_#{moj.id}".to_sym => {
+          removed: {
+            raw: {
+              group_id: [moj.id, nil]
+            },
+            message: "Removed you from the Ministry of Justice team"
           }
         }
       }
@@ -77,12 +105,16 @@ RSpec.describe MembershipChangesPresenter, type: :presenter do
 
     it_behaves_like '#changes on changes_presenter'
 
-    it 'returns expected format of data' do
+    it 'returns expected format of data for additions' do
       is_expected.to include membership_changes_for_ds
     end
 
+    it 'returns expected format of data for removals' do
+      is_expected.to include membership_changes_for_moj
+    end
+
     it 'returns a set for each membership' do
-      expect(subject.size).to eql 2
+      expect(subject.size).to eql 3
     end
   end
 

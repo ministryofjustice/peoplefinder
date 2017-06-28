@@ -78,7 +78,7 @@ feature 'Group browsing' do
 
       visit group_path(department)
       expect(page).not_to have_link("View all 7 people in #{department.name}")
-      expect(page).to have_link("View 2 people not assigned to a sub-team")
+      expect(page).to have_link("View 1 person not assigned to a sub-team")
       expect(page).to have_link("View printable organogram")
     end
 
@@ -151,8 +151,7 @@ feature 'Group browsing' do
 
   def add_people_to_group(names, group)
     names.each do |gn, sn|
-      person = create(:person, given_name: gn, surname: sn)
-      create(:membership, person: person, group: group)
+      create(:person, :member_of, team: group, sole_membership: true, given_name: gn, surname: sn)
     end
   end
 

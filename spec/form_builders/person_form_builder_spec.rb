@@ -67,21 +67,42 @@ RSpec.describe PersonFormBuilder, type: :form_builder do
   describe '#text_field' do
     subject { builder.text_field(:test_field) }
 
-    let(:object) { double 'object' }
+    before do
+      I18n.backend.store_translations(:en, translations)
+      allow(object).to receive(:test_field)
+      allow(object).to receive(:needed_for_completion?).and_return true
+      allow(object).to receive(:class).and_return Person
+    end
+
+    let(:object) { double('person') }
+
+    let(:translations) do
+      {
+        helpers: {
+          label: {
+            person: {
+              test_field: 'Test label'
+            }
+          },
+          hint: {
+            person: {
+              test_field: 'Test hint'
+            }
+          }
+        }
+      }
+    end
+
     let(:output) do
       <<~HTML.squish_heredoc
         <div class=\"form-group\">
           <label class=\"form-label\" for=\"person_test_field\">
-            Test field
+            Test label
+            <span class="form-hint">Test hint</span>
           </label>
           <input class=\"form-control incomplete\" type=\"text\" name=\"person[test_field]\" id=\"person_test_field\" />
         </div>
       HTML
-    end
-
-    before do
-      allow(object).to receive(:test_field)
-      allow(object).to receive(:needed_for_completion?).and_return true
     end
 
     it 'adds profile completion class to field if needed' do

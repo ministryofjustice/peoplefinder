@@ -20,12 +20,12 @@ class Membership < ActiveRecord::Base
   belongs_to :group, touch: true
 
   validates :person, presence: true, on: :update
-  validates :group, presence: true, on: :update
+  validates :group, presence: true, on: [:create, :update]
   validates_with PermanentSecretaryUniqueValidator
 
   delegate :name, to: :person, prefix: true
   delegate :image, to: :person, prefix: true
-  delegate :name, to: :group, prefix: true
+  delegate :name, to: :group, prefix: true, allow_nil: true
   delegate :path, to: :group
 
   include Concerns::ConcatenatedFields

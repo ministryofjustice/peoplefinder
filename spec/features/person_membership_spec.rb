@@ -7,6 +7,8 @@ feature "Person maintenance" do
     omni_auth_log_in_as 'test.user@digital.justice.gov.uk'
   end
 
+  let(:edit_profile_page) { Pages::EditProfile.new }
+
   scenario 'Creating a person and making them the leader of a group', js: true do
     group = create(:group, name: 'Digital Justice')
     javascript_log_in
@@ -61,8 +63,7 @@ feature "Person maintenance" do
     visit edit_person_path(person)
     expect(page).to have_selector('.team-led', text: 'Digital Justice team')
 
-    fill_in 'Job title', with: 'Head Honcho'
-
+    fill_in 'Job title', match: :first, with: 'Head Honcho'
     click_button 'Save', match: :first
 
     membership = Person.last.memberships.last
@@ -92,7 +93,7 @@ feature "Person maintenance" do
     visit edit_person_path(person)
 
     expect(page).to have_selector('.editable-fields', visible: :hidden)
-    within('.editable-container') { click_link 'Edit team membership' }
+    within('.editable-container') { click_link 'Change team' }
     expect(page).to have_selector('.editable-fields', visible: :visible)
     expect(page).to have_selector('.hide-editable-fields', visible: :visible)
 
@@ -116,7 +117,7 @@ feature "Person maintenance" do
     visit edit_person_path(person)
 
     expect(page).to have_selector('.editable-fields', visible: :hidden)
-    within('.editable-container') { click_link 'Edit team membership' }
+    within('.editable-container') { click_link 'Change team' }
     expect(page).to have_selector('.editable-fields', visible: :visible)
     expect(page).to have_selector('.button-add-team', visible: :visible)
 
@@ -127,14 +128,14 @@ feature "Person maintenance" do
     end
   end
 
-  scenario 'Adding an additional role', js: true do
+  scenario 'Joining another team with a role', js: true do
     person = create_person_in_digital_justice
     create(:group, name: 'Communications', parent: Group.department)
 
     javascript_log_in
     visit edit_person_path(person)
 
-    click_link('Add another role')
+    click_link('Join another team')
     expect(page).to have_selector('.editable-fields', visible: :visible)
 
     within all('#memberships .membership').last do
@@ -152,6 +153,35 @@ feature "Person maintenance" do
     end
   end
 
+  scenario 'Adding a permanent secretary', js: true do
+    person = create_person_in_digital_justice
+    javascript_log_in
+    visit edit_person_path(person)
+    fill_in 'First name', with: 'Samantha'
+    fill_in 'Last name', with: 'Taylor'
+    fill_in 'Job title', with: 'Permanent Secretary'
+
+    expect(leader_question).to match('Is this person the leader of the Digital Justice team?')
+    click_link 'Change team'
+    select_in_team_select 'Ministry of Justice'
+    expect(leader_question).to match('Are you the Permanent Secretary?')
+    check_leader
+
+    click_button 'Save', match: :first
+
+    visit group_path(Group.find_by(name: 'Ministry of Justice'))
+    within('.cb-leaders') do
+      expect(page).to have_selector('h4', text: 'Samantha Taylor')
+      expect(page).to have_text('Permanent Secretary')
+    end
+
+    visit person_path(person)
+    expect(page).to have_selector('h3', text: 'Permanent Secretary')
+
+    visit home_path
+    expect(page.find('img.media-object')[:alt]).to have_content 'Current photo of Samantha Taylor'
+  end
+
   scenario 'Adding an additional leadership role in same team', js: true do
     person = create_person_in_digital_justice
     javascript_log_in
@@ -161,15 +191,17 @@ feature "Person maintenance" do
     fill_in 'Job title', with: 'Head Honcho'
     check_leader
 
-    click_link('Add another role')
+    click_link('Join another team')
     expect(page).to have_selector('.editable-fields', visible: :visible)
+    expect(leader_question).to match('Is this person the leader of the team?')
+    select_in_team_select 'Digital Justice'
+    expect(leader_question).to match('Is this person the leader of the Digital Justice team?')
 
-    within all('#memberships .membership').last do
-      expect(find('.team-leader fieldset legend').text).to eq('Are you the Permanent Secretary?')
-      click_link 'Digital Justice'
+    within last_membership do
       fill_in 'Job title', with: 'Master of None'
       check_leader
     end
+
     click_button 'Save', match: :first
 
     visit group_path(Group.find_by_name('Digital Justice'))
@@ -196,52 +228,73 @@ feature "Person maintenance" do
     expect(membership).not_to be_subscribed
   end
 
-  scenario 'Clicking the add another role link', js: true do
+  scenario 'Clicking Join another team', js: true do
     create(:group)
 
     javascript_log_in
     visit new_person_path
 
-    click_link('Add another role')
+    click_link('Join another team')
     expect(page).to have_selector('#memberships .membership', count: 2)
-
-    click_link('Delete', match: :first)
-    expect(page).to have_selector('#memberships .membership', count: 1)
   end
 
-  scenario 'Removing a group' do
-    person = create_person_in_digital_justice
+  scenario 'Clicking Leave team', js: true do
+    create(:group)
 
+    javascript_log_in
+    visit new_person_path
+
+    click_link('Leave team', match: :first)
+    expect(page).to have_selector('#memberships .membership', count: 0)
+  end
+
+  scenario 'Leaving a team', js: true do
+    ds = create(:group, name: 'Digital Justice')
+    person = create(:person, :member_of, team: ds, role: 'tester', sole_membership: false)
+
+    javascript_log_in
     visit edit_person_path(person)
-
-    within('#memberships') do
-      click_link('Delete')
+    expect(person.memberships.count).to eql 2
+    expect(edit_profile_page).to have_selector('.membership.panel', visible: true, count: 2)
+    within last_membership do
+      click_link 'Leave team'
     end
-    expect(page).to have_content("Removed #{person.name} from Digital Justice")
-    expect(person.reload.memberships).to be_empty
-    expect(current_path).to eql(edit_person_path(person))
+    expect(edit_profile_page).to have_selector('.membership.panel', visible: true, count: 1)
+    click_button 'Save'
+    expect(current_path).to eql(person_path(person))
+    expect(page).to have_content("Thank you for helping to improve People Finder")
+    expect(person.reload.memberships.count).to eql 1
+  end
+
+  scenario 'Leaving all teams', js: true do
+    person = create_person_in_digital_justice
+    javascript_log_in
+    visit edit_person_path(person)
+    click_link('Leave team')
+    click_button 'Save'
+    expect(edit_profile_page).to have_error_summary
+    expect(edit_profile_page.error_summary).to have_team_membership_required_error text: 'Membership of a team is required'
+    expect(edit_profile_page.form).to have_team_membership_error_destination_anchor
+    expect(person.reload.memberships.count).to eql 1
   end
 end
 
 def create_person_in_digital_justice
   department = create(:department, name: 'Ministry of Justice')
   group = create(:group, name: 'Digital Justice', parent: department)
-  person = create(:person)
-  person.memberships.create(group: group)
+  person = create(:person, :member_of, team: group, sole_membership: true)
   person
 end
 
 def setup_three_level_team
-  dept = create(:department, name: 'Ministry of Justice')
-  parent_group = create(:group, name: 'CSG', parent: dept)
-  @technology = create(:group, name: 'Technology', parent: parent_group)
+  department = create(:department, name: 'Ministry of Justice')
+  parent_group = create(:group, name: 'CSG', parent: department)
+  create(:group, name: 'Technology', parent: parent_group)
   create(:group, name: 'Digital Services', parent: parent_group)
 end
 
 def setup_team_member group
-  subscriber = create(:person)
-  create :membership, person: subscriber, group: group, subscribed: true
-  subscriber
+  create(:person, :member_of, team: group, subscribed: true, sole_membership: true)
 end
 
 def visit_edit_view group

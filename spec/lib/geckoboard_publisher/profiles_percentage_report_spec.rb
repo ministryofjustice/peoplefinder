@@ -39,9 +39,15 @@ RSpec.describe GeckoboardPublisher::ProfilesPercentageReport, geckoboard: true d
     end
 
     before do
-      create(:person, :with_photo, :department_member, current_project: 'peoplefinder')
-      create(:person, :with_photo, :team_member, current_project: nil, description: " \t\n") # test whitespace exclusion
-      create(:person, description: 'test extra information ').update(given_name: 'Joe')
+      create(:person, :with_photo, current_project: 'peoplefinder')
+      create(:person, :with_photo, :team_member, current_project: nil, description: " \t\n").tap do |person|
+        person.memberships.find_by(group_id: Group.department.id).destroy
+      end
+
+      create(:person, description: 'test extra information ').tap do |person|
+        person.update(given_name: 'Joe')
+        person.memberships.destroy_all
+      end
     end
 
     include_examples 'returns valid items structure'

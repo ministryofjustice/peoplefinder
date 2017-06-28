@@ -77,6 +77,10 @@ describe UserUpdateMailer do
             role: 'Chief Executive Officer',
             leader: true,
             subscribed: false
+          },
+          '3' => {
+            id: person.memberships.find_by(group_id: Group.department).id,
+            _destroy: '1'
           }
         }
       }
@@ -140,8 +144,14 @@ describe UserUpdateMailer do
 
       it 'includes team membership additions' do
         %w(plain html).each do |part_type|
-          expect(get_message_part(mail, part_type)).to have_content(/Added you to the Digital Services team as Lead Developer. You are a leader of the team./m)
+          expect(get_message_part(mail, part_type)).to have_content(/Added you to the Digital Services team as Lead Developer\. You are a leader of the team/m)
           expect(get_message_part(mail, part_type)).to have_content(/Added you to the Corporate Services Group team as Product Manager/m)
+        end
+      end
+
+      it 'includes team membership removals' do
+        %w(plain html).each do |part_type|
+          expect(get_message_part(mail, part_type)).to have_content(/Removed you from the Ministry of Justice team/m)
         end
       end
 
@@ -161,7 +171,7 @@ describe UserUpdateMailer do
 
       it 'includes team membership leadership modifications' do
         %w(plain html).each do |part_type|
-          expect(get_message_part(mail, part_type)).to have_content(/Made you leader of the Human Resources team./m)
+          expect(get_message_part(mail, part_type)).to have_content(/Made you leader of the Human Resources team/m)
         end
       end
 
