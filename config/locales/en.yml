@@ -311,7 +311,9 @@ en:
         too_big: "file size, %{size}, is too large"
         not_in_range: "file size, %{size}, is not in expected range"
       permanent_secretary_unique_validator:
-        leader: Please select "No"
+        leader:
+          unique: "%{role} (leader of %{name}) already exists. Select \"No\" or change the current %{role}'s profile first"
+          # unique: "Leader, select \"No\" as there is already a Permanent Secretary (leader of Ministry of Justice). Alternatively, change the current Permanent Secretary's profile first"
   activerecord:
     errors:
       <<: *errors
@@ -326,6 +328,7 @@ en:
         leader: "Are you the Permanent Secretary of the Ministry of Justice?"
         group: Team
       membership:
+        leader: ''
         group: Team
 
   shared:

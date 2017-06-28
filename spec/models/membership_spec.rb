@@ -78,9 +78,9 @@ RSpec.describe Membership, type: :model do
       end
 
       it 'adds appropriate error message to leader attribute' do
-        membership = build(:membership, person: person, group: moj, leader: true, role: 'another perm sec')
+        membership = build(:membership, person: person, group: moj, leader: true, role: 'Boss')
         membership.valid?
-        expect(membership.errors[:leader]).to include 'Please select "No"'
+        expect(membership.errors[:leader]).to include "Perm. Sec. (leader of Ministry of Justice) already exists. Select \"No\" or change the current Perm. Sec.'s profile first"
       end
     end
 

@@ -1,20 +1,19 @@
 - membership = membership_f.object
 
 .membership.panel
-
-  - if membership.errors.keys.include?(:group)
-    .form-group.error
-      = render partial: 'team_selector', locals: { person: person, membership_f: membership_f }
-  - else
-    .form-group
-      = render partial: 'team_selector', locals: { person: person, membership_f: membership_f }
+  .form-group{ membership_f.error_html_attributes(:group) }
+    = render partial: 'team_selector', locals: { person: person, membership_f: membership_f }
 
   .form-group
     = membership_f.text_field :role
 
-  .form-group.team-leader
+  .form-group.team-leader{ membership_f.error_html_attributes(:leader) }
     %fieldset.inline
-      %legend.form-label-bold= role_translate(person, 'memberships.leader').html_safe
+      %legend.form-label-bold
+        = role_translate(person, 'memberships.leader').html_safe
+      - membership.errors.full_messages_for(:leader).each do |message|
+        %span.error-message
+          = message
       = membership_f.label :leader, value: true, class: 'block-label' do
         = membership_f.radio_button :leader, true
         Yes

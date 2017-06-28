@@ -6,7 +6,7 @@
 .editable-container
   .editable-summary.parent-summary
     - if membership.errors.keys.include?(:group)
-      %span.error-message{ id: GovukElementsErrorsHelper.dom_id_for_nested_error(membership.class.name.downcase, membership_f.index, :group) }
+      %span.error-message
         = membership.errors.full_messages_for(:group).first
     - if membership.group
       .title.breadcrumbs

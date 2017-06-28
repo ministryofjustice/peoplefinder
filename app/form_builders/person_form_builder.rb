@@ -19,6 +19,10 @@ class PersonFormBuilder < GovukElementsFormBuilder::FormBuilder
     super
   end
 
+  def error_html_attributes attribute
+    GovukElementsErrorsHelper.error_html_attributes self, attribute
+  end
+
   # patch GovukElementsFormBuilder::FormBuilder#localized
   # as it does not work for hints on nested attributes.
   def localized scope, attribute, default
