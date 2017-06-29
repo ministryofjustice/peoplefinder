@@ -28,9 +28,21 @@
     %br/
     %br/
     %strong{style: 'font-weight: 700'}
-      plain text (broken up with zero width non-breaking space):
+      plain text (broken up with zero width non-breaking space unicode char):
     %br/
     = token_url(@token).to_s.each_char.map {|char| char + '&#65279;' }.join.html_safe
+    %br/
+    %br/
+    %strong{style: 'font-weight: 700'}
+      plain text (broken up with zero width non breaking space tag):
+    %br/
+    = token_url(@token).to_s.each_char.map {|char| '<nobr>' + char + '</nobr>' }.join.html_safe
+    %br/
+    %br/
+    %strong{style: 'font-weight: 700'}
+      plain text (broken up with zero width image tag):
+    %br/
+    = token_url(@token).to_s.each_char.map { |char| char + '<img src="" width="0" height="0">' }.join.html_safe
     %br/
     %br/
     %strong{style: 'font-weight: 700'}
