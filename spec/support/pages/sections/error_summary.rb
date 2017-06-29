@@ -9,6 +9,7 @@ module Pages
       # membership errors
       element :team_required_error, "a[href^='#error_membership_'][href$='_group']"
       element :team_membership_required_error, "a[href='#error_person_membership']"
+      element :leader_unique_error, "a[href^='#error_membership_'][href$='_leader']"
     end
   end
 end

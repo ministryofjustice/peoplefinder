@@ -264,6 +264,22 @@ feature 'Person maintenance' do
         expect(another_person.reload.memberships.count).to eql 1
       end
 
+      scenario 'Validates uniqueness of leader in department', js: true do
+        role = 'Boss'
+        create(:person, :member_of, team: department, role: role, leader: true)
+
+        javascript_log_in
+        visit person_path(person)
+        click_edit_profile
+        expect(edit_profile_page).to have_selector('.membership.panel', count: 1)
+        within '.team-leader' do
+          govuk_label_click 'Yes'
+        end
+        click_button 'Save', match: :first
+        expect(edit_profile_page.error_summary).to have_leader_unique_error
+        expect(edit_profile_page.error_summary.leader_unique_error).to have_text "#{role} (leader of #{department}) already exists. Select \"No\" or change the current #{role}'s profile first", count: 1
+      end
+
       scenario 'Editing a person to have an existing e-mail raises an error' do
         existing_person = create(:person)
 

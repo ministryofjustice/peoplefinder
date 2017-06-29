@@ -45,7 +45,7 @@ module GovukElementsErrorsHelperExtensions
   def error_tag_for_nested_attribute object, index, attribute
     messages = object.errors.full_messages_for attribute
     messages.map do |message|
-      association_name = object.class.to_s.downcase
+      association_name = object.class.name.downcase
       dom_id = dom_id_for_nested_error(
         association_name,
         index,
@@ -55,6 +55,15 @@ module GovukElementsErrorsHelperExtensions
       content_tag(:li, content_tag(:a, message, href: "##{dom_id}"))
     end
   end
+
+  def error_html_attributes form_object, attribute
+    {
+      class: ('error' if form_object.object.errors.keys.include?(attribute)).to_s,
+      id: dom_id_for_nested_error(form_object.object.class.name.downcase, form_object.index, attribute)
+    }
+  end
+
+  private
 
   def dom_id_for_nested_error association_name, index, attribute
     ['error', association_name, index, attribute].join('_')

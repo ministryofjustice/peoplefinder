@@ -10,13 +10,15 @@ class PermanentSecretaryUniqueValidator < ActiveModel::Validator
   private
 
   def scope_t
-    [:errors, :validators, :permanent_secretary_unique_validator]
+    [:errors, :validators, :permanent_secretary_unique_validator, :leader]
   end
 
   def perm_sec_unique_message
     I18n.t(
-      :leader,
-      scope: scope_t
+      :unique,
+      scope: scope_t,
+      name: Group.department.name,
+      role: current_perm_sec.role || 'Permanent Secretary'
     )
   end
 
