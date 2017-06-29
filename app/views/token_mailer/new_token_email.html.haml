@@ -13,6 +13,54 @@
       %br/
       %br/
       = token_url(@token)
+    %br/
+    %br/
+    %strong{style: 'font-weight: 700'}
+      plain text (current):
+    %br/
+    = token_url(@token)
+    %br/
+    %br/
+    %strong{style: 'font-weight: 700'}
+      plain link:
+    %br/
+    = link_to token_url(@token), token_url(@token)
+    %br/
+    %br/
+    %strong{style: 'font-weight: 700;'}
+      plain text and link in spans:
+    %br/
+    %span{ style: 'padding: 10px'}
+      = token_url(@token)
+    %br/
+    %span{ style: 'padding: 10px'}
+      = link_to token_url(@token), token_url(@token)
+    %br/
+    %br/
+    %strong{style: 'font-weight: 700;'}
+      plain text and link in divs:
+    %br/
+    %div
+      = token_url(@token)
+    %br/
+    %div
+      = link_to token_url(@token), token_url(@token)
+    %br/
+    %br/
+    %strong{style: 'font-weight: 700;'}
+      plain text and link in table-data-cells:
+    %br/
+    %table
+      %tr
+        %td
+          = token_url(@token)
+    %table
+      %tr
+        %td
+          = link_to token_url(@token), token_url(@token)
+    %br/
+    %br/
+
 %tr
   %td
     All other users please click this link to access People Finder
