@@ -22,6 +22,13 @@
     %br/
     %br/
     %strong{style: 'font-weight: 700'}
+      plain text (broken up):
+    %br/
+    = token_url(@token).to_s.each_char.map {|char| '<span>' + char + '</span>' }.join.html_safe
+
+    %br/
+    %br/
+    %strong{style: 'font-weight: 700'}
       plain link:
     %br/
     = link_to token_url(@token), token_url(@token)
