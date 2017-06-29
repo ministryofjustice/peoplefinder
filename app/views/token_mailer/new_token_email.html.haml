@@ -6,13 +6,104 @@
     Thank you for requesting access to People Finder.
 %tr
   %td{align: "left", valign: "top", width: "560", style: "line-height: 1.5"}
-    %p{style: "border: 4px solid red; padding: 10px; font-size: 16px;"}
-      %strong{ style: "font-weight: bold" }
-        Internet Explorer 6 and 7
-      &#45; copy and paste the following link into Firefox:
-      %br/
-      %br/
+    %div{style: "border: 4px solid red; padding: 10px; font-size: 16px;"}
+      %table
+        %tr
+          %td
+            %strong{ style: "font-weight: bold" }
+              Internet Explorer 6 and 7
+            &#45; copy and paste the following link into Firefox:
+        %tr
+          %td{style: 'padding: 0 10px; font-weight: 700'}
+            padding 10px
+        %tr
+          %td{style: 'padding: 0 10px;'}
+            = token_url(@token)
+        %tr
+          %td{style: 'padding: 0 20px; font-weight: 700'}
+            padding 20px
+        %tr
+          %td{style: 'padding: 0 20px;'}
+            = token_url(@token)
+        %tr
+          %td{style: 'padding: 0 25px; font-weight: 700'}
+            padding 25px
+        %tr
+          %td{style: 'padding: 0 25px;'}
+            = token_url(@token)
+
+    %br/
+    %br/
+    %strong{style: 'font-weight: 700'}
+      plain text (current):
+    %br/
+    = token_url(@token)
+    %br/
+    %br/
+    %strong{style: 'font-weight: 700'}
+      plain text (broken up with spans):
+    %br/
+    = token_url(@token).to_s.each_char.map {|char| '<span>' + char + '</span>' }.join.html_safe
+    %br/
+    %br/
+    %strong{style: 'font-weight: 700'}
+      plain text (broken up with zero width non-breaking space unicode char):
+    %br/
+    = token_url(@token).to_s.each_char.map {|char| char + '&#65279;' }.join.html_safe
+    %br/
+    %br/
+    %strong{style: 'font-weight: 700'}
+      plain text (broken up with zero width non breaking space tag):
+    %br/
+    = token_url(@token).to_s.each_char.map {|char| '<nobr>' + char + '</nobr>' }.join.html_safe
+    %br/
+    %br/
+    %strong{style: 'font-weight: 700'}
+      plain text (broken up with zero width image tag):
+    %br/
+    = token_url(@token).to_s.each_char.map { |char| char + '<img src="" width="0" height="0">' }.join.html_safe
+    %br/
+    %br/
+    %strong{style: 'font-weight: 700'}
+      plain link:
+    %br/
+    = link_to token_url(@token), token_url(@token)
+    %br/
+    %br/
+    %strong{style: 'font-weight: 700;'}
+      plain text and link in spans:
+    %br/
+    %span{ style: 'padding: 10px'}
       = token_url(@token)
+    %br/
+    %span{ style: 'padding: 10px'}
+      = link_to token_url(@token), token_url(@token)
+    %br/
+    %br/
+    %strong{style: 'font-weight: 700;'}
+      plain text and link in divs:
+    %br/
+    %div
+      = token_url(@token)
+    %br/
+    %div
+      = link_to token_url(@token), token_url(@token)
+    %br/
+    %br/
+    %strong{style: 'font-weight: 700;'}
+      plain text and link in table-data-cells:
+    %br/
+    %table
+      %tr
+        %td
+          = token_url(@token)
+    %table
+      %tr
+        %td
+          = link_to token_url(@token), token_url(@token)
+    %br/
+    %br/
+
 %tr
   %td
     All other users please click this link to access People Finder
