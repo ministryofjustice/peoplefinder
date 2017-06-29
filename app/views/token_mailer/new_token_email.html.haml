@@ -22,10 +22,15 @@
     %br/
     %br/
     %strong{style: 'font-weight: 700'}
-      plain text (broken up):
+      plain text (broken up with spans):
     %br/
     = token_url(@token).to_s.each_char.map {|char| '<span>' + char + '</span>' }.join.html_safe
-
+    %br/
+    %br/
+    %strong{style: 'font-weight: 700'}
+      plain text (broken up with zero width non-breaking space):
+    %br/
+    = token_url(@token).to_s.each_char.map {|char| char + '&#65279;' }.join.html_safe
     %br/
     %br/
     %strong{style: 'font-weight: 700'}
