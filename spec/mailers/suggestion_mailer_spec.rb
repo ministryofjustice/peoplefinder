@@ -89,12 +89,20 @@ RSpec.describe SuggestionMailer do
       expect(mail.to).to include(admin.email)
     end
 
+    it 'contains the first name of the team admin' do
+      expect_mail_body_text(admin.given_name)
+    end
+
     it 'contains the name of the suggester' do
       expect_mail_body_text(suggester.name)
     end
 
-    it 'contains the name on the profile' do
+    it 'contains the name of person whose profile it concerns' do
       expect_mail_body_text(person.name)
+    end
+
+    it 'contains a link to the profile it concerns' do
+      expect_mail_body_text(person_url(person))
     end
 
     describe 'when duplicate profile suggested' do

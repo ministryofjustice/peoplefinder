@@ -1,43 +1,43 @@
-= render partial: "shared/email_flash_message", locals: { link_url: person_url(@person) }
 %tr
   %td{ align:"left", valign: "top", style: "padding-bottom: 20px;", width: "560" }
-    Hello,
+    Hello #{@admin.given_name},
 %tr
   %td{ align:"left", valign: "top", style: "line-height: 30px; padding-bottom:20px;", width: "560" }
+    %p
+      You are receiving this email because you are a leader of #{@person.name}'s team.
     %p
       = @suggester.name
       suggested the following improvements to
       the profile of #{@person.name}:
-    - if @suggestion.duplicate_profile
-      %p
-        They suggested it was a duplicate profile.
-    - if @suggestion.inappropriate_content
-      %p
-        They suggested it contains inappropriate content.
-    - if @suggestion.inappropriate_content_info.present?
-      %p
-        They provided the following information about inappropriate content:
-      %p
-        = @suggestion.inappropriate_content_info
-    - if @suggestion.person_left
-      %p
-        They suggested that the person left the organisation.
-      %p
-        To update this person’s information, just:
       %ul
-        %li Go to their profile page
-        %li Click the Edit this profile link in the top right hand corner
-        %li Make any changes or delete their profile if they’ve left
-    - if @suggestion.person_left_info.present?
-      %p
-        They provided the following information about the person leaving:
-      %p
-        = @suggestion.person_left_info
-%tr
-  %td{ align: "center", valign: "top", style: "padding-bottom: 40px;", width: "560" }
-    %table.button-container{ cellpadding: "15", cellspacing: "0", border: "0", align: "left", bgcolor: "#00823b" }
-      %tbody
-        %tr
-          %td{ align: "left", valign: "middle", bgcolor: "#00823b" }
-            %a.button{href: "#{person_url(@person)}", target: "_blank"}
-              Log in to People Finder
+        - if @suggestion.duplicate_profile
+          %li
+            They suggested it was a duplicate profile.
+        - if @suggestion.inappropriate_content
+          %li
+            They suggested it contains inappropriate content.
+        - if @suggestion.inappropriate_content_info.present?
+          %li
+            They provided the following information about inappropriate content:
+            = "\"#{@suggestion.inappropriate_content_info}\""
+        - if @suggestion.person_left
+          %li
+            They suggested that the person left the organisation.
+        - if @suggestion.person_left_info.present?
+          %li
+            They provided the following information about the person leaving:
+            = "\"#{@suggestion.person_left_info}\""
+
+    %p
+      To update this person’s information, just:
+    %ul
+      %li Go to #{link_to 'their profile page', person_url(@person)}
+      %li Click the Edit this profile link in the top right hand corner
+      %li Make any changes or delete their profile if they’ve left
+
+    %p
+      Check their profile:
+    = browser_warning
+    = easy_copy_link_to url: person_url(@person)
+    = app_guidance
+    = do_not_reply

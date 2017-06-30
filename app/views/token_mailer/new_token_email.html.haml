@@ -2,31 +2,13 @@
   %td{ align:"left", valign: "top", style: "padding-bottom: 20px;", width: "560" }
     Hello,
 %tr
-  %td{ align:"left", valign: "top", style: "line-height: 30px;", width: "560" }
-    Thank you for requesting access to People Finder.
-%tr
-  %td{align: "left", valign: "top", width: "560", style: "line-height: 1.5"}
-    %p{style: "border: 4px solid red; padding: 10px; font-size: 16px;"}
-      %strong{ style: "font-weight: bold" }
-        Internet Explorer 6 and 7
-      &#45; copy and paste the following link into Firefox:
-      %br/
-      %br/
-      = token_url(@token)
+  %td{ align:"left", valign: "top", style: "line-height: 20px;", width: "560" }
+    Thank you for your request to access People Finder. Please use the link below to continue.
+    = browser_warning
+    = easy_copy_link_to url: token_url(@token)
 %tr
   %td
-    All other users please click this link to access People Finder
-    %br/
-    %br/
+    = app_guidance
 %tr
-  %td{ align: "center", valign: "top", style: "padding-bottom: 20px;", width: "560" }
-    %table.button-container{ cellpadding: "0", cellspacing: "0", border: "0", align: "left", bgcolor: "#00823b" }
-      %tbody
-        %tr
-          %td{ align: "left", valign: "middle", bgcolor: "#00823b" }
-            %a.button{ href: "#{token_url(@token)}", target: "_blank" }
-              Access People Finder
-%tr
-  %td{ width: "560", style: "line-height: 30px; padding-bottom: 40px;" }
-    %p The People Finder Team
-    %p This email is automatically generated. Do not reply.
+  %td{ width: "560", style: "line-height: 30px;" }
+    = do_not_reply

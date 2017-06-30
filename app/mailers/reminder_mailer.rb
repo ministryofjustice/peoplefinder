@@ -1,5 +1,6 @@
 class ReminderMailer < ActionMailer::Base
   include FeatureHelper
+  add_template_helper(MailHelper)
   layout 'email'
 
   before_action :set_firefox_warning

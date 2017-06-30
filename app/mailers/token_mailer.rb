@@ -1,4 +1,7 @@
 class TokenMailer < ActionMailer::Base
+
+  add_template_helper(MailHelper)
+
   layout 'email'
 
   def new_token_email(token)

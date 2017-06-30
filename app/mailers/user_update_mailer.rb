@@ -2,6 +2,8 @@ class UserUpdateMailer < ActionMailer::Base
   include FeatureHelper
   extend Forwardable
 
+  add_template_helper(MailHelper)
+
   layout 'email'
 
   before_action :set_firefox_warning
