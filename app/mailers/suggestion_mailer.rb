@@ -1,12 +1,12 @@
 class SuggestionMailer < ActionMailer::Base
-  add_template_helper(MailHelper)
+
   layout 'email'
+  add_template_helper MailHelper
 
   def person_email(person, suggester, suggestion_hash)
     @person = person
     @suggester = suggester
     @suggestion = Suggestion.new(suggestion_hash)
-    @firefox_browser_warning = t('.firefox_message', default: '')
     mail to: person.email
   end
 
@@ -15,7 +15,6 @@ class SuggestionMailer < ActionMailer::Base
     @suggester = suggester
     @admin = admin
     @suggestion = Suggestion.new(suggestion_hash)
-    @firefox_browser_warning = t('.firefox_message', default: '')
     mail to: admin.email
   end
 end

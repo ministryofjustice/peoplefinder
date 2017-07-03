@@ -2,9 +2,8 @@
   %td{ align:"left", valign: "top", style: "padding-bottom: 20px;", width: "560" }
     Hello #{@admin.given_name},
 %tr
-  %td{ align:"left", valign: "top", style: "line-height: 30px; padding-bottom:20px;", width: "560" }
-    %p
-      You are receiving this email because you are a leader of #{@person.name}'s team.
+  %td{ align:"left", valign: "top", style: "line-height: 30px", width: "560" }
+    You are receiving this email because you are a leader of #{@person.name}'s team.
     %p
       = @suggester.name
       suggested the following improvements to
@@ -27,13 +26,6 @@
           %li
             They provided the following information about the person leaving:
             = "\"#{@suggestion.person_left_info}\""
-
-    %p
-      To update this person’s information, just:
-    %ul
-      %li Go to #{link_to 'their profile page', person_url(@person)}
-      %li Click the Edit this profile link in the top right hand corner
-      %li Make any changes or delete their profile if they’ve left
 
     %p
       Check their profile:

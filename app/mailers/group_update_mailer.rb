@@ -1,12 +1,13 @@
 class GroupUpdateMailer < ActionMailer::Base
-  add_template_helper(MailHelper)
-  layout 'email'
 
-  def inform_subscriber(recipient, group, person_responsible)
+  layout 'email'
+  add_template_helper MailHelper
+
+  def inform_subscriber(recipient, group, instigator)
+    @person = recipient
     @group = group
-    @person_responsible = person_responsible
+    @instigator = instigator
     @group_url = group_url(group)
-    @firefox_browser_warning = t('.firefox_message')
     mail to: recipient.email
   end
 end

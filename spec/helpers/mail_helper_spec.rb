@@ -2,6 +2,11 @@ require 'rails_helper'
 
 RSpec.describe MailHelper, type: :helper do
 
+  # mock view path for relative translations
+  before do
+    @virtual_path = "path.to.view"
+  end
+
   describe '#browser_warning' do
     subject { browser_warning }
 
@@ -22,7 +27,7 @@ RSpec.describe MailHelper, type: :helper do
 
     it 'wraps link with padded div to ensure easy copy and paste in email clients (including lotus notes)' do
       is_expected.to have_selector 'div'
-      is_expected.to have_selector('div[style*="padding: 10px 20px"]')
+      is_expected.to have_selector('div[style*="padding: 10px 25px"]')
     end
   end
 

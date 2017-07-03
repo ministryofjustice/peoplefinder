@@ -1,11 +1,9 @@
 class ReminderMailer < ActionMailer::Base
   include FeatureHelper
-  add_template_helper(MailHelper)
+
   layout 'email'
-
-  before_action :set_firefox_warning
-
   add_template_helper PeopleHelper
+  add_template_helper MailHelper
 
   def never_logged_in(person)
     @person = person
@@ -26,10 +24,6 @@ class ReminderMailer < ActionMailer::Base
   end
 
   private
-
-  def set_firefox_warning
-    @firefox_browser_warning = t('.firefox_message', default: '')
-  end
 
   def token_url_for person
     token = Token.for_person(person)

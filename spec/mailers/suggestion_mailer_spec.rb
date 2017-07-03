@@ -97,7 +97,7 @@ RSpec.describe SuggestionMailer do
       expect_mail_body_text(suggester.name)
     end
 
-    it 'contains the name of person whose profile it concerns' do
+    it 'contains the name of the person whose profile it concerns' do
       expect_mail_body_text(person.name)
     end
 

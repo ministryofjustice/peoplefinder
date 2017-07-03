@@ -2,12 +2,11 @@
   %td{ align:"left", valign: "top", style: "padding-bottom: 20px;", width: "560" }
     Hello #{@person.given_name},
 %tr
-  %td{ align:"left", valign: "top", style: "line-height: 20px;", width: "560" }
+  %td{ align:"left", valign: "top", style: "line-height: 30px;", width: "560" }
     %p
       You’ve just been added to MoJ People Finder - MoJ's contact directory
       - if @by_email
-        \- by #{@by_email}
-      \.
+        \- by #{ mail_to @by_email, @by_email }.
     %p
       Check your profile:
     = browser_warning

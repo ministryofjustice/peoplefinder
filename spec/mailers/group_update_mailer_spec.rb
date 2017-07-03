@@ -4,12 +4,12 @@ RSpec.describe GroupUpdateMailer do
   include PermittedDomainHelper
 
   let(:recipient) { create(:person, email: 'test.user@digital.justice.gov.uk') }
-  let(:person_responsible) { create(:person) }
+  let(:instigator) { create(:person) }
   let(:group) { create(:person) }
 
   describe '.inform_subscriber' do
     let(:mail) do
-      described_class.inform_subscriber(recipient, group, person_responsible).
+      described_class.inform_subscriber(recipient, group, instigator).
         deliver_now
     end
 
@@ -27,9 +27,9 @@ RSpec.describe GroupUpdateMailer do
       end
     end
 
-    it 'includes the name of the person who changed the group' do
+    it 'includes the email of the person who changed the group' do
       %w(plain html).each do |part_type|
-        expect(get_message_part(mail, part_type)).to have_text(person_responsible.name)
+        expect(get_message_part(mail, part_type)).to have_text(instigator.email)
       end
     end
 

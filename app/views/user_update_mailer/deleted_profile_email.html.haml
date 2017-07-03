@@ -6,8 +6,7 @@
     %p
       The People Finder profile linked to this email address has been deleted
       - if @by_email.present?
-        by #{@by_email}
-      \.
+        by #{ mail_to @by_email }.
     %p
       Please contact
       - if @by_email.present?
