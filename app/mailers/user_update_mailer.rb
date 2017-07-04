@@ -3,8 +3,7 @@ class UserUpdateMailer < ActionMailer::Base
   extend Forwardable
 
   layout 'email'
-
-  before_action :set_firefox_warning
+  add_template_helper MailHelper
 
   def new_profile_email(person, by_email = nil)
     @person = person
@@ -28,10 +27,6 @@ class UserUpdateMailer < ActionMailer::Base
   end
 
   private
-
-  def set_firefox_warning
-    @firefox_browser_warning = t('.firefox_message', default: '')
-  end
 
   def profile_url(person)
     person_url(person)

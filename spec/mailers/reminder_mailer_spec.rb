@@ -48,8 +48,8 @@ RSpec.describe ReminderMailer do
     it 'includes the person edit url' do
       edit_url = edit_group_url(group)
       html = get_message_part(mail, 'html')
-      expect(html).to have_link('your team’s profile', href: edit_url)
-      expect(html).to have_link('Edit this team link', href: edit_url)
+      expect(html).to have_link('your team’s information', href: edit_url)
+      expect(html).to have_link(edit_url, href: edit_url)
 
       plain_text = get_message_part(mail, 'plain')
       expect(plain_text).to have_text(edit_url)

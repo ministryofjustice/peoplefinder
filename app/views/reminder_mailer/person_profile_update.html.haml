@@ -1,11 +1,11 @@
-= render partial: "shared/email_flash_message", locals: { link_url: @token_url }
 %tr
   %td{ align:"left", valign: "top", style: "padding-bottom: 20px;", width: "560" }
     Hello #{@person.given_name},
 %tr
   %td{ align:"left", valign: "top", style: "line-height: 30px;", width: "560" }
+    We’ve noticed that you haven't updated #{link_to 'your profile', @token_url, target: '_blank'} in the last 6 months.
     %p
-      We’ve noticed that you’ve not updated #{link_to 'your People Finder page', @token_url, target: '_blank'} recently.
+      To help your colleagues, it’s a good idea to make sure your details are up to date - especially if you’ve changed your role or location. These are your current details:
     %style{ type: "text/css" }
       :plain
         dt {
@@ -16,7 +16,6 @@
         dt:after {
           content:':'
         }
-    %p You can see the information that visitors to your page are viewing below:
     %dl
       %dt Name
       %dd= @person.name
@@ -60,11 +59,9 @@
         %dt Extra information:
         %dd= @person.description
 
-    %p
-      If anything’s changed over recent months, why not help your co-workers stay in touch and #{link_to 'update your details', @token_url, target: '_blank'} now.
-
-    %p
-      The People Finder Team
-
-    %p
-      We welcome your feedback on People Finder. Please reply to this email if you'd like to share your thoughts.
+      %p
+        Check your profile:
+      = browser_warning
+      = easy_copy_link_to url: @token_url
+      = app_guidance
+      = do_not_reply

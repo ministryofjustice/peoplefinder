@@ -1,3 +1,5 @@
+$lightgrey: #DEE0E2;
+
 * {
   font-family: Arial, sans-serif;
   font-weight: normal;
@@ -63,7 +65,7 @@ table.footer {
   border-top-width: 1px;
   border-top-style: solid;
   border-top-color: #a1acb2;
-  background-color: #DEE0E2;
+  background-color: lightgrey;
 }
 
 td {
@@ -117,4 +119,9 @@ td.footer-text {
 li.align-indent {
   text-indent: -2em;
   padding-left: 2em;
+}
+
+.browser-warning {
+  padding: 10px;
+  background-color: lightgrey;
 }
