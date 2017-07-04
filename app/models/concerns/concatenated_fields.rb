@@ -4,7 +4,7 @@ module Concerns::ConcatenatedFields
   included do
     def self.concatenated_field(name, *fields, join_with: ' ')
       define_method name do
-        fields.map { |f| send(f) }.select(&:present?).join(join_with)
+        fields.map { |f| send(f) if respond_to? f }.select(&:present?).join(join_with)
       end
     end
   end

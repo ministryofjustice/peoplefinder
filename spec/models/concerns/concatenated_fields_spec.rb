@@ -7,6 +7,7 @@ RSpec.describe Concerns::ConcatenatedFields do
 
     include Concerns::ConcatenatedFields
     concatenated_field :concatenated, :field_a, :field_b, join_with: ', '
+    concatenated_field :concat_missing, :field_a, :field_c, join_with: ', '
   end
 
   subject { TestModel.new }
@@ -22,4 +23,16 @@ RSpec.describe Concerns::ConcatenatedFields do
     subject.field_b = 'bravo'
     expect(subject.concatenated).to eq('alpha, bravo')
   end
+
+  it 'ignores missing attributes' do
+    subject.field_a = 'alpha'
+    expect(subject.concat_missing).to eq('alpha')
+  end
+
+  context 'Person model' do
+    it 'does not prevent output for queries using .select' do
+      expect { puts Person.unscoped.select("count(people.id)") }.to output(/\n/).to_stdout
+    end
+  end
+
 end
