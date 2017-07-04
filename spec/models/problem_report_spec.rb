@@ -1,5 +1,4 @@
-require 'spec_helper'
-require 'problem_report'
+require 'rails_helper'
 
 RSpec.describe ProblemReport, type: :model do
   let(:current_time) { Time.at(1_410_298_077) }
