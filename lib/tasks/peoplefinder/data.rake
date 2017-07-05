@@ -136,8 +136,7 @@ namespace :peoplefinder do
       task :remove_unnecessary_department_memberships => :environment do
         puts "Remove #{Person.department_members_in_other_teams.count} unnecessary #{department} memberships"
         Person.department_members_in_other_teams.each do |person|
-          puts "Testing: removing #{person} from #{department}"
-          # person.memberships.find_by(group_id: department).destroy_all
+          person.memberships.find_by(group_id: department).destroy_all
         end
       end
     end
