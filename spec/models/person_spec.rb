@@ -136,7 +136,7 @@ RSpec.describe Person, type: :model do
       person.save!
     end
 
-    it 'returns people in department who are also in another team' do
+    it 'returns people in department with no role who are also in another team' do
       person.memberships.create(group: create(:group, name: 'Technology'))
       expect(described_class.department_members_in_other_teams).to include(person)
     end
@@ -152,6 +152,12 @@ RSpec.describe Person, type: :model do
 
     it 'does not return people in department who are also in another team if they are the department leader' do
       person.memberships.find_by(group_id: Group.department).update(leader: true)
+      person.memberships.create(group: create(:group, name: 'Technology'))
+      expect(described_class.department_members_in_other_teams).to_not include(person)
+    end
+
+    it 'does not return people in department who are also in another team if they have a role in the department' do
+      person.memberships.find_by(group_id: Group.department.id).update(role: 'SIRO for peoplefinder')
       person.memberships.create(group: create(:group, name: 'Technology'))
       expect(described_class.department_members_in_other_teams).to_not include(person)
     end
