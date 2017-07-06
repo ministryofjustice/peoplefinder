@@ -5,6 +5,105 @@
   %td{ align:"left", valign: "top", style: "line-height: 30px;", width: "560" }
     Thank you for your request to access People Finder. Please use the link below to continue.
     = browser_warning
+
+
+    %h1
+      INLINE CSS
+    %hr
+
+    %p
+      no padding
+    = link_to 'https://peoplefinder.service.gov.uk/tokens/fac5acc3-62d4-43f1-9581-130597de6239', 'https://peoplefinder.service.gov.uk/tokens/fac5acc3-62d4-43f1-9581-130597de6239'
+
+    %p
+      para with padding
+    %p{style: 'padding: 10px 25px'}
+      = link_to 'https://peoplefinder.service.gov.uk/tokens/fac5acc3-62d4-43f1-9581-130597de6239', 'https://peoplefinder.service.gov.uk/tokens/fac5acc3-62d4-43f1-9581-130597de6239'
+
+    %p
+      span with padding
+    %span{style: 'padding: 10px 25px'}
+      = link_to 'https://peoplefinder.service.gov.uk/tokens/fac5acc3-62d4-43f1-9581-130597de6239', 'https://peoplefinder.service.gov.uk/tokens/fac5acc3-62d4-43f1-9581-130597de6239'
+
+    %h1
+      COMMENTING INLINE CSS
+    %hr
+
+    %p
+      commented padded link by id
+    %a{ id: 'padded-link', href: 'https://peoplefinder.service.gov.uk/tokens/fac5acc3-62d4-43f1-9581-130597de6239'}
+      https://peoplefinder.service.gov.uk/tokens/fac5acc3-62d4-43f1-9581-130597de6239
+
+    %p
+      commented padded link by class
+    %a{ class: 'padded-link', href: 'https://peoplefinder.service.gov.uk/tokens/fac5acc3-62d4-43f1-9581-130597de6239'}
+      https://peoplefinder.service.gov.uk/tokens/fac5acc3-62d4-43f1-9581-130597de6239
+
+    %p
+      commented padded para
+    %p.padded-link
+      = link_to 'https://peoplefinder.service.gov.uk/tokens/fac5acc3-62d4-43f1-9581-130597de6239', 'https://peoplefinder.service.gov.uk/tokens/fac5acc3-62d4-43f1-9581-130597de6239'
+    %p
+      commented padded div
+    %div.padded-link
+      = link_to 'https://peoplefinder.service.gov.uk/tokens/fac5acc3-62d4-43f1-9581-130597de6239', 'https://peoplefinder.service.gov.uk/tokens/fac5acc3-62d4-43f1-9581-130597de6239'
+
+    %h1
+      CHAR PADDING
+    %hr
+
+    %p
+      char padded para
+    %p
+      another word or two
+      = link_to 'https://peoplefinder.service.gov.uk/tokens/fac5acc3-62d4-43f1-9581-130597de6239', 'https://peoplefinder.service.gov.uk/tokens/fac5acc3-62d4-43f1-9581-130597de6239'
+      another word or two
+
+    %p
+      char padded div
+    %div
+      another word or two
+      = link_to 'https://peoplefinder.service.gov.uk/tokens/fac5acc3-62d4-43f1-9581-130597de6239', 'https://peoplefinder.service.gov.uk/tokens/fac5acc3-62d4-43f1-9581-130597de6239'
+      another word or two
+
+    %p
+      char padded span
+    %span
+      another word or two
+      = link_to 'https://peoplefinder.service.gov.uk/tokens/fac5acc3-62d4-43f1-9581-130597de6239', 'https://peoplefinder.service.gov.uk/tokens/fac5acc3-62d4-43f1-9581-130597de6239'
+      another word or two
+
+    %h1
+      HIDING PADDING CHARS
+    %hr
+
+    %p
+      &nbsp padded para
+    %p
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      = link_to 'https://peoplefinder.service.gov.uk/tokens/fac5acc3-62d4-43f1-9581-130597de6239', 'https://peoplefinder.service.gov.uk/tokens/fac5acc3-62d4-43f1-9581-130597de6239'
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+    %p
+      &nbsp padded div
+    %div
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      = link_to 'https://peoplefinder.service.gov.uk/tokens/fac5acc3-62d4-43f1-9581-130597de6239', 'https://peoplefinder.service.gov.uk/tokens/fac5acc3-62d4-43f1-9581-130597de6239'
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+    %p
+      &nbsp padded span
+    %span
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      = link_to 'https://peoplefinder.service.gov.uk/tokens/fac5acc3-62d4-43f1-9581-130597de6239', 'https://peoplefinder.service.gov.uk/tokens/fac5acc3-62d4-43f1-9581-130597de6239'
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+:css
+  <!--.padded-link{padding: 10px 25px;}-->
+  <!--#padded-link{padding: 10px 25px;}-->
+
+    %p
+      div with padding
     = easy_copy_link_to url: token_url(@token)
     = app_guidance
     = do_not_reply
