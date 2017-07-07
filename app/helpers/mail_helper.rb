@@ -24,8 +24,6 @@ module MailHelper
     content_tag(:p, mailer_t(:do_not_reply))
   end
 
-  private
-
   def link_to_guidance
     link_to('MoJ Intranet', APP_GUIDANCE_PAGE, target: '_blank')
   end
