@@ -6,7 +6,7 @@ class TokenMailer < ActionMailer::Base
   def new_token_email(token)
     @token = token
     mail(to: @token.user_email) do |format|
-      if @token.user_email.include?('@probation.gsi.gov.uk')
+      if @token.user_email.include?('@probation.gsi')
         headers['skip_premailer'] = true
         format.text
       else
