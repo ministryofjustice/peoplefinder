@@ -170,6 +170,35 @@ RSpec.describe Person, type: :model do
     end
   end
 
+  describe '#department_memberships_with_no_role' do
+    subject { person.department_memberships_with_no_role }
+
+    before do
+      person.save!
+      person.memberships.create(group: create(:group, name: 'Technology'))
+    end
+
+    it 'returns AssociationRelation of memberships' do
+      is_expected.to be_kind_of ActiveRecord::AssociationRelation
+      expect(subject.first).to be_kind_of Membership
+    end
+
+    it 'returns department memberships only' do
+      expect(subject.map(&:group)).to eql [Group.department]
+    end
+
+    it 'returns department memberships with no role' do
+      expect(subject.count).to eql 1
+      expect(subject.map(&:role)).to eq [nil]
+    end
+
+    it 'treats whitespace only roles as null' do
+      person.memberships.find_by(group_id: Group.department.id).update(role: ' ')
+      expect(subject.count).to eql 1
+      expect(subject.map(&:role)).to eq [' ']
+    end
+  end
+
   describe '#name' do
     context 'with a given_name and surname' do
       let(:person) { build(:person, given_name: 'Jon', surname: 'von Brown') }

@@ -132,11 +132,11 @@ namespace :peoplefinder do
         end
       end
 
-      desc 'Deletes department level team memberships for those in another team'
+      desc 'Deletes department level team memberships with no role for people with memberships in another team'
       task :remove_unnecessary_department_memberships => :environment do
         puts "Remove #{Person.department_members_in_other_teams.count} unnecessary #{department} memberships"
         Person.department_members_in_other_teams.each do |person|
-          person.memberships.find_by(group_id: department).destroy_all
+          person.department_memberships_with_no_role.destroy_all
         end
       end
     end
