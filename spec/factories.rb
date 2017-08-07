@@ -72,6 +72,21 @@ FactoryGirl.define do
       last_login_at { login_count == 0 ? nil : Random.rand(15).days.ago }
     end
 
+    trait :for_demo_csv do
+      after :build do
+        PermittedDomain.create(domain: 'example.com') unless PermittedDomain.exists?(domain: 'example.com')
+      end
+
+      given_name { Faker::Name.first_name }
+      surname { Faker::Name.last_name }
+      email { "#{given_name}.#{surname}@example.com" }
+      primary_phone_number { Faker::PhoneNumber.phone_number }
+      secondary_phone_number { Faker::PhoneNumber.phone_number }
+      login_count { Random.rand(20) + 1 }
+      last_login_at { login_count == 0 ? nil : Random.rand(15).days.ago }
+      description { Faker::Lorem.sentences.join(' ') }
+    end
+
     trait :with_photo do
       association :profile_photo, factory: :profile_photo
     end

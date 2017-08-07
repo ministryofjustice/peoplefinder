@@ -6,7 +6,7 @@ class PersonCsvImporter
   extend Forwardable
 
   REQUIRED_COLUMNS = %i(given_name surname email).freeze
-  OPTIONAL_COLUMNS = %i(primary_phone_number pager_number building location_in_building city).freeze
+  OPTIONAL_COLUMNS = %i(primary_phone_number secondary_phone_number pager_number building location_in_building city description).freeze
 
   ErrorRow = Struct.new(:line_number, :raw, :messages) do
     def to_s
