@@ -17,7 +17,7 @@ feature 'Upload CSV' do
   RSpec::Matchers.define :have_govuk_errors do
     match do |page|
       page.has_selector?('.error-summary-heading', text: 'There is a problem with the CSV file') &&
-      page.has_selector?('span.error-message', text: 'There were errors in the CSV file, listed below. Update the file then try again')
+        page.has_selector?('span.error-message', text: 'There were errors in the CSV file, listed below. Update the file then try again')
     end
 
     failure_message do

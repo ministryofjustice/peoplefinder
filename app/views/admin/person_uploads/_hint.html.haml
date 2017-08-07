@@ -10,11 +10,8 @@
       optional:
       = optional_headers
   example:
-  %div.csv-formatted-text
-    %pre
-      %code
-        %span.csv-header
-          = csv_headers
-        %br
-        %span
-          Tom,O'Conner,tom.o.conner@example.gov.uk,020 7947 7268,102 Petty France,"Room 5.03, 5th Floor, Blue Core",London
+  %pre{ style: 'overflow: auto; display: block; padding: 1em; word-wrap: normal; whitespace: pre; word-spacing: normal; word-wrap: normal;' }
+    %code
+      = csv_headers
+    %code
+      Tom,O'Conner,tom.o.conner@example.gov.uk,020 7947 7268,07701 001001,203-222-222,102 Petty France,"Room 5.03, 5th Floor, Blue Core",London,"I work on various projects across MoJ"
