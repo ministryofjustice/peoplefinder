@@ -1,7 +1,9 @@
 - if @upload.csv_errors.any?
-  %div.csv-upload-errors
-    %h2= t('person_uploads.error_header')
-    %p= t('person_uploads.error_blurb')
+  .form-group.error
+    .form-label
+      = t('person_uploads.error_header')
+      %span.error-message
+        = t('person_uploads.error_blurb')
     %table
       %thead
         %tr

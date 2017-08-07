@@ -1,10 +1,11 @@
 = form_for [:admin, @upload], multipart: true do |f|
 
-  .form-group{ :class => ('gov-uk-field-error' if f.object.errors.include?(:group_id)) }
-    = f.label :group_id, class: 'form-label-bold' do
+  .form-group{ :class => ('error' if f.object.errors.include?(:group_id)) }
+    = f.label :group_id, class: 'form-label' do
       = t(:group_id, scope: 'helpers.person_uploads')
       - if f.object.errors.include?(:group_id)
-        %span.error= f.object.errors[:group_id].first
+        %span.error-message
+          = f.object.errors[:group_id].first
     %p.form-hint
       = info_text('hint_person_upload_group')
     = f.collection_select :group_id,
@@ -15,11 +16,9 @@
 
   = render partial: 'errors'
 
-  .form-group{ :class => ('gov-uk-field-error' if f.object.errors.include?(:file)) }
-    = f.label :file, class: 'form-label-bold' do
+  .form-group{ :class => ('error' if f.object.errors.include?(:file)) }
+    = f.label :file, class: 'form-label' do
       = t(:file, scope: 'helpers.person_uploads')
-      - if f.object.errors.include?(:file)
-        %span.error= f.object.errors[:file].first
     %p.form-hint
       = render partial: 'hint'
     = f.file_field :file

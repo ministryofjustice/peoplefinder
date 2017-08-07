@@ -66,7 +66,8 @@ RSpec.describe PersonCsvParser, type: :service do
       [
         { given_name: 'Peter', surname: 'Bly', email: 'peter.bly@valid.gov.uk' },
         { given_name: 'Jon', surname: 'O\'Carey', email: 'jon.o.carey@valid.gov.uk' },
-        { given_name: 'Tom',
+        {
+          given_name: 'Tom',
           surname: 'Mason-Buggs',
           email: 'tom.mason-buggs@valid.gov.uk',
           primary_phone_number: '020 7947 6743',
