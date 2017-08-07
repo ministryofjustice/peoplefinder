@@ -88,9 +88,9 @@ RSpec.describe PersonImportJob, type: :job do
       context 'with optional headers' do
         let(:serialized_people) do
           <<-END.strip_heredoc
-            given_name,surname,email,primary_phone_number,building,location_in_building,city
+            given_name,surname,email,primary_phone_number,secondary_phone_number,pager_number,building,location_in_building,city,description
             Tom,O'Carey,tom.o.carey@valid.gov.uk
-            Tom,Mason-Buggs,tom.mason-buggs@valid.gov.uk,020 7947 6743,"102, Petty France","Room 5.02, 5th Floor, Orange Core","London, England"
+            Tom,Mason-Buggs,tom.mason-buggs@valid.gov.uk,020 7947 6743,07701 234 567,07600 000 001,"102, Petty France","Room 5.02, 5th Floor, Orange Core","London, England","I work around here"
           END
         end
         it 'creates records with and without optional fields' do

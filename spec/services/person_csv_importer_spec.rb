@@ -31,10 +31,33 @@ RSpec.describe PersonCsvImporter, type: :service do
   describe '#valid?' do
     subject { importer.valid? }
 
+    let(:csv_object) { CSV.new(csv, headers: true).read }
+    let(:csv_headers) { csv_object.headers.map(&:strip).map(&:to_sym) }
+    let(:all_headers) { described_class::REQUIRED_COLUMNS + described_class::OPTIONAL_COLUMNS }
+
     before { subject }
 
     context 'when csv has valid format' do
-      context 'when all people have surname and email' do
+      context 'and all required and optional columns provided' do
+        let(:csv) do
+          <<-CSV.strip_heredoc
+            given_name, surname, email, primary_phone_number, secondary_phone_number, pager_number, building, location_in_building, city, description
+            Peter, Bly, peter.bly@valid.gov.uk, 0207 956 6457, 07701 432 754, 20343434, Building 1, Room 252, Birmingham
+          CSV
+        end
+
+        it 'ensure test csv has all expected column headers' do
+          expect(csv_headers).to match_array all_headers
+        end
+
+        it { is_expected.to be true }
+
+        it 'errors are empty' do
+          expect(importer.errors).to be_empty
+        end
+      end
+
+      context 'and all people have surname and email' do
         let(:csv) do
           <<-CSV.strip_heredoc
             email,given_name,surname
@@ -50,7 +73,7 @@ RSpec.describe PersonCsvImporter, type: :service do
         end
       end
 
-      context 'when some people have incorrect details' do
+      context 'and some people have incorrect details' do
         let(:csv) do
           <<-CSV.strip_heredoc
             email,given_name,surname
@@ -153,7 +176,7 @@ RSpec.describe PersonCsvImporter, type: :service do
     context 'when the CSV has too many header columns' do
       let(:csv) do
         <<-END.strip_heredoc
-          email,given_name,surname,primary_phone_number,pager_number,building,location_in_building,city,city
+          email,given_name,surname,primary_phone_number,secondary_phone_number,pager_number,building,location_in_building,city,description,city
           tom.o.carey@digital.justice.gov.uk,Jon,O'Carey
           tom.mason-buggs@digital.justice.gov.uk,Tom,Mason-Buggs,020 7947 76738,"102, Petty France","Room 5.02, 5th Floor, Blue Core",London
         END
@@ -161,7 +184,7 @@ RSpec.describe PersonCsvImporter, type: :service do
 
       let(:errors) do
         [
-          PersonCsvImporter::ErrorRow.new(1, "email,given_name,surname,primary_phone_number,pager_number,building,location_in_building,city,city", ['There are more columns than expected'])
+          PersonCsvImporter::ErrorRow.new(1, "email,given_name,surname,primary_phone_number,secondary_phone_number,pager_number,building,location_in_building,city,description,city", ['There are more columns than expected'])
         ]
       end
 
