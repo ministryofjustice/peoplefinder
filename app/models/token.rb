@@ -24,7 +24,7 @@ class Token < ActiveRecord::Base
   validate :valid_email_address
   validate :within_throttle_limit, on: :create
 
-  DEFAULT_TTL = 10_800
+  DEFAULT_TTL = 86_400
   DEFAULT_MAX_TOKENS_PER_HOUR = 8
   DEFAULT_EXTRA_EXPIRY_PERIOD = 10.minutes
 

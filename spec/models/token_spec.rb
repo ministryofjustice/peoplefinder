@@ -149,8 +149,8 @@ RSpec.describe Token, type: :model do
 
   context 'time dependent tokens' do
     describe '#ttl' do
-      it 'defaults to 10800 seconds (3 hours)' do
-        expect(token.ttl).to eql(10_800)
+      it 'defaults to 86400 seconds (24 hours)' do
+        expect(token.ttl).to eql(86_400)
       end
     end
 
@@ -158,23 +158,23 @@ RSpec.describe Token, type: :model do
       before { token.save }
 
       context 'in production environment' do
-        it 'returns true if token is less than 10800 seconds old and not spent' do
+        it 'returns true if token is less than 86400 seconds old and not spent' do
           expect(token.active?).to be_truthy
           expect(token.spent?).to be_falsey
-          Timecop.freeze(10_790.seconds.from_now) do
+          Timecop.freeze(86_390.seconds.from_now) do
             expect(token).to be_active
           end
         end
 
-        it 'returns false if token is less than 10800 seconds old but already used' do
+        it 'returns false if token is less than 86400 seconds old but already used' do
           expect do
             token.spend!
             token.reload
           end.to change { token.spent? }.from(false).to(true)
         end
 
-        it 'returns false if token is 10800 seconds or more old' do
-          Timecop.freeze(4.hours.from_now) do
+        it 'returns false if token is 86400 seconds or more old' do
+          Timecop.freeze(25.hours.from_now) do
             expect(token).not_to be_active
           end
         end
