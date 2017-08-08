@@ -94,18 +94,54 @@ RSpec.describe PersonCsvParser, type: :service do
   context 'with misordered and inferable headers' do
     let(:csv) do
       <<-END.strip_heredoc
-        First Name,Last Name,E-mail Display Name,Address2,Address1,town,primary_phone,pager
+        First Name,Last Name,E-mail Display Name,Address2,Address1,town,secondary_phone,primary_phone,pager,extra_information,job_title
         Peter,Bly,peter.bly@valid.gov.uk
         Jon,O'Carey,jon.o.carey@valid.gov.uk
-        Tom,Mason-Buggs,tom.mason-buggs@valid.gov.uk,Room 5.02 5th Floor Orange Core,102 Petty France,London,020 7947 6743,07600 123456
+        Tom,Mason-Buggs,tom.mason-buggs@valid.gov.uk,Room 5.02 5th Floor Orange Core,102 Petty France,London,07701 001001,020 7947 6743,07600 123456,My extra information,The boss
       END
     end
 
     let(:expected) do
       [
-        { given_name: 'Peter', surname: 'Bly', email: 'peter.bly@valid.gov.uk', primary_phone_number: nil, pager_number: nil, building: nil, location_in_building: nil, city: nil },
-        { given_name: 'Jon', surname: 'O\'Carey', email: 'jon.o.carey@valid.gov.uk', primary_phone_number: nil, pager_number: nil, building: nil, location_in_building: nil, city: nil },
-        { given_name: 'Tom', surname: 'Mason-Buggs', email: 'tom.mason-buggs@valid.gov.uk', primary_phone_number: '020 7947 6743', pager_number: '07600 123456', building: '102 Petty France', location_in_building: 'Room 5.02 5th Floor Orange Core', city: 'London' }
+        {
+          given_name: 'Peter',
+          surname: 'Bly',
+          email: 'peter.bly@valid.gov.uk',
+          secondary_phone_number: nil,
+          primary_phone_number: nil,
+          pager_number: nil,
+          building: nil,
+          location_in_building: nil,
+          city: nil,
+          role: nil,
+          description: nil
+        },
+        {
+          given_name: 'Jon',
+          surname: 'O\'Carey',
+          email: 'jon.o.carey@valid.gov.uk',
+          secondary_phone_number: nil,
+          primary_phone_number: nil,
+          pager_number: nil,
+          building: nil,
+          location_in_building: nil,
+          city: nil,
+          role: nil,
+          description: nil
+        },
+        {
+          given_name: 'Tom',
+          surname: 'Mason-Buggs',
+          email: 'tom.mason-buggs@valid.gov.uk',
+          primary_phone_number: '020 7947 6743',
+          secondary_phone_number: '07701 001001',
+          pager_number: '07600 123456',
+          building: '102 Petty France',
+          location_in_building: 'Room 5.02 5th Floor Orange Core',
+          city: 'London',
+          role: 'The boss',
+          description: 'My extra information'
+        }
       ]
     end
 

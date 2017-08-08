@@ -9,7 +9,8 @@ class PersonCsvImporter
   OPTIONAL_COLUMNS = %i(
     primary_phone_number
     secondary_phone_number
-    pager_number building
+    pager_number
+    building
     location_in_building
     city
     role

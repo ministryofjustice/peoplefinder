@@ -20,6 +20,7 @@ RSpec.describe UploadHelper, type: :helper do
       '<code>building</code> ' \
       '<code>location_in_building</code> ' \
       '<code>city</code> ' \
+      '<code>role</code> ' \
       '<code>description</code>'
     end
     it "returns expected html wrapped list of optional columns" do
