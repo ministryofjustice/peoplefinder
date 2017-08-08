@@ -1,4 +1,5 @@
 require 'virtus'
+
 class PersonUpload
   include Virtus.model
   extend ActiveModel::Naming
@@ -10,6 +11,7 @@ class PersonUpload
 
   validates :file, presence: true
   validates :group_id, presence: true
+  validate :file_type
 
   def self.policy_class
     Admin::PersonUploadPolicy
@@ -32,5 +34,21 @@ class PersonUpload
 
   def persisted?
     false
+  end
+
+  private
+
+  def file_type
+    errors.add(:file, 'is an invalid type') unless csv_mime_type?(file)
+  end
+
+  def csv_mime_type? file
+    if file
+      mime_parts = file.content_type.split('/')
+      [
+        %w(text application).include?(mime_parts.first),
+        %w(csv x-csv comma-separated-values x-comma-separated-values plain).include?(mime_parts.last)
+      ].all?
+    end
   end
 end
