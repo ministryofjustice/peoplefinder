@@ -55,10 +55,10 @@ RSpec.describe PersonCsvParser, type: :service do
   context 'clean CSV, with optional headers' do
     let(:csv) do
       <<-END.strip_heredoc
-        email,given_name,surname,primary_phone_number,secondary_phone_number,pager_number,building,location_in_building,city,description
+        email,given_name,surname,primary_phone_number,secondary_phone_number,pager_number,building,location_in_building,city,role,description
         peter.bly@valid.gov.uk,Peter,Bly
         jon.o.carey@valid.gov.uk,Jon,O'Carey
-        tom.mason-buggs@valid.gov.uk,Tom,Mason-Buggs,020 7947 6743,07701 345 678,07600 123456,102 Petty France,Room 5.02 5th Floor Orange Core,London,\"My extra information\"
+        tom.mason-buggs@valid.gov.uk,Tom,Mason-Buggs,020 7947 6743,07701 345 678,07600 123456,102 Petty France,Room 5.02 5th Floor Orange Core,London,My Cool Job Title,\"My extra information\"
       END
     end
 
@@ -76,6 +76,7 @@ RSpec.describe PersonCsvParser, type: :service do
           building: '102 Petty France',
           location_in_building: 'Room 5.02 5th Floor Orange Core',
           city: 'London',
+          role: 'My Cool Job Title',
           description: "My extra information"
         }
       ]
@@ -83,7 +84,7 @@ RSpec.describe PersonCsvParser, type: :service do
 
     it 'returns a hash of fields including the optional fields' do
       subject.records.each_with_index do |record, index|
-        [:given_name, :surname, :email, :primary_phone_number, :secondary_phone_number, :pager_number, :building, :location_in_building, :city, :description].each do |attribute|
+        [:given_name, :surname, :email, :primary_phone_number, :secondary_phone_number, :pager_number, :building, :location_in_building, :city, :role, :description].each do |attribute|
           expect(record.fields[attribute]).to eql expected[index][attribute]
         end
       end

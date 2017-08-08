@@ -41,8 +41,8 @@ RSpec.describe PersonCsvImporter, type: :service do
       context 'and all required and optional columns provided' do
         let(:csv) do
           <<-CSV.strip_heredoc
-            given_name, surname, email, primary_phone_number, secondary_phone_number, pager_number, building, location_in_building, city, description
-            Peter, Bly, peter.bly@valid.gov.uk, 0207 956 6457, 07701 432 754, 20343434, Building 1, Room 252, Birmingham
+            given_name, surname, email, primary_phone_number, secondary_phone_number, pager_number, building, location_in_building, city, role, description
+            Peter, Bly, peter.bly@valid.gov.uk, 0207 956 6457, 07701 432 754, 20343434, Building 1, Room 252, Birmingham, My Cool Job Title,"My extra info."
           CSV
         end
 
@@ -176,15 +176,15 @@ RSpec.describe PersonCsvImporter, type: :service do
     context 'when the CSV has too many header columns' do
       let(:csv) do
         <<-END.strip_heredoc
-          email,given_name,surname,primary_phone_number,secondary_phone_number,pager_number,building,location_in_building,city,description,city
-          tom.o.carey@digital.justice.gov.uk,Jon,O'Carey
-          tom.mason-buggs@digital.justice.gov.uk,Tom,Mason-Buggs,020 7947 76738,"102, Petty France","Room 5.02, 5th Floor, Blue Core",London
+          #{all_headers.join(',')},city
+          Jon,O'Carey,tom.o.carey@digital.justice.gov.uk
+          Tom,Mason-Buggs,tom.mason-buggs@digital.justice.gov.uk,020 7947 76738,"102, Petty France","Room 5.02, 5th Floor, Blue Core",London
         END
       end
 
       let(:errors) do
         [
-          PersonCsvImporter::ErrorRow.new(1, "email,given_name,surname,primary_phone_number,secondary_phone_number,pager_number,building,location_in_building,city,description,city", ['There are more columns than expected'])
+          PersonCsvImporter::ErrorRow.new(1, "#{all_headers.join(',')},city", ['There are more columns than expected'])
         ]
       end
 
@@ -210,15 +210,15 @@ RSpec.describe PersonCsvImporter, type: :service do
         ]
       end
 
-      let(:local_importer) { described_class.new(csv) }
+      subject(:importer) { described_class.new(csv, creation_options) }
 
       before do
         allow_any_instance_of(described_class).to receive(:max_row_upload).and_return 1
       end
 
       it 'errors include too many rows' do
-        expect(local_importer.valid?).to be false
-        expect(local_importer.errors).to match_array errors
+        expect(importer.valid?).to be false
+        expect(importer.errors).to match_array errors
       end
     end
 

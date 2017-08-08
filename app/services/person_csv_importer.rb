@@ -12,6 +12,7 @@ class PersonCsvImporter
     pager_number building
     location_in_building
     city
+    role
     description
   ).freeze
 
@@ -51,8 +52,9 @@ class PersonCsvImporter
     Group.where(id: group_ids)
   end
 
-  def self.clean_fields(hash)
-    hash.merge(email: EmailExtractor.new.extract(hash[:email]))
+  def self.person_fields(hash)
+    hash.merge(email: EmailExtractor.new.extract(hash[:email])).
+      except(:role)
   end
 
   private
@@ -61,7 +63,9 @@ class PersonCsvImporter
 
   def people
     @people ||= records.map do |record|
-      Person.new(@creation_options.merge(self.class.clean_fields(record.fields)))
+      Person.new(@creation_options.merge(self.class.person_fields(record.fields))).tap do |person|
+        person.memberships.first.role = record.fields[:role]
+      end
     end
   end
 

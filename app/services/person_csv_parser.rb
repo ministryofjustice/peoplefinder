@@ -50,6 +50,7 @@ class PersonCsvParser
       building: /^building$|^location1$|^address$|^address1$/i,
       location_in_building: /location_in_building|location2|address2|room/i,
       city: /city|town/i,
+      role: /role|job_title/i,
       description: /description|extra_information/i
     }
   end

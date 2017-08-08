@@ -64,7 +64,9 @@ class PersonImportJob < ActiveJob::Base
 
   def people
     @people ||= records.map do |record|
-      Person.new(creation_options.merge(PersonCsvImporter.clean_fields(record.fields)))
+      Person.new(creation_options.merge(PersonCsvImporter.person_fields(record.fields))).tap do |person|
+        person.memberships.first.role = record.fields[:role]
+      end
     end
   end
 

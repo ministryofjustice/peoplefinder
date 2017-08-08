@@ -77,11 +77,12 @@ namespace :peoplefinder do
         given_name = name.split.first
         surname = name.split.second
         email = "#{given_name.downcase}.#{surname.downcase}@#{DOMAIN}"
-        person = Person.find_or_create_by!(given_name: given_name, surname: surname, email: email)
-        Membership.create(person_id: person.id, group_id: demo_groups.sample.first.id) if person.memberships.empty?
+        Person.find_or_initialize_by(given_name: given_name, surname: surname, email: email).tap do |person|
+          person.memberships << Membership.new(person_id: person.id, group_id: demo_groups.sample.first.id) if person.memberships.empty?
+          person.description = 'PA to Steve Richards' if email == "personal.assistant@#{DOMAIN}"
+          person.save!
+        end
       end
-      Person.find_by(email: "personal.assistant@#{DOMAIN}").update(description: 'PA to Steve Richards')
-
       puts 'Generated data for steve\'s search scenario'
     end
 
@@ -106,11 +107,10 @@ namespace :peoplefinder do
     def csv_record(email_prefix = nil)
       person = FactoryGirl.build(:person, :for_demo_csv)
       person.email.prepend(email_prefix) if email_prefix.present?
-      record = []
-      csv_header.each do |attribute|
-        record += [person.__send__(attribute)]
+      csv_header.each_with_object([]) do |attribute, memo|
+        memo << person.__send__(attribute) if person.attributes.include? attribute.to_s
+        memo << person.memberships.first.__send__(attribute) if person.memberships.first.attributes.include? attribute.to_s
       end
-      record
     end
 
     namespace :migration do
