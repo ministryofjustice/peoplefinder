@@ -30,7 +30,13 @@ module PreviewHelper
   end
 
   def instigator
-    @instigator ||= Person.find_or_create_by!(given_name: 'Insti', surname: 'Gator', email: 'insti.gator@fake-moj.justice.gov.uk')
+    @instigator ||= Person.find_or_create_by!(
+      given_name: 'Insti',
+      surname: 'Gator',
+      email: 'insti.gator@fake-moj.justice.gov.uk'
+    ) do | person |
+      person.memberships << Membership.new(group_id: Group.department.id)
+    end
   end
 
   def clean_recipient
