@@ -13,6 +13,7 @@
     background-color: $warning-bg;
   }
   .error {
-    background-color: $error-bg;
+    border: 5px solid #b10e1e;
+    color: #b10e1e;
   }
 }

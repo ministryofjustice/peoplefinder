@@ -212,9 +212,11 @@ en:
   person_uploads:
     header: Upload people’s details
     add_new_team: Add new team
-    error_header: We couldn’t upload this file
+    error_summary_header: There is a problem with the CSV file
+    error_summary_hint: Check below for more detail
+    error_header: Upload CSV file
     error_blurb: |
-      There were some errors in the CSV file. Update the file then try again.
+      There were errors in the CSV file, listed below. Update the file then try again.
     error_table:
       line_number: Line
       messages: Error

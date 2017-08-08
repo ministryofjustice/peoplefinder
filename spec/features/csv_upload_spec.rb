@@ -14,6 +14,17 @@ feature 'Upload CSV' do
     select group.name, from: 'Choose your team'
   end
 
+  RSpec::Matchers.define :have_govuk_errors do
+    match do |page|
+      page.has_selector?('.error-summary-heading', text: 'There is a problem with the CSV file') &&
+        page.has_selector?('span.error-message', text: 'There were errors in the CSV file, listed below. Update the file then try again')
+    end
+
+    failure_message do
+      "expected page to have displayed gov uk style error summary and field-level errors"
+    end
+  end
+
   scenario 'only super admins can access uploader' do
     Person.find_by(email: email).update(super_admin: false)
     visit new_admin_person_upload_path
@@ -68,9 +79,7 @@ feature 'Upload CSV' do
     end.not_to change(Person, :count)
 
     expect(current_path).to eql(admin_person_uploads_path)
-
-    expect(page).to have_text('Upload failed')
-    expect(page).to have_text('can’t be used to access')
+    expect(page).to have_govuk_errors
   end
 
   scenario 'uploading a bad CSV file with optionals' do
@@ -80,14 +89,12 @@ feature 'Upload CSV' do
     end.not_to change(Person, :count)
 
     expect(current_path).to eql(admin_person_uploads_path)
-    expect(page).to have_text('Upload failed')
-    expect(page).to have_text('can’t be used to access')
+    expect(page).to have_govuk_errors
   end
 
   scenario 'forgetting to attach a file' do
     click_button 'Upload'
-    expect(page).to have_text('Upload failed')
-    expect(page).to have_text('Upload CSV file is required')
+    expect(page).to have_selector('span.error-message', text: 'File is required')
   end
 
   def check_new_user_notification_email(addr)

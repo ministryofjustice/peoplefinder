@@ -6,7 +6,16 @@ class PersonCsvImporter
   extend Forwardable
 
   REQUIRED_COLUMNS = %i(given_name surname email).freeze
-  OPTIONAL_COLUMNS = %i(primary_phone_number pager_number building location_in_building city).freeze
+  OPTIONAL_COLUMNS = %i(
+    primary_phone_number
+    secondary_phone_number
+    pager_number
+    building
+    location_in_building
+    city
+    role
+    description
+  ).freeze
 
   ErrorRow = Struct.new(:line_number, :raw, :messages) do
     def to_s
@@ -44,8 +53,9 @@ class PersonCsvImporter
     Group.where(id: group_ids)
   end
 
-  def self.clean_fields(hash)
-    hash.merge(email: EmailExtractor.new.extract(hash[:email]))
+  def self.person_fields(hash)
+    hash.merge(email: EmailExtractor.new.extract(hash[:email])).
+      except(:role)
   end
 
   private
@@ -54,7 +64,9 @@ class PersonCsvImporter
 
   def people
     @people ||= records.map do |record|
-      Person.new(@creation_options.merge(self.class.clean_fields(record.fields)))
+      Person.new(@creation_options.merge(self.class.person_fields(record.fields))).tap do |person|
+        person.memberships.first.role = record.fields[:role]
+      end
     end
   end
 

@@ -1,6 +1,11 @@
-.grid-row.mod-heading
-  .column-full
-    %h1.heading-xlarge.mod-heading-border
-      = t('person_uploads.header')
+%h1.heading-xlarge.with-border-lg
+  = t('person_uploads.header')
+
+- if @upload.csv_errors.any?
+  .error-summary{ 'aria-labelledby' => 'error-summary-heading', tabindex: '-1' }
+    %h1#error-summary-heading.heading-medium.error-summary-heading
+      = t('person_uploads.error_summary_header')
+    %p
+      = t('person_uploads.error_summary_hint')
 
 = render partial: 'form'

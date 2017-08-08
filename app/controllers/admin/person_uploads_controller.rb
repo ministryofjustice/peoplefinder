@@ -13,7 +13,6 @@ module Admin
         notice :upload_succeeded, count: @upload.import_count
         redirect_to action: :new
       else
-        error :upload_failed
         render action: :new
       end
     end
