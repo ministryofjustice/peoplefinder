@@ -14,10 +14,10 @@ feature 'Upload CSV' do
     select group.name, from: 'Choose your team'
   end
 
-  RSpec::Matchers.define :have_govuk_errors do
+  RSpec::Matchers.define :have_govuk_errors do |errors = {}|
     match do |page|
-      page.has_selector?('.error-summary-heading', text: 'There is a problem with the CSV file') &&
-        page.has_selector?('span.error-message', text: 'There were errors in the CSV file, listed below. Update the file then try again')
+      page.has_selector?('.error-summary-heading', text: errors[:summary] || 'There is a problem with the CSV file') &&
+        page.has_selector?('span.error-message', text: errors[:field] || 'There were errors in the CSV file, listed below. Update the file then try again')
     end
 
     failure_message do
@@ -72,6 +72,25 @@ feature 'Upload CSV' do
     end
   end
 
+  scenario 'uploading nothing' do
+    expect do
+      click_button 'Upload'
+    end.not_to change(Person, :count)
+
+    expect(current_path).to eql(admin_person_uploads_path)
+    expect(page).to have_govuk_errors(field: 'File is required')
+  end
+
+  scenario 'uploading a non-CSV file type' do
+    expect do
+      attach_file 'Upload CSV file', File.expand_path('../../fixtures/placeholder.png', __FILE__)
+      click_button 'Upload'
+    end.not_to change(Person, :count)
+
+    expect(current_path).to eql(admin_person_uploads_path)
+    expect(page).to have_govuk_errors(field: 'File is an invalid type')
+  end
+
   scenario 'uploading a CSV file with bad records' do
     expect do
       attach_file 'Upload CSV file', File.expand_path('../../fixtures/invalid_rows.csv', __FILE__)
@@ -90,11 +109,6 @@ feature 'Upload CSV' do
 
     expect(current_path).to eql(admin_person_uploads_path)
     expect(page).to have_govuk_errors
-  end
-
-  scenario 'forgetting to attach a file' do
-    click_button 'Upload'
-    expect(page).to have_selector('span.error-message', text: 'File is required')
   end
 
   def check_new_user_notification_email(addr)
