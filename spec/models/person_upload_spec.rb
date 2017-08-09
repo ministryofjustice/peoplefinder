@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe PersonUpload, type: :model do
   let(:group) { double(Group, id: 42) }
-  let(:file) { double(File, read: 'contents') }
+  let(:file) { double(File, read: 'contents', content_type: 'text/csv') }
   subject { described_class.new(group_id: group.id, file: file) }
 
   before do
@@ -73,21 +73,39 @@ RSpec.describe PersonUpload, type: :model do
     end
   end
 
-  context 'with an invalid upload' do
+  context 'with no file upload' do
+    let(:file) { nil }
+
     it 'is not valid' do
-      subject.file = nil
       expect(subject).not_to be_valid
     end
 
-    it 'has errors for invalid fields' do
-      subject.file = nil
+    it 'has errors for invalid file' do
       subject.valid?
       expect(subject.errors).to have_key(:file)
     end
 
     describe 'save' do
       it 'returns nil' do
-        subject.file = nil
+        expect(subject.save).to be_nil
+      end
+    end
+  end
+
+  context 'with invalid file type' do
+    let(:file) { double(File, read: 'contents', content_type: 'text/my-csv') }
+
+    it 'is not valid' do
+      expect(subject).not_to be_valid
+    end
+
+    it 'has errors for invalid file' do
+      subject.valid?
+      expect(subject.errors).to have_key(:file)
+    end
+
+    describe 'save' do
+      it 'returns nil' do
         expect(subject.save).to be_nil
       end
     end
