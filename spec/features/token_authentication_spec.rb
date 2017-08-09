@@ -81,8 +81,8 @@ feature 'Token Authentication' do
     expect(page).to have_text("The authentication token has expired.")
   end
 
-  scenario "logging in with a token that's more than 3 hours old" do
-    token = create(:token, created_at: 4.hours.ago)
+  scenario "logging in with a token that's more than 24 hours old" do
+    token = create(:token, created_at: 25.hours.ago)
     visit token_path(token)
 
     expect(page).to_not have_text('Signed in as')
@@ -145,7 +145,7 @@ feature 'Token Authentication' do
 
   scenario 'requesting token a second time after 3 hours sends different token url in email' do
     first_token_url = nil
-    Timecop.freeze(Time.now - 3.hours) do
+    Timecop.freeze(Time.now - 24.hours) do
       visit '/'
       fill_in 'token_user_email', with: 'test.user@digital.justice.gov.uk'
       expect { click_button 'Request link' }.to change { ActionMailer::Base.deliveries.count }.by(1)
