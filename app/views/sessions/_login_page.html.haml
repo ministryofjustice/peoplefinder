@@ -12,10 +12,10 @@
 
     %p.lede
       - if @unauthorised_login
-        - t('.intro_unauthorised').each_line do |line|
+        - t('.intro_unauthorised', ttl: distance_of_time_in_words(Token.ttl)).each_line do |line|
           = line
       -else
-        - t('.intro').each_line do |line|
+        - t('.intro', ttl: distance_of_time_in_words(Token.ttl)).each_line do |line|
           = line
 
 - if feature_enabled?('token_auth')

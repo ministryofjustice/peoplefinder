@@ -43,10 +43,10 @@ en:
       heading: Request link to access People Finder
       heading_unauthorised: Log in to edit People Finder
       intro: |
-        We will email you a secure link so you can log in to People Finder and create or edit profiles. The link will be active for 3 hours.
+        We will email you a secure link so you can log in to People Finder and create or edit profiles. The link will be active for %{ttl}.
       intro_unauthorised: |
         For security reasons, you have to be logged in to People Finder to make any changes.
-        We will email you a secure link so you can log in. This link will be active for 3 hours.
+        We will email you a secure link so you can log in. This link will be active for %{ttl}.
       heading_google: Got a government Google account?
       body_google:
         If you have a Google account ending in gov.uk, you can log in now.
