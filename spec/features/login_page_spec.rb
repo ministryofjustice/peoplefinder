@@ -40,7 +40,7 @@ feature 'Login page' do
       login_page.request_button.click
 
       expect(token_created_page).to be_displayed
-      expect(token_created_page.info).to have_text('When it arrives, click on the link (which is active for 3 hours). This will log you in to People Finder and enable you to make any changes.')
+      expect(token_created_page.info).to have_text('When it arrives, click on the link (which is active for 1 day). This will log you in to People Finder and enable you to make any changes.')
     end
   end
 end

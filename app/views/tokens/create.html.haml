@@ -7,7 +7,7 @@
       = t('tokens.create.body_intro')
     - if @unauthorised_login
       %p
-        = t('tokens.create.body_unauthorised')
+        = t('tokens.create.body_ttl_warning', ttl: distance_of_time_in_words(Token.ttl))
     %p
       = t('tokens.create.body_informative_html')
     %p

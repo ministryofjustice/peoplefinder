@@ -18,6 +18,13 @@ feature 'Token Authentication' do
     ActionMailer::Base.deliveries = []
   end
 
+  scenario 'trying to log in with a valid email address' do
+    visit '/'
+    fill_in 'token_user_email', with: 'valid.email@digital.justice.gov.uk'
+    expect { click_button 'Request link' }.to change { ActionMailer::Base.deliveries.count }
+    expect(page).to have_text('When it arrives, click on the link (which is active for 1 day)')
+  end
+
   scenario 'trying to log in with an invalid email address' do
     visit '/'
     fill_in 'token_user_email', with: 'Bob'
@@ -122,11 +129,11 @@ feature 'Token Authentication' do
     end
   end
 
-  scenario "requesting token more than once within 3 hours sends same token url in email" do
+  scenario "requesting token more than once within 24 hours sends same token url in email" do
     create(:person, given_name: 'Bob', surname: 'Smith', email: 'test.user@digital.justice.gov.uk')
 
     first_token_url = nil
-    Timecop.freeze(Time.now - (2.hours + 59.minutes)) do
+    Timecop.freeze(Time.now - (23.hours + 59.minutes)) do
       visit '/'
       fill_in 'token_user_email', with: 'test.user@digital.justice.gov.uk'
       expect { click_button 'Request link' }.to change { ActionMailer::Base.deliveries.count }.by(1)
@@ -143,7 +150,7 @@ feature 'Token Authentication' do
     expect(page).to have_text('Signed in as Bob Smith')
   end
 
-  scenario 'requesting token a second time after 3 hours sends different token url in email' do
+  scenario 'requesting token a second time after 24 hours sends different token url in email' do
     first_token_url = nil
     Timecop.freeze(Time.now - 24.hours) do
       visit '/'
