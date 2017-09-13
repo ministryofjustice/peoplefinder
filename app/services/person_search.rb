@@ -126,6 +126,7 @@ class PersonSearch
     @search_definition = {}
     @search_definition[:query] = email_query
     @search_definition[:highlight] = highlighter
+    @search_definition[:size] = 1
     search @search_definition
   end
 
