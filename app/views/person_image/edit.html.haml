@@ -13,20 +13,21 @@
   .column-one-half
     %h3.heading-medium{:for => "person_profile_photo_id"}
       Profile picture
-      -# %span.form-hint
-      -#   = "There are some steps to follow"
+      %span.form-hint
+        = "Your picture must be a minimum of 648 by 648 pixels and no more than 6mb in size."
     %ol.list.list-number
       %li
-        Choose a photo or drag and drop
+        Choose a photo that help people to recognise you
       %li
-        Click the Upload photo button
+        Click on choose file or drag and drop
+      %li
+        Click the upload photo button
       %li
         Use your mouse to adjust the crop lines
       %li
         Click the Crop photo button
       %li
         Click the Save button
-
 
   .column-one-half
     = form_for @person, builder: PersonFormBuilder, html: { multipart: true, class: person_form_class(@person, @activity) } do |f|
