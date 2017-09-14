@@ -137,7 +137,6 @@ class PersonSearch
       match: {
         name: {
           query: @query,
-          analyzer: 'standard', # override default name field synonym analyzer
           boost: 6.0 # boost to prioritise exact matches over synonyms
         }
       }
@@ -151,7 +150,7 @@ class PersonSearch
       match: {
         name: {
           query: @query,
-          analyzer: 'name_synonyms_analyzer', # this is the default name field's analyzer
+          analyzer: 'name_synonyms_analyzer', # override the standard analyzer
           boost: 4.0 # boost to prioritise synonym matches to 2nd rank
         }
       }
