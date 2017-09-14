@@ -86,7 +86,7 @@ feature 'Searching feature', elastic: true do
 
   feature 'higlighting of search terms' do
 
-    scenario 'highlights entire matching email address' do
+    xscenario 'highlights entire matching email address' do
       fill_in 'query', with: 'jon.browne@digital.justice.gov.uk'
       click_button 'Search'
       within '.cb-person-email' do
@@ -112,7 +112,7 @@ feature 'Searching feature', elastic: true do
       end
     end
 
-    scenario 'highlights individual current project terms' do
+    xscenario 'highlights individual current project terms' do
       fill_in 'query', with: 'Digital Prisons Browne'
       click_button 'Search'
       within '.cb-person-current-project' do
