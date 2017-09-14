@@ -393,9 +393,9 @@ Windows XP for their OS and IE7 for their browser. Consequently considerable sty
 
 ### Development tools
 
-CI by [Travis](https://travis-ci.org/ministryofjustice/peoplefinder).
+CI by [Travis](https://travis-ci.org/uktrade/peoplefinder).
 
-Software metrics by [Code Climate](https://codeclimate.com/github/ministryofjustice/peoplefinder)
+Software metrics by [Code Climate](https://codeclimate.com/github/uktrade/peoplefinder)
 
 ## Reminders
 
