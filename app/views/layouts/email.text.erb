@@ -1,4 +1,4 @@
-Ministry of Justice
+<%= Rails.configuration.department_name %>
 
 People Finder
 
@@ -6,6 +6,6 @@ People Finder
 
 
 ------------------------------------------
-If you're unsure an email is from the MOJ:
+If you're unsure an email is from the <%= Rails.configuration.department_abbrev %>:
 
-• forward it to phishing@digital.justice.gov.uk
+• forward it to <%= Rails.configuration.support_email %>

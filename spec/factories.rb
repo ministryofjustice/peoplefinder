@@ -120,7 +120,7 @@ FactoryGirl.define do
       end
     end
 
-    # i.e. unassigned person - person in group with ancestry of 0 (i.e. MoJ)
+    # i.e. unassigned person - person in group with ancestry of 0 (i.e. DIT)
     trait :department_member do
       after(:create) do |p|
         department = create(:department)

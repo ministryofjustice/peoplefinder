@@ -50,7 +50,7 @@ en:
       heading_google: Got a government Google account?
       body_google:
         If you have a Google account ending in gov.uk, you can log in now.
-      heading_other: Enter your MOJ email address
+      heading_other: Enter your DIT email address
       log_in_google: Log in
       log_in_email: Request link
     unsupported_browser:
@@ -81,7 +81,7 @@ en:
         <p>
           You have clicked the link in the
           <span style="font-weight: bold">
-            Access request to MoJ People Finder
+            Access request to DIT People Finder
           </span>
           email and this has opened %{browser_name}.
         </p>
@@ -249,21 +249,21 @@ en:
       subject: "People Finder profile improvements"
   user_update_mailer:
     new_profile_email:
-      subject: "You’re on MOJ People Finder, check your profile today"
+      subject: "You’re on DIT People Finder, check your profile today"
     updated_profile_email:
-      subject: "Your profile on MOJ People Finder has been edited"
+      subject: "Your profile on DIT People Finder has been edited"
     deleted_profile_email:
-      subject: "Your profile on MOJ People Finder has been deleted"
+      subject: "Your profile on DIT People Finder has been deleted"
     updated_address_from_email:
-      subject: "This email address has been removed from a profile on MOJ People Finder"
+      subject: "This email address has been removed from a profile on DIT People Finder"
     updated_address_to_email:
-      subject: "This email address has been added to a profile on MOJ People Finder"
+      subject: "This email address has been added to a profile on DIT People Finder"
   group_update_mailer:
     inform_subscriber:
       subject: "People Finder team updated"
   token_mailer:
     new_token_email:
-      subject: 'Access request to MOJ People Finder'
+      subject: 'Access request to DIT People Finder'
   errors: &errors
     information_request:
       message_required: "You must enter a message to be sent to the person"
@@ -307,7 +307,7 @@ en:
         email: Main email
         secondary_email: Alternative work email
       memberships:
-        leader: "Are you the Permanent Secretary of the Ministry of Justice?"
+        leader: "Are you the Permanent Secretary of the Department?"
         group: Team
       membership:
         leader: ''
@@ -327,7 +327,7 @@ en:
   home:
     show:
       heading: People Finder
-      explanation: Search for a person or team in the Ministry of Justice
+      explanation: Search for a person or team in the Department for International Trade
       about_usage: *about_usage
       unsupported_browser_warning_html: |
         <h1 id='error-summary-heading' class='heading-medium error-summary-heading'>
