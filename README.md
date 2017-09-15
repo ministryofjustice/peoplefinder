@@ -5,7 +5,6 @@ Climate](https://codeclimate.com/github/uktrade/peoplefinder/badges/gpa.svg)](ht
 [![Build Status](https://travis-ci.org/uktrade/peoplefinder.png?branch=master)](https://travis-ci.org/uktrade/peoplefinder)
 [![Dependency Status](https://gemnasium.com/badges/github.com/uktrade/peoplefinder.svg)](https://gemnasium.com/github.com/uktrade/peoplefinder)
 
-https://www.travis-ci.org/uktrade/peoplefinder.svg
 ## Installing for development
 
 This is not how people finder is actually deployed but provides an environment to do development on the app.
@@ -54,7 +53,7 @@ brew install homebrew/versions/elasticsearch17
 brew services start elasticsearch@1.7
 
 
-git clone git@github.com:ministryofjustice/peoplefinder.git
+git clone git@github.com:uktrade/peoplefinder.git
 cd peoplefinder
 
 gem install eventmachine -v 1.0.5 -- --with-cppflags=-I/usr/local/opt/openssl/include
@@ -111,7 +110,7 @@ PermittedDomain.create(domain: 'some.domain.gov.uk')
 
 ## Authentication
 
-Authentication for Log in to People Finder in the various environments (dev/staging/prod) is handled by the setting of `GPLUS_CLIENT_ID` and `GP_CLIENT_SECRET` environment variables in the [private People Finder Deployment repo](https://github.com/ministryofjustice/pf-deploy/)
+Authentication for Log in to People Finder in the various environments (dev/staging/prod) is handled by the setting of `GPLUS_CLIENT_ID` and `GP_CLIENT_SECRET` environment variables in the [private People Finder Deployment repo](https://github.com/uktrade/pf-deploy/)
 
 You can configure your local machine for authentication by obtaining an OAuth Client ID and Secret from google+ and setting them in a `.env.local` file (.gitignore'd).
 
@@ -165,7 +164,7 @@ In production, periodic emails are sent to users that have:
 - not added a team description when they are a team leader.
 
 Cronjobs are created to daily check for users matching these conditions and send emails. Cronjobs are created via the
-`whenever` gem and configured here: https://github.com/ministryofjustice/peoplefinder/blob/master/config/schedule.rb
+`whenever` gem and configured here: https://github.com/uktrade/peoplefinder/blob/master/config/schedule.rb
 
 ### In Development
 
@@ -279,7 +278,7 @@ Also, if you'd like test coverage for Javascript you'll need to have Node and Is
 
 ## View templates
 
-The application layout is set by the [moj_internal_template](https://github.com/ministryofjustice/moj_internal_template) that is installed as part of this engine.
+The application layout is set by the [moj_internal_template](https://github.com/uktrade/moj_internal_template) that is installed as part of this engine.
 
 You can override this layout in wrapper application, create your own file:
 
@@ -399,6 +398,6 @@ Software metrics by [Code Climate](https://codeclimate.com/github/uktrade/people
 
 If the Peoplefinder is to be successful, profiles need to be populated and maintained.
 
-###Support
+### Support
 
 A support email address is set as SUPPORT_EMAIL.
