@@ -36,7 +36,7 @@ feature 'OmniAuth Authentication' do
 
     click_link 'Log in'
     expect(page).to have_title("Login failure - #{app_title}")
-    expect(page).to have_text(/log in with an MoJ email address/)
+    expect(page).to have_text(/log in with a DIT email address/)
 
     click_link 'Return to the log in screen'
     expect(login_page).to be_displayed

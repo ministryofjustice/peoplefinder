@@ -1,6 +1,6 @@
 module MailHelper
 
-  APP_GUIDANCE_PAGE = 'https://intranet.justice.gov.uk/peoplefinder'.freeze
+  APP_GUIDANCE_PAGE = 'https://intranet.trade.gov.uk/peoplefinder'.freeze
 
   def browser_warning
     content_tag(:p, class: 'browser-warning') do
@@ -25,7 +25,7 @@ module MailHelper
   end
 
   def link_to_guidance
-    link_to('MoJ Intranet', APP_GUIDANCE_PAGE, target: '_blank')
+    link_to("#{Rails.configuration.department_abbrev} Intranet", APP_GUIDANCE_PAGE, target: '_blank')
   end
 
   # try relative path then specific scope:

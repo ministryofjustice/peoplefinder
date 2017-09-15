@@ -1,4 +1,4 @@
-# MoJ People Finder
+# DIT People Finder
 
 [![Code
 Climate](https://codeclimate.com/github/uktrade/peoplefinder/badges/gpa.svg)](https://codeclimate.com/github/uktrade/peoplefinder)

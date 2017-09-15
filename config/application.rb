@@ -30,6 +30,10 @@ module Peoplefinder
     # app title appears in the header bar
     config.app_title = 'People Finder'
 
+    config.department_name = 'Department for International Trade'
+
+    config.department_abbrev = 'DIT'
+
     config.admin_ip_ranges = ENV.fetch('ADMIN_IP_RANGES', '127.0.0.1')
 
     config.readonly_ip_whitelist = ENV.fetch('READONLY_IP_WHITELIST', '127.0.0.1')

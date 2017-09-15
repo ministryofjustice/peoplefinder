@@ -5,8 +5,10 @@ module GeckoboardPublisher
       [
         Geckoboard::PercentageField.new(:with_photos, name: 'With Photos'),
         Geckoboard::PercentageField.new(:with_additional_info, name: 'With Additional Info'),
-        Geckoboard::PercentageField.new(:not_in_team, name: 'Not in any team nor MoJ'),
-        Geckoboard::PercentageField.new(:not_in_subteam, name: 'Not in a subteam - i.e. in MoJ'),
+        Geckoboard::PercentageField.new(:not_in_team, name:
+                                        "Not in any team nor #{Rails.configuration.department_abbrev}"),
+        Geckoboard::PercentageField.new(:not_in_subteam, name:
+                                        "Not in a subteam - i.e. in #{Rails.configuration.department_abbrev}"),
         Geckoboard::PercentageField.new(:not_in_tip_team, name: 'Not in a branch tip team - e.g. at Agency level'),
         Geckoboard::PercentageField.new(:not_edited, name: 'Never been edited')
       ]
