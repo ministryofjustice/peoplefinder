@@ -17,7 +17,7 @@ RSpec.context 'on initialization', type: :initializer do
     it 'sets Mail delivery_interceptors correctly' do
       interceptor = Mail.class_variable_get(:@@delivery_interceptors).last
       expect(interceptor).to be_a(OnlySendLoginEmailInterceptor)
-      expect(interceptor.login_email_subject).to eq 'Access request to MOJ People Finder'
+      expect(interceptor.login_email_subject).to eq 'Access request to DIT People Finder'
     end
   end
 

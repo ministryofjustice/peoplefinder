@@ -1,0 +1,16 @@
+language: ruby
+rvm:
+ - 2.3.3
+
+bundler_args: --without production
+
+services:
+  - postgresql
+  - elasticsearch
+
+before_script:
+  - psql -c 'create database peoplefinder_test;' -U postgres
+
+notifications:
+  on_success: never
+  on_failure: always

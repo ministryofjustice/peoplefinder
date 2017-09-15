@@ -363,7 +363,7 @@ feature 'Person maintenance' do
         expect { Person.find(person.id) }.to raise_error(ActiveRecord::RecordNotFound)
 
         expect(last_email.to).to include(email_address)
-        expect(last_email.subject).to eq('Your profile on MOJ People Finder has been deleted')
+        expect(last_email.subject).to eq('Your profile on DIT People Finder has been deleted')
         expect(last_email.body.encoded).to match("Hello #{given_name}")
       end
 

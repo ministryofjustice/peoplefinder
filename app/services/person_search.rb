@@ -112,9 +112,9 @@ class PersonSearch
   # exact match - email is not analyzed (see mappings)
   def email_query
     {
-      filtered: {
-        query: {
-          term: {
+      bool: {
+        must: {
+          match: {
             email: @email_query
           }
         }
@@ -126,6 +126,7 @@ class PersonSearch
     @search_definition = {}
     @search_definition[:query] = email_query
     @search_definition[:highlight] = highlighter
+    @search_definition[:size] = 1
     search @search_definition
   end
 
@@ -136,7 +137,6 @@ class PersonSearch
       match: {
         name: {
           query: @query,
-          analyzer: 'standard', # override default name field synonym analyzer
           boost: 6.0 # boost to prioritise exact matches over synonyms
         }
       }
@@ -150,7 +150,7 @@ class PersonSearch
       match: {
         name: {
           query: @query,
-          analyzer: 'name_synonyms_analyzer', # this is the default name field's analyzer
+          analyzer: 'name_synonyms_analyzer', # override the standard analyzer
           boost: 4.0 # boost to prioritise synonym matches to 2nd rank
         }
       }

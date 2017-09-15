@@ -4,7 +4,7 @@
 %tr
   %td{ align:"left", valign: "top", style: "line-height: 30px;", width: "560" }
     %p
-      You’ve just been added to MoJ People Finder - MoJ's contact directory
+      You’ve just been added to People Finder - #{Rails.configuration.department_abbrev}'s contact directory
       - if @by_email
         \- by #{ mail_to @by_email, @by_email }.
     %p

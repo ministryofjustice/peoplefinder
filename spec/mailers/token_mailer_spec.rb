@@ -34,8 +34,8 @@ RSpec.describe TokenMailer do
     it 'includes the app guidance' do
       %w(plain html).each do |part_type|
         expect(get_message_part(mail, part_type)).to have_text('Find out more about how to use People Finder on the')
-        expect(get_message_part(mail, part_type)).to have_text('https://intranet.justice.gov.uk/peoplefinder') if part_type == 'plain'
-        expect(get_message_part(mail, part_type)).to have_link('MoJ Intranet', href: 'https://intranet.justice.gov.uk/peoplefinder') if part_type == 'html'
+        expect(get_message_part(mail, part_type)).to have_text('https://intranet.trade.gov.uk/peoplefinder') if part_type == 'plain'
+        expect(get_message_part(mail, part_type)).to have_link('DIT Intranet', href: 'https://intranet.trade.gov.uk/peoplefinder') if part_type == 'html'
       end
     end
 

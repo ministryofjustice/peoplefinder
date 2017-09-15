@@ -45,7 +45,7 @@ feature 'Person edit notifications' do
     visit person_path(person)
     expect { click_delete_profile }.to change { ActionMailer::Base.deliveries.count }.by(1)
 
-    expect(last_email.subject).to eq('Your profile on MOJ People Finder has been deleted')
+    expect(last_email.subject).to eq('Your profile on DIT People Finder has been deleted')
     check_email_to_and_from
   end
 

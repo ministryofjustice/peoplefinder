@@ -12,8 +12,8 @@ RSpec.describe GeckoboardPublisher::ProfilesPercentageReport, geckoboard: true d
       [
         Geckoboard::PercentageField.new(:with_photos, name: 'With Photos'),
         Geckoboard::PercentageField.new(:with_additional_info, name: 'With Additional Info'),
-        Geckoboard::PercentageField.new(:not_in_team, name: 'Not in any team nor MoJ'),
-        Geckoboard::PercentageField.new(:not_in_subteam, name: 'Not in a subteam - i.e. in MoJ'),
+        Geckoboard::PercentageField.new(:not_in_team, name: 'Not in any team nor DIT'),
+        Geckoboard::PercentageField.new(:not_in_subteam, name: 'Not in a subteam - i.e. in DIT'),
         Geckoboard::PercentageField.new(:not_in_tip_team, name: 'Not in a branch tip team - e.g. at Agency level'),
         Geckoboard::PercentageField.new(:not_edited, name: 'Never been edited')
       ].map { |field| [field.class, field.id, field.name] }
