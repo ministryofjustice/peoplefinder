@@ -1,13 +1,11 @@
 # MoJ People Finder
 
-![Build Status](https://circleci.com/gh/ministryofjustice/peoplefinder.png?circle-token=7af6dba1153f14c5e9b4ca7aec831720aeb00b1c)
 [![Code
-Climate](https://codeclimate.com/github/ministryofjustice/peoplefinder/badges/gpa.svg)](https://codeclimate.com/github/ministryofjustice/peoplefinder)
-[![Test
-Coverage](https://codeclimate.com/github/ministryofjustice/peoplefinder/badges/coverage.svg)](https://codeclimate.com/github/ministryofjustice/peoplefinder/coverage)
-[![Dependency Status](https://gemnasium.com/badges/github.com/ministryofjustice/peoplefinder.svg)](https://gemnasium.com/github.com/ministryofjustice/peoplefinder)
+Climate](https://codeclimate.com/github/uktrade/peoplefinder/badges/gpa.svg)](https://codeclimate.com/github/uktrade/peoplefinder)
+[![Build Status](https://travis-ci.org/uktrade/peoplefinder.png?branch=master)](https://travis-ci.org/uktrade/peoplefinder)
+[![Dependency Status](https://gemnasium.com/badges/github.com/uktrade/peoplefinder.svg)](https://gemnasium.com/github.com/uktrade/peoplefinder)
 
-
+https://www.travis-ci.org/uktrade/peoplefinder.svg
 ## Installing for development
 
 This is not how people finder is actually deployed but provides an environment to do development on the app.
