@@ -108,48 +108,25 @@ In rails console:
 PermittedDomain.create(domain: 'some.domain.gov.uk')
 ```
 
-## Authentication
+## DIT SSO Authentication
 
-Authentication for Log in to People Finder in the various environments (dev/staging/prod) is handled by the setting of `GPLUS_CLIENT_ID` and `GP_CLIENT_SECRET` environment variables in the [private People Finder Deployment repo](https://github.com/uktrade/pf-deploy/)
-
-You can configure your local machine for authentication by obtaining an OAuth Client ID and Secret from google+ and setting them in a `.env.local` file (.gitignore'd).
-
-To create your own ID and SECRET:
-
-  * visit the [Google Developers Console](https://console.developers.google.com/).
-  * Create a project, optionally naming it `PeopleFinder-local`, and wait for the process to complete.
-
-  * Select **Google+ API** from the central panel "Overview", then hit the Enable button. Wait for process to complete then follow link to **Go to Credentials** or choose **Credentials** from left sidebar, then follow the steps required to create an **OAuth 2.0 client ID** for a **Web application**.
-
-  * On **OAuth consent page** you can optonally set the **Product name** to `PeopleFinder-local`
-  * On the credentials page:
-    * set Application type to Web application
-    * set Name to `PeopleFinder-local`
-    * set **Authorized JavaScript origins** to the root (e.g. `http://localhost:3000`)
-    * set **Authorized redirect URIs** to the OAuth redirect path, currently `http://localhost:3000/auth/gplus/callback`, but check routes.rb
-
-Hit create/continue until process is complete and you will receive a client ID and client SECRET.
-
-For local development purposes the ID and SECRET can be stored in your bash profile or you can create an `.env.local` file based on `.env.example` and set them, as below.
-
-```
-GPLUS_CLIENT_ID=your_gplus_client_id
-GPLUS_CLIENT_SECRET=your_gplus_client_secret
-```
-
-The permitted domains are configured in `config/application.rb`.
+Authentication to Log in to People Finder in the various environments (dev/staging/prod) is by setting the following environment variables:
+`DITSSO_INTERNAL_PROVIDER`
+`DITSSO_INTERNAL_CLIENT_ID`
+`DITSSO_INTERNAL_CLIENT_SECRET`
 
 ## Token-based authentication
 
-An alternative 'token-based' authentication method is also supported. The
+**NOTE: This has been replaced by DIT SSO Internal**
+~~An alternative 'token-based' authentication method is also supported. The
 token authentication method relies upon the users access to their email
-account to authenticate them.
+account to authenticate them.~~
 
-Each time the user wishes to start a session, they need to generate an
+~~Each time the user wishes to start a session, they need to generate an
 authentication token. This can be done by entering their email address
 (from a permitted domain) on the login screen. They will be sent an email
 message containing a link with a unique random token. Clicking on the link
-will allow them to login.
+will allow them to login.~~
 
 
 ## E-mails
