@@ -1,4 +1,7 @@
+require 'ditsso_internal'
+
 Rails.application.config.middleware.use OmniAuth::Builder do
-  provider :gplus, ENV['GPLUS_CLIENT_ID'], ENV['GPLUS_CLIENT_SECRET'],
-    scope: 'openid,profile,email'
+  provider 'ditsso_internal',
+    ENV['DITSSO_INTERNAL_CLIENT_ID'],
+    ENV['DITSSO_INTERNAL_CLIENT_SECRET']
 end
