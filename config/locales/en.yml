@@ -47,9 +47,9 @@ en:
       intro_unauthorised: |
         For security reasons, you have to be logged in to People Finder to make any changes.
         We will email you a secure link so you can log in. This link will be active for %{ttl}.
-      heading_google: Got a government Google account?
-      body_google:
-        If you have a Google account ending in gov.uk, you can log in now.
+      heading_ditsso: Got a DIT account?
+      body_ditsso:
+        If you have a DIT account ending in trade.gov.uk, you can log in now.
       heading_other: Enter your DIT email address
       log_in_google: Log in
       log_in_email: Request link
