@@ -9,7 +9,7 @@ RSpec.describe SessionsController, type: :controller do
 
   let(:john_doe_omniauth_hash) do
     OmniAuth::AuthHash.new(
-      provider: 'gplus',
+      provider: 'ditsso_internal',
       info: {
         email: 'john.doe@digital.justice.gov.uk',
         first_name: 'John',
@@ -21,7 +21,7 @@ RSpec.describe SessionsController, type: :controller do
 
   let(:john_doe2_omniauth_hash) do
     OmniAuth::AuthHash.new(
-      provider: 'gplus',
+      provider: 'ditsso_internal',
       info: {
         email: 'john.doe2@digital.justice.gov.uk',
         first_name: 'John',
@@ -33,7 +33,7 @@ RSpec.describe SessionsController, type: :controller do
 
   let(:fred_bloggs_omniauth_hash) do
     OmniAuth::AuthHash.new(
-      provider: 'gplus',
+      provider: 'ditsso_internal',
       info: {
         email: 'fred.bloggs@digital.justice.gov.uk',
         first_name: 'Fred',
@@ -123,7 +123,7 @@ RSpec.describe SessionsController, type: :controller do
       context 'using invalid omniauth hash' do
         let(:invalid_omniauth_hash) do
           OmniAuth::AuthHash.new(
-            provider: 'gplus',
+            provider: 'ditsso_internal',
             info: {
               email: 'rogue.user@example.com',
               first_name: 'John',
