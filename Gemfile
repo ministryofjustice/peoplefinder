@@ -28,6 +28,7 @@ gem 'keen'
 gem 'mail', '~> 2.6.6.rc1'
 gem 'mini_magick'
 gem 'netaddr'
+gem 'omniauth-oauth2'
 gem 'paper_trail', '~> 4.0.2'
 gem 'pg'
 gem 'premailer-rails', '~> 1.9'
@@ -47,8 +48,6 @@ gem 'will_paginate-bootstrap', '~> 1.0', '>= 1.0.1'
 gem 'carrierwave',
   git: 'https://github.com/carrierwaveuploader/carrierwave.git',
   tag: 'cc39842e44edcb6187b2d379a606ec48a6b5e4a8'
-gem 'omniauth-gplus',
-  git: 'https://github.com/ministryofjustice/omniauth-gplus.git'
 
 group :assets do
   gem 'coffee-rails'

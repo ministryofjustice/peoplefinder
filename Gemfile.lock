@@ -24,13 +24,6 @@ GIT
     sentry-raven (0.14.0)
       faraday (>= 0.7.6)
 
-GIT
-  remote: https://github.com/ministryofjustice/omniauth-gplus.git
-  revision: c9b013d10c6af55d9eb92d41191e7e0d036ef7c9
-  specs:
-    omniauth-gplus (2.0.1)
-      omniauth-oauth2 (~> 1.1)
-
 GEM
   remote: https://rubygems.org/
   specs:
@@ -666,7 +659,7 @@ DEPENDENCIES
   mini_magick
   minitest
   netaddr
-  omniauth-gplus!
+  omniauth-oauth2
   paper_trail (~> 4.0.2)
   pg
   poltergeist
