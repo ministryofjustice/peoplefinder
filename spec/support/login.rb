@@ -16,8 +16,8 @@ module SpecSupport
     def omni_auth_log_in_as(email)
       OmniAuth.config.test_mode = true
 
-      OmniAuth.config.mock_auth[:gplus] = OmniAuth::AuthHash.new(
-        provider: 'gplus',
+      OmniAuth.config.mock_auth[:ditsso_internal] = OmniAuth::AuthHash.new(
+        provider: 'ditsso_internal',
         info: {
           email: email,
           first_name: 'John',
@@ -26,7 +26,7 @@ module SpecSupport
         }
       )
 
-      visit 'auth/gplus'
+      visit 'auth/ditsso_internal'
     end
 
     def token_log_in_as(email)
