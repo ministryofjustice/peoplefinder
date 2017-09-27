@@ -15,7 +15,7 @@ feature 'OmniAuth Authentication' do
   end
 
   scenario 'Logging in and out' do
-    OmniAuth.config.mock_auth[:gplus] = valid_user
+    OmniAuth.config.mock_auth[:ditsso_internal] = valid_user
 
     visit '/'
     expect(login_page).to be_displayed
@@ -29,7 +29,7 @@ feature 'OmniAuth Authentication' do
   end
 
   scenario 'Log in failure' do
-    OmniAuth.config.mock_auth[:gplus] = invalid_user
+    OmniAuth.config.mock_auth[:ditsso_internal] = invalid_user
 
     visit '/'
     expect(login_page).to be_displayed
@@ -43,7 +43,7 @@ feature 'OmniAuth Authentication' do
   end
 
   scenario 'Non existent users are redirected to their new profiles edit page after logging in' do
-    OmniAuth.config.mock_auth[:gplus] = valid_user
+    OmniAuth.config.mock_auth[:ditsso_internal] = valid_user
     visit group_path(group)
     click_link 'Log in'
     expect(edit_profile_page).to be_displayed
@@ -51,7 +51,7 @@ feature 'OmniAuth Authentication' do
 
   scenario 'Existing users are redirected to their desired path after logging in' do
     create(:person, email: valid_user[:info][:email])
-    OmniAuth.config.mock_auth[:gplus] = valid_user
+    OmniAuth.config.mock_auth[:ditsso_internal] = valid_user
     visit group_path(group)
     click_link 'Log in'
     expect(group_page).to be_displayed
@@ -60,7 +60,7 @@ end
 
 def invalid_user
   OmniAuth::AuthHash.new(
-    provider: 'gplus',
+    provider: 'ditsso_internal',
     info: {
       email: 'test.user@example.com',
       first_name: 'John',
@@ -72,7 +72,7 @@ end
 
 def valid_user
   OmniAuth::AuthHash.new(
-    provider: 'gplus',
+    provider: 'ditsso_internal',
     info: {
       email: 'test.user@digital.justice.gov.uk',
       first_name: 'John',

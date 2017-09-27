@@ -11,14 +11,14 @@ class ProblemReportsController < ApplicationController
   private
 
   # This method returns the path that the user came here from, unless it was from a path
-  # which doesn't exist within the application, or from the /auth/gplus path (which would
+  # which doesn't exist within the application, or from the /auth/ditsso_internal path (which would
   # cause a CSRF error). In either of these cases we redirect to the login page.
   #
   def valid_return_path_or_login
     return_path = request.env['HTTP_REFERER']
     begin
       path_hash = Rails.application.routes.recognize_path(return_path)
-      return_path = new_sessions_path if path_hash[:provider] == 'gplus'
+      return_path = new_sessions_path if path_hash[:provider] == 'ditsso_internal'
     rescue ActionController::RoutingError
       return_path = new_sessions_path
     end

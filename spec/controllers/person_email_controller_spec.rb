@@ -9,7 +9,7 @@ RSpec.describe PersonEmailController, type: :controller do
   let(:token) { create(:token, user_email: new_email, spent: true) }
   let(:oauth_hash) do
     OmniAuth::AuthHash.new(
-      provider: 'gplus',
+      provider: 'ditsso_internal',
       info: {
         email: new_email,
         first_name: 'John',
