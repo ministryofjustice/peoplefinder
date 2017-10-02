@@ -401,3 +401,11 @@ If the Peoplefinder is to be successful, profiles need to be populated and maint
 ### Support
 
 A support email address is set as SUPPORT_EMAIL.
+
+### Profile API
+A profile summary for a person can be retrieved by the API:
+`/api/people?email=bob@example.com`
+Note that a token is required, and should be configured as:
+`ENV['PROFILE_API_TOKEN']`
+So the API can be access with curl:
+`curl -H "Authorization: Token token=<PROFILE_API_TOKEN>" http://localhost:3000/api/people.json?email=bob@example.com`

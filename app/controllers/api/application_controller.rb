@@ -1,20 +1,19 @@
 module Api
   class ApplicationController < ActionController::Base
+    include ActionController::HttpAuthentication::Token::ControllerMethods
 
+    before_action :authenticate_api_token
     protect_from_forgery with: :exception
-    before_action :authenticate!
 
     private
 
-    def authenticate!
-      token = Token.where(value: authorization_token).first
-      unless token
-        render json: { errors: 'Unauthorized' }, status: :unauthorized
+    def authenticate_api_token
+      authenticate_or_request_with_http_token do |token, _options|
+        ActiveSupport::SecurityUtils.secure_compare(
+          ::Digest::SHA256.hexdigest(token),
+          ::Digest::SHA256.hexdigest(ENV['PROFILE_API_TOKEN'])
+        )
       end
-    end
-
-    def authorization_token
-      request.headers['AUTHORIZATION'] || params[:token]
     end
   end
 end
