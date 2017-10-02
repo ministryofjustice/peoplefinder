@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   get 'healthcheck', to: 'health_check#index'
 
   namespace :api, format: [:json] do
-    resources :people, only: [:show]
+    resource :people, only: [:show]
   end
 
   resources :profile_photos, only: [:create]

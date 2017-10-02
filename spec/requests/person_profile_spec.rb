@@ -10,7 +10,7 @@ describe 'Person Profile API', type: :request do
   let(:links_hash) { parsed_json['data']['links'] }
   let(:profile_image_url_hash_key) { 'profile-image-url' }
 
-  before { get "/api/people/#{person.id}" }
+  before { get '/api/people', email: person.email }
 
   it 'has the expected person attributes' do
     expect(attr_hash).to have_key('email')
@@ -36,7 +36,7 @@ describe 'Person Profile API', type: :request do
     )
   end
 
-  context "with no profile image" do
+  context 'with no profile image' do
     let(:person) { create(:person) }
 
     it 'does not have the profile-image-url' do
