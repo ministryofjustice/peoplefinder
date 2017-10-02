@@ -10,7 +10,11 @@ describe 'Person Profile API', type: :request do
   let(:links_hash) { parsed_json['data']['links'] }
   let(:profile_image_url_hash_key) { 'profile-image-url' }
 
-  before { get '/api/people', email: person.email }
+  before do
+    get "/api/people?email=#{person.email}",
+      {},
+      authorization: "Token #{ENV['PROFILE_API_TOKEN']}"
+  end
 
   it 'has the expected person attributes' do
     expect(attr_hash).to have_key('email')
