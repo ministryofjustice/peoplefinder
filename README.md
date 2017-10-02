@@ -401,3 +401,7 @@ If the Peoplefinder is to be successful, profiles need to be populated and maint
 ### Support
 
 A support email address is set as SUPPORT_EMAIL.
+
+### Profile API
+A profile summary for a person can be retrieved by the API:
+`/api/people?email=bob@example.com`
