@@ -3,7 +3,11 @@ module Api
     before_action :set_person, only: [:show]
 
     def show
-      render json: @person
+      if @person
+        render json: @person
+      else
+        render json: { error: 'That person was not found' }, status: :not_found
+      end
     end
 
     private

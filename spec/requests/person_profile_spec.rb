@@ -43,4 +43,12 @@ describe 'Person Profile API', type: :request do
       expect(links_hash[profile_image_url_hash_key]).to be_blank
     end
   end
+
+  context 'when the person is not found' do
+    let(:person) { double(:person, email: 'not-found@example.com') }
+
+    it 'returns a 404' do
+      expect(response.status).to eq(404)
+    end
+  end
 end
