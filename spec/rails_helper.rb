@@ -30,6 +30,9 @@ Capybara.register_driver :poltergeist_silent do |app|
   Capybara::Poltergeist::Driver.new(app, phantomjs_logger: File::NULL)
 end
 
+# define a the PROFILE_API_TOKEN to ensure the API specs can be authenticated
+ENV['PROFILE_API_TOKEN'] = 'DEFINED'
+
 # Capybara.javascript_driver = :poltergeist # uncomment to enable console.log
 Capybara.javascript_driver = :poltergeist_silent # uncomment this to disable console.log (including warn)
 Capybara.default_max_wait_time = 3
