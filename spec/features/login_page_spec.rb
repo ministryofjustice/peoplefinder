@@ -2,6 +2,7 @@ require 'rails_helper'
 
 feature 'Login page' do
   include PermittedDomainHelper
+  include TokenAuthEnabler
 
   let(:login_page) { Pages::Login.new }
   let(:token_created_page) { Pages::TokenCreated.new }

@@ -2,23 +2,24 @@
 - @page_title = 'Log in'
 - content_for :body_classes, 'login-page '
 
-.grid-row.mod-heading
-  .column-full
-    %h1.heading-xlarge.mod-heading-border
-      - if @unauthorised_login
-        = t('.heading_unauthorised')
-      - else
-        = t('.heading')
-
-    %p.lede
-      - if @unauthorised_login
-        - t('.intro_unauthorised', ttl: distance_of_time_in_words(Token.ttl)).each_line do |line|
-          = line
-      -else
-        - t('.intro', ttl: distance_of_time_in_words(Token.ttl)).each_line do |line|
-          = line
-
 - if feature_enabled?('token_auth')
+  .grid-row.mod-heading
+    .column-full
+      %h1.heading-xlarge.mod-heading-border
+        - if @unauthorised_login
+          = t('.heading_unauthorised')
+        - else
+          = t('.heading')
+
+      %p.lede
+        - if @unauthorised_login
+          - t('.intro_unauthorised', ttl: distance_of_time_in_words(Token.ttl)).each_line do |line|
+            = line
+        -else
+          - t('.intro', ttl: distance_of_time_in_words(Token.ttl)).each_line do |line|
+            = line
+
+
   %h2.heading-medium
     = t('.heading_other')
 
@@ -31,10 +32,10 @@
 
 .grid-row
   .column-full
-    %h2.heading-medium
-      = t('.heading_google')
+    %h1.heading-medium
+      = t('.heading_ditsso')
     %p
-      = t('.body_google')
+      = t('.body_ditsso')
     %p
-      = link_to t('.log_in_google'), "/auth/gplus", class: 'button login-button'
+      = link_to t('.log_in_google'), "/auth/ditsso_internal", class: 'button login-button'
 
