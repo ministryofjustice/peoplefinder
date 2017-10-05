@@ -1,0 +1,4 @@
+---
+applications:
+- name: peoplefinder
+  buildpack: ruby_buildpack
