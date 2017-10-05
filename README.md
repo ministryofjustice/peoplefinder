@@ -88,6 +88,8 @@ defined on a per environment basis.
 
 `config.default_url_options` e.g. { host: mail.peoplefinder.example.com }
 
+`config.disable_organogram` Disable the 'View printable organogram' feature
+
 `config.disable_token_auth` Disable the 'token-based authentication' feature
 
 `config.elastic_search_url` Required for production (see Search section below)

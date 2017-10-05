@@ -34,6 +34,9 @@ module Peoplefinder
 
     config.department_abbrev = 'DIT'
 
+    # hides link to View printable organogram
+    config.disable_organogram = true
+
     # disable token authentication (hides fields from login page)
     config.disable_token_auth = true
 
