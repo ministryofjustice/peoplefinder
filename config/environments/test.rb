@@ -19,4 +19,8 @@ Rails.application.configure do
 
   # mock the fact we are NOT on an IP whitelist for test runs
   config.readonly_ip_whitelist = nil
+
+  # enable these features just for tests
+  config.disable_token_auth = false
+  config.disable_organogram = false
 end

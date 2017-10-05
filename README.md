@@ -88,6 +88,8 @@ defined on a per environment basis.
 
 `config.default_url_options` e.g. { host: mail.peoplefinder.example.com }
 
+`config.disable_organogram` Disable the 'View printable organogram' feature
+
 `config.disable_token_auth` Disable the 'token-based authentication' feature
 
 `config.elastic_search_url` Required for production (see Search section below)
@@ -118,8 +120,6 @@ Authentication to Log in to People Finder in the various environments (dev/stagi
 ## Token-based authentication
 
 **NOTE: This has been disabled for DIT SSO Internal**
-
-To enable Token-based authentication, set the environment variable `ENABLE_TOKEN_AUTH` to any value.
 
 ~~An alternative 'token-based' authentication method is also supported. The
 token authentication method relies upon the users access to their email

@@ -28,12 +28,12 @@
     .mod-wrap-text.formatted-text
       = govspeak(@group.with_placeholder_default(:description))
 
-    - if @group.children.present?
+    - if @group.children.present? && feature_enabled?('organogram')
 
-      = link_to "View printable organogram", organogram_group_path(@group)
+      = link_to "View printable organogram", organogram_group_path(@group), class: 'pipe-right'
     - unless @group.leaf_node?
       - if @all_people_count > 0 && @group.parent.present?
-        = link_to "View #{ @all_people_count > 1 ? 'all' : '' } people", people_group_path(@group), class: 'view-all-people pipe-left'
+        = link_to "View #{ @all_people_count > 1 ? 'all' : '' } people", people_group_path(@group), class: 'view-all-people'
 
 - unless @group.leaf_node?
   = render partial: "teams_in_team"
