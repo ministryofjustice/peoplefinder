@@ -35,7 +35,7 @@ module Peoplefinder
     config.department_abbrev = 'DIT'
 
     # disable token authentication (hides fields from login page)
-    config.disable_token_auth = !ENV['ENABLE_TOKEN_AUTH'].nil?
+    config.disable_token_auth = true
 
     config.admin_ip_ranges = ENV.fetch('ADMIN_IP_RANGES', '127.0.0.1')
 
