@@ -14,12 +14,12 @@ Rails.application.configure do
   config.log_formatter = ::Logger::Formatter.new
   config.active_record.dump_schema_after_migration = false
   config.action_mailer.smtp_settings = {
-    address: 'smtp.sendgrid.net',
+    address: ENV['SMTP_HOST'],
     port: '587',
     authentication: :plain,
-    user_name: ENV['SENDGRID_USERNAME'],
-    password: ENV['SENDGRID_PASSWORD'],
-    domain: ENV['SENDGRID_DOMAIN'] || 'people-finder.dsd.io',
+    user_name: ENV['SMTP_USERNAME'],
+    password: ENV['SMTP_PASSWORD'],
+    domain: ENV['SMTP_DOMAIN'] || 'trade.digital.gov.uk',
     enable_starttls_auto: true
   }
   config.filter_parameters += [
