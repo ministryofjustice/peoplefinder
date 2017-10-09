@@ -57,7 +57,7 @@ module Peoplefinder
     config.active_record.raise_in_transactional_callbacks = true
     config.active_record.schema_format = :ruby
 
-    config.elastic_search_url = ENV['MOJ_PF_ES_URL']
+    config.elastic_search_url = ENV['DIT_PF_ES_URL']
 
     config.ga_tracking_id = (ENV['GA_TRACKING_ID'] || '')
 
