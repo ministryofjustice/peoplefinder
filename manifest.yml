@@ -3,6 +3,6 @@ applications:
 - name: peoplefinder-dev
   buildpack: ruby_buildpack
   web: bundle exec unicorn -p $PORT -c ./config/unicorn.rb
-- name: peoplefinder-worket-dev
+- name: peoplefinder-worker-dev
   buildpack: ruby_buildpack
-  worker: bundle exec rake jobs:work 
+  worker: bundle exec rake jobs:work
