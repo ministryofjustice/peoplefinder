@@ -14,6 +14,7 @@ class EmailAddress
   end
 
   def permitted_domain?
+    return true if Rails.configuration.disable_permitted_domain_checks
     valid_login_domains.any? { |pattern| pattern === domain }
   end
 

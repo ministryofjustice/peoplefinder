@@ -18,6 +18,14 @@ RSpec.describe EmailAddress do
   end
 
   describe '.permitted_domain' do
+    context 'when disable_permitted_domain_checks = true' do
+      it "allows any domain" do
+        Rails.configuration.disable_permitted_domain_checks = true
+        expect(described_class.new('me@example.com')).to be_permitted_domain
+        Rails.configuration.disable_permitted_domain_checks = false
+      end
+    end
+
     context 'with strings to match login domains' do
       let(:permitted_login_domains) { ['dept.gov.uk'] }
 
