@@ -23,4 +23,5 @@ Rails.application.configure do
   # enable these features just for tests
   config.disable_token_auth = false
   config.disable_organogram = false
+  config.disable_permitted_domain_checks = false
 end

@@ -40,6 +40,9 @@ module Peoplefinder
     # disable token authentication (hides fields from login page)
     config.disable_token_auth = true
 
+    # disable permitted domain checks (allows user from any domain)
+    config.disable_permitted_domain_checks = true
+
     config.admin_ip_ranges = ENV.fetch('ADMIN_IP_RANGES', '127.0.0.1')
 
     config.readonly_ip_whitelist = ENV.fetch('READONLY_IP_WHITELIST', '127.0.0.1')
