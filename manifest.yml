@@ -2,7 +2,7 @@
 applications:
 - name: peoplefinder-dev
   buildpack: ruby_buildpack
-  web: bundle exec unicorn -p $PORT -c ./config/unicorn.rb
+  command: bundle exec unicorn -p $PORT -c ./config/unicorn.rb
 - name: peoplefinder-worker-dev
   buildpack: ruby_buildpack
-  worker: bundle exec rake jobs:work; echo "ksjdksjd" > echo_out.txt
+  command: bundle exec rake jobs:work; echo "ksjdksjd" > echo_out.txt
