@@ -62,7 +62,11 @@ class ApplicationController < ActionController::Base
   def ensure_user
     return true if logged_in?
     session[:desired_path] = request.fullpath
-    redirect_to new_sessions_path
+    if Rails.configuration.disable_token_auth
+      redirect_to '/auth/ditsso_internal'
+    else
+      redirect_to new_sessions_path
+    end
   end
 
   def desired_path person
