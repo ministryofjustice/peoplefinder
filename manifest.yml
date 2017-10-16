@@ -6,3 +6,6 @@ applications:
 - name: peoplefinder-staging
   buildpack: ruby_buildpack
   command: bundle exec unicorn -p $PORT -c ./config/unicorn.rb  
+- name: peoplefinder
+  buildpack: ruby_buildpack
+  command: bundle exec unicorn -p $PORT -c ./config/unicorn.rb  
