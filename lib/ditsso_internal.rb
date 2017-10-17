@@ -33,7 +33,7 @@ module OmniAuth
       end
 
       def callback_url
-        full_host + script_name + callback_path
+        ENV['DITSSO_CALLBACK_URL']
       end
     end
   end

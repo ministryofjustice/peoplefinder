@@ -116,6 +116,9 @@ Authentication to Log in to People Finder in the various environments (dev/stagi
 `DITSSO_INTERNAL_PROVIDER`
 `DITSSO_INTERNAL_CLIENT_ID`
 `DITSSO_INTERNAL_CLIENT_SECRET`
+Note that due to Cloudfoundry's routing we can't use the omniauth helpers to build the callback URL. We have to explicitly declare it as:
+`DITSSO_CALLBACK_URL`
+
 
 ## Token-based authentication
 
