@@ -2,6 +2,7 @@ module OmniAuth
   module Strategies
     class DitssoInternal < OmniAuth::Strategies::OAuth2
       option :name, 'ditsso_internal'
+      option :provider_ignores_state, true
 
       SSO_PROVIDER = ENV['DITSSO_INTERNAL_PROVIDER']
 
