@@ -28,6 +28,14 @@ feature 'OmniAuth Authentication' do
     expect(login_page).to be_displayed
   end
 
+  scenario 'Logging in when the user has no last_name' do
+    OmniAuth.config.mock_auth[:ditsso_internal] = valid_user_no_last_name
+
+    visit '/'
+    click_link 'Log in'
+    expect(page).to have_text('Signed in as John -required-')
+  end
+
   scenario 'Log in failure' do
     OmniAuth.config.mock_auth[:ditsso_internal] = invalid_user
 
@@ -78,6 +86,16 @@ def valid_user
       first_name: 'John',
       last_name: 'Doe',
       name: 'John Doe'
+    }
+  )
+end
+
+def valid_user_no_last_name
+  OmniAuth::AuthHash.new(
+    provider: 'ditsso_internal',
+    info: {
+      email: 'test.user@digital.justice.gov.uk',
+      first_name: 'John'
     }
   )
 end

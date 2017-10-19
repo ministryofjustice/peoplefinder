@@ -2,7 +2,6 @@ module OmniAuth
   module Strategies
     class DitssoInternal < OmniAuth::Strategies::OAuth2
       option :name, 'ditsso_internal'
-      option :provider_ignores_state, true
 
       SSO_PROVIDER = ENV['DITSSO_INTERNAL_PROVIDER']
 
@@ -30,7 +29,8 @@ module OmniAuth
       end
 
       def raw_info
-        @raw_info ||= access_token.get('/api/v1/user/me/').parsed
+        access_token_path = "/api/v1/user/me/?access_token=#{access_token.token}"
+        @raw_info ||= access_token.get(access_token_path).parsed
       end
 
       def callback_url

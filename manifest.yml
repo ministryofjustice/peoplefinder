@@ -2,10 +2,10 @@
 applications:
 - name: peoplefinder-dev
   buildpack: ruby_buildpack
-  command: bundle exec unicorn -p $PORT -c ./config/unicorn.rb
+  command: bundle exec rake db:migrate && unicorn -p $PORT -c ./config/unicorn.rb
 - name: peoplefinder-staging
   buildpack: ruby_buildpack
-  command: bundle exec unicorn -p $PORT -c ./config/unicorn.rb  
+  command: bundle exec rake db:migrate && unicorn -p $PORT -c ./config/unicorn.rb
 - name: peoplefinder
   buildpack: ruby_buildpack
-  command: bundle exec unicorn -p $PORT -c ./config/unicorn.rb  
+  command: bundle exec rake db:migrate && unicorn -p $PORT -c ./config/unicorn.rb
