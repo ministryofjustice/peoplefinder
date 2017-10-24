@@ -1,0 +1,6 @@
+#proposition-menu{
+  @extend %contain-floats;
+  #proposition-links{
+    float: right;
+  }
+}

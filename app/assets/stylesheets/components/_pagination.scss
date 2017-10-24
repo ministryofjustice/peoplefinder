@@ -1,0 +1,101 @@
+	.prev {
+		box-sizing: border-box;
+		position: relative;
+		float: left;
+		text-align: left;
+		width: 30%;
+		min-height: 1px;
+
+		a {
+			position: relative;
+			padding-left: 30px;
+
+			&:before {
+				content: '';
+				position: absolute;
+				top: 0px;
+				left: 0px;
+				background-image: asset-data-url("arrow-left.png");
+				background-repeat: no-repeat;
+				width: 19px;
+				height: 14px;
+				margin: 4px 0px;
+
+				@media (min-width: 641px) {
+					margin: 6px 0px;
+				}
+			}
+		}
+	}
+
+	.pages {
+		box-sizing: border-box;
+		float: left;
+		text-align: center;
+		width: 40%;
+		min-height: 1px;
+	}
+
+	.page-number {
+		text-align: center;
+		padding: 0 4px;
+	}
+
+	.next {
+		box-sizing: border-box;
+		position: relative;
+		float: right;
+		text-align: right;
+		width: 30%;
+		min-height: 1px;
+
+		a {
+			position: relative;
+			padding-right: 30px;
+
+			&:after {
+				content: '';
+				position: absolute;
+				top: 0px;
+				right: 0px;
+				background-image: asset-data-url("arrow-right.png");
+				background-repeat: no-repeat;
+				width: 19px;
+				height: 14px;
+				margin: 4px 0px;
+
+				@media (min-width: 641px) {
+					margin: 6px 0px;
+				}
+			}
+		}
+	}
+
+	.numbered-paging {
+		float: left;
+		text-align: center;
+		width: 40%;
+		li {
+			display: inline-block;
+			padding: 0 0.2em;
+		}
+	}
+
+.pagination{
+	@extend %clearfix;
+	margin-bottom: 50px;
+
+	a {
+		display: inline-block;
+
+		&:link {
+			colour: $brand_color_a;
+			text-decoration: underline;
+		}
+
+		&:hover {
+			colour: $brand_color_a;
+			text-decoration: none;
+		}
+	}
+}
