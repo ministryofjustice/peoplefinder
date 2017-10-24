@@ -1,0 +1,49 @@
+- content_for :global_header_text do
+  %img{:src => 'http://dit-prototype.preview3.co.uk/assets/dit-logo.png', :alt => 'Department for International Trade'}
+
+- content_for :page_title, "Digital Workspace"
+
+- content_for :head do
+
+  = stylesheet_link_tag "application", media: "all"
+  = csrf_meta_tag
+
+- content_for :header_class do
+  = "with-proposition"
+
+- content_for :proposition_header do
+  .header-proposition
+    .content
+      = link_to "Digital Workspace", '#DIT-HOME-URL', id: "proposition-name"
+      %strong.beta-label
+        BETA
+    
+    = render partial: "widgets/nav"
+
+    .search
+      %form{:action => "/search", :method => "get", :role => "search"}
+        .proposition-search.govuk-search
+          %label.search-label
+            Search site
+          .search-wrapper
+            %input{:type => 'search', :title => 'Search', :class => 'search-element search-input js-class-toggle'}
+            .search-element.search-submit-wrapper
+              %button{:type => 'submit', :class => 'search-submit'}
+                Search
+
+
+- content_for :body_end do
+  = javascript_include_tag 'application'
+
+- content_for :footer_support_links do
+  %ul
+    %li
+      = link_to("Teams", "")
+    %li
+      = link_to("Networks", "")
+    %li
+      = link_to("Regions", "")
+    %li
+      = link_to("Sectors", "")
+
+= render file: 'layouts/govuk_template'

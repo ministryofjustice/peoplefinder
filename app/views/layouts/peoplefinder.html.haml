@@ -1,12 +1,36 @@
-- content_for :global_header_text do
-  %img{:src => 'http://dit-prototype.preview3.co.uk/assets/dit-logo.png', :alt => 'Department for International Trade'}
+- content_for :page_title do
+  = page_title
 
-- content_for :page_title, "Digital Workspace"
+- content_for :cookie_message do
+  = "<p>GOV.UK uses cookies to make the site simpler. <a href=\"/cookies\">Find out more about cookies</a></p>".html_safe
+
+- content_for :global_header_text do
+  #{Rails.configuration.department_abbrev}
+
+- content_for :homepage_url do
+  = home_path
+
+- content_for :logo_link_title do
+  = 'Go to the People Finder homepage'
 
 - content_for :head do
 
   = stylesheet_link_tag "application", media: "all"
   = csrf_meta_tag
+  %meta{name: "format-detection", content: "telephone=no"}
+
+  /[if IE 6]
+    = stylesheet_link_tag "application-ie6", media: "all"
+
+  /[if IE 7]
+    = stylesheet_link_tag "application-ie7", media: "all"
+
+  /[if IE 8]
+    = stylesheet_link_tag "application-ie8", media: "all"
+
+
+- content_for :body_classes do
+  = " controller-" + controller.controller_name
 
 - content_for :header_class do
   = "with-proposition"
@@ -14,36 +38,30 @@
 - content_for :proposition_header do
   .header-proposition
     .content
-      = link_to "Digital Workspace", '#DIT-HOME-URL', id: "proposition-name"
-      %strong.beta-label
-        BETA
-    
-    = render partial: "widgets/nav"
+      %a.js-header-toggle.menu{:href => "#proposition-links"}
+        = "Menu"
+      %nav#proposition-menu
+        =link_to app_title, home_path, id: "proposition-name"
+        = render "shared/loginout"
 
-    .search
-      %form{:action => "/search", :method => "get", :role => "search"}
-        .proposition-search.govuk-search
-          %label.search-label
-            Search site
-          .search-wrapper
-            %input{:type => 'search', :title => 'Search', :class => 'search-element search-input js-class-toggle'}
-            .search-element.search-submit-wrapper
-              %button{:type => 'submit', :class => 'search-submit'}
-                Search
+- content_for :footer_top do
+  = render 'shared/feedback_form'
+
+
+- content_for :footer_support_links do
+  = render 'layouts/footer'
 
 
 - content_for :body_end do
   = javascript_include_tag 'application'
+  = render 'layouts/ga'
 
-- content_for :footer_support_links do
-  %ul
-    %li
-      = link_to("Teams", "")
-    %li
-      = link_to("Networks", "")
-    %li
-      = link_to("Regions", "")
-    %li
-      = link_to("Sectors", "")
+- content_for :content do
+  %main#content
+    = yield :breadcrumbs
 
-= render file: 'layouts/govuk_template'
+    = flash_messages
+
+    = yield
+
+= render template: 'layouts/govuk_template'
