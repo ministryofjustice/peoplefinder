@@ -1,10 +1,83 @@
-// ---------------------------------------
+
+%contain-floats {
+  &:after {
+    content: "";
+    display: block;
+    clear: both;
+  }
+}
+
+$tablet-width: 768px;
+$desktop-width: 1025px;
+$blackish: #6F777B;
+$darkblue: #005EA5;
+$turqoise: rgba(#28A197, 0.5);
+$opaqueblue: rgba(#2B8CC4, 0.25);
+$paleblue: rgba(#9BB7CE, 0.5);
+$blueish: #27A097;
+$error-text: #DF3034;
+$error-border: $error-text;
+$error-bg: #FBE1E1;
+$palegreen: #c9d8bd;
+$notice-bg: $blueish;
+$paleorange: #FFBF47;
+$warning-bg: $paleorange;
+$pink-bg: #FEF7F7;
+$grey-bg: #DEE0E2;
+$green: #006435;
+$border-color: #bfc1c3;
+
+@mixin mobile($orientation: landscape) {
+  @media (max-width: #{$tablet-width - 1px}) and (orientation: $orientation){
+    @content;
+  }
+}
+
+@mixin tablet($orientation: landscape) {
+  @media (min-width: #{$tablet-width}) and (max-width: #{$desktop-width - 1px}) and (orientation: $orientation){
+    @content;
+  }
+}
+
+@mixin tablet($orientation: landscape) {
+  @media (min-width: #{$tablet-width}) and (max-width: #{$desktop-width - 1px}) and (orientation: $orientation){
+    @content;
+  }
+}
+
+
+
+@mixin desktop($orientation: landscape)  {
+  @media (min-width: #{$desktop-width}) and (orientation: $orientation){
+    @content;
+  }
+}
+
+@mixin setSize($size:100%, $multiply:true){
+  width: $size;
+
+  @include mobile(landscape){
+    width: $size/4;
+  }
+
+  @include tablet(landscape){
+    width: $size/4;
+  }
+
+  @include tablet(portrait){
+    width: $size/4;
+  }
+
+  @include desktop{
+    width: $size/4;
+  }
+}
+
 // Settings (variables)
 @import "colours";                                // Colour variables
 @import "font_stack";                             // Font family variables
 @import "measurements";                           // Widths and gutter variables
 
-// ---------------------------------------
 // Mixins
 @import "conditionals";                           // Media query mixin
 @import "device-pixels";                          // Retina image mixin
@@ -12,28 +85,24 @@
 @import "typography";                             // Core bold and heading mixins, also external links
 @import "shims";                                  // Inline block mixin, clearfix placeholder
 
-// ---------------------------------------
 // Mixins to generate components (chunks of UI)
 @import "design-patterns/alpha-beta";
 @import "design-patterns/buttons";
 @import "design-patterns/breadcrumbs";
 
-// ---------------------------------------
 // Functions
 @import "url-helpers";                            // Function to output image-url, or prefixed path (Rails and Compass only)
 
 // GOV.UK elements
+
 @import "elements/helpers";                       // Helper functions and classes
 
-// ---------------------------------------
 // Generic (normalize/reset.css)
 @import "elements/reset";
 
-// ---------------------------------------
 // Objects (unstyled design patterns)
 @import "elements/layout";                        // Main content container. Grid layout - rows and column widths
 
-// ---------------------------------------
 // Components (chunks of UI)
 @import "elements/elements-typography";           // Typography
 @import "elements/buttons";                       // Buttons
@@ -43,45 +112,133 @@
 @import "elements/details";                       // Details summary
 @import "elements/panels";                        // Panels with a left grey border
 @import "elements/forms";                         // Form - wrappers, inputs, labels
+@import "elements/forms/form-block-labels";       // Chunky labels for radios and checkboxes
+@import "elements/forms/form-date";               // Date of birth pattern
+@import "elements/forms/form-validation";         // Errors and validation
 @import "elements/breadcrumbs";                   // Breadcrumbs
 @import "elements/phase-banner";                  // Alpha and beta banners and tags
 @import "elements/components";                    // GOV.UK prefixed styles - blue highlighted box
 @import "elements/shame";                         // Hacks and workarounds that will go away eventually
 
-// ---------------------------------------
+@import "Jcrop/css/jquery.Jcrop.min";
 
-// ---------------------------------------
-// variables
-@import "vars/screen-sizes";
-@import "vars/colours";
-@import "vars/assets";
+@import "elements-local/*";
+@import "modules/*";
 
-// ---------------------------------------
-// Utilites
-@import "util/utilities";
-@import "util/links";
-@import "util/horizontal-rules";
+@import "print";
 
-// ---------------------------------------
-// Partials
-@import "components/header";
-@import "components/people-finder";
-@import "components/search";
-@import "components/breadcrumb";
-@import "components/pagination";
-@import "components/post-meta";
-@import "components/typography";
-@import "components/footer";
+.clearfix:before,
+.clearfix:after {
+  content: " ";
+  display: table;
+}
+.clearfix:after {
+  clear: both;
+}
+.center-block {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+.pull-right {
+  float: right !important;
+}
+.pull-left {
+  float: left !important;
+}
+.hide {
+  display: none !important;
+}
+.show {
+  display: block !important;
+}
+.invisible {
+  visibility: hidden;
+}
+.text-hide {
+  font: 0/0 a;
+  color: transparent;
+  text-shadow: none;
+  background-color: transparent;
+  border: 0;
+}
+.hidden {
+  display: none !important;
+}
+.affix {
+  position: fixed;
+}
 
-// ---------------------------------------
-// Pages
+.clear-both{
+  clear:both;
+}
+.audit {
+  td, th{
+  @include core-16;
+}
+}
 
-// Homepage
-@import "pages/home/homepage";
+.formatted-text {
+  word-wrap: break-word;
+  ul li {
+    list-style-type: disc;
+    margin-left: 20px;
+  }
 
-// News section
-@import "pages/news/news-index";
-@import "pages/news/news-comments";
+  ol li {
+    list-style-type: decimal;
+    margin-left: 25px;
+  }
 
-// Overrides
-/*@import "digital-workspace-overrides";			   // Additional styles either new or over-riding for the Digital Workspace*/
+  ul, ol{
+    margin-bottom: $gutter;
+  }
+
+  h4{
+    margin-top: $gutter;
+    @include core-19;
+    font-weight: 700;
+  }
+}
+
+.mobile-hide{
+  display: block;
+
+  @include mobile(landscape){
+    display: none;
+  }
+  @include mobile(portrait){
+    display: none;
+  }
+
+  @include tablet(landscape){
+    display: block;
+  }
+  @include tablet(portrait){
+    display: block;
+  }
+  @include desktop(landscape){
+    display: block;
+  }
+  @include desktop(portrait){
+    display: block;
+  }
+}
+
+.mobile-show{
+  display: none;
+  margin: -20px 10px 10px 0px;
+  @include mobile(landscape){
+    display: block;
+  }
+  @include mobile(portrait){
+    display: block;
+  }
+}
+
+#proposition-links{
+  width: 100%;
+  @include desktop(){
+    width: auto;
+  }
+}
