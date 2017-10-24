@@ -86,14 +86,6 @@ feature 'Searching feature', elastic: true do
 
   feature 'higlighting of search terms' do
 
-    xscenario 'highlights entire matching email address' do
-      fill_in 'query', with: 'jon.browne@digital.justice.gov.uk'
-      click_button 'Search'
-      within '.cb-person-email' do
-        expect(page).to have_selector('.es-highlight', text: 'jon.browne@digital.justice.gov.uk')
-      end
-    end
-
     scenario 'highlights individual role and group terms' do
       fill_in 'query', with: 'HMP Wilsden'
       click_button 'Search'
@@ -109,15 +101,6 @@ feature 'Searching feature', elastic: true do
       within '#person-results' do
         expect(page).to have_selector('.es-highlight', text: 'Browne')
         expect(page).to have_selector('.es-highlight', text: 'Jon')
-      end
-    end
-
-    xscenario 'highlights individual current project terms' do
-      fill_in 'query', with: 'Digital Prisons Browne'
-      click_button 'Search'
-      within '.cb-person-current-project' do
-        expect(page).to have_selector('.es-highlight', text: 'Digital')
-        expect(page).to have_selector('.es-highlight', text: 'Prisons')
       end
     end
 

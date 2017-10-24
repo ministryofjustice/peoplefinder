@@ -396,12 +396,12 @@ en:
         surname: Last name
         email: Main email address
         secondary_email: Alternative work email address (optional)
-        primary_phone_number: Main phone number (optional)
+        primary_phone_number: Phone number
         secondary_phone_number: Alternative phone number (optional)
         pager_number: Pager number (optional)
         location_in_building: Location in building (optional)
-        building: Building (optional)
-        city: City (optional)
+        building: Building I work in (optional)
+        city: City
         current_project: Current project(s) (optional)
         works_monday: Monday
         works_tuesday: Tuesday
@@ -412,7 +412,7 @@ en:
         works_sunday: Sunday
         description: Extra information
       membership:
-        role: "Job title (optional)"
+        role: "Job title"
         group: Team
       problem_report:
         goal: "What were you trying to do?"
@@ -459,8 +459,9 @@ en:
       file: Upload CSV file
     hint:
       person:
+        primary_phone_number: "Select your country code then type in your number"
         location_in_building: "For example, 10.30"
-        building: "For example, 102 Petty France"
+        building: "Select options from the list"
         city: "For example, London"
         current_project: List the names of current projects this person is working on. Use a comma to separate project names.
         working_days: Select all that apply

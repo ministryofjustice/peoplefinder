@@ -30,8 +30,6 @@ feature 'Person edit notifications' do
       'building' => [nil, ''],
       'city' => [nil, ''],
       'primary_phone_number' => [nil, ''],
-      'secondary_phone_number' => [nil, ''],
-      'pager_number' => [nil, ''],
       'email' => [nil, 'bob.smith@digital.justice.gov.uk'],
       'secondary_email' => [nil, ''],
       'description' => [nil, ''],

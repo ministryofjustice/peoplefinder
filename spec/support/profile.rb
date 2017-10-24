@@ -49,9 +49,7 @@ module SpecSupport
       fill_in 'Last name', with: person_attributes[:surname]
       select_in_team_select 'Digital'
       fill_in 'Main email', with: person_attributes[:email]
-      fill_in 'Main phone number', with: person_attributes[:primary_phone_number]
-      fill_in 'Alternative phone number', with: person_attributes[:secondary_phone_number]
-      fill_in 'Pager number', with: person_attributes[:pager_number]
+      fill_in 'Phone number', with: person_attributes[:primary_phone_number]
       fill_in 'Location in building', with: person_attributes[:location_in_building]
       fill_in 'Building', with: person_attributes[:building]
       fill_in 'City', with: person_attributes[:city]
@@ -89,8 +87,6 @@ module SpecSupport
       within('h1') { expect(page).to have_text(name) }
       expect(page).to have_text(person_attributes[:email])
       expect(page).to have_text(person_attributes[:primary_phone_number])
-      expect(page).to have_text(person_attributes[:secondary_phone_number])
-      expect(page).to have_text(person_attributes[:pager_number])
       expect(page).to have_text(person_attributes[:location_in_building])
       expect(page).to have_text(person_attributes[:building])
       expect(page).to have_text(person_attributes[:city])

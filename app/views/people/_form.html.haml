@@ -17,11 +17,9 @@
   %h3.heading-medium.with-border-lg
     = "Contact details"
   = f.text_field :primary_phone_number
-  = f.text_field :secondary_phone_number
-  = f.text_field :pager_number
   = f.text_field :secondary_email
-  = f.text_field :location_in_building
   = f.text_field :building
+  = f.text_field :location_in_building
   = f.text_field :city
 
   .form-group
@@ -44,7 +42,7 @@
       = "Working days"
     %fieldset#working-days
       %legend.form-label-bold.visually-hidden Working days
-      %ul
+      %ul.inline-list
         - Person::DAYS_WORKED.each do |day|
           %li
             = f.check_box day
