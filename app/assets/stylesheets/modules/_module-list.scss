@@ -1,0 +1,18 @@
+.mod-list{
+  &.mod-list-people{
+    .column-one-quarter{
+      @include grid-column( 1/4 );
+    }
+    @media (max-width: 640px) and (orientation: landscape){
+      .column-one-quarter{
+        width: 50%;
+      }
+    }
+  }
+  &.mod-list-groups{
+    .column-one-quarter{
+      @extend %contain-floats;
+      @include grid-column( 1/4 );
+    }
+  }
+}

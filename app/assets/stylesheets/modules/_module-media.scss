@@ -1,0 +1,239 @@
+// Bootstrap media block
+// .profile, .card, .leader variations
+//
+.media {
+  margin-top: 15px;
+}
+.media:first-child {
+  margin-top: 0;
+}
+.media,
+.media-body {
+  zoom: 1;
+  overflow: hidden;
+}
+
+.media-body {
+  width: 10000px;
+}
+.media-object {
+  display: block;
+}
+.media-object.img-thumbnail {
+  max-width: none;
+}
+.media-right,
+.media > .pull-right {
+  padding-left: 10px;
+}
+.media-left,
+.media > .pull-left {
+  // padding-right: 10px;
+}
+.media-left,
+.media-right,
+.media-body {
+  display: table-cell;
+  vertical-align: top;
+}
+.media-middle {
+  vertical-align: middle;
+}
+.media-bottom {
+  vertical-align: bottom;
+}
+.media-heading {
+  margin-top: 0;
+  margin-bottom: 5px;
+  // @include core-24;
+}
+.media-list {
+  padding-left: 0;
+  list-style: none;
+}
+
+.team-leader-list{
+  @extend %contain-floats;
+}
+
+.form-group.mod-media.card{
+  margin: 0 10px 50px 0;
+  .media-left{
+    @include setSize();
+  }
+}
+
+.edit-profile-page{
+  .card .media-left{
+    max-width: 300px;
+  }
+}
+.mod-media{
+  a{
+    @extend %contain-floats;
+    display:block;
+  }
+  .media-object{
+    width: 100%;
+    height: 100%;
+  }
+  margin-bottom: $gutter;
+
+  .media-heading{
+    @include core-19;
+    font-weight: 700;
+  }
+
+  &.profile{
+    .media-object{}
+
+    .media-left{
+      padding-right:$gutter;
+      width: 33%;
+
+      @include mobile(){
+
+      }
+
+      @include mobile(portrait){
+        display: block;
+        width: auto;
+      }
+    }
+    .heading-medium{
+      margin-top:0;
+      small{
+        @include core-19;
+      }
+    }
+  }
+
+  &.card{
+    min-height: 305px;
+    margin: 0 10px 10px 0;
+    @extend %contain-floats;
+
+    .media-left{
+      float: left;
+      overflow: hidden;
+    }
+
+    @include tablet(){
+      .media-left{
+        max-height: 240px;
+      }
+    }
+
+    @include desktop(){
+      .media-left{
+        max-height: 240px;
+      }
+    }
+
+    .media-body{
+      @include core-16();
+    }
+
+    &.team{
+      .media-heading{
+        margin-top: $gutter/6;
+        text-align: center;
+      }
+    }
+  }
+
+  &.leaders, &.leader{
+    @include core-16;
+  }
+
+  &.leaders{
+    float:left !important;
+    padding-right: 10px;
+    width: 45%;
+  }
+
+  &.leader{
+    .maginot{
+      margin-bottom: $gutter/2;
+    }
+  }
+
+  &.result-team{}
+
+  &.result-person,
+  &.result-team{
+    .media-left{
+      min-width: 120px;
+      width: 30%;
+      padding-right: $gutter/2;
+    }
+  }
+  &.result-team,
+  &.result-person{
+    .media-body{
+      .media-heading{
+        font-weight: 400;
+      }
+      ul li{
+        margin-bottom: $gutter/4;
+        @include core-16;
+      }
+    }
+  }
+
+
+  ul.working_days {
+    clear: both;
+    list-style: none;
+    padding: 0;
+
+    li {
+      display:inline-block;
+      text-align: center;
+      background-color: gray;
+      width: 25px;
+      padding:3px 0;
+      color: white;
+
+      background: image-url('bg_not_working_day.png') no-repeat scroll 0 0;
+
+      &.active {
+        background-image: none;
+        background-color: rgb(98,152,187);
+      }
+    }
+  }
+}
+
+.profile {
+  min-height: 300px;
+  .image-background {
+    height: 300px;
+  }
+
+  dl {
+    margin-bottom: 15px;
+  }
+  .inline-labels dt {
+    font-weight: 700;
+  }
+
+  dd.breadcrumbs {
+    margin: 0;
+    ol {
+      margin: 0;
+      padding: 0;
+    }
+  }
+
+  .role-and-location {
+    dd, dt {
+      margin-bottom: 0.4em;
+    }
+  }
+  .job-title {
+    small {
+      font-size: 16px;
+    }
+  }
+}
