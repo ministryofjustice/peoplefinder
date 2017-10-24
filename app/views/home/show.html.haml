@@ -5,50 +5,52 @@
   .cb-unsupported-browser-warning.error-summary{"aria-labelledby" => "error-summary-heading", :role => "group", :tabindex => "-1"}
     = t('.unsupported_browser_warning_html')
 
-.grid-row
-  .column-two-thirds
-    %h1.heading-xlarge.cb-page-title
-      = t('.heading', group_name: @department.name)
+%div{:class => 'page-content', :id => 'home'}
+  %main{:class => '', :id => 'content'}
+    .grid-row
+      .column-two-thirds
+        %h1.heading-xlarge.cb-page-title
+          = t('.heading', group_name: @department.name)
 
-    %p.lede
-      = t('.explanation')
+        %p.lede
+          = t('.explanation')
 
-  .column-one-third
-    .heading-medium.mod-home-info.cb-about-usage
-      = t('.about_usage')
+      .column-one-third
+        .heading-medium.mod-home-info.cb-about-usage
+          = t('.about_usage')
 
-= render 'shared/search'
+    = render 'shared/search'
 
-.cb-department-overview
-  .grid-row.mod-heading
-    .column-full
-      %h1.heading-xlarge.mod-heading-border
-        %span.heading-secondary
-          = @department.acronym
-        = @department.name
+    .cb-department-overview
+      .grid-row.mod-heading
+        .column-full
+          %h1.heading-xlarge.mod-heading-border
+            %span.heading-secondary
+              = @department.acronym
+            = @department.name
 
-  .grid-row.mod-team-overview
-    .column-one-third
-      - if @department.leaderships.count > 0
-        - @department.leaderships_by_person.each do |person, leaderships|
-          = render partial: 'groups/leaderships', object: leaderships, locals: { person: person, counter: @department.leaderships.count }
+      .grid-row.mod-team-overview
+        .column-one-third
+          - if @department.leaderships.count > 0
+            - @department.leaderships_by_person.each do |person, leaderships|
+              = render partial: 'groups/leaderships', object: leaderships, locals: { person: person, counter: @department.leaderships.count }
 
-    .column-two-thirds
-      %h3.heading-medium
-        = "About the team"
-      .mod-wrap-text.formatted-text
-        = govspeak(@department.with_placeholder_default(:description))
+        .column-two-thirds
+          %h3.heading-medium
+            = "About the team"
+          .mod-wrap-text.formatted-text
+            = govspeak(@department.with_placeholder_default(:description))
 
-      - if @department.children.present? && feature_enabled?('organogram')
-        = link_to "View printable organogram", organogram_group_path(@department)
-      - unless @department.leaf_node?
-        - if @all_people_count > 0 && @department.parent.present?
-          = link_to "View #{ @all_people_count > 1 ? 'all' : '' } people", people_group_path(@department), class: 'view-all-people'
+          - if @department.children.present? && feature_enabled?('organogram')
+            = link_to "View printable organogram", organogram_group_path(@department)
+          - unless @department.leaf_node?
+            - if @all_people_count > 0 && @department.parent.present?
+              = link_to "View #{ @all_people_count > 1 ? 'all' : '' } people", people_group_path(@department), class: 'view-all-people'
 
-  .grid-row.mod-heading
-    .column-full
-      %h1.heading-large.mod-heading-border
-        = "Teams within #{@department.name}"
+      .grid-row.mod-heading
+        .column-full
+          %h1.heading-large.mod-heading-border
+            = "Teams within #{@department.name}"
 
-  #teams.grid-row.mod-subgroups
-    = render partial: "groups/subgroup", collection: @department.children
+      #teams.grid-row.mod-subgroups
+        = render partial: "groups/subgroup", collection: @department.children

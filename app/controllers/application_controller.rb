@@ -5,6 +5,8 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   before_action :ensure_user
 
+  layout 'peoplefinder'
+
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 
   def login_person(person)
