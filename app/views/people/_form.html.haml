@@ -21,7 +21,9 @@
   .form-group.visually-connected
     .panel.panel-border-narrow
       %label.form-label{for: :primary_phone_country_code} Country code
-      = f.country_select :primary_phone_country_code, {format: :with_dialling_code, priority_countries: ["GB"]}, {class: 'form-control'}
+      = f.country_select :primary_phone_country_code,
+        {format: :with_dialling_code, priority_countries: ["GB"]},
+        class: 'form-control'
 
   = f.text_field :secondary_email
 
