@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170228181641) do
+ActiveRecord::Schema.define(version: 20171024110518) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -72,18 +72,18 @@ ActiveRecord::Schema.define(version: 20170228181641) do
     t.text     "description"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "works_monday",           default: true
-    t.boolean  "works_tuesday",          default: true
-    t.boolean  "works_wednesday",        default: true
-    t.boolean  "works_thursday",         default: true
-    t.boolean  "works_friday",           default: true
+    t.boolean  "works_monday",               default: true
+    t.boolean  "works_tuesday",              default: true
+    t.boolean  "works_wednesday",            default: true
+    t.boolean  "works_thursday",             default: true
+    t.boolean  "works_friday",               default: true
     t.string   "image"
     t.string   "slug"
-    t.boolean  "works_saturday",         default: false
-    t.boolean  "works_sunday",           default: false
-    t.integer  "login_count",            default: 0,     null: false
+    t.boolean  "works_saturday",             default: false
+    t.boolean  "works_sunday",               default: false
+    t.integer  "login_count",                default: 0,     null: false
     t.datetime "last_login_at"
-    t.boolean  "super_admin",            default: false
+    t.boolean  "super_admin",                default: false
     t.text     "building"
     t.text     "city"
     t.text     "secondary_email"
@@ -91,6 +91,7 @@ ActiveRecord::Schema.define(version: 20170228181641) do
     t.datetime "last_reminder_email_at"
     t.string   "current_project"
     t.text     "pager_number"
+    t.text     "primary_phone_country_code"
   end
 
   add_index "people", ["slug"], name: "index_people_on_slug", unique: true, using: :btree

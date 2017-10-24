@@ -16,7 +16,13 @@
 
   %h3.heading-medium.with-border-lg
     = "Contact details"
+
   = f.text_field :primary_phone_number
+  .form-group.visually-connected
+    .panel.panel-border-narrow
+      %label.form-label{for: :primary_phone_country_code} Country code
+      = f.country_select :primary_phone_country_code, {format: :with_dialling_code, priority_countries: ["GB"]}, {class: 'form-control'}
+
   = f.text_field :secondary_email
   = f.text_field :building
   = f.text_field :location_in_building

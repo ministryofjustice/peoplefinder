@@ -6,7 +6,7 @@ module SpecSupport
         surname: 'Polo',
         email: 'marco.polo@digital.justice.gov.uk',
         primary_phone_number: '+44-208-123-4567',
-        secondary_phone_number: '07777777777',
+        primary_phone_country_code: 'GB',
         pager_number: '07666666666',
         location_in_building: '10.999',
         building: '102 Petty France',

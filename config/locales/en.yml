@@ -459,7 +459,7 @@ en:
       file: Upload CSV file
     hint:
       person:
-        primary_phone_number: "Select your country code then type in your number"
+        primary_phone_number: "Enter your number then select your country code"
         location_in_building: "For example, 10.30"
         building: "Select options from the list"
         city: "For example, London"

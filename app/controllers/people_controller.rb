@@ -96,7 +96,7 @@ class PeopleController < ApplicationController
   def person_params_list
     [
       :given_name, :surname, :location_in_building, :building, :city,
-      :primary_phone_number, :secondary_phone_number, :pager_number,
+      :primary_phone_number, :primary_phone_country_code,
       :email, :secondary_email,
       :profile_photo_id, :crop_x, :crop_y, :crop_w, :crop_h,
       :description, :current_project,

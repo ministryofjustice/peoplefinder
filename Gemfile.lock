@@ -121,10 +121,17 @@ GEM
       execjs
     coffee-script-source (1.12.2)
     concurrent-ruby (1.0.5)
+    countries (1.2.5)
+      currencies (~> 0.4.2)
+      i18n_data (~> 0.7.0)
+    country_select (2.5.2)
+      countries (~> 1.2.0)
+      sort_alphabetical (~> 1.0)
     crack (0.4.3)
       safe_yaml (~> 1.0.0)
     css_parser (1.5.0)
       addressable
+    currencies (0.4.2)
     daemon (1.2.0)
     daemons (1.2.4)
     database_cleaner (1.5.3)
@@ -321,6 +328,7 @@ GEM
       ruby_parser (~> 3.5)
     htmlentities (4.3.3)
     i18n (0.8.6)
+    i18n_data (0.7.0)
     ice_nine (0.11.1)
     inflecto (0.0.2)
     ipaddress (0.8.0)
@@ -551,6 +559,8 @@ GEM
       eventmachine (~> 1.0.0)
       thin (>= 1.5, < 1.7)
     slop (3.6.0)
+    sort_alphabetical (1.0.2)
+      unicode_utils (>= 1.2.2)
     spring (1.6.4)
     spring-commands-rspec (1.0.4)
       spring (>= 0.9.1)
@@ -579,6 +589,7 @@ GEM
       unf_ext
     unf_ext (0.0.6)
     unicode-display_width (1.2.1)
+    unicode_utils (1.4.0)
     unicorn (4.8.3)
       kgio (~> 2.6)
       rack
@@ -626,6 +637,7 @@ DEPENDENCIES
   carrierwave!
   codeclimate-test-reporter
   coffee-rails
+  country_select
   daemon
   database_cleaner
   delayed_job!
