@@ -400,14 +400,16 @@ en:
       person:
         given_name: First name
         surname: Last name
-        email: Main email address
+        email: Primary work email
         secondary_email: Alternative work email address (optional)
         primary_phone_number: Phone number
         secondary_phone_number: Alternative phone number (optional)
         pager_number: Pager number (optional)
         location_in_building: Location in building (optional)
         building: Building I work in (optional)
-        city: City
+        city: Town, City or Region
+        country: Country
+        skype_name: Skype name (optional)
         current_project: Current project(s) (optional)
         works_monday: Monday
         works_tuesday: Tuesday

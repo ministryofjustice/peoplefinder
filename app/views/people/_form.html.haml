@@ -25,9 +25,9 @@
         {format: :with_dialling_code, priority_countries: ["GB"]},
         class: 'form-control'
 
-  = f.text_field :secondary_email
+  = f.text_field :skype_name
 
-  .form-group
+  .form-group.visually-connected-below
     %label.form-label{for: :building} Building I work in (optional)
     %span.form-hint Select options from the list
     %ul.inline-list
@@ -38,6 +38,12 @@
 
   = f.text_field :location_in_building
   = f.text_field :city
+
+  .form-group
+    %label.form-label{for: :country} Country
+    = f.country_select :country,
+      {priority_countries: ["GB"]},
+      class: 'form-control'
 
   .form-group
     #error_person_membership
