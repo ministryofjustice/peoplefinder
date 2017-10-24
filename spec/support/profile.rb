@@ -9,7 +9,6 @@ module SpecSupport
         primary_phone_country_code: 'GB',
         pager_number: '07666666666',
         location_in_building: '10.999',
-        building: '102 Petty France',
         city: 'London',
         description: 'Lorem ipsum dolor sit amet...',
         current_project: 'Donec tincidunt luctus ullamcorper.'
@@ -51,7 +50,6 @@ module SpecSupport
       fill_in 'Main email', with: person_attributes[:email]
       fill_in 'Phone number', with: person_attributes[:primary_phone_number]
       fill_in 'Location in building', with: person_attributes[:location_in_building]
-      fill_in 'Building', with: person_attributes[:building]
       fill_in 'City', with: person_attributes[:city]
       fill_in 'Extra information', with: person_attributes[:description]
       fill_in 'Current project(s)', with: person_attributes[:current_project]
@@ -88,7 +86,6 @@ module SpecSupport
       expect(page).to have_text(person_attributes[:email])
       expect(page).to have_text(person_attributes[:primary_phone_number])
       expect(page).to have_text(person_attributes[:location_in_building])
-      expect(page).to have_text(person_attributes[:building])
       expect(page).to have_text(person_attributes[:city])
       expect(page).to have_text(person_attributes[:description])
       expect(page).to have_text(person_attributes[:current_project])
