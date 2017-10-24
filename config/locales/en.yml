@@ -211,6 +211,63 @@ en:
       victoria_1: "Victoria Street"
       horse_guards: "Horse Guards Rd"
       king_charles: "King Charles Street"
+    key_skill_names:
+      accounting: Accounting
+      agile_delivery: Agile delivery
+      auditing: Auditing
+      briefing_ministers: Briefing ministers and senior officials
+      change_management: Change management
+      communications: Communications
+      commercial_awareness: Commercial awareness
+      crm:  Customer relationship management (CRM)
+      data_analysis:  Data analysis
+      financial_reporting:  Financial reporting
+      knowledge_sharing: Knowledge sharing
+      legal_writing:  Legal writing
+      legislation: Legislation
+      negotiation: Negotiation
+      marketing: Marketing
+      ministerial_briefing: Ministerial briefing
+      operational_delivery: Operational delivery
+      parliamentary_business: Parliamentary business
+      planning: Planning
+      policy: Policy
+      project_delivery: Project delivery
+      risk_management: Risk management
+      speech_writing: Speech writing
+      statistics: Statistics
+      strategy: Strategy
+      submission: Submissions
+      training: Training
+      underwriting: Underwriting
+      valution: Valuation
+      media_trained:  Media trained
+      economist:  Economist
+      law: Law
+      research_operational: Research - operational
+      research_economic: Research - economic
+      research_statistical: Research - statistical
+      research_social: Research - social
+      research_user: Research - user
+      it: IT
+      information_management: Information management
+      content_design: Content design
+      graphic_design: Graphic design
+      ux_design: UX design
+      marketing: Marketing
+      contract_management: Contract managment
+      project_management: Project management
+      asset_management: Asset management
+      tax: Tax
+      digital_workspace_publisher: Digital Workspace publisher
+      commercial_specialise: Commercial specialist
+      income_generation: Income generation
+      sponsorship: Sponsorship and partmentships
+      credit_risk_analysis: Credit risk analysis
+      digital: Digital
+      interviewing: Interviewing
+      project_finance:  Project finance
+      presenting: Presenting
   management:
     header: Management
     report_header: Reports

@@ -91,8 +91,14 @@ module PeopleHelper
   end
 
   def building_names
-    Person::BUILDING_NAMES.map do |building_name|
+    Person::BUILDING_OPTS.map do |building_name|
       [building_name, I18n.t("people.building_names.#{building_name}")]
+    end
+  end
+
+  def key_skill_names
+    Person::KEY_SKILL_OPTS.map do |key_skill|
+      [key_skill, I18n.t("people.key_skill_names.#{key_skill}")]
     end
   end
 end

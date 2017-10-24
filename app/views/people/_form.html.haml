@@ -72,7 +72,14 @@
 
   %h3.heading-medium.with-border-lg
     = "Extra information"
-  = f.text_area :description
+
+  .form-group
+    %label.form-label{for: :key_skills} Key areas of responsibility within my job
+    %ul.inline-list
+      = f.collection_check_boxes :key_skills, key_skill_names, :first, :last, checked: @person.try(:key_skills) do |b|
+        %li
+          .form-group
+            = b.label(class: "block-label selection-button-checkbox", 'data-value': b.value) { b.check_box + b.text }
 
 
   .form-group
