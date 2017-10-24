@@ -205,6 +205,12 @@ en:
       works_friday: "F"
       works_saturday: "S"
       works_sunday: "S"
+    building_names:
+      whitehall_55: "55 Whitehall"
+      whitehall_3: "Whitehall Place"
+      victoria_1: "Victoria Street"
+      horse_guards: "Horse Guards Rd"
+      king_charles: "King Charles Street"
   management:
     header: Management
     report_header: Reports

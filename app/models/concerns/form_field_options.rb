@@ -1,4 +1,4 @@
-module Concerns::WorkDays
+module Concerns::FormFieldOptions
   extend ActiveSupport::Concern
 
   included do
@@ -19,5 +19,13 @@ module Concerns::WorkDays
     def works_weekends?
       works_saturday || works_sunday
     end
+
+    BUILDING_NAMES = [
+      :whitehall_55,
+      :whitehall_3,
+      :victoria_1,
+      :horse_guards,
+      :king_charles
+    ].freeze
   end
 end

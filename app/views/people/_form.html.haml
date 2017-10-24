@@ -24,7 +24,16 @@
       = f.country_select :primary_phone_country_code, {format: :with_dialling_code, priority_countries: ["GB"]}, {class: 'form-control'}
 
   = f.text_field :secondary_email
-  = f.text_field :building
+
+  .form-group
+    %label.form-label{for: :building} Building I work in (optional)
+    %span.form-hint Select options from the list
+    %ul.inline-list
+      = f.collection_check_boxes :building, building_names, :first, :last, checked: @person.try(:building) do |b|
+        %li
+          .form-group
+            = b.label(class: "block-label selection-button-checkbox", 'data-value': b.value) { b.check_box + b.text }
+
   = f.text_field :location_in_building
   = f.text_field :city
 

@@ -90,4 +90,9 @@ module PeopleHelper
     end
   end
 
+  def building_names
+    Person::BUILDING_NAMES.map do |building_name|
+      [building_name, I18n.t("people.building_names.#{building_name}")]
+    end
+  end
 end
