@@ -92,13 +92,13 @@ module PeopleHelper
 
   def building_names
     Person::BUILDING_OPTS.map do |building_name|
-      [building_name, I18n.t("people.building_names.#{building_name}")]
+      [I18n.t("people.building_names.#{building_name}"), building_name]
     end
   end
 
   def key_skill_names
     Person::KEY_SKILL_OPTS.map do |key_skill|
-      [key_skill, I18n.t("people.key_skill_names.#{key_skill}")]
+      [I18n.t("people.key_skill_names.#{key_skill}"), key_skill]
     end
   end
 
@@ -110,7 +110,7 @@ module PeopleHelper
 
   def learning_and_development_names
     Person::LEARNING_DEVELOPMENT_OPTS.map do |ld|
-      [ld, I18n.t("people.learning_and_development_names.#{ld}")]
+      [I18n.t("people.learning_and_development_names.#{ld}"), ld]
     end
   end
 end

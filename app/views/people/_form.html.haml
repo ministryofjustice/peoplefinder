@@ -31,7 +31,7 @@
     %label.form-label{for: :building} Building I work in (optional)
     %span.form-hint Select options from the list
     %ul.inline-list
-      = f.collection_check_boxes :building, building_names, :first, :last, checked: @person.try(:building) do |b|
+      = f.collection_check_boxes :building, building_names,:last, :first,  checked: @person.try(:building) do |b|
         %li
           .form-group
             = b.label(class: "block-label selection-button-checkbox", 'data-value': b.value) { b.check_box + b.text }
@@ -76,7 +76,7 @@
   .form-group
     %label.form-label{for: :key_skills} Key areas of responsibility within my job
     %ul.inline-list
-      = f.collection_check_boxes :key_skills, key_skill_names, :first, :last, checked: @person.try(:key_skills) do |b|
+      = f.collection_check_boxes :key_skills, key_skill_names, :last, :first , checked: @person.try(:key_skills) do |b|
         %li
           .form-group
             = b.label(class: "block-label selection-button-checkbox", 'data-value': b.value) { b.check_box + b.text }
@@ -93,7 +93,7 @@
   .form-group
     %label.form-label{for: :learning_and_development} Learning and development interests (optional)
     %ul.inline-list
-      = f.collection_check_boxes :learning_and_development, learning_and_development_names, :first, :last, checked: @person.try(:learning_and_development) do |b|
+      = f.collection_check_boxes :learning_and_development, learning_and_development_names, :last, :first, checked: @person.try(:learning_and_development) do |b|
         %li
           .form-group
             = b.label(class: "block-label selection-button-checkbox", 'data-value': b.value) { b.check_box + b.text }
