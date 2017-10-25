@@ -19,6 +19,9 @@
         .heading-medium.mod-home-info.cb-about-usage
           = t('.about_usage')
 
+    - if can_add_person_here?
+      = link_to 'Create a new profile', new_person_path, class: 'add-new-person'
+
     .cb-department-overview
       .grid-row.mod-heading
         .column-full
