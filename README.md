@@ -94,11 +94,14 @@ defined on a per environment basis.
 
 `config.elastic_search_url` Required for production (see Search section below)
 
-`config.ga_tracking_id` Google Analytics tracking id [optional]. e.g. 'XXXX-XXX'
-
 `config.support_email` e.g. 'peoplefinder-support@example.com'
 
 `config.send_reminder_emails` Set to true if reminder emails are to be sent by cronjobs
+
+## Google Analytics
+Set the tracking id as:
+`ENV['GA_TRACKING_ID']`
+
 
 ## Permitted domains
 

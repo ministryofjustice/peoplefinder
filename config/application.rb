@@ -62,8 +62,6 @@ module Peoplefinder
 
     config.elastic_search_url = ENV['DIT_PF_ES_URL']
 
-    config.ga_tracking_id = (ENV['GA_TRACKING_ID'] || '')
-
     config.rack_timeout = (ENV['RACK_TIMEOUT'] || 14)
 
     config.max_tokens_per_hour = ENV['MAX_TOKENS_PER_HOUR']
