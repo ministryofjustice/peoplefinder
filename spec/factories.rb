@@ -6,6 +6,7 @@ FactoryGirl.define do
   sequence(:surname) { |n| "Surname #{('a'.ord + (n % 25)).chr}" }
   sequence(:location_in_building) { |n| "Room #{n}, #{n.ordinalize}" }
   sequence(:city) { |n| 'Megacity %d' % n }
+  sequence(:country) { |n| 'Country %d' % n }
   sequence(:primary_phone_number) { |n| '07708 %06d' % (900_000 + n) }
   sequence(:pager_number) { |n| '07600 %06d' % (900_000 + n) }
   sequence(:phone_number) { |n| '07700 %06d' % (900_000 + n) }
@@ -53,7 +54,7 @@ FactoryGirl.define do
     trait :with_details do
       primary_phone_number
       pager_number
-      building
+      country
       location_in_building
       city
     end
@@ -69,6 +70,7 @@ FactoryGirl.define do
       primary_phone_number { Faker::PhoneNumber.phone_number }
       login_count { Random.rand(20) + 1 }
       last_login_at { login_count == 0 ? nil : Random.rand(15).days.ago }
+      country { Faker::Address.country_code }
     end
 
     trait :for_demo_csv do

@@ -6,7 +6,7 @@ module Concerns::Completion
   include Concerns::BucketedCompletion
 
   ADEQUATE_FIELDS = %i(
-    building
+    country
     city
     location_in_building
     primary_phone_number

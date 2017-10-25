@@ -29,7 +29,7 @@ module SpecSupport
       person.update_attributes(
         person_attributes.
           except(:email).
-          merge(profile_photo_id: profile_photo.id)
+          merge(profile_photo_id: profile_photo.id, country: 'GB')
       )
       person.groups << create(:group)
     end
