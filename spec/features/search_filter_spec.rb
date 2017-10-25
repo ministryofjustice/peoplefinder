@@ -52,7 +52,7 @@ feature 'Search results page' do
   feature 'filtering' do
     before do
       fill_in 'query', with: 'browne'
-      click_button 'Search'
+      find('.mod-search-submit').click()
     end
 
     scenario 'defaults to searching people and teams' do

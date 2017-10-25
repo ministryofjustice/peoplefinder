@@ -136,7 +136,6 @@ feature 'Group maintenance' do
       visit_edit_view(group)
 
       expect(page).to have_title("Edit team - #{app_title}")
-      expect(page).not_to have_selector('.mod-search-form')
       new_name = 'Cyberdigital Cyberservices'
       fill_in 'Team name', with: new_name
 
@@ -263,15 +262,11 @@ feature 'Group maintenance' do
     scenario 'UI elements on the new/edit pages' do
       javascript_log_in
       visit new_group_path
-      expect(page).not_to have_selector('.mod-search-form')
 
       fill_in 'Team name', with: 'Digital'
       select_in_parent_team_select 'Ministry of Justice'
       click_button 'Save'
-      expect(page).to have_selector('.mod-search-form')
-
-      click_link 'Edit this team'
-      expect(page).not_to have_selector('.mod-search-form')
+      expect(page).to have_link 'Edit this team'
     end
 
     scenario 'Cancelling an edit' do

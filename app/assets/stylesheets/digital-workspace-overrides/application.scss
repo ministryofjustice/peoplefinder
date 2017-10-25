@@ -1,0 +1,890 @@
+// ---------------------------------------
+// variables
+@import "vars/screen-sizes";
+@import "vars/colours";
+@import "vars/assets";
+
+// ---------------------------------------
+// components
+@import "components/people-finder";
+
+// ------------------------------------
+// Global header
+
+#global-header.with-proposition {
+	background-color: #FFFFFF;
+	.header-wrapper {
+		background-color: #FFFFFF;
+		.header-global {
+			float: left;
+			width: 38%;
+		}
+		.header-proposition {
+			padding-top: 0;
+			position: relative;
+			.search {
+				position: absolute;
+				right: 15px;
+				top: 0px;
+			}
+			#proposition-name {
+				font-size: 16px;
+			}
+
+			.beta-label {
+				display: -moz-inline-stack;
+				display: inline-block;
+				margin: 4px 12px 0 0;
+				padding: 2px 5px 0;
+				//font-family: $font_family_main;
+				font-weight: 100;
+				text-transform: none;
+				font-size: 16px;
+				line-height: 1;
+				text-transform: uppercase;
+				letter-spacing: 1px;
+				text-decoration: none;
+				color: #fff;
+				background-color: #005ea5;
+				margin-top: 13px;
+				margin-left: 7px;
+				padding: 3px 6px;
+			}
+
+			#proposition-menu {
+				clear: none;
+				float: right;
+				padding-top: 10px;
+			}
+			a.menu {
+				clear: right;
+				margin-top: 5px;
+			}
+			form {
+				float: right;
+				.govuk-search {
+					&.proposition-search {
+						margin-bottom: 0;
+						width: auto;
+					}
+					.search-label {
+						display: none;
+					}
+					.search-wrapper {
+						background: transparent;
+						display: inline-block;
+						width: auto;
+					}
+					.search-element {
+						display: inline-block;
+					}
+					.search-input {
+						display: none;
+					}
+					.search-submit {
+						height: 32px;
+						width: 38px;
+					}
+				}
+			}
+		}
+	}
+	#logo {
+		background-image: asset-data-url("dit-logo_000@2x.png");
+		background-size: 137px 65px;
+		margin-top: 15px;
+
+		width: 137px;
+		height: 65px;
+
+		img {
+			max-width: 100%;
+			&:first-child {
+				display: none;
+			}
+		}
+	}
+	#proposition-name {
+		float: left;
+	}
+}
+
+@media (min-width: $screen_small) {
+	#global-header.with-proposition {
+		.header-wrapper {
+			.header-proposition {
+				#proposition-menu  {
+					margin-left: 15px;
+				}
+				#proposition-name {
+					font-size: 18px;
+				}
+			}
+		}
+	}
+}
+
+@media (min-width: $screen_medium) {
+	#global-header.with-proposition {
+		.header-wrapper {
+			.header-global {
+				float: left;
+				width: 25%;
+			}
+			.header-proposition {
+				padding-top: 10px;
+				width: 75%;
+				.search {
+					top: 9px;
+				}
+				#proposition-name {
+					font-size: 34px;
+				}
+				#proposition-menu {
+					clear: both;
+					float: left;
+					padding-top: 5px;
+				}
+				form {
+					float: none;
+					.govuk-search {
+						&.proposition-search {
+							width: 41.187%;
+						}
+						.search-label {
+							display: block;
+						}
+						.search-wrapper {
+							background: transparent;
+							display: table;
+							width: auto;
+						}
+						.search-element {
+							display: table-cell;
+						}
+						.search-input {
+							display: table-cell;
+						}
+						.search-submit {
+							height: 40px;
+							width: 40px;
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+// ------------------------------------
+// homepage intro block
+
+.homepage-top {
+	background: $brand_chrome_d;
+	background-image: asset-data-url("find-people-pattern.png");
+	color: #ffffff;
+
+	.homepage-top-inner {
+		margin: 0 15px;
+		overflow: hidden;
+		position: relative;
+		max-width: 980px;
+		text-align: left;
+	}
+	.welcome-block {
+		width: 100%;
+		.welcome-people-finder {
+			margin: 0 10px;
+		}
+	}
+	.profile-overview {
+		display: none;
+		position: absolute;
+		top: 0;
+		right: 10px;
+		width: 33.33%;
+		.profile-overview-inner {
+			/*padding: 107px 20px 5px;*/
+			position: relative;
+			margin-left: 27px;
+			min-height: 20em;
+			color: #ffffff;
+			overflow: auto;
+			.profile-flair {
+				background: $brand_color_c; /* For unsupported browsers */
+				background: rgba($brand_color_c, 0.3); /* IE8 */
+				-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=$brand_color_c, endColorstr=$brand_color_c)"; /* IE8 */
+				filter: alpha(opacity=30); /* IE8 */
+				zoom: 1; /* IE8 */
+				display: block;
+				height: 70px;
+				position: absolute;
+				right: 0;
+				text-align: right;
+				top: 0;
+				width: 100%;
+			}
+
+			.profile-content {
+				background: $brand_color_c;
+				margin: 67px 0;
+				padding: 20px 20px 20px;
+				@extend %clearfix;
+			}
+
+			.profile-details {
+				@extend %clearfix;
+			}
+
+			.profile-image {
+				display: none;
+				float: left;
+				width: 33.33%;
+			}
+			.profile-meta {
+				float: left;
+				width: 100%;
+				h3 {
+					line-height: 1em;
+					margin-top: 0;
+					a {
+						word-break: break-all;
+					}
+				}
+				span {
+					font-size: 14px;
+					&.profile-update {
+						display: block;
+						text-align: right;
+					}
+				}
+			}
+
+			.profile-progress,
+			.profile-update {
+				display: inline-block;
+			}
+			.profile-update {
+				font-size: 14px;
+				padding-left: 90px;
+			}
+
+			img {
+				max-height: 5em;
+				max-width: 100%;
+			}
+			.heading-small {
+				margin-top: 6px;
+			}
+			span {
+				display: block;
+			}
+		}
+	}
+	a {
+		color: #ffffff;
+	}
+}
+
+@media (min-width: $screen_small) {
+	.homepage-top {
+		.homepage-top-inner {
+			margin: 0 30px;
+		}
+		.welcome-block {
+			width: 66.66%;
+		}
+		.profile-overview {
+			display: block;
+		}
+	}
+}
+
+@media (min-width: $screen_medium) {
+	.homepage-top {
+		.welcome-block {
+			.heading-large {
+				margin-top: 0.9em;
+				margin-bottom: 0.4em;
+			}
+		}
+		.profile-overview {
+			.profile-overview-inner {
+				.profile-image {
+					display: block;
+				}
+				.profile-meta {
+					width: 66.66%;
+					h3, span {
+						padding-left: 15px;
+					}
+				}
+			}
+		}
+	}
+}
+
+@media (min-width: $screen_large) {
+	.homepage-top {
+		.homepage-top-inner {
+			margin: 0 auto;
+		}
+	}
+}
+
+// ------------------------------------
+// beta bar
+
+#global-header-bar {
+	background-color: #cd1632;
+}
+
+.beta-bar {
+	font-size: 16px;
+	margin: 0 15px;
+	padding: 5px 0;
+	position: relative;
+	overflow: hidden;
+	max-width: 960px;
+	text-align: left;
+	.beta-label {
+		display: -moz-inline-stack;
+		display: inline-block;
+		margin: 4px 12px 0 0;
+		padding: 2px 5px 0;
+		//font-family: $font_family_main;
+		font-weight: 700;
+		text-transform: none;
+		font-size: 16px;
+		line-height: 1.14286;
+		text-transform: uppercase;
+		letter-spacing: 1px;
+		text-decoration: none;
+		color: #fff;
+		background-color: #005ea5;
+		margin-right: 0;
+		padding-top: 1px;
+	}
+	span {
+		display: inline;
+		margin-left: 4px;
+	}
+}
+
+@media (min-width: $screen_small) {
+	.beta-bar {
+		margin: 0 30px;
+		span {
+			display: inline-block;
+		}
+	}
+}
+
+@media (min-width: $screen_large) {
+	.beta-bar {
+		margin: 0 auto;
+	}
+}
+
+// ------------------------------------
+// homepage news, what's popular
+
+.news-column {
+	h2 {
+		border-top: 1px solid #bfc1c3;
+		margin-top: 0;
+		padding-top: 0.8333333333em;
+	}
+}
+
+.more-news {
+	.more-news-inner {
+		border-top: 1px solid #b8bcbe;
+	}
+}
+
+.news-item {
+	margin-bottom: 30px;
+	overflow: auto;
+	img {
+		display: block;
+		width: 100%;
+	}
+	.image-holder {
+		float: left;
+		width: 33.33333%;
+		max-height: 195px;
+		overflow: hidden;
+		.img {
+			display: block;
+			padding: 5px 15px 0 0;
+		}
+	}
+	.news-item-text {
+		float: left;
+		width: 66.66667%
+	}
+
+	.heading-medium {
+		margin: 0;
+		padding-top: 6px;
+		padding-bottom: 4px;
+	}
+
+	&:first-child {
+		.heading-medium {
+			margin-top: 0px;
+			padding-top: 0px;
+		}
+		/*margin-bottom: 0;*/
+	}
+}
+
+.popular-page-summary {
+	clear: both;
+	margin-bottom: 30px;
+	overflow: auto;
+	img {
+		display: block;
+		width: 100%;
+	}
+	.image-holder {
+		float: left;
+		width: 33.33333%;
+		max-height: 195px;
+		overflow: hidden;
+		.img {
+			display: block;
+			padding: 5px 15px 0 0;
+		}
+	}
+	.popular-page-text {
+		float: left;
+		width: 66.66667%
+	}
+	.heading-medium {
+		font-size: 16px;
+		margin: 0;
+		//padding-top: 6px;
+		padding-top: 1.65em;
+		padding-bottom: 4px;
+	}
+	p {
+		font-size: 14px;
+		line-height: 1.4em;
+	}
+	&:last-child {
+		margin-bottom: 0;
+	}
+}
+
+@media(min-width: $screen_medium) {
+	.news-item {
+		.image-holder {
+			width: 100%;
+			.img {
+				padding: 0;
+			}
+		}
+		.news-item-text {
+			width: 100%;
+		}
+
+		.heading-medium {
+			margin: 0;
+			padding-top: 6px;
+			padding-bottom: 4px;
+		}
+		p {
+			font-size: 16px;
+		}
+	}
+
+	.popular-page-summary {
+		clear: none;
+		margin-bottom: 30px;
+		.image-holder {
+			width: 100%;
+			.img {
+				padding: 0;
+			}
+		}.popular-page-text {
+			width: 100%
+		}
+		.heading-medium {
+			font-size: 19px;
+			margin: 0;
+			padding-top: 20px;
+			padding-bottom: 4px;
+		}
+		&:last-child {
+			/*margin-bottom: 30px;*/
+		}
+	}
+}
+
+// ------------------------------------
+// homepage graph summaries
+
+.graph-summary {
+	color: #ffffff;
+	margin-bottom: 15px;
+
+	&.graph-summary-orange {
+		.stat {
+			background-color: $brand_color_a;
+		}
+	}
+	&.graph-summary-teal {
+		.stat {
+			background-color: #30a197;
+		}
+	}
+	&.graph-summary-blue {
+		.stat {
+			background-color: #318dc2;
+		}
+	}
+	&.graph-summary-pink {
+		.stat {
+			background-color: #f29abe;
+		}
+	}
+	.stat {
+		background-position: center 30px;
+		background-repeat: no-repeat;
+		background-size: 45%;
+		padding: 15px 15px 15px 15px;
+		text-align: center;
+	}
+	.stat-number {
+		display: block;
+		font-size: 82px;
+		font-weight: bold;
+		line-height: 90px;
+	}
+	.stat-description {
+		display: block;
+		font-size: 16px;
+		margin-top: 0;
+	}
+}
+
+.howdoi-description {
+	display: block;
+	font-size: 16px;
+	margin-top: 0;
+}
+
+@media (min-width: $screen_small) {
+	.graph-summary {
+		.stat {
+			background-size: 60%;
+			padding-top: 150px;
+		}
+		&.graph-summary-a {
+			.stat {
+				background-image: asset-data-url("graph-dots.png");
+			}
+		}
+		&.graph-summary-b {
+			.stat {
+				background-image: asset-data-url("graph-pie.png");
+			}
+		}
+		&.graph-summary-c {
+			.stat {
+				background-image: asset-data-url("graph-line.png");
+			}
+		}
+	}
+}
+
+// ------------------------------------
+// homepage how to links
+
+.how-tos {
+	margin: 10px 0 0;
+	li {
+		font-size: 16px;
+		margin-bottom: 12px;
+	}
+}
+
+// ------------------------------------
+// homepage tweets
+
+.tweet {
+	.tweet-profile-image {
+		float: left;
+		width: 17%;
+	}
+	.tweet-body {
+		float: left;
+		font-size: 16px;
+		width: 83%;
+		.tweet-meta {
+			margin-left: 20px;
+		}
+		.tweet-content {
+			color: #6f777b;
+			font-size: 16px;
+			margin-left: 20px;
+			padding-top: 4px;
+		}
+		a, date, span {
+			display: inline-block;
+			padding-right: 0.25em;
+		}
+		.tweet-username {
+			font-weight: bold;
+		}
+		.tweet-date {
+			color: #6f777b;
+			&:before {
+				content: '\2022';
+			}
+		}
+	}
+}
+
+// ------------------------------------
+// govuk-search
+
+.mod-search {
+	position: relative;
+	margin-bottom: 40px;
+	.search-label {
+		color: #6f777b;
+		display: block;
+	}
+	.search-wrapper {
+		display: table;
+		width: 87%;
+		background: #fff;
+	}
+
+	&.proposition-search .search-wrapper {
+		border: 2px solid #000000;
+	}
+
+	.search-element {
+		position: relative;
+		display: table-cell;
+		vertical-align: top;
+	}
+	.search-input {
+		padding: 6px;
+		margin: 0;
+		width: 100%;
+		height: 40px;
+		border: 0;
+		-webkit-box-sizing: border-box;
+		-moz-box-sizing: border-box;
+		box-sizing: border-box;
+		font-family: $font_family_main;
+		font-weight: 400;
+		text-transform: none;
+		font-size: 16px;
+		line-height: 1.75;
+		background: #fff;
+		border-radius: 0;
+		-webkit-appearance: none;
+		-moz-appearance: none;
+		&:focus,
+		&.focus {
+			z-index: 2;
+		}
+	}
+	.search-submit-wrapper {
+		width: 1%;
+	}
+	.mod-search-form {
+		.mod-search-input {
+			position: relative;
+			padding: 0;
+			width: 100%;
+			height: 40px;
+			background-color: #cd1632;
+			background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGkAAABGCAMAAAD4pkrrAAAAM1BMV…lEhzKJorCcV%2BpiSUQHMkoegJrb%2FPJS1pSUta0pJ%2BAIynqm4LtSuyAAAAAElFTkSuQmCC);
+			background-repeat: no-repeat;
+			background-position: 2px 50%;
+			border-width: 0px;
+			color: #fff;
+			text-indent: -5000px;
+			overflow: hidden;
+			&:focus,
+			&.focus {
+				z-index: 2;
+			}
+		}
+		.mod-search-submit {
+			position: relative;
+			padding: 0;
+			width: 40px;
+			height: 40px;
+			background-color: #cd1632;
+			background-image: asset-data-url("icon-search-submit.png");
+			background-repeat: no-repeat;
+			background-position: 2px 50%;
+			border-width: 0px;
+			color: #fff;
+			text-indent: -5000px;
+			overflow: hidden;
+		}
+	}
+	&.proposition-search {
+		float: right;
+		width: 41.187%;
+		.search-submit {
+			background-color: #005ea5;
+		}
+	}
+}
+
+.js-enabled {
+	.govuk-search {
+		.search-label {
+			position: absolute;
+			left: 15px;
+			top: 1px;
+			z-index: 1;
+			font-family: $font_family_main;
+			font-weight: 400;
+			text-transform: none;
+			font-size: 16px;
+			line-height: 40px;
+			color: #6f777b;
+		}
+	}
+}
+
+input[type="search"] {
+	min-width: 8em;
+}
+
+@media (min-width: $screen_small) {
+	.js-enabled {
+		.govuk-search {
+			.search-label {
+				font-size: 19px;
+				line-height: 40px;
+			}
+		}
+	}
+	.govuk-search {
+		.search-input {
+			font-size: 19px;
+			line-height: 1.47368em;
+		}
+	}
+}
+
+// ------------------------------------
+// horizontal rules
+
+hr {
+	&.rule-large {
+		clear: both;
+		background-color: transparent;
+		border: 5px solid $brand_color_c;
+		border-width: 5px 0 0;
+		margin: 15px 0px 0px;
+	}
+	&.rule-top {
+		margin: 0;
+	}
+}
+
+@media (min-width: $screen_small) {
+	hr {
+		&.rule-large {
+			//margin: 60px 0px 30px;
+			margin: 15px 0px 0px;
+		}
+		&.rule-top {
+			margin: 0;
+		}
+	}
+}
+
+// ------------------------------------
+// misc. type
+
+html, body, button, input, main, table, td, th, .heading-xlarge, .heading-large, .heading-medium, .heading-small, #footer .footer-meta .footer-meta-inner ul, #footer .footer-meta .footer-meta-inner .open-government-licence p, #footer .footer-meta .copyright, #footer h2, .govuk-search .search-input, #global-header .header-proposition #proposition-name, #global-header .header-proposition #proposition-link a, #global-header .header-proposition #proposition-links a {
+	color: #000000;
+	font-family: $font_family_main;
+}
+
+.homepage-top .heading-large {
+	color: #FFFFFF !important;
+}
+
+
+.section-note {
+	color: #6f777b;
+	float: right;
+	font-size: 14px;
+	margin-top: 30px;
+	text-align: right;
+	&.section-note-top {
+		margin-bottom: 20px;
+		margin-top: 0px;
+	}
+	p {
+		margin: 0;
+	}
+}
+
+#footer {
+	border-top: 16px solid $brand_color_a;
+
+	.heading-xsmall {
+		font-weight: 700;
+	}
+}
+
+.footer-wrapper {
+	ul {
+		margin-bottom: 30px;
+		li {
+			margin-bottom: 10px;
+		}
+	}
+}
+
+@media (min-width: $screen_small) {
+	.section-note {
+		&.section-note-top {
+			margin-top: 15px;
+			margin-bottom: 0;
+		}
+	}
+
+	.footer-wrapper {
+		margin-bottom: 0;
+	}
+}
+
+// ------------------------------------
+// News pages
+
+.news-section {
+	.news-category {
+		.rule-large {
+			margin-top: 0;
+		}
+	}
+
+	.news-item {
+		.heading-small,
+		.heading-large,
+		.rule-small {
+			margin-top: 0px;
+		}
+	}
+}
+
+.case {
+	text-transform: capitalize;
+}

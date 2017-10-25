@@ -1,17 +1,12 @@
 .grid-row.mod-search
-  .column-two-thirds
-    = form_tag '/search', method: :get, class: 'mod-search-form', id: "mod-search-form" do
-
-      .form-group.header-search-content
-        %label{:for => "mod-search-input"}
-          = t('shared.search.hint')
-
-        .mod-search-input-wrapper
-          = search_field_tag :query, @query, class: 'form-control mod-search-input js-search-focus focus', id: "mod-search-input"
-          - SearchHelper::FILTERS.each_value do |value|
-            = hidden_field_tag 'search_filters[]', value
-        = submit_tag 'Search', class: 'mod-search-submit'
-
-  .column-one-third.new-profile
-    - if can_add_person_here?
-      = link_to 'Create a new profile', new_person_path, class: 'add-new-person'
+  = form_tag '/search', method: :get, class: 'mod-search-form', id: "mod-search-form" do
+    .form-group.header-search-content
+      %label{:for => "mod-search-input"}
+        = t('shared.search.hint')
+      .mod-search-input-wrapper
+        = search_field_tag :query, @query, class: 'form-control mod-search-input js-search-focus focus', id: "mod-search-input"
+        - SearchHelper::FILTERS.each_value do |value|
+          = hidden_field_tag 'search_filters[]', value
+      = submit_tag 'Search', class: 'mod-search-submit'
+  - if can_add_person_here?
+    = link_to 'Create a new profile', new_person_path, class: 'add-new-person'

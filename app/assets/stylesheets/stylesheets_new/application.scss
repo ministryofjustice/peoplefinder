@@ -1,0 +1,87 @@
+// ---------------------------------------
+// Settings (variables)
+@import "colours";                                // Colour variables
+@import "font_stack";                             // Font family variables
+@import "measurements";                           // Widths and gutter variables
+
+// ---------------------------------------
+// Mixins
+@import "conditionals";                           // Media query mixin
+@import "device-pixels";                          // Retina image mixin
+@import "grid_layout";                            // Basic grid layout mixin
+@import "typography";                             // Core bold and heading mixins, also external links
+@import "shims";                                  // Inline block mixin, clearfix placeholder
+
+// ---------------------------------------
+// Mixins to generate components (chunks of UI)
+@import "design-patterns/alpha-beta";
+@import "design-patterns/buttons";
+@import "design-patterns/breadcrumbs";
+
+// ---------------------------------------
+// Functions
+@import "url-helpers";                            // Function to output image-url, or prefixed path (Rails and Compass only)
+
+// GOV.UK elements
+@import "elements/helpers";                       // Helper functions and classes
+
+// ---------------------------------------
+// Generic (normalize/reset.css)
+@import "elements/reset";
+
+// ---------------------------------------
+// Objects (unstyled design patterns)
+@import "elements/layout";                        // Main content container. Grid layout - rows and column widths
+
+// ---------------------------------------
+// Components (chunks of UI)
+@import "elements/elements-typography";           // Typography
+@import "elements/buttons";                       // Buttons
+@import "elements/icons";                         // Icons - numbered steps, calendar, search
+@import "elements/lists";                         // Lists - numbered, bulleted
+@import "elements/tables";                        // Tables - regular, numeric
+@import "elements/details";                       // Details summary
+@import "elements/panels";                        // Panels with a left grey border
+@import "elements/forms";                         // Form - wrappers, inputs, labels
+@import "elements/breadcrumbs";                   // Breadcrumbs
+@import "elements/phase-banner";                  // Alpha and beta banners and tags
+@import "elements/components";                    // GOV.UK prefixed styles - blue highlighted box
+@import "elements/shame";                         // Hacks and workarounds that will go away eventually
+
+// ---------------------------------------
+
+// ---------------------------------------
+// variables
+@import "vars/screen-sizes";
+@import "vars/colours";
+@import "vars/assets";
+
+// ---------------------------------------
+// Utilites
+@import "util/utilities";
+@import "util/links";
+@import "util/horizontal-rules";
+
+// ---------------------------------------
+// Partials
+@import "components/header";
+@import "components/people-finder";
+@import "components/search";
+@import "components/breadcrumb";
+@import "components/pagination";
+@import "components/post-meta";
+@import "components/typography";
+@import "components/footer";
+
+// ---------------------------------------
+// Pages
+
+// Homepage
+@import "pages/home/homepage";
+
+// News section
+@import "pages/news/news-index";
+@import "pages/news/news-comments";
+
+// Overrides
+/*@import "digital-workspace-overrides";			   // Additional styles either new or over-riding for the Digital Workspace*/

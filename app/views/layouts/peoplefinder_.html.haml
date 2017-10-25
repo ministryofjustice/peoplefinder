@@ -1,0 +1,18 @@
+- content_for :proposition_header do
+  .header-proposition
+    .content
+
+        / .search
+    /   %form{:action => "/search", :method => "get", :role => "search"}
+    /     .proposition-search.govuk-search
+    /       %label.search-label
+    /         Search site
+    /       .search-wrapper
+    /         %input{:type => 'search', :title => 'Search', :class => 'search-element search-input js-class-toggle'}
+    /         .search-element.search-submit-wrapper
+    /           %button{:type => 'submit', :class => 'search-submit'}
+    /             Search
+
+
+- content_for :body_end do
+  = javascript_include_tag 'application'
