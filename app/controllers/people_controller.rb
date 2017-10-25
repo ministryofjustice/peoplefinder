@@ -101,7 +101,7 @@ class PeopleController < ApplicationController
       :profile_photo_id, :crop_x, :crop_y, :crop_w, :crop_h,
       :description, :current_project, :previous_positions, :grade,
       *Person::DAYS_WORKED,
-      building: [], key_skills: [], learning_and_development: [],
+      building: [], key_skills: [], learning_and_development: [], networks: [],
       memberships_attributes: [:id, :role, :group_id, :leader, :subscribed, :_destroy]
     ]
   end

@@ -99,6 +99,14 @@
             = b.label(class: "block-label selection-button-checkbox", 'data-value': b.value) { b.check_box + b.text }
 
   .form-group
+    %label.form-label{for: :networks} Networks I belong to (optional)
+    %ul.inline-list
+      = f.collection_check_boxes :networks, network_names, :last, :first, checked: @person.try(:networks) do |b|
+        %li
+          .form-group
+            = b.label(class: "block-label selection-button-checkbox", 'data-value': b.value) { b.check_box + b.text }
+
+  .form-group
     = f.submit 'Save', class: 'button'
 
   .form-group

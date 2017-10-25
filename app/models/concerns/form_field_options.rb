@@ -121,5 +121,19 @@ module Concerns::FormFieldOptions
       ministerial_submissions
       coding
       }.freeze
+
+    NETWORK_OPTS = %w{
+      age
+      disability
+      enthnicity
+      eu_nationals
+      lgbti_plus
+      parents
+      advisory_group_for_race_equality
+      faith_group
+      women
+      muslim_women
+      mentoring
+    }.freeze
   end
 end

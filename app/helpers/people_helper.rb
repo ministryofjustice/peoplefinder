@@ -113,4 +113,10 @@ module PeopleHelper
       [I18n.t("people.learning_and_development_names.#{ld}"), ld]
     end
   end
+
+  def network_names
+    Person::NETWORK_OPTS.map do |network|
+      [I18n.t("people.network_names.#{network}"), network]
+    end
+  end
 end

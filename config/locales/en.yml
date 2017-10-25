@@ -299,6 +299,18 @@ en:
       parliamentary_work: Parliamentary work
       ministerial_submissions: Ministerial submissions
       coding: Coding
+    network_names:
+      age: Age network
+      disability: Disability network
+      enthnicity: Ethnicity network
+      eu_nationals: EU nationals group
+      lgbti_plus: LGBTI+ network
+      parents: Parents group
+      advisory_group_for_race_equality: Advisory Group for Race Equality
+      faith_group: Faith Group
+      women: "Women's network"
+      muslim_women: "Muslim women's network"
+      mentoring: Mentoring network
   management:
     header: Management
     report_header: Reports
