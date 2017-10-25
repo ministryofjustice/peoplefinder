@@ -93,42 +93,42 @@ module PeopleHelper
   def building_names
     Person::BUILDING_OPTS.map do |building_name|
       [I18n.t("people.building_names.#{building_name}"), building_name]
-    end
+    end.sort
   end
 
   def key_skill_names
     Person::KEY_SKILL_OPTS.map do |key_skill|
       [I18n.t("people.key_skill_names.#{key_skill}"), key_skill]
-    end
+    end.sort
   end
 
   def grade_names
     Person::GRADE_OPTS.map do |grade|
       [I18n.t("people.grade_names.#{grade}"), grade]
-    end
+    end.sort
   end
 
   def learning_and_development_names
     Person::LEARNING_DEVELOPMENT_OPTS.map do |ld|
       [I18n.t("people.learning_and_development_names.#{ld}"), ld]
-    end
+    end.sort
   end
 
   def network_names
     Person::NETWORK_OPTS.map do |network|
       [I18n.t("people.network_names.#{network}"), network]
-    end
+    end.sort
   end
 
   def key_responsibility_names
     Person::KEY_RESPONSIBILITY_OPTS.map do |key_resp|
       [I18n.t("people.key_responsibility_names.#{key_resp}"), key_resp]
-    end
+    end.sort
   end
 
   def additional_responsibility_names
     Person::ADDITIONAL_RESPONSIBILITY_OPTS.map do |addl_resp|
       [I18n.t("people.additional_responsibility_names.#{addl_resp}"), addl_resp]
-    end
+    end.sort
   end
 end
