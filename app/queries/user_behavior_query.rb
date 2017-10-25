@@ -71,7 +71,7 @@ class UserBehaviorQuery < BaseQuery
     <<~SQL
       people.id,
       people.given_name || ' ' || people.surname AS full_name,
-      people.location_in_building || ', ' || people.building || ', ' || people.city AS address,
+      people.location_in_building || ', ' || people.city AS address,
       people.login_count,
       people.last_login_at,
       groups.name AS team_name,

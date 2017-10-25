@@ -25,8 +25,8 @@ describe UserBehaviorQuery, versioning: true do
 
   let!(:person3) do
     person = create :person, given_name: 'Adrian', surname: 'Smith', email: 'adrian.smith@digital.justice.gov.uk', login_count: 3, last_login_at: Time.new(2016, 05, 21, 3, 3, 3, "+00:00")
-    person.update! location_in_building: '10.51', building: 'Fleet Street', city: 'Vancouver'
-    person.update! location_in_building: '10.52', building: 'Fleet Street', city: 'Vancouver'
+    person.update! location_in_building: '10.51', country: 'GB', city: 'Vancouver'
+    person.update! location_in_building: '10.52', country: 'GB', city: 'Vancouver'
     person.memberships.destroy_all
     person
   end
@@ -38,7 +38,7 @@ describe UserBehaviorQuery, versioning: true do
       <<~SQL
         SELECT people.id,
           people.given_name || ' ' || people.surname AS full_name,
-          people.location_in_building || ', ' || people.building || ', ' || people.city AS address,
+          people.location_in_building || ', ' || people.city AS address,
           people.login_count,
           people.last_login_at,
           groups.name AS team_name,
