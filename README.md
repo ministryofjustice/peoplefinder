@@ -49,8 +49,8 @@ brew install postgresql
 brew install imagemagick
 brew install phantomjs
 
-brew install homebrew/versions/elasticsearch17
-brew services start elasticsearch@1.7
+brew install elasticsearch
+brew services start elasticsearch
 
 
 git clone git@github.com:uktrade/peoplefinder.git
