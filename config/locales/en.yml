@@ -329,7 +329,6 @@ en:
       fire_warden: Fire warden
       first_aider: First aider
       mental_health_first_aider: Mental health first aider
-      board_member: Board member
       mentor: Mentor
       network_lead: Network lead
       network_deputy_lead: Network deputy lead
@@ -339,6 +338,7 @@ en:
       fast_stream_rep: Fast stream rep
       overseas_staff_rep: Overseas staff rep
       digital_champion: Digital champion
+      information_manager: Information manager
   management:
     header: Management
     report_header: Reports

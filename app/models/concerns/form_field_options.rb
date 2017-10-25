@@ -156,7 +156,6 @@ module Concerns::FormFieldOptions # rubocop:disable Metrics/ModuleLength
       fire_warden
       first_aider
       mental_health_first_aider
-      board_member
       mentor
       network_lead
       network_deputy_lead
@@ -166,6 +165,7 @@ module Concerns::FormFieldOptions # rubocop:disable Metrics/ModuleLength
       fast_stream_rep
       overseas_staff_rep
       digital_champion
+      information_manager
     }.freeze
   end
 end
