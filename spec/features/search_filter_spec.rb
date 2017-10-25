@@ -49,10 +49,10 @@ feature 'Search results page' do
     end
   end
 
-  feature 'filtering' do
+  feature 'filtering', js: true do
     before do
       fill_in 'query', with: 'browne'
-      find('.mod-search-submit').click()
+      page.execute_script("$('form#mod-search-form').submit()")
     end
 
     scenario 'defaults to searching people and teams' do
