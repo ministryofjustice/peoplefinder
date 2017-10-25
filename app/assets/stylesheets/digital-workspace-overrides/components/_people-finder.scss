@@ -136,6 +136,7 @@
 	//.govuk-search {
 	.mod-search-form {
 		margin: 10px 0 10px 10px;
+		width: 87%;
 	}
 
 	//.search-people-form {
@@ -175,9 +176,14 @@
 		}
 	}
 
-	.user-account-profile-img {
+	//.user-account-profile-img {
+	.maginot {
 		width: 60px;
 		max-height: 100%;
 		float: right;
+		img {
+			max-height: 100%;
+			max-width: 100%;
+		}
 	}
 }

@@ -649,6 +649,21 @@
 }
 
 // ------------------------------------
+// people-finder forms
+
+ul.inline-list {
+	li {
+		display: block;
+		float: left;
+		width: 50%;
+	}
+}
+
+.form-label + .inline_list {
+	margin-top: 20px;
+}
+
+// ------------------------------------
 // govuk-search
 
 .mod-search {

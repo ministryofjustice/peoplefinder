@@ -14,3 +14,6 @@
       = link_to "Tools", "/"
     %li
       = link_to "Data Hub", "/"
+    - if super_admin?
+      %li
+        = link_to 'Manage', admin_home_path, class: "manage-link"
