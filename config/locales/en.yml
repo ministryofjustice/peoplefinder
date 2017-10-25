@@ -476,8 +476,9 @@ en:
         works_saturday: Saturday
         works_sunday: Sunday
         description: Extra information
-        language_fluent: Intermediate Languages
-        language_intermediate: Fluent Languages
+        language_fluent: Intermediate languages
+        language_intermediate: Fluent languages
+        previous_positions: Previous positions held (optional)
       membership:
         role: "Job title"
         group: Team
@@ -535,6 +536,7 @@ en:
         description: Include details about where this person works on different days, any days out of the office, and if this person starts early or late.
         language_fluent: Add languages at which you are fluent. Use a comma to separate languages.
         language_intermediate: Add languages at which you have intermediate fluency. Use a comma to separate languages.
+        previous_positions: Please note your previous experience
       membership:
         role: Role within this team
       group:
