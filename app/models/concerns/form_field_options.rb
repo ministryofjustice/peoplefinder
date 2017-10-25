@@ -1,4 +1,4 @@
-module Concerns::FormFieldOptions
+module Concerns::FormFieldOptions # rubocop:disable Metrics/ModuleLength
   extend ActiveSupport::Concern
 
   included do
@@ -120,7 +120,7 @@ module Concerns::FormFieldOptions
       parliamentary_work
       ministerial_submissions
       coding
-      }.freeze
+    }.freeze
 
     NETWORK_OPTS = %w{
       age
