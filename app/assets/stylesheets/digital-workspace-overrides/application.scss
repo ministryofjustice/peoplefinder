@@ -649,6 +649,21 @@
 }
 
 // ------------------------------------
+// people-finder forms
+
+ul.inline-list {
+	li {
+		display: block;
+		float: left;
+		width: 50%;
+	}
+}
+
+.form-label + .inline_list {
+	margin-top: 20px;
+}
+
+// ------------------------------------
 // govuk-search
 
 .mod-search {
@@ -706,7 +721,7 @@
 			width: 100%;
 			height: 40px;
 			background-color: #cd1632;
-			background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGkAAABGCAMAAAD4pkrrAAAAM1BMV…lEhzKJorCcV%2BpiSUQHMkoegJrb%2FPJS1pSUta0pJ%2BAIynqm4LtSuyAAAAAElFTkSuQmCC);
+			background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGkAAABGCAMAAAD4pkrrAAAAM1BMVEX%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F8AAAD%2F%2F%2F8VtYL2AAAAEHRSTlMgsFDgkKAwcGCAwEDw0BAAV51l0wAAAYhJREFUeF7t192OhCAMBeBRlJ9S8Lz%2F027A7DTjkrSZhL3iXBmjflKbBl%2FXf2VJn1nSkpa0pCUtaUn%2BKGgpZ54qZYLE7fOkA5%2FZ6hypEnroSIm4U6VOkTrEod5udDc1QTqe9UqNIquUczbauUHnhx0bFS1STdwrsFtrdz70AIANUi1AIWLg0CEPgOuIj7pU4HIDExBMDR6GJd1UKbzfMbYjJQXA4CIHQJWKrJv0RQGg8VLhNQmQJsKmSuOvGQBkVSIpN8ggpYGUTZL05%2F61FC2Sk0tOpC%2B%2FU7JI6T20MvAy9B6PT%2Bu9VxnUqcwol5ZzOHheAIoqXZ7BZ0pFBpoy9tzQD4rUVUILH2yg3KAndhlR2iz3IaW9Xt5A7X8Ht%2Beuq9LznqhQGx6l2huEapSEUstXS6Mo%2Fz7oRE%2BpVknO2yi4I%2BSYOiuUXbJvWSRCmSV7IkPCqRahrJLd2nCntE2SUFP25bnldoWaIUnGlEhzKJorCcV%2BpiSUQHMkoegJrb%2FPJS1pSUta0pJ%2BAIynqm4LtSuyAAAAAElFTkSuQmCC);
 			background-repeat: no-repeat;
 			background-position: 2px 50%;
 			border-width: 0px;

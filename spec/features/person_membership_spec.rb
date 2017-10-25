@@ -179,7 +179,7 @@ feature "Person maintenance" do
     expect(page).to have_selector('h3', text: 'Permanent Secretary')
 
     visit home_path
-    expect(page.find('img.media-object')[:alt]).to have_content 'Current photo of Samantha Taylor'
+    expect(page.find('#content img.media-object')[:alt]).to have_content 'Current photo of Samantha Taylor'
   end
 
   scenario 'Adding an additional leadership role in same team', js: true do

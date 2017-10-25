@@ -1,13 +1,7 @@
-%ul#proposition-links
-  - if logged_in_regular?
-    %li
-      = link_to "Signed in as #{current_user}", person_path(current_user)
-    - if super_admin?
-      %li
-        = link_to 'Manage', admin_home_path, class: "manage-link"
-
-    %li
-      = link_to "Sign out", sessions_path, :method => :delete
-  - elsif logged_in_readonly? && !@login_screen
-    %li
-      = link_to('To update People Finder, Sign in now', new_sessions_path )
+- if logged_in_regular?
+  = link_to "Signed in as #{current_user}", person_path(current_user)
+  = profile_image_tag current_user, link: false
+- elsif logged_in_readonly? && !@login_screen
+  = link_to('To update People Finder, Sign in now', new_sessions_path )
+- if feature_enabled?('token_auth')
+  = link_to "Sign out", sessions_path, :method => :delete
