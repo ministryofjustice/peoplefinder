@@ -125,4 +125,10 @@ module PeopleHelper
       [I18n.t("people.key_responsibility_names.#{key_resp}"), key_resp]
     end
   end
+
+  def additional_responsibility_names
+    Person::ADDITIONAL_RESPONSIBILITY_OPTS.map do |addl_resp|
+      [I18n.t("people.additional_responsibility_names.#{addl_resp}"), addl_resp]
+    end
+  end
 end

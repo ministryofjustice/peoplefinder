@@ -151,5 +151,21 @@ module Concerns::FormFieldOptions # rubocop:disable Metrics/ModuleLength
       commercial
       knowledge_management
     }.freeze
+
+    ADDITIONAL_RESPONSIBILITY_OPTS = %w{
+      fire_warden
+      first_aider
+      mental_health_first_aider
+      board_member
+      mentor
+      network_lead
+      network_deputy_lead
+      union_rep
+      cirrus_champion
+      health_wellbeing_champion
+      fast_stream_rep
+      overseas_staff_rep
+      digital_champion
+    }.freeze
   end
 end

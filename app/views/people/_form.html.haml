@@ -113,6 +113,13 @@
         %li
           .form-group
             = b.label(class: "block-label selection-button-checkbox", 'data-value': b.value) { b.check_box + b.text }
+  .form-group
+    %label.form-label{for: :additional_responsibilities} My additional roles and responsibilities (optional)
+    %ul.inline-list
+      = f.collection_check_boxes :additional_responsibilities, additional_responsibility_names, :last, :first, checked: @person.try(:additional_responsibilities) do |b|
+        %li
+          .form-group
+            = b.label(class: "block-label selection-button-checkbox", 'data-value': b.value) { b.check_box + b.text }
 
   .form-group
     = f.submit 'Save', class: 'button'

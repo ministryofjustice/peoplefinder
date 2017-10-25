@@ -102,7 +102,7 @@ class PeopleController < ApplicationController
       :description, :current_project, :previous_positions, :grade,
       *Person::DAYS_WORKED,
       building: [], key_skills: [], learning_and_development: [], networks: [],
-      key_responsibilities: [],
+      key_responsibilities: [], additional_responsibilities: [],
       memberships_attributes: [:id, :role, :group_id, :leader, :subscribed, :_destroy]
     ]
   end

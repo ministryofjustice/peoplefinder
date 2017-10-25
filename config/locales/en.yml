@@ -325,6 +325,20 @@ en:
       capability_management: Capability management
       commercial: Commercial
       knowledge_management: Knowledge management
+    additional_responsibility_names:
+      fire_warden: Fire warden
+      first_aider: First aider
+      mental_health_first_aider: Mental health first aider
+      board_member: Board member
+      mentor: Mentor
+      network_lead: Network lead
+      network_deputy_lead: Network deputy lead
+      union_rep: Union rep
+      cirrus_champion: Cirrus champion
+      health_wellbeing_champion: Health & wellbeing champion
+      fast_stream_rep: Fast stream rep
+      overseas_staff_rep: Overseas staff rep
+      digital_champion: Digital champion
   management:
     header: Management
     report_header: Reports
