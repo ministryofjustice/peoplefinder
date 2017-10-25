@@ -550,6 +550,8 @@ en:
         language_fluent: Intermediate languages
         language_intermediate: Fluent languages
         previous_positions: Previous positions held (optional)
+        other_uk: Other - UK regional
+        other_overseas: Other - Overseas
       membership:
         role: "Job title"
         group: Team
