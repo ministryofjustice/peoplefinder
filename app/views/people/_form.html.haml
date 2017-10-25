@@ -86,11 +86,7 @@
 
   .form-group
     %label.form-label{for: :grade} Grade
-    %ul.inline-list
-      = f.collection_check_boxes :grades, grade_names, :first, :last, checked: @person.try(:grades) do |b|
-        %li
-          .form-group
-            = b.label(class: "block-label selection-button-checkbox", 'data-value': b.value) { b.check_box + b.text }
+    = f.select :grade, grade_names, { include_blank: true}, class: 'form-control'
 
   = f.text_area :previous_positions
 

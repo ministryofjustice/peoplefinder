@@ -268,6 +268,28 @@ en:
       interviewing: Interviewing
       project_finance:  Project finance
       presenting: Presenting
+    grade_names:
+      fco_s1: FCO S1
+      fco_s2: FCO S2
+      fco_s3: FCO S3
+      admin_assistant: Administrative assistant (AA)
+      admin_officer: Administrative officer (AO/A2)
+      executive_officer: Executive officer (EO/B3)
+      higher_executive_officer: Higher executive officer (HEO/C4)
+      senior_executive_officer: Senior executive officer (SEO/C5)
+      grade_7: Grade 7 (G7/D6)
+      grade_6: Grade 6 (G6/D7)
+      scs_1: Senior civil service 1 (SCS1/SMS1)
+      scs_2: Senior civil service 2 (SCS2/SMS2)
+      scs_3: Senior civil service 3 (SCS3/SMS3)
+      scs_4: Senior civil service 4 (SCS4/SMS4)
+      fast_stream: Fast Stream
+      fast_track: Fast Track
+      apprentice: Apprentice
+      non_graded_special_advisor: Non graded - special advisor (SPAD)
+      non_graded_contractor: Non graded - contractor
+      non_graded_secondee: Non graded - secondee
+      non_graded_post: Non graded - post
   management:
     header: Management
     report_header: Reports
@@ -537,6 +559,7 @@ en:
         language_fluent: Add languages at which you are fluent. Use a comma to separate languages.
         language_intermediate: Add languages at which you have intermediate fluency. Use a comma to separate languages.
         previous_positions: Please note your previous experience
+        grade: Grade
       membership:
         role: Role within this team
       group:

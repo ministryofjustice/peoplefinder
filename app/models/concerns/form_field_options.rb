@@ -86,5 +86,29 @@ module Concerns::FormFieldOptions
       project_finance
       presenting
     }.freeze
+
+    GRADE_OPTS = %w{
+      fco_s1
+      fco_s2
+      fco_s3
+      admin_assistant
+      admin_officer
+      executive_officer
+      higher_executive_officer
+      senior_executive_officer
+      grade_7
+      grade_6
+      scs_1
+      scs_2
+      scs_3
+      scs_4
+      fast_stream
+      fast_track
+      apprentice
+      non_graded_special_advisor
+      non_graded_contractor
+      non_graded_secondee
+      non_graded_post
+    }.freeze
   end
 end

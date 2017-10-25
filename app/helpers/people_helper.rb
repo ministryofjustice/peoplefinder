@@ -101,4 +101,10 @@ module PeopleHelper
       [key_skill, I18n.t("people.key_skill_names.#{key_skill}")]
     end
   end
+
+  def grade_names
+    Person::GRADE_OPTS.map do |grade|
+      [I18n.t("people.grade_names.#{grade}"), grade]
+    end
+  end
 end

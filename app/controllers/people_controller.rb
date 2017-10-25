@@ -99,7 +99,7 @@ class PeopleController < ApplicationController
       :primary_phone_number, :primary_phone_country_code, :skype_name,
       :email, :secondary_email, :language_intermediate, :language_fluent,
       :profile_photo_id, :crop_x, :crop_y, :crop_w, :crop_h,
-      :description, :current_project, :previous_positions,
+      :description, :current_project, :previous_positions, :grade,
       *Person::DAYS_WORKED,
       building: [], key_skills: [],
       memberships_attributes: [:id, :role, :group_id, :leader, :subscribed, :_destroy]
