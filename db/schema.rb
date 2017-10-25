@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170228181641) do
+ActiveRecord::Schema.define(version: 20171025141416) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -72,25 +72,39 @@ ActiveRecord::Schema.define(version: 20170228181641) do
     t.text     "description"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "works_monday",           default: true
-    t.boolean  "works_tuesday",          default: true
-    t.boolean  "works_wednesday",        default: true
-    t.boolean  "works_thursday",         default: true
-    t.boolean  "works_friday",           default: true
+    t.boolean  "works_monday",                default: true
+    t.boolean  "works_tuesday",               default: true
+    t.boolean  "works_wednesday",             default: true
+    t.boolean  "works_thursday",              default: true
+    t.boolean  "works_friday",                default: true
     t.string   "image"
     t.string   "slug"
-    t.boolean  "works_saturday",         default: false
-    t.boolean  "works_sunday",           default: false
-    t.integer  "login_count",            default: 0,     null: false
+    t.boolean  "works_saturday",              default: false
+    t.boolean  "works_sunday",                default: false
+    t.integer  "login_count",                 default: 0,     null: false
     t.datetime "last_login_at"
-    t.boolean  "super_admin",            default: false
-    t.text     "building"
+    t.boolean  "super_admin",                 default: false
     t.text     "city"
     t.text     "secondary_email"
     t.integer  "profile_photo_id"
     t.datetime "last_reminder_email_at"
     t.string   "current_project"
     t.text     "pager_number"
+    t.text     "primary_phone_country_code"
+    t.string   "building",                    default: [],                 array: true
+    t.string   "country"
+    t.string   "skype_name"
+    t.string   "key_skills",                  default: [],                 array: true
+    t.text     "language_fluent"
+    t.text     "language_intermediate"
+    t.text     "previous_positions"
+    t.string   "learning_and_development",    default: [],                 array: true
+    t.string   "networks",                    default: [],                 array: true
+    t.string   "key_responsibilities",        default: [],                 array: true
+    t.string   "additional_responsibilities", default: [],                 array: true
+    t.text     "grade"
+    t.text     "other_uk"
+    t.text     "other_overseas"
   end
 
   add_index "people", ["slug"], name: "index_people_on_slug", unique: true, using: :btree

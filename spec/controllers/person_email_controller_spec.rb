@@ -126,7 +126,7 @@ RSpec.describe PersonEmailController, type: :controller do
 
       it 'sets a flash message' do
         subject
-        expect(flash[:notice]).to include("Your main email has been updated to #{new_attributes[:email]}")
+        expect(flash[:notice]).to include("Your Primary work email has been updated to #{new_attributes[:email]}")
       end
     end
 

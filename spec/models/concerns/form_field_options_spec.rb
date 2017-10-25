@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Concerns::WorkDays do
+RSpec.describe Concerns::FormFieldOptions do
   include PermittedDomainHelper
 
   describe '.works_weekends?' do

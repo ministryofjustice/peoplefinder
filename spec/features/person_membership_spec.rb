@@ -16,7 +16,7 @@ feature "Person maintenance" do
     visit new_person_path
     fill_in 'First name', with: 'Helen'
     fill_in 'Last name', with: 'Taylor'
-    fill_in 'Main email', with: person_attributes[:email]
+    fill_in 'Primary work email', with: person_attributes[:email]
     fill_in 'Job title', with: 'Head Honcho'
 
     select_in_team_select 'Digital Justice'

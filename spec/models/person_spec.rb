@@ -501,7 +501,7 @@ RSpec.describe Person, type: :model do
       person.location_in_building = '99.99'
       person.building = '102 Petty France'
       person.city = 'London'
-      expect(person.location).to eq('99.99, 102 Petty France, London')
+      expect(person.location).to eq('99.99, London')
     end
 
     it 'skips blank fields' do

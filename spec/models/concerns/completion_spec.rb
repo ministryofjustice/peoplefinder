@@ -10,7 +10,7 @@ RSpec.describe 'Completion' do # rubocop:disable RSpec/DescribeClass
       email: 'user.example@digital.justice.gov.uk',
       primary_phone_number: '020 7946 0123',
       location_in_building: '13.13',
-      building: '102 Petty France',
+      country: 'GB',
       city: 'London',
       description: 'I am a real person',
       profile_photo_id: profile_photo.id
@@ -44,7 +44,7 @@ RSpec.describe 'Completion' do # rubocop:disable RSpec/DescribeClass
     end
 
     it 'returns 55 if half the fields are completed' do
-      person = create(:person, city: generate(:city), primary_phone_number: generate(:phone_number))
+      person = create(:person, city: generate(:city), country: nil, primary_phone_number: generate(:phone_number))
       person.memberships.destroy_all
       expect(person.completion_score).to be_within(1).of(55)
       expect(person).to be_incomplete
@@ -173,7 +173,7 @@ RSpec.describe 'Completion' do # rubocop:disable RSpec/DescribeClass
     end
 
     it 'returns the person when there is no building' do
-      Person.update_all 'building = \'\''
+      Person.update_all 'country = \'\''
       expect(subject).to include(person)
     end
 

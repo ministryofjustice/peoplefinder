@@ -151,9 +151,9 @@ en:
       update_error: "There was an error updating the image"
     person_email:
       person_email_confirm: "You need to update your People Finder account to finish signing in"
-      profile_email_updated: "Your main email has been updated to %{email}"
+      profile_email_updated: "Your Primary work email has been updated to %{email}"
       original_email_info_html: |
-        Your main email address will be updated.
+        Your Primary work email address will be updated.
         <br/>
         <br/>
         Your previous main address
@@ -164,7 +164,7 @@ en:
         <br/>
         <br/>
       info_message_html: |
-        Your new email address will be used as your main email and your
+        Your new email address will be used as your Primary work email and your
         old email address as an alternative.
         <br/>
         <br/>
@@ -205,6 +205,140 @@ en:
       works_friday: "F"
       works_saturday: "S"
       works_sunday: "S"
+    building_names:
+      whitehall_55: "55 Whitehall"
+      whitehall_3: "3 Whitehall Place"
+      victoria_1: "1 Victoria Street"
+      horse_guards: "1 Horse Guards Rd"
+      king_charles: "King Charles Street"
+    key_skill_names:
+      accounting: Accounting
+      agile_delivery: Agile delivery
+      auditing: Auditing
+      briefing_ministers: Briefing ministers and senior officials
+      change_management: Change management
+      communications: Communications
+      commercial_awareness: Commercial awareness
+      crm:  Customer relationship management (CRM)
+      data_analysis:  Data analysis
+      financial_reporting:  Financial reporting
+      knowledge_sharing: Knowledge sharing
+      legal_writing:  Legal writing
+      legislation: Legislation
+      negotiation: Negotiation
+      marketing: Marketing
+      ministerial_briefing: Ministerial briefing
+      operational_delivery: Operational delivery
+      parliamentary_business: Parliamentary business
+      planning: Planning
+      policy: Policy
+      project_delivery: Project delivery
+      risk_management: Risk management
+      speech_writing: Speech writing
+      statistics: Statistics
+      strategy: Strategy
+      submission: Submissions
+      training: Training
+      underwriting: Underwriting
+      valution: Valuation
+      media_trained:  Media trained
+      economist:  Economist
+      law: Law
+      research_operational: Research - operational
+      research_economic: Research - economic
+      research_statistical: Research - statistical
+      research_social: Research - social
+      research_user: Research - user
+      it: IT
+      information_management: Information management
+      content_design: Content design
+      graphic_design: Graphic design
+      ux_design: UX design
+      marketing: Marketing
+      contract_management: Contract managment
+      project_management: Project management
+      asset_management: Asset management
+      tax: Tax
+      digital_workspace_publisher: Digital Workspace publisher
+      commercial_specialise: Commercial specialist
+      income_generation: Income generation
+      sponsorship: Sponsorship and partmentships
+      credit_risk_analysis: Credit risk analysis
+      digital: Digital
+      interviewing: Interviewing
+      project_finance:  Project finance
+      presenting: Presenting
+    grade_names:
+      fco_s1: FCO S1
+      fco_s2: FCO S2
+      fco_s3: FCO S3
+      admin_assistant: Administrative assistant (AA)
+      admin_officer: Administrative officer (AO/A2)
+      executive_officer: Executive officer (EO/B3)
+      higher_executive_officer: Higher executive officer (HEO/C4)
+      senior_executive_officer: Senior executive officer (SEO/C5)
+      grade_7: Grade 7 (G7/D6)
+      grade_6: Grade 6 (G6/D7)
+      scs_1: Senior civil service 1 (SCS1/SMS1)
+      scs_2: Senior civil service 2 (SCS2/SMS2)
+      scs_3: Senior civil service 3 (SCS3/SMS3)
+      scs_4: Senior civil service 4 (SCS4/SMS4)
+      fast_stream: Fast Stream
+      fast_track: Fast Track
+      apprentice: Apprentice
+      non_graded_special_advisor: Non graded - special advisor (SPAD)
+      non_graded_contractor: Non graded - contractor
+      non_graded_secondee: Non graded - secondee
+      non_graded_post: Non graded - post
+    learning_and_development_names:
+      shadowing: Shadowing
+      mentoring: Mentoring
+      research: Research
+      overseas_posts: Overseas posts
+      secondment: Secondment
+      parliamentary_work: Parliamentary work
+      ministerial_submissions: Ministerial submissions
+      coding: Coding
+    network_names:
+      age: Age network
+      disability: Disability network
+      enthnicity: Ethnicity network
+      eu_nationals: EU nationals group
+      lgbti_plus: LGBTI+ network
+      parents: Parents group
+      advisory_group_for_race_equality: Advisory Group for Race Equality
+      faith_group: Faith Group
+      women: "Women's network"
+      muslim_women: "Muslim women's network"
+      mentoring: Mentoring network
+    key_responsibility_names:
+      hr_partner: HR partner
+      finance_partner: Finance partner
+      scrum_master: Scrum master
+      communications: Communications
+      training: Training
+      admin_coordinator: Administrative coordinator
+      ministerial_submissions: Ministerial submissions
+      webinars: Webinars
+      business_outreach: Business outreach
+      communities: Communities
+      capability_management: Capability management
+      commercial: Commercial
+      knowledge_management: Knowledge management
+    additional_responsibility_names:
+      fire_warden: Fire warden
+      first_aider: First aider
+      mental_health_first_aider: Mental health first aider
+      mentor: Mentor
+      network_lead: Network lead
+      network_deputy_lead: Network deputy lead
+      union_rep: Union rep
+      cirrus_champion: Cirrus champion
+      health_wellbeing_champion: Health & wellbeing champion
+      fast_stream_rep: Fast stream rep
+      overseas_staff_rep: Overseas staff rep
+      digital_champion: Digital champion
+      information_manager: Information manager
   management:
     header: Management
     report_header: Reports
@@ -304,7 +438,7 @@ en:
         user_email: "Email address"
       person:
         given_name: "First name"
-        email: Main email
+        email: Primary work email
         secondary_email: Alternative work email
       memberships:
         leader: "Are you the Permanent Secretary of the Department?"
@@ -394,14 +528,16 @@ en:
       person:
         given_name: First name
         surname: Last name
-        email: Main email address
+        email: Primary work email
         secondary_email: Alternative work email address (optional)
-        primary_phone_number: Main phone number (optional)
+        primary_phone_number: Phone number
         secondary_phone_number: Alternative phone number (optional)
         pager_number: Pager number (optional)
         location_in_building: Location in building (optional)
-        building: Building (optional)
-        city: City (optional)
+        building: Building I work in (optional)
+        city: Town, City or Region
+        country: Country
+        skype_name: Skype name (optional)
         current_project: Current project(s) (optional)
         works_monday: Monday
         works_tuesday: Tuesday
@@ -411,8 +547,13 @@ en:
         works_saturday: Saturday
         works_sunday: Sunday
         description: Extra information
+        language_fluent: Intermediate languages
+        language_intermediate: Fluent languages
+        previous_positions: Previous positions held (optional)
+        other_uk: Other - UK regional
+        other_overseas: Other - Overseas
       membership:
-        role: "Job title (optional)"
+        role: "Job title"
         group: Team
       problem_report:
         goal: "What were you trying to do?"
@@ -459,12 +600,17 @@ en:
       file: Upload CSV file
     hint:
       person:
+        primary_phone_number: "Enter your number then select your country code"
         location_in_building: "For example, 10.30"
-        building: "For example, 102 Petty France"
+        building: "Select options from the list"
         city: "For example, London"
         current_project: List the names of current projects this person is working on. Use a comma to separate project names.
         working_days: Select all that apply
         description: Include details about where this person works on different days, any days out of the office, and if this person starts early or late.
+        language_fluent: Add languages at which you are fluent. Use a comma to separate languages.
+        language_intermediate: Add languages at which you have intermediate fluency. Use a comma to separate languages.
+        previous_positions: Please note your previous experience
+        grade: Grade
       membership:
         role: Role within this team
       group:

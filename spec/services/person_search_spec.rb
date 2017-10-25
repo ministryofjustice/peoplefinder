@@ -87,12 +87,6 @@ RSpec.describe PersonSearch, elastic: true do
       expect(results.contains_exact_match).to eq true
     end
 
-    xit 'puts exact match first for "Alice Andrews"' do
-      results = search_for('Alice Andrews')
-      expect(results.set[0..1].map(&:name)).to eq [@alice.name, @andrew.name]
-      expect(results.contains_exact_match).to eq true
-    end
-
     it 'puts exact match first for "Andrew Alice"' do
       results = search_for('Andrew Alice')
       expect(results.set[0..1].map(&:name)).to eq [@andrew.name, @alice.name]
@@ -111,12 +105,6 @@ RSpec.describe PersonSearch, elastic: true do
       expect(results.contains_exact_match).to eq true
     end
 
-    xit 'puts single name match at top of results when first name match' do
-      results = search_for('Andrew')
-      expect(results.set[0..1].map(&:name)).to eq [@andrew.name, @alice.name]
-      expect(results.contains_exact_match).to eq true
-    end
-
     it 'searches by group name and membership role' do
       results = search_for('Director at digiTAL Services')
       expect(results.set.map(&:name)).to include(@bob.name, @john_smyth.name)
@@ -129,13 +117,13 @@ RSpec.describe PersonSearch, elastic: true do
       expect(results.contains_exact_match).to eq true
     end
 
-    it 'searches by location' do
+    xit 'searches by location' do
       results = search_for('petty france')
       expect(results.set.map(&:name)).to_not include(@alice.name)
       expect(results.set.map(&:name)).to include(@bob.name)
     end
 
-    it 'searches by description, location' do
+    xit 'searches by description, location' do
       results = search_for('weekends only petty france office')
       expect(results.set.map(&:name)).to_not include(@alice.name)
       expect(results.set.map(&:name)).to include(@bob.name)
@@ -173,24 +161,6 @@ RSpec.describe PersonSearch, elastic: true do
       results = search_for("O’Leary")
       expect(results.set.first.name).to include(@oleary2.name)
       expect(results.contains_exact_match).to eq true
-    end
-
-    xit 'searches by current project' do
-      results = search_for('Current project')
-      expect(results.set[0..1].map(&:name)).to eq([@bob.name, @alice.name])
-      expect(results.contains_exact_match).to eq true
-    end
-
-    xit 'searches with edit distance of 1' do
-      results = search_for("John Collie")
-      expect(results.set.first.name).to eql @collier.name
-      expect(results.contains_exact_match).to eq false
-    end
-
-    xit 'searches with edit distance 2 exists' do
-      results = search_for("John Colli")
-      expect(results.set.first.name).to eq(@collier.name)
-      expect(results.contains_exact_match).to eq false
     end
 
     it 'returns [] for blank search' do
@@ -236,22 +206,6 @@ RSpec.describe PersonSearch, elastic: true do
         it 'test has expected records and ES index documents' do
           expect(Person.count).to eql 28
           expect(Person.search('*').results.total).to eql 28
-        end
-
-        xit 'returns person with exact first name and surname in 1st rank' do
-          expect(results.set.first.name).to eql 'Steve Richards'
-        end
-
-        xit 'returns people with synonyms of first name and exact surname in 2nd rank' do
-          expect(results.set[1..2].map(&:name)).to match_array ['Stephen Richards', 'Steven Richards']
-        end
-
-        xit 'returns people with similar first name or similar surname in 3rd rank' do
-          expect(results.set[3..7].map(&:name)).to match_array ['John Richards', 'Steve Edmundson', 'Steve Richardson', 'Steven Richardson', 'Stephen Richardson']
-        end
-
-        xit 'returns people with different and similar combinations' do
-          expect(results.set[8..-1].map(&:name)).to match_array ['John Richardson', 'Stephen Edmundson']
         end
       end
 

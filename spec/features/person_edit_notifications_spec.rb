@@ -14,7 +14,7 @@ feature 'Person edit notifications' do
 
     fill_in 'First name', with: 'Bob'
     fill_in 'Last name', with: 'Smith'
-    fill_in 'Main email', with: 'bob.smith@digital.justice.gov.uk'
+    fill_in 'Primary work email', with: 'bob.smith@digital.justice.gov.uk'
     expect do
       click_button 'Save', match: :first
     end.to change { QueuedNotification.count }.by(1)
@@ -27,14 +27,11 @@ feature 'Person edit notifications' do
       'given_name' => [nil, 'Bob'],
       'surname' => [nil, 'Smith'],
       'location_in_building' => [nil, ''],
-      'building' => [nil, ''],
+      'building' => [[], ['']],
       'city' => [nil, ''],
       'primary_phone_number' => [nil, ''],
-      'secondary_phone_number' => [nil, ''],
-      'pager_number' => [nil, ''],
+      'primary_phone_country_code' => [nil, "GB"],
       'email' => [nil, 'bob.smith@digital.justice.gov.uk'],
-      'secondary_email' => [nil, ''],
-      'description' => [nil, ''],
       'current_project' => [nil, ''],
       'slug' => [nil, 'bob-smith']
     )

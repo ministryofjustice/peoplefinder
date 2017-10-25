@@ -16,13 +16,36 @@
 
   %h3.heading-medium.with-border-lg
     = "Contact details"
+
   = f.text_field :primary_phone_number
-  = f.text_field :secondary_phone_number
-  = f.text_field :pager_number
-  = f.text_field :secondary_email
+  .form-group.visually-connected
+    .panel.panel-border-narrow
+      %label.form-label{for: :primary_phone_country_code} Country code
+      = f.country_select :primary_phone_country_code,
+        {format: :with_dialling_code, priority_countries: ["GB"]},
+        class: 'form-control'
+
+  = f.text_field :skype_name
+
+  .form-group.visually-connected-below
+    %label.form-label{for: :building} Building I work in (optional)
+    %span.form-hint Select options from the list
+    %ul.inline-list
+      = f.collection_check_boxes :building, building_names,:last, :first,  checked: @person.try(:building) do |b|
+        %li
+          .form-group
+            = b.label(class: "block-label selection-button-checkbox", 'data-value': b.value) { b.check_box + b.text }
+
+  = f.text_field :other_uk
+  = f.text_field :other_overseas
   = f.text_field :location_in_building
-  = f.text_field :building
   = f.text_field :city
+
+  .form-group
+    %label.form-label{for: :country} Country (Market)
+    = f.country_select :country,
+      {priority_countries: ["GB"]},
+      class: 'form-control'
 
   .form-group
     #error_person_membership
@@ -44,15 +67,61 @@
       = "Working days"
     %fieldset#working-days
       %legend.form-label-bold.visually-hidden Working days
-      %ul
+      %ul.inline-list
         - Person::DAYS_WORKED.each do |day|
           %li
             = f.check_box day
 
   %h3.heading-medium.with-border-lg
     = "Extra information"
-  = f.text_area :description
 
+  .form-group
+    %label.form-label{for: :key_skills} Key areas of responsibility within my job
+    %ul.inline-list
+      = f.collection_check_boxes :key_skills, key_skill_names, :last, :first , checked: @person.try(:key_skills) do |b|
+        %li
+          .form-group
+            = b.label(class: "block-label selection-button-checkbox", 'data-value': b.value) { b.check_box + b.text }
+
+  = f.text_field :language_intermediate
+  = f.text_field :language_fluent
+
+  .form-group
+    %label.form-label{for: :grade} Grade
+    = f.select :grade, grade_names, { include_blank: true}, class: 'form-control'
+
+  = f.text_area :previous_positions
+
+  .form-group
+    %label.form-label{for: :learning_and_development} Learning and development interests (optional)
+    %ul.inline-list
+      = f.collection_check_boxes :learning_and_development, learning_and_development_names, :last, :first, checked: @person.try(:learning_and_development) do |b|
+        %li
+          .form-group
+            = b.label(class: "block-label selection-button-checkbox", 'data-value': b.value) { b.check_box + b.text }
+
+  .form-group
+    %label.form-label{for: :networks} Networks I belong to (optional)
+    %ul.inline-list
+      = f.collection_check_boxes :networks, network_names, :last, :first, checked: @person.try(:networks) do |b|
+        %li
+          .form-group
+            = b.label(class: "block-label selection-button-checkbox", 'data-value': b.value) { b.check_box + b.text }
+
+  .form-group
+    %label.form-label{for: :key_responsibilities} Key areas of responsibility within my job (optional)
+    %ul.inline-list
+      = f.collection_check_boxes :key_responsibilities, key_responsibility_names, :last, :first, checked: @person.try(:key_responsibilities) do |b|
+        %li
+          .form-group
+            = b.label(class: "block-label selection-button-checkbox", 'data-value': b.value) { b.check_box + b.text }
+  .form-group
+    %label.form-label{for: :additional_responsibilities} My additional roles and responsibilities (optional)
+    %ul.inline-list
+      = f.collection_check_boxes :additional_responsibilities, additional_responsibility_names, :last, :first, checked: @person.try(:additional_responsibilities) do |b|
+        %li
+          .form-group
+            = b.label(class: "block-label selection-button-checkbox", 'data-value': b.value) { b.check_box + b.text }
 
   .form-group
     = f.submit 'Save', class: 'button'

@@ -111,7 +111,7 @@ feature 'Person maintenance' do
         expect(new_profile_page).to be_displayed
         fill_in 'First name', with: person_attributes[:given_name]
         fill_in 'Last name', with: person_attributes[:surname]
-        fill_in 'Main email', with: person_attributes[:email]
+        fill_in 'Primary work email', with: person_attributes[:email]
         within last_membership do
           click_link 'Leave team'
         end
@@ -128,7 +128,7 @@ feature 'Person maintenance' do
         expect(new_profile_page).to be_displayed
         fill_in 'First name', with: person_attributes[:given_name]
         fill_in 'Last name', with: person_attributes[:surname]
-        fill_in 'Main email', with: person_attributes[:email]
+        fill_in 'Primary work email', with: person_attributes[:email]
         fill_in 'Job title', match: :first, with: 'dude'
 
         click_button 'Save', match: :first
@@ -164,7 +164,7 @@ feature 'Person maintenance' do
 
         fill_in 'First name', with: person_attributes[:given_name]
         fill_in 'Last name', with: person_attributes[:surname]
-        fill_in 'Main email', with: person_attributes[:email]
+        fill_in 'Primary work email', with: person_attributes[:email]
         click_button 'Save', match: :first
 
         click_link 'Return to home page'
@@ -230,7 +230,7 @@ feature 'Person maintenance' do
         click_edit_profile
         fill_in 'First name', with: ''
         fill_in 'Last name', with: ''
-        fill_in 'Main email address', with: ''
+        fill_in 'Primary work email', with: ''
         click_button 'Save', match: :first
 
         expect(edit_profile_page).to have_error_summary
@@ -429,7 +429,7 @@ feature 'Person maintenance' do
 
     fill_in 'First name', with: person_attributes[:given_name]
     fill_in 'Last name', with: person_attributes[:surname]
-    fill_in 'Main email', with: person_attributes[:email]
+    fill_in 'Primary work email', with: person_attributes[:email]
     click_button 'Save', match: :first
     expect(page).to have_selector('.mod-search-form')
   end

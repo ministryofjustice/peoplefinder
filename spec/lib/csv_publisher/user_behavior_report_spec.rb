@@ -12,14 +12,14 @@ RSpec.describe CsvPublisher::UserBehaviorReport, versioning: true, csv_report: t
   it { expect(described_class).to respond_to :publish! }
   it { expect(described_class).to respond_to :default_file_path }
 
-  describe '#default_file_path' do
+  xdescribe '#default_file_path' do
     subject { described_class.default_file_path }
     it 'returns file name containing app name, environment and report name' do
       expect(subject.to_path).to include "peoplefinder_test_user_behavior_report"
     end
   end
 
-  describe '#publish!' do
+  xdescribe '#publish!' do
     subject { described_class.new.publish! }
 
     let(:moj) { create :department}
