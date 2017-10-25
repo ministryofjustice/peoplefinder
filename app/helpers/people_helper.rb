@@ -119,4 +119,10 @@ module PeopleHelper
       [I18n.t("people.network_names.#{network}"), network]
     end
   end
+
+  def key_responsibility_names
+    Person::KEY_RESPONSIBILITY_OPTS.map do |key_resp|
+      [I18n.t("people.key_responsibility_names.#{key_resp}"), key_resp]
+    end
+  end
 end

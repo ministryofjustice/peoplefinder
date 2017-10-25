@@ -135,5 +135,21 @@ module Concerns::FormFieldOptions # rubocop:disable Metrics/ModuleLength
       muslim_women
       mentoring
     }.freeze
+
+    KEY_RESPONSIBILITY_OPTS = %w{
+      hr_partner
+      finance_partner
+      scrum_master
+      communications
+      training
+      admin_coordinator
+      ministerial_submissions
+      webinars
+      business_outreach
+      communities
+      capability_management
+      commercial
+      knowledge_management
+    }.freeze
   end
 end

@@ -311,6 +311,20 @@ en:
       women: "Women's network"
       muslim_women: "Muslim women's network"
       mentoring: Mentoring network
+    key_responsibility_names:
+      hr_partner: HR partner
+      finance_partner: Finance partner
+      scrum_master: Scrum master
+      communications: Communications
+      training: Training
+      admin_coordinator: Administrative coordinator
+      ministerial_submissions: Ministerial submissions
+      webinars: Webinars
+      business_outreach: Business outreach
+      communities: Communities
+      capability_management: Capability management
+      commercial: Commercial
+      knowledge_management: Knowledge management
   management:
     header: Management
     report_header: Reports
