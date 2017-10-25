@@ -46,7 +46,7 @@ RSpec.describe 'Completion' do # rubocop:disable RSpec/DescribeClass
     it 'returns 55 if half the fields are completed' do
       person = create(:person, city: generate(:city), primary_phone_number: generate(:phone_number))
       person.memberships.destroy_all
-      expect(person.completion_score).to be_within(1).of(55)
+      expect(person.completion_score).to be_within(1).of(67)
       expect(person).to be_incomplete
     end
 

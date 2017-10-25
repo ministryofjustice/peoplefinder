@@ -89,13 +89,13 @@ RSpec.describe PersonCsvImporter, type: :service do
           expect(importer.errors).to match_array([
             PersonCsvImporter::ErrorRow.new(
               3, "jon.o. carey@valid.gov.uk,Jon,O'Carey",
-              ['Main email isn’t valid']
+              ['Primary work email isn’t valid']
             ),
             PersonCsvImporter::ErrorRow.new(
               4, "jack@invalid.gov.uk,Jack,",
               [
                 'Surname is required',
-                'Main email you have entered can’t be used to access People Finder'
+                'Primary work email you have entered can’t be used to access People Finder'
               ]
             )
           ])

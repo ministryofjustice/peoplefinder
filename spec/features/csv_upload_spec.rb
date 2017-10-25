@@ -67,7 +67,7 @@ feature 'Upload CSV' do
     ).each do |email|
       person = Person.find_by(email: email)
       expect(person.groups).to eq([group])
-      expect(person.location).to eq "Room 5.02, 5th Floor, Blue Core, 102, Petty France, London"
+      expect(person.location).to eq "Room 5.02, 5th Floor, Blue Core, London"
       check_queued_notification(person)
     end
   end

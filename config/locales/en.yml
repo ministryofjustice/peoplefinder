@@ -151,9 +151,9 @@ en:
       update_error: "There was an error updating the image"
     person_email:
       person_email_confirm: "You need to update your People Finder account to finish signing in"
-      profile_email_updated: "Your main email has been updated to %{email}"
+      profile_email_updated: "Your Primary work email has been updated to %{email}"
       original_email_info_html: |
-        Your main email address will be updated.
+        Your Primary work email address will be updated.
         <br/>
         <br/>
         Your previous main address
@@ -164,7 +164,7 @@ en:
         <br/>
         <br/>
       info_message_html: |
-        Your new email address will be used as your main email and your
+        Your new email address will be used as your Primary work email and your
         old email address as an alternative.
         <br/>
         <br/>
@@ -438,7 +438,7 @@ en:
         user_email: "Email address"
       person:
         given_name: "First name"
-        email: Main email
+        email: Primary work email
         secondary_email: Alternative work email
       memberships:
         leader: "Are you the Permanent Secretary of the Department?"

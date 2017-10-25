@@ -185,7 +185,7 @@ feature 'Login flow' do
           and_info_is_displayed message_includes: /new email .* old email/i
           when_i_continue
           then_persons_email_is_updated person: person, new_email: email
-          then_profile_page_is_displayed_with_message_for person: person, message: "Your main email has been updated to #{person.email}"
+          then_profile_page_is_displayed_with_message_for person: person, message: "Your Primary work email has been updated to #{person.email}"
           expect(person.email).to eql email
         end
 
@@ -201,7 +201,7 @@ feature 'Login flow' do
           and_info_is_displayed message_includes: person.email
           when_i_continue
           then_persons_email_is_updated person: person, new_email: email
-          then_profile_page_is_displayed_with_message_for person: person, message: "Your main email has been updated to #{person.email}"
+          then_profile_page_is_displayed_with_message_for person: person, message: "Your Primary work email has been updated to #{person.email}"
           expect(person.email).to eql email
         end
 

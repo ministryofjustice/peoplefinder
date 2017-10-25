@@ -14,7 +14,7 @@ feature 'Person edit notifications' do
 
     fill_in 'First name', with: 'Bob'
     fill_in 'Last name', with: 'Smith'
-    fill_in 'Main email', with: 'bob.smith@digital.justice.gov.uk'
+    fill_in 'Primary work email', with: 'bob.smith@digital.justice.gov.uk'
     expect do
       click_button 'Save', match: :first
     end.to change { QueuedNotification.count }.by(1)

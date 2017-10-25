@@ -47,11 +47,10 @@ module SpecSupport
       fill_in 'First name', with: person_attributes[:given_name]
       fill_in 'Last name', with: person_attributes[:surname]
       select_in_team_select 'Digital'
-      fill_in 'Main email', with: person_attributes[:email]
+      fill_in 'Primary work email', with: person_attributes[:email]
       fill_in 'Phone number', with: person_attributes[:primary_phone_number]
       fill_in 'Location in building', with: person_attributes[:location_in_building]
       fill_in 'City', with: person_attributes[:city]
-      fill_in 'Extra information', with: person_attributes[:description]
       fill_in 'Current project(s)', with: person_attributes[:current_project]
       within_fieldset('working-days') do
         govuk_label_click 'Monday'
@@ -87,7 +86,6 @@ module SpecSupport
       expect(page).to have_text(person_attributes[:primary_phone_number])
       expect(page).to have_text(person_attributes[:location_in_building])
       expect(page).to have_text(person_attributes[:city])
-      expect(page).to have_text(person_attributes[:description])
       expect(page).to have_text(person_attributes[:current_project])
 
       within('ul.working_days') do

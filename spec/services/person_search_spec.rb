@@ -117,13 +117,13 @@ RSpec.describe PersonSearch, elastic: true do
       expect(results.contains_exact_match).to eq true
     end
 
-    it 'searches by location' do
+    xit 'searches by location' do
       results = search_for('petty france')
       expect(results.set.map(&:name)).to_not include(@alice.name)
       expect(results.set.map(&:name)).to include(@bob.name)
     end
 
-    it 'searches by description, location' do
+    xit 'searches by description, location' do
       results = search_for('weekends only petty france office')
       expect(results.set.map(&:name)).to_not include(@alice.name)
       expect(results.set.map(&:name)).to include(@bob.name)
