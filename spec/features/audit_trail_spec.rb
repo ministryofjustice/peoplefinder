@@ -31,7 +31,7 @@ feature 'Audit trail' do
       visit new_person_path
       fill_in 'First name', with: 'Jon'
       fill_in 'Last name', with: 'Smith'
-      fill_in 'Main email', with: person_attributes[:email]
+      fill_in 'Primary work email', with: person_attributes[:email]
       click_button 'Save', match: :first
 
       visit '/audit_trail'
