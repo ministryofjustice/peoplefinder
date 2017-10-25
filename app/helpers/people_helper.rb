@@ -107,4 +107,10 @@ module PeopleHelper
       [I18n.t("people.grade_names.#{grade}"), grade]
     end
   end
+
+  def learning_and_development_names
+    Person::LEARNING_DEVELOPMENT_OPTS.map do |ld|
+      [ld, I18n.t("people.learning_and_development_names.#{ld}")]
+    end
+  end
 end

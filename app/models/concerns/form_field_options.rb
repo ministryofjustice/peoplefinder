@@ -110,5 +110,16 @@ module Concerns::FormFieldOptions
       non_graded_secondee
       non_graded_post
     }.freeze
+
+    LEARNING_DEVELOPMENT_OPTS = %w{
+      shadowing
+      mentoring
+      research
+      overseas_posts
+      secondment
+      parliamentary_work
+      ministerial_submissions
+      coding
+      }.freeze
   end
 end

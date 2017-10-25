@@ -91,6 +91,14 @@
   = f.text_area :previous_positions
 
   .form-group
+    %label.form-label{for: :learning_and_development} Learning and development interests (optional)
+    %ul.inline-list
+      = f.collection_check_boxes :learning_and_development, learning_and_development_names, :first, :last, checked: @person.try(:learning_and_development) do |b|
+        %li
+          .form-group
+            = b.label(class: "block-label selection-button-checkbox", 'data-value': b.value) { b.check_box + b.text }
+
+  .form-group
     = f.submit 'Save', class: 'button'
 
   .form-group

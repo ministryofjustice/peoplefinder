@@ -290,6 +290,15 @@ en:
       non_graded_contractor: Non graded - contractor
       non_graded_secondee: Non graded - secondee
       non_graded_post: Non graded - post
+    learning_and_development_names:
+      shadowing: Shadowing
+      mentoring: Mentoring
+      research: Research
+      overseas_posts: Overseas posts
+      secondment: Secondment
+      parliamentary_work: Parliamentary work
+      ministerial_submissions: Ministerial submissions
+      coding: Coding
   management:
     header: Management
     report_header: Reports
