@@ -1,0 +1,21 @@
+= flash_messages
+.people-search-inner-page
+  .homepage-top-inner
+    = render 'shared/search'
+    / %form{action: "#{ENV['PEOPLEFINDER_URL']}/search", method: 'get', role: 'search', id: 'people_search', class: 'search-people-form' }
+    /   .govuk-search
+    /     %label.search-label
+    /       Search people
+    /     .search-wrapper
+    /       %input#search_filters_{:name => "search_filters[]", :type => "hidden", :value => "people"}/
+    /       %input#search_filters_{:name => "search_filters[]", :type => "hidden", :value => "teams"}/
+    /       %input{name: 'query', type: 'search', title: 'Search', class: 'search-element search-input js-class-toggle'}
+    /       .search-element.search-submit-wrapper
+    /         %button{type: 'submit', class: 'search-submit', id:'people_search_submit' }
+    /           Search
+    .user-account
+      = render "shared/loginout"
+      /- if @people_finder_profile.name
+      /  = link_to(@people_finder_profile.name, @people_finder_profile.profile_url)
+      /- if @people_finder_profile.profile_image_url
+      /  = image_tag @people_finder_profile.profile_image_url, class: 'user-account-profile-img', alt: @people_finder_profile.name

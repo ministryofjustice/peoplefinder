@@ -2,7 +2,6 @@
   - if logged_in_regular?
     %li
       = link_to "Signed in as #{current_user}", person_path(current_user)
-
     - if super_admin?
       %li
         = link_to 'Manage', admin_home_path, class: "manage-link"

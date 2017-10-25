@@ -1,0 +1,183 @@
+/* People finder */
+
+// Homepage
+
+	.profile-overview {
+		display: none;
+		position: absolute;
+		top: 0;
+		right: 10px;
+		width: 33.33%;
+		.profile-overview-inner {
+			/*padding: 107px 20px 5px;*/
+			position: relative;
+			margin-left: 27px;
+			min-height: 20em;
+			color: #ffffff;
+			overflow: auto;
+			.profile-flair {
+				background: $brand_color_c; /* For unsupported browsers */
+				background: rgba($brand_color_c, 0.3); /* IE8 */
+				-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=$brand_color_c, endColorstr=$brand_color_c)"; /* IE8 */
+				filter: alpha(opacity=30); /* IE8 */
+				zoom: 1; /* IE8 */
+				display: block;
+				height: 70px;
+				position: absolute;
+				right: 0;
+				text-align: right;
+				top: 0;
+				width: 100%;
+			}
+
+			.profile-content {
+				background: $brand_color_c;
+				margin: 67px 0;
+				padding: 20px 20px 20px;
+				@extend %clearfix;
+			}
+
+			.profile-details {
+				@extend %clearfix;
+			}
+
+			.profile-image {
+				display: none;
+				float: left;
+				width: 33.33%;
+			}
+			.profile-meta {
+				float: left;
+				width: 100%;
+				h3 {
+					line-height: 1em;
+					margin-top: 0;
+					a {
+						word-break: break-all;
+					}
+				}
+				span {
+					font-size: 14px;
+					&.profile-update {
+						display: block;
+						text-align: right;
+					}
+				}
+			}
+
+			.profile-progress,
+			.profile-update {
+				display: inline-block;
+			}
+			.profile-update {
+				font-size: 14px;
+				padding-left: 90px;
+			}
+
+			img {
+				max-height: 5em;
+				max-width: 100%;
+			}
+			.heading-small {
+				margin-top: 6px;
+			}
+			span {
+				display: block;
+			}
+		}
+	}
+
+@media (min-width: $screen_small) {
+	.homepage-top {
+		.profile-overview {
+			display: block;
+		}
+	}
+}
+
+@media (min-width: $screen_medium) {
+	.homepage-top {
+		.profile-overview {
+			.profile-overview-inner {
+				.profile-image {
+					display: block;
+				}
+				.profile-meta {
+					width: 66.66%;
+					h3, span {
+						padding-left: 15px;
+					}
+				}
+			}
+		}
+	}
+}
+
+// Inner pages
+
+.people-search-inner-page {
+	background: #454a4c;
+	background-image: asset-data-url("find-people-pattern.png");
+	@extend %clearfix;
+
+	.homepage-top-inner {
+		overflow: hidden;
+		position: relative;
+		max-width: 960px;
+		text-align: left;
+		margin: 0 auto;
+		padding: 0px;
+
+		@media (min-width: $screen_medium) {
+			padding: 0px 15px;
+		}
+	}
+
+	//.govuk-search {
+	.mod-search-form {
+		margin: 10px 0 10px 10px;
+	}
+
+	//.search-people-form {
+	.mod-search {
+		width: 50%;
+		float: left;
+		margin: 0;
+	}
+
+	.user-account {
+		width: 31%;
+		float: right;
+		background: $brand_color_c;
+		background: rgba(205,22,50,0.3);
+		-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=$brand_color_c, endColorstr=$brand_color_c)";
+		text-align: right;
+		a {
+			position: relative;
+			padding: 18px 18px 18px 0px;
+			display: inline-block;
+			font-weight: 700;
+			text-decoration: none;
+			color: #FFFFFF;
+
+			&:before {
+				content: '';
+				display: block;
+				position: absolute;
+				top: 18px;
+				left: -30px;
+				background-image: asset-data-url("icon-user.png");
+				background-repeat: no-repeat;
+
+				width: 16px;
+				height: 20px;
+			}
+		}
+	}
+
+	.user-account-profile-img {
+		width: 60px;
+		max-height: 100%;
+		float: right;
+	}
+}

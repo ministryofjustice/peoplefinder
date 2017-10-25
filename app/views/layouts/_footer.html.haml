@@ -2,9 +2,12 @@
   %div.acknowledgements
     %ul
       %li
-        = link_to "Cookies", :cookies
+        = link_to("Teams", "")
       %li
-        Built by
-        %a.underlined{href: "https://mojdigital.blog.gov.uk/"}
-          %abbr{title: "Ministry of Justice"} MOJ
-          Digital Services
+        = link_to("Networks", "")
+      %li
+        = link_to("Regions", "")
+      %li
+        = link_to("Sectors", "")
+    %p
+      = "Built by the #{link_to('DIT Digital', '#')} team".html_safe

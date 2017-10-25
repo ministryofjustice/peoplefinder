@@ -5,7 +5,8 @@
   = "<p>GOV.UK uses cookies to make the site simpler. <a href=\"/cookies\">Find out more about cookies</a></p>".html_safe
 
 - content_for :global_header_text do
-  #{Rails.configuration.department_abbrev}
+  /#{Rails.configuration.department_abbrev}
+  %img{:src => 'http://dit-prototype.preview3.co.uk/assets/dit-logo.png', :alt => 'Department for International Trade'}
 
 - content_for :homepage_url do
   = home_path
@@ -16,6 +17,7 @@
 - content_for :head do
 
   = stylesheet_link_tag "application", media: "all"
+  = stylesheet_link_tag "digital-workspace-overrides/application", media: "all"
   = csrf_meta_tag
   %meta{name: "format-detection", content: "telephone=no"}
 
@@ -38,11 +40,10 @@
 - content_for :proposition_header do
   .header-proposition
     .content
-      %a.js-header-toggle.menu{:href => "#proposition-links"}
-        = "Menu"
-      %nav#proposition-menu
-        =link_to app_title, home_path, id: "proposition-name"
-        = render "shared/loginout"
+      = link_to "Digital Workspace", home_path, id: "proposition-name"
+      %strong.beta-label
+        BETA
+    = render partial: "widgets/nav"
 
 - content_for :footer_top do
   = render 'shared/feedback_form'
@@ -57,11 +58,10 @@
   = render 'layouts/ga'
 
 - content_for :content do
-  %main#content
-    = yield :breadcrumbs
-
-    = flash_messages
-
-    = yield
+  .page-content
+    = render partial: "widgets/people_search_inner_page"
+    %main#content
+      = yield :breadcrumbs
+      = yield
 
 = render template: 'layouts/govuk_template'
