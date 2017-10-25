@@ -97,7 +97,7 @@ class PeopleController < ApplicationController
     [
       :given_name, :surname, :location_in_building, :city, :country,
       :primary_phone_number, :primary_phone_country_code, :skype_name,
-      :email, :secondary_email,
+      :email, :secondary_email, :language_intermediate, :language_fluent,
       :profile_photo_id, :crop_x, :crop_y, :crop_w, :crop_h,
       :description, :current_project,
       *Person::DAYS_WORKED,

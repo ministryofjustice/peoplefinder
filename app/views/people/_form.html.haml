@@ -81,6 +81,8 @@
           .form-group
             = b.label(class: "block-label selection-button-checkbox", 'data-value': b.value) { b.check_box + b.text }
 
+  = f.text_field :language_intermediate
+  = f.text_field :language_fluent
 
   .form-group
     = f.submit 'Save', class: 'button'

@@ -476,6 +476,8 @@ en:
         works_saturday: Saturday
         works_sunday: Sunday
         description: Extra information
+        language_fluent: Intermediate Languages
+        language_intermediate: Fluent Languages
       membership:
         role: "Job title"
         group: Team
@@ -531,6 +533,8 @@ en:
         current_project: List the names of current projects this person is working on. Use a comma to separate project names.
         working_days: Select all that apply
         description: Include details about where this person works on different days, any days out of the office, and if this person starts early or late.
+        language_fluent: Add languages at which you are fluent. Use a comma to separate languages.
+        language_intermediate: Add languages at which you have intermediate fluency. Use a comma to separate languages.
       membership:
         role: Role within this team
       group:
