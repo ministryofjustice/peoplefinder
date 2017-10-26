@@ -1,0 +1,68 @@
+// Miscellaneous, very specific styles we need to over-ride on People Finder
+
+// padding on create a new profile link to match view all people (sub team pages)
+.mod-team-overview {
+	.add-new-person {
+		margin-left: 10px;
+		padding-left: 10px;
+	}
+}
+
+// links in sub-team block excerpts (the h3 is coloured instead of the a)
+.mod-subgroups {
+	.mod-subgroup {
+		a {
+			&.subgroup-link-block {
+				&:link {
+					h3 {
+						color: $brand_color_a;
+					}
+				}
+				&:hover {
+					h3 {
+						color: $brand_color_a;
+					}
+				}
+				&:active {
+					h3 {
+						color: $brand_color_a;
+					}
+				}
+				&:visited {
+					h3 {
+						color: $brand_color_b;
+					}
+				}
+			}
+		}
+	}
+}
+
+// breathing space around feedback container
+#feedback_container {
+	margin-top: 4em;
+	#feedbackToggle {
+		color: $brand_color_a;
+	}
+}
+
+// horizontal rule on sidebar top
+.mod-home-info {
+	border-top: 5px solid $brand_color_c;
+}
+
+#footer {
+	.footer-meta {
+		.footer-meta-inner {
+			a {
+				color: #000;
+			}
+			.acknowledgements {
+				p {
+					color: #000;
+					font-size: 16px;
+				}
+			}
+		}
+	}
+}

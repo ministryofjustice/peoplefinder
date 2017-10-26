@@ -1,0 +1,17 @@
+// ------------------------------------
+// checkbox lists
+
+ul.inline-list {
+	li {
+		display: block;
+		float: left;
+		width: 33%;
+		&:nth-child(3n + 1) {
+			clear: left;
+		}
+	}
+}
+
+.form-label + ul.inline-list {
+	margin-top: 20px;
+}

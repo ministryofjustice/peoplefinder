@@ -44,11 +44,19 @@
       %strong.beta-label
         BETA
     = render partial: "widgets/nav"
+    .search
+      %form{:action => ENV['WORKSPACE_SEARCH_URL'], :method => "get", :role => "search-workspace"}
+        .proposition-search.govuk-search
+          %label.search-label
+            Search site
+          .search-wrapper
+            %input{:type => 'search', :title => 'Search Workspace', :class => 'search-element search-input js-class-toggle'}
+            .search-element.search-submit-wrapper
+              %button{:type => 'submit', :class => 'search-submit'}
+                Search Workspace
 
-- content_for :footer_top do
-  = render 'shared/feedback_form'
-
-
+/- content_for :footer_top do
+  
 - content_for :footer_support_links do
   = render 'layouts/footer'
 
@@ -63,5 +71,6 @@
     %main#content
       = yield :breadcrumbs
       = yield
+      = render 'shared/feedback_form'
 
 = render template: 'layouts/govuk_template'
