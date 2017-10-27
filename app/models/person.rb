@@ -44,6 +44,7 @@ class Person < ActiveRecord::Base
   include Concerns::GeckoboardDatasets
   include Concerns::PersonChangesTracker
   include Concerns::DataMigrationUtils
+  include Concerns::ProfileFields
 
   belongs_to :profile_photo
 
