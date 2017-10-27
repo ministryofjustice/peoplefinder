@@ -21,7 +21,6 @@
                 - else
                   = "#{ membership.role }, " if membership.role?
                   = link_to membership.group.name, membership.group, { data: search_result_analytics_attributes(index) }
-
           %li.cb-person-phone
             = call_to(person.phone)
           %li.cb-person-email
@@ -33,3 +32,17 @@
                 Current project(s)
               %br/
               = es_highlighter(hit, person, :current_project)
+
+          - if person.languages.present?
+            %li.cb-person-languages.core-16
+              %span.bold
+                Languages
+              %br/
+              = es_highlighter(hit, person, :languages)
+
+          - if person.formatted_key_skills.present?
+            %li.cb-person-key-skills.core-16
+              %span.bold
+                Key Skills
+              %br/
+              = es_highlighter(hit, person, :formatted_key_skills)
