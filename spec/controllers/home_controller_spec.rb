@@ -43,6 +43,15 @@ RSpec.describe HomeController, type: :controller do
         expect(assigns(:department).name).to eql('Ministry of Justice')
       end
     end
-  end
 
+    context 'when the HOME_PAGE_URL environment variable is defined' do
+      it 'redirects to the HOME_PAGE_URL' do
+        ENV['HOME_PAGE_URL'] = 'http://dev/null'
+        create(:department)
+        get :show
+        expect(response).to redirect_to('http://dev/null')
+        ENV['HOME_PAGE_URL'] = nil
+      end
+    end
+  end
 end

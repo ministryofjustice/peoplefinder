@@ -98,6 +98,9 @@ defined on a per environment basis.
 
 `config.send_reminder_emails` Set to true if reminder emails are to be sent by cronjobs
 
+## Using an alternate home page
+Set `ENV['HOME_PAGE_URL']` to redirect requests to the root path, or leave it blank to render `homes#show`.
+
 ## Google Analytics
 Set the tracking id as:
 `ENV['GA_TRACKING_ID']`
