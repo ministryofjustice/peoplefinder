@@ -13,7 +13,8 @@ feature 'Searching feature', elastic: true do
       surname: 'Browne',
       email: 'jon.browne@digital.justice.gov.uk',
       primary_phone_number: '0711111111',
-      current_project: 'Digital Prisons'
+      current_project: 'Digital Prisons',
+      language_fluent: 'Spanish, Italian'
     )
     create(
       :person,
@@ -101,6 +102,14 @@ feature 'Searching feature', elastic: true do
       within '#person-results' do
         expect(page).to have_selector('.es-highlight', text: 'Browne')
         expect(page).to have_selector('.es-highlight', text: 'Jon')
+      end
+    end
+
+    scenario 'highlights language terms' do
+      fill_in 'query', with: 'Spanish'
+      click_button 'Search'
+      within '#person-results' do
+        expect(page).to have_selector('.es-highlight', text: 'Spanish')
       end
     end
 
