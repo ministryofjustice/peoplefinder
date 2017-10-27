@@ -68,7 +68,8 @@ class PersonSearch
       :role_and_group,
       :location,
       :current_project,
-      :languages
+      :languages,
+      :formatted_key_skills
     ].any? do |field|
       any_partial_match_for?(person, field)
     end
@@ -178,7 +179,15 @@ class PersonSearch
   # promote fuzzy surname matches above role/group, above full name
   #
   def fields_to_search
-    %w(surname^12 role_and_group^6 languages^5 current_project^4 location^4 name^4)
+    %w(
+      surname^12
+      role_and_group^6
+      languages^5
+      current_project^4
+      location^4
+      name^4
+      formatted_key_skills^4
+    )
   end
 
   def combined_query
@@ -209,7 +218,8 @@ class PersonSearch
       role_and_group: {},
       current_project: {},
       email: {},
-      languages: {}
+      languages: {},
+      formatted_key_skills: {}
     }
   end
 

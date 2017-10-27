@@ -14,7 +14,8 @@ feature 'Searching feature', elastic: true do
       email: 'jon.browne@digital.justice.gov.uk',
       primary_phone_number: '0711111111',
       current_project: 'Digital Prisons',
-      language_fluent: 'Spanish, Italian'
+      language_fluent: 'Spanish, Italian',
+      key_skills: ['agile_delivery']
     )
     create(
       :person,
@@ -110,6 +111,14 @@ feature 'Searching feature', elastic: true do
       click_button 'Search'
       within '#person-results' do
         expect(page).to have_selector('.es-highlight', text: 'Spanish')
+      end
+    end
+
+    scenario 'highlights key skills terms' do
+      fill_in 'query', with: 'agile'
+      click_button 'Search'
+      within '#person-results' do
+        expect(page).to have_selector('.es-highlight', text: 'Agile')
       end
     end
 

@@ -34,8 +34,15 @@
               = es_highlighter(hit, person, :current_project)
 
           - if person.languages.present?
-            %li.cb-person-current-project.core-16
+            %li.cb-person-languages.core-16
               %span.bold
                 Languages
               %br/
               = es_highlighter(hit, person, :languages)
+
+          - if person.formatted_key_skills.present?
+            %li.cb-person-key-skills.core-16
+              %span.bold
+                Key Skills
+              %br/
+              = es_highlighter(hit, person, :formatted_key_skills)
