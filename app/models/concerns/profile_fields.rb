@@ -3,7 +3,7 @@ module Concerns::ProfileFields
 
   def formatted_buildings
     building.reject(&:empty?).map do |x|
-      I18n.t(x, scope: "people.xuilding.#{x}")
+      I18n.t(x, scope: "people.building_names")
     end.join(', ')
   end
 
