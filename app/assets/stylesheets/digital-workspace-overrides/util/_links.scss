@@ -1,0 +1,47 @@
+/* Links */
+
+a {
+	cursor: pointer;
+
+	&:link {
+		color: $brand_color_a;
+		text-decoration: underline;
+	}
+
+	&:hover {
+		color: $brand_color_a;
+		text-decoration: none;
+	}
+
+	&:active {
+		color: $brand_color_a;
+	}
+
+	&:visited {
+		color: $brand_color_b;
+	}
+
+	// Heading links
+
+	&:link {
+		h1 &,
+		h2 &,
+		h3 &,
+		h4 &,
+		h5 &,
+		h6 & {
+			text-decoration: none;
+		}
+	}
+
+	&:hover {
+		h1 &,
+		h2 &,
+		h3 &,
+		h4 &,
+		h5 &,
+		h6 & {
+			text-decoration: underline;
+		}
+	}
+}

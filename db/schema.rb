@@ -97,12 +97,12 @@ ActiveRecord::Schema.define(version: 20171025141416) do
     t.string   "key_skills",                  default: [],                 array: true
     t.text     "language_fluent"
     t.text     "language_intermediate"
+    t.text     "grade"
     t.text     "previous_positions"
     t.string   "learning_and_development",    default: [],                 array: true
     t.string   "networks",                    default: [],                 array: true
     t.string   "key_responsibilities",        default: [],                 array: true
     t.string   "additional_responsibilities", default: [],                 array: true
-    t.text     "grade"
     t.text     "other_uk"
     t.text     "other_overseas"
   end

@@ -1,0 +1,51 @@
+.profile-page {
+	.mod-media.profile {
+		//profile image
+		.maginot {
+			border: 2px solid #000000;
+		}
+
+		//profile completeness dialog box
+		.complete-your-profile {
+			background-color: #fff;
+			border: 2px solid $brand_color_c;
+			margin: 20px 0;
+			//general classname, but only used for "progress bar" in this area
+			.grid-row {
+				margin: 6px 0 10px;
+			}
+			.mod-complete {
+				border: 2px solid $brand_color_c;
+				line-height: 25px;
+				.on {
+					background-color: $brand_color_c;
+				}
+				.off {
+					background-color: #FFFFFF;
+				}
+			}
+			.score {
+				color: $brand_color_c;
+				margin-top: 3px;
+			}
+			p {
+				a {
+					&:first-letter {
+						text-transform: capitalize;
+					}
+				}
+				&:last-child {
+					margin-bottom: 18px;
+				}
+			}
+		}
+
+		//working day icons
+		ul.working_days {
+			.active {
+				background-color: $brand_color_c;
+			}
+		}
+
+	}
+}
