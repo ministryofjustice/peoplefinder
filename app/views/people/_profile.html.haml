@@ -32,12 +32,47 @@
                 %a{ href: url_for(group) }
                   = group
 
-        - if @person.location.present?
+        - if @person.formatted_buildings.present?
           %dl.inline-labels
             %dt
-              Location
+              Building I work in
             %dd
-              = @person.location
+              = @person.formatted_buildings
+
+        - if @person.location_in_building.present?
+          %dl.inline-labels
+            %dt
+              Locations in building
+            %dd
+              = @person.location_in_building
+
+        - if @person.city.present?
+          %dl.inline-labels
+            %dt
+              Town, city or region
+            %dd
+              = @person.city
+
+        - if @person.country.present?
+          %dl.inline-labels
+            %dt
+              Country
+            %dd
+              = @person.country
+
+        - if @person.other_uk.present?
+          %dl.inline-labels
+            %dt
+              Other - UK regional
+            %dd
+              = @person.other_uk
+
+        - if @person.other_overseas.present?
+          %dl.inline-labels
+            %dt
+              Other - Overseas
+            %dd
+              = @person.other_overseas
 
         - if @person.email.present?
           %dl.inline-labels
@@ -60,12 +95,26 @@
             %dd
               = call_to(@person.primary_phone_number)
 
+        - if @person.primary_phone_country_code.present?
+          %dl.inline-labels
+            %dt
+              Country dialling code
+            %dd
+              = @person.primary_phone_country_code
+
         - if @person.secondary_phone_number.present?
           %dl.inline-labels
             %dt
               Other phone number
             %dd
               = call_to(@person.secondary_phone_number)
+
+        - if @person.skype_name.present?
+          %dl.inline-labels
+            %dt
+              Skype name
+            %dd
+              = link_to(@person.skype_name, "skype:#{@person.skype_name}?call")
 
         - if @person.pager_number.present?
           %dl.inline-labels
@@ -81,18 +130,81 @@
             %dd
               = @person.current_project
 
+        %h4.heading-small
+          = "Days worked"
+
+        %ul.working_days
+          = render 'working_days'
+
+        - if @person.formatted_key_skills.present?
+          %dl.inline-labels
+            %dt
+              Key skills
+            %dd
+              = @person.formatted_key_skills
+
+        - if @person.language_fluent.present?
+          %dl.inline-labels
+            %dt
+              Fluent Languages
+            %dd
+              = @person.language_fluent
+
+        - if @person.language_intermediate.present?
+          %dl.inline-labels
+            %dt
+              Intermediate Languages
+            %dd
+              = @person.language_intermediate
+
+        - if @person.grade.present?
+          %dl.inline-labels
+            %dt
+              Grade
+            %dd
+              = I18n.t(@person.grade, scope: 'people.grade_names')
+
+        - if @person.previous_positions.present?
+          %dl.inline-labels
+            %dt
+              Previous positions held
+            %dd
+              = @person.previous_positions
+
+        - if @person.formatted_learning_and_development.present?
+          %dl.inline-labels
+            %dt
+              Learning and development interests
+            %dd
+              = @person.formatted_learning_and_development
+
+        - if @person.formatted_networks.present?
+          %dl.inline-labels
+            %dt
+              Networks I belong to
+            %dd
+              = @person.formatted_networks
+
+        - if @person.formatted_key_responsibilities.present?
+          %dl.inline-labels
+            %dt
+              Key areas of responsibility within my job
+            %dd
+              = @person.formatted_key_responsibilities
+
+        - if @person.formatted_additional_responsibilities.present?
+          %dl.inline-labels
+            %dt
+              My additional roles and responsibilities
+            %dd
+              = @person.formatted_additional_responsibilities
+
         - if @person.description.present?
           %dl.inline-labels
             %dt
               Extra information
             %dd
               = @person.description
-
-        %h4.heading-small
-          = "Days worked"
-
-        %ul.working_days
-          = render 'working_days'
 
 - unless @versions.nil?
   = render 'shared/audit', versions: @versions

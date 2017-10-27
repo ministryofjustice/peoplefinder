@@ -76,7 +76,7 @@
     = "Extra information"
 
   .form-group
-    %label.form-label{for: :key_skills} Key areas of responsibility within my job
+    %label.form-label{for: :key_skills} Key skills
     %ul.inline-list
       = f.collection_check_boxes :key_skills, key_skill_names, :last, :first , checked: @person.try(:key_skills) do |b|
         %li
