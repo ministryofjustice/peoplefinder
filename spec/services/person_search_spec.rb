@@ -10,7 +10,9 @@ RSpec.describe PersonSearch, elastic: true do
     @bob = create(:person, given_name: 'Bob', surname: 'Browning',
              location_in_building: '10th floor', building: '102 Petty France',
              city: 'London', description: 'weekends only',
-             current_project: 'Current project')
+             current_project: 'Current project',
+             language_fluent: 'Spanish, Italian',
+             language_intermediate: 'Hindi')
     @andrew = create(:person, given_name: 'Andrew', surname: 'Alice')
     @abraham_kiehn = create(:person, given_name: 'Abraham', surname: 'Kiehn')
     @abe = create(:person, given_name: 'Abe', surname: 'Predovic')
@@ -114,6 +116,18 @@ RSpec.describe PersonSearch, elastic: true do
     it 'searches by description, current_project, group and role ' do
       results = search_for('Digital Project')
       expect(results.set.map(&:name)).to include(@bob.name, @john_smyth.name)
+      expect(results.contains_exact_match).to eq true
+    end
+
+    it 'searches by language_fluent' do
+      results = search_for('Spanish')
+      expect(results.set.map(&:name)).to include(@bob.name)
+      expect(results.contains_exact_match).to eq true
+    end
+
+    it 'searches by language_intermediate' do
+      results = search_for('Hindi')
+      expect(results.set.map(&:name)).to include(@bob.name)
       expect(results.contains_exact_match).to eq true
     end
 

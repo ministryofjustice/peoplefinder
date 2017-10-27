@@ -60,7 +60,7 @@ class Person < ActiveRecord::Base
   def as_indexed_json(_options = {})
     as_json(
       only: [:surname, :current_project, :email],
-      methods: [:name, :role_and_group, :location]
+      methods: [:name, :role_and_group, :location, :languages]
     )
   end
 
@@ -184,6 +184,10 @@ class Person < ActiveRecord::Base
 
   def role_and_group
     memberships.join('; ')
+  end
+
+  def languages
+    [language_fluent, language_intermediate].compact.reject(&:empty?).join(', ')
   end
 
   def path
