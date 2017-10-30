@@ -29,62 +29,54 @@ module Concerns::FormFieldOptions # rubocop:disable Metrics/ModuleLength
     ].freeze
 
     KEY_SKILL_OPTS = %w{
-      accounting
-      agile_delivery
-      auditing
-      briefing_ministers
+      asset_management
       change_management
-      communications
-      commercial_awareness
-      crm
-      data_analysis
-      financial_reporting
-      knowledge_sharing
-      legal_writing
-      legislation
-      negotiation
-      marketing
-      ministerial_briefing
-      operational_delivery
-      parliamentary_business
-      planning
-      policy
-      project_delivery
-      risk_management
-      speech_writing
-      statistics
-      strategy
-      submission
-      training
-      underwriting
-      valution
-      media_trained
+      coaching
+      commercial_specialist
+      commissioning
+      contract_management
+      credit_risk_analysis
+      customer_service
+      digital
+      digital_workspace_publisher
       economist
+      financial_reporting
+      graphic_design
+      hr
+      income_generation
+      information_management
+      interviewing
+      it
       law
+      line_management
+      media_trained
+      mentoring
+      policy_design
+      policy_implementation
+      presenting
+      project_delivery
+      project_management
+      property_estates
       research_operational
       research_economic
       research_statistical
       research_social
       research_user
-      it
-      information_management
-      content_design
-      graphic_design
-      ux_design
-      marketing
-      contract_management
-      project_management
-      asset_management
-      tax
-      digital_workspace_publisher
-      commercial_specialise
-      income_generation
+      security
+      skills_and_capability
       sponsorship
-      credit_risk_analysis
-      digital
-      interviewing
-      project_finance
-      presenting
+      stakeholder_management
+      statistics
+      strategy
+      submission_writing
+      talent_management
+      tax
+      training
+      underwriting
+      valution
+      working_with_devolved_admin
+      working_with_ministers
+      working_with_govt_depts
     }.freeze
 
     GRADE_OPTS = %w{

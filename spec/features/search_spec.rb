@@ -15,7 +15,7 @@ feature 'Searching feature', elastic: true do
       primary_phone_number: '0711111111',
       current_project: 'Digital Prisons',
       language_fluent: 'Spanish, Italian',
-      key_skills: ['agile_delivery']
+      key_skills: ['interviewing']
     )
     create(
       :person,
@@ -115,10 +115,10 @@ feature 'Searching feature', elastic: true do
     end
 
     scenario 'highlights key skills terms' do
-      fill_in 'query', with: 'agile'
+      fill_in 'query', with: 'interviewing'
       click_button 'Search'
       within '#person-results' do
-        expect(page).to have_selector('.es-highlight', text: 'Agile')
+        expect(page).to have_selector('.es-highlight', text: 'Interviewing')
       end
     end
 
