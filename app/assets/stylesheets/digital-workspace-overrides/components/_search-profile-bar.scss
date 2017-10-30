@@ -187,3 +187,24 @@
 		}
 	}
 }
+
+.js-enabled {
+	.mod-search {
+		.mod-search-form {
+			label {
+				padding-right: 40px;
+				overflow: hidden;
+				word-break: break-all;
+			}
+			.mod-search-input-wrapper {
+				position: relative;
+				z-index: 10;
+			}
+			.mod-search-input {
+				&:focus {
+					background-color: #ffffff;
+				}
+			}
+		}
+	}
+}
