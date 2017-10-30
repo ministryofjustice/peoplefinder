@@ -17,10 +17,11 @@ class HomeController < ApplicationController
 
   def set_department_or_redirect
     @department = Group.department
-    unless @department
+    if @department
+      redirect_to ENV['HOME_PAGE_URL'] if ENV['HOME_PAGE_URL']
+    else
       notice :top_level_group_needed
       redirect_to(new_group_path) && return
     end
   end
-
 end

@@ -212,62 +212,54 @@ en:
       horse_guards: "1 Horse Guards Rd"
       king_charles: "King Charles Street"
     key_skill_names:
-      accounting: Accounting
-      agile_delivery: Agile delivery
-      auditing: Auditing
-      briefing_ministers: Briefing ministers and senior officials
+      asset_management: Asset management
       change_management: Change management
-      communications: Communications
-      commercial_awareness: Commercial awareness
-      crm:  Customer relationship management (CRM)
-      data_analysis:  Data analysis
+      coaching: Coaching
+      commercial_specialist: Commercial specialist
+      commissioning: Commissioning
+      contract_management: Contract management
+      credit_risk_analysis: Credit risk analysis
+      customer_service: Customer service
+      digital:  Digital
+      digital_workspace_publisher: Digital Workspace publisher
+      economist: Economist
       financial_reporting:  Financial reporting
-      knowledge_sharing: Knowledge sharing
-      legal_writing:  Legal writing
-      legislation: Legislation
-      negotiation: Negotiation
-      marketing: Marketing
-      ministerial_briefing: Ministerial briefing
-      operational_delivery: Operational delivery
-      parliamentary_business: Parliamentary business
-      planning: Planning
-      policy: Policy
-      project_delivery: Project delivery
-      risk_management: Risk management
-      speech_writing: Speech writing
-      statistics: Statistics
-      strategy: Strategy
-      submission: Submissions
-      training: Training
-      underwriting: Underwriting
-      valution: Valuation
-      media_trained:  Media trained
-      economist:  Economist
+      graphic_design: Graphic Design
+      hr: HR
+      income_generation: Income generation
+      information_management: Information management
+      interviewing: Interviewing
+      it: IT
       law: Law
+      line_management: Line management
+      media_trained: Media trained
+      mentoring: Mentoring
+      policy_design: Policy design
+      policy_implementation: Policy immplementation
+      presenting: Presenting
+      project_delivery: Project delivery
+      project_management: Project management
+      property_estates: Property / Estates
       research_operational: Research - operational
       research_economic: Research - economic
       research_statistical: Research - statistical
       research_social: Research - social
       research_user: Research - user
-      it: IT
-      information_management: Information management
-      content_design: Content design
-      graphic_design: Graphic design
-      ux_design: UX design
-      marketing: Marketing
-      contract_management: Contract management
-      project_management: Project management
-      asset_management: Asset management
-      tax: Tax
-      digital_workspace_publisher: Digital Workspace publisher
-      commercial_specialise: Commercial specialist
-      income_generation: Income generation
+      security: Security
+      skills_and_capability: Skills and capability management
       sponsorship: Sponsorship and partmentships
-      credit_risk_analysis: Credit risk analysis
-      digital: Digital
-      interviewing: Interviewing
-      project_finance:  Project finance
-      presenting: Presenting
+      stakeholder_management: Stakeholder management
+      statistics: Statistics
+      strategy: Strategy
+      submission_writing: Submission writing
+      talent_management: Talent Management
+      tax: Tax
+      training: Training
+      underwriting: Underwriting
+      valution: Valuation
+      working_with_devolved_admin: Working with Devolved Administrations
+      working_with_ministers: Working with Ministers
+      working_with_govt_depts: Working with other government departments
     grade_names:
       fco_s1: FCO S1
       fco_s2: FCO S2
