@@ -1,77 +1,96 @@
+/* Headers */
+
+// ------------------------------------
+// Global header
+
 #global-header.with-proposition {
 	background-color: #FFFFFF;
 	.header-wrapper {
 		background-color: #FFFFFF;
 		.header-global {
 			float: left;
-			width: 38%;
+			//width: 38%;
+			position: relative;
+			width: 100%;
 		}
 		.header-proposition {
-			padding-top: 0;
+			clear: both;
+			padding-top: 16px;
 			position: relative;
 			.search {
+				display: none;
 				position: absolute;
 				right: 15px;
 				top: 0px;
-				width: 100%;
+				width: 38%;
 			}
 			#proposition-name {
-				font-size: 16px;
+				font-size: 24px;
+				padding-left: 7px;
 			}
-
-			.beta-label {
-				display: -moz-inline-stack;
-				display: inline-block;
-				margin: 4px 12px 0 0;
-				padding: 2px 5px 0;
-				//font-family: $font_family_main;
-				font-weight: 100;
-				text-transform: none;
-				font-size: 16px;
-				line-height: 1;
-				text-transform: uppercase;
-				letter-spacing: 1px;
-				text-decoration: none;
-				color: #fff;
-				background-color: #005ea5;
-				margin-top: 13px;
-				margin-left: 7px;
-				padding: 3px 6px;
+			#proposition-links {
+				padding-top: 10px;
+				padding-left: 8px;
+				width: auto;
+				li {
+					line-height: 2;
+					padding-bottom: 3px;
+					a {
+						font-size: 18px;
+					}
+				}
 			}
-
 			#proposition-menu {
 				clear: none;
-				float: right;
-				padding-top: 10px;
+				float: none;
+				margin: 0 15px;
+				padding-top: 25px;
+				width: auto;
+				ul {
+					list-style-type: none;
+					margin-right: 30px;
+					li {
+						border-bottom-width: 0px;
+						padding: 0px 0px;
+						width: 100%;
+					}
+				}
 			}
 			a.menu {
+				color: #000000;
 				clear: right;
-				margin-top: 5px;
+				margin-top: 0px;
+				padding-top: 9px;
+				padding-right: 15px;
+				&.js-hidden {
+					font-size: 0px;
+					padding: 0px;
+				}
 			}
 			form {
 				float: right;
 				.govuk-search {
 					&.proposition-search {
-						float: right;
 						margin-bottom: 0;
-						position: relative;
 						width: auto;
 					}
 					.search-label {
 						display: none;
-						left: 25px;
+						z-index: 1;
 					}
 					.search-wrapper {
 						background: transparent;
 						border: 2px solid #000000;
 						display: inline-block;
-						width: 100%;
+						width: auto;
 					}
 					.search-element {
-						display: inline-block;
+						display: table-cell;
+						position: relative;
 						vertical-align: top;
 					}
 					.search-input {
+						display: none;
 						padding: 6px;
 						margin: 0;
 						width: 100%;
@@ -83,34 +102,63 @@
 						font-family: Arial, sans-serif;
 						font-weight: 400;
 						text-transform: none;
-						font-size: 16px;
-						line-height: 1.75;
 						background: transparent;
 						border-radius: 0;
-						position: relative;
-						z-index: 2;
 						-webkit-appearance: none;
 						-moz-appearance: none;
+						z-index: 2;
 						&:focus {
-							background-color: #ffffff;
+							background-color: #fff;
 						}
 					}
 					.search-submit-wrapper {
 						width: 1%;
 					}
 					.search-submit {
+						background-color: #005ea5;
+						border-radius: 0px;
+						-moz-border-radius: 0px;
+						-webkit-border-radius: 0px;
 						position: relative;
 						padding: 0;
-						width: 40px;
-						height: 40px;
-						background-color: #005ea5;
 						background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGkAAABGCAMAAAD4pkrrAAAAM1BMVEX%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F8AAAD%2F%2F%2F8VtYL2AAAAEHRSTlMgsFDgkKAwcGCAwEDw0BAAV51l0wAAAYhJREFUeF7t192OhCAMBeBRlJ9S8Lz%2F027A7DTjkrSZhL3iXBmjflKbBl%2FXf2VJn1nSkpa0pCUtaUn%2BKGgpZ54qZYLE7fOkA5%2FZ6hypEnroSIm4U6VOkTrEod5udDc1QTqe9UqNIquUczbauUHnhx0bFS1STdwrsFtrdz70AIANUi1AIWLg0CEPgOuIj7pU4HIDExBMDR6GJd1UKbzfMbYjJQXA4CIHQJWKrJv0RQGg8VLhNQmQJsKmSuOvGQBkVSIpN8ggpYGUTZL05%2F61FC2Sk0tOpC%2B%2FU7JI6T20MvAy9B6PT%2Bu9VxnUqcwol5ZzOHheAIoqXZ7BZ0pFBpoy9tzQD4rUVUILH2yg3KAndhlR2iz3IaW9Xt5A7X8Ht%2Beuq9LznqhQGx6l2huEapSEUstXS6Mo%2Fz7oRE%2BpVknO2yi4I%2BSYOiuUXbJvWSRCmSV7IkPCqRahrJLd2nCntE2SUFP25bnldoWaIUnGlEhzKJorCcV%2BpiSUQHMkoegJrb%2FPJS1pSUta0pJ%2BAIynqm4LtSuyAAAAAElFTkSuQmCC);
 						background-repeat: no-repeat;
 						background-position: 2px 50%;
-						border-width: 0px;
+						border-width: 0;
 						color: #fff;
 						text-indent: -5000px;
 						overflow: hidden;
+						height: 40px;
+						width: 40px;
+					}
+				}
+			}
+		}
+		.mobile-header {
+			display: block;
+			margin: 0;
+			padding: 23px 5px 0 0;
+			position: absolute;
+			right: 0;
+			top: 0;
+			li {
+				float: left;
+				list-style-type: none;
+				margin-right: 10px;
+				a {
+					background-color: $brand_color_c;
+					background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAUCAYAAACEYr13AAAABGdBTUEAALGPC%2FxhBQAAAYVJREFUOBGVk71KA1EQRnNXiwRiYRpTSEorA6kUbG1S5A2sBJ%2FAQhBrn0ArGytfQUEUBEXBUhAhEoMWgqBYiMRG1%2FNt5sbdm6ziwGH%2Bvpncu5t1hRyL43iR1py1L51zxznSbJnBKhxCaKpVs%2BogQ%2BDgyCbb%2BDXYgI7V1HPB2E9Ks2nCB%2FyU7xBPwK31mr4uH6UT4nnLd7nzk%2B8RvxHvWO41SRouGDNRz3zafVjiNeleP%2BaILTvmPb7kFcSTcGW9lq8PeQQRnJmwi1%2BFdfD3Vy88dXYPghqcQ2iq1bLqQmHkK0GoX1mCBYjhAvZ4mF%2F4fGOwCJvwCKGppl5x5AYaDbgBb68EenBCsTdpGpklFMrQBdkJzGYEJKpZDxffQXmgIdlWFduHkc9FYvXgAGRbyQKCErzDJ0wPtuYE0phWMyVt1d1l1zkzQ2Vpkwlm9boqpugMKfMLXlsZR%2FNiujpbV4h%2Ff9f9D7BuM8%2B6gv6%2Bp3ak%2FzjNRMkTJ9CHswwztvkv10agT773DbRP3YUEFVTQAAAAAElFTkSuQmCC);
+					background-repeat: no-repeat;
+					background-position: 7px 50%;
+					display: block;
+					width: 31px;
+					height: 31px;
+					text-indent: -5000em;
+					&.mobile-search-button {
+						background-color: #005ea5;
+						background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGkAAABGCAMAAAD4pkrrAAAAM1BMVEX%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F8AAAD%2F%2F%2F8VtYL2AAAAEHRSTlMgsFDgkKAwcGCAwEDw0BAAV51l0wAAAYhJREFUeF7t192OhCAMBeBRlJ9S8Lz%2F027A7DTjkrSZhL3iXBmjflKbBl%2FXf2VJn1nSkpa0pCUtaUn%2BKGgpZ54qZYLE7fOkA5%2FZ6hypEnroSIm4U6VOkTrEod5udDc1QTqe9UqNIquUczbauUHnhx0bFS1STdwrsFtrdz70AIANUi1AIWLg0CEPgOuIj7pU4HIDExBMDR6GJd1UKbzfMbYjJQXA4CIHQJWKrJv0RQGg8VLhNQmQJsKmSuOvGQBkVSIpN8ggpYGUTZL05%2F61FC2Sk0tOpC%2B%2FU7JI6T20MvAy9B6PT%2Bu9VxnUqcwol5ZzOHheAIoqXZ7BZ0pFBpoy9tzQD4rUVUILH2yg3KAndhlR2iz3IaW9Xt5A7X8Ht%2Beuq9LznqhQGx6l2huEapSEUstXS6Mo%2Fz7oRE%2BpVknO2yi4I%2BSYOiuUXbJvWSRCmSV7IkPCqRahrJLd2nCntE2SUFP25bnldoWaIUnGlEhzKJorCcV%2BpiSUQHMkoegJrb%2FPJS1pSUta0pJ%2BAIynqm4LtSuyAAAAAElFTkSuQmCC);
+						background-repeat: no-repeat;
+						background-position: -2px 50%;
 					}
 				}
 			}
@@ -136,19 +184,15 @@
 	}
 }
 
-#global-header-bar {
-	background-color: $brand_color_c;
-}
-
 @media (min-width: $screen_small) {
 	#global-header.with-proposition {
 		.header-wrapper {
+			.mobile-header {
+				padding-right: 20px;
+			}
 			.header-proposition {
 				#proposition-menu  {
 					margin-left: 15px;
-				}
-				#proposition-name {
-					font-size: 18px;
 				}
 			}
 		}
@@ -163,24 +207,40 @@
 				width: 25%;
 			}
 			.header-proposition {
+				clear: none;
 				padding-top: 10px;
 				width: 75%;
 				.search {
+					display: block;
 					top: 9px;
 				}
 				#proposition-name {
+					margin-left: 0;
 					font-size: 34px;
 				}
 				#proposition-menu {
 					clear: both;
 					float: left;
-					padding-top: 5px;
+					padding-top: 10px;
+					margin: 3px 0px 6px 25px;
+					#proposition-links {
+						margin-right: 0;
+						padding-top: 0px;
+						padding-left: 0;
+						line-height: 1;
+						li {
+							width: auto;
+							line-height: 1;
+							margin-right: 15px;
+							padding: 0;
+						}
+					}
 				}
 				form {
 					float: none;
 					.govuk-search {
 						&.proposition-search {
-							width: 41.187%;
+							width: 100%;
 						}
 						.search-label {
 							display: block;
@@ -188,7 +248,7 @@
 						.search-wrapper {
 							background: transparent;
 							display: table;
-							width: 100%;
+							width: auto;
 						}
 						.search-element {
 							display: table-cell;
@@ -203,6 +263,121 @@
 					}
 				}
 			}
+			.mobile-header {
+				display: none;
+			}
 		}
+	}
+}
+
+.govuk-search {
+	.search-submit {
+		border-radius: 0px;
+		-moz-border-radius: 0px;
+		-webkit-border-radius: 0px;
+	}
+}
+
+
+// ------------------------------------
+// Homepage
+.homepage-top {
+	background: $brand_chrome_d;
+	background-image: asset-data-url("find-people-pattern.png");
+	color: #ffffff;
+
+	.homepage-top-inner {
+		margin: 0 15px;
+		overflow: hidden;
+		position: relative;
+		max-width: 980px;
+		text-align: left;
+	}
+	.welcome-block {
+		width: 100%;
+		.welcome-people-finder {
+			margin: 0 10px;
+			p {
+				display: none;
+			}
+			.heading-large {
+				font-size: 24px;
+				margin-top: 18px;
+			}
+			.govuk-search {
+				margin-bottom: 26px;
+			}
+		}
+	}
+
+	p,
+	a {
+		color: #ffffff;
+	}
+}
+
+@media (min-width: $screen_small) {
+	.homepage-top {
+		.homepage-top-inner {
+			margin: 0 30px;
+		}
+		.welcome-block {
+			width: 66.66%;
+		}
+	}
+}
+
+@media (min-width: $screen_medium) {
+	.homepage-top {
+		.welcome-block {
+			.heading-large {
+				margin-top: 0.9em;
+				margin-bottom: 0.4em;
+			}
+			.welcome-people-finder {
+				p {
+					display: block;
+				}
+				.heading-large {
+					margin-top: 1.25em;
+				}
+				.govuk-search {
+					margin-bottom: 40px;
+				}
+			}
+		}
+	}
+}
+
+@media (min-width: $screen_large) {
+	.homepage-top {
+		.homepage-top-inner {
+			margin: 0 auto;
+		}
+	}
+}
+
+// ------------------------------------
+// beta bar
+
+#global-header-bar {
+	background-color: $brand_color_c;
+}
+
+// ------------------------------------
+// Inner pages
+.select-category {
+	margin: 0px;
+	padding: 15px 0px;
+
+	.form-control {
+
+	}
+
+	.form-label {
+		display: inline-block;
+		margin-left: 120px;
+		margin-right: 10px;
+		font-weight: 700;
 	}
 }

@@ -38,11 +38,14 @@
   = "with-proposition"
 
 - content_for :proposition_header do
+  %ul.mobile-header
+    %li
+      = link_to "Account", '/', class: "mobile-account-button"
+    %li
+      = link_to "Search", "/search", class: "mobile-search-button"
   .header-proposition
     .content
       = link_to "Digital Workspace", home_path, id: "proposition-name"
-      %strong.beta-label
-        BETA
     = render partial: "widgets/nav"
     .search
       %form{:action => ENV['WORKSPACE_SEARCH_URL'], :method => "get", :role => "search-workspace"}
@@ -68,6 +71,7 @@
 - content_for :content do
   .page-content
     = render partial: "widgets/people_search_inner_page"
+    = render partial: "widgets/beta_bar"
     %main#content
       = yield :breadcrumbs
       = yield

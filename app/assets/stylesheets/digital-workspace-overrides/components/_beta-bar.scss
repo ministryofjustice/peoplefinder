@@ -1,17 +1,19 @@
 .beta-bar {
-	font-size: 16px;
+	font-size: 14px;
 	margin: 0 15px;
 	padding: 5px 0;
 	position: relative;
 	overflow: hidden;
 	max-width: 960px;
 	text-align: left;
+	border-bottom: 1px solid #bfc1c3;
+
 	.beta-label {
 		display: -moz-inline-stack;
 		display: inline-block;
-		margin: 4px 12px 0 0;
+		float: left;
+		margin: 4px 12px 2px 0;
 		padding: 2px 5px 0;
-		//font-family: $font_family_main;
 		font-weight: 700;
 		text-transform: none;
 		font-size: 16px;
@@ -21,8 +23,10 @@
 		text-decoration: none;
 		color: #fff;
 		background-color: #005ea5;
-		margin-right: 0;
 		padding-top: 1px;
+	}
+	a:link {
+		color: #000;
 	}
 	span {
 		display: inline;
@@ -35,6 +39,17 @@
 		margin: 0 30px;
 		span {
 			display: inline-block;
+		}
+	}
+}
+
+@media (min-width: $screen_medium) {
+	.beta-bar {
+		font-size: 16px;
+		.beta-label {
+			float: none;
+			margin-bottom: 0;
+			margin-right: 0;
 		}
 	}
 }

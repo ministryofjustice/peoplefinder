@@ -1,0 +1,36 @@
+.people-search-inner-page {
+	.homepage-top-inner {
+		.mod-search {
+			width: 100%;
+			.mod-search-form {
+				width: 95%;
+				.mod-search-submit {
+					background-position: -16px 50%;
+				}
+				label {
+					font-size: 16px;
+				}
+			}
+		}
+	}
+}
+
+.user-account {
+	display: none;
+}
+
+@media (min-width: $screen_medium) {
+	.people-search-inner-page {
+		.homepage-top-inner {
+			.mod-search {
+				width: 50%;
+				.mod-search-form {
+					width: 85%;
+				}
+			}
+		}
+	}
+	.user-account {
+		display: block;
+	}
+}
