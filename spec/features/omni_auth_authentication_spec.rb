@@ -33,7 +33,7 @@ feature 'OmniAuth Authentication' do
 
     visit '/'
     click_link 'Log in'
-    expect(page).to have_text('Signed in as John -required-')
+    expect(page).to have_text('Signed in as John')
   end
 
   scenario 'Log in failure' do
@@ -95,7 +95,8 @@ def valid_user_no_last_name
     provider: 'ditsso_internal',
     info: {
       email: 'test.user@digital.justice.gov.uk',
-      first_name: 'John'
+      first_name: 'John',
+      last_name: ''
     }
   )
 end

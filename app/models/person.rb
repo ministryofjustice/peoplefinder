@@ -111,7 +111,8 @@ class Person < ActiveRecord::Base
   end
 
   validates :given_name, presence: true
-  validates :surname, presence: true
+  attr_accessor :skip_must_have_surname
+  validates :surname, presence: true, unless: :skip_must_have_surname
   validates :email, presence: true, uniqueness: { case_sensitive: false }, email: true
   validates :secondary_email, email: true, allow_blank: true
 
