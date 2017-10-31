@@ -90,12 +90,6 @@ RSpec.describe PersonSearch, elastic: true do
       expect(results.contains_exact_match).to eq true
     end
 
-    it 'puts exact match first for "Andrew Alice"' do
-      results = search_for('Andrew Alice')
-      expect(results.set[0..1].map(&:name)).to eq [@andrew.name, @alice.name]
-      expect(results.contains_exact_match).to eq true
-    end
-
     it 'puts name synonym matches in results' do
       results = search_for('Abe Kiehn')
       expect(results.set.map(&:name)).to match_array [@abraham_kiehn.name, @abe.name]

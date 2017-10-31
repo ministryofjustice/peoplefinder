@@ -7,7 +7,7 @@ module SessionPersonCreator
       return unless email.permitted_domain?
       find_or_create_person(email) do |new_person|
         new_person.given_name = auth_hash['info']['first_name']
-        new_person.surname = auth_hash['info']['last_name'] || '-required-'
+        new_person.surname = auth_hash['info']['last_name']
       end
     end
 
@@ -39,6 +39,7 @@ module SessionPersonCreator
 
     def confirm_or_create person
       @person = person
+      @person.skip_must_have_surname = true
       @person.skip_must_have_team = true
       if @person.valid?
         if namesakes?
