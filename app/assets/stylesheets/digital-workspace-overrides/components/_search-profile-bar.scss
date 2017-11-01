@@ -201,7 +201,8 @@
 				z-index: 10;
 			}
 			.mod-search-input {
-				&:focus {
+				padding: 6px;
+				&:focus, &.focus {
 					background-color: #ffffff;
 				}
 			}
