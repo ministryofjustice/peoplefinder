@@ -107,7 +107,8 @@
 						-webkit-appearance: none;
 						-moz-appearance: none;
 						z-index: 2;
-						&:focus {
+						&:focus,
+						&.focus {
 							background-color: #fff;
 						}
 					}
