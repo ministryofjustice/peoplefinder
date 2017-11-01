@@ -13,7 +13,7 @@ RSpec.describe PersonSearch, elastic: true do
              current_project: 'Current project',
              language_fluent: 'Spanish, Italian',
              language_intermediate: 'Hindi',
-             key_skills: ['agile_delivery'])
+             key_skills: ['interviewing'])
     @andrew = create(:person, given_name: 'Andrew', surname: 'Alice')
     @abraham_kiehn = create(:person, given_name: 'Abraham', surname: 'Kiehn')
     @abe = create(:person, given_name: 'Abe', surname: 'Predovic')
@@ -90,12 +90,6 @@ RSpec.describe PersonSearch, elastic: true do
       expect(results.contains_exact_match).to eq true
     end
 
-    it 'puts exact match first for "Andrew Alice"' do
-      results = search_for('Andrew Alice')
-      expect(results.set[0..1].map(&:name)).to eq [@andrew.name, @alice.name]
-      expect(results.contains_exact_match).to eq true
-    end
-
     it 'puts name synonym matches in results' do
       results = search_for('Abe Kiehn')
       expect(results.set.map(&:name)).to match_array [@abraham_kiehn.name, @abe.name]
@@ -133,7 +127,7 @@ RSpec.describe PersonSearch, elastic: true do
     end
 
     it 'searches by key skills' do
-      results = search_for('Agile')
+      results = search_for('Interviewing')
       expect(results.set.map(&:name)).to include(@bob.name)
       expect(results.contains_exact_match).to eq true
     end
