@@ -6,6 +6,7 @@ module SessionPersonCreator
       email = EmailAddress.new(auth_hash['info']['email'])
       return unless email.permitted_domain?
       find_or_create_person(email) do |new_person|
+        new_person.email = email
         new_person.given_name = auth_hash['info']['first_name']
         new_person.surname = auth_hash['info']['last_name']
       end
@@ -14,6 +15,7 @@ module SessionPersonCreator
     def person_from_token(token)
       email = EmailAddress.new(token.user_email)
       find_or_create_person(email) do |new_person|
+        new_person.email = email
         new_person.given_name = email.inferred_first_name
         new_person.surname = email.inferred_last_name
       end
@@ -32,7 +34,7 @@ module SessionPersonCreator
     private
 
     def find_or_create_person(email, &_on_create)
-      person = Person.where(email: email.to_s).first_or_initialize
+      person = Person.where(internal_auth_key: email.to_s).first_or_initialize
       yield(person) if person.new_record?
       person
     end

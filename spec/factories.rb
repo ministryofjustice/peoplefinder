@@ -2,7 +2,6 @@
 FactoryGirl.define do
 
   sequence(:email) { |n| 'example.user.%d@digital.justice.gov.uk' % n }
-  sequence(:internal_auth_key) { |n| 'internal.auth.user.%dexample.com' % n }
   sequence(:given_name) { |n| "First name #{('a'.ord + (n % 25)).chr}" }
   sequence(:surname) { |n| "Surname #{('a'.ord + (n % 25)).chr}" }
   sequence(:location_in_building) { |n| "Room #{n}, #{n.ordinalize}" }
@@ -45,12 +44,15 @@ FactoryGirl.define do
     given_name
     surname
     email
-    internal_auth_key
 
     # validation requires team membership existence
     after :build do |peep, _evaluator|
       department = create(:department)
       peep.memberships << build(:membership, group: department, person: nil) if peep.memberships.empty?
+
+      # ensure that the internal_auth_email is populated
+      # so an oauth user can be logged in
+      peep.internal_auth_key = peep.email
     end
 
     trait :with_details do
