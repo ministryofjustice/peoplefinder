@@ -11,7 +11,7 @@ describe 'Person Profile API', type: :request do
   let(:profile_image_url_hash_key) { 'profile-image-url' }
 
   before do
-    get "/api/people?email=#{person.internal_auth_email}",
+    get "/api/people?email=#{person.internal_auth_key}",
       {},
       authorization: "Token #{ENV['PROFILE_API_TOKEN']}"
   end
@@ -49,7 +49,7 @@ describe 'Person Profile API', type: :request do
   end
 
   context 'when the person is not found' do
-    let(:person) { double(:person, internal_auth_email: 'nobody@example.com') }
+    let(:person) { double(:person, internal_auth_key: 'nobody@example.com') }
 
     it 'returns a 404' do
       expect(response.status).to eq(404)

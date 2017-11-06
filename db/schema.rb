@@ -105,7 +105,7 @@ ActiveRecord::Schema.define(version: 20171106164424) do
     t.string   "additional_responsibilities", default: [],                 array: true
     t.text     "other_uk"
     t.text     "other_overseas"
-    t.string   "internal_auth_email"
+    t.string   "internal_auth_key"
   end
 
   add_index "people", ["slug"], name: "index_people_on_slug", unique: true, using: :btree

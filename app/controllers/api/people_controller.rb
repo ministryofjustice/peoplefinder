@@ -13,7 +13,7 @@ module Api
     private
 
     def set_person
-      @person = Person.includes(:groups).find_by(internal_auth_email: params[:email])
+      @person = Person.includes(:groups).find_by(internal_auth_key: params[:email])
     end
   end
 end
