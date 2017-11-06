@@ -45,6 +45,7 @@ FactoryGirl.define do
     given_name
     surname
     email
+    internal_auth_email
 
     # validation requires team membership existence
     after :build do |peep, _evaluator|
@@ -58,10 +59,6 @@ FactoryGirl.define do
       country
       location_in_building
       city
-    end
-
-    trait :with_internal_auth_email do
-      internal_auth_email
     end
 
     trait :with_random_dets do
