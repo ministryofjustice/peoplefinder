@@ -2,6 +2,7 @@
 FactoryGirl.define do
 
   sequence(:email) { |n| 'example.user.%d@digital.justice.gov.uk' % n }
+  sequence(:internal_auth_email) { |n| 'internal.auth.user.%dexample.com' % n }
   sequence(:given_name) { |n| "First name #{('a'.ord + (n % 25)).chr}" }
   sequence(:surname) { |n| "Surname #{('a'.ord + (n % 25)).chr}" }
   sequence(:location_in_building) { |n| "Room #{n}, #{n.ordinalize}" }
@@ -57,6 +58,10 @@ FactoryGirl.define do
       country
       location_in_building
       city
+    end
+
+    trait :with_internal_auth_email do
+      internal_auth_email
     end
 
     trait :with_random_dets do

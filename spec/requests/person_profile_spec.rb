@@ -3,7 +3,7 @@ require 'rails_helper'
 describe 'Person Profile API', type: :request do
   include PermittedDomainHelper
 
-  let(:person) { create(:person, :with_photo, :team_member) }
+  let(:person) { create(:person, :with_internal_auth_email, :with_photo, :team_member) }
 
   let(:parsed_json) { JSON.parse(response.body).with_indifferent_access }
   let(:attr_hash) { parsed_json['data']['attributes'] }
@@ -11,7 +11,7 @@ describe 'Person Profile API', type: :request do
   let(:profile_image_url_hash_key) { 'profile-image-url' }
 
   before do
-    get "/api/people?email=#{person.email}",
+    get "/api/people?email=#{person.internal_auth_email}",
       {},
       authorization: "Token #{ENV['PROFILE_API_TOKEN']}"
   end
@@ -41,7 +41,7 @@ describe 'Person Profile API', type: :request do
   end
 
   context 'with no profile image' do
-    let(:person) { create(:person) }
+    let(:person) { create(:person, internal_auth_email: 'alice@example.com') }
 
     it 'does not have the profile-image-url' do
       expect(links_hash[profile_image_url_hash_key]).to be_blank
@@ -49,7 +49,7 @@ describe 'Person Profile API', type: :request do
   end
 
   context 'when the person is not found' do
-    let(:person) { double(:person, email: 'not-found@example.com') }
+    let(:person) { double(:person, internal_auth_email: 'not-found@example.com') }
 
     it 'returns a 404' do
       expect(response.status).to eq(404)
