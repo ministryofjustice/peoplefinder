@@ -56,7 +56,7 @@
         - if @person.country.present?
           %dl.inline-labels
             %dt
-              Country
+              Country (market)
             %dd
               = @person.country
 
@@ -81,13 +81,6 @@
             %dd
               = mail_to(@person.email)
 
-        - if @person.secondary_email.present?
-          %dl.inline-labels
-            %dt
-              = t(:secondary_email, scope: 'activerecord.attributes.person')
-            %dd
-              = mail_to(@person.secondary_email)
-
         - if @person.primary_phone_number.present?
           %dl.inline-labels
             %dt
@@ -102,33 +95,12 @@
             %dd
               = @person.primary_phone_country_code
 
-        - if @person.secondary_phone_number.present?
-          %dl.inline-labels
-            %dt
-              Other phone number
-            %dd
-              = call_to(@person.secondary_phone_number)
-
         - if @person.skype_name.present?
           %dl.inline-labels
             %dt
               Skype name
             %dd
               = link_to(@person.skype_name, "skype:#{@person.skype_name}?call")
-
-        - if @person.pager_number.present?
-          %dl.inline-labels
-            %dt
-              Pager number
-            %dd
-              = call_to(@person.pager_number)
-
-        - if @person.current_project.present?
-          %dl.inline-labels
-            %dt
-              Current project(s)
-            %dd
-              = @person.current_project
 
         %h4.heading-small
           = "Days worked"
@@ -198,13 +170,6 @@
               My additional roles and responsibilities
             %dd
               = @person.formatted_additional_responsibilities
-
-        - if @person.description.present?
-          %dl.inline-labels
-            %dt
-              Extra information
-            %dd
-              = @person.description
 
 - unless @versions.nil?
   = render 'shared/audit', versions: @versions

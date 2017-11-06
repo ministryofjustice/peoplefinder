@@ -545,8 +545,8 @@ en:
         works_saturday: Saturday
         works_sunday: Sunday
         description: Extra information
-        language_fluent: Intermediate languages
-        language_intermediate: Fluent languages
+        language_intermediate: Intermediate languages
+        language_fluent: Fluent languages
         previous_positions: Previous positions held (optional)
         other_uk: Other - UK regional
         other_overseas: Other - Overseas
@@ -608,7 +608,6 @@ en:
         language_fluent: Add languages at which you are fluent. Use a comma to separate languages.
         language_intermediate: Add languages at which you have intermediate fluency. Use a comma to separate languages.
         previous_positions: Please note your previous experience
-        grade: Grade
       membership:
         role: Role within this team
       group:
