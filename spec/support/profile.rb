@@ -9,9 +9,7 @@ module SpecSupport
         primary_phone_country_code: 'GB',
         pager_number: '07666666666',
         location_in_building: '10.999',
-        city: 'London',
-        description: 'Lorem ipsum dolor sit amet...',
-        current_project: 'Donec tincidunt luctus ullamcorper.'
+        city: 'London'
       }
     end
 
@@ -51,7 +49,6 @@ module SpecSupport
       fill_in 'Phone number', with: person_attributes[:primary_phone_number]
       fill_in 'Location in building', with: person_attributes[:location_in_building]
       fill_in 'City', with: person_attributes[:city]
-      fill_in 'Current project(s)', with: person_attributes[:current_project]
       within_fieldset('working-days') do
         govuk_label_click 'Monday'
         govuk_label_click 'Friday'
@@ -86,7 +83,6 @@ module SpecSupport
       expect(page).to have_text(person_attributes[:primary_phone_number])
       expect(page).to have_text(person_attributes[:location_in_building])
       expect(page).to have_text(person_attributes[:city])
-      expect(page).to have_text(person_attributes[:current_project])
 
       within('ul.working_days') do
         expect(page).to_not have_selector("li.active[alt='Monday']")
