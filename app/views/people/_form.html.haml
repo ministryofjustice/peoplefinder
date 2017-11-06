@@ -58,10 +58,6 @@
       = link_to 'Join another team', add_membership_people_path(id: @person.to_param),
         id: 'add_membership', class: 'button-secondary'
 
-  %h3.heading-medium.with-border-lg
-    = "Current Projects"
-  = f.text_field :current_project
-
   .form-group
     %h3.heading-medium.with-border-lg
       = "Working days"
@@ -83,12 +79,9 @@
           .form-group
             = b.label(class: "block-label selection-button-checkbox", 'data-value': b.value) { b.check_box + b.text }
 
-  = f.text_field :language_intermediate
   = f.text_field :language_fluent
-
-  .form-group
-    %label.form-label{for: :grade} Grade
-    = f.select :grade, grade_names, { include_blank: true}, class: 'form-control'
+  = f.text_field :language_intermediate
+  = f.collection_select :grade, grade_names, :first, :last, { include_blank: true, hint: false }, class: 'form-control'
 
   = f.text_area :previous_positions
 

@@ -213,6 +213,8 @@ en:
       king_charles: "King Charles Street"
     key_skill_names:
       asset_management: Asset management
+      assurance: Assurance
+      benefits_realisation: Benefits realisation
       change_management: Change management
       coaching: Coaching
       commercial_specialist: Commercial specialist
@@ -231,6 +233,7 @@ en:
       interviewing: Interviewing
       it: IT
       law: Law
+      lean: Lean/ Six sigma
       line_management: Line management
       media_trained: Media trained
       mentoring: Mentoring
@@ -245,7 +248,9 @@ en:
       research_statistical: Research - statistical
       research_social: Research - social
       research_user: Research - user
+      risk_management: Risk management
       security: Security
+      service_design: Service and prowess design
       skills_and_capability: Skills and capability management
       sponsorship: Sponsorship and partmentships
       stakeholder_management: Stakeholder management
@@ -256,6 +261,7 @@ en:
       tax: Tax
       training: Training
       underwriting: Underwriting
+      user_research: User research
       valution: Valuation
       working_with_devolved_admin: Working with Devolved Administrations
       working_with_ministers: Working with Ministers
@@ -539,8 +545,8 @@ en:
         works_saturday: Saturday
         works_sunday: Sunday
         description: Extra information
-        language_fluent: Intermediate languages
-        language_intermediate: Fluent languages
+        language_intermediate: Intermediate languages
+        language_fluent: Fluent languages
         previous_positions: Previous positions held (optional)
         other_uk: Other - UK regional
         other_overseas: Other - Overseas
@@ -602,7 +608,6 @@ en:
         language_fluent: Add languages at which you are fluent. Use a comma to separate languages.
         language_intermediate: Add languages at which you have intermediate fluency. Use a comma to separate languages.
         previous_positions: Please note your previous experience
-        grade: Grade
       membership:
         role: Role within this team
       group:

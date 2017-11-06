@@ -104,7 +104,7 @@ module PeopleHelper
 
   def grade_names
     I18n.t('people.grade_names').each_pair do |k, v|
-      [k, v]
+      [v, k]
     end.sort
   end
 

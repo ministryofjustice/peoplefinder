@@ -32,7 +32,6 @@ feature 'Person edit notifications' do
       'primary_phone_number' => [nil, ''],
       'primary_phone_country_code' => [nil, "GB"],
       'email' => [nil, 'bob.smith@digital.justice.gov.uk'],
-      'current_project' => [nil, ''],
       'slug' => [nil, 'bob-smith']
     )
   end
