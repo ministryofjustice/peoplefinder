@@ -9,6 +9,12 @@ feature 'Person browsing' do
     omni_auth_log_in_as 'test.user@digital.justice.gov.uk'
   end
 
+  scenario 'visiting the my/profile path' do
+    visit '/my/profile'
+
+    expect(page).to have_current_path(person_path('test-user'))
+  end
+
   scenario 'Using breadcrumbs on a profile page', skip: "HELP REQUIRED" do
     group_a = create_group_hierarchy('Ministry of Justice', 'Apple', 'Biwa')
     group_b = create_group_hierarchy('Ministry of Justice', 'Cherry', 'Durian')

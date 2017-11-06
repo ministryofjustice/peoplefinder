@@ -13,6 +13,10 @@ class HomeController < ApplicationController
     params['action'] == 'show'
   end
 
+  def my_profile
+    redirect_to person_path(current_user)
+  end
+
   private
 
   def set_department_or_redirect
