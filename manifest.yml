@@ -9,3 +9,6 @@ applications:
 - name: peoplefinder
   buildpack: ruby_buildpack
   command: bundle exec rake db:migrate && unicorn -p $PORT -c ./config/unicorn.rb
+- name: peoplefinder-worker-dev
+  buildpack: ruby_buildpack
+  command: bundle exec rake jobs work
