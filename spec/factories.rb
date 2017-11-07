@@ -49,6 +49,10 @@ FactoryGirl.define do
     after :build do |peep, _evaluator|
       department = create(:department)
       peep.memberships << build(:membership, group: department, person: nil) if peep.memberships.empty?
+
+      # ensure that the internal_auth_email is populated
+      # so an oauth user can be logged in
+      peep.internal_auth_key = peep.email
     end
 
     trait :with_details do
