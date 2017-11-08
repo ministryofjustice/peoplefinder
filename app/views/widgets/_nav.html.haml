@@ -5,15 +5,15 @@
     -#%li
     -#  = link_to "People finder", ENV['PEOPLEFINDER_URL']
     %li
-      = link_to "News and views", "/news/"
+      = link_to "News and Views", "/news-and-views/"
     %li
-      = link_to "Working at DIT", "/"
+      = link_to "Working at DIT", "/working-at-dit/"
     %li
-      = link_to "About DIT", "/"
+      = link_to "About Us", "/about-dit/"
     %li
-      = link_to "Tools", "/"
+      = link_to "Tools", "/tools/"
     %li
-      = link_to "Data Hub", "/"
+      = link_to "Data Hub", "/data-hub/"
     - if super_admin?
       %li
         = link_to 'Manage', admin_home_path, class: "manage-link"
