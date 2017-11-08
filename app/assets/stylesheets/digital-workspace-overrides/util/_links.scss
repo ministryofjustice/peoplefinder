@@ -45,3 +45,29 @@ a {
 		}
 	}
 }
+
+.pull-right {
+	display: inline-block;
+	margin-top: 10px;
+	a {
+		display: inline-block;
+		padding: 5px 0;
+	}
+	.pipe-right {
+		border-right-width: 0px;
+	}
+}
+
+@media (min-width: $screen-medium) {
+	.pull-right {
+		display: inline;
+		margin-top: 0;
+		a {
+			padding: 0;
+		}
+		.pipe-right {
+			border-right-width: 1px;
+			padding-right: 10px;
+		}
+	}
+}
