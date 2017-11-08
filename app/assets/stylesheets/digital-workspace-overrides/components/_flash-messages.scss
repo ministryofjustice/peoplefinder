@@ -5,6 +5,10 @@
 	.notice {
 		background-color: $brand_color_c;
 	}
+	.warning {
+		background-color: $brand_color_a;
+		color: #fff;
+	}
 }
 
 .error-summary {
