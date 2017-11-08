@@ -5,7 +5,7 @@
 			.mod-search-form {
 				width: 95%;
 				.mod-search-submit {
-					background-position: -16px 50%;
+					//background-position: -16px 50%;
 				}
 				label {
 					font-size: 16px;
@@ -17,6 +17,20 @@
 
 .user-account {
 	display: none;
+}
+
+@media (min-resolution: 192dpi) {
+	.people-search-inner-page {
+		.homepage-top-inner {
+			.mod-search {
+				.mod-search-form {
+					.mod-search-submit {
+						background-position: -16px 50%;
+					}
+				}
+			}
+		}
+	}
 }
 
 @media (min-width: $screen_medium) {

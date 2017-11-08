@@ -63,8 +63,8 @@
 				padding-top: 9px;
 				padding-right: 15px;
 				&.js-hidden {
-					font-size: 0px;
-					padding: 0px;
+					color: $brand_color_a;
+					visibility: visible;
 				}
 			}
 			form {
@@ -232,7 +232,7 @@
 						li {
 							width: auto;
 							line-height: 1;
-							margin-right: 15px;
+							margin-right: 25px;
 							padding: 0;
 						}
 					}
