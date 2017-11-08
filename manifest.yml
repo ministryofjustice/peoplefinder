@@ -18,3 +18,15 @@ applications:
     command: bundle exec rake jobs:work
     no-route: true
     health-check-type: process
+  - name: peoplefinder-worker-staging
+    buildpack: ruby_buildpack
+    path: .
+    command: bundle exec rake jobs:work
+    no-route: true
+    health-check-type: process
+  - name: peoplefinder-worker
+    buildpack: ruby_buildpack
+    path: .
+    command: bundle exec rake jobs:work
+    no-route: true
+    health-check-type: process
