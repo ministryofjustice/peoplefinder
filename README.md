@@ -92,6 +92,8 @@ defined on a per environment basis.
 
 `config.disable_token_auth` Disable the 'token-based authentication' feature
 
+`config.disable_open_profiles` Disables the adding/editing/deleting of another person's profile (see below)
+
 `config.elastic_search_url` Required for production (see Search section below)
 
 `config.support_email` e.g. 'peoplefinder-support@example.com'
@@ -104,6 +106,13 @@ Set `ENV['HOME_PAGE_URL']` to redirect requests to the root path, or leave it bl
 ## Google Analytics
 Set the tracking id as:
 `ENV['GA_TRACKING_ID']`
+
+## Disabling open profiles
+An initial premise behind the Peoplefinder was that it should be 'open' and people would be encouraged to collaborate and support each other building profile. A team member could add a profile for a new colleague, or remove a profile when a colleague has left  the department, etc.
+
+However, there are some issues implementing this with the DIT's SSO. For example, Alice adds a new profile for Bob, entering `bob@example.com` as Bob's email address. When Bob logs in via the SSO, we can't predict which email address will be returned in the auth hash, so we can't be confident of identifying him correctly.
+
+By disabling open profiles as `config.disable_open_profile`, we will prevent a person from editing another person's profile, thereby limiting the risks of not knowing how to link an authenticated user to their profile.
 
 
 ## Permitted domains

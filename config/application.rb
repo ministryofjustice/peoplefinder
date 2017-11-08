@@ -43,6 +43,9 @@ module Peoplefinder
     # disable permitted domain checks (allows user from any domain)
     config.disable_permitted_domain_checks = true
 
+    # disabling the adding/editing/deletion of another person's profile
+    config.disable_open_profiles = true
+
     config.admin_ip_ranges = ENV.fetch('ADMIN_IP_RANGES', '127.0.0.1')
 
     config.readonly_ip_whitelist = ENV.fetch('READONLY_IP_WHITELIST', '127.0.0.1')

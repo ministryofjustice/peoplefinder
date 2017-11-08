@@ -10,7 +10,7 @@ class HomeController < ApplicationController
   end
 
   def can_add_person_here?
-    params['action'] == 'show'
+    can_edit_profiles? && params['action'] == 'show'
   end
 
   def my_profile
