@@ -2,18 +2,16 @@
   Menu
 %nav{:id => "proposition-menu"}
   %ul{:id => "proposition-links"}
-    -#%li
-    -#  = link_to "People finder", ENV['PEOPLEFINDER_URL']
     %li
-      = link_to "News and Views", "/news-and-views/"
+      = link_to "News and views", "#{ENV['HOME_PAGE_URL']}/news/"
     %li
-      = link_to "Working at DIT", "/working-at-dit/"
+      = link_to "Working at DIT", "#{ENV['HOME_PAGE_URL']}/working-at-dit/"
     %li
-      = link_to "About Us", "/about-dit/"
+      = link_to "About Us", "#{ENV['HOME_PAGE_URL']}/about-dit/"
     %li
-      = link_to "Tools", "/tools/"
+      = link_to "Tools", "#{ENV['HOME_PAGE_URL']}/tools/"
     %li
-      = link_to "Data Hub", "/data-hub/"
+      = link_to "Data Hub", "#{ENV['HOME_PAGE_URL']}/data-hub/"
     - if super_admin?
       %li
         = link_to 'Manage', admin_home_path, class: "manage-link"
