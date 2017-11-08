@@ -700,7 +700,6 @@ DEPENDENCIES
   simplecov-rcov
   site_prism
   spring-commands-rspec
-  sqlite3 (>= 1.3.13)
   text
   timecop
   uglifier (>= 2.7.2)
