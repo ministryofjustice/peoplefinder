@@ -20,7 +20,8 @@
           - else
             - if @person.incomplete?
               = render partial: "completeness", locals: { person: @person }
-            = render partial: "request_information", locals: { person: @person }
+            - if can_edit_profiles?
+              = render partial: "request_information", locals: { person: @person }
       .media-body
         %h4.media-heading
         - @person.memberships.group_by(&:group).each do |group, memberships|

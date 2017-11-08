@@ -149,6 +149,6 @@ class GroupsController < ApplicationController
   end
 
   def can_add_person_here?
-    @group && @group.ancestry_depth > 1
+    can_edit_profiles? && @group && @group.ancestry_depth > 1
   end
 end

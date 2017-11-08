@@ -16,7 +16,7 @@ class SearchController < ApplicationController
   end
 
   def can_add_person_here?
-    true
+    can_edit_profiles?
   end
 
   def query
