@@ -1,8 +1,10 @@
 - if @person.persisted?
-  = link_to info_text('delete_this_profile'),
-    @person,
-    method: :delete,
-    class: "button button-secondary",
-    data: { confirm: "Are you sure you want to delete #{ @person }? #{ info_text('profile_deletable') }." }
-
-  = edit_person_link 'Edit this profile', @person, class: 'button'
+  - if can_edit_profiles?
+    = link_to info_text('delete_this_profile'),
+      @person,
+      method: :delete,
+      class: "button button-secondary",
+      data: { confirm: "Are you sure you want to delete #{ @person }? #{ info_text('profile_deletable') }." }
+    = edit_person_link 'Edit this profile', @person, class: 'button'
+  - elsif @person == current_user
+    = edit_person_link 'Edit my profile', current_user, class: 'button'

@@ -30,6 +30,11 @@ class ApplicationController < ActionController::Base
   end
   helper_method :can_add_person_here?
 
+  def can_edit_profiles?
+    Rails.configuration.disable_open_profiles == false
+  end
+  helper_method :can_edit_profiles?
+
   def load_user
     Login.current_user(session) || ReadonlyUser.from_request(request)
   end
