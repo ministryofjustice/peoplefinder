@@ -1,0 +1,26 @@
+- content_for :body_classes, 'profile-page-request-deletion '
+
+= render partial: 'breadcrumbs'
+
+.grid-row.mod-heading
+  .column-full
+    %h1.heading-xlarge.mod-heading-border
+      = @page_title = 'Request deletion of this profile'
+      %span.pull-right
+        = link_to 'Cancel and go to profile page', @person,{ class: 'font-xsmall' }
+
+.grid-row.mod-media.profile
+  .column-full
+    %p
+      = t('person_deletion_request.instruction', name: @person.name)
+
+    = form_tag person_deletion_request_path(@person) do
+
+      .form-group
+        = text_area_tag :note, '', { class: 'form-control' }
+
+      %p
+        = t('person_deletion_request.your_details_hint')
+
+      .form-group
+        = submit_tag 'Request deletion', { class: 'button' }
