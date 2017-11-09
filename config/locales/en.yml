@@ -243,7 +243,7 @@ en:
       media_trained: Media trained
       mentoring: Mentoring
       policy_design: Policy design
-      policy_implementation: Policy immplementation
+      policy_implementation: Policy implementation
       presenting: Presenting
       project_delivery: Project delivery
       project_management: Project management
@@ -255,9 +255,9 @@ en:
       research_user: Research - user
       risk_management: Risk management
       security: Security
-      service_design: Service and prowess design
+      service_design: Service and process design
       skills_and_capability: Skills and capability management
-      sponsorship: Sponsorship and partmentships
+      sponsorship: Sponsorship and partnerships
       stakeholder_management: Stakeholder management
       statistics: Statistics
       strategy: Strategy
@@ -314,6 +314,7 @@ en:
       women: "Women's network"
       muslim_women: "Muslim women's network"
       mentoring: Mentoring network
+      social_mobility: Social mobility network
     key_responsibility_names:
       hr_partner: HR partner
       finance_partner: Finance partner
