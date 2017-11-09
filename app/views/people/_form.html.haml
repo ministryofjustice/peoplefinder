@@ -5,15 +5,6 @@
   = f.text_field :surname
   = f.text_field :email
 
-  .form-group.mod-media.card
-    = f.label :profile_image, 'Profile photo', class: 'form-label'
-    .media
-      .media-left
-        = profile_image_tag @person, link: false
-    %br/
-    - button_text = f.object.profile_image.present? ? 'Change this photo' : 'Add a photo'
-    = f.submit button_text, name: 'edit-picture-button', class: 'button'
-
   %h3.heading-medium.with-border-lg
     = "Contact details"
 
@@ -115,6 +106,15 @@
         %li
           .form-group
             = b.label(class: "block-label selection-button-checkbox", 'data-value': b.value) { b.check_box + b.text }
+
+  .form-group.mod-media.card
+    = f.label :profile_image, 'Profile photo', class: 'form-label'
+    .media
+      .media-left
+        = profile_image_tag @person, link: false
+    %br/
+    - button_text = f.object.profile_image.present? ? 'Change this photo' : 'Add a photo'
+    = f.submit button_text, name: 'edit-picture-button', class: 'button'
 
   .form-group
     = f.submit 'Save', class: 'button'
