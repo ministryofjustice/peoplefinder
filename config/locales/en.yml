@@ -185,7 +185,7 @@ en:
       other: Select the person's new team
     leader:
       mine: |
-        Are you the leader of the <span class="team-led">team above</span>? (optional)
+        Are you the head of the <span class="team-led">team above</span>? (optional)
       other: |
         Is this person the leader of the <span class="team-led">team above</span>? (optional)
     subscribed:
