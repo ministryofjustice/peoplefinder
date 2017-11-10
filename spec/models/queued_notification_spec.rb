@@ -60,6 +60,14 @@ RSpec.describe QueuedNotification, type: :model do
         allow(creator).to receive(:is_a?).with(PersonCreator).and_return(true)
       end
 
+      it 'queues a job to send notifications' do
+        allow(creator).to receive(:edit_finalised?).and_return(false)
+
+        expect(SendNotificationsJob).to receive(:perform_later)
+
+        described_class.queue!(creator)
+      end
+
       context 'no group changes (except default)' do
         context 'not final edit' do
           it 'creates a new email template with edit finalised false' do

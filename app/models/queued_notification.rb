@@ -35,6 +35,7 @@ class QueuedNotification < ActiveRecord::Base
             current_user_id: updater.current_user&.id,
             changes_json: changes.serialize,
             edit_finalised: updater.edit_finalised?)
+    SendNotificationsJob.perform_later
   end
 
   def changes_hash
