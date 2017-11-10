@@ -6,10 +6,9 @@
 
 - content_for :global_header_text do
   /#{Rails.configuration.department_abbrev}
-  %img{:src => 'http://dit-prototype.preview3.co.uk/assets/dit-logo.png', :alt => 'Department for International Trade'}
 
 - content_for :homepage_url do
-  = home_path
+  = ENV['HOME_PAGE_URL']
 
 - content_for :logo_link_title do
   = 'Go to the People Finder homepage'
@@ -48,12 +47,12 @@
       = link_to "Digital Workspace", home_path, id: "proposition-name"
     = render partial: "widgets/nav"
     .search
-      %form{:action => ENV['WORKSPACE_SEARCH_URL'], :method => "get", :role => "search-workspace"}
+      %form{:action => "#{ENV['HOME_PAGE_URL']}/search", :method => "get", :role => "search-workspace"}
         .proposition-search.govuk-search
           %label.search-label
             Search site
           .search-wrapper
-            %input{:type => 'search', :id =>'site-search-input', :title => 'Search Workspace', :class => 'search-element search-input js-class-toggle js-search-focus'}
+            %input{:type => 'search', :id =>'site-search-input', :title => 'Search Workspace', :name => 's', :class => 'search-element search-input js-class-toggle js-search-focus'}
             .search-element.search-submit-wrapper
               %button{:type => 'submit', :class => 'search-submit'}
                 Search Workspace

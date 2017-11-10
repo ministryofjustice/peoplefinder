@@ -16,7 +16,7 @@ namespace :peoplefinder do
       conn = ActiveRecord::Base.connection
       tables = conn.tables
       tables.each do |table|
-        next if %w{ schema_migrations delayed_jobs }.include? table
+        next if %w{ schema_migrations delayed_jobs sessions }.include? table
         table.classify.constantize.reset_column_information
       end
     end

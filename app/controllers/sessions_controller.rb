@@ -3,6 +3,7 @@ class SessionsController < ApplicationController
   include UserAgentHelper
 
   skip_before_action :ensure_user
+  protect_from_forgery except: :create
 
   before_action :set_login_screen_flag
 

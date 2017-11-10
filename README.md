@@ -125,14 +125,22 @@ In rails console:
 PermittedDomain.create(domain: 'some.domain.gov.uk')
 ```
 
-## DIT SSO Authentication
+## Authentication
+
+### DIT SSO Authentication
 
 Authentication to Log in to People Finder in the various environments (dev/staging/prod) is by setting the following environment variables:
 `DITSSO_INTERNAL_PROVIDER`
 `DITSSO_INTERNAL_CLIENT_ID`
 `DITSSO_INTERNAL_CLIENT_SECRET`
 
-## Token-based authentication
+### Authentication in the development environment
+
+Setting the `DEVELOPER_AUTH_STRATEGY` variable in the development environment
+will swap out the default DIT SSO authentication for Omniauth's developer
+strategy.
+
+### Token-based authentication
 
 **NOTE: This has been disabled for DIT SSO Internal**
 

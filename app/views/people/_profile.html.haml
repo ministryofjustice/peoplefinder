@@ -22,6 +22,8 @@
               = render partial: "completeness", locals: { person: @person }
             - if can_edit_profiles?
               = render partial: "request_information", locals: { person: @person }
+        %p.deletion-request-link
+          = link_to("Has #{@person.given_name} left the department?", new_person_deletion_request_path(@person))
       .media-body
         %h4.media-heading
         - @person.memberships.group_by(&:group).each do |group, memberships|

@@ -24,6 +24,9 @@ Rails.application.routes.draw do
     resource :image, controller: 'person_image', only: [:edit, :update]
     resource :email, controller: 'person_email', only: [:edit, :update]
     resources :suggestions, only: [:new, :create]
+    resource :deletion_request, controller: 'person_deletion_request',
+                                path: 'deletion-request',
+                                only: [:new, :create]
   end
 
   resource :sessions, only: [:new, :create, :destroy] do

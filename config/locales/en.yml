@@ -145,6 +145,10 @@ en:
           We have let %{person} know that you’ve made changes
       profile_deleted: "Deleted %{person}’s profile"
       create_error: "The profile was not created. Please check the errors below"
+    person_deletion_request:
+      request_sent: |
+        Thank you for helping to improve People Finder.
+        We'll review this profile.
     person_image:
       no_image_uploaded: "No image has been uploaded for %{person}"
       image_cropped: "Cropped %{person}’s image"
@@ -353,6 +357,9 @@ en:
       line_number: Line
       messages: Error
       raw: Current content
+  person_deletion_request:
+    instruction: If %{name} has left the department, please provide details in the form below. Our support team will confirm the details and remove the profile.
+    your_details_hint: Your profile details will be included with the request.
   suggestions:
     thank_you_intro: Thank you for helping improve this profile.
     thank_you_detail:
@@ -452,7 +459,7 @@ en:
 
   shared:
     search:
-      hint: 'Search name, job title, team name or location'
+      hint: 'Search people, teams and skills'
     cookie_message_html:
       People Finder uses cookies to make the site simpler.
       <a href="/cookies">Find out more about cookies</a>

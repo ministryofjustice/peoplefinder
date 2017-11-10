@@ -2,4 +2,19 @@
 	margin: 0 auto;
 	max-width: 960px;
 	width: 100%;
+	.notice {
+		background-color: $brand_color_c;
+	}
+	.warning {
+		background-color: $brand_color_a;
+		color: #fff;
+	}
+}
+
+.error-summary {
+	background-color: $brand_color_c;
+	border-width: 0px;
+	#error-summary-heading, p, .error-summary-list a {
+		color: #FFFFFF;
+	}
 }
