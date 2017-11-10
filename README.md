@@ -72,10 +72,13 @@ cd peoplefinder
 bundle exec rake jobs:work
 ```
 
-To catch emails in development, in a separate terminal, run `mailcatcher` and view emails at `http://localhost:1080`:
+To catch emails in development, in a separate terminal, install the
+[mailcatcher](https://github.com/sj26/mailcatcher) gem. Run `mailcatcher` and
+view emails at `http://localhost:1080`:
 
 ```cmd
 cd peoplefinder
+gem install mailcatcher
 mailcatcher
 ```
 
