@@ -58,6 +58,7 @@ end
 group :production do
   gem 'sentry-raven', git: 'https://github.com/getsentry/raven-ruby.git'
   gem 'logstasher', '~> 0.6.2'
+  gem 'rails_12factor'
 end
 
 group :development do
