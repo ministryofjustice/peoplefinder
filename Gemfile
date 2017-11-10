@@ -58,11 +58,11 @@ end
 group :production do
   gem 'sentry-raven', git: 'https://github.com/getsentry/raven-ruby.git'
   gem 'logstasher', '~> 0.6.2'
+  gem 'rails_12factor'
 end
 
 group :development do
   gem 'foreman'
-  gem 'mailcatcher'
   gem 'spring-commands-rspec'
   gem 'rb-fsevent', require: RUBY_PLATFORM[/darwin/i].to_s.size > 0
   gem 'meta_request'

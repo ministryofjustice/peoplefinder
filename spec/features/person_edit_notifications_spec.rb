@@ -21,7 +21,6 @@ feature 'Person edit notifications' do
 
     notification = QueuedNotification.last
     expect(notification.current_user_id).to eq person.id
-    expect(notification.sent).to be false
     expect(notification.edit_finalised).to be true
     expect(notification.changes_hash['data']['raw']).to include(
       'given_name' => [nil, 'Bob'],
