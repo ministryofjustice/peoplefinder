@@ -44,7 +44,7 @@ module Peoplefinder
     config.disable_permitted_domain_checks = true
 
     # disabling the adding/editing/deletion of another person's profile
-    config.disable_open_profiles = true
+    config.disable_open_profiles = false
 
     config.admin_ip_ranges = ENV.fetch('ADMIN_IP_RANGES', '127.0.0.1')
 
