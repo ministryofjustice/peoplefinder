@@ -24,7 +24,7 @@ class PersonPolicy < ApplicationPolicy
   end
 
   def destroy?
-    regular_user?
+    admin_user?
   end
 
   def add_membership?

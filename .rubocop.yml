@@ -180,6 +180,7 @@ Rails/ScopeArgs:
 
 RSpec/ScatteredSetup:
   Exclude:
+    - 'spec/controllers/people_controller_spec.rb'
     - 'spec/features/group_maintenance_spec.rb'
     - 'spec/features/management_spec.rb'
     - 'spec/features/person_maintenance_spec.rb'

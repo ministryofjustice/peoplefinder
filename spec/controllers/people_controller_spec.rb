@@ -3,8 +3,12 @@ require 'rails_helper'
 RSpec.describe PeopleController, type: :controller do
   include PermittedDomainHelper
 
-  before do
-    mock_logged_in_user
+  before do |example|
+    mock_logged_in_user unless example.metadata[:user] == :super_admin
+  end
+
+  before(:each, user: :super_admin) do
+    mock_logged_in_user super_admin: true
   end
 
   # This should return the minimal set of attributes required to create a valid
@@ -271,30 +275,32 @@ RSpec.describe PeopleController, type: :controller do
   end
 
   describe 'DELETE destroy' do
-    it 'destroys the requested person' do
-      person = create(:person, valid_attributes)
-      expect do
-        delete :destroy, id: person.to_param
-      end.to change(Person, :count).by(-1)
-    end
-
-    context 'when person member of teams' do
-      it 'redirects to first team page' do
+    context 'as a super admin', user: :super_admin do
+      it 'destroys the requested person' do
         person = create(:person, valid_attributes)
-        groups = create_list(:group, 2)
-        groups.each do |group|
-          create :membership, person: person, group: group
-        end
-
-        delete :destroy, id: person.to_param
-        expect(response).to redirect_to(group_path(groups.first))
+        expect do
+          delete :destroy, id: person.to_param
+        end.to change(Person, :count).by(-1)
       end
-    end
 
-    it 'sets a flash message' do
-      person = create(:person, valid_attributes)
-      delete :destroy, id: person.to_param
-      expect(flash[:notice]).to include("Deleted #{person}’s profile")
+      context 'when person member of teams' do
+        it 'redirects to first team page' do
+          person = create(:person, valid_attributes)
+          groups = create_list(:group, 2)
+          groups.each do |group|
+            create :membership, person: person, group: group
+          end
+
+          delete :destroy, id: person.to_param
+          expect(response).to redirect_to(group_path(groups.first))
+        end
+      end
+
+      it 'sets a flash message' do
+        person = create(:person, valid_attributes)
+        delete :destroy, id: person.to_param
+        expect(flash[:notice]).to include("Deleted #{person}’s profile")
+      end
     end
   end
 
