@@ -277,7 +277,7 @@ RSpec/VerifiedDoubles:
 Rails/Blank:
   Exclude:
     - 'app/controllers/people_controller.rb'
-    - 'app/jobs/notification_sender.rb'
+    - 'app/services/notification_sender.rb'
 
 # Offense count: 9
 # Cop supports --auto-correct.
@@ -324,12 +324,12 @@ Rails/Present:
 # Blacklist: decrement!, decrement_counter, increment!, increment_counter, toggle!, touch, update_all, update_attribute, update_column, update_columns, update_counters
 Rails/SkipsModelValidations:
   Exclude:
-    - 'app/jobs/notification_sender.rb'
+    - 'app/services/notification_sender.rb'
     - 'app/models/group.rb'
     - 'app/models/queued_notification.rb'
     - 'app/models/token.rb'
     - 'app/services/token_sender.rb'
-    - 'spec/jobs/notification_sender_spec.rb'
+    - 'spec/services/notification_sender_spec.rb'
     - 'spec/models/concerns/completion_spec.rb'
 
 # Offense count: 2
