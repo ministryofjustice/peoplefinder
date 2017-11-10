@@ -6,6 +6,10 @@
 				width: 95%;
 				.mod-search-submit {
 					//background-position: -16px 50%;
+					z-index: 20;
+					&:hover {
+						background-color: $brand_color_c;
+					}
 				}
 				label {
 					font-size: 16px;
