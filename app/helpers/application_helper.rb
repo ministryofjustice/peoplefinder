@@ -1,5 +1,13 @@
 module ApplicationHelper
 
+  def home_page_link_helper(path)
+    if ENV['HOME_PAGE_URL'].present?
+      URI.join(ENV['HOME_PAGE_URL'], path)
+    else
+      path
+    end
+  end
+
   def pluralize_with_delimiter number, text
     "#{number_with_delimiter(number)} #{text.pluralize(number)}"
   end

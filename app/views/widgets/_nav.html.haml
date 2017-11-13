@@ -3,15 +3,17 @@
 %nav{:id => "proposition-menu"}
   %ul{:id => "proposition-links"}
     %li
-      = link_to "News and views", "#{ENV['HOME_PAGE_URL']}news-and-views/"
+      %a{:href => home_page_link_helper('/news-and-views')}
+        News and Views
     %li
-      = link_to "Working at DIT", "#{ENV['HOME_PAGE_URL']}working-at-dit/"
+      %a{:href => home_page_link_helper('/working-at-dit')}
+        Working at DIT
     %li
-      = link_to "About Us", "#{ENV['HOME_PAGE_URL']}about-dit/"
+      %a{:href => home_page_link_helper('/about-dit')}
+        About Us
     %li
-      = link_to "Tools", "#{ENV['HOME_PAGE_URL']}tools/"
-    %li
-      = link_to "Data Hub", "#{ENV['HOME_PAGE_URL']}data-hub/"
+      %a{:href => home_page_link_helper('/tools')}
+        Tools
     - if super_admin?
       %li
         = link_to 'Manage', admin_home_path, class: "manage-link"
