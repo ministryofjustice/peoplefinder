@@ -4,22 +4,22 @@ class GroupPolicy < ApplicationPolicy
   end
 
   def edit?
-    regular_user?
+    admin_user?
   end
 
   def update?
-    regular_user?
+    admin_user?
   end
 
   def new?
-    regular_user?
+    admin_user?
   end
 
   def create?
-    regular_user?
+    admin_user?
   end
 
   def destroy?
-    regular_user?
+    admin_user?
   end
 end

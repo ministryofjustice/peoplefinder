@@ -7,6 +7,10 @@ feature "Person maintenance" do
     omni_auth_log_in_as 'test.user@digital.justice.gov.uk'
   end
 
+  before(:each, user: :super_admin) do
+    omni_auth_log_in_as_super_admin
+  end
+
   let(:edit_profile_page) { Pages::EditProfile.new }
 
   scenario 'Creating a person and making them the leader of a group', js: true do
@@ -109,7 +113,7 @@ feature "Person maintenance" do
     expect(person.memberships.last.group).to eql(Group.find_by(name: 'CSG'))
   end
 
-  scenario 'Adding a new team', js: true do
+  scenario 'Adding a new team', js: true, user: :super_admin do
     group = setup_three_level_team
     person = setup_team_member group
 

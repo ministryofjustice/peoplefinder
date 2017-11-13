@@ -5,11 +5,16 @@ feature 'Group maintenance' do
   include ActiveJobHelper
 
   let(:login_page) { Pages::Login.new }
+  let(:home_page) { Pages::Home.new }
 
   let(:dept) { create(:department) }
 
   before(:each, user: :regular) do
     omni_auth_log_in_as 'test.user@digital.justice.gov.uk'
+  end
+
+  before(:each, user: :super_admin) do
+    omni_auth_log_in_as_super_admin
   end
 
   before(:each, user: :readonly) do
@@ -22,7 +27,7 @@ feature 'Group maintenance' do
     click_link 'Edit'
   end
 
-  context 'for a regular user', user: :regular, js: true do
+  context 'for a super admin', user: :super_admin, js: true do
     background do
       dept
     end
@@ -290,10 +295,29 @@ feature 'Group maintenance' do
     end
   end
 
+  context 'for a regular user', user: :regular do
+    scenario 'Is not allowed to create a new team' do
+      visit group_path(dept)
+      expect(page).not_to have_link('Add new sub-team')
+
+      visit new_group_group_path(dept)
+      expect(home_page).to be_displayed
+      expect(home_page.flash_message).to have_content('Unauthorised')
+    end
+
+    scenario 'Is not allowed to edit a team' do
+      group = create(:group, name: 'Digital Services', parent: dept)
+      visit edit_group_path(group)
+      expect(home_page.flash_message).to have_content('Unauthorised')
+    end
+  end
+
   context 'for a readonly user', user: :readonly do
     scenario 'Is not allowed to create a new team' do
       visit group_path(dept)
-      click_link 'Add new sub-team'
+      expect(page).not_to have_link('Add new sub-team')
+
+      visit new_group_group_path(dept)
       expect(login_page).to be_displayed
     end
 
