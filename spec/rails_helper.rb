@@ -75,4 +75,5 @@ RSpec.configure do |config|
   config.include SpecSupport::ElasticSearchHelper
   config.include SpecSupport::FeatureFlags
   config.include SpecSupport::AppConfig
+  config.include SpecSupport::GeckoboardHelper
 end
