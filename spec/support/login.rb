@@ -26,7 +26,11 @@ module SpecSupport
         }
       )
 
-      visit 'auth/ditsso_internal'
+      visit '/auth/ditsso_internal'
+    end
+
+    def omni_auth_log_in_as_super_admin
+      omni_auth_log_in_as create(:super_admin).email
     end
 
     def token_log_in_as(email)
@@ -34,9 +38,12 @@ module SpecSupport
       visit token_path(token)
     end
 
+    # TODO: This method should be removed and replaced with the
+    # `omni_auth_log_in_as` method in the future, as this now encapsulates
+    # log in behaviour.
+    #
     def javascript_log_in
       visit '/'
-      click_link 'Log in'
     end
   end
 end

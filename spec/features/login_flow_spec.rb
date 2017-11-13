@@ -65,7 +65,7 @@ feature 'Login flow' do
 
     context 'when I have a profile' do
       scenario 'attempting a new|edit action redirects via login back to that action\'s template page with NO flash notice' do
-        create(:person, email: email)
+        create(:super_admin, email: email)
         visit new_group_path
         token_login_step_with_expectation
         expect(new_group_page).to be_displayed

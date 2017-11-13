@@ -122,6 +122,7 @@ en:
       group_deleted: "Deleted %{group}"
       create_error: "The record was not created. Please check the errors below"
       update_error: "The details were not updated. Please check the errors below"
+      unauthorised: *unauthorised
     home:
       top_level_group_needed: "To use the People Finder, first create a top-level group (without a parent)"
     information_requests:
