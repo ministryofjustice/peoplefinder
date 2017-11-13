@@ -22,7 +22,7 @@ RSpec.describe GroupsController, type: :controller do
   include PermittedDomainHelper
 
   before do
-    mock_logged_in_user
+    mock_logged_in_user(super_admin: true)
     Group.destroy_all
   end
 

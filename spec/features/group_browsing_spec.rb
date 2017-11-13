@@ -137,6 +137,7 @@ feature 'Group browsing' do
   end
 
   scenario 'redirecting from /groups' do
+    omni_auth_log_in_as_super_admin
     create(:group, name: 'moj')
 
     visit '/groups/moj'
