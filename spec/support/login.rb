@@ -26,7 +26,7 @@ module SpecSupport
         }
       )
 
-      visit 'auth/ditsso_internal'
+      visit '/auth/ditsso_internal'
     end
 
     def token_log_in_as(email)
