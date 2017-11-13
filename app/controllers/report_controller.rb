@@ -11,7 +11,7 @@ class ReportController < ApplicationController
       priority: 'normal', type: 'incident', custom_fields: zendesk_request_fields
     )
     flash[:notice] = 'Thank you for your submission. Your problem has been reported.'
-    redirect_back fallback_location: '/'
+    redirect_to params['problem_report_origin']
   end
 
   def zendesk_client
@@ -19,7 +19,6 @@ class ReportController < ApplicationController
       config.url = ENV['ZD_URL']
       config.username = ENV['ZD_USER']
       config.password = ENV['ZD_PASS']
-      config.enable_http = true
       config.retry = true
       require 'logger'
       config.logger = Logger.new(STDOUT)
