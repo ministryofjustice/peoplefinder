@@ -11,7 +11,8 @@ class ReportController < ApplicationController
       priority: 'normal', type: 'incident', custom_fields: zendesk_request_fields
     )
     flash[:notice] = 'Thank you for your submission. Your problem has been reported.'
-    redirect_to params['problem_report_origin']
+    paramHash = params['problem_report_origin'].to_h
+    redirect_to paramHash.merge(:only_path => true)
   end
 
   def zendesk_client
