@@ -3,6 +3,8 @@ Rails.application.routes.draw do
   get 'ping', to: 'ping#index'
   get 'healthcheck', to: 'health_check#index'
 
+  post '/report_problem', to: 'report#index'
+
   namespace :api, format: [:json] do
     resource :people, only: [:show]
   end
