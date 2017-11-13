@@ -14,9 +14,10 @@ feature 'Flash messages' do
     let(:person) { create :person }
     let(:flash_messages) { 'flash-messages' }
     let(:searchbox) { 'mod-search-form' }
+    let(:super_admin) { create(:super_admin) }
 
     before do
-      omni_auth_log_in_as 'test.user@digital.justice.gov.uk'
+      omni_auth_log_in_as super_admin.email
       person.memberships.destroy_all
     end
 

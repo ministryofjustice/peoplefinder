@@ -5,11 +5,18 @@ feature 'Person edit notifications' do
   include PermittedDomainHelper
 
   let(:person) { create(:person, email: 'test.user@digital.justice.gov.uk') }
-  before do
+
+  let(:super_admin) { create(:super_admin) }
+
+  before(:each, user: :regular) do
     omni_auth_log_in_as(person.email)
   end
 
-  scenario 'Creating a person with different email' do
+  before(:each, user: :super_admin) do
+    omni_auth_log_in_as(super_admin.email)
+  end
+
+  scenario 'Creating a person with different email', user: :regular do
     visit new_person_path
 
     fill_in 'First name', with: 'Bob'
@@ -35,16 +42,16 @@ feature 'Person edit notifications' do
     )
   end
 
-  scenario 'Deleting a person with different email' do
+  scenario 'Deleting a person with different email', user: :super_admin do
     person = create(:person, email: 'bob.smith@digital.justice.gov.uk')
     visit person_path(person)
     expect { click_delete_profile }.to change { ActionMailer::Base.deliveries.count }.by(1)
 
     expect(last_email.subject).to eq('Your profile on DIT People Finder has been deleted')
-    check_email_to_and_from
+    check_email_to_and_from(from: super_admin.email)
   end
 
-  scenario 'Editing a person with different email' do
+  scenario 'Editing a person with different email', user: :regular do
     digital = create(:group, name: 'Digital')
     person = create(:person, :member_of, team: digital, given_name: 'Bob', surname: 'Smith', email: 'bob.smith@digital.justice.gov.uk')
     visit person_path(person)
@@ -56,7 +63,7 @@ feature 'Person edit notifications' do
     expect(QueuedNotification.last.changes_hash['data']['raw']['surname']).to eq(["Smith", "Smelly Pants"])
   end
 
-  scenario 'Editing a person with same email' do
+  scenario 'Editing a person with same email', user: :regular do
     visit person_path(person)
     click_edit_profile
     fill_in 'Last name', with: 'Smelly Pants'
@@ -65,7 +72,7 @@ feature 'Person edit notifications' do
     end.not_to change { ActionMailer::Base.deliveries.count }
   end
 
-  scenario 'Verifying the link to bob that is render in the emails' do
+  scenario 'Verifying the link to bob that is render in the emails', user: :regular do
     bob = create(:person, email: 'bob@digital.justice.gov.uk', surname: 'bob')
     visit token_url(Token.for_person(bob), desired_path: person_path(bob))
 
@@ -74,8 +81,8 @@ feature 'Person edit notifications' do
     end
   end
 
-  def check_email_to_and_from
+  def check_email_to_and_from(from: 'test.user@digital.justice.gov.uk')
     expect(last_email.to).to eql(['bob.smith@digital.justice.gov.uk'])
-    expect(last_email.body.encoded).to match('test.user@digital.justice.gov.uk')
+    expect(last_email.body.encoded).to match(from)
   end
 end
