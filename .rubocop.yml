@@ -183,5 +183,6 @@ RSpec/ScatteredSetup:
     - 'spec/controllers/people_controller_spec.rb'
     - 'spec/features/group_maintenance_spec.rb'
     - 'spec/features/management_spec.rb'
+    - 'spec/features/person_edit_notifications_spec.rb'
     - 'spec/features/person_maintenance_spec.rb'
     - 'spec/features/suggestion_spec.rb'

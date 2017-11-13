@@ -6,6 +6,7 @@ feature 'Person maintenance' do
 
   let(:department) { create(:department) }
   let(:person) { create(:person, email: 'test.user@digital.justice.gov.uk') }
+  let(:super_admin) { create(:super_admin, email: 'super.admin@digital.justice.gov.uk') }
   let(:another_person) { create(:person, email: 'someone.else@digital.justice.gov.uk') }
 
   before do
@@ -14,6 +15,10 @@ feature 'Person maintenance' do
 
   before(:each, user: :regular) do
     omni_auth_log_in_as person.email
+  end
+
+  before(:each, user: :super_admin) do
+    omni_auth_log_in_as super_admin.email
   end
 
   before(:each, user: :readonly) do
@@ -352,7 +357,7 @@ feature 'Person maintenance' do
   end
 
   context 'Deleting a person' do
-    context 'for a regular user', user: :regular do
+    context 'for a super admin user', user: :super_admin do
       scenario 'Deleting a person' do
         person = create :person
         email_address = person.email

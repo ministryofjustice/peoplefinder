@@ -6,7 +6,7 @@ feature 'Regression' do
   let(:login_page) { Pages::Login.new }
 
   before do
-    omni_auth_log_in_as 'test.user@digital.justice.gov.uk'
+    omni_auth_log_in_as create(:super_admin).email
   end
 
   scenario 'Gracefully handle a session when the logged in person deletes their profile' do
