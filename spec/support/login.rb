@@ -29,6 +29,10 @@ module SpecSupport
       visit '/auth/ditsso_internal'
     end
 
+    def omni_auth_log_in_as_super_admin
+      omni_auth_log_in_as create(:super_admin).email
+    end
+
     def token_log_in_as(email)
       token = create(:token, user_email: email)
       visit token_path(token)
