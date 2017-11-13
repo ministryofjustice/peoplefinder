@@ -177,3 +177,10 @@ RSpec/InstanceVariable:
 
 Rails/ScopeArgs:
   Enabled: false
+
+RSpec/ScatteredSetup:
+  Exclude:
+    - 'spec/features/group_maintenance_spec.rb'
+    - 'spec/features/management_spec.rb'
+    - 'spec/features/person_maintenance_spec.rb'
+    - 'spec/features/suggestion_spec.rb'

@@ -249,14 +249,6 @@ RSpec/ScatteredLet:
     - 'spec/mailers/only_send_login_email_interceptor_spec.rb'
     - 'spec/presenters/membership_changes_presenter_spec.rb'
 
-# Offense count: 8
-RSpec/ScatteredSetup:
-  Exclude:
-    - 'spec/features/group_maintenance_spec.rb'
-    - 'spec/features/management_spec.rb'
-    - 'spec/features/person_maintenance_spec.rb'
-    - 'spec/features/suggestion_spec.rb'
-
 # Offense count: 12
 RSpec/SubjectStub:
   Exclude:
