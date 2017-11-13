@@ -185,4 +185,5 @@ RSpec/ScatteredSetup:
     - 'spec/features/management_spec.rb'
     - 'spec/features/person_edit_notifications_spec.rb'
     - 'spec/features/person_maintenance_spec.rb'
+    - 'spec/features/person_membership_spec.rb'
     - 'spec/features/suggestion_spec.rb'

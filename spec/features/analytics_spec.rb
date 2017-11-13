@@ -30,7 +30,7 @@ feature 'Google Analytics tracking' do
 
   context 'Edit team links' do
     before do
-      omni_auth_log_in_as 'test.user@digital.justice.gov.uk'
+      omni_auth_log_in_as_super_admin
       visit group_path(group)
     end
 
