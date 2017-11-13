@@ -5,6 +5,8 @@ class PersonSerializer < ActiveModel::Serializer
     :email,
     :name,
     :team,
+    :given_name,
+    :surname,
     :completion_score
   )
 
