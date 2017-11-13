@@ -36,7 +36,8 @@ module Concerns::GeckoboardDatasets
     end
 
     def not_in_subteam
-      Group.find_by(ancestry_depth: 0).people_outside_subteams
+      group = Group.find_by(ancestry_depth: 0)
+      group.present? ? group.people_outside_subteams : []
     end
 
     def not_edited

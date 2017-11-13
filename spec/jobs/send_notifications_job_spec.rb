@@ -30,10 +30,20 @@ RSpec.describe SendNotificationsJob, type: :job do
   end
 
   context 'when performed' do
-    it 'invokes the NotificationSender' do
+    it 'invokes the NotificationSender and Geckoboard publishers' do
       mock_sender = double("NotificationSender")
+      mock_publisher = double("Publisher")
+
       expect(NotificationSender).to receive(:new).and_return(mock_sender)
       expect(mock_sender).to receive(:send!)
+
+      expect(GeckoboardPublisher::PhotoProfilesReport).to receive(:new).and_return(mock_publisher)
+      expect(GeckoboardPublisher::ProfilesPercentageReport).to receive(:new).and_return(mock_publisher)
+      expect(GeckoboardPublisher::TotalProfilesReport).to receive(:new).and_return(mock_publisher)
+      expect(GeckoboardPublisher::ProfilesChangedReport).to receive(:new).and_return(mock_publisher)
+      expect(GeckoboardPublisher::ProfileCompletionsReport).to receive(:new).and_return(mock_publisher)
+
+      expect(mock_publisher).to receive(:publish!).with(true).exactly(5).times
 
       perform_now
     end
