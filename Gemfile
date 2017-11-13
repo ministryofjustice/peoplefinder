@@ -26,6 +26,7 @@ gem 'geckoboard-ruby', '~> 0.4.0'
 gem 'haml-rails'
 gem 'jbuilder', '~> 2.0'
 gem 'jquery-rails', '>= 4.0.4'
+gem 'json'
 gem 'keen'
 gem 'mail', '~> 2.6.6.rc1'
 gem 'mini_magick'
@@ -46,6 +47,7 @@ gem 'virtus'
 gem 'whenever', require: false
 gem 'will_paginate', '~> 3.0', '>=3.0.3'
 gem 'will_paginate-bootstrap', '~> 1.0', '>= 1.0.1'
+gem 'zendesk_api'
 
 gem 'carrierwave',
   git: 'https://github.com/carrierwaveuploader/carrierwave.git',
