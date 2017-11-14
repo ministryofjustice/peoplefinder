@@ -1,0 +1,17 @@
+#feedback_container.feedback_container
+  %a{:href => '#feedback', :id => 'feedbackToggle'}
+    Is there anything wrong with this page?
+  = form_tag('/report_problem', method: :post, class: 'new_problem_report', id: 'new_problem_report') do
+    .form-group
+      = label_tag('problem_report_goal', 'What were you trying to do?', {:class => 'form-label'})
+      = text_area_tag('problem_report_goal', '', {:class => 'form-control', :id => 'problem_report_goal'})
+    .form-group
+      = label_tag('problem_report_problem', 'What went wrong?', {:class => 'form-label'})
+      = text_area_tag('problem_report_problem', '', {:class => 'form-control', :id => 'problem_report_problem'})
+    - unless logged_in_regular?
+      .form-group
+        = label_tag('problem_report_email', 'Your email', {:class => 'form-label'})
+        = text_field_tag('problem_report_email', :person_email)
+    = hidden_field_tag('problem_report_origin', "#{request.original_url}")
+    = hidden_field_tag('problem_report_browser', "#{request.env['HTTP_USER_AGENT']}")
+    = submit_tag('Report', class: 'button')
