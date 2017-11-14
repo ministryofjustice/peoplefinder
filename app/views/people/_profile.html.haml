@@ -20,7 +20,7 @@
           - else
             - if @person.incomplete?
               = render partial: "completeness", locals: { person: @person }
-            - if can_edit_profiles?
+            - if can_make_suggestions?
               = render partial: "request_information", locals: { person: @person }
         %p.deletion-request-link
           = link_to("Has #{@person.given_name} left the department?", new_person_deletion_request_path(@person))
