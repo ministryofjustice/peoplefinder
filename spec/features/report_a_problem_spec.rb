@@ -11,7 +11,7 @@ feature 'Report a problem', js: true do
     ActionMailer::Base.deliveries.clear
   end
 
-  context 'When logged in' do
+  xcontext 'When logged in' do #to do test for response
     let(:me) { create(:person) }
     let(:group) { create(:group) }
 
@@ -22,8 +22,6 @@ feature 'Report a problem', js: true do
 
     scenario 'Reporting a problem', js: true do
       visit group_path(group)
-
-      ENV['ZD_URL'] = 'https://uktrade.zendesk.com/api/v2' #zendesk api tests need this string to begin with https
 
       click_link 'Is there anything wrong with this page?' # includes a wait, which is required for the slideToggle jquery behaviour
       fill_in 'What were you trying to do?', with: 'Rhubarb'
