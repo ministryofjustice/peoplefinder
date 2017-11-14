@@ -41,7 +41,7 @@ class ReportController < ApplicationController
 
   def redirect_to_referrer
     redirect_to :back
-    rescue ActionController::RedirectBackError
-      redirect_to root_path
+  rescue ActionController::RedirectBackError
+    redirect_to root_path
   end
 end
