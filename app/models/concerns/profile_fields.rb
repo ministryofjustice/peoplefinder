@@ -11,14 +11,14 @@ module Concerns::ProfileFields
     items = key_skills.reject(&:empty?).map do |x|
       I18n.t(x, scope: 'people.key_skill_names')
     end.join(', ')
-    items += ", #{other_key_skills}" unless other_key_skills.blank?
-    items
+    [items, other_key_skills].compact.reject(&:empty?).join(', ')
   end
 
   def formatted_learning_and_development
-    learning_and_development.reject(&:empty?).map do |x|
+    items = learning_and_development.reject(&:empty?).map do |x|
       I18n.t(x, scope: 'people.learning_and_development_names')
     end.join(', ')
+    [items, other_learning_and_development].compact.reject(&:empty?).join(', ')
   end
 
   def formatted_networks
@@ -34,8 +34,9 @@ module Concerns::ProfileFields
   end
 
   def formatted_additional_responsibilities
-    additional_responsibilities.reject(&:empty?).map do |x|
+    items = additional_responsibilities.reject(&:empty?).map do |x|
       I18n.t(x, scope: 'people.additional_responsibility_names')
     end.join(', ')
+    [items, other_additional_responsibilities].compact.reject(&:empty?).join(', ')
   end
 end

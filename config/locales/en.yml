@@ -572,6 +572,7 @@ en:
         previous_positions: Previous positions held (optional)
         other_uk: Other - UK regional
         other_overseas: Other - Overseas
+        other_additional_responsibilities: Other additional roles and responsibilities
       membership:
         role: "Job title"
         group: Team

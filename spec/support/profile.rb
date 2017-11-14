@@ -68,6 +68,7 @@ module SpecSupport
       within '#learning_and_development' do
         govuk_label_click 'Coding'
       end
+      fill_in 'Other learning and development', with: 'Walking, Talking'
 
       within '#networks' do
         govuk_label_click 'Age network'
@@ -80,6 +81,7 @@ module SpecSupport
       within '#additional_responsibilities' do
         govuk_label_click 'First aider'
       end
+      fill_in 'Other additional roles', with: 'lifeguard, beekeper'
     end
 
     def click_edit_profile(matcher = :first)
@@ -142,7 +144,7 @@ module SpecSupport
       end
 
       within '#learning_and_development' do
-        expect(page).to have_text('Coding')
+        expect(page).to have_text('Coding, Walking, Talking')
       end
 
       within '#networks' do
@@ -154,7 +156,7 @@ module SpecSupport
       end
 
       within '#additional_responsibilities' do
-        expect(page).to have_text('First aider')
+        expect(page).to have_text('First aider, lifeguard, beekeper')
       end
     end
   end
