@@ -348,10 +348,10 @@ en:
       gov_statistical: Government statistical service profession
       gov_tax: Government tax profession
       gov_vet: Government veterinary profession
-      gov_hr: Human resources profession
-      gov_ia: Intelligence analysis
-      gov_internal_audit: Internal audit profession
-      gov_medical: Medical profession
+      human_resources: Human resources profession
+      intelligence_analysis: Intelligence analysis
+      internal_audit: Internal audit profession
+      medical_profession: Medical profession
       operation_delivery: Operational delivery profession
       policy_profiession: Policy profession
       procurement_profession: Procurement profession
