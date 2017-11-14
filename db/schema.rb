@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171106164424) do
+ActiveRecord::Schema.define(version: 20171114113958) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -72,18 +72,18 @@ ActiveRecord::Schema.define(version: 20171106164424) do
     t.text     "description"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "works_monday",                default: true
-    t.boolean  "works_tuesday",               default: true
-    t.boolean  "works_wednesday",             default: true
-    t.boolean  "works_thursday",              default: true
-    t.boolean  "works_friday",                default: true
+    t.boolean  "works_monday",                      default: true
+    t.boolean  "works_tuesday",                     default: true
+    t.boolean  "works_wednesday",                   default: true
+    t.boolean  "works_thursday",                    default: true
+    t.boolean  "works_friday",                      default: true
     t.string   "image"
     t.string   "slug"
-    t.boolean  "works_saturday",              default: false
-    t.boolean  "works_sunday",                default: false
-    t.integer  "login_count",                 default: 0,     null: false
+    t.boolean  "works_saturday",                    default: false
+    t.boolean  "works_sunday",                      default: false
+    t.integer  "login_count",                       default: 0,     null: false
     t.datetime "last_login_at"
-    t.boolean  "super_admin",                 default: false
+    t.boolean  "super_admin",                       default: false
     t.text     "city"
     t.text     "secondary_email"
     t.integer  "profile_photo_id"
@@ -91,21 +91,25 @@ ActiveRecord::Schema.define(version: 20171106164424) do
     t.string   "current_project"
     t.text     "pager_number"
     t.text     "primary_phone_country_code"
-    t.string   "building",                    default: [],                 array: true
+    t.string   "building",                          default: [],                 array: true
     t.string   "country"
     t.string   "skype_name"
-    t.string   "key_skills",                  default: [],                 array: true
+    t.string   "key_skills",                        default: [],                 array: true
     t.text     "language_fluent"
     t.text     "language_intermediate"
     t.text     "grade"
     t.text     "previous_positions"
-    t.string   "learning_and_development",    default: [],                 array: true
-    t.string   "networks",                    default: [],                 array: true
-    t.string   "key_responsibilities",        default: [],                 array: true
-    t.string   "additional_responsibilities", default: [],                 array: true
+    t.string   "learning_and_development",          default: [],                 array: true
+    t.string   "networks",                          default: [],                 array: true
+    t.string   "additional_responsibilities",       default: [],                 array: true
     t.text     "other_uk"
     t.text     "other_overseas"
     t.string   "internal_auth_key"
+    t.string   "other_key_skills"
+    t.string   "other_learning_and_development"
+    t.string   "other_additional_responsibilities"
+    t.string   "professions_i_belong_to",           default: [],                 array: true
+    t.string   "other_professions_i_belong_to"
   end
 
   add_index "people", ["slug"], name: "index_people_on_slug", unique: true, using: :btree
