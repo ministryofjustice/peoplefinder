@@ -26,17 +26,13 @@ class ReportController < ApplicationController
   end
 
   def zendesk_request_fields
-    [{
-      id: '45490089', value: params['problem_report_goal']
-    }, {
-      id: '45522325', value: params['problem_report_problem']
-    }, {
-      id: '45522345', value: params['problem_report_origin']
-    }, {
-      id: '34146805', value: params['problem_report_browser']
-    }, {
-      id: '45522485', value: params['problem_report_email']
-    }]
+    [
+      { id: '45490089', value: params['problem_report_goal'] },
+      { id: '45522325', value: params['problem_report_problem'] },
+      { id: '45522345', value: params['problem_report_origin'] },
+      { id: '34146805', value: params['problem_report_browser'] },
+      { id: '45522485', value: params['problem_report_email'] }
+    ]
   end
 
   def redirect_to_referrer
