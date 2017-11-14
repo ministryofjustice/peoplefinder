@@ -119,7 +119,7 @@ module SpecSupport
         expect(page).to_not have_selector("li.active[alt='Saturday']")
         expect(page).to_not have_selector("li.active[alt='Sunday']")
       end
-save_and_open_page
+
       within '#key_skills' do
         expect(page).to have_text('Assurance')
       end
