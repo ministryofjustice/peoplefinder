@@ -8,9 +8,11 @@ module Concerns::ProfileFields
   end
 
   def formatted_key_skills
-    key_skills.reject(&:empty?).map do |x|
+    items = key_skills.reject(&:empty?).map do |x|
       I18n.t(x, scope: 'people.key_skill_names')
     end.join(', ')
+    items += ", #{other_key_skills}" unless other_key_skills.blank?
+    items
   end
 
   def formatted_learning_and_development

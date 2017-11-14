@@ -58,6 +58,7 @@ module SpecSupport
       within '#key_skills' do
         govuk_label_click 'Assurance'
       end
+      fill_in 'Other key skills', with: 'Laughing'
 
       fill_in 'Fluent languages', with: 'English'
       fill_in 'Intermediate languages', with: 'Dutch'
@@ -121,7 +122,7 @@ module SpecSupport
       end
 
       within '#key_skills' do
-        expect(page).to have_text('Assurance')
+        expect(page).to have_text('Assurance, Laughing')
       end
 
       within '#language_fluent' do
