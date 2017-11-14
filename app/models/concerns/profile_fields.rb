@@ -25,12 +25,6 @@ module Concerns::ProfileFields
     end.join(', ')
   end
 
-  def formatted_key_responsibilities
-    key_responsibilities.reject(&:empty?).map do |x|
-      I18n.t(x, scope: 'people.key_responsibility_names')
-    end.join(', ')
-  end
-
   def formatted_additional_responsibilities
     additional_responsibilities.reject(&:empty?).map do |x|
       I18n.t(x, scope: 'people.additional_responsibility_names')

@@ -53,6 +53,27 @@ module SpecSupport
         govuk_label_click 'Monday'
         govuk_label_click 'Friday'
       end
+      within '#key_skills' do
+        govuk_label_click 'Assurance'
+      end
+      fill_in 'Fluent languages', with: 'English'
+      fill_in 'Intermediate languages', with: 'Dutch'
+      select 'Apprentice', from: 'Grade'
+      fill_in 'Previous positions held', with: 'Task rabbit'
+      
+      within '#learning_and_development' do
+        govuk_label_click 'Coding'
+      end
+      
+      within '#networks' do
+        govuk_label_click 'Age network'
+      end
+
+      # professions
+
+      within '#additional_responsibilities' do
+        govuk_label_click 'First aider'
+      end
     end
 
     def click_edit_profile(matcher = :first)
@@ -92,6 +113,40 @@ module SpecSupport
         expect(page).to_not have_selector("li.active[alt='Friday']")
         expect(page).to_not have_selector("li.active[alt='Saturday']")
         expect(page).to_not have_selector("li.active[alt='Sunday']")
+      end
+
+      within '#key_skills' do
+        expect(page).to have_text('Assurance')
+      end
+
+      within '#language_fluent' do
+        expect(page).to have_text('English')
+      end
+
+      within '#language_intermediate' do
+        expect(page).to have_text('Dutch')
+      end 
+
+      within('#grade') do
+        expect(page).to have_text('Apprentice')
+      end
+
+      within('#previous_positions') do
+        expect(page).to have_text('Task rabbit')
+      end
+      
+      within '#learning_and_development' do
+        expect(page).to have_text('Coding') 
+      end
+      
+      within '#networks' do
+        expect(page).to have_text('Age network') 
+      end
+
+      # professions
+
+      within '#additional_responsibilities' do
+        expect(page).to have_text('First aider') 
       end
     end
   end

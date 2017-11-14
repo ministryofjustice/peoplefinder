@@ -62,7 +62,7 @@
   %h3.heading-medium.with-border-lg
     = "Extra information"
 
-  .form-group
+  .form-group#key_skills
     %label.form-label{for: :key_skills} Key skills
     %ul.inline-list
       = f.collection_check_boxes :key_skills, key_skill_names, :first, :last, checked: @person.try(:key_skills) do |b|
@@ -76,7 +76,7 @@
 
   = f.text_area :previous_positions
 
-  .form-group
+  .form-group#learning_and_development
     %label.form-label{for: :learning_and_development} Learning and development interests (optional)
     %ul.inline-list
       = f.collection_check_boxes :learning_and_development, learning_and_development_names, :first, :last, checked: @person.try(:learning_and_development) do |b|
@@ -84,7 +84,7 @@
           .form-group
             = b.label(class: "block-label selection-button-checkbox", 'data-value': b.value) { b.check_box + b.text }
 
-  .form-group
+  .form-group#networks
     %label.form-label{for: :networks} Networks I belong to (optional)
     %ul.inline-list
       = f.collection_check_boxes :networks, network_names, :first, :last, checked: @person.try(:networks) do |b|
@@ -92,14 +92,8 @@
           .form-group
             = b.label(class: "block-label selection-button-checkbox", 'data-value': b.value) { b.check_box + b.text }
 
-  .form-group
-    %label.form-label{for: :key_responsibilities} Key areas of responsibility within my job (optional)
-    %ul.inline-list
-      = f.collection_check_boxes :key_responsibilities, key_responsibility_names, :first, :last, checked: @person.try(:key_responsibilities) do |b|
-        %li
-          .form-group
-            = b.label(class: "block-label selection-button-checkbox", 'data-value': b.value) { b.check_box + b.text }
-  .form-group
+ 
+  .form-group#additional_responsibilities
     %label.form-label{for: :additional_responsibilities} My additional roles and responsibilities (optional)
     %ul.inline-list
       = f.collection_check_boxes :additional_responsibilities, additional_responsibility_names, :first, :last, checked: @person.try(:additional_responsibilities) do |b|

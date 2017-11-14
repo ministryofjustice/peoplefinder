@@ -159,7 +159,6 @@ feature 'Person maintenance' do
 
         expect(profile_page).to be_displayed
         expect(profile_page.flash_message).to have_selector('.notice', text: /Created .* profile/)
-        check_creation_of_profile_details
         expect(Person.where(surname: person_attributes[:surname]).count).to eql(2)
       end
 
