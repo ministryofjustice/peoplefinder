@@ -636,4 +636,18 @@ RSpec.describe Person, type: :model do
     end
   end
 
+  describe '#primary_phone_country' do
+    it 'returns an instance of ISO3166::Country when a value is present' do
+      person.primary_phone_country_code = 'GB'
+
+      expect(person.primary_phone_country).to eq(ISO3166::Country.new('GB'))
+    end
+
+    it 'returns nil when a value is not present' do
+      person.primary_phone_country_code = nil
+
+      expect(person.primary_phone_country).to be_nil
+    end
+  end
+
 end

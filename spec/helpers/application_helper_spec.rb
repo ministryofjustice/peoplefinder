@@ -93,6 +93,31 @@ RSpec.describe ApplicationHelper, type: :helper do
     end
   end
 
+  describe '#phone_number_with_country_code' do
+    let(:country) { ISO3166::Country.new('GB') }
+    let(:phone_number) { '1234 56789' }
+
+    it 'returns a phone number prepended with the country code given a country' do
+      expect(phone_number_with_country_code(country, phone_number)).to eq('+44 1234 56789')
+    end
+
+    it 'returns only the phone number when no country is provided' do
+      expect(phone_number_with_country_code(nil, phone_number)).to eq('1234 56789')
+    end
+  end
+
+  describe '#call_to_with_country_code' do
+    let(:country) { ISO3166::Country.new('GB') }
+    let(:phone_number) { '1234 56789' }
+
+    it 'returns a phone number prepended with the country code with a tel href' do
+      expect(self).to receive(:phone_number_with_country_code).with(country, phone_number).and_return('+44 12345')
+      expect(self).to receive(:call_to).with('+44 12345').and_return('tel:4412345')
+
+      expect(call_to_with_country_code(country, phone_number)).to eq('tel:4412345')
+    end
+  end
+
   context '#role_translate' do
     let(:current_user) { build(:person) }
 
