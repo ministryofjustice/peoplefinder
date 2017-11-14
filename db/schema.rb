@@ -108,8 +108,8 @@ ActiveRecord::Schema.define(version: 20171114113958) do
     t.string   "other_key_skills"
     t.string   "other_learning_and_development"
     t.string   "other_additional_responsibilities"
-    t.string   "professions_i_belong_to",           default: [],                 array: true
-    t.string   "other_professions_i_belong_to"
+    t.string   "professions",                       default: [],                 array: true
+    t.string   "other_professions"
   end
 
   add_index "people", ["slug"], name: "index_people_on_slug", unique: true, using: :btree

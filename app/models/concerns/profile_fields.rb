@@ -25,6 +25,12 @@ module Concerns::ProfileFields
     end.join(', ')
   end
 
+  def formatted_professions
+    professions.reject(&:empty?).map do |x|
+      I18n.t(x, scope: 'people.profession_names')
+    end.join(', ')
+  end
+
   def formatted_additional_responsibilities
     additional_responsibilities.reject(&:empty?).map do |x|
       I18n.t(x, scope: 'people.additional_responsibility_names')

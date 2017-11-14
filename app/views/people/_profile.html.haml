@@ -160,6 +160,13 @@
             %dd
               = @person.formatted_networks
 
+        - if @person.formatted_professions.present?
+          %dl.inline-labels#professions
+            %dt
+              Professions I belong to
+            %dd
+              = @person.formatted_professions
+
         - if @person.formatted_additional_responsibilities.present?
           %dl.inline-labels#additional_responsibilities
             %dt

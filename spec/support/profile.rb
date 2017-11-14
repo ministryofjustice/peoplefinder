@@ -1,5 +1,5 @@
 module SpecSupport
-  module Profile
+  module Profile # rubocop:disable Metrics/ModuleLength
     def person_attributes
       {
         given_name: 'Marco',
@@ -49,27 +49,32 @@ module SpecSupport
       fill_in 'Phone number', with: person_attributes[:primary_phone_number]
       fill_in 'Location in building', with: person_attributes[:location_in_building]
       fill_in 'City', with: person_attributes[:city]
+
       within_fieldset('working-days') do
         govuk_label_click 'Monday'
         govuk_label_click 'Friday'
       end
+
       within '#key_skills' do
         govuk_label_click 'Assurance'
       end
+
       fill_in 'Fluent languages', with: 'English'
       fill_in 'Intermediate languages', with: 'Dutch'
       select 'Apprentice', from: 'Grade'
       fill_in 'Previous positions held', with: 'Task rabbit'
-      
+
       within '#learning_and_development' do
         govuk_label_click 'Coding'
       end
-      
+
       within '#networks' do
         govuk_label_click 'Age network'
       end
 
-      # professions
+      within '#professions' do
+        govuk_label_click 'Government communication service'
+      end
 
       within '#additional_responsibilities' do
         govuk_label_click 'First aider'
@@ -114,7 +119,7 @@ module SpecSupport
         expect(page).to_not have_selector("li.active[alt='Saturday']")
         expect(page).to_not have_selector("li.active[alt='Sunday']")
       end
-
+save_and_open_page
       within '#key_skills' do
         expect(page).to have_text('Assurance')
       end
@@ -125,7 +130,7 @@ module SpecSupport
 
       within '#language_intermediate' do
         expect(page).to have_text('Dutch')
-      end 
+      end
 
       within('#grade') do
         expect(page).to have_text('Apprentice')
@@ -134,19 +139,21 @@ module SpecSupport
       within('#previous_positions') do
         expect(page).to have_text('Task rabbit')
       end
-      
+
       within '#learning_and_development' do
-        expect(page).to have_text('Coding') 
-      end
-      
-      within '#networks' do
-        expect(page).to have_text('Age network') 
+        expect(page).to have_text('Coding')
       end
 
-      # professions
+      within '#networks' do
+        expect(page).to have_text('Age network')
+      end
+
+      within '#professions' do
+        expect(page).to have_text('Government communication service')
+      end
 
       within '#additional_responsibilities' do
-        expect(page).to have_text('First aider') 
+        expect(page).to have_text('First aider')
       end
     end
   end

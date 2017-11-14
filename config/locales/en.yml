@@ -327,6 +327,35 @@ en:
       overseas_staff_rep: Overseas staff rep
       digital_champion: Digital champion
       information_manager: Information manager
+    profession_names:
+      corp_finance: Corporate finance profession
+      counter_fraud: Counter-fraud standards and profession
+      digital_data_tech: Digital, data and technology profession
+      gov_comms: Government communication service
+      gov_economics: Government economic service
+      gov_finance: Government finance profession
+      gov_it: Government IT profession
+      gov_knowledge: Government knowledge and information management profession
+      gov_legal: Government legal service
+      gov_occupational: Government occupational psychology profession
+      gov_operational: Government operational research service
+      gov_planning_inspectors: Government planning inspectors
+      gov_planning_profession: Government planning profession
+      gov_property: Government property profession
+      gov_security: Government security profession
+      gov_science: Government science and engineering profession
+      gov_social: Government social research profession
+      gov_statistical: Government statistical service profession
+      gov_tax: Government tax profession
+      gov_vet: Government veterinary profession
+      gov_hr: Human resources profession
+      gov_ia: Intelligence analysis
+      gov_internal_audit: Internal audit profession
+      gov_medical: Medical profession
+      operation_delivery: Operational delivery profession
+      policy_profiession: Policy profession
+      procurement_profession: Procurement profession
+      project_delivery: Project delivery profession
   management:
     header: Management
     report_header: Reports
