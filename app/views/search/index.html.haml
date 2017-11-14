@@ -32,8 +32,3 @@
       - if teams_filter?
         #team-results
           = render partial: 'search/team', collection: @team_results.set
-
-.grid-row.cb-search-footer
-  .column-full
-    %br/
-    = t('.results_footer_html', new_profile_link: link_to('add them', new_person_path))
