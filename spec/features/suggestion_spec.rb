@@ -4,6 +4,8 @@ feature 'Make a suggestion about a profile', js: true do
   include ActiveJobHelper
   include PermittedDomainHelper
 
+  before { Rails.application.config.disable_suggestions = false }
+
   let(:me) { create(:person) }
   let(:leader) { create(:person) }
   let(:group) do
