@@ -35,6 +35,11 @@ class ApplicationController < ActionController::Base
   end
   helper_method :can_edit_profiles?
 
+  def can_make_suggestions?
+    Rails.configuration.disable_suggestions == false
+  end
+  helper_method :can_make_suggestions?
+
   def load_user
     Login.current_user(session) || ReadonlyUser.from_request(request)
   end
