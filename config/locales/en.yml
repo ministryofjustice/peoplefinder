@@ -185,7 +185,7 @@ en:
       other: Select the person's new team
     leader:
       mine: |
-        Are you the leader of the <span class="team-led">team above</span>? (optional)
+        Are you the head of the <span class="team-led">team above</span>? (optional)
       other: |
         Is this person the leader of the <span class="team-led">team above</span>? (optional)
     subscribed:
@@ -243,7 +243,7 @@ en:
       media_trained: Media trained
       mentoring: Mentoring
       policy_design: Policy design
-      policy_implementation: Policy immplementation
+      policy_implementation: Policy implementation
       presenting: Presenting
       project_delivery: Project delivery
       project_management: Project management
@@ -252,12 +252,11 @@ en:
       research_economic: Research - economic
       research_statistical: Research - statistical
       research_social: Research - social
-      research_user: Research - user
       risk_management: Risk management
       security: Security
-      service_design: Service and prowess design
+      service_design: Service and process design
       skills_and_capability: Skills and capability management
-      sponsorship: Sponsorship and partmentships
+      sponsorship: Sponsorship and partnerships
       stakeholder_management: Stakeholder management
       statistics: Statistics
       strategy: Strategy
@@ -314,20 +313,7 @@ en:
       women: "Women's network"
       muslim_women: "Muslim women's network"
       mentoring: Mentoring network
-    key_responsibility_names:
-      hr_partner: HR partner
-      finance_partner: Finance partner
-      scrum_master: Scrum master
-      communications: Communications
-      training: Training
-      admin_coordinator: Administrative coordinator
-      ministerial_submissions: Ministerial submissions
-      webinars: Webinars
-      business_outreach: Business outreach
-      communities: Communities
-      capability_management: Capability management
-      commercial: Commercial
-      knowledge_management: Knowledge management
+      social_mobility: Social mobility network
     additional_responsibility_names:
       fire_warden: Fire warden
       first_aider: First aider
@@ -335,13 +321,41 @@ en:
       mentor: Mentor
       network_lead: Network lead
       network_deputy_lead: Network deputy lead
-      union_rep: Union rep
       cirrus_champion: Cirrus champion
       health_wellbeing_champion: Health & wellbeing champion
       fast_stream_rep: Fast stream rep
       overseas_staff_rep: Overseas staff rep
       digital_champion: Digital champion
       information_manager: Information manager
+    profession_names:
+      corp_finance: Corporate finance profession
+      counter_fraud: Counter-fraud standards and profession
+      digital_data_tech: Digital, data and technology profession
+      gov_comms: Government communication service
+      gov_economics: Government economic service
+      gov_finance: Government finance profession
+      gov_it: Government IT profession
+      gov_knowledge: Government knowledge and information management profession
+      gov_legal: Government legal service
+      gov_occupational: Government occupational psychology profession
+      gov_operational: Government operational research service
+      gov_planning_inspectors: Government planning inspectors
+      gov_planning_profession: Government planning profession
+      gov_property: Government property profession
+      gov_security: Government security profession
+      gov_science: Government science and engineering profession
+      gov_social: Government social research profession
+      gov_statistical: Government statistical service profession
+      gov_tax: Government tax profession
+      gov_vet: Government veterinary profession
+      human_resources: Human resources profession
+      intelligence_analysis: Intelligence analysis
+      internal_audit: Internal audit profession
+      medical_profession: Medical profession
+      operation_delivery: Operational delivery profession
+      policy_profiession: Policy profession
+      procurement_profession: Procurement profession
+      project_delivery: Project delivery profession
   management:
     header: Management
     report_header: Reports
@@ -558,6 +572,7 @@ en:
         previous_positions: Previous positions held (optional)
         other_uk: Other - UK regional
         other_overseas: Other - Overseas
+        other_additional_responsibilities: Other additional roles and responsibilities
       membership:
         role: "Job title"
         group: Team

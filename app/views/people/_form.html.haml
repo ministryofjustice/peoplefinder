@@ -5,15 +5,6 @@
   = f.text_field :surname
   = f.text_field :email
 
-  .form-group.mod-media.card
-    = f.label :profile_image, 'Profile photo', class: 'form-label'
-    .media
-      .media-left
-        = profile_image_tag @person, link: false
-    %br/
-    - button_text = f.object.profile_image.present? ? 'Change this photo' : 'Add a photo'
-    = f.submit button_text, name: 'edit-picture-button', class: 'button'
-
   %h3.heading-medium.with-border-lg
     = "Contact details"
 
@@ -71,13 +62,14 @@
   %h3.heading-medium.with-border-lg
     = "Extra information"
 
-  .form-group
+  .form-group#key_skills
     %label.form-label{for: :key_skills} Key skills
     %ul.inline-list
       = f.collection_check_boxes :key_skills, key_skill_names, :first, :last, checked: @person.try(:key_skills) do |b|
         %li
           .form-group
             = b.label(class: "block-label selection-button-checkbox", 'data-value': b.value) { b.check_box + b.text }
+  = f.text_field :other_key_skills
 
   = f.text_field :language_fluent
   = f.text_field :language_intermediate
@@ -85,15 +77,16 @@
 
   = f.text_area :previous_positions
 
-  .form-group
+  .form-group#learning_and_development
     %label.form-label{for: :learning_and_development} Learning and development interests (optional)
     %ul.inline-list
       = f.collection_check_boxes :learning_and_development, learning_and_development_names, :first, :last, checked: @person.try(:learning_and_development) do |b|
         %li
           .form-group
             = b.label(class: "block-label selection-button-checkbox", 'data-value': b.value) { b.check_box + b.text }
+  = f.text_field :other_learning_and_development
 
-  .form-group
+  .form-group#networks
     %label.form-label{for: :networks} Networks I belong to (optional)
     %ul.inline-list
       = f.collection_check_boxes :networks, network_names, :first, :last, checked: @person.try(:networks) do |b|
@@ -101,20 +94,32 @@
           .form-group
             = b.label(class: "block-label selection-button-checkbox", 'data-value': b.value) { b.check_box + b.text }
 
-  .form-group
-    %label.form-label{for: :key_responsibilities} Key areas of responsibility within my job (optional)
+  .form-group#professions
+    %label.form-label{for: :professions} Professions I belong to (optional)
     %ul.inline-list
-      = f.collection_check_boxes :key_responsibilities, key_responsibility_names, :first, :last, checked: @person.try(:key_responsibilities) do |b|
+      = f.collection_check_boxes :professions, profession_names, :first, :last, checked: @person.try(:professions) do |b|
         %li
           .form-group
             = b.label(class: "block-label selection-button-checkbox", 'data-value': b.value) { b.check_box + b.text }
-  .form-group
+
+  .form-group#additional_responsibilities
     %label.form-label{for: :additional_responsibilities} My additional roles and responsibilities (optional)
     %ul.inline-list
       = f.collection_check_boxes :additional_responsibilities, additional_responsibility_names, :first, :last, checked: @person.try(:additional_responsibilities) do |b|
         %li
           .form-group
             = b.label(class: "block-label selection-button-checkbox", 'data-value': b.value) { b.check_box + b.text }
+            
+  = f.text_field :other_additional_responsibilities
+
+  .form-group.mod-media.card
+    = f.label :profile_image, 'Profile photo', class: 'form-label'
+    .media
+      .media-left
+        = profile_image_tag @person, link: false
+    %br/
+    - button_text = f.object.profile_image.present? ? 'Change this photo' : 'Add a photo'
+    = f.submit button_text, name: 'edit-picture-button', class: 'button'
 
   .form-group
     = f.submit 'Save', class: 'button'
