@@ -23,12 +23,14 @@ feature 'Report a problem', js: true do
     scenario 'Reporting a problem', js: true do
       visit group_path(group)
 
-      ENV['ZD_URL'] = 'https' #zendesk api tests need this string to begin with https
+      ENV['ZD_URL'] = 'https://uktrade.zendesk.com/api/v2' #zendesk api tests need this string to begin with https
 
       click_link 'Is there anything wrong with this page?' # includes a wait, which is required for the slideToggle jquery behaviour
       fill_in 'What were you trying to do?', with: 'Rhubarb'
       fill_in 'What went wrong?', with: 'Custard'
       click_button 'Report'
+
+      save_and_open_page
 
       expect(page).to have_text('Thank you for your submission. Your problem has been reported.')
 
