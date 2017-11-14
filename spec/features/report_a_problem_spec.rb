@@ -11,7 +11,7 @@ feature 'Report a problem', js: true do
     ActionMailer::Base.deliveries.clear
   end
 
-  xcontext 'When logged in' do #to do test for response
+  xcontext 'When logged in' do # to do test for response
     let(:me) { create(:person) }
     let(:group) { create(:group) }
 
@@ -32,7 +32,7 @@ feature 'Report a problem', js: true do
 
       expect(page).to have_text('Thank you for your submission. Your problem has been reported.')
 
-      #expect(current_path).to eq group_path(group)
+      # expect(current_path).to eq group_path(group)
       # expect(last_email.to).to eq([Rails.configuration.support_email])
       # body = last_email.body.encoded
 
