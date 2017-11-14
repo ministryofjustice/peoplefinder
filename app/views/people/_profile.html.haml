@@ -112,63 +112,63 @@
           = render 'working_days'
 
         - if @person.formatted_key_skills.present?
-          %dl.inline-labels
+          %dl.inline-labels#key_skills
             %dt
               Key skills
             %dd
               = @person.formatted_key_skills
 
         - if @person.language_fluent.present?
-          %dl.inline-labels
+          %dl.inline-labels#language_fluent
             %dt
               Fluent Languages
             %dd
               = @person.language_fluent
 
         - if @person.language_intermediate.present?
-          %dl.inline-labels
+          %dl.inline-labels#language_intermediate
             %dt
               Intermediate Languages
             %dd
               = @person.language_intermediate
 
         - if @person.grade.present?
-          %dl.inline-labels
+          %dl.inline-labels#grade
             %dt
               Grade
             %dd
               = I18n.t(@person.grade, scope: 'people.grade_names')
 
         - if @person.previous_positions.present?
-          %dl.inline-labels
+          %dl.inline-labels#previous_positions
             %dt
               Previous positions held
             %dd
               = @person.previous_positions
 
         - if @person.formatted_learning_and_development.present?
-          %dl.inline-labels
+          %dl.inline-labels#learning_and_development
             %dt
               Learning and development interests
             %dd
               = @person.formatted_learning_and_development
 
         - if @person.formatted_networks.present?
-          %dl.inline-labels
+          %dl.inline-labels#networks
             %dt
               Networks I belong to
             %dd
               = @person.formatted_networks
 
-        - if @person.formatted_key_responsibilities.present?
-          %dl.inline-labels
+        - if @person.formatted_professions.present?
+          %dl.inline-labels#professions
             %dt
-              Key areas of responsibility within my job
+              Professions I belong to
             %dd
-              = @person.formatted_key_responsibilities
+              = @person.formatted_professions
 
         - if @person.formatted_additional_responsibilities.present?
-          %dl.inline-labels
+          %dl.inline-labels#additional_responsibilities
             %dt
               My additional roles and responsibilities
             %dd

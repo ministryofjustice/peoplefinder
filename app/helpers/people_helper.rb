@@ -120,6 +120,12 @@ module PeopleHelper
     end.sort
   end
 
+  def profession_names
+    I18n.t('people.profession_names').each_pair do |k, v|
+      [k, v]
+    end.sort
+  end
+
   def key_responsibility_names
     I18n.t('people.key_responsibility_names').each_pair do |k, v|
       [k, v]

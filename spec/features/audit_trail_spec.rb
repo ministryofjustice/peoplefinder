@@ -135,7 +135,6 @@ feature 'Audit trail' do
     Timecop.freeze(1.day.from_now) do
       with_versioning do
         visit edit_person_path(person)
-        save_and_open_page
         within last_membership do
           click_link 'Leave team'
         end
@@ -144,7 +143,7 @@ feature 'Audit trail' do
     end
 
     visit '/audit_trail'
-    save_and_open_page
+
     within('tbody tr:first-child') do
       expect(page).to have_text('Deleted Membership')
       expect(page).to have_text('Person was: Joe Bob')
