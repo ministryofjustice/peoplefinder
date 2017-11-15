@@ -38,10 +38,11 @@
 
 - content_for :proposition_header do
   %ul.mobile-header
+    - if logged_in_regular?
+      %li
+        = link_to "Account", "#{person_path(current_user)}", class: "mobile-account-button"
     %li
-      = link_to "Account", '/', class: "mobile-account-button"
-    %li
-      = link_to "Search", "/search", class: "mobile-search-button"
+      = link_to "Search", "#{ENV['HOME_PAGE_URL']}/search", class: "mobile-search-button"
   .header-proposition
     .content
       = link_to "Digital Workspace", home_path, id: "proposition-name"
