@@ -67,6 +67,14 @@ module ApplicationHelper
     content_tag(:a, href: "tel:#{digits}") { telno }
   end
 
+  def phone_number_with_country_code(country, phone_number)
+    country.present? ? "+#{country.country_code} #{phone_number}" : phone_number
+  end
+
+  def call_to_with_country_code(country, phone_number)
+    call_to(phone_number_with_country_code(country, phone_number))
+  end
+
   def role_translate(subject, key, options = {})
     if subject == current_user
       subkey = 'mine'
