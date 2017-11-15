@@ -16,6 +16,7 @@
 /tmp
 
 # Ignore environment variable configuration
+/.env
 /.env.local
 
 
