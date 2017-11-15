@@ -26,6 +26,9 @@ feature 'OmniAuth Authentication' do
 
     click_link 'Sign out'
     expect(login_page).to be_displayed
+
+    # and verifying that the internal auth key has been set
+    expect(Person.last.internal_auth_key).to eq(valid_user[:info][:email].to_s)
   end
 
   scenario 'Logging in when the user has no last_name' do
