@@ -22,7 +22,7 @@
                   = "#{ membership.role }, " if membership.role?
                   = link_to membership.group.name, membership.group, { data: search_result_analytics_attributes(index) }
           %li.cb-person-phone
-            = call_to(person.phone)
+            = call_to_with_country_code(person.primary_phone_country, person.phone)
           %li.cb-person-email
             = mail_to(person.email, es_highlighter(hit, person, :email), data: search_result_analytics_attributes(index) )
 

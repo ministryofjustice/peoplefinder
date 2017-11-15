@@ -199,6 +199,10 @@ class Person < ActiveRecord::Base
     [primary_phone_number, secondary_phone_number].find(&:present?)
   end
 
+  def primary_phone_country
+    primary_phone_country_code.present? ? ISO3166::Country.new(primary_phone_country_code) : nil
+  end
+
   include Concerns::ConcatenatedFields
   concatenated_field :location, :location_in_building, :building, :city, join_with: ', '
   concatenated_field :name, :given_name, :surname, join_with: ' '

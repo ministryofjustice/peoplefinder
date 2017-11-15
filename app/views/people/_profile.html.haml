@@ -89,14 +89,7 @@
             %dt
               Primary phone number
             %dd
-              = call_to(@person.primary_phone_number)
-
-        - if @person.primary_phone_country_code.present?
-          %dl.inline-labels
-            %dt
-              Country dialling code
-            %dd
-              = @person.primary_phone_country_code
+              = call_to_with_country_code(@person.primary_phone_country, @person.primary_phone_number)
 
         - if @person.skype_name.present?
           %dl.inline-labels
