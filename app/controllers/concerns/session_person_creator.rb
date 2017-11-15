@@ -7,6 +7,7 @@ module SessionPersonCreator
       return unless email.permitted_domain?
       find_or_create_person(email) do |new_person|
         new_person.email = email
+        new_person.internal_auth_key = email
         new_person.given_name = auth_hash['info']['first_name']
         new_person.surname = auth_hash['info']['last_name']
       end
