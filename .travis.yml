@@ -17,3 +17,4 @@ notifications:
 
 env:
   PROFILE_API_TOKEN: BOB
+  SUPPORT_EMAIL: support@example.com
