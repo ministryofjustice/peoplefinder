@@ -2,12 +2,18 @@
   %div.acknowledgements
     %ul
       %li
-        = link_to("Teams", "")
+        %a{:href => '/teams/department-for-international-trade'}
+          Teams
       %li
-        = link_to("Networks", "")
+        %a{:href => home_page_link_helper('/networks')}
+          Networks
       %li
-        = link_to("Regions", "")
+        %a{:href => '/teams/overseas'}
+          Regions
       %li
-        = link_to("Sectors", "")
+        %a{:href => home_page_link_helper('/sectors')}
+          Sectors
+      %li
+        = link_to("UKEF", "https://info.ecgd.gov.uk/pages/home.aspx")
     %p
       = "Built by the #{link_to('DIT Digital', '#')} team".html_safe
