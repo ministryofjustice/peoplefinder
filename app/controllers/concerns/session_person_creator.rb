@@ -34,8 +34,15 @@ module SessionPersonCreator
     private
 
     def find_or_create_person(email, &_on_create)
-      person = Person.where(internal_auth_key: email.to_s).first_or_initialize
-      yield(person) if person.new_record?
+      person = Person.where(internal_auth_key: email.to_s).first
+      person ||= Person.where(email: email.to_s).first_or_initialize
+
+      if person.new_record?
+        yield(person)
+      elsif person.internal_auth_key != email.to_s
+        person.update_column(:internal_auth_key, email.to_s) # rubocop:disable Rails/SkipsModelValidations
+      end
+
       person
     end
 
