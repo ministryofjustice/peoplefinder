@@ -126,10 +126,10 @@
     = f.submit button_text, name: 'edit-picture-button', class: 'button'
 
   .form-group
+    %div.privacy-notice
+      = t('views.info_text.privacy_notice').html_safe
     = f.submit 'Save', class: 'button'
 
   .form-group
     .cancel
       = link_to 'Cancel and go back', @person.new_record? ? :back : @person
-
-

@@ -16,6 +16,7 @@ gem 'elasticsearch-rails'
 gem 'faker', '~> 1.7'
 gem 'fastimage', '~> 2.1'
 gem 'fog'
+gem 'foreman'
 gem 'friendly_id', '~> 5.2.1'
 gem 'govspeak'
 gem 'govuk_template',         '~> 0.19.2'
@@ -64,7 +65,6 @@ group :production do
 end
 
 group :development do
-  gem 'foreman'
   gem 'spring-commands-rspec'
   gem 'rb-fsevent', require: RUBY_PLATFORM[/darwin/i].to_s.size > 0
   gem 'meta_request'
