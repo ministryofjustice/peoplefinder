@@ -45,24 +45,6 @@ feature 'Person maintenance' do
     end
 
     context 'for a regular user', user: :regular do
-      scenario 'Creating a person from a group' do
-        team = create(:group)
-        subteam = create(:group, parent: team)
-
-        cta_text = 'Create a new profile'
-        visit group_path(department)
-        expect(page).not_to have_selector('a', text: cta_text)
-
-        click_link team.name
-        expect(page).not_to have_selector('a', text: cta_text)
-
-        click_link subteam.name
-        expect(page).to have_selector('a', text: cta_text)
-
-        click_link cta_text
-        expect(page.current_path).to eq(new_person_path)
-      end
-
       scenario 'Creating a person with a complete profile', js: true do
         create(:group, name: 'Digital')
 

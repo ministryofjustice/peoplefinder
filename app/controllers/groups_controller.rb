@@ -147,8 +147,4 @@ class GroupsController < ApplicationController
       @versions = AuditVersionPresenter.wrap(versions)
     end
   end
-
-  def can_add_person_here?
-    can_edit_profiles? && @group && @group.ancestry_depth > 1
-  end
 end
