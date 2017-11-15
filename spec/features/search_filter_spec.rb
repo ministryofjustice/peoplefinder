@@ -42,11 +42,6 @@ feature 'Search results page' do
     it 'has search results' do
       is_expected.to have_search_results
     end
-
-    it 'has search footer' do
-      is_expected.to have_search_footer
-      expect(search_page.search_footer).to be_all_there
-    end
   end
 
   feature 'filtering', js: true do
