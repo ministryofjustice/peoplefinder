@@ -111,7 +111,7 @@ class SmokeTest
   attr_reader :imap, :email_address
 
   def find_own_name
-    page.text[/Signed in as (.*?) Sign out/, 1].tap do |name|
+    page.text[/Hi, (.*?) Sign out/, 1].tap do |name|
       fail "couldn't find own name" unless name
     end
   end
@@ -162,7 +162,7 @@ class SmokeTest
 
   def sign_in(path)
     visit path
-    fail "couldn't sign in via #{path}" unless page.body =~ /Signed in as/
+    fail "couldn't sign in via #{path}" unless page.body =~ /Hi, /
   end
 
   def with_retries(tries: 5, initial_delay: 2, max_delay: 30)
