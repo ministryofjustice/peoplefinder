@@ -36,6 +36,28 @@ feature 'OmniAuth Authentication' do
     expect(page).to have_text('Signed in as John')
   end
 
+  scenario 'Logging in when the user has an existing account from another provider' do
+    person = create(:person, given_name: 'Alice', email: valid_user[:info][:email])
+    person.update_column(:internal_auth_key, 'alice@example.com') # rubocop:disable Rails/SkipsModelValidations
+    OmniAuth.config.mock_auth[:ditsso_internal] = valid_user
+
+    visit '/'
+    click_link 'Log in'
+    expect(page).to have_text('Signed in as Alice')
+    expect(person.reload.internal_auth_key).to eq(valid_user[:info][:email].to_s)
+  end
+
+  scenario 'Logging in when the user has an account that was created by another person' do
+    person = create(:person, given_name: 'Alice', email: valid_user[:info][:email])
+    person.update_column(:internal_auth_key, nil) # rubocop:disable Rails/SkipsModelValidations
+    OmniAuth.config.mock_auth[:ditsso_internal] = valid_user
+
+    visit '/'
+    click_link 'Log in'
+    expect(page).to have_text('Signed in as Alice')
+    expect(person.reload.internal_auth_key).to eq(valid_user[:info][:email].to_s)
+  end
+
   scenario 'Log in failure' do
     OmniAuth.config.mock_auth[:ditsso_internal] = invalid_user
 
