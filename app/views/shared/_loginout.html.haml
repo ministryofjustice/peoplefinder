@@ -1,6 +1,6 @@
 - if logged_in_regular?
-  = link_to "Hi, #{current_user}", person_path(current_user)
-  = profile_image_tag current_user, link: false
+  = link_to "Hi, #{current_user.given_name}", person_path(current_user)
+  = profile_image_tag current_user, link: true
 - elsif logged_in_readonly? && !@login_screen
   = link_to('To update People Finder, Sign in now', new_sessions_path )
 - if feature_enabled?('token_auth')
