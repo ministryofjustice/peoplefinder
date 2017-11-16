@@ -52,3 +52,22 @@
 		display: block;
 	}
 }
+
+@media only screen and (-webkit-min-device-pixel-ratio: 2), not all, not all, not all, only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
+	.people-search-inner-page {
+		.homepage-top-inner {
+			.mod-search {
+				.mod-search-form {
+					.mod-search-submit {
+						background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACEAAAAhCAYAAABX5MJvAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyhpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw%2FeHBhY2tldCBiZWdpbj0i77u%2FIiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8%2BIDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTM4IDc5LjE1OTgyNCwgMjAxNi8wOS8xNC0wMTowOTowMSAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTcgKE1hY2ludG9zaCkiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6QzE3MDlDRkNCRTMxMTFFN0E0QjJBNUI5RUM5NEEyQkEiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6QzE3MDlDRkRCRTMxMTFFN0E0QjJBNUI5RUM5NEEyQkEiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDpDMTcwOUNGQUJFMzExMUU3QTRCMkE1QjlFQzk0QTJCQSIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDpDMTcwOUNGQkJFMzExMUU3QTRCMkE1QjlFQzk0QTJCQSIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI%2FPsyPvQUAAAHASURBVHjaxJfhcYQgEIWJDRypIHZwdhBLsATTgSWYDq6EK8ESsIOzA9MBqcAsGZxjmIesQsybeT9Q5D6WBfaKZVlExBX5Rn4sWOb5nVwzxoLeemkGVcs%2BzeQmF8RtSdNAllyIl1%2BSpyR5IL8LrJH8IGvbrskV%2BQL6Tva9FjF5VCj8mtxFZtbapUD5Ivcsxy01rOQejKG4EDX4%2BH4w21swVsuBUJkAVndgSTchKvCBTIRAEwtGo6DcbL1c7VkZHVfvtZtQR7NFzZa7Os9eM0EYzeQ39%2FdQp8IDGDMCCHvmuKpCEK4eIq9mry05EDozBGtShfhblUcg6v%2BCmGKJkyB%2FW6oQhLtuF3BupETh6t2qwVu0BoWJyOC7N24Xuzv8a7hPBGj2XAWhj6I3X6Qm1Xsm5TYGANIdiIAG40guhAxU1IpRSZcgB9gVFqoxlZfVq77sXTDbHVVaN4H%2B%2FJoTkMkDpT5XMCLo2NaW%2BIP8vfNsMP0%2FbTmAzoWrjbSMRQLVjANjhn5FLiP%2F2mQoJ2JCd4va6L%2BVY88cyXQ6bjkakb2ROKqtiIxnQYRATCLXhThP666bXABz5pwJ4YKMK4B5%2BCPAAL1QJVBoQ%2BwyAAAAAElFTkSuQmCC);
+						background-position: center;
+						-webkit-background-size: 18px 18px;
+						-moz-background-size: 18px 18px;
+						-o-background-size: 18px 18px;
+						background-size: 18px 18px;
+					}
+				}
+			}
+		}
+	}
+}
