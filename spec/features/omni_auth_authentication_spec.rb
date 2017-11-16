@@ -22,7 +22,7 @@ feature 'OmniAuth Authentication' do
     expect(page).to have_title("Log in - #{app_title}")
 
     click_link 'Log in'
-    expect(page).to have_text('Signed in as John Doe')
+    expect(page).to have_text('Hi, John Doe')
 
     click_link 'Sign out'
     expect(login_page).to be_displayed
@@ -33,7 +33,7 @@ feature 'OmniAuth Authentication' do
 
     visit '/'
     click_link 'Log in'
-    expect(page).to have_text('Signed in as John')
+    expect(page).to have_text('Hi, John')
   end
 
   scenario 'Logging in when the user has an existing account from another provider' do
@@ -43,7 +43,7 @@ feature 'OmniAuth Authentication' do
 
     visit '/'
     click_link 'Log in'
-    expect(page).to have_text('Signed in as Alice')
+    expect(page).to have_text('Hi, Alice')
     expect(person.reload.internal_auth_key).to eq(valid_user[:info][:email].to_s)
   end
 
@@ -54,7 +54,7 @@ feature 'OmniAuth Authentication' do
 
     visit '/'
     click_link 'Log in'
-    expect(page).to have_text('Signed in as Alice')
+    expect(page).to have_text('Hi, Alice')
     expect(person.reload.internal_auth_key).to eq(valid_user[:info][:email].to_s)
   end
 
