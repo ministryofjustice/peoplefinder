@@ -52,3 +52,22 @@
 		display: block;
 	}
 }
+
+@media only screen and (-webkit-min-device-pixel-ratio: 2), not all, not all, not all, only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
+	.people-search-inner-page {
+		.homepage-top-inner {
+			.mod-search {
+				.mod-search-form {
+					.mod-search-submit {
+						background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACEAAAAhCAYAAABX5MJvAAAAGXRFW…qtiIxnQYRATCLXhThP666bXABz5pwJ4YKMK4B5%2BCPAAL1QJVBoQ%2BwyAAAAAElFTkSuQmCC);
+						background-position: center;
+						-webkit-background-size: 17px 18px;
+						-moz-background-size: 17px 18px;
+						-o-background-size: 17px 18px;
+						background-size: 17px 18px;
+					}
+				}
+			}
+		}
+	}
+}
