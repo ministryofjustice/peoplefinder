@@ -69,7 +69,9 @@
         %li
           .form-group
             = b.label(class: "block-label selection-button-checkbox", 'data-value': b.value) { b.check_box + b.text }
-  = f.text_field :other_key_skills
+  
+  .form-group.visually-connected
+    = f.text_field :other_key_skills
 
   = f.text_field :language_fluent
   = f.text_field :language_intermediate
@@ -84,7 +86,8 @@
         %li
           .form-group
             = b.label(class: "block-label selection-button-checkbox", 'data-value': b.value) { b.check_box + b.text }
-  = f.text_field :other_learning_and_development
+  .form-group.visually-connected
+    = f.text_field :other_learning_and_development
 
   .form-group#networks
     %label.form-label{for: :networks} Networks I belong to (optional)
@@ -110,7 +113,8 @@
           .form-group
             = b.label(class: "block-label selection-button-checkbox", 'data-value': b.value) { b.check_box + b.text }
             
-  = f.text_field :other_additional_responsibilities
+  .form-group.visually-connected
+    = f.text_field :other_additional_responsibilities
 
   .form-group.mod-media.card
     = f.label :profile_image, 'Profile photo', class: 'form-label'
