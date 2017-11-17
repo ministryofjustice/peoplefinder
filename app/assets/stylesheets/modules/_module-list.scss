@@ -2,6 +2,11 @@
   &.mod-list-people{
     .column-one-quarter{
       @include grid-column( 1/4 );
+      @media (min-width: 641px) {
+        &:nth-child(4n+1) {
+          clear: left;
+        }
+      }
     }
     @media (max-width: 640px) and (orientation: landscape){
       .column-one-quarter{
