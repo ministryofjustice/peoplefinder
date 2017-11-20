@@ -147,7 +147,7 @@ feature 'Token Authentication' do
     expect(last_email.body.encoded).to have_text(first_token_url)
 
     visit first_token_url
-    expect(page).to have_text('Hi, Bob Smith')
+    expect(page).to have_text('Hi, Bob')
   end
 
   scenario 'requesting token a second time after 24 hours sends different token url in email' do
@@ -187,7 +187,7 @@ feature 'Token Authentication' do
     person = create(:person, given_name: 'Bob', surname: 'Smith', email: 'test.user@digital.justice.gov.uk')
     token = Token.for_person(person)
     visit token_path(token)
-    expect(page).to have_text('Hi, Bob Smith')
+    expect(page).to have_text('Hi, Bob')
     expect(page).to have_link('Bob Smith', href: person_path(person))
   end
 
@@ -206,7 +206,7 @@ feature 'Token Authentication' do
       email: 'example.user@digital.justice.gov.uk'
           )
     token_log_in_as('Example.USER@digital.justice.gov.uk')
-    expect(page).to have_text('Hi, Example User')
+    expect(page).to have_text('Hi, Example')
   end
 
   context 'token_auth feature disabled' do

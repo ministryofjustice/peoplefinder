@@ -22,7 +22,7 @@ feature 'OmniAuth Authentication' do
     expect(page).to have_title("Log in - #{app_title}")
 
     click_link 'Log in'
-    expect(page).to have_text('Hi, John Doe')
+    expect(page).to have_text('Hi, John')
 
     click_link 'Sign out'
     expect(login_page).to be_displayed
