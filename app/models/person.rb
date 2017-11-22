@@ -250,6 +250,11 @@ class Person < ActiveRecord::Base
     address.format
   end
 
+  def country_name
+    country_obj = ISO3166::Country[country]
+    country_obj ? country_obj.translations[I18n.locale.to_s] : country
+  end
+
   private
 
   def must_have_team

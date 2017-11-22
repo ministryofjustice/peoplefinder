@@ -41,7 +41,7 @@
   = f.text_field :city
 
   .form-group
-    %label.form-label{for: :country} Country (Market)
+    %label.form-label{for: :person_country} Country (Market)
     = f.country_select :country,
       {priority_countries: ["GB"]},
       class: 'form-control'

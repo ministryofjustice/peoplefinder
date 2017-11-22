@@ -56,12 +56,12 @@
             %dd
               = @person.city
 
-        - if @person.country.present?
+        - if @person.country_name.present?
           %dl.inline-labels
             %dt
               Country (market)
             %dd
-              = @person.country
+              = @person.country_name
 
         - if @person.other_uk.present?
           %dl.inline-labels

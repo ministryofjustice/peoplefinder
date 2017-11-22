@@ -11,7 +11,8 @@ module SpecSupport
         secondary_phone_country_code: 'US',
         pager_number: '07666666666',
         location_in_building: '10.999',
-        city: 'London'
+        city: 'London',
+        country: 'United Kingdom'
       }
     end
 
@@ -52,6 +53,7 @@ module SpecSupport
       fill_in 'Landline number', with: person_attributes[:secondary_phone_number]
       fill_in 'Location in building', with: person_attributes[:location_in_building]
       fill_in 'City', with: person_attributes[:city]
+      select person_attributes[:country], from: 'Country (Market)', match: :first
 
       within_fieldset('working-days') do
         govuk_label_click 'Monday'
@@ -116,6 +118,7 @@ module SpecSupport
       expect(page).to have_text(person_attributes[:secondary_phone_number])
       expect(page).to have_text(person_attributes[:location_in_building])
       expect(page).to have_text(person_attributes[:city])
+      expect(page).to have_text(person_attributes[:country])
 
       within('ul.working_days') do
         expect(page).to_not have_selector("li.active[alt='Monday']")
