@@ -17,13 +17,6 @@ GIT
     delayed_job (4.1.1)
       activesupport (>= 3.0, < 5.0)
 
-GIT
-  remote: https://github.com/getsentry/raven-ruby.git
-  revision: 14fd97f84f218a8ff16024aadea3430eb1dd169f
-  specs:
-    sentry-raven (2.7.1)
-      faraday (>= 0.7.6, < 1.0)
-
 GEM
   remote: https://rubygems.org/
   specs:
@@ -94,10 +87,6 @@ GEM
       descendants_tracker (~> 0.0.4)
       ice_nine (~> 0.11.0)
       thread_safe (~> 0.3, >= 0.3.1)
-    better_errors (2.4.0)
-      coderay (>= 1.0.0)
-      erubi (>= 1.0.0)
-      rack (>= 0.9.0)
     binding_of_caller (0.7.2)
       debug_inspector (>= 0.0.1)
     brakeman (3.6.1)
@@ -165,7 +154,6 @@ GEM
       faraday
       multi_json
     equalizer (0.0.11)
-    erubi (1.7.0)
     erubis (2.7.0)
     excon (0.45.1)
     execjs (2.6.0)
@@ -538,6 +526,8 @@ GEM
       sprockets (>= 2.8, < 4.0)
       sprockets-rails (>= 2.0, < 4.0)
       tilt (>= 1.1, < 3)
+    sentry-raven (2.7.1)
+      faraday (>= 0.7.6, < 1.0)
     sexp_processor (4.8.0)
     shellany (0.0.1)
     shoulda-matchers (3.1.1)
@@ -625,7 +615,6 @@ DEPENDENCIES
   annotate
   awesome_print
   aws-sdk (~> 2.5, >= 2.5.5)
-  better_errors
   binding_of_caller
   brakeman
   byebug
@@ -684,7 +673,7 @@ DEPENDENCIES
   rubocop
   rubocop-rspec (~> 1.15.0)
   sass-rails (~> 5.0.6)
-  sentry-raven!
+  sentry-raven
   shoulda-matchers
   simplecov
   simplecov-rcov
