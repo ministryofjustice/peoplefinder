@@ -19,10 +19,10 @@ GIT
 
 GIT
   remote: https://github.com/getsentry/raven-ruby.git
-  revision: f64e7ec69621dc9108f8ab206de814584ad6164c
+  revision: 14fd97f84f218a8ff16024aadea3430eb1dd169f
   specs:
-    sentry-raven (0.14.0)
-      faraday (>= 0.7.6)
+    sentry-raven (2.7.1)
+      faraday (>= 0.7.6, < 1.0)
 
 GEM
   remote: https://rubygems.org/
@@ -94,9 +94,9 @@ GEM
       descendants_tracker (~> 0.0.4)
       ice_nine (~> 0.11.0)
       thread_safe (~> 0.3, >= 0.3.1)
-    better_errors (2.1.1)
+    better_errors (2.4.0)
       coderay (>= 1.0.0)
-      erubis (>= 2.6.6)
+      erubi (>= 1.0.0)
       rack (>= 0.9.0)
     binding_of_caller (0.7.2)
       debug_inspector (>= 0.0.1)
@@ -165,6 +165,7 @@ GEM
       faraday
       multi_json
     equalizer (0.0.11)
+    erubi (1.7.0)
     erubis (2.7.0)
     excon (0.45.1)
     execjs (2.6.0)
