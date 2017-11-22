@@ -87,9 +87,16 @@
         - if @person.primary_phone_number.present?
           %dl.inline-labels
             %dt
-              Primary phone number
+              Mobile number
             %dd
               = call_to_with_country_code(@person.primary_phone_country, @person.primary_phone_number)
+
+        - if @person.secondary_phone_number.present?
+          %dl.inline-labels
+            %dt
+              Landline number
+            %dd
+              = call_to_with_country_code(@person.secondary_phone_country, @person.secondary_phone_number)
 
         - if @person.skype_name.present?
           %dl.inline-labels

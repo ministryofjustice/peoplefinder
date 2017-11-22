@@ -203,6 +203,10 @@ class Person < ActiveRecord::Base
     primary_phone_country_code.present? ? ISO3166::Country.new(primary_phone_country_code) : nil
   end
 
+  def secondary_phone_country
+    secondary_phone_country_code.present? ? ISO3166::Country.new(secondary_phone_country_code) : nil
+  end
+
   include Concerns::ConcatenatedFields
   concatenated_field :location, :location_in_building, :building, :city, join_with: ', '
   concatenated_field :name, :given_name, :surname, join_with: ' '
