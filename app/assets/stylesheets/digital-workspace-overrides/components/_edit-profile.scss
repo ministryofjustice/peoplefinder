@@ -2,18 +2,30 @@
 // checkbox lists
 
 ul.inline-list {
+	margin-top: 5px;
 	li {
-		display: block;
-		float: left;
-		width: 33%;
-		&:nth-child(3n + 1) {
-			clear: left;
-		}
+		width: 100%;
 	}
 }
 
-.form-label + ul.inline-list {
-	margin-top: 20px;
+@media (min-width: $screen-medium) {
+
+	ul.inline-list {
+		margin-top: 0;
+		li {
+			display: block;
+			float: left;
+			width: 33%;
+			&:nth-child(3n + 1) {
+				clear: left;
+			}
+		}
+	}
+
+	.form-label + ul.inline-list {
+		margin-top: 20px;
+	}
+
 }
 
 // ------------------------------------
