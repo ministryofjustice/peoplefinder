@@ -553,10 +553,10 @@ en:
         surname: Last name
         email: Primary work email
         secondary_email: Alternative work email address (optional)
-        primary_phone_number: Phone number
-        secondary_phone_number: Alternative phone number (optional)
+        primary_phone_number: Mobile number
+        secondary_phone_number: Landline number (optional)
         pager_number: Pager number (optional)
-        location_in_building: Location in building (optional)
+        location_in_building: Location in building (optional - do not enter location if in KCS)
         building: Building I work in (optional)
         city: Town, City or Region
         country: Country
@@ -624,7 +624,8 @@ en:
       file: Upload CSV file
     hint:
       person:
-        primary_phone_number: "Enter your number then select your country code"
+        primary_phone_number: "Enter your mobile number then select your country code"
+        secondary_phone_number: "Enter your landline number then select your country code"
         location_in_building: "For example, 10.30"
         building: "Select options from the list"
         city: "For example, London"

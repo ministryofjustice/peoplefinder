@@ -16,6 +16,14 @@
         {format: :with_dialling_code, priority_countries: ["GB"]},
         class: 'form-control'
 
+  = f.text_field :secondary_phone_number
+  .form-group.visually-connected
+    .panel.panel-border-narrow
+      %label.form-label{for: :secondary_phone_country_code} Country code
+      = f.country_select :secondary_phone_country_code,
+        {format: :with_dialling_code, priority_countries: ["GB"]},
+        class: 'form-control'
+
   = f.text_field :skype_name
 
   .form-group.visually-connected-below
@@ -33,7 +41,7 @@
   = f.text_field :city
 
   .form-group
-    %label.form-label{for: :country} Country (Market)
+    %label.form-label{for: :person_country} Country (Market)
     = f.country_select :country,
       {priority_countries: ["GB"]},
       class: 'form-control'
@@ -69,7 +77,7 @@
         %li
           .form-group
             = b.label(class: "block-label selection-button-checkbox", 'data-value': b.value) { b.check_box + b.text }
-  
+
   .form-group.visually-connected
     = f.text_field :other_key_skills
 
@@ -112,7 +120,7 @@
         %li
           .form-group
             = b.label(class: "block-label selection-button-checkbox", 'data-value': b.value) { b.check_box + b.text }
-            
+
   .form-group.visually-connected
     = f.text_field :other_additional_responsibilities
 

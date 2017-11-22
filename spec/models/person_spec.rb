@@ -2,35 +2,55 @@
 #
 # Table name: people
 #
-#  id                     :integer          not null, primary key
-#  given_name             :text
-#  surname                :text
-#  email                  :text
-#  primary_phone_number   :text
-#  secondary_phone_number :text
-#  location_in_building   :text
-#  description            :text
-#  created_at             :datetime
-#  updated_at             :datetime
-#  works_monday           :boolean          default(TRUE)
-#  works_tuesday          :boolean          default(TRUE)
-#  works_wednesday        :boolean          default(TRUE)
-#  works_thursday         :boolean          default(TRUE)
-#  works_friday           :boolean          default(TRUE)
-#  image                  :string
-#  slug                   :string
-#  works_saturday         :boolean          default(FALSE)
-#  works_sunday           :boolean          default(FALSE)
-#  login_count            :integer          default(0), not null
-#  last_login_at          :datetime
-#  super_admin            :boolean          default(FALSE)
-#  building               :text
-#  city                   :text
-#  secondary_email        :text
-#  profile_photo_id       :integer
-#  last_reminder_email_at :datetime
-#  current_project        :string
-#  pager_number           :text
+#  id                                :integer          not null, primary key
+#  given_name                        :text
+#  surname                           :text
+#  email                             :text
+#  primary_phone_number              :text
+#  secondary_phone_number            :text
+#  location_in_building              :text
+#  description                       :text
+#  created_at                        :datetime
+#  updated_at                        :datetime
+#  works_monday                      :boolean          default(TRUE)
+#  works_tuesday                     :boolean          default(TRUE)
+#  works_wednesday                   :boolean          default(TRUE)
+#  works_thursday                    :boolean          default(TRUE)
+#  works_friday                      :boolean          default(TRUE)
+#  image                             :string
+#  slug                              :string
+#  works_saturday                    :boolean          default(FALSE)
+#  works_sunday                      :boolean          default(FALSE)
+#  login_count                       :integer          default(0), not null
+#  last_login_at                     :datetime
+#  super_admin                       :boolean          default(FALSE)
+#  city                              :text
+#  secondary_email                   :text
+#  profile_photo_id                  :integer
+#  last_reminder_email_at            :datetime
+#  current_project                   :string
+#  pager_number                      :text
+#  primary_phone_country_code        :text
+#  building                          :string           default([]), is an Array
+#  country                           :string
+#  skype_name                        :string
+#  key_skills                        :string           default([]), is an Array
+#  language_fluent                   :text
+#  language_intermediate             :text
+#  grade                             :text
+#  previous_positions                :text
+#  learning_and_development          :string           default([]), is an Array
+#  networks                          :string           default([]), is an Array
+#  additional_responsibilities       :string           default([]), is an Array
+#  other_uk                          :text
+#  other_overseas                    :text
+#  internal_auth_key                 :string
+#  other_key_skills                  :string
+#  other_learning_and_development    :string
+#  other_additional_responsibilities :string
+#  professions                       :string           default([]), is an Array
+#  other_professions                 :string
+#  secondary_phone_country_code      :text
 #
 
 require 'rails_helper'

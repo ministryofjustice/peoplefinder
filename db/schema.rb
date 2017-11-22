@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171114113958) do
+ActiveRecord::Schema.define(version: 20171122114825) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -110,6 +110,7 @@ ActiveRecord::Schema.define(version: 20171114113958) do
     t.string   "other_additional_responsibilities"
     t.string   "professions",                       default: [],                 array: true
     t.string   "other_professions"
+    t.text     "secondary_phone_country_code"
   end
 
   add_index "people", ["slug"], name: "index_people_on_slug", unique: true, using: :btree

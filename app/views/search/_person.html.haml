@@ -46,3 +46,11 @@
                 Key Skills
               %br/
               = es_highlighter(hit, person, :formatted_key_skills)
+
+          - if person.formatted_learning_and_development.present?
+            %li.cb-person-learning-and-development.core-16
+              %span.bold
+                Learning and Development Interests
+              %br/
+              = es_highlighter(hit, person, :formatted_learning_and_development)
+

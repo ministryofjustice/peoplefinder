@@ -1,3 +1,16 @@
+# == Schema Information
+#
+# Table name: reports
+#
+#  id         :integer          not null, primary key
+#  content    :text
+#  name       :string
+#  extension  :string
+#  mime_type  :string
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#
+
 require 'rails_helper'
 
 RSpec.describe Report, type: :model, csv_report: true do

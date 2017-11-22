@@ -5,11 +5,14 @@ module SpecSupport
         given_name: 'Marco',
         surname: 'Polo',
         email: 'marco.polo@digital.justice.gov.uk',
-        primary_phone_number: '+44-208-123-4567',
+        primary_phone_number: '0208-123-4567',
         primary_phone_country_code: 'GB',
+        secondary_phone_number: '718-555-1212',
+        secondary_phone_country_code: 'US',
         pager_number: '07666666666',
         location_in_building: '10.999',
-        city: 'London'
+        city: 'London',
+        country: 'United Kingdom'
       }
     end
 
@@ -46,9 +49,11 @@ module SpecSupport
       fill_in 'Last name', with: person_attributes[:surname]
       select_in_team_select 'Digital'
       fill_in 'Primary work email', with: person_attributes[:email]
-      fill_in 'Phone number', with: person_attributes[:primary_phone_number]
+      fill_in 'Mobile number', with: person_attributes[:primary_phone_number]
+      fill_in 'Landline number', with: person_attributes[:secondary_phone_number]
       fill_in 'Location in building', with: person_attributes[:location_in_building]
       fill_in 'City', with: person_attributes[:city]
+      select person_attributes[:country], from: 'Country (Market)', match: :first
 
       within_fieldset('working-days') do
         govuk_label_click 'Monday'
@@ -110,8 +115,10 @@ module SpecSupport
       within('h1') { expect(page).to have_text(name) }
       expect(page).to have_text(person_attributes[:email])
       expect(page).to have_text(person_attributes[:primary_phone_number])
+      expect(page).to have_text(person_attributes[:secondary_phone_number])
       expect(page).to have_text(person_attributes[:location_in_building])
       expect(page).to have_text(person_attributes[:city])
+      expect(page).to have_text(person_attributes[:country])
 
       within('ul.working_days') do
         expect(page).to_not have_selector("li.active[alt='Monday']")

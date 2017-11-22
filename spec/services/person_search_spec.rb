@@ -13,7 +13,8 @@ RSpec.describe PersonSearch, elastic: true do
              current_project: 'Current project',
              language_fluent: 'Spanish, Italian',
              language_intermediate: 'Hindi',
-             key_skills: ['interviewing'])
+             key_skills: ['interviewing'],
+             other_learning_and_development: ['foolishness'])
     @andrew = create(:person, given_name: 'Andrew', surname: 'Alice')
     @abraham_kiehn = create(:person, given_name: 'Abraham', surname: 'Kiehn')
     @abe = create(:person, given_name: 'Abe', surname: 'Predovic')
@@ -128,6 +129,12 @@ RSpec.describe PersonSearch, elastic: true do
 
     it 'searches by key skills' do
       results = search_for('Interviewing')
+      expect(results.set.map(&:name)).to include(@bob.name)
+      expect(results.contains_exact_match).to eq true
+    end
+
+    it 'searches by learning and development interest' do
+      results = search_for('Foolishness')
       expect(results.set.map(&:name)).to include(@bob.name)
       expect(results.contains_exact_match).to eq true
     end

@@ -2,35 +2,55 @@
 #
 # Table name: people
 #
-#  id                     :integer          not null, primary key
-#  given_name             :text
-#  surname                :text
-#  email                  :text
-#  primary_phone_number   :text
-#  secondary_phone_number :text
-#  location_in_building   :text
-#  description            :text
-#  created_at             :datetime
-#  updated_at             :datetime
-#  works_monday           :boolean          default(TRUE)
-#  works_tuesday          :boolean          default(TRUE)
-#  works_wednesday        :boolean          default(TRUE)
-#  works_thursday         :boolean          default(TRUE)
-#  works_friday           :boolean          default(TRUE)
-#  image                  :string
-#  slug                   :string
-#  works_saturday         :boolean          default(FALSE)
-#  works_sunday           :boolean          default(FALSE)
-#  login_count            :integer          default(0), not null
-#  last_login_at          :datetime
-#  super_admin            :boolean          default(FALSE)
-#  building               :text
-#  city                   :text
-#  secondary_email        :text
-#  profile_photo_id       :integer
-#  last_reminder_email_at :datetime
-#  current_project        :string
-#  pager_number           :text
+#  id                                :integer          not null, primary key
+#  given_name                        :text
+#  surname                           :text
+#  email                             :text
+#  primary_phone_number              :text
+#  secondary_phone_number            :text
+#  location_in_building              :text
+#  description                       :text
+#  created_at                        :datetime
+#  updated_at                        :datetime
+#  works_monday                      :boolean          default(TRUE)
+#  works_tuesday                     :boolean          default(TRUE)
+#  works_wednesday                   :boolean          default(TRUE)
+#  works_thursday                    :boolean          default(TRUE)
+#  works_friday                      :boolean          default(TRUE)
+#  image                             :string
+#  slug                              :string
+#  works_saturday                    :boolean          default(FALSE)
+#  works_sunday                      :boolean          default(FALSE)
+#  login_count                       :integer          default(0), not null
+#  last_login_at                     :datetime
+#  super_admin                       :boolean          default(FALSE)
+#  city                              :text
+#  secondary_email                   :text
+#  profile_photo_id                  :integer
+#  last_reminder_email_at            :datetime
+#  current_project                   :string
+#  pager_number                      :text
+#  primary_phone_country_code        :text
+#  building                          :string           default([]), is an Array
+#  country                           :string
+#  skype_name                        :string
+#  key_skills                        :string           default([]), is an Array
+#  language_fluent                   :text
+#  language_intermediate             :text
+#  grade                             :text
+#  previous_positions                :text
+#  learning_and_development          :string           default([]), is an Array
+#  networks                          :string           default([]), is an Array
+#  additional_responsibilities       :string           default([]), is an Array
+#  other_uk                          :text
+#  other_overseas                    :text
+#  internal_auth_key                 :string
+#  other_key_skills                  :string
+#  other_learning_and_development    :string
+#  other_additional_responsibilities :string
+#  professions                       :string           default([]), is an Array
+#  other_professions                 :string
+#  secondary_phone_country_code      :text
 #
 
 class Person < ActiveRecord::Base
@@ -60,7 +80,10 @@ class Person < ActiveRecord::Base
   def as_indexed_json(_options = {})
     as_json(
       only: [:surname, :current_project, :email],
-      methods: [:name, :role_and_group, :location, :languages, :formatted_key_skills]
+      methods: [
+        :name, :role_and_group, :location, :languages,
+        :formatted_key_skills, :formatted_learning_and_development
+      ]
     )
   end
 
@@ -203,6 +226,10 @@ class Person < ActiveRecord::Base
     primary_phone_country_code.present? ? ISO3166::Country.new(primary_phone_country_code) : nil
   end
 
+  def secondary_phone_country
+    secondary_phone_country_code.present? ? ISO3166::Country.new(secondary_phone_country_code) : nil
+  end
+
   include Concerns::ConcatenatedFields
   concatenated_field :location, :location_in_building, :building, :city, join_with: ', '
   concatenated_field :name, :given_name, :surname, join_with: ' '
@@ -224,6 +251,11 @@ class Person < ActiveRecord::Base
     address = Mail::Address.new email
     address.display_name = name
     address.format
+  end
+
+  def country_name
+    country_obj = ISO3166::Country[country]
+    country_obj ? country_obj.translations[I18n.locale.to_s] : country
   end
 
   private
