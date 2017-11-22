@@ -39,6 +39,7 @@ gem 'premailer-rails', '~> 1.9'
 gem 'pundit', '~> 1.1'
 gem 'recipient_interceptor', '~> 0.1.2'
 gem 'sass-rails', '~> 5.0.6'
+gem 'sentry-raven'
 gem 'uglifier', '>= 2.7.2'
 gem 'unf'
 gem 'unicorn', '~> 4.8.3'
@@ -59,7 +60,6 @@ group :assets do
 end
 
 group :production do
-  gem 'sentry-raven', git: 'https://github.com/getsentry/raven-ruby.git'
   gem 'logstasher', '~> 0.6.2'
   gem 'rails_12factor'
 end
@@ -68,7 +68,6 @@ group :development do
   gem 'spring-commands-rspec'
   gem 'rb-fsevent', require: RUBY_PLATFORM[/darwin/i].to_s.size > 0
   gem 'meta_request'
-  gem 'better_errors'
   gem 'binding_of_caller'
   gem 'daemon'
 end
