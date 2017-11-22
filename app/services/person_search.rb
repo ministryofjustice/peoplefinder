@@ -69,7 +69,8 @@ class PersonSearch
       :location,
       :current_project,
       :languages,
-      :formatted_key_skills
+      :formatted_key_skills,
+      :formatted_learning_and_development
     ].any? do |field|
       any_partial_match_for?(person, field)
     end
@@ -187,6 +188,7 @@ class PersonSearch
       location^4
       name^4
       formatted_key_skills^4
+      formatted_learning_and_development^4
     )
   end
 
@@ -219,7 +221,8 @@ class PersonSearch
       current_project: {},
       email: {},
       languages: {},
-      formatted_key_skills: {}
+      formatted_key_skills: {},
+      formatted_learning_and_development: {}
     }
   end
 
