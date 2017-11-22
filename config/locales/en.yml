@@ -556,7 +556,7 @@ en:
         primary_phone_number: Mobile number
         secondary_phone_number: Landline number (optional)
         pager_number: Pager number (optional)
-        location_in_building: Location in building (optional)
+        location_in_building: Location in building (optional - do not enter location if in KCS)
         building: Building I work in (optional)
         city: Town, City or Region
         country: Country
