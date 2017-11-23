@@ -155,7 +155,7 @@ en:
       image_cropped: "Cropped %{person}’s image"
       update_error: "There was an error updating the image"
     person_email:
-      profile_merged: Your profiles is now correctly setup
+      profile_merged: Your profile is now correctly setup
       person_email_confirm: "You need to update your People Finder account to finish signing in"
       profile_email_updated: "Your Primary work email has been updated to %{email}"
       original_email_info_html: |
