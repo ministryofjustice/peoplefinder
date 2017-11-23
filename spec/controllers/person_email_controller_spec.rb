@@ -91,6 +91,27 @@ RSpec.describe PersonEmailController, type: :controller do
     end
   end
 
+  describe 'GET edit - when there is no internal_auth_key (edge case)' do
+    let(:person) { create(:person) }
+
+    before do
+      person.update_attribute(:internal_auth_key, nil) # rubocop:disable Rails/SkipsModelValidations
+      get :edit, person_id: person.to_param, oauth_hash: oauth_hash
+    end
+
+    it 'makes sure there is an internal_auth_key' do
+      expect(assigns(:person).internal_auth_key).to eq(new_email)
+    end
+
+    it 'redirects to profile page' do
+      expect(response).to redirect_to(person_path(person))
+    end
+
+    it 'sets a relevant flash message' do
+      expect(flash[:notice]).to include('Your profiles is now correctly setup')
+    end
+  end
+
   describe 'PUT update' do
     let(:person) { create(:person, given_name: "John", surname: "Doe", email: 'john.doe@digital.justice.gov.uk') }
     let(:new_attributes) { { email: 'john.doe2@digital.justice.gov.uk', secondary_email: 'john.doe@digital.justice.gov.uk', pager_number: '0100' } }

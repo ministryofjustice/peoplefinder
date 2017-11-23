@@ -7,6 +7,21 @@ class PersonEmailController < ApplicationController
   before_action :set_new_emails, only: [:edit]
 
   def edit
+    if @person.internal_auth_key.blank?
+      # This is an edge case. If a person has been setup without an
+      # internal_auth_key *and* a different email address than the
+      # one returned from the SSO provider, the `namesakes` workflow
+      # kicks in and they are prompted to select a profile.
+      # Here we effectively `merge` their SSO auth credentials
+      # with this Person profile, and redirect to the profile
+      # page, as opposed to inviting them to edit their email.
+      @person.update_attribute( # rubocop:disable Rails/SkipsModelValidations
+        :internal_auth_key, new_email
+      )
+      notice :profile_merged
+      return redirect_to person_path(@person)
+    end
+
     warning :person_email_confirm
   end
 
