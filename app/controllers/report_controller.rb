@@ -8,7 +8,9 @@ class ReportController < ApplicationController
       subject: "Website error submission #{Time.current}",
       comment: { value: params['problem_report_problem'] },
       submitter_id: client.current_user.id,
-      priority: 'normal', type: 'incident', custom_fields: zendesk_request_fields
+      priority: 'normal', type: 'incident', custom_fields: zendesk_request_fields,
+      requester: { email: current_user.email, name: current_user.name }
+
     )
     flash[:notice] = 'Thank you for your submission. Your problem has been reported.'
     redirect_to_referrer
