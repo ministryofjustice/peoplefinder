@@ -108,7 +108,7 @@ RSpec.describe PersonEmailController, type: :controller do
     end
 
     it 'sets a relevant flash message' do
-      expect(flash[:notice]).to include('Your profiles is now correctly setup')
+      expect(flash[:notice]).to include('Your profile is now correctly setup')
     end
   end
 

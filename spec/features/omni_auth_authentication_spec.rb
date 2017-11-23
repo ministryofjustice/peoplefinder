@@ -108,9 +108,8 @@ def valid_user
     provider: 'ditsso_internal',
     info: {
       email: 'test.user@digital.justice.gov.uk',
-      first_name: 'John',
-      last_name: 'Doe',
-      name: 'John Doe'
+      first_name: 'john',
+      last_name: 'doe'
     }
   )
 end
