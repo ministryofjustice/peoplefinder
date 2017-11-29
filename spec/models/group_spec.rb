@@ -255,7 +255,7 @@ RSpec.describe Group, type: :model do
           it 'has members_completion_score equal to average of bob and alice\'s completion_score' do
             team.update_members_completion_score!
             average_score = ((bob.completion_score + alice.completion_score) / 2.0).round(0)
-            expect(team.members_completion_score).to eq(average_score)
+            expect(team.members_completion_score).to be_within(1).of(average_score)
           end
         end
 
@@ -286,7 +286,7 @@ RSpec.describe Group, type: :model do
             it 'has members_completion_score equal to average of bob and alice\'s completion_score' do
               team.update_members_completion_score!
               average_score = ((bob.completion_score + alice.completion_score) / 2.0).round(0)
-              expect(team.members_completion_score).to eq(average_score)
+              expect(team.members_completion_score).to be_within(1).of(average_score)
             end
           end
         end
@@ -416,8 +416,8 @@ RSpec.describe Group, type: :model do
       create(:membership, group: team, person: create(:person))
       create(:membership, group: team, person: create(:person))
       create(:membership, group: subteam, person: create(:person, city: 'Wherever'))
-      expect(team.average_completion_score).to be_between(47, 49)
-      expect(subteam.average_completion_score).to be_between(55, 58)
+      expect(team.average_completion_score).to be_between(52, 56)
+      expect(subteam.average_completion_score).to be_between(61, 65)
     end
 
   end
