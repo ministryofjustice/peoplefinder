@@ -24,11 +24,11 @@
         %br/
         %br/
     .cb-search-results
+      - if teams_filter?
+        #team-results
+          = render partial: 'search/team', collection: @team_results.set
+
       - if people_filter?
         #person-results
           - @people_results.each_with_hit.with_index do |(person, hit), idx|
             = render partial: 'search/person', locals: { person: person, hit: hit, index: idx }
-
-      - if teams_filter?
-        #team-results
-          = render partial: 'search/team', collection: @team_results.set
