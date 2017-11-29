@@ -46,7 +46,7 @@ RSpec.describe 'Completion' do # rubocop:disable RSpec/DescribeClass
     it 'returns 55 if half the fields are completed' do
       person = create(:person, city: generate(:city), country: nil, primary_phone_number: generate(:phone_number))
       person.memberships.destroy_all
-      expect(person.completion_score).to be_within(1).of(55)
+      expect(person.completion_score).to be_within(1).of(63)
       expect(person).to be_incomplete
     end
 
@@ -101,7 +101,7 @@ RSpec.describe 'Completion' do # rubocop:disable RSpec/DescribeClass
           primary_phone_number: generate(:phone_number)
         )
       end
-      expect(Person.overall_completion).to be_within(1).of(67)
+      expect(Person.overall_completion).to be_within(1).of(75)
     end
 
     it 'includes membership in calculation' do
@@ -122,9 +122,9 @@ RSpec.describe 'Completion' do # rubocop:disable RSpec/DescribeClass
         create(:membership, person: people[0])
       end
       people.each(&:reload)
-      expect(people[0].completion_score).to be_within(1).of(66)
-      expect(people[1].completion_score).to be_within(1).of(55)
-      expect(Person.overall_completion).to be_within(1).of(61)
+      expect(people[0].completion_score).to be_within(1).of(75)
+      expect(people[1].completion_score).to be_within(1).of(63)
+      expect(Person.overall_completion).to be_within(1).of(69)
     end
   end
 
@@ -150,7 +150,7 @@ RSpec.describe 'Completion' do # rubocop:disable RSpec/DescribeClass
 
     it 'returns a rounded float for use as a percentage' do
       create(:person, :with_details)
-      expect(Person.average_completion_score).to eql 89
+      expect(Person.average_completion_score).to eql 88
     end
   end
 
@@ -164,11 +164,6 @@ RSpec.describe 'Completion' do # rubocop:disable RSpec/DescribeClass
 
     it 'returns the person when there is no primary phone number' do
       Person.update_all 'primary_phone_number = \'\''
-      expect(subject).to include(person)
-    end
-
-    it 'returns the person when there is no location in building' do
-      Person.update_all 'location_in_building = \'\''
       expect(subject).to include(person)
     end
 

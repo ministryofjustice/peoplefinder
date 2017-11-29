@@ -8,7 +8,6 @@ module Concerns::Completion
   ADEQUATE_FIELDS = %i(
     country
     city
-    location_in_building
     primary_phone_number
   ).freeze
 

@@ -59,7 +59,6 @@ FactoryGirl.define do
       primary_phone_number
       pager_number
       country
-      location_in_building
       city
     end
 
