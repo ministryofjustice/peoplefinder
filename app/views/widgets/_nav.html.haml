@@ -14,6 +14,9 @@
     %li
       %a{:href => home_page_link_helper('/tools')}
         Tools
+    %li
+      %a{:href => home_page_link_helper('/working-at-dit/data-hub')}
+        Data Hub
     - if super_admin?
       %li
         = link_to 'Manage', admin_home_path, class: "manage-link"
