@@ -13,7 +13,6 @@ module PreviewHelper
       email: 'fred.bloggs@fake-moj.justice.gov.uk',
       primary_phone_number: '0555 555 555',
       location_in_building: 'room 101',
-      building: '',
       description: 'old info'
     ) do | person |
       person.memberships << Membership.new(group_id: Group.department.id)
@@ -48,7 +47,7 @@ module PreviewHelper
   end
 
   def mass_person_attrs person
-    membership = person.reload.memberships.create(group_id: Group.second.id, role: "Executive Officer", leader: false, subscribed: true)
+    membership = person.reload.memberships.create(group_id: Group.department.id, role: "Executive Officer", leader: false, subscribed: true)
     {
       given_name: "Frederick",
       surname: 'Reese-Bloggs',
@@ -57,7 +56,6 @@ module PreviewHelper
       pager_number: '0113 432 567',
       email: 'fred.reese-bloggs@fake-moj.justice.gov.uk',
       location_in_building: '',
-      building: 'St Pancras',
       city: 'Manchester',
       current_project: 'Office 365 Rollout',
       works_monday: false,
