@@ -4,7 +4,8 @@ namespace :peoplefinder do
     task :reconcile, [:path] => :environment do  |_, args|
       ARGV.each { |a| task a.to_sym do ; end }
 
-      if ARGV[1].empty?
+      if ARGV[1].blank?
+        puts '-----------------'
         puts 'Running in preview mode, no changes will be commited'
         puts 'To commit changes, run:'
         puts 'rake peoplefinder:accounts:reconcile commit_changes'
@@ -13,6 +14,7 @@ namespace :peoplefinder do
       Person.all.each do |person|
         sleep 0.5
         auth_user_email = AuthUserLoader.find_auth_email(person.internal_auth_key)
+        auth_user_email ||= AuthUserLoader.find_auth_email(person.email)
         next unless auth_user_email
 
         puts '-----------------'
@@ -26,7 +28,7 @@ namespace :peoplefinder do
 
           if ARGV[1] == 'commit_changes'
             puts "Updating #{person.email}'s internal_auth_key to: #{auth_user_email}"
-            person.update_column(internal_auth_key: immutable_email)
+            person.update_column(:internal_auth_key, auth_user_email)
           else
             puts 'Running in preview mode, no changes made'
           end

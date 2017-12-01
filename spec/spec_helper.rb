@@ -24,12 +24,12 @@ RSpec.configure do |config|
   end
 
   config.before :each, auth_user_loader: true do
-    stub_request(:get, 'http://test.local/user/user_introspect?email=nobody@example.com').
-      with(headers: { 'Authorization'=>'Token token=abc' }).
+    stub_request(:get, 'http://test.local/api/v1/user/introspect?email=nobody@example.com').
+      with(headers: { 'Authorization'=>'Bearer abc' }).
       to_return(status: 404)
 
-    stub_request(:get, 'http://test.local/user/user_introspect?email=somebody@example.com').
-      with(headers: { 'Authorization'=>'Token token=abc' }).
+    stub_request(:get, 'http://test.local/api/v1/user/introspect?email=somebody@example.com').
+      with(headers: { 'Authorization'=>'Bearer abc' }).
       to_return(status: 200, body: { email: 'auth_user@example.com' }.to_json, headers: {})
   end
 

@@ -21,9 +21,9 @@ class AuthUserLoader
 
   def from_api(email)
     response = HTTParty.get(
-      "#{URI.join(BASE_URL, '/user/user_introspect')}?email=#{email}",
+      "#{URI.join(BASE_URL, '/api/v1/user/introspect')}?email=#{email}",
       headers: {
-        'Authorization' => "Token token=#{AUTH_TOKEN}"
+        'Authorization' => "Bearer #{AUTH_TOKEN}"
       }
     )
 
