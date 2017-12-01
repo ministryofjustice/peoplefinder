@@ -11,32 +11,46 @@ namespace :peoplefinder do
         puts 'rake peoplefinder:accounts:reconcile commit_changes'
       end
 
-      Person.all.each do |person|
-        sleep 0.5
+      # find people who have properly merged accounts
+      Person.where.not(internal_auth_key: nil).each do |person|
         auth_user_email = AuthUserLoader.find_auth_email(person.internal_auth_key)
-        auth_user_email ||= AuthUserLoader.find_auth_email(person.email)
-        next unless auth_user_email
+        perform(person, auth_user_email)
+      end
 
-        puts '-----------------'
-        puts "Current internal_auth_key: #{person.internal_auth_key}"
-        puts "AuthUser email found: #{auth_user_email}"
+      # find people who have not merged their accounts
+      Person.where(internal_auth_key: nil).each do |person|
+        auth_user_email = AuthUserLoader.find_auth_email(person.email)
+        perform(person, auth_user_email)
+      end
+    end
 
-        duplicates = Person.where(internal_auth_key: auth_user_email)
+    def perform(person, auth_user_email)
+      sleep 0.5
+      puts '-----------------'
 
-        if duplicates.empty?
-          puts "No duplicates"
+      if auth_user_email.blank?
+        puts "No auth user found for: #{person.name}"
+        return
+      end
 
-          if ARGV[1] == 'commit_changes'
-            puts "Updating #{person.email}'s internal_auth_key to: #{auth_user_email}"
-            person.update_column(:internal_auth_key, auth_user_email)
-          else
-            puts 'Running in preview mode, no changes made'
-          end
+      puts "Current internal_auth_key: #{person.internal_auth_key}"
+      puts "AuthUser email found: #{auth_user_email}"
+
+      duplicates = Person.where(internal_auth_key: auth_user_email)
+
+      if duplicates.empty?
+        puts "No duplicates"
+
+        if ARGV[1] == 'commit_changes'
+          puts "Updating #{person.email}'s internal_auth_key to: #{auth_user_email}"
+          person.update_column(:internal_auth_key, auth_user_email)
         else
-          puts 'Duplicates found for the following email addresses:'
-          puts duplicates.map(&:email).join(', ')
-          puts 'No updates will be performed'
+          puts 'Running in preview mode, no changes made'
         end
+      else
+        puts 'Duplicates found for the following email addresses:'
+        puts duplicates.map(&:email).join(', ')
+        puts 'No updates will be performed'
       end
     end
   end
