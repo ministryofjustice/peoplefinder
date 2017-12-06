@@ -19,5 +19,9 @@ module Admin
       admin_user?
     end
 
+    def csv_extract_report?
+      admin_user?
+    end
+
   end
 end

@@ -10,6 +10,12 @@
       = t('management.report_header')
 
     %h3.heading-small
+      = "CSV extract: Profiles"
+    #csv-extract
+      %span.download-link
+        = link_to 'download', admin_profile_extract_path(format: :csv), class: "button"
+
+    %h3.heading-small
       = "User behaviour report"
 
     #user-behavior-report

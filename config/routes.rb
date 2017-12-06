@@ -60,15 +60,12 @@ Rails.application.routes.draw do
 
   resources :problem_reports, only: [:create]
 
-  admin_ip_matcher = IpAddressMatcher.new(Rails.configuration.admin_ip_ranges)
-
-  constraints ip: admin_ip_matcher do
-    namespace :admin do
-      root to: 'management#show', as: :home
-      get 'user_behavior_report', controller: 'management', action: :user_behavior_report
-      get 'generate_user_behavior_report', controller: 'management', action: :generate_user_behavior_report
-      resources :person_uploads, only: [:new, :create]
-    end
+  namespace :admin do
+    root to: 'management#show', as: :home
+    get 'user_behavior_report', controller: 'management', action: :user_behavior_report
+    get 'generate_user_behavior_report', controller: 'management', action: :generate_user_behavior_report
+    resources :person_uploads, only: [:new, :create]
+    resource :profile_extract, only: [:show]
   end
 
   get '/my/profile', to: 'home#my_profile'
