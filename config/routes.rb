@@ -65,6 +65,7 @@ Rails.application.routes.draw do
     get 'user_behavior_report', controller: 'management', action: :user_behavior_report
     get 'generate_user_behavior_report', controller: 'management', action: :generate_user_behavior_report
     resources :person_uploads, only: [:new, :create]
+    resource :profile_extract, only: [:show]
   end
 
   get '/my/profile', to: 'home#my_profile'

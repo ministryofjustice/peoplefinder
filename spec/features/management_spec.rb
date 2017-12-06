@@ -45,12 +45,12 @@ feature 'Management flow' do
     scenario 'can be downloaded', skip: 'until we can implement an approrpiate web driver for testing downloads' do
       click_link 'generate'
       expect(ActionController::DataStreaming).to receive(:send_file)
-      click_link 'download'
+      within('#user-behavior-report') { click_link 'download' }
     end
 
     scenario 'Warns user that report needs generating first if one does not exist' do
       expect(File.exist?(file)).to be false
-      click_link 'download'
+      within('#user-behavior-report') { click_link 'download' }
       expect(management_page).to have_flash_message(text: 'not been generated')
     end
   end
