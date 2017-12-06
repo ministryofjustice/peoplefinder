@@ -144,7 +144,7 @@
             %dt
               Previous positions held
             %dd
-              = @person.previous_positions
+              = simple_format(@person.previous_positions)
 
         - if @person.formatted_learning_and_development.present?
           %dl.inline-labels#learning_and_development
