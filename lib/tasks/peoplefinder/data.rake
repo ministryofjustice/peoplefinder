@@ -141,5 +141,23 @@ namespace :peoplefinder do
       end
     end
 
+    desc 'update whitelisted domains'
+    task :update_domains => :environment do
+      puts "Updating whitelisted domains"
+      domains = %w(
+        cica.gov.uk
+        giaa.gov.uk
+        judicialappointments.gov.uk
+        judiciary.gsi.gov.uk
+        judiciary.uk
+        judicialconduct.gov.uk
+        sentencingcouncil.gov.uk
+      )
+      domains.each do |domain|
+        PermittedDomain.where(domain: 'cica.gov.uk').first_or_create!
+        puts domain
+      end
+      puts "...done"
+    end
   end
 end
