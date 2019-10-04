@@ -59,7 +59,23 @@ references:
       paths:
         - vendor/bundle
 
-  wait_for_db: &wait_for_db
+  restore_phantom_cache: &restore_phantom_cache
+    key: v1-phantomjs-2.1.1
+
+  install-phantom: &install_phantom
+    run:
+      name: Install phantomjs
+      command: |
+        if ! [ $(which phantomjs) ]; then
+          sudo curl --output /usr/local/bin/phantomjs https://s3.amazonaws.com/circle-downloads/phantomjs-2.1.1
+        fi
+
+        sudo chmod ugo+x /usr/local/bin/phantomjs
+
+  save_phantom_cache: &save_phantom_cache
+    key: v1-phantomjs-2.1.1
+    paths:
+      - /usr/local/bin/phantomjs  wait_for_db: &wait_for_db
     run:
       name: Wait for DB
       command: dockerize -wait tcp://localhost:5432 -timeout 1m
@@ -139,6 +155,9 @@ jobs:
       - *check_bundler_version
       - *install_dependencies
       - *save_cache
+      - *restore_phantom_cache
+      - *install_phantom
+      - *save_phantom_cache
       - *wait_for_db
       - *set_up_the_database
       - *rubocop
@@ -152,12 +171,12 @@ workflows:
   build_and_run_tests:
     jobs:
       - build_and_test
-      - deploy_to_dev:
-          requires:
-            - build_and_test
-          filters:
-            branches:
-              only: master
+      # - deploy_to_dev:
+      #     requires:
+      #       - build_and_test
+      #     filters:
+      #       branches:
+      #         only: master
       # - deploy_staging_approval:
       #     type: approval
       #     requires:
