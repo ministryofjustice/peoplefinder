@@ -73,7 +73,7 @@ module Peoplefinder
 
     # make the geckoboard publisher available generally
     # NOTE: may need to eager load paths instead if lib code is commonly called
-    config.autoload_paths << Rails.root.join('lib')
+    config.eager_load_paths << Rails.root.join('lib')
 
   end
 

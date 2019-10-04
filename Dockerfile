@@ -1,4 +1,4 @@
-FROM ruby:2.3.3
+FROM ruby:2.3.7
 
 # https://github.com/ministryofjustice/docker-templates/issues/37
 # UTF 8 issue during bundle install
@@ -40,7 +40,7 @@ RUN apt-get update && apt-get install -y \
 
 # Override imagemagick policy with recommended
 # mitagation policy for imagetragick bug
-# CVE-2016–3714 https://imagetragick.com/ 
+# CVE-2016–3714 https://imagetragick.com/
 COPY policy.xml /etc/ImageMagick-6/policy.xml
 
 # Pre-install gems with native code to reduce build times

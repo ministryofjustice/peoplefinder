@@ -6,7 +6,7 @@ machine:
 
   ruby:
     version:
-      2.3.3
+      2.3.7
 
   environment:
     DB_TEST_URL: postgres://ubuntu:@127.0.0.1:5432/circle_test

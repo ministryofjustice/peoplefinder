@@ -7,7 +7,7 @@ references:
 # Sets up the docker images and environment variables that we use
   test_container_config: &test_container_config
     docker:
-      - image: circleci/ruby:2.3.3-node-browsers
+      - image: circleci/ruby:2.3.7-node-browsers-legacy
         environment:
           RAILS_ENV: test
           RACK_ENV: test
@@ -58,26 +58,6 @@ references:
       key: people-finder-{{ checksum "Gemfile.lock" }}
       paths:
         - vendor/bundle
-
-  restore_phantom_cache: &restore_phantom_cache
-    restore_cache:
-      key: v1-phantomjs-2.1.1
-
-  install-phantom: &install_phantom
-    run:
-      name: Install phantomjs
-      command: |
-        if ! [ $(which phantomjs) ]; then
-          sudo curl --output /usr/local/bin/phantomjs https://s3.amazonaws.com/circle-downloads/phantomjs-2.1.1
-        fi
-
-        sudo chmod ugo+x /usr/local/bin/phantomjs
-
-  save_phantom_cache: &save_phantom_cache
-    save_cache:
-      key: v1-phantomjs-2.1.1
-      paths:
-        - /usr/local/bin/phantomjs
 
   wait_for_db: &wait_for_db
     run:
@@ -159,9 +139,6 @@ jobs:
       - *check_bundler_version
       - *install_dependencies
       - *save_cache
-      - *restore_phantom_cache
-      - *install_phantom
-      - *save_phantom_cache
       - *wait_for_db
       - *set_up_the_database
       - *rubocop

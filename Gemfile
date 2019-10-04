@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-ruby '2.3.3'
+ruby '2.3.7'
 gem 'rails', '~> 4.2.8'
 gem 'text'
 gem 'ancestry', '~> 2.1'
