@@ -1,5 +1,4 @@
 Dir[File.expand_path('../sections/search*.rb', __FILE__)].sort.each { |f| require f }
-require File.expand_path('../base.rb', __FILE__)
 
 module Pages
   class Search < Base

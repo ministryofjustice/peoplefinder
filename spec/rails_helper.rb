@@ -34,6 +34,8 @@ end
 Capybara.javascript_driver = :poltergeist_silent # uncomment this to disable console.log (including warn)
 Capybara.default_max_wait_time = 3
 
+require File.expand_path('../support/pages/base.rb', __FILE__)
+
 Dir[File.expand_path('../../{lib,app/*}', __FILE__)].each do |path|
   $LOAD_PATH.unshift(path) unless $LOAD_PATH.include?(path)
 end
