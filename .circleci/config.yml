@@ -60,7 +60,8 @@ references:
         - vendor/bundle
 
   restore_phantom_cache: &restore_phantom_cache
-    key: v1-phantomjs-2.1.1
+    restore_cache:
+      key: v1-phantomjs-2.1.1
 
   install-phantom: &install_phantom
     run:
@@ -73,9 +74,12 @@ references:
         sudo chmod ugo+x /usr/local/bin/phantomjs
 
   save_phantom_cache: &save_phantom_cache
-    key: v1-phantomjs-2.1.1
-    paths:
-      - /usr/local/bin/phantomjs  wait_for_db: &wait_for_db
+    save_cache:
+      key: v1-phantomjs-2.1.1
+      paths:
+        - /usr/local/bin/phantomjs
+
+  wait_for_db: &wait_for_db
     run:
       name: Wait for DB
       command: dockerize -wait tcp://localhost:5432 -timeout 1m
@@ -141,7 +145,7 @@ references:
 #  These are the jobs which run the steps. The jobs are used by the workflows.
 
 jobs:
-  build_and_test:
+  build:
     <<: *test_container_config
     <<: *defaults
     steps:
@@ -170,7 +174,7 @@ workflows:
   version: 2
   build_and_run_tests:
     jobs:
-      - build_and_test
+      - build
       # - deploy_to_dev:
       #     requires:
       #       - build_and_test
