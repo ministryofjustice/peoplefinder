@@ -1,36 +1,3 @@
-GIT
-  remote: https://github.com/carrierwaveuploader/carrierwave.git
-  revision: cc39842e44edcb6187b2d379a606ec48a6b5e4a8
-  tag: cc39842e44edcb6187b2d379a606ec48a6b5e4a8
-  specs:
-    carrierwave (0.10.0)
-      activemodel (>= 3.2.0)
-      activesupport (>= 3.2.0)
-      json (>= 1.7)
-      mime-types (>= 1.16)
-
-GIT
-  remote: https://github.com/collectiveidea/delayed_job.git
-  revision: 5f914105c1c38ca73a486d63de8ad62f254b3d72
-  ref: 5f914105c1c38ca73a486d63de8ad62f254b3d72
-  specs:
-    delayed_job (4.1.1)
-      activesupport (>= 3.0, < 5.0)
-
-GIT
-  remote: https://github.com/getsentry/raven-ruby.git
-  revision: f64e7ec69621dc9108f8ab206de814584ad6164c
-  specs:
-    sentry-raven (0.14.0)
-      faraday (>= 0.7.6)
-
-GIT
-  remote: https://github.com/ministryofjustice/omniauth-gplus.git
-  revision: c9b013d10c6af55d9eb92d41191e7e0d036ef7c9
-  specs:
-    omniauth-gplus (2.0.1)
-      omniauth-oauth2 (~> 1.1)
-
 GEM
   remote: https://rubygems.org/
   specs:
@@ -106,6 +73,10 @@ GEM
       rack (>= 1.0.0)
       rack-test (>= 0.5.4)
       xpath (~> 2.0)
+    carrierwave (1.3.1)
+      activemodel (>= 4.0.0)
+      activesupport (>= 4.0.0)
+      mime-types (>= 1.16)
     childprocess (0.5.9)
       ffi (~> 1.0, >= 1.0.11)
     chronic (0.10.2)
@@ -131,6 +102,8 @@ GEM
     daemons (1.2.4)
     database_cleaner (1.5.3)
     debug_inspector (0.0.2)
+    delayed_job (4.1.2)
+      activesupport (>= 3.0, < 5.1)
     delayed_job_active_record (4.1.1)
       activerecord (>= 3.0, < 5.1)
       delayed_job (>= 3.0, < 5)
@@ -322,7 +295,8 @@ GEM
       nokogiri (>= 1.6.0)
       ruby_parser (~> 3.5)
     htmlentities (4.3.3)
-    i18n (0.8.1)
+    i18n (0.9.5)
+      concurrent-ruby (~> 1.0)
     ice_nine (0.11.1)
     inflecto (0.0.2)
     ipaddress (0.8.0)
@@ -346,7 +320,7 @@ GEM
       railties (>= 4.2.0)
       thor (>= 0.14, < 2.0)
     json (1.8.6)
-    jwt (1.4.1)
+    jwt (2.2.1)
     keen (0.8.10)
       addressable (~> 2.3.5)
       multi_json (~> 1.3)
@@ -384,9 +358,9 @@ GEM
     mime-types-data (3.2016.0521)
     mini_magick (4.2.0)
     mini_portile2 (2.3.0)
-    minitest (5.10.1)
+    minitest (5.12.2)
     multi_json (1.12.1)
-    multi_xml (0.5.5)
+    multi_xml (0.6.0)
     multipart-post (2.0.0)
     nenv (0.2.0)
     net-scp (1.2.1)
@@ -398,19 +372,19 @@ GEM
     notiffany (0.0.8)
       nenv (~> 0.1)
       shellany (~> 0.0)
-    oauth2 (1.0.0)
-      faraday (>= 0.8, < 0.10)
-      jwt (~> 1.0)
+    oauth2 (1.4.2)
+      faraday (>= 0.8, < 2.0)
+      jwt (>= 1.0, < 3.0)
       multi_json (~> 1.3)
       multi_xml (~> 0.5)
-      rack (~> 1.2)
-    omniauth (1.2.2)
+      rack (>= 1.2, < 3)
+    omniauth (1.4.3)
       hashie (>= 1.2, < 4)
-      rack (~> 1.0)
-    omniauth-oauth2 (1.2.0)
-      faraday (>= 0.8, < 0.10)
-      multi_json (~> 1.3)
-      oauth2 (~> 1.0)
+      rack (>= 1.6.2, < 3)
+    omniauth-gplus (2.0.1)
+      omniauth-oauth2 (~> 1.1)
+    omniauth-oauth2 (1.5.0)
+      oauth2 (~> 1.1)
       omniauth (~> 1.2)
     paper_trail (4.0.2)
       activerecord (>= 3.0, < 6.0)
@@ -568,7 +542,7 @@ GEM
     thread_safe (0.3.6)
     tilt (2.0.7)
     timecop (0.8.1)
-    tzinfo (1.2.3)
+    tzinfo (1.2.5)
       thread_safe (~> 0.1)
     uglifier (3.2.0)
       execjs (>= 0.3.0, < 3)
@@ -619,12 +593,12 @@ DEPENDENCIES
   brakeman
   byebug
   capybara
-  carrierwave!
+  carrierwave
   codeclimate-test-reporter
   coffee-rails
   daemon
   database_cleaner
-  delayed_job!
+  delayed_job
   delayed_job_active_record (~> 4.1.0)
   dotenv-rails
   elasticsearch-model (~> 0.1.4)
@@ -655,7 +629,7 @@ DEPENDENCIES
   mini_magick
   minitest
   netaddr
-  omniauth-gplus!
+  omniauth-gplus
   paper_trail (~> 4.0.2)
   pg
   poltergeist
@@ -671,7 +645,6 @@ DEPENDENCIES
   rubocop
   rubocop-rspec (~> 1.15.0)
   sass-rails (~> 5.0.6)
-  sentry-raven!
   shoulda-matchers
   simplecov
   simplecov-rcov

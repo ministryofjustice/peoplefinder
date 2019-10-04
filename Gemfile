@@ -5,8 +5,9 @@ gem 'text'
 gem 'ancestry', '~> 2.1'
 gem 'awesome_print'
 gem 'aws-sdk', '~> 2.5', '>= 2.5.5'
-gem 'delayed_job', git: 'https://github.com/collectiveidea/delayed_job.git',
-    ref: '5f914105c1c38ca73a486d63de8ad62f254b3d72' # needed for queue_attributes configuration
+gem 'delayed_job'
+# gem 'delayed_job', git: 'https://github.com/collectiveidea/delayed_job.git',
+#     ref: '5f914105c1c38ca73a486d63de8ad62f254b3d72' # needed for queue_attributes configuration
 gem 'delayed_job_active_record', '~> 4.1.0'
 gem 'elasticsearch-model', '~> 0.1.4'
 gem 'elasticsearch-rails', '~> 0.1.4'
@@ -42,19 +43,20 @@ gem 'virtus'
 gem 'whenever', require: false
 gem 'will_paginate', '~> 3.0', '>=3.0.3'
 gem 'will_paginate-bootstrap', '~> 1.0', '>= 1.0.1'
-
-gem 'carrierwave',
-  git: 'https://github.com/carrierwaveuploader/carrierwave.git',
-  tag: 'cc39842e44edcb6187b2d379a606ec48a6b5e4a8'
-gem 'omniauth-gplus',
-  git: 'https://github.com/ministryofjustice/omniauth-gplus.git'
+gem 'carrierwave'
+gem 'omniauth-gplus'
+# gem 'carrierwave',
+#   git: 'https://github.com/carrierwaveuploader/carrierwave.git',
+#   tag: 'cc39842e44edcb6187b2d379a606ec48a6b5e4a8'
+# gem 'omniauth-gplus',
+#   git: 'https://github.com/ministryofjustice/omniauth-gplus.git'
 
 group :assets do
   gem 'coffee-rails'
 end
 
 group :production do
-  gem 'sentry-raven', git: 'https://github.com/getsentry/raven-ruby.git'
+  # gem 'sentry-raven', git: 'https://github.com/getsentry/raven-ruby.git'
   gem 'logstasher', '~> 0.6.2'
 end
 
