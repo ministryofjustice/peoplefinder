@@ -33,6 +33,8 @@ gem 'premailer-rails', '~> 1.9'
 gem 'pundit', '~> 1.1'
 gem 'recipient_interceptor', '~> 0.1.2'
 gem 'sass-rails', '~> 5.0.6'
+gem 'sprockets', '>= 3.7.2'
+
 gem 'uglifier', '>= 2.7.2'
 gem 'unf'
 gem 'unicorn', '~> 4.8.3'
