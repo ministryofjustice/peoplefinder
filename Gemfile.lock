@@ -461,7 +461,7 @@ GEM
     rack-contrib (1.4.0)
       git-version-bump (~> 0.15)
       rack (~> 1.4)
-    rack-protection (1.5.3)
+    rack-protection (1.5.5)
       rack
     rack-test (0.6.3)
       rack (>= 1.0)
@@ -679,6 +679,7 @@ DEPENDENCIES
   pry-byebug
   pry-rails
   pundit (~> 1.1)
+  rack-protection (>= 1.5.5)
   rails (~> 4.2.11)
   rb-fsevent
   recipient_interceptor (~> 0.1.2)
