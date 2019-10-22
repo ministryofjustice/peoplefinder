@@ -1,3 +1,4 @@
+
 # MoJ People Finder
 
 ![Build Status](https://circleci.com/gh/ministryofjustice/peoplefinder.png?circle-token=7af6dba1153f14c5e9b4ca7aec831720aeb00b1c)
@@ -36,21 +37,52 @@ Point your browser to http://0.0.0.0:3000 and you should see the application's s
 
 ### Mac OSX install
 
-[Install Java](https://www.java.com/en/download/mac_download.jsp) if it is not on your machine.
-Alternatively, you can install it with Homebrew-Cask:
+PeopleFinder uses Ruby 2.3.7 and bundler 1.14.6
+
+Install Ruby 2.3.7 using rbenv or rvm then install bundler using
+
+`gem install bundler:1.14.6`
+
+PeopleFinder relies on Elasticsearch for its search functionality, and ElasticSearch requires Java to be installed on your Mac. Presently we use Elastisearch 1.7 which requires Java 8.
+
+Oracle recently changed the licensing for Java such that you need to agree to their updated licence agreement before you download it. This in turn has meant that they have broken all previous methods for obtaining older versions of Java, so most of the suggestions that previously worked no longer do. At time of writing (late 2019) the best method is to install OpenJDK using homebrew as follows.
+
+```cmd
+$ brew tap homebrew/cask-versions
+$ brew cask install homebrew/cask-versions/adoptopenjdk8
+```
+
+If you need to have other versions of Java installed, you may need to add this to your `~/.bash_profile` file or find some other way of switching the active version.
 
 ```
-brew cask install java
+export JAVA_HOME=`/usr/libexec/java_home -v 1.8`
 ```
 
 [Install Homebrew](http://brew.sh/) if it is not on your machine.
 
-On Mac OSX:
+Regarding Elasticsearch, unfortunately the version we use is no longer available from Homebrew. There are two options presently:
+
+Either:
+
+Download and run the binary executable from the Elastic website and extract it into a sensible location where you don't mind keeping it - https://download.elastic.co/elasticsearch/elasticsearch/elasticsearch-1.7.0.zip then change into that  directory and run
+
+`$ ./elasticsearch`
+
+Or:
+
+Run this docker image maintained by a third party:
+```cmd
+docker run --name elasticsearch \
+>   --publish 9200:9200 \
+>   [quay.io/trackmaven/elasticsearch:1.7](http://quay.io/trackmaven/elasticsearch:1.7)
+```
+
+Install remaining dependencies on Mac OSX:
 
 ```cmd
 brew install postgresql
 brew install imagemagick
-brew install phantomjs
+brew cask install phantomjs
 
 brew install homebrew/versions/elasticsearch17
 brew services start elasticsearch@1.7
@@ -61,6 +93,10 @@ cd peoplefinder
 
 gem install eventmachine -v 1.0.5 -- --with-cppflags=-I/usr/local/opt/openssl/include
 
+# if you encounter issues with the bundler version
+# for example if you have a later version installed in this ruby,
+# add _1.14.6_ to the following commands e.g.:
+# `bundle _1.14.6_`
 bundle
 bundle exec rake db:setup
 bundle exec rake peoplefinder:db:reload # includes demo data
