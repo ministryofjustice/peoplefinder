@@ -7,7 +7,8 @@ class IpAddressMatcher
   end
 
   def ===(other)
-    @cidrs.any? { |cidr| cidr.matches?(other) }
+    other = NetAddr::IPv4.parse(other)
+    @cidrs.any? { |cidr| cidr.contains(other) }
   end
   alias include? ===
 
@@ -18,6 +19,6 @@ class IpAddressMatcher
   end
 
   def cidr(term)
-    NetAddr::CIDR.create(term)
+    NetAddr.parse_net(term)
   end
 end

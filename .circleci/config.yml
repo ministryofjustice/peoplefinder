@@ -1,0 +1,189 @@
+version: 2
+
+references:
+  defaults: &defaults
+    working_directory: ~/peoplefinder
+
+# Sets up the docker images and environment variables that we use
+  test_container_config: &test_container_config
+    docker:
+      - image: circleci/ruby:2.3.7-node-browsers-legacy
+        environment:
+          RAILS_ENV: test
+          RACK_ENV: test
+          PG_HOST: 127.0.0.1
+          PG_PASSWORD: ""
+          PG_USER: postgres
+          PGUSER: postgres
+          PGHOST: 127.0.0.1
+          POSTGRES_DB: peoplefinder_test
+
+      - image: circleci/postgres:9.5-alpine
+        environment:
+          PG_PASSWORD: ""
+          PG_USER: postgres
+          POSTGRES_DB: peoplefinder_test-questions_test
+          POSTGRES_USER: postgres
+          PGUSER: postgres
+
+      - image: quay.io/trackmaven/elasticsearch:1.7
+        environment:
+          - cluster.name: es-test-cluster
+          - xpack.security.enabled: false
+          - transport.host: localhost
+          - network.host: 127.0.0.1
+          - http.port: 9200
+          - discovery.type: single-node
+
+  install_bundler: &install_bundler
+    run:
+      name: Install bundler
+      command: |
+        gem install bundler -v 1.14.6
+
+  check_bundler_version: &check_bundler_version
+    run:
+      name: Check the installed version of bundler
+      command: |
+        bundle -v
+
+  restore_cache: &restore_cache
+    restore_cache:
+      keys:
+        - people-finder-{{ checksum "Gemfile.lock" }}
+        # fallback to using the latest cache if no exact match is found
+        - people-finder-
+
+  install_dependencies: &install_dependencies
+    run:
+      name: Install dependencies
+      command: |
+        if [ "${CIRCLE_NODE_INDEX}" == "0" ]; then
+          bundle check --path vendor/bundle || bundle install --path vendor/bundle && bundle clean
+        fi
+
+  save_cache: &save_cache
+    save_cache:
+      key: people-finder-{{ checksum "Gemfile.lock" }}
+      paths:
+        - vendor/bundle
+
+  wait_for_db: &wait_for_db
+    run:
+      name: Wait for DB
+      command: dockerize -wait tcp://localhost:5432 -timeout 1m
+
+  set_up_the_database: &set_up_the_database
+    run:
+      name: Set up the database
+      command: |
+        bundle exec rake db:setup
+
+  rubocop: &rubocop
+    run:
+      name: Run rubocop
+      command: bundler exec rubocop
+
+  run_unit_tests: &run_unit_tests
+    run:
+      name: Run unit tests
+      command: |
+        bundle exec rspec
+# This command is from the CircleCI docs and is for running in a time
+# base system. We currenly are not using it, but here if we want to
+# implement it
+#
+# bundle exec rspec --profile 10 \
+#                   --format RspecJunitFormatter \
+#                   --out test_results/rspec.xml \
+#                   --format progress \
+#                   $(circleci tests glob "spec/**/*_spec.rb" | circleci tests split --split-by=timings)
+
+  # deploy_to_dev: &deploy_to_dev
+  #   run:
+  #     name: Deploy to dev environment
+  #     command: |
+  #       setup-kube-auth
+  #       kubectl config use-context development
+  #       sed -i -e s/:latest/:$CIRCLE_SHA1/ k8s-deploy/development/deployment.yaml
+  #       kubectl apply --record=false -f ./k8s-deploy/development/
+
+  # deploy_to_staging: &deploy_to_staging
+  #   run:
+  #     name: Deploy to staging environment
+  #     command: |
+  #       setup-kube-auth
+  #       kubectl config use-context staging
+  #       sed -i -e s/:latest/:$CIRCLE_SHA1/ k8s-deploy/staging/deployment.yaml
+  #       kubectl apply --record=false -f ./k8s-deploy/staging/
+  #
+  # deploy_to_production: &deploy_to_production
+  #   run:
+  #     name: Deploy to production environment
+  #     command: |
+  #       setup-kube-auth
+  #       kubectl config use-context production
+  #       sed -i -e s/:latest/:$CIRCLE_SHA1/ k8s-deploy/production/deployment.yaml
+  #       kubectl apply --record=false -f ./k8s-deploy/production/
+
+#  These are the jobs which run the steps. The jobs are used by the workflows.
+
+jobs:
+  build:
+    <<: *test_container_config
+    <<: *defaults
+    steps:
+      - checkout
+      - setup_remote_docker:
+          docker_layer_caching: true
+      - attach_workspace:
+          at: ~/repo
+      - *restore_cache
+      - *install_bundler
+      - *check_bundler_version
+      - *install_dependencies
+      - *save_cache
+      - *wait_for_db
+      - *set_up_the_database
+      - *rubocop
+      - *run_unit_tests
+
+#  Workflows combine jobs to perform the actions
+
+workflows:
+  version: 2
+  build_and_run_tests:
+    jobs:
+      - build
+      # - deploy_to_dev:
+      #     requires:
+      #       - build_and_test
+      #     filters:
+      #       branches:
+      #         only: master
+      # - deploy_staging_approval:
+      #     type: approval
+      #     requires:
+      #       - build_and_test
+      #     filters:
+      #       branches:
+      #         only: master
+      # - deploy_staging:
+      #     requires:
+      #       - deploy_staging_approval
+      #     filters:
+      #       branches:
+      #         only: master
+      # - deploy_production_approval:
+      #     type: approval
+      #     requires:
+      #       - build_and_test
+      #     filters:
+      #       branches:
+      #         only: master
+      # - deploy_production:
+      #     requires:
+      #       - deploy_production_approval
+      #     filters:
+      #       branches:
+      #         only: master
