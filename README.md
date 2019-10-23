@@ -84,10 +84,6 @@ brew install postgresql
 brew install imagemagick
 brew cask install phantomjs
 
-brew install homebrew/versions/elasticsearch17
-brew services start elasticsearch@1.7
-
-
 git clone git@github.com:ministryofjustice/peoplefinder.git
 cd peoplefinder
 
@@ -100,7 +96,7 @@ gem install eventmachine -v 1.0.5 -- --with-cppflags=-I/usr/local/opt/openssl/in
 bundle
 bundle exec rake db:setup
 bundle exec rake peoplefinder:db:reload # includes demo data
-bundle exec rake # runs tests
+bundle exec rake # runs tests - make sure Elasticsearch is running
 bundle exec rails s -b 0.0.0.0
 ```
 
