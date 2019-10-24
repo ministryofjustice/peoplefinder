@@ -5,7 +5,7 @@ RSpec.describe SessionsController, type: :controller do
 
   it_behaves_like 'session_person_creatable'
 
-  let!(:person) { create(:person, given_name: 'John', surname: 'Doe', email: 'john.doe@digital.justice.gov.uk') }
+  let(:person) { create(:person, given_name: 'John', surname: 'Doe', email: 'john.doe@digital.justice.gov.uk') }
 
   describe 'GET new' do
     context 'with supported browser' do
