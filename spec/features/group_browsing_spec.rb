@@ -17,7 +17,7 @@ feature 'Group browsing' do
   let!(:leaf_node) { create(:group, name: 'A Leaf Node', parent: subteam) }
 
   before do
-    omni_auth_log_in_as 'test.user@digital.justice.gov.uk'
+    token_log_in_as 'test.user@digital.justice.gov.uk'
   end
 
   scenario 'Drilling down through groups' do

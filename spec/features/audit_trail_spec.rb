@@ -5,7 +5,7 @@ feature 'Audit trail' do
 
   let(:person) { create(:super_admin, email: 'test.user@digital.justice.gov.uk') }
   before do
-    omni_auth_log_in_as person.email
+    token_log_in_as person.email
   end
 
   scenario 'Auditing an edit of a person' do
@@ -103,7 +103,6 @@ feature 'Audit trail' do
     create(:group, name: 'Digital Justice')
     person = create(:person, given_name: 'Bob', surname: 'Smith')
     person.memberships.destroy_all
-    javascript_log_in
 
     with_versioning do
       visit edit_person_path(person)

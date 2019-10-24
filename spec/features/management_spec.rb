@@ -14,7 +14,7 @@ feature 'Management flow' do
 
   before do
     create(:super_admin, email: email)
-    omni_auth_log_in_as(email)
+    token_log_in_as(email)
   end
 
   scenario 'When a super admin logis in they have a manage link' do

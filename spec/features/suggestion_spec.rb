@@ -18,8 +18,7 @@ feature 'Make a suggestion about a profile', js: true do
   end
 
   before(:each, user: :regular) do
-    omni_auth_log_in_as(me.email)
-    javascript_log_in
+    token_log_in_as(me.email)
     visit person_path(subject)
     click_link 'Help improve this profile', match: :first
   end

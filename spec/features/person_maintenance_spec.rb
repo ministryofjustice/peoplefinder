@@ -13,7 +13,7 @@ feature 'Person maintenance' do
   end
 
   before(:each, user: :regular) do
-    omni_auth_log_in_as person.email
+    token_log_in_as person.email
   end
 
   before(:each, user: :readonly) do
@@ -61,7 +61,6 @@ feature 'Person maintenance' do
       scenario 'Creating a person with a complete profile', js: true do
         create(:group, name: 'Digital')
 
-        javascript_log_in
         visit new_person_path
         expect(page).to have_title("New profile - #{app_title}")
         expect(page).not_to have_text(completion_prompt_text)
@@ -106,7 +105,6 @@ feature 'Person maintenance' do
       end
 
       scenario 'Creating a person with no team membership raises a membership required error and builds empty membership', js: true do
-        javascript_log_in
         visit new_person_path
         expect(new_profile_page).to be_displayed
         fill_in 'First name', with: person_attributes[:given_name]
@@ -123,7 +121,6 @@ feature 'Person maintenance' do
       end
 
       scenario 'Creating a person with a team membership but no team chosen raises a team required error', js: true do
-        javascript_log_in
         visit new_person_path
         expect(new_profile_page).to be_displayed
         fill_in 'First name', with: person_attributes[:given_name]
@@ -140,7 +137,6 @@ feature 'Person maintenance' do
         create(:group, name: 'Digital')
         create(:person, given_name: person_attributes[:given_name], surname: person_attributes[:surname])
 
-        javascript_log_in
         visit new_person_path
         fill_in_complete_profile_details
 
@@ -189,7 +185,6 @@ feature 'Person maintenance' do
 
     context 'for a regular user', user: :regular do
       scenario 'Editing a person', js: true do
-        javascript_log_in
         visit person_path(create(:person, person_attributes))
         click_edit_profile
 
@@ -240,7 +235,6 @@ feature 'Person maintenance' do
       end
 
       scenario 'Validates required fields on team memberships', js: true do
-        javascript_log_in
         visit person_path(another_person)
         click_edit_profile
         click_link 'Join another team'
@@ -251,7 +245,6 @@ feature 'Person maintenance' do
       end
 
       scenario 'Validates existence of at least one team membership', js: true do
-        javascript_log_in
         visit person_path(another_person)
         expect(another_person.memberships.count).to eql 1
         click_edit_profile
@@ -268,7 +261,6 @@ feature 'Person maintenance' do
         role = 'Boss'
         create(:person, :member_of, team: department, role: role, leader: true)
 
-        javascript_log_in
         visit person_path(person)
         click_edit_profile
         expect(edit_profile_page).to have_selector('.membership.panel', count: 1)

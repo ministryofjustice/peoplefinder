@@ -7,17 +7,6 @@ RSpec.describe PersonEmailController, type: :controller do
   let(:invalid_attributes) { { surname: '' } }
   let(:new_email) { 'my-new-email@digital.justice.gov.uk' }
   let(:token) { create(:token, user_email: new_email, spent: true) }
-  let(:oauth_hash) do
-    OmniAuth::AuthHash.new(
-      provider: 'gplus',
-      info: {
-        email: new_email,
-        first_name: 'John',
-        last_name: 'Doe',
-        name: 'John Doe'
-      }
-    )
-  end
 
   describe 'GET edit' do
     let(:person) { create(:person, valid_attributes) }
@@ -81,14 +70,6 @@ RSpec.describe PersonEmailController, type: :controller do
         end
       end
     end
-
-    context 'with oauth authentication' do
-      before do
-        get :edit, person_id: person.to_param, oauth_hash: oauth_hash
-      end
-
-      include_examples 'renders edit template'
-    end
   end
 
   describe 'PUT update' do
@@ -143,12 +124,6 @@ RSpec.describe PersonEmailController, type: :controller do
       it 'raises routing error for handling by server as Not Found' do
         expect { request }.to raise_error ActionController::RoutingError, 'Not Found'
       end
-    end
-
-    context 'with oauth authentication' do
-      subject { put :update, person_id: person.to_param, person: new_attributes, oauth_hash: oauth_hash }
-
-      include_examples 'updates the person'
     end
 
   end

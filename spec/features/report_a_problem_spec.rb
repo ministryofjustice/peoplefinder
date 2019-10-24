@@ -16,8 +16,7 @@ feature 'Report a problem', js: true do
     let(:group) { create(:group) }
 
     before do
-      omni_auth_log_in_as(me.email)
-      javascript_log_in
+      token_log_in_as(me.email)
     end
 
     scenario 'Reporting a problem', js: true do

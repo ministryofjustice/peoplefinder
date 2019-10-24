@@ -87,7 +87,7 @@ feature 'Home page' do
 
   context 'for a regular user' do
     before do
-      omni_auth_log_in_as 'test.user@digital.justice.gov.uk'
+      token_log_in_as 'test.user@digital.justice.gov.uk'
       visit '/'
     end
 

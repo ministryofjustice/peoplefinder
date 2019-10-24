@@ -26,34 +26,34 @@ feature 'Login flow' do
 
   describe 'Choosing to login' do
     scenario 'When a user logs in for the first time, they are directed to edit their profile' do
-      omni_auth_log_in_as(email)
+      token_log_in_as(email)
       expect(edit_profile_page).to be_displayed
     end
 
     scenario 'When and existing user logs in, their profile page is displayed' do
       login_count = 5
       create(:person_with_multiple_logins, email: email, login_count: login_count)
-      omni_auth_log_in_as(email)
+      token_log_in_as(email)
       expect(profile_page).to be_displayed
     end
 
     scenario 'Login counter is updated every time user logs in' do
       login_count = 3
       person = create(:person_with_multiple_logins, email: email, login_count: login_count)
-      omni_auth_log_in_as(email)
+      token_log_in_as(email)
       person.reload
       expect(person.login_count).to eql(4)
     end
 
     scenario 'When super user logs in they see the manage link in the banner' do
       create(:super_admin, email: email)
-      omni_auth_log_in_as(email)
+      token_log_in_as(email)
       expect(base_page).to have_manage_link
     end
 
     scenario 'When a normal user logs in they do not see the manage link in the banner' do
       create(:person, email: email)
-      omni_auth_log_in_as(email)
+      token_log_in_as(email)
       expect(base_page).to have_no_manage_link
     end
   end
@@ -120,10 +120,6 @@ feature 'Login flow' do
 
         def and_i_login_using_token
           token_login_step_with_expectation
-        end
-
-        def when_i_login_using_oauth
-          omni_auth_log_in_as(email)
         end
 
         def then_the_confirmation_list_is_displayed_with count: 2
@@ -219,20 +215,6 @@ feature 'Login flow' do
 
             scenario 'without an alternative email' do
               without_alternative_email_scenario
-            end
-          end
-
-          context 'using oauth login' do
-            background do
-              when_i_login_using_oauth
-            end
-
-            scenario 'without an alternative email' do
-              without_alternative_email_scenario
-            end
-
-            scenario 'with an alternative email' do
-              with_alternative_email_scenario
             end
           end
         end
