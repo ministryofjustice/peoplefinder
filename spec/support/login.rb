@@ -17,10 +17,5 @@ module SpecSupport
       token = create(:token, user_email: email)
       visit token_path(token)
     end
-
-    def javascript_log_in
-      visit '/'
-      click_link 'Log in'
-    end
   end
 end
