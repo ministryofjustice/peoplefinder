@@ -51,8 +51,6 @@ gem 'will_paginate-bootstrap', '~> 1.0', '>= 1.0.1'
 gem 'carrierwave',
   git: 'https://github.com/carrierwaveuploader/carrierwave.git',
   tag: 'cc39842e44edcb6187b2d379a606ec48a6b5e4a8'
-gem 'omniauth-gplus',
-  git: 'https://github.com/ministryofjustice/omniauth-gplus.git'
 
 group :assets do
   gem 'coffee-rails'
