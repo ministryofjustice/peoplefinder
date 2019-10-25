@@ -6,7 +6,7 @@ feature 'Person browsing' do
   let(:department) { create(:department) }
   before do
     department
-    omni_auth_log_in_as 'test.user@digital.justice.gov.uk'
+    token_log_in_as 'test.user@digital.justice.gov.uk'
   end
 
   scenario 'Using breadcrumbs on a profile page', skip: "HELP REQUIRED" do

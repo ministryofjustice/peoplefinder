@@ -6,11 +6,6 @@ class SessionsController < ApplicationController
 
   before_action :set_login_screen_flag
 
-  def create
-    oauth_login = OauthLogin.new(auth_hash)
-    oauth_login.call(self)
-  end
-
   def new
     @unauthorised_login = session.delete(:unauthorised_login)
     redirect_to unsupported_browser_new_sessions_path if unsupported_browser?
@@ -40,11 +35,5 @@ class SessionsController < ApplicationController
 
   def set_login_screen_flag
     @login_screen = true
-  end
-
-  protected
-
-  def auth_hash
-    request.env['omniauth.auth']
   end
 end

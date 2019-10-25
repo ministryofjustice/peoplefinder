@@ -9,7 +9,7 @@ feature 'Upload CSV' do
 
   before do
     create(:person, email: email, super_admin: true)
-    omni_auth_log_in_as email
+    token_log_in_as email
     visit new_admin_person_upload_path
     select group.name, from: 'Choose your team'
   end

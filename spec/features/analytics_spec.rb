@@ -16,7 +16,7 @@ feature 'Google Analytics tracking' do
 
   context 'Edit profile links' do
     before do
-      omni_auth_log_in_as 'test.user@digital.justice.gov.uk'
+      token_log_in_as 'test.user@digital.justice.gov.uk'
       visit person_path(person)
     end
 
@@ -30,7 +30,7 @@ feature 'Google Analytics tracking' do
 
   context 'Edit team links' do
     before do
-      omni_auth_log_in_as 'test.user@digital.justice.gov.uk'
+      token_log_in_as 'test.user@digital.justice.gov.uk'
       visit group_path(group)
     end
 

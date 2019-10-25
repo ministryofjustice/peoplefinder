@@ -27,7 +27,7 @@ feature 'View person audit' do
 
     context 'as an admin user' do
       before do
-        omni_auth_log_in_as(super_admin.email)
+        token_log_in_as(super_admin.email)
       end
 
       scenario 'view audit' do
@@ -72,7 +72,7 @@ feature 'View person audit' do
 
     context 'as a regular user' do
       before do
-        omni_auth_log_in_as(person.email)
+        token_log_in_as(person.email)
       end
 
       scenario 'hide audit' do
@@ -89,7 +89,7 @@ feature 'View person audit' do
         person.update description: description
       end
 
-      omni_auth_log_in_as(super_admin.email)
+      token_log_in_as(super_admin.email)
     end
 
     scenario 'show text for change author' do

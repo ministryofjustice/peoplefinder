@@ -6,7 +6,7 @@ feature 'Person edit notifications' do
 
   let(:person) { create(:person, email: 'test.user@digital.justice.gov.uk') }
   before do
-    omni_auth_log_in_as(person.email)
+    token_log_in_as(person.email)
   end
 
   scenario 'Creating a person with different email' do

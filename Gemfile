@@ -21,7 +21,7 @@ gem 'govuk_frontend_toolkit', '>= 5.2.0'
 gem 'govuk_elements_rails',   '>= 1.1.2'
 gem 'govuk_elements_form_builder', '>= 0.0.3', '~> 0.0'
 gem 'geckoboard-ruby', '~> 0.4.0'
-gem 'haml-rails'
+gem 'haml-rails', '~> 1.0.0'
 gem 'jbuilder', '~> 2.0'
 gem 'jquery-rails', '>= 4.0.4'
 gem 'keen'
@@ -51,8 +51,6 @@ gem 'will_paginate-bootstrap', '~> 1.0', '>= 1.0.1'
 gem 'carrierwave',
   git: 'https://github.com/carrierwaveuploader/carrierwave.git',
   tag: 'cc39842e44edcb6187b2d379a606ec48a6b5e4a8'
-gem 'omniauth-gplus',
-  git: 'https://github.com/ministryofjustice/omniauth-gplus.git'
 
 group :assets do
   gem 'coffee-rails'
