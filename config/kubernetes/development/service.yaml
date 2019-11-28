@@ -1,13 +1,13 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: track-a-query-service
+  name: peoplefinder-service
   labels:
-    app: track-a-query-service
+    app: peoplefinder-service
 spec:
   ports:
   - port: 3000
     name: http
     targetPort: 3000
   selector:
-    app: track-a-query
+    app: peoplefinder
