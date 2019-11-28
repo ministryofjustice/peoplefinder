@@ -30,44 +30,14 @@ spec:
             - name: RAILS_ENV
               value: 'production'
             - name: PROJECT
-              value: 'correspondence-staff'
+              value: 'peoplefinder'
             - name: RAILS_SERVE_STATIC_FILES
               value: 'true'
-            - name: GA_TRACKING_ID
-              valueFrom:
-                secretKeyRef:
-                  name: app-secrets
-                  key: GA_TRACKING_ID
-            - name: SETTINGS__CTS_EMAIL_URL
-              valueFrom:
-                secretKeyRef:
-                  name: app-secrets
-                  key: SETTINGS__CTS_EMAIL_URL
-            - name: SETTINGS__GOVUK_NOTIFY_API_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: app-secrets
-                  key: SETTINGS__GOVUK_NOTIFY_API_KEY
-            - name: SETTINGS__SMOKE_TESTS__USERNAME
-              valueFrom:
-                secretKeyRef:
-                  name: app-secrets
-                  key: SETTINGS__SMOKE_TESTS__USERNAME
-            - name: SETTINGS__SMOKE_TESTS__PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: app-secrets
-                  key: SETTINGS__SMOKE_TESTS__PASSWORD
             - name: SECRET_KEY_BASE
               valueFrom:
                 secretKeyRef:
                   name: app-secrets
                   key: SECRET_KEY_BASE
-            - name: SENTRY_DSN
-              valueFrom:
-                secretKeyRef:
-                  name: app-secrets
-                  key: SENTRY_DSN
             - name: DATABASE_URL
               valueFrom:
                 secretKeyRef:
@@ -112,42 +82,12 @@ spec:
             - name: RAILS_ENV
               value: 'production'
             - name: PROJECT
-              value: 'correspondence-staff-jobs'
-            - name: GA_TRACKING_ID
-              valueFrom:
-                secretKeyRef:
-                  name: app-secrets
-                  key: GA_TRACKING_ID
-            - name: SETTINGS__CTS_EMAIL_URL
-              valueFrom:
-                secretKeyRef:
-                  name: app-secrets
-                  key: SETTINGS__CTS_EMAIL_URL
-            - name: SETTINGS__GOVUK_NOTIFY_API_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: app-secrets
-                  key: SETTINGS__GOVUK_NOTIFY_API_KEY
-            - name: SETTINGS__SMOKE_TESTS__USERNAME
-              valueFrom:
-                secretKeyRef:
-                  name: app-secrets
-                  key: SETTINGS__SMOKE_TESTS__USERNAME
-            - name: SETTINGS__SMOKE_TESTS__PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: app-secrets
-                  key: SETTINGS__SMOKE_TESTS__PASSWORD
+              value: 'peoplefinder-jobs'
             - name: SECRET_KEY_BASE
               valueFrom:
                 secretKeyRef:
                   name: app-secrets
                   key: SECRET_KEY_BASE
-            - name: SENTRY_DSN
-              valueFrom:
-                secretKeyRef:
-                  name: app-secrets
-                  key: SENTRY_DSN
             - name: DATABASE_URL
               valueFrom:
                 secretKeyRef:
