@@ -1,0 +1,185 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: peoplefinder
+spec:
+  replicas: 2
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 0
+      maxSurge: 1
+  selector:
+    matchLabels:
+      app: peoplefinder
+  template:
+    metadata:
+      labels:
+        app: peoplefinder
+    spec:
+      containers:
+        - name: webapp
+          imagePullPolicy: Always
+          image: 754256621582.dkr.ecr.eu-west-2.amazonaws.com/peoplefinder/peoplefinder-ecr:latest
+          ports:
+            - containerPort: 3000
+          command: ["./config/docker/entrypoint-webapp.sh"]
+          env:
+            - name: ENV
+              value: 'dev'
+            - name: RAILS_ENV
+              value: 'production'
+            - name: PROJECT
+              value: 'correspondence-staff'
+            - name: RAILS_SERVE_STATIC_FILES
+              value: 'true'
+            - name: GA_TRACKING_ID
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: GA_TRACKING_ID
+            - name: SETTINGS__CTS_EMAIL_URL
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: SETTINGS__CTS_EMAIL_URL
+            - name: SETTINGS__GOVUK_NOTIFY_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: SETTINGS__GOVUK_NOTIFY_API_KEY
+            - name: SETTINGS__SMOKE_TESTS__USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: SETTINGS__SMOKE_TESTS__USERNAME
+            - name: SETTINGS__SMOKE_TESTS__PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: SETTINGS__SMOKE_TESTS__PASSWORD
+            - name: SECRET_KEY_BASE
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: SECRET_KEY_BASE
+            - name: SENTRY_DSN
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: SENTRY_DSN
+            - name: DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: peoplefinder-rds-output
+                  key: url
+            - name: CORRESPONDENCE_PLATFORM_DATABASE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: peoplefinder-rds-output
+                  key: database_password
+            - name: REDIS_URL
+              valueFrom:
+                secretKeyRef:
+                  name: peoplefinder-elasticache-redis-output
+                  key: url
+            - name: REDIS_AUTH_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: peoplefinder-elasticache-redis-output
+                  key: auth_token
+            - name: SETTINGS__CASE_UPLOADS_S3_BUCKET
+              valueFrom:
+                secretKeyRef:
+                  name: peoplefinder-s3-output
+                  key: bucket_name
+            - name: AWS_ACCESS_KEY_ID
+              valueFrom:
+                secretKeyRef:
+                  name: peoplefinder-s3-output
+                  key: access_key_id
+            - name: AWS_SECRET_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: peoplefinder-s3-output
+                  key: secret_access_key
+        - name: jobs
+          image: 754256621582.dkr.ecr.eu-west-2.amazonaws.com/correspondence/peoplefinder-ecr:latest
+          command: ["./config/docker/entrypoint-background-jobs.sh"]
+          env:
+            - name: ENV
+              value: 'dev'
+            - name: RAILS_ENV
+              value: 'production'
+            - name: PROJECT
+              value: 'correspondence-staff-jobs'
+            - name: GA_TRACKING_ID
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: GA_TRACKING_ID
+            - name: SETTINGS__CTS_EMAIL_URL
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: SETTINGS__CTS_EMAIL_URL
+            - name: SETTINGS__GOVUK_NOTIFY_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: SETTINGS__GOVUK_NOTIFY_API_KEY
+            - name: SETTINGS__SMOKE_TESTS__USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: SETTINGS__SMOKE_TESTS__USERNAME
+            - name: SETTINGS__SMOKE_TESTS__PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: SETTINGS__SMOKE_TESTS__PASSWORD
+            - name: SECRET_KEY_BASE
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: SECRET_KEY_BASE
+            - name: SENTRY_DSN
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: SENTRY_DSN
+            - name: DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: peoplefinder-rds-output
+                  key: url
+            - name: CORRESPONDENCE_PLATFORM_DATABASE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: peoplefinder-rds-output
+                  key: database_password
+            - name: REDIS_URL
+              valueFrom:
+                secretKeyRef:
+                  name: peoplefinder-elasticache-redis-output
+                  key: url
+            - name: REDIS_AUTH_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: peoplefinder-elasticache-redis-output
+                  key: auth_token
+            - name: SETTINGS__CASE_UPLOADS_S3_BUCKET
+              valueFrom:
+                secretKeyRef:
+                  name: peoplefinder-s3-output
+                  key: bucket_name
+            - name: AWS_ACCESS_KEY_ID
+              valueFrom:
+                secretKeyRef:
+                  name: peoplefinder-s3-output
+                  key: access_key_id
+            - name: AWS_SECRET_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: peoplefinder-s3-output
+                  key: secret_access_key
