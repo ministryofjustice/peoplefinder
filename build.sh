@@ -10,7 +10,7 @@ p() {
 function _build() {
 
   # 1. Define variables for use in the script
-  team_name=pepolefinder
+  team_name=peoplefinder
   ecr_repo_name=peoplefinder-ecr
   component=peoplefinder
 
