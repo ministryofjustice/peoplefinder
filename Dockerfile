@@ -62,7 +62,7 @@ USER appuser
 USER 1000
 
 RUN chown -R appuser:appgroup ./*
-RUN chmod +x /usr/src/app/config/docker/*
+# RUN chmod +x /usr/src/app/config/docker/*
 
 COPY Gemfile /usr/src/app/
 COPY Gemfile.lock /usr/src/app/
