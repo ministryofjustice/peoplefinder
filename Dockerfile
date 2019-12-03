@@ -6,6 +6,9 @@ ENV LC_ALL C.UTF-8
 ENV APPUSER moj
 ENV UNICORN_PORT 3000
 
+RUN addgroup --gid 1000 --system appgroup && \
+    adduser --uid 1000 --system appuser --ingroup appgroup
+
 EXPOSE $UNICORN_PORT
 
 # Add Githubs public keys into known_hosts
@@ -40,7 +43,7 @@ RUN apt-get update && apt-get install -y \
 
 # Override imagemagick policy with recommended
 # mitagation policy for imagetragick bug
-# CVE-2016–3714 https://imagetragick.com/ 
+# CVE-2016–3714 https://imagetragick.com/
 COPY policy.xml /etc/ImageMagick-6/policy.xml
 
 # Pre-install gems with native code to reduce build times
