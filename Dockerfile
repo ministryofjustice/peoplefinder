@@ -64,7 +64,7 @@ RUN bundle install
 
 COPY . /usr/src/app
 
-RUN mkdir log tmp
+# RUN mkdir log tmp
 RUN chown -R appuser:appgroup /usr/src/app/
 USER appuser
 USER 1000
@@ -72,6 +72,6 @@ USER 1000
 RUN chown -R appuser:appgroup ./*
 # RUN chmod +x /usr/src/app/config/docker/*
 
-RUN bundle exec rake assets:precompile RAILS_ENV=assets SUPPORT_EMAIL=''
+RUN bundle exec rake assets:precompile RAILS_ENV=assets SUPPORT_EMAIL='' 2> /dev/null
 
 ENTRYPOINT ["./run.sh"]
