@@ -5,6 +5,7 @@ FROM ruby:2.3.7
 ENV LC_ALL C.UTF-8
 ENV APPUSER moj
 ENV UNICORN_PORT 3000
+ENV SUPPORT_EMAIL "support@thing.com"
 
 RUN addgroup --gid 1000 --system appgroup && \
     adduser --uid 1000 --system appuser --ingroup appgroup
