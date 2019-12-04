@@ -26,7 +26,7 @@ function _build() {
   current_version=$(git rev-parse $current_branch)
   short_version=$(git rev-parse --short $current_branch)
 
-  docker_build_tag=cts-${current_branch}-${short_version}
+  docker_build_tag=pf-${current_branch}-${short_version}
   docker_registry_tag=${docker_registry}:${docker_build_tag}
 
   # 2. Display status message - include warning if the working copy is not clean
