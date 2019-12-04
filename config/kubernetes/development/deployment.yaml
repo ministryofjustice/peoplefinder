@@ -23,7 +23,7 @@ spec:
           image: 754256621582.dkr.ecr.eu-west-2.amazonaws.com/peoplefinder/peoplefinder-ecr:latest
           ports:
             - containerPort: 3000
-          command: ["./config/docker/entrypoint-webapp.sh"]
+          command: ["./run.sh"]
           env:
             - name: ENV
               value: 'dev'
@@ -38,26 +38,21 @@ spec:
                 secretKeyRef:
                   name: app-secrets
                   key: SECRET_KEY_BASE
+            - name: SUPPORT_EMAIL
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: SUPPORT_EMAIL
             - name: DATABASE_URL
               valueFrom:
                 secretKeyRef:
                   name: peoplefinder-rds-output
                   key: url
-            - name: CORRESPONDENCE_PLATFORM_DATABASE_PASSWORD
+            - name: DATABASE_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: peoplefinder-rds-output
                   key: database_password
-            - name: REDIS_URL
-              valueFrom:
-                secretKeyRef:
-                  name: peoplefinder-elasticache-redis-output
-                  key: url
-            - name: REDIS_AUTH_TOKEN
-              valueFrom:
-                secretKeyRef:
-                  name: peoplefinder-elasticache-redis-output
-                  key: auth_token
             - name: SETTINGS__CASE_UPLOADS_S3_BUCKET
               valueFrom:
                 secretKeyRef:
@@ -74,8 +69,11 @@ spec:
                   name: peoplefinder-s3-output
                   key: secret_access_key
         - name: jobs
-          image: 754256621582.dkr.ecr.eu-west-2.amazonaws.com/correspondence/peoplefinder-ecr:latest
-          command: ["./config/docker/entrypoint-background-jobs.sh"]
+          image: 754256621582.dkr.ecr.eu-west-2.amazonaws.com/peoplefinder/peoplefinder-ecr:latest
+          ports:
+            - containerPort: 3000
+          command: ["./run.sh"]
+          args: ["worker"]
           env:
             - name: ENV
               value: 'dev'
@@ -88,26 +86,26 @@ spec:
                 secretKeyRef:
                   name: app-secrets
                   key: SECRET_KEY_BASE
+            - name: SUPPORT_EMAIL
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: SUPPORT_EMAIL
+            - name: ACTION_MAILER_DEFAULT_URL
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: ACTION_MAILER_DEFAULT_URL                  
             - name: DATABASE_URL
               valueFrom:
                 secretKeyRef:
                   name: peoplefinder-rds-output
                   key: url
-            - name: CORRESPONDENCE_PLATFORM_DATABASE_PASSWORD
+            - name: DATABASE_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: peoplefinder-rds-output
                   key: database_password
-            - name: REDIS_URL
-              valueFrom:
-                secretKeyRef:
-                  name: peoplefinder-elasticache-redis-output
-                  key: url
-            - name: REDIS_AUTH_TOKEN
-              valueFrom:
-                secretKeyRef:
-                  name: peoplefinder-elasticache-redis-output
-                  key: auth_token
             - name: SETTINGS__CASE_UPLOADS_S3_BUCKET
               valueFrom:
                 secretKeyRef:
@@ -123,3 +121,4 @@ spec:
                 secretKeyRef:
                   name: peoplefinder-s3-output
                   key: secret_access_key
+
