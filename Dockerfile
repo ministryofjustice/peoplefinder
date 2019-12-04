@@ -5,7 +5,6 @@ FROM ruby:2.3.7
 ENV LC_ALL C.UTF-8
 ENV APPUSER moj
 ENV UNICORN_PORT 3000
-ENV ACTION_MAILER_DEFAULT_URL "https://peoplefinder-development.apps.live-1.cloud-platform.service.justice.gov.uk/"
 
 RUN addgroup --gid 1000 --system appgroup && \
     adduser --uid 1000 --system appuser --ingroup appgroup

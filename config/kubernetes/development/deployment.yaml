@@ -91,6 +91,11 @@ spec:
                 secretKeyRef:
                   name: app-secrets
                   key: SUPPORT_EMAIL
+            - name: ACTION_MAILER_DEFAULT_URL
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: ACTION_MAILER_DEFAULT_URL                  
             - name: DATABASE_URL
               valueFrom:
                 secretKeyRef:
@@ -116,3 +121,4 @@ spec:
                 secretKeyRef:
                   name: peoplefinder-s3-output
                   key: secret_access_key
+
