@@ -68,48 +68,48 @@ spec:
                 secretKeyRef:
                   name: peoplefinder-s3-output
                   key: secret_access_key
-        - name: jobs
-          image: 754256621582.dkr.ecr.eu-west-2.amazonaws.com/peoplefinder/peoplefinder-ecr:latest
-          command: ["./run.sh"]
-          env:
-            - name: ENV
-              value: 'dev'
-            - name: RAILS_ENV
-              value: 'production'
-            - name: PROJECT
-              value: 'peoplefinder-jobs'
-            - name: SECRET_KEY_BASE
-              valueFrom:
-                secretKeyRef:
-                  name: app-secrets
-                  key: SECRET_KEY_BASE
-            - name: SUPPORT_EMAIL
-              valueFrom:
-                secretKeyRef:
-                  name: app-secrets
-                  key: SUPPORT_EMAIL
-            - name: DATABASE_URL
-              valueFrom:
-                secretKeyRef:
-                  name: peoplefinder-rds-output
-                  key: url
-            - name: DATABASE_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: peoplefinder-rds-output
-                  key: database_password
-            - name: SETTINGS__CASE_UPLOADS_S3_BUCKET
-              valueFrom:
-                secretKeyRef:
-                  name: peoplefinder-s3-output
-                  key: bucket_name
-            - name: AWS_ACCESS_KEY_ID
-              valueFrom:
-                secretKeyRef:
-                  name: peoplefinder-s3-output
-                  key: access_key_id
-            - name: AWS_SECRET_ACCESS_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: peoplefinder-s3-output
-                  key: secret_access_key
+        # - name: jobs
+        #   image: 754256621582.dkr.ecr.eu-west-2.amazonaws.com/peoplefinder/peoplefinder-ecr:latest
+        #   command: ["./run.sh"]
+        #   env:
+        #     - name: ENV
+        #       value: 'dev'
+        #     - name: RAILS_ENV
+        #       value: 'production'
+        #     - name: PROJECT
+        #       value: 'peoplefinder-jobs'
+        #     - name: SECRET_KEY_BASE
+        #       valueFrom:
+        #         secretKeyRef:
+        #           name: app-secrets
+        #           key: SECRET_KEY_BASE
+        #     - name: SUPPORT_EMAIL
+        #       valueFrom:
+        #         secretKeyRef:
+        #           name: app-secrets
+        #           key: SUPPORT_EMAIL
+        #     - name: DATABASE_URL
+        #       valueFrom:
+        #         secretKeyRef:
+        #           name: peoplefinder-rds-output
+        #           key: url
+        #     - name: DATABASE_PASSWORD
+        #       valueFrom:
+        #         secretKeyRef:
+        #           name: peoplefinder-rds-output
+        #           key: database_password
+        #     - name: SETTINGS__CASE_UPLOADS_S3_BUCKET
+        #       valueFrom:
+        #         secretKeyRef:
+        #           name: peoplefinder-s3-output
+        #           key: bucket_name
+        #     - name: AWS_ACCESS_KEY_ID
+        #       valueFrom:
+        #         secretKeyRef:
+        #           name: peoplefinder-s3-output
+        #           key: access_key_id
+        #     - name: AWS_SECRET_ACCESS_KEY
+        #       valueFrom:
+        #         secretKeyRef:
+        #           name: peoplefinder-s3-output
+        #           key: secret_access_key

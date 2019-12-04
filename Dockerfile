@@ -4,6 +4,7 @@ FROM ruby:2.3.7
 # UTF 8 issue during bundle install
 ENV LC_ALL C.UTF-8
 ENV APPUSER moj
+ENV UNICORN_PORT 3000
 ENV SUPPORT_EMAIL "support@thing.com"
 
 RUN addgroup --gid 1000 --system appgroup && \
@@ -73,5 +74,3 @@ RUN chown -R appuser:appgroup ./*
 # RUN chmod +x /usr/src/app/config/docker/*
 
 RUN bundle exec rake assets:precompile RAILS_ENV=assets SUPPORT_EMAIL='' 2> /dev/null
-
-ENTRYPOINT ["./run.sh"]

@@ -37,6 +37,6 @@ worker)
     ;;
 *)
     echo "running app server - unicorn"
-    bundle exec unicorn -c config/unicorn.rb
+    bundle exec unicorn -c config/unicorn.rb -p $UNICORN_PORT
     ;;
 esac
