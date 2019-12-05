@@ -33,6 +33,8 @@ spec:
               value: 'peoplefinder'
             - name: RAILS_SERVE_STATIC_FILES
               value: 'true'
+            - name: MOJ_PF_ES_URL
+              value: 'http://aws-es-proxy-service:9200'
             - name: SECRET_KEY_BASE
               valueFrom:
                 secretKeyRef:
