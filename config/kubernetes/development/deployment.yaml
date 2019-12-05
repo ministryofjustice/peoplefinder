@@ -43,6 +43,11 @@ spec:
                 secretKeyRef:
                   name: app-secrets
                   key: SUPPORT_EMAIL
+            - name: READONLY_IP_WHITELIST
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: READONLY_IP_WHITELIST
             - name: DATABASE_URL
               valueFrom:
                 secretKeyRef:
@@ -95,7 +100,7 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: app-secrets
-                  key: ACTION_MAILER_DEFAULT_URL                  
+                  key: ACTION_MAILER_DEFAULT_URL
             - name: DATABASE_URL
               valueFrom:
                 secretKeyRef:
