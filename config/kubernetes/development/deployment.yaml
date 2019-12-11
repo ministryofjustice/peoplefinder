@@ -31,6 +31,8 @@ spec:
               value: 'production'
             - name: PROJECT
               value: 'peoplefinder'
+            - name: ACTION_MAILER_DEFAULT_URL
+              value: 'development.peoplefinder.service.gov.uk'
             - name: RAILS_SERVE_STATIC_FILES
               value: 'true'
             - name: MOJ_PF_ES_URL
@@ -120,7 +122,7 @@ spec:
               value: 'production'
             - name: PROJECT
               value: 'peoplefinder-jobs'
-             - name: ACTION_MAILER_DEFAULT_URL
+            - name: ACTION_MAILER_DEFAULT_URL
               value: 'development.peoplefinder.service.gov.uk'
             - name: SECRET_KEY_BASE
               valueFrom:
