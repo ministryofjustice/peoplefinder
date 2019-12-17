@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: peoplefinder-es-api
+  labels:
+    app: peoplefinder-es-api
+spec:
+  ports:
+  - port: 9200
+    name: http
+    targetPort: 9200
+  selector:
+    app: peoplefinder-es

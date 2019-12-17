@@ -123,6 +123,9 @@ function _deploy() {
     -f config/kubernetes/${environment}/service.yaml \
     -f config/kubernetes/${environment}/ingress.yaml \
     -f config/kubernetes/${environment}/secrets.yaml \
+    -f config/kubernetes/${environment}/deployment-es.yaml \
+    -f config/kubernetes/${environment}/service-es-api.yaml \
+    -f config/kubernetes/${environment}/service-es-transport.yaml \
     -n $namespace
 
 }

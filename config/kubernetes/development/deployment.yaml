@@ -18,14 +18,6 @@ spec:
         app: peoplefinder
     spec:
       containers:
-        - name: elasticsearch
-          image: 754256621582.dkr.ecr.eu-west-2.amazonaws.com/peoplefinder/peoplefinder-ecr:estest-ia-2
-          ports:
-            - containerPort: 9200
-            - containerPort: 9300
-          command: ["elasticsearch"]
-
-
         - name: webapp
           imagePullPolicy: Always
           image: 754256621582.dkr.ecr.eu-west-2.amazonaws.com/peoplefinder/peoplefinder-ecr:latest
