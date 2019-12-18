@@ -36,7 +36,7 @@ spec:
             - name: RAILS_SERVE_STATIC_FILES
               value: 'true'
             - name: MOJ_PF_ES_URL
-              value: 'localhost:9200'
+              value: peoplefinder-es-api
             - name: SECRET_KEY_BASE
               valueFrom:
                 secretKeyRef:
