@@ -48,6 +48,16 @@ spec:
                 secretKeyRef:
                   name: app-secrets
                   key: READONLY_IP_WHITELIST
+            - name: SENDGRID_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: SENDGRID_USERNAME
+            - name: SENDGRID_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: SENDGRID_PASSWORD
             - name: DATABASE_URL
               valueFrom:
                 secretKeyRef:
@@ -86,6 +96,8 @@ spec:
               value: 'production'
             - name: PROJECT
               value: 'peoplefinder-jobs'
+             - name: ACTION_MAILER_DEFAULT_URL
+              value: 'development.peoplefinder.service.gov.uk'
             - name: SECRET_KEY_BASE
               valueFrom:
                 secretKeyRef:
@@ -96,11 +108,6 @@ spec:
                 secretKeyRef:
                   name: app-secrets
                   key: SUPPORT_EMAIL
-            - name: ACTION_MAILER_DEFAULT_URL
-              valueFrom:
-                secretKeyRef:
-                  name: app-secrets
-                  key: ACTION_MAILER_DEFAULT_URL
             - name: DATABASE_URL
               valueFrom:
                 secretKeyRef:
@@ -126,4 +133,14 @@ spec:
                 secretKeyRef:
                   name: peoplefinder-s3-output
                   key: secret_access_key
+            - name: SENDGRID_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: SENDGRID_USERNAME
+            - name: SENDGRID_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: SENDGRID_PASSWORD
 
