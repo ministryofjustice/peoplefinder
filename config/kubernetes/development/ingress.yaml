@@ -6,10 +6,10 @@ metadata:
 spec:
   tls:
     - hosts:
-        - peoplefinder-development.apps.live-1.cloud-platform.service.justice.gov.uk
+         - development.peoplefinder.service.gov.uk
       secretName: peoplefinder-certificate
   rules:
-    - host: peoplefinder-development.apps.live-1.cloud-platform.service.justice.gov.uk
+    - host:  - development.peoplefinder.service.gov.uk
       http:
         paths:
           - path: /
