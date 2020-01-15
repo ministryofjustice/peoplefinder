@@ -6,10 +6,10 @@ metadata:
 spec:
   tls:
     - hosts:
-         - development.peoplefinder.service.gov.uk
+        - development.peoplefinder.service.gov.uk
       secretName: peoplefinder-certificate
   rules:
-    - host:  - development.peoplefinder.service.gov.uk
+    - host: development.peoplefinder.service.gov.uk
       http:
         paths:
           - path: /
