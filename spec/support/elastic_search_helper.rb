@@ -13,11 +13,11 @@ module SpecSupport
     end
 
     def all_documents(limit: 100)
-      IO.popen("curl -i -XGET 'localhost:9200/#{Person.index_name}/person/_search?size=#{limit}&pretty'", &:readlines)
+      IO.popen("curl -i -XGET '#{Rails.configuration.elastic_search_url}:9200/#{Person.index_name}/person/_search?size=#{limit}&pretty'", &:readlines)
     end
 
     def all_mappings
-      IO.popen("curl 'localhost:9200/test_people/_mappings?pretty'", &:readlines)
+      IO.popen("curl '#{Rails.configuration.elastic_search_url}:9200/test_people/_mappings?pretty'", &:readlines)
     end
 
     def index_health

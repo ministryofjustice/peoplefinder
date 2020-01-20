@@ -112,8 +112,8 @@ class PersonSearch
   # exact match - email is not analyzed (see mappings)
   def email_query
     {
-      filtered: {
-        query: {
+      bool: {
+        must: {
           term: {
             email: @email_query
           }
