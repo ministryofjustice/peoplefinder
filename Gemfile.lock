@@ -426,6 +426,7 @@ GEM
     premailer-rails (1.9.6)
       actionmailer (>= 3, < 6)
       premailer (~> 1.7, >= 1.7.9)
+    prometheus-client (1.0.0)
     pry (0.10.4)
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
@@ -656,6 +657,7 @@ DEPENDENCIES
   pg
   poltergeist
   premailer-rails (~> 1.9)
+  prometheus-client
   pry-byebug
   pry-rails
   pundit (~> 1.1)
