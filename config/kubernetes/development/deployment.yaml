@@ -96,7 +96,7 @@ spec:
                   value: https
                 - name: X-Forwarded-Ssl
                   value: "on"
-              initialDelaySeconds: 20
+              initialDelaySeconds: 60
               periodSeconds: 60
           livenessProbe:
             httpGet:
@@ -107,7 +107,7 @@ spec:
                   value: https
                 - name: X-Forwarded-Ssl
                   value: "on"
-            initialDelaySeconds: 20
+            initialDelaySeconds: 60
             periodSeconds: 60
         - name: jobs
           image: 754256621582.dkr.ecr.eu-west-2.amazonaws.com/peoplefinder/peoplefinder-ecr:latest
