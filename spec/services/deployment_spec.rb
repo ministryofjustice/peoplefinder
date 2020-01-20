@@ -6,10 +6,10 @@ RSpec.describe Deployment, type: :service do
   context 'when all environment variables are available' do
     let(:environment) do
       {
-        'APPVERSION' => '1.2.3',
-        'APP_BUILD_DATE' => '2013-04-03',
-        'APP_GIT_COMMIT' => '7cb26ffe8a2ead47837e28606743e4d31a31512d',
-        'APP_BUILD_TAG' => '0.5.25'
+        'VERSION_NUMBER' => '1.2.3',
+        'BUILD_DATE' => '2013-04-03',
+        'COMMIT_ID' => '7cb26ffe8a2ead47837e28606743e4d31a31512d',
+        'BUILD_TAG' => '0.5.25'
       }
     end
 
