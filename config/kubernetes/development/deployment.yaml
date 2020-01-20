@@ -89,14 +89,14 @@ spec:
                   key: secret_access_key
           readinessProbe:
             httpGet:
-              path: /ping.json
+              path: /healthcheck
               port: 3000
               httpHeaders:
                 - name: X-Forwarded-Proto
                   value: https
                 - name: X-Forwarded-Ssl
                   value: "on"
-              initialDelaySeconds: 60
+              initialDelaySeconds: 40
               periodSeconds: 60
           livenessProbe:
             httpGet:
@@ -107,7 +107,7 @@ spec:
                   value: https
                 - name: X-Forwarded-Ssl
                   value: "on"
-            initialDelaySeconds: 60
+            initialDelaySeconds: 40
             periodSeconds: 60
         - name: jobs
           image: 754256621582.dkr.ecr.eu-west-2.amazonaws.com/peoplefinder/peoplefinder-ecr:latest
