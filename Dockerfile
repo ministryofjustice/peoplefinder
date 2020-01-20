@@ -62,7 +62,7 @@ RUN gem install --conservative kgio -v 2.9.3 && \
     gem install --conservative pg -v 0.18.1 && \
     gem install --conservative raindrops -v 0.13.0 && \
     gem install --conservative unf_ext -v 0.0.6 && \
-    gem install --conservative nokogiri -v 1.6.7.2 && \
+    gem install --conservative nokogiri -v 1.10.5 && \
     gem install --conservative unicorn -v 4.8.3
 
 WORKDIR /usr/src/app
