@@ -4,7 +4,7 @@ module Concerns::Searchable
   included do
     include Elasticsearch::Model
     include Elasticsearch::Model::Callbacks
-    document_type "doc"
+    document_type 'doc'
     # Force a full re-index after update, the ActiveModel::Dirty tracking
     # doesn't detect changes to community_name.
     # Don't know if we still need this, as we have removed community feature.
@@ -39,7 +39,7 @@ module Concerns::Searchable
       mapping do
         # indexes :name, search_analyzer: 'name_synonyms_analyzer', analyzer: 'standard', type: 'keyword'
         indexes :name, search_analyzer: 'name_synonyms_analyzer', type: :text, fielddata: true, analyzer: :english
-        indexes :email #, index: :not_analyzed
+        indexes :email # , index: :not_analyzed
       end
     end
   end
