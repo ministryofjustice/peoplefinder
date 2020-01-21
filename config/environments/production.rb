@@ -32,4 +32,5 @@ Rails.application.configure do
   config.logstasher.logger_path =
     "#{Rails.root}/log/logstash_#{Rails.env}.json"
   config.logstasher.source = 'logstasher'
+  config.logstasher.logger = ActiveSupport::Logger.new STDOUT
 end
