@@ -39,7 +39,7 @@ module Concerns::Searchable
       mapping do
         # indexes :name, search_analyzer: 'name_synonyms_analyzer', analyzer: 'standard', type: 'keyword'
         indexes :name, search_analyzer: 'name_synonyms_analyzer', type: :text, fielddata: true, analyzer: :english
-        indexes :email # , index: :not_analyzed
+        indexes :email, type: :keyword
       end
     end
   end

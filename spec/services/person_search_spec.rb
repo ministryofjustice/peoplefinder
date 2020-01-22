@@ -57,7 +57,6 @@ RSpec.describe PersonSearch, elastic: true do
     it_behaves_like 'a search'
 
     it 'searches by email' do
-      pending "TODO CT-2691 - commented out test to get ES update working"
       results = search_for(@alice.email.upcase)
       expect(results.set.first.name).to eq @alice.name
       expect(results.contains_exact_match).to eq true
