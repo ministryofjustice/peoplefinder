@@ -1,0 +1,172 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: peoplefinder
+spec:
+  replicas: 2
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 0
+      maxSurge: 1
+  selector:
+    matchLabels:
+      app: peoplefinder
+  template:
+    metadata:
+      labels:
+        app: peoplefinder
+    spec:
+      containers:
+        - name: webapp
+          imagePullPolicy: Always
+          image: 754256621582.dkr.ecr.eu-west-2.amazonaws.com/peoplefinder/peoplefinder-ecr:latest
+          ports:
+            - containerPort: 3000
+          command: ["./run.sh"]
+          env:
+            - name: ENV
+              value: 'dev'
+            - name: RAILS_ENV
+              value: 'production'
+            - name: PROJECT
+              value: 'peoplefinder'
+            - name: ACTION_MAILER_DEFAULT_URL
+              value: peoplefinder-production.apps.live-1.cloud-platform.service.justice.gov.uk #'www.peoplefinder.service.gov.uk'
+            - name: RAILS_SERVE_STATIC_FILES
+              value: 'true'
+            - name: MOJ_PF_ES_URL
+              value: 'http://aws-es-proxy-service:9200'
+            - name: SECRET_KEY_BASE
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: SECRET_KEY_BASE
+            - name: SUPPORT_EMAIL
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: SUPPORT_EMAIL
+            - name: READONLY_IP_WHITELIST
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: READONLY_IP_WHITELIST
+            - name: SENDGRID_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: SENDGRID_USERNAME
+            - name: SENDGRID_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: SENDGRID_PASSWORD
+            - name: DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: peoplefinder-rds-output
+                  key: url
+            - name: DATABASE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: peoplefinder-rds-output
+                  key: database_password
+            - name: SETTINGS__CASE_UPLOADS_S3_BUCKET
+              valueFrom:
+                secretKeyRef:
+                  name: peoplefinder-s3-output
+                  key: bucket_name
+            - name: AWS_ACCESS_KEY_ID
+              valueFrom:
+                secretKeyRef:
+                  name: peoplefinder-s3-output
+                  key: access_key_id
+            - name: AWS_SECRET_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: peoplefinder-s3-output
+                  key: secret_access_key
+          readinessProbe:
+            httpGet:
+              path: /healthcheck
+              port: 3000
+              httpHeaders:
+                - name: X-Forwarded-Proto
+                  value: https
+                - name: X-Forwarded-Ssl
+                  value: "on"
+              initialDelaySeconds: 40
+              periodSeconds: 60
+          livenessProbe:
+            httpGet:
+              path: /healthcheck
+              port: 3000
+              httpHeaders:
+                - name: X-Forwarded-Proto
+                  value: https
+                - name: X-Forwarded-Ssl
+                  value: "on"
+            initialDelaySeconds: 40
+            periodSeconds: 60
+        - name: jobs
+          image: 754256621582.dkr.ecr.eu-west-2.amazonaws.com/peoplefinder/peoplefinder-ecr:latest
+          ports:
+            - containerPort: 3000
+          command: ["./run.sh"]
+          args: ["worker"]
+          env:
+            - name: ENV
+              value: 'dev'
+            - name: RAILS_ENV
+              value: 'production'
+            - name: PROJECT
+              value: 'peoplefinder-jobs'
+            - name: ACTION_MAILER_DEFAULT_URL
+              value: peoplefinder-production.apps.live-1.cloud-platform.service.justice.gov.uk #'www.peoplefinder.service.gov.uk'
+            - name: SECRET_KEY_BASE
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: SECRET_KEY_BASE
+            - name: SUPPORT_EMAIL
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: SUPPORT_EMAIL
+            - name: DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: peoplefinder-rds-output
+                  key: url
+            - name: DATABASE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: peoplefinder-rds-output
+                  key: database_password
+            - name: SETTINGS__CASE_UPLOADS_S3_BUCKET
+              valueFrom:
+                secretKeyRef:
+                  name: peoplefinder-s3-output
+                  key: bucket_name
+            - name: AWS_ACCESS_KEY_ID
+              valueFrom:
+                secretKeyRef:
+                  name: peoplefinder-s3-output
+                  key: access_key_id
+            - name: AWS_SECRET_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: peoplefinder-s3-output
+                  key: secret_access_key
+            - name: SENDGRID_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: SENDGRID_USERNAME
+            - name: SENDGRID_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: SENDGRID_PASSWORD
+
