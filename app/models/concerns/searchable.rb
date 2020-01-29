@@ -40,6 +40,8 @@ module Concerns::Searchable
         # indexes :name, search_analyzer: 'name_synonyms_analyzer', analyzer: 'standard', type: 'keyword'
         indexes :name, search_analyzer: 'name_synonyms_analyzer', type: :text, fielddata: true, analyzer: :english
         indexes :email, type: :keyword
+        # indexes :name
+        # indexes :email
       end
     end
   end
