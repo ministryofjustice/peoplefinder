@@ -2,7 +2,7 @@ apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
   name: peoplefinder-ingress
-  namespace: peoplefinder-development
+  namespace: peoplefinder-production
 spec:
   tls:
     - hosts:
@@ -10,7 +10,7 @@ spec:
         - peoplefinder.service.gov.uk
       secretName: peoplefinder-certificate
   rules:
-    - host: development.peoplefinder.service.gov.uk
+    - host: peoplefinder.service.gov.uk
       http:
         paths:
           - path: /
