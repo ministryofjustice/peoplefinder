@@ -122,6 +122,8 @@ spec:
           env:
             - name: ENV
               value: 'demo'
+            - name: RACK_ENV
+              value: 'production'  
             - name: RAILS_ENV
               value: 'production'
             - name: PROJECT
