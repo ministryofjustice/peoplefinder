@@ -121,7 +121,7 @@ spec:
           args: ["worker"]
           env:
             - name: ENV
-              value: 'demo'
+              value: 'staging'
             - name: RACK_ENV
               value: 'production'  
             - name: RAILS_ENV
