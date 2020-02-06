@@ -1,0 +1,17 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: peoplefinder-ingress
+  namespace: peoplefinder-staging
+spec:
+  tls:
+    - hosts: staging.peoplefinder.service.gov.uk
+      secretName: peoplefinder-certificate
+  rules:
+    - host: staging.peoplefinder.service.gov.uk
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: peoplefinder-service
+              servicePort: 3000
