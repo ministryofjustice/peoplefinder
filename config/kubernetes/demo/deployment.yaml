@@ -26,9 +26,11 @@ spec:
           command: ["./run.sh"]
           env:
             - name: ENV
-              value: 'dev'
+              value: 'demo'
+            - name: RACK_ENV
+              value: 'production'            
             - name: RAILS_ENV
-              value: 'production'
+              value: 'production'  
             - name: PROJECT
               value: 'peoplefinder'
             - name: ACTION_MAILER_DEFAULT_URL
@@ -119,7 +121,7 @@ spec:
           args: ["worker"]
           env:
             - name: ENV
-              value: 'dev'
+              value: 'demo'
             - name: RAILS_ENV
               value: 'production'
             - name: PROJECT

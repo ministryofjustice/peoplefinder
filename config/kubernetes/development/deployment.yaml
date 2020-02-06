@@ -120,6 +120,8 @@ spec:
           env:
             - name: ENV
               value: 'dev'
+            - name: RACK_ENV
+              value: 'production'
             - name: RAILS_ENV
               value: 'production'
             - name: PROJECT
