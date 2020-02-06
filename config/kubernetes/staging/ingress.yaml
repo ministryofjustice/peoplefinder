@@ -5,12 +5,10 @@ metadata:
   namespace: peoplefinder-staging
 spec:
   tls:
-    - hosts:
-        - peoplefinder-staging.apps.live-1.cloud-platform.service.justice.gov.uk
-        - staging.peoplefinder.service.gov.uk
+    - hosts: staging.peoplefinder.service.gov.uk
       secretName: peoplefinder-certificate
   rules:
-    - host: peoplefinder-staging.apps.live-1.cloud-platform.service.justice.gov.uk #staging.peoplefinder.service.gov.uk
+    - host: staging.peoplefinder.service.gov.uk
       http:
         paths:
           - path: /
