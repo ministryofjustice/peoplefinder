@@ -5,8 +5,7 @@ metadata:
   namespace: peoplefinder-demo
 spec:
   tls:
-    - hosts:
-        - demo.peoplefinder.service.gov.uk
+    - hosts: demo.peoplefinder.service.gov.uk
       secretName: peoplefinder-certificate
   rules:
     - host: demo.peoplefinder.service.gov.uk
