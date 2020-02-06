@@ -162,7 +162,7 @@ class PersonSearch
       multi_match: {
         fields: fields_to_search,
         fuzziness: 2, # maximum allowed Levenshtein Edit Distance/ 'AUTO' is recommended by documention
-        prefix_length: 5, # number of initial characters which won't be "fuzzified"
+        prefix_length: 3, # number of initial characters which won't be "fuzzified"
         query: @query,
         analyzer: 'standard'
       }
