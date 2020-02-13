@@ -17,3 +17,10 @@ spec:
             backend:
               serviceName: peoplefinder-service
               servicePort: 3000
+    - host: peoplefinder-production.apps.live-1.cloud-platform.service.justice.gov.uk
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: peoplefinder-service
+              servicePort: 3000
