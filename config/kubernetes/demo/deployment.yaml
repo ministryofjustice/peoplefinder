@@ -26,15 +26,15 @@ spec:
           command: ["./run.sh"]
           env:
             - name: ENV
-              value: 'dev'
+              value: 'demo'
             - name: RACK_ENV
-              value: 'production'  
+              value: 'production'            
             - name: RAILS_ENV
-              value: 'production'
+              value: 'production'  
             - name: PROJECT
               value: 'peoplefinder'
             - name: ACTION_MAILER_DEFAULT_URL
-              value: 'development.peoplefinder.service.gov.uk'
+              value: 'demo.peoplefinder.service.gov.uk'
             - name: RAILS_SERVE_STATIC_FILES
               value: 'true'
             - name: MOJ_PF_ES_URL
@@ -121,15 +121,15 @@ spec:
           args: ["worker"]
           env:
             - name: ENV
-              value: 'dev'
+              value: 'demo'
             - name: RACK_ENV
-              value: 'production'
+              value: 'production'  
             - name: RAILS_ENV
               value: 'production'
             - name: PROJECT
               value: 'peoplefinder-jobs'
             - name: ACTION_MAILER_DEFAULT_URL
-              value: 'development.peoplefinder.service.gov.uk'
+              value: 'demo.peoplefinder.service.gov.uk'
             - name: SECRET_KEY_BASE
               valueFrom:
                 secretKeyRef:
