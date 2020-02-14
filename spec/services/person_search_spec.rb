@@ -252,7 +252,7 @@ RSpec.describe PersonSearch, elastic: true do
           expect(results.set[1..2].map(&:name)).to match_array ['Stephen Richards', 'Steven Richards']
         end
 
-        # TODO CT-2691 - commented out test to get ES update working
+        # TODO: CT-2691 - commented out test to get ES update working
         # it 'returns people with similar first name or similar surname in 3rd rank' do
         #   expect(results.set[3..7].map(&:name)).to match_array ['John Richards', 'Steve Edmundson', 'Steve Richardson', 'Steven Richardson', 'Stephen Richardson']
         # end
