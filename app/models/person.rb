@@ -131,6 +131,7 @@ class Person < ActiveRecord::Base
   scope :created_at_older_than, -> (within) { where('created_at < ?', within) }
 
   scope :namesakes, -> (person) { NamesakesQuery.new(person).call }
+  scope :ordered_by_name, -> { order(surname: :asc, given_name: :asc) }
 
   def email_prefix
     email.split('@').first.gsub(/[\W]|[\d]/, '')

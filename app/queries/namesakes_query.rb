@@ -6,7 +6,7 @@ class NamesakesQuery < BaseQuery
 
   # remove the initializer if not different from BaseQuery
   def initialize(person)
-    @relation = Person.all
+    @relation = Person.all.ordered_by_name
     @person = person
   end
 
