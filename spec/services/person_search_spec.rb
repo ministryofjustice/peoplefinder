@@ -188,8 +188,6 @@ RSpec.describe PersonSearch, elastic: true do
     end
 
     it 'searches with edit distance 2 exists' do
-      pending "TODO CT-2691 - commented out test to get ES update working"
-
       results = search_for("John Colli")
       expect(results.set.first.name).to eq(@collier.name)
       expect(results.contains_exact_match).to eq false
