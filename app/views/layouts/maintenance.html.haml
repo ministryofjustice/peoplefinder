@@ -1,0 +1,70 @@
+- content_for :page_title do
+  = page_title
+
+- content_for :cookie_message do
+  = "<p>GOV.UK uses cookies to make the site simpler. <a href=\"/cookies\">Find out more about cookies</a></p>".html_safe
+
+- content_for :global_header_text do
+  = 'Ministry of Justice'
+
+- content_for :homepage_url do
+  = home_path
+
+- content_for :logo_link_title do
+  = 'Go to the People Finder homepage'
+
+- content_for :head do
+
+  = stylesheet_link_tag "application", media: "all"
+  = csrf_meta_tag
+  %meta{name: "format-detection", content: "telephone=no"}
+
+  /[if IE 6]
+    = stylesheet_link_tag "application-ie6", media: "all"
+
+  /[if IE 7]
+    = stylesheet_link_tag "application-ie7", media: "all"
+
+  /[if IE 8]
+    = stylesheet_link_tag "application-ie8", media: "all"
+
+
+- content_for :body_classes do
+  = " controller-" + controller.controller_name
+
+- content_for :header_class do
+  = "with-proposition"
+
+- content_for :proposition_header do
+  .header-proposition
+    .content
+      %a.js-header-toggle.menu{:href => "#proposition-links"}
+        = "Menu"
+      %nav#proposition-menu
+        =link_to app_title, home_path, id: "proposition-name"
+        = render "shared/loginout"
+
+- content_for :footer_top do
+  = render 'shared/feedback_form'
+
+
+- content_for :footer_support_links do
+  = render 'layouts/footer'
+
+
+- content_for :body_end do
+  = javascript_include_tag 'application'
+  = render 'layouts/ga'
+
+- content_for :content do
+  %main#content
+    = yield :breadcrumbs
+
+    = flash_messages
+
+    %h1.page-heading style="border-bottom: 1px solid #000"
+      = "Service down for planned maintenance"
+    %p.lede  This service will be down for essential maintenance during the afternoon of Wednesday 13 November. You will not have access after 13.00 on this day – the site will likely resume service after business hours. Apologies for the inconvenience.
+
+
+= render template: 'layouts/govuk_template'
