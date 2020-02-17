@@ -113,7 +113,7 @@ spec:
           command: ["./run.sh"]
           args: ["worker"]
           env:
-           - name: SECRET_KEY_BASE
+            - name: SECRET_KEY_BASE
               valueFrom:
                 secretKeyRef:
                   name: app-secrets
