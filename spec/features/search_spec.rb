@@ -49,7 +49,6 @@ feature 'Searching feature', elastic: true do
   feature 'for people' do
 
     scenario 'retrieves single exact match for email' do
-      pending "TODO CT-2691 - commented out test to get ES update working"
       fill_in 'query', with: 'jon.browne@digital.justice.gov.uk'
       click_button 'Search'
       expect(page).to have_selector('.cb-person', count: 1)
@@ -88,7 +87,6 @@ feature 'Searching feature', elastic: true do
   feature 'higlighting of search terms' do
 
     scenario 'highlights entire matching email address' do
-      pending "TODO CT-2691 - commented out test to get ES update working"
       fill_in 'query', with: 'jon.browne@digital.justice.gov.uk'
       click_button 'Search'
       within '.cb-person-email' do
