@@ -25,16 +25,6 @@ spec:
             - containerPort: 3000
           command: ["./run.sh"]
           env:
-            - name: ENV
-              value: 'staging'
-            - name: RACK_ENV
-              value: 'production'
-            - name: RAILS_ENV
-              value: 'production'
-            - name: PROJECT
-              value: 'peoplefinder'
-            - name: ACTION_MAILER_DEFAULT_URL
-              value: 'staging.peoplefinder.service.gov.uk'
             - name: RAILS_SERVE_STATIC_FILES
               value: 'true'
             - name: MOJ_PF_ES_URL
@@ -91,6 +81,9 @@ spec:
                   key: secret_access_key
             - name: S3_REGION
               value: 'eu-west-2'
+          envFrom: 
+            - configMapRef:
+                name: environment-variables
           readinessProbe:
             httpGet:
               path: /healthcheck
@@ -120,16 +113,6 @@ spec:
           command: ["./run.sh"]
           args: ["worker"]
           env:
-            - name: ENV
-              value: 'staging'
-            - name: RACK_ENV
-              value: 'production'  
-            - name: RAILS_ENV
-              value: 'production'
-            - name: PROJECT
-              value: 'peoplefinder-jobs'
-            - name: ACTION_MAILER_DEFAULT_URL
-              value: 'staging.peoplefinder.service.gov.uk'
             - name: SECRET_KEY_BASE
               valueFrom:
                 secretKeyRef:
@@ -177,4 +160,7 @@ spec:
                 secretKeyRef:
                   name: app-secrets
                   key: SENDGRID_PASSWORD
+          envFrom: 
+            - configMapRef:
+                name: environment-variables
 

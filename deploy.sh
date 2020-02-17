@@ -113,6 +113,10 @@ function _deploy() {
   # kubectl config set-context ${context} --namespace=$namespace
   # kubectl config use-context ${context}
 
+  # Apply config map updates
+  kubectl apply \
+    -f config/kubernetes/${environment}/env-configmap.yaml -n $namespace
+
   # Apply image specific config
   kubectl set image -f config/kubernetes/${environment}/deployment.yaml \
           webapp=${docker_image_tag} \
@@ -125,6 +129,12 @@ function _deploy() {
     -f config/kubernetes/${environment}/secrets.yaml \
     -n $namespace
 
+  #Add cron jobs if production
+  if [[ $environment == "staging" ]]
+  then
+    kubectl set image -f config/kubernetes/${environment}/cron-person-notifier.yaml \
+            jobs=${docker_image_tag} --local --output yaml | kubectl apply -n $namespace -f -
+  fi
 }
 
 _deploy $@
