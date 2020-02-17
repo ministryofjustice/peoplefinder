@@ -15,9 +15,10 @@ class ApplicationController < ActionController::Base
     redirect_to desired_path(person)
   end
 
+  # rubocop:disable AndOr
   def maintenance_mode
     redirect_to '/' and return unless maintenance_mode_on?
-    render layout: nil, file: "layouts/maintenance"
+    render layout: nil, file: 'layouts/maintenance'
   end
 
   private
