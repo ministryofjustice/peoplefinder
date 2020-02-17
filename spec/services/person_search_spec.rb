@@ -239,8 +239,6 @@ RSpec.describe PersonSearch, elastic: true do
         end
 
         it 'returns person with exact first name and surname in 1st rank' do
-          pending "TODO CT-2691 - commented out test to get ES update working"
-
           expect(results.set.first.name).to eql 'Steve Richards'
         end
 
