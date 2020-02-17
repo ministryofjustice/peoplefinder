@@ -1,9 +1,9 @@
 apiVersion: batch/v1beta1
 kind: CronJob
 metadata:
-  name: person-notifier
+  name: photo-profiles-report-publish
 spec:
-  schedule: "0,5,10,15,20,25,30,35,40,45,50,55 * * * *"
+  schedule: "0 6 * * 1-5"
   concurrencyPolicy: Forbid
   jobTemplate:
     spec:
@@ -67,5 +67,5 @@ spec:
             command:
               - /bin/sh
               - "-c"
-              - "rails runner 'NotificationSender.new.send!'"
+              - "rails runner 'GeckoboardPublisher::PhotoProfilesReport.new.publish!(true)'"
           restartPolicy: OnFailure
