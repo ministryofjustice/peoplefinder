@@ -3,6 +3,8 @@ class ApplicationController < ActionController::Base
   include FeatureHelper
 
   protect_from_forgery with: :exception
+
+  before_action :check_maintenance_mode
   before_action :ensure_user
 
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
@@ -13,7 +15,22 @@ class ApplicationController < ActionController::Base
     redirect_to desired_path(person)
   end
 
+  def maintenance_mode
+    redirect_to '/' and return unless maintenance_mode_on?
+    render layout: nil, file: "layouts/maintenance"
+  end
+
   private
+
+  def maintenance_mode_on?
+    File.exist? Rails.root.join('maintenance.txt')
+  end
+
+  def check_maintenance_mode
+    if maintenance_mode_on? && request.fullpath != '/maintenance'
+      redirect_to '/maintenance' and return
+    end
+  end
 
   def user_for_paper_trail
     logged_in_regular? ? current_user.id : nil
