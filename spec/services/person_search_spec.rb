@@ -243,8 +243,6 @@ RSpec.describe PersonSearch, elastic: true do
         end
 
         it 'returns people with synonyms of first name and exact surname in 2nd rank' do
-          pending "TODO CT-2691 - commented out test to get ES update working"
-
           expect(results.set[1..2].map(&:name)).to match_array ['Stephen Richards', 'Steven Richards']
         end
 
