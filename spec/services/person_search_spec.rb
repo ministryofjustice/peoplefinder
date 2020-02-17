@@ -3,6 +3,4 @@
 
 # RSpec.describe PersonSearch, elastic: true do
 
-
-
 # end
