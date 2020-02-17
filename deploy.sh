@@ -113,6 +113,10 @@ function _deploy() {
   # kubectl config set-context ${context} --namespace=$namespace
   # kubectl config use-context ${context}
 
+  # Apply config map updates
+  kubectl apply \
+    -f config/kubernetes/${environment}/env-configmap.yaml -n $namespace
+
   # Apply image specific config
   kubectl set image -f config/kubernetes/${environment}/deployment.yaml \
           webapp=${docker_image_tag} \
@@ -125,6 +129,40 @@ function _deploy() {
     -f config/kubernetes/${environment}/secrets.yaml \
     -n $namespace
 
+  #Add cron jobs if production
+  # if [[ $environment == "production" ]]
+  # then
+  #   kubectl set image -f config/kubernetes/${environment}/cron-person-notifier.yaml \
+  #           jobs=${docker_image_tag} --local --output yaml | kubectl apply -n $namespace -f -
+
+  #   kubectl set image -f config/kubernetes/${environment}/cron-team-description-notifier.yaml \
+  #           jobs=${docker_image_tag} --local --output yaml | kubectl apply -n $namespace -f -
+
+  #   kubectl set image -f config/kubernetes/${environment}/cron-never-logged-in-notifier.yaml \
+  #           jobs=${docker_image_tag} --local --output yaml | kubectl apply -n $namespace -f -
+
+  #   kubectl set image -f config/kubernetes/${environment}/cron-person-update-reminder.yaml \
+  #           jobs=${docker_image_tag} --local --output yaml | kubectl apply -n $namespace -f -
+
+  #   kubectl set image -f config/kubernetes/${environment}/cron-user-behaviour-report.yaml \
+  #           jobs=${docker_image_tag} --local --output yaml | kubectl apply -n $namespace -f -
+
+  #   kubectl set image -f config/kubernetes/${environment}/cron-profile-completions-report.yaml \
+  #           jobs=${docker_image_tag} --local --output yaml | kubectl apply -n $namespace -f -
+
+  #   kubectl set image -f config/kubernetes/${environment}/cron-profile-changed-report.yaml \
+  #           jobs=${docker_image_tag} --local --output yaml | kubectl apply -n $namespace -f -
+  
+  #   kubectl set image -f config/kubernetes/${environment}/cron-total-profiles-report.yaml \
+  #           jobs=${docker_image_tag} --local --output yaml | kubectl apply -n $namespace -f -
+
+  #   kubectl set image -f config/kubernetes/${environment}/cron-profile-percentage-report.yaml \
+  #             jobs=${docker_image_tag} --local --output yaml | kubectl apply -n $namespace -f -
+    
+  #   kubectl set image -f config/kubernetes/${environment}/cron-photo-profiles-report.yaml \
+  #           jobs=${docker_image_tag} --local --output yaml | kubectl apply -n $namespace -f -
+
+  # fi
 }
 
 _deploy $@
