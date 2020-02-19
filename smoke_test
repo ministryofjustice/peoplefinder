@@ -118,26 +118,26 @@ class SmokeTest
 
   def search_profile(name, search_term)
     visit '/'
-    fill_in 'Enter the name of a person or role', with: search_term
-    click_button 'Submit search'
+    fill_in 'Search name, job title, team name or location', with: search_term
+    click_button 'Search'
     result = nil
-    within '#search_results' do
+    within '#person-results' do
       result = page.has_text?(name)
     end
     result
   end
 
   def update_profile(name, uuid)
-    desc = "Smoke test started at #{@start_time.iso8601}\n\nUnique identifier: #{uuid}"
+    desc = "#{uuid}"
     click_link name, match: :first
     click_edit_profile
-    fill_in 'Extra information', with: desc
+    fill_in 'Job title (optional)', with: desc
     click_button 'Save', match: :first
     fail "couldn't update profile" unless page.has_text?('Updated your profile')
   end
 
   def request_token
-    visit '/'
+    visit '/sessions/new'
     page_loaded = page.has_text?('Request link to access People Finder')
     if page_loaded
       fill_in 'Email address', with: email_address
@@ -158,6 +158,10 @@ class SmokeTest
         mail.date.to_time >= (@start_time - TIME_DRIFT_ALLOWANCE) &&
         mail.text_part.decoded.include?(@host)
     end
+  end
+
+  def click_edit_profile(matcher = :first)
+    click_link('Edit this profile', match: matcher)
   end
 
   def sign_in(path)
