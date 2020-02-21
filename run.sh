@@ -23,12 +23,6 @@ worker)
     echo "cd /usr/src/app && $PATH_APPENDS bin/rails runner -e production \$1" >> rails_runner.sh
     chmod a+x rails_runner.sh
 
-    echo "installing cron"
-    apt-get update && apt-get install -y cron
-
-    echo "starting cron"
-    service cron restart
-
     echo "running worker"
     bundle exec rake jobs:work
     ;;
