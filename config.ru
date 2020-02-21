@@ -1,5 +1,13 @@
 # This file is used by Rack-based servers to start the application.
 
+# Prometheus monitoring
+require_relative 'config/environment'
+require 'prometheus/middleware/collector'
+require 'prometheus/middleware/exporter'
+
+use Prometheus::Middleware::Collector
+use Prometheus::Middleware::Exporter
+
 # Unicorn self-process killer
 require 'unicorn/worker_killer'
 

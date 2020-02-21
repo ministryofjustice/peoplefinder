@@ -2,14 +2,14 @@ apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
   name: peoplefinder-ingress
-  namespace: peoplefinder-development
+  namespace: peoplefinder-demo
 spec:
   tls:
-    - hosts:
-        - development.peoplefinder.service.gov.uk
+    - hosts: 
+      - demo.peoplefinder.service.gov.uk
       secretName: peoplefinder-certificate
   rules:
-    - host: development.peoplefinder.service.gov.uk
+    - host: demo.peoplefinder.service.gov.uk
       http:
         paths:
           - path: /

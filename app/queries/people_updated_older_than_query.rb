@@ -1,7 +1,7 @@
 class PeopleUpdatedOlderThanQuery < BaseQuery
 
   def initialize(within, relation = Person.all)
-    @relation = relation
+    @relation = relation.ordered_by_name
     @within = within
   end
 
