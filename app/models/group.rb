@@ -93,7 +93,7 @@ class Group < ActiveRecord::Base
   end
 
   def all_people
-    Person.all_in_subtree(self)
+    Person.all_in_subtree(self).ordered_by_name
   end
 
   def all_people_count

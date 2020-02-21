@@ -112,8 +112,8 @@ class PersonSearch
   # exact match - email is not analyzed (see mappings)
   def email_query
     {
-      filtered: {
-        query: {
+      bool: {
+        must: {
           term: {
             email: @email_query
           }
@@ -172,7 +172,7 @@ class PersonSearch
   # promote fuzzy surname matches above role/group, above full name
   #
   def fields_to_search
-    %w(surname^12 role_and_group^6 current_project^4 location^4 name^4)
+    %w(surname^12 given_name^12 role_and_group^6 current_project^4 location^4 name^4)
   end
 
   def combined_query

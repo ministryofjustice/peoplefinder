@@ -1,0 +1,10 @@
+kind: ConfigMap 
+apiVersion: v1 
+metadata:
+  name: environment-variables 
+data:
+  ENV: 'production'
+  RACK_ENV: 'production'
+  RAILS_ENV: 'production'
+  ACTION_MAILER_DEFAULT_URL: 'peoplefinder.service.gov.uk'
+  

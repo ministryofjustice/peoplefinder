@@ -1,0 +1,71 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: team-description-notifier
+spec:
+  schedule: "10 8 * * 1-5"
+  concurrencyPolicy: Forbid
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: jobs
+            image: 754256621582.dkr.ecr.eu-west-2.amazonaws.com/peoplefinder/peoplefinder-ecr:latest
+            imagePullPolicy: IfNotPresent
+            env:
+              - name: SECRET_KEY_BASE
+                valueFrom:
+                  secretKeyRef:
+                    name: app-secrets
+                    key: SECRET_KEY_BASE
+              - name: SUPPORT_EMAIL
+                valueFrom:
+                  secretKeyRef:
+                    name: app-secrets
+                    key: SUPPORT_EMAIL
+              - name: DATABASE_URL
+                valueFrom:
+                  secretKeyRef:
+                    name: peoplefinder-rds-output
+                    key: url
+              - name: DATABASE_PASSWORD
+                valueFrom:
+                  secretKeyRef:
+                    name: peoplefinder-rds-output
+                    key: database_password
+              - name: S3_BUCKET_NAME
+                valueFrom:
+                  secretKeyRef:
+                    name: peoplefinder-s3-output
+                    key: bucket_name
+              - name: S3_KEY
+                valueFrom:
+                  secretKeyRef:
+                    name: peoplefinder-s3-output
+                    key: access_key_id
+              - name: S3_SECRET
+                valueFrom:
+                  secretKeyRef:
+                    name: peoplefinder-s3-output
+                    key: secret_access_key
+              - name: S3_REGION
+                value: 'eu-west-2'
+              - name: SENDGRID_USERNAME
+                valueFrom:
+                  secretKeyRef:
+                    name: app-secrets
+                    key: SENDGRID_USERNAME
+              - name: SENDGRID_PASSWORD
+                valueFrom:
+                  secretKeyRef:
+                    name: app-secrets
+                    key: SENDGRID_PASSWORD
+            envFrom: 
+            - configMapRef:
+                name: environment-variables
+            command:
+              - /bin/sh
+              - "-c"
+              - "rails runner 'TeamDescriptionNotifier.send_reminders'"
+          restartPolicy: OnFailure

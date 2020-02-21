@@ -83,7 +83,7 @@ spec:
               value: 'eu-west-2'
           envFrom: 
             - configMapRef:
-                name: environment-variables                    
+                name: environment-variables          
           readinessProbe:
             httpGet:
               path: /healthcheck
@@ -162,5 +162,5 @@ spec:
                   key: SENDGRID_PASSWORD
           envFrom: 
             - configMapRef:
-                name: environment-variables          
+                name: environment-variables
 

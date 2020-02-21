@@ -2,7 +2,7 @@ class PeopleInGroupsQuery < BaseQuery
 
   def initialize(groups, relation = Person.all)
     @groups = groups
-    @relation = relation
+    @relation = relation.ordered_by_name
   end
 
   def call
@@ -12,6 +12,6 @@ class PeopleInGroupsQuery < BaseQuery
                 string_agg(CASE role WHEN '' THEN NULL ELSE role END, ', ' ORDER BY role) AS role_names"
                 ).
           group(:id).
-          uniq, :people)
+          uniq, :people).ordered_by_name
   end
 end
