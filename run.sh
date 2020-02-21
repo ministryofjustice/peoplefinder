@@ -29,9 +29,6 @@ worker)
     echo "starting cron"
     service cron restart
 
-    echo "running whenever to create/update crontab"
-    bundle exec whenever -w
-
     echo "running worker"
     bundle exec rake jobs:work
     ;;

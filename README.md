@@ -198,8 +198,7 @@ In production, periodic emails are sent to users that have:
 - not updated their profile for a period of time; and
 - not added a team description when they are a team leader.
 
-Cronjobs are created to daily check for users matching these conditions and send emails. Cronjobs are created via the
-`whenever` gem and configured here: https://github.com/ministryofjustice/peoplefinder/blob/master/config/schedule.rb
+Cron jobs are handled using Kubernetes Cron jobs. The files are located in config/kubernetes. These are responsible for Emails like the one that you received when someone updates your profile.
 
 ### In Development
 
@@ -377,7 +376,7 @@ Mail previews can be found at `http://localhost:3000/rails/mailers`, assuming th
 
 A <a href="https://app.geckoboard.com/edit/dashboards/116571" target="_blank">Geckboard dashboard</a> is used for the visualization of various metrics from Peoplefinder. These metrics take the form of either pollable endpoints locate under `app/metrics/..` OR pushable/publishable geckboard datasets located under `lib/geckoboardpublisher/..`
 
-The datasets are scheduled for pushing in `conf/schedule.rb` using the whenever gem and cron installed on the worker instances (production environment only).
+The datasets are scheduled for pushing in Kubernetes Cron Jobs and cron installed on the worker instances (production environment only).
 
 Once published, datasets are wired up on Geckboard by adding a widget, specifying "Datasets" for the connection type and selecting the published dataset from the list available.
 

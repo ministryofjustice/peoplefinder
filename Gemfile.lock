@@ -101,7 +101,6 @@ GEM
       xpath (~> 2.0)
     childprocess (0.5.9)
       ffi (~> 1.0, >= 1.0.11)
-    chronic (0.10.2)
     cliver (0.3.2)
     codeclimate-test-reporter (0.4.8)
       simplecov (>= 0.7.1, < 1.0.0)
@@ -593,10 +592,6 @@ GEM
     websocket-driver (0.6.5)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.2)
-    whenever (0.9.7)
-      chronic (>= 0.6.3)
-    whenever-test (1.0.1)
-      whenever
     will_paginate (3.1.5)
     will_paginate-bootstrap (1.0.1)
       will_paginate (>= 3.0.3)
@@ -687,8 +682,6 @@ DEPENDENCIES
   useragent (~> 0.10)
   virtus
   webmock
-  whenever
-  whenever-test
   will_paginate (~> 3.0, >= 3.0.3)
   will_paginate-bootstrap (~> 1.0, >= 1.0.1)
 
