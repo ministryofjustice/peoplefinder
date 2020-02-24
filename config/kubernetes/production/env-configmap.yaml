@@ -6,5 +6,5 @@ data:
   ENV: 'production'
   RACK_ENV: 'production'
   RAILS_ENV: 'production'
-  ACTION_MAILER_DEFAULT_URL: www.peoplefinder.service.gov.uk
+  ACTION_MAILER_DEFAULT_URL: 'peoplefinder.service.gov.uk'
   
