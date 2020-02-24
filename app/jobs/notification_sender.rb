@@ -1,4 +1,4 @@
-# This class is instantiated regularly by the whenever gem
+# This class is instantiated regularly by the Kubernetes Cron
 # to examine the QueuedNotifications table for outstanding
 # notifications, and batch them together and mail to users.
 #
