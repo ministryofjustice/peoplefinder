@@ -57,7 +57,7 @@ Rails.application.routes.draw do
 
   admin_ip_matcher = IpAddressMatcher.new(Rails.configuration.admin_ip_ranges)
 
-  constraints ip: admin_ip_matcher do
+  constraints remote_ip: admin_ip_matcher do
     namespace :admin do
       root to: 'management#show', as: :home
       get 'user_behavior_report', controller: 'management', action: :user_behavior_report

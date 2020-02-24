@@ -44,6 +44,11 @@ spec:
                 secretKeyRef:
                   name: app-secrets
                   key: READONLY_IP_WHITELIST
+            - name: ADMIN_IP_RANGES
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: ADMIN_IP_RANGES
             - name: SENDGRID_USERNAME
               valueFrom:
                 secretKeyRef:
@@ -81,7 +86,7 @@ spec:
                   key: secret_access_key
             - name: S3_REGION
               value: 'eu-west-2'
-          envFrom: 
+          envFrom:
             - configMapRef:
                 name: environment-variables
           readinessProbe:
@@ -160,7 +165,7 @@ spec:
                 secretKeyRef:
                   name: app-secrets
                   key: SENDGRID_PASSWORD
-          envFrom: 
+          envFrom:
             - configMapRef:
                 name: environment-variables
 
