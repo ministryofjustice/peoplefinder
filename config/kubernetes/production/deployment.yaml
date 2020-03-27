@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: peoplefinder
 spec:
-  replicas: 2
+  replicas: 4
   strategy:
     type: RollingUpdate
     rollingUpdate:
@@ -48,7 +48,7 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: app-secrets
-                  key: ADMIN_IP_RANGES                  
+                  key: ADMIN_IP_RANGES
             - name: SENDGRID_USERNAME
               valueFrom:
                 secretKeyRef:
@@ -86,9 +86,9 @@ spec:
                   key: secret_access_key
             - name: S3_REGION
               value: 'eu-west-2'
-          envFrom: 
+          envFrom:
             - configMapRef:
-                name: environment-variables          
+                name: environment-variables
           readinessProbe:
             httpGet:
               path: /healthcheck
@@ -165,6 +165,6 @@ spec:
                 secretKeyRef:
                   name: app-secrets
                   key: SENDGRID_PASSWORD
-          envFrom: 
+          envFrom:
             - configMapRef:
-                name: environment-variables          
+                name: environment-variables
