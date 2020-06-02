@@ -8,7 +8,7 @@
 #  updated_at :datetime
 #
 
-class ProfilePhoto < ActiveRecord::Base
+class ProfilePhoto < ApplicationRecord
   has_one :person
   mount_uploader :image, ImageUploader
 

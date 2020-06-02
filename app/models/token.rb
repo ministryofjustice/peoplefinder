@@ -11,7 +11,7 @@
 #
 require 'secure'
 
-class Token < ActiveRecord::Base
+class Token < ApplicationRecord
   class TTLRaceCondition < StandardError; end
 
   include Concerns::Sanitizable

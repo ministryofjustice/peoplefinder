@@ -15,7 +15,7 @@
 #  updated_at            :datetime         not null
 #
 
-class QueuedNotification < ActiveRecord::Base
+class QueuedNotification < ApplicationRecord
 
   GRACE_PERIOD = 15.minutes
 

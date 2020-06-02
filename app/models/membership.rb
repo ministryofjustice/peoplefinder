@@ -12,7 +12,7 @@
 #  subscribed :boolean          default(TRUE), not null
 #
 
-class Membership < ActiveRecord::Base
+class Membership < ApplicationRecord
   has_paper_trail class_name: 'Version',
                   ignore: [:updated_at, :created_at, :id]
 

@@ -15,7 +15,7 @@
 #  members_completion_score      :integer
 #
 
-class Group < ActiveRecord::Base
+class Group < ApplicationRecord
   include Concerns::Hierarchical
   include Concerns::Placeholder
 

@@ -64,7 +64,7 @@ RSpec.configure do |config|
   end
 
   config.infer_spec_type_from_file_location!
-  config.include FactoryGirl::Syntax::Methods
+  config.include FactoryBot::Syntax::Methods
   config.include SpecSupport::Login
   config.include SpecSupport::Search
   config.include SpecSupport::Carrierwave

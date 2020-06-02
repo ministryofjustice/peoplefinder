@@ -1,6 +1,6 @@
 require 'yaml'
 
-class PersonImportJob < ActiveJob::Base
+class PersonImportJob < ApplicationJob
 
   #
   # The creation of people as initiated by the CSV uploader

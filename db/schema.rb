@@ -1,4 +1,3 @@
-# encoding: UTF-8
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -29,9 +28,8 @@ ActiveRecord::Schema.define(version: 20170228181641) do
     t.string   "queue"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.index ["priority", "run_at"], name: "delayed_jobs_priority", using: :btree
   end
-
-  add_index "delayed_jobs", ["priority", "run_at"], name: "delayed_jobs_priority", using: :btree
 
   create_table "groups", force: :cascade do |t|
     t.text     "name"
@@ -44,10 +42,9 @@ ActiveRecord::Schema.define(version: 20170228181641) do
     t.text     "acronym"
     t.datetime "description_reminder_email_at"
     t.integer  "members_completion_score"
+    t.index ["ancestry"], name: "index_groups_on_ancestry", using: :btree
+    t.index ["slug"], name: "index_groups_on_slug", using: :btree
   end
-
-  add_index "groups", ["ancestry"], name: "index_groups_on_ancestry", using: :btree
-  add_index "groups", ["slug"], name: "index_groups_on_slug", using: :btree
 
   create_table "memberships", force: :cascade do |t|
     t.integer  "group_id",                   null: false
@@ -57,10 +54,9 @@ ActiveRecord::Schema.define(version: 20170228181641) do
     t.datetime "updated_at"
     t.boolean  "leader",     default: false
     t.boolean  "subscribed", default: true,  null: false
+    t.index ["group_id"], name: "index_memberships_on_group_id", using: :btree
+    t.index ["person_id"], name: "index_memberships_on_person_id", using: :btree
   end
-
-  add_index "memberships", ["group_id"], name: "index_memberships_on_group_id", using: :btree
-  add_index "memberships", ["person_id"], name: "index_memberships_on_person_id", using: :btree
 
   create_table "people", force: :cascade do |t|
     t.text     "given_name"
@@ -91,9 +87,9 @@ ActiveRecord::Schema.define(version: 20170228181641) do
     t.datetime "last_reminder_email_at"
     t.string   "current_project"
     t.text     "pager_number"
+    t.index "lower(email)", name: "index_people_on_lowercase_email", unique: true, using: :btree
+    t.index ["slug"], name: "index_people_on_slug", unique: true, using: :btree
   end
-
-  add_index "people", ["slug"], name: "index_people_on_slug", unique: true, using: :btree
 
   create_table "permitted_domains", force: :cascade do |t|
     t.string   "domain"
@@ -147,9 +143,8 @@ ActiveRecord::Schema.define(version: 20170228181641) do
     t.text     "object_changes"
     t.string   "ip_address"
     t.string   "user_agent"
+    t.index ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id", using: :btree
   end
-
-  add_index "versions", ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id", using: :btree
 
   add_foreign_key "memberships", "groups"
   add_foreign_key "memberships", "people"

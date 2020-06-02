@@ -1,4 +1,4 @@
-class UpdateGroupMembersCompletionScoreJob < ActiveJob::Base
+class UpdateGroupMembersCompletionScoreJob < ApplicationJob
 
   # Typically this occurs if a record is deleted after the job is enqueued
   # but before it is executed (i.e. #perform called).
