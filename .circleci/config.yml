@@ -39,7 +39,7 @@ references:
     run:
       name: Install bundler
       command: |
-        gem install bundler -v 1.14.6
+        gem install bundler -v 1.17.1
 
   check_bundler_version: &check_bundler_version
     run:
