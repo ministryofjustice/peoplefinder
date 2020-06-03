@@ -7,7 +7,7 @@ references:
 # Sets up the docker images and environment variables that we use
   test_container_config: &test_container_config
     docker:
-      - image: circleci/ruby:2.3.7-node-browsers-legacy
+      - image: circleci/ruby:2.5.1-node-browsers-legacy
         environment:
           RAILS_ENV: test
           RACK_ENV: test
