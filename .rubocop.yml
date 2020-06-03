@@ -368,6 +368,15 @@ Rails/LinkToBlank:
 Rails/ApplicationController:
   Enabled: false
 
+Performance/StringReplacement:
+  Enabled: false
+
+Lint/NonDeterministicRequireOrder:
+  Enabled: false
+
+Performance/InefficientHashSearch:
+  Enabled: false
+
 # New settings due to upgrade and switch it off for now
 Layout/SpaceAroundMethodCallOperator:
   Enabled: false
