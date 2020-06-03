@@ -33,7 +33,7 @@ module CsvPublisher
       private
 
       def tmp_dir
-        @tmp_dir ||= Rails.root.join('tmp', 'reports')
+        @tmp_dir ||= Rails.root.join('tmp/reports')
       end
 
       # e.g. peoplefinder_staging_user_behavior_report
@@ -56,7 +56,7 @@ module CsvPublisher
 
     def csv_record record_hash
       csv_record = []
-      record_hash.values.each_with_object([]) do |value|
+      record_hash.values.each([]) do |value|
         csv_record += [value]
       end
       csv_record

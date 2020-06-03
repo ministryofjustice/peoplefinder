@@ -334,7 +334,7 @@ RSpec.describe Group, type: :model do
 
       context 'when the team name is changed' do
         it 'gets the updated slug when the name is changed' do
-          team.update_attributes(name: 'Analog Services')
+          team.update(name: 'Analog Services')
           expect(team.reload.slug).to eql('analog-services')
         end
       end

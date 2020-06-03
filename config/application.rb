@@ -34,7 +34,7 @@ module Peoplefinder
 
     config.readonly_ip_whitelist = ENV.fetch('READONLY_IP_WHITELIST', '127.0.0.1')
 
-    config.assets.paths << Rails.root.join('vendor', 'assets', 'components')
+    config.assets.paths << Rails.root.join('vendor/assets/components')
 
     config.support_email = ENV.fetch('SUPPORT_EMAIL')
 

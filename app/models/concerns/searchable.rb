@@ -24,7 +24,7 @@ module Concerns::Searchable
       filter: {
         name_synonyms_expand: {
           type: 'synonym',
-          synonyms: File.readlines(Rails.root.join('config', 'initializers', 'name_synonyms.csv')).map(&:chomp)
+          synonyms: File.readlines(Rails.root.join('config/initializers/name_synonyms.csv')).map(&:chomp)
         }
       },
       analyzer: {

@@ -1,5 +1,6 @@
 source 'https://rubygems.org'
-ruby '2.5.1'
+git_source(:github) { |repo| "https://github.com/#{repo}.git" }
+
 gem 'rails', '~> 5.0.7.2'
 gem 'text'
 gem 'ancestry'
@@ -27,7 +28,7 @@ gem 'haml-rails'
 gem 'jbuilder', '~> 2.10'
 gem 'jquery-rails'
 gem 'keen'
-gem 'mail', '~> 2.6.6.rc1'
+gem 'mail'
 gem 'mini_magick', '>= 4.9.4'
 gem 'netaddr', '~> 2.0.4'
 gem 'paper_trail', '~> 10.3'
@@ -100,7 +101,10 @@ group :development, :test do
   gem 'guard-jasmine'
   gem 'jasmine-rails'
   gem 'rubocop'
-  gem 'rubocop-rspec', '~> 1.15.0'
+  # gem 'rubocop-rspec', '~> 1.15.0'
+  gem 'rubocop-rspec', '~> 1.39.0', require: false
+  gem 'rubocop-performance', require: false
+  gem 'rubocop-rails', require: false
   gem 'annotate'
 end
 

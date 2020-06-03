@@ -27,7 +27,7 @@ module SpecSupport
 
     def complete_profile!(person)
       profile_photo = create(:profile_photo)
-      person.update_attributes(
+      person.update(
         person_attributes.
           except(:email).
           merge(profile_photo_id: profile_photo.id)

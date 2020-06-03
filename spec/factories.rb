@@ -134,7 +134,7 @@ FactoryBot.define do
     end
 
     factory :super_admin do
-      super_admin{ true }
+      super_admin { true }
     end
 
   end
@@ -149,30 +149,30 @@ FactoryBot.define do
 
   factory :profile_photo do
     image { Rack::Test::UploadedFile.new(
-      File.join(Rails.root, 'spec', 'fixtures', 'profile_photo_valid.png')
+      Rails.root.join('spec/fixtures/profile_photo_valid.png')
     ) }
 
     trait :invalid_extension do
       image { Rack::Test::UploadedFile.new(
-        File.join(Rails.root, 'spec', 'fixtures', 'placeholder.bmp')
+        Rails.root.join('spec/fixtures/placeholder.bmp')
       ) }
     end
 
     trait :non_image do
       image { Rack::Test::UploadedFile.new(
-        File.join(Rails.root, 'spec', 'fixtures', 'invalid_rows.csv')
+        Rails.root.join('spec/fixtures/invalid_rows.csv')
       ) }
     end
 
     trait :too_small_dimensions do
       image { Rack::Test::UploadedFile.new(
-        File.join(Rails.root, 'spec', 'fixtures', 'profile_photo_too_small_dimensions.png')
+        Rails.root.join('spec/fixtures/profile_photo_too_small_dimensions.png')
       ) }
     end
 
     trait :large_dimensions do
       image { Rack::Test::UploadedFile.new(
-        File.join(Rails.root, 'spec', 'fixtures', 'profile_photo_large.png')
+        Rails.root.join('spec/fixtures/profile_photo_large.png')
       ) }
     end
   end

@@ -59,9 +59,6 @@ GEM
       tzinfo (~> 1.1)
     addressable (2.7.0)
       public_suffix (>= 2.0.2, < 5.0)
-    aliyun-sdk (0.7.1)
-      nokogiri (~> 1.6)
-      rest-client (~> 2.0)
     ancestry (3.0.7)
       activerecord (>= 3.2.0)
     annotate (3.1.1)
@@ -71,13 +68,13 @@ GEM
     ast (2.4.0)
     awesome_print (1.8.0)
     aws-eventstream (1.1.0)
-    aws-sdk (2.7.3)
-      aws-sdk-resources (= 2.7.3)
-    aws-sdk-core (2.7.3)
+    aws-sdk (2.7.16)
+      aws-sdk-resources (= 2.7.16)
+    aws-sdk-core (2.7.16)
       aws-sigv4 (~> 1.0)
       jmespath (~> 1.0)
-    aws-sdk-resources (2.7.3)
-      aws-sdk-core (= 2.7.3)
+    aws-sdk-resources (2.7.16)
+      aws-sdk-core (= 2.7.16)
     aws-sigv4 (1.1.4)
       aws-eventstream (~> 1.0, >= 1.0.2)
     axiom-types (0.1.1)
@@ -146,18 +143,18 @@ GEM
       dotenv (= 2.7.5)
       railties (>= 3.2, < 6.1)
     dry-inflector (0.2.0)
-    elasticsearch (7.7.0)
-      elasticsearch-api (= 7.7.0)
-      elasticsearch-transport (= 7.7.0)
-    elasticsearch-api (7.7.0)
+    elasticsearch (7.4.0)
+      elasticsearch-api (= 7.4.0)
+      elasticsearch-transport (= 7.4.0)
+    elasticsearch-api (7.4.0)
       multi_json
     elasticsearch-model (6.1.0)
       activesupport (> 3)
       elasticsearch (> 1)
       hashie
     elasticsearch-rails (6.1.0)
-    elasticsearch-transport (7.7.0)
-      faraday (~> 1)
+    elasticsearch-transport (7.4.0)
+      faraday
       multi_json
     equalizer (0.0.11)
     erubi (1.9.0)
@@ -213,8 +210,7 @@ GEM
       fog-xml (~> 0.1.1)
       ipaddress (~> 0.5)
       json (~> 2.0)
-    fog-aliyun (0.3.12)
-      aliyun-sdk
+    fog-aliyun (0.3.13)
       fog-core
       fog-json
       ipaddress (~> 0.8)
@@ -463,8 +459,8 @@ GEM
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
     lumberjack (1.2.5)
-    mail (2.6.6)
-      mime-types (>= 1.16, < 4)
+    mail (2.7.1)
+      mini_mime (>= 0.1.1)
     mailcatcher (0.2.4)
       eventmachine
       haml
@@ -628,8 +624,14 @@ GEM
       unicode-display_width (>= 1.4.0, < 2.0)
     rubocop-ast (0.0.3)
       parser (>= 2.7.0.1)
-    rubocop-rspec (1.15.1)
-      rubocop (>= 0.42.0)
+    rubocop-performance (1.6.0)
+      rubocop (>= 0.71.0)
+    rubocop-rails (2.5.2)
+      activesupport
+      rack (>= 1.1)
+      rubocop (>= 0.72.0)
+    rubocop-rspec (1.39.0)
+      rubocop (>= 0.68.1)
     ruby-progressbar (1.10.1)
     ruby2_keywords (0.0.2)
     ruby_parser (3.14.2)
@@ -728,7 +730,7 @@ GEM
       hashdiff (>= 0.4.0, < 2.0.0)
     websocket-driver (0.6.5)
       websocket-extensions (>= 0.1.0)
-    websocket-extensions (0.1.4)
+    websocket-extensions (0.1.5)
     will_paginate (3.3.0)
     will_paginate-bootstrap (1.0.2)
       will_paginate (>= 3.0.3)
@@ -758,6 +760,7 @@ DEPENDENCIES
   delayed_job
   delayed_job_active_record (~> 4.1.0)
   dotenv-rails
+  elasticsearch (= 7.4.0)
   elasticsearch-model (~> 6.1.0)
   elasticsearch-rails (~> 6.1.0)
   factory_bot_rails
@@ -781,7 +784,7 @@ DEPENDENCIES
   keen
   launchy
   logstasher (~> 0.6.2)
-  mail (~> 2.6.6.rc1)
+  mail
   mailcatcher
   meta_request
   mini_magick (>= 4.9.4)
@@ -802,7 +805,9 @@ DEPENDENCIES
   rspec-json_expectations
   rspec-rails (~> 3.9)
   rubocop
-  rubocop-rspec (~> 1.15.0)
+  rubocop-performance
+  rubocop-rails
+  rubocop-rspec (~> 1.39.0)
   sanitize (>= 4.6.3)
   sass-rails (~> 5.0.6)
   sentry-raven!
@@ -823,9 +828,6 @@ DEPENDENCIES
   webmock
   will_paginate (~> 3.0, >= 3.0.3)
   will_paginate-bootstrap (~> 1.0, >= 1.0.1)
-
-RUBY VERSION
-   ruby 2.5.1p57
 
 BUNDLED WITH
    1.17.1

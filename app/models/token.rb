@@ -75,7 +75,7 @@ class Token < ApplicationRecord
   end
 
   def spend!
-    update_attributes!(spent: true)
+    update!(spent: true)
   end
 
   def self.max_tokens_per_hour

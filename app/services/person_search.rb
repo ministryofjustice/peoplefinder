@@ -151,6 +151,7 @@ class PersonSearch
         name: {
           query: @query,
           analyzer: 'name_synonyms_analyzer', # this is the default name field's analyzer
+          # analyzer: 'standard', # this is the default name field's analyzer
           boost: 4.0 # boost to prioritise synonym matches to 2nd rank
         }
       }

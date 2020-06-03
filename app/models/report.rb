@@ -14,7 +14,7 @@ class Report < ApplicationRecord
   private
 
   def tmp_dir
-    @tmp_dir ||= Rails.root.join('tmp', 'reports')
+    @tmp_dir ||= Rails.root.join('tmp/reports')
   end
 
   def tmp_file_name

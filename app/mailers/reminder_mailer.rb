@@ -1,7 +1,7 @@
-class ReminderMailer < ActionMailer::Base
+class ReminderMailer < ApplicationMailer
   include FeatureHelper
 
-  layout 'email'
+  # layout 'email'
   add_template_helper PeopleHelper
   add_template_helper MailHelper
 

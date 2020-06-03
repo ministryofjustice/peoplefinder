@@ -79,7 +79,7 @@ Rails.application.configure do
   # require 'syslog/logger'
   # config.logger = ActiveSupport::TaggedLogging.new(Syslog::Logger.new 'app-name')
 
-  if ENV["RAILS_LOG_TO_STDOUT"].present?
+  if ENV['RAILS_LOG_TO_STDOUT'].present?
     logger           = ActiveSupport::Logger.new(STDOUT)
     logger.formatter = config.log_formatter
     config.logger = ActiveSupport::TaggedLogging.new(logger)
@@ -103,8 +103,7 @@ Rails.application.configure do
   config.logstasher.enabled = true
   config.logstasher.suppress_app_log = true
   config.logstasher.log_level = Logger::INFO
-  config.logstasher.logger_path =
-    "#{Rails.root}/log/logstash_#{Rails.env}.json"
+  config.logstasher.logger_path = Rails.root.join("log/logstash_#{Rails.env}.json")
   config.logstasher.source = 'logstasher'
   config.logstasher.logger = ActiveSupport::Logger.new STDOUT
 end

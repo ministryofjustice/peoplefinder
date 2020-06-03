@@ -21,15 +21,15 @@ AllCops:
     - 'smoke_test'
     - 'spec/mailers/previews/*'
     - 'lib/generators/**/*'
-  TargetRubyVersion: 2.3
-  TargetRailsVersion: 4.2
+  TargetRubyVersion: 2.5
+  TargetRailsVersion: 5.0
 
 Rails:
   Enabled: true
 
 # Just indent parameters by two spaces. It's less volatile if methods change,
 # and there's less busy work lining things up.
-Layout/AlignParameters:
+Layout/ParameterAlignment:
   EnforcedStyle: with_fixed_indentation
 
 Style/CollectionMethods:
@@ -50,7 +50,7 @@ Style/FormatString:
 Style/GuardClause:
   Enabled: false
 
-Metrics/LineLength:
+Layout/LineLength:
   Max: 120
   Exclude:
     - 'spec/**/*'
@@ -107,13 +107,22 @@ Layout/EmptyLinesAroundModuleBody:
 Style/MethodDefParentheses:
   Enabled: false
 
-Layout/AlignHash:
+Layout/HashAlignment:
+  Enabled: false
+
+Layout/EmptyLinesAroundAttributeAccessor:
   Enabled: false
 
 Style/BlockDelimiters:
   Enabled: false
 
 Style/DoubleNegation:
+  Enabled: false
+
+Style/WordArray:
+  Enabled: false
+
+Naming/HeredocDelimiterNaming:
   Enabled: false
 
 Metrics/ClassLength:
@@ -151,7 +160,7 @@ Style/ClassVars:
   Exclude:
     - 'spec/**/*'
 
-Layout/IndentArray:
+Layout/FirstArrayElementIndentation:
   Exclude:
     - 'spec/**/*'
 
@@ -177,3 +186,222 @@ RSpec/InstanceVariable:
 
 Rails/ScopeArgs:
   Enabled: false
+
+# Switch off due to upgrade
+Rails/UniqueValidationWithoutIndex:
+  Enabled: false
+
+Rails/LexicallyScopedActionFilter:
+  Enabled: false
+
+RSpec/ContextWording:
+  Enabled: false
+
+RSpec/EmptyLineAfterExample:
+  Enabled: false
+
+Capybara/FeatureMethods:
+  Enabled: false
+
+Style/FormatStringToken:
+  Enabled: false
+
+Rails/HttpPositionalArguments:
+  Enabled: false
+
+Layout/EmptyLineAfterGuardClause:
+  Enabled: false
+
+Naming/MethodParameterName:
+  Enabled: false
+
+RSpec/ImplicitSubject:
+  Enabled: false
+
+RSpec/ContextMethod:
+  Enabled: false
+
+Capybara/CurrentPathExpectation:
+  Enabled: false
+
+RSpec/LeakyConstantDeclaration:
+  Enabled: false
+
+RSpec/RepeatedExampleGroupBody:
+  Enabled: false
+
+RSpec/PredicateMatcher:
+  Enabled: false
+
+Style/CommentedKeyword:
+  Enabled: false
+
+Capybara/VisibilityMatcher:
+  Enabled: false
+
+RSpec/EmptyLineAfterHook:
+  Enabled: false
+
+Layout/MultilineBlockLayout:
+  Enabled: false
+
+Style/RedundantSort:
+  Enabled: false
+
+RSpec/SubjectStub:
+  Enabled: false
+
+FactoryBot/CreateList:
+  Enabled: false
+
+RSpec/LetBeforeExamples:
+  Enabled: false
+
+FactoryBot/AttributeDefinedStatically:
+  Enabled: false
+
+Naming/RescuedExceptionsVariableName:
+  Enabled: false
+
+Rails/HasManyOrHasOneDependent:
+  Enabled: false
+
+Rails/InverseOf:
+  Enabled: false
+
+Style/Encoding:
+  Enabled: false
+
+Style/SafeNavigation:
+  Enabled: false
+
+Style/RescueStandardError:
+  Enabled: false
+
+Style/MutableConstant:
+  Enabled: false
+
+Style/MissingRespondToMissing:
+  Enabled: false
+
+Layout/ArgumentAlignment:
+  Enabled: false
+
+Style/ExpandPathArguments:
+  Enabled: false
+
+Style/RedundantBegin:
+  Enabled: false
+
+RSpec/ReceiveNever:
+  Enabled: false
+
+RSpec/MultipleExpectations:
+  Enabled: false
+
+RSpec/HooksBeforeExamples:
+  Enabled: false
+
+Layout/BlockEndNewline:
+  Enabled: false
+
+Layout/LeadingEmptyLines:
+  Enabled: false
+
+Style/RandomWithOffset:
+  Enabled: false
+
+RSpec/EmptyLineAfterExampleGroup:
+  Enabled: false
+
+Naming/MemoizedInstanceVariableName:
+  Enabled: false
+
+Layout/TrailingWhitespace:
+  Enabled: false
+
+Layout/SpaceInsideArrayLiteralBrackets:
+  Enabled: false
+
+Layout/EmptyLines:
+  Enabled: false
+
+Layout/TrailingEmptyLines:
+  Enabled: false
+
+RSpec/ExpectChange:
+  Enabled: false
+
+RSpec/ExpectInHook:
+  Enabled: false
+
+Lint/RedundantCopDisableDirective:
+  Enabled: false
+
+RSpec/ImplicitBlockExpectation:
+  Enabled: false
+
+RSpec/MultipleSubjects:
+  Enabled: false
+
+Rails/FilePath:
+  Enabled: false
+
+Layout/IndentationWidth:
+  Enabled: false
+
+Rails/HelperInstanceVariable:
+  Enabled: false
+
+Rails/Presence:
+  Enabled: false
+
+Performance/RegexpMatch:
+  Enabled: false
+
+Performance/EndWith:
+  Enabled: false
+
+Rails/LinkToBlank:
+  Enabled: false
+
+Rails/ApplicationController:
+  Enabled: false
+
+# New settings due to upgrade and switch it off for now
+Layout/SpaceAroundMethodCallOperator:
+  Enabled: false
+
+Lint/DeprecatedOpenSSLConstant:
+  Enabled: false
+
+Lint/MixedRegexpCaptureTypes:
+  Enabled: false
+
+Lint/RaiseException:
+  Enabled: false
+
+Lint/StructNewOverride:
+  Enabled: false
+
+Style/ExponentialNotation:
+  Enabled: false
+
+Style/HashEachMethods:
+  Enabled: false
+
+Style/HashTransformKeys:
+  Enabled: false
+
+Style/HashTransformValues:
+  Enabled: false
+
+Style/RedundantRegexpCharacterClass:
+  Enabled: false
+
+Style/RedundantRegexpEscape:
+  Enabled: false
+
+Style/SlicingWithRange:
+  Enabled: false
+
