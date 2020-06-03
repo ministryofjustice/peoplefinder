@@ -58,6 +58,7 @@ references:
     run:
       name: Install dependencies
       command: |
+        bundle install --path vendor/bundle && bundle clean
         if [ "${CIRCLE_NODE_INDEX}" == "0" ]; then
           bundle check --path vendor/bundle || bundle install --path vendor/bundle && bundle clean
         fi
