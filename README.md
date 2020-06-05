@@ -60,21 +60,10 @@ export JAVA_HOME=`/usr/libexec/java_home -v 1.8`
 
 [Install Homebrew](http://brew.sh/) if it is not on your machine.
 
-Regarding Elasticsearch, unfortunately the version we use is no longer available from Homebrew. There are two options presently:
+Regarding Elasticsearch, unfortunately the version we use is no longer available from Homebrew. The easiest thing to do is run the Elasticsearch server in Docker and keep it running in a separate terminal window for local development use:
 
-Either:
-
-Download and run the binary executable from the Elastic website and extract it into a sensible location where you don't mind keeping it - https://download.elastic.co/elasticsearch/elasticsearch/elasticsearch-1.7.0.zip then change into that  directory and run
-
-`$ ./elasticsearch`
-
-Or:
-
-Run this docker image maintained by a third party:
 ```cmd
-docker run --name elasticsearch \
->   --publish 9200:9200 \
->   [quay.io/trackmaven/elasticsearch:1.7](http://quay.io/trackmaven/elasticsearch:1.7)
+docker run --name elasticsearch  --publish 9200:9200 bitnami/elasticsearch:6.8.6-r1
 ```
 
 Install remaining dependencies on Mac OSX:
