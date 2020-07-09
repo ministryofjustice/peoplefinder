@@ -1,11 +1,11 @@
-apiVersion: extensions/v1beta1
+apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
 metadata:
   name: peoplefinder-ingress
   namespace: peoplefinder-staging
 spec:
   tls:
-    - hosts: 
+    - hosts:
       - staging.peoplefinder.service.gov.uk
       secretName: peoplefinder-certificate
   rules:
