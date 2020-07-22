@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: peoplefinder
 spec:
-  replicas: 2
+  replicas: 1
   strategy:
     type: RollingUpdate
     rollingUpdate:
