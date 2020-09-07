@@ -17,7 +17,7 @@ RSpec.describe SearchController, type: :controller do
     allow(GroupSearch).to receive(:new).and_return(group_search)
   end
 
-  subject { get :index, query: query, search_filters: search_filters }
+  subject { get :index, params: { query: query, search_filters: search_filters } }
 
   describe 'GET #index' do
     context 'with valid UTF-8' do

@@ -76,6 +76,7 @@ group :development do
 end
 
 group :test do
+  gem 'rails-controller-testing'
   gem 'codeclimate-test-reporter', require: nil
   gem 'database_cleaner'
   gem 'site_prism'

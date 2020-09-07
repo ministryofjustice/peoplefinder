@@ -33,6 +33,7 @@ end
 # Capybara.javascript_driver = :poltergeist # uncomment to enable console.log
 Capybara.javascript_driver = :poltergeist_silent # uncomment this to disable console.log (including warn)
 Capybara.default_max_wait_time = 3
+Capybara.server = :puma, { Silent: true }
 
 # Fix load order issue on Circle CI 2.0
 require File.expand_path('../support/pages/base.rb', __FILE__)

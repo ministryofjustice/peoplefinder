@@ -63,7 +63,7 @@ class Person < ApplicationRecord
     )
   end
 
-  has_paper_trail class_name: 'Version',
+  has_paper_trail versions: {class_name: "Version"},
                   ignore: [:updated_at, :created_at, :id, :slug, :login_count, :last_login_at,
                            :last_reminder_email_at]
 
@@ -147,7 +147,7 @@ class Person < ApplicationRecord
       where(memberships: { group_id: group.id }).
       where(memberships: { leader: false }).
       where('NOT EXISTS (SELECT 1 FROM memberships m2 WHERE m2.person_id = people.id AND m2.group_id != ?)', group.id).
-      uniq
+      distinct
   end
 
   # Does not return ActiveRecord::Relation

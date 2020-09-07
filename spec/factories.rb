@@ -33,7 +33,7 @@ FactoryBot.define do
     group
 
     factory :membership_default do
-      role nil
+      role { nil }
       leader { false }
       subscribed { true }
       group_id { create(:department).id }
@@ -101,10 +101,10 @@ FactoryBot.define do
 
     trait :member_of do
       transient do
-        team nil
+        team { nil }
         leader { false }
         subscribed { true }
-        role nil
+        role { nil }
         sole_membership { false }
       end
       after(:build) do |peep, evaluator|
@@ -149,30 +149,30 @@ FactoryBot.define do
 
   factory :profile_photo do
     image { Rack::Test::UploadedFile.new(
-      Rails.root.join('spec/fixtures/profile_photo_valid.png')
+      Rails.root.join('spec/fixtures/profile_photo_valid.png').to_s
     ) }
 
     trait :invalid_extension do
       image { Rack::Test::UploadedFile.new(
-        Rails.root.join('spec/fixtures/placeholder.bmp')
+        Rails.root.join('spec/fixtures/placeholder.bmp').to_s
       ) }
     end
 
     trait :non_image do
       image { Rack::Test::UploadedFile.new(
-        Rails.root.join('spec/fixtures/invalid_rows.csv')
+        Rails.root.join('spec/fixtures/invalid_rows.csv').to_s
       ) }
     end
 
     trait :too_small_dimensions do
       image { Rack::Test::UploadedFile.new(
-        Rails.root.join('spec/fixtures/profile_photo_too_small_dimensions.png')
+        Rails.root.join('spec/fixtures/profile_photo_too_small_dimensions.png').to_s
       ) }
     end
 
     trait :large_dimensions do
       image { Rack::Test::UploadedFile.new(
-        Rails.root.join('spec/fixtures/profile_photo_large.png')
+        Rails.root.join('spec/fixtures/profile_photo_large.png').to_s
       ) }
     end
   end
