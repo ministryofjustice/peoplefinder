@@ -24,7 +24,7 @@ describe PeopleUpdatedOlderThanQuery do
       %q{
         SELECT "people".*
         FROM "people"
-        WHERE (updated_at < '2016-11-19 04:03:06.000000')
+        WHERE (updated_at < '2016-11-19 04:03:06')
         ORDER BY "people"."surname" ASC, "people"."given_name" ASC
       }
     end
