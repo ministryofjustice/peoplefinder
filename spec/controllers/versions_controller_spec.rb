@@ -49,7 +49,7 @@ RSpec.describe VersionsController, type: :controller do
       with_versioning do
         person = create(:person)
         version = PaperTrail::Version.where(item_type: 'Person').last
-        put :undo, id: version.id
+        put :undo, params: { id: version.id }
 
         expect { Person.find(person.id) }.
           to raise_error(ActiveRecord::RecordNotFound)
@@ -61,7 +61,7 @@ RSpec.describe VersionsController, type: :controller do
         person = create(:person, surname: 'Necro')
         person.destroy
         version = PaperTrail::Version.where(item_type: 'Person').last
-        put :undo, id: version.id
+        put :undo, params: { id: version.id }
 
         expect(Person.find_by_surname('Necro')).to be_present
       end
@@ -71,7 +71,7 @@ RSpec.describe VersionsController, type: :controller do
       with_versioning do
         membership = create(:membership)
         version = PaperTrail::Version.last
-        put :undo, id: version.id
+        put :undo, params: { id: version.id }
 
         expect(Membership.find(membership.id)).to be_present
       end
@@ -82,7 +82,7 @@ RSpec.describe VersionsController, type: :controller do
         membership = create(:membership)
         membership.destroy
         version = PaperTrail::Version.last
-        put :undo, id: version.id
+        put :undo, params: { id: version.id }
 
         expect { Membership.find(membership.id) }.
           to raise_error(ActiveRecord::RecordNotFound)

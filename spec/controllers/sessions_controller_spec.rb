@@ -40,12 +40,12 @@ RSpec.describe SessionsController, type: :controller do
     end
 
     it 'creates the new person' do
-      expect { post :create_person, person_params }.to change Person, :count
+      expect { post :create_person, params: person_params }.to change Person, :count
     end
 
     it 'redirects to the person\'s profile edit page, ignoring desired path' do
       request.session[:desired_path] = '/search'
-      post :create_person, person_params
+      post :create_person, params: person_params
       expect(response).to redirect_to edit_person_path(Person.find_by(email: 'fred.bloggs@digital.justice.gov.uk'), page_title: "Create profile")
     end
   end

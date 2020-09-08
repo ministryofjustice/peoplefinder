@@ -207,7 +207,7 @@ Style/FormatStringToken:
   Enabled: false
 
 Rails/HttpPositionalArguments:
-  Enabled: false
+  Enabled: true
 
 Layout/EmptyLineAfterGuardClause:
   Enabled: false

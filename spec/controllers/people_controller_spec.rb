@@ -24,7 +24,7 @@ RSpec.describe PeopleController, type: :controller do
 
   describe 'GET index' do
     it 'redirects to the root' do
-      get :index, {}
+      get :index
       expect(response).to redirect_to('/')
     end
   end
@@ -39,12 +39,12 @@ RSpec.describe PeopleController, type: :controller do
 
   describe 'GET new' do
     it 'assigns a new person as @person' do
-      get :new, {}
+      get :new
       expect(assigns(:person)).to be_a_new(Person)
     end
 
     it 'builds a membership object' do
-      get :new, {}
+      get :new
       expect(assigns(:person).memberships.length).to eql(1)
     end
   end

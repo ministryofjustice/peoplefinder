@@ -20,7 +20,7 @@ RSpec.describe SuggestionsController, type: :controller do
     it 'assigns a new suggestion as @suggestion' do
       expect(Suggestion).to receive(:new).and_return(suggestion)
 
-      get :new, person_id: person_id
+      get :new, params: { person_id: person_id }
       expect(assigns(:suggestion)).to eq suggestion
     end
 
@@ -29,7 +29,7 @@ RSpec.describe SuggestionsController, type: :controller do
       expect(Person).to receive(:friendly).and_return(friendly)
       expect(friendly).to receive(:find).with(person_id).and_return(person)
 
-      get :new, person_id: person_id
+      get :new, params: { person_id: person_id }
 
       expect(assigns(:person)).to eq person
     end
@@ -37,7 +37,7 @@ RSpec.describe SuggestionsController, type: :controller do
     it 'checks whether authority to edit person exists' do
       expect(controller).to receive(:authorize).with(person)
 
-      get :new, person_id: person_id
+      get :new, params: { person_id: person_id }
     end
   end
 
@@ -49,7 +49,7 @@ RSpec.describe SuggestionsController, type: :controller do
 
       it 'renders the form' do
         expect(Suggestion).to receive(:new).with(params).and_return(suggestion)
-        post :create, person_id: 'foo', suggestion: params
+        post :create, params: { person_id: 'foo', suggestion: params }
         expect(response).to render_template(:new)
       end
     end
@@ -63,7 +63,7 @@ RSpec.describe SuggestionsController, type: :controller do
         expect(friendly).to receive(:find).with(person_id).and_return(person)
         expect(SuggestionDelivery).to receive(:deliver).with(person, current_user, suggestion)
 
-        post :create, person_id: person_id, suggestion: params
+        post :create, params: { person_id: person_id, suggestion: params }
 
         expect(response).to render_template(:create)
       end
@@ -73,7 +73,7 @@ RSpec.describe SuggestionsController, type: :controller do
         allow(SuggestionDelivery).to receive(:deliver).with(person, current_user, suggestion)
 
         expect(controller).to receive(:authorize).with(person)
-        post :create, person_id: person_id, suggestion: params
+        post :create, params: { person_id: person_id, suggestion: params }
       end
 
     end

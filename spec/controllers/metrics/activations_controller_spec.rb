@@ -48,12 +48,12 @@ RSpec.describe Metrics::ActivationsController, type: :controller do
           }
         ]
       }
-      get :index, cohort_split_date: date
+      get :index, params: { cohort_split_date: date }
       expect(parsed_body).to eq(expected)
     end
 
     it 'returns 200 OK' do
-      get :index, cohort_split_date: date
+      get :index, params: { cohort_split_date: date }
       expect(response).to be_ok
     end
   end

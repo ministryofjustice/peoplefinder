@@ -24,7 +24,7 @@ RSpec.describe Api::PeopleController, type: :controller do
 
       before do
         request.headers['AUTHORIZATION'] = token.value
-        get :show, id: subject.to_param
+        get :show, params: { id: subject.to_param }
       end
 
       it 'assigns the requested person as @person' do
@@ -39,7 +39,7 @@ RSpec.describe Api::PeopleController, type: :controller do
     context 'without valid auth token' do
       before do
         request.headers['AUTHORIZATION'] = 'xxxxxxxx'
-        get :show, id: subject.to_param
+        get :show, params: { id: subject.to_param }
       end
 
       it 'returns status 401' do
