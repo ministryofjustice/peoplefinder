@@ -31,7 +31,7 @@ class UpdateGroupMembersCompletionScoreJob < ApplicationJob
   def error_handler exception
     Rails.logger.warn "#{self.class} encountered #{exception.class}: #{exception.message}"
     if exception.is_a? ActiveJob::DeserializationError
-      exception.original_exception == ActiveRecord::RecordNotFound
+      exception.cause == ActiveRecord::RecordNotFound
     else
       false
     end
