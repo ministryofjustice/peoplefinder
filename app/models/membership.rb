@@ -13,7 +13,7 @@
 #
 
 class Membership < ApplicationRecord
-  has_paper_trail versions: {class_name: "Version"},
+  has_paper_trail versions: { class_name: 'Version' },
                   ignore: [:updated_at, :created_at, :id]
 
   belongs_to :person, touch: true

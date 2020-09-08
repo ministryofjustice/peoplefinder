@@ -339,7 +339,7 @@ RSpec.describe PeopleController, type: :controller do
 
         context 'pressing confirm on duplicate confirmation page' do
           it 'updates and shows the person edit page' do
-            post :create, params: { person: valid_attributes.merge(given_name: 'Francis', surname: 'Drake', email: 'francis.drake@digital.justice.gov.uk'), continue_from_duplication: '1'}
+            post :create, params: { person: valid_attributes.merge(given_name: 'Francis', surname: 'Drake', email: 'francis.drake@digital.justice.gov.uk'), continue_from_duplication: '1' }
             person = Person.friendly.find('francis-drake')
             expect(response).to redirect_to person_path(person)
           end

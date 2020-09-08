@@ -21,7 +21,7 @@ class Group < ApplicationRecord
 
   MAX_DESCRIPTION = 1000
 
-  has_paper_trail versions: {class_name: "Version"},
+  has_paper_trail versions: { class_name: 'Version' },
                   ignore: [:updated_at, :created_at, :slug, :id,
                            :description_reminder_email_at,
                            :members_completion_score]
