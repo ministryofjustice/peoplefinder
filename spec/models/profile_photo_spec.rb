@@ -11,7 +11,7 @@
 require 'rails_helper'
 
 RSpec.describe ProfilePhoto, type: :model do
-  subject { create(:profile_photo) }
+  subject { build_stubbed(:profile_photo) }
 
   it { is_expected.to respond_to :upload_dimensions }
   it { is_expected.to respond_to :crop_x }
