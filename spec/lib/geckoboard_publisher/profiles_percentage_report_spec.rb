@@ -54,7 +54,7 @@ RSpec.describe GeckoboardPublisher::ProfilesPercentageReport, geckoboard: true d
 
     it 'returns expected dataset items' do
       expected_items.each do |item|
-        is_expected.to include item
+        expect(expected_items.include?(item)).to be true
       end
     end
   end
