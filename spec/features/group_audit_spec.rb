@@ -15,7 +15,7 @@ feature 'View group audit' do
 
   before do
     with_versioning do
-      PaperTrail.whodunnit = author.id
+      PaperTrail.request.whodunnit = author.id
       group.update name: name
       group.update description: description
     end
