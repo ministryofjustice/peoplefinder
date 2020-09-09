@@ -18,7 +18,7 @@ feature 'View person audit' do
   context 'modern versioning' do
     before do
       with_versioning do
-        PaperTrail.whodunnit = author.id
+        PaperTrail.request.whodunnit = author.id
         person.update description: description
         person.update primary_phone_number: phone_number
         person.update profile_photo_id: profile_photo.id
@@ -85,7 +85,7 @@ feature 'View person audit' do
   context 'legacy versioning as an admin' do
     before do
       with_versioning do
-        PaperTrail.whodunnit = 'Michael Mouse'
+        PaperTrail.request.whodunnit = 'Michael Mouse'
         person.update description: description
       end
 
