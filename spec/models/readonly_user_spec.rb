@@ -6,7 +6,7 @@ RSpec.describe ReadonlyUser, type: :model do
   let(:be_readonly_user) { be_instance_of described_class }
 
   describe '.from_request' do
-    let(:request) { ActionDispatch::TestRequest.new }
+    let(:request) { ActionDispatch::TestRequest.create }
 
     subject { described_class.from_request(request) }
 
