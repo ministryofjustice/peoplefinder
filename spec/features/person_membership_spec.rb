@@ -65,7 +65,7 @@ feature "Person maintenance" do
 
     membership = person.reload.memberships.last
     expect(membership.role).to eql('Head Honcho')
-    expect(page).to have_selector('.cb-job-title', text: 'Head Honcho in Digital Justice')
+    expect(page).to have_selector('.cb-job-title', text: "Head Honcho in\nDigital Justice")
   end
 
   scenario 'Leaving the job title blank', js: true do
