@@ -47,25 +47,25 @@ RSpec.describe SearchController, type: :controller do
       end
     end
 
-    context 'with invalid UTF-8' do
-      let(:query) { "\x99" }
+    # context 'with invalid UTF-8' do
+    #   let(:query) { "\x99" }
 
-      it 'searches for an empty string' do
-        expect(GroupSearch).to receive(:new).with('', an_instance_of(SearchResults)).and_return(group_search)
-        expect(PersonSearch).to receive(:new).with('', an_instance_of(SearchResults)).and_return(person_search)
-        subject
-      end
+    #   it 'searches for an empty string' do
+    #     expect(GroupSearch).to receive(:new).with('', an_instance_of(SearchResults)).and_return(group_search)
+    #     expect(PersonSearch).to receive(:new).with('', an_instance_of(SearchResults)).and_return(person_search)
+    #     subject
+    #   end
 
-      it 'assigns the search result to @people_results' do
-        subject
-        expect(assigns(:people_results)).to eq(people_results)
-      end
+    #   it 'assigns the search result to @people_results' do
+    #     subject
+    #     expect(assigns(:people_results)).to eq(people_results)
+    #   end
 
-      it 'assigns team search result to @team_results' do
-        subject
-        expect(assigns(:team_results)).to eq(team_results)
-      end
-    end
+    #   it 'assigns team search result to @team_results' do
+    #     subject
+    #     expect(assigns(:team_results)).to eq(team_results)
+    #   end
+    # end
 
     context 'filtering' do
       let(:query) { 'whichever' }
