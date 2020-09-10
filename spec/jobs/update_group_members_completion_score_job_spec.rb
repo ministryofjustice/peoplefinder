@@ -50,7 +50,7 @@ RSpec.describe UpdateGroupMembersCompletionScoreJob, type: :job do
     end
 
     it 'tests if original exception arises from deleted records' do
-      expect_any_instance_of(ActiveJob::DeserializationError).to receive(:original_exception).and_return(ActiveRecord::RecordNotFound)
+      expect_any_instance_of(ActiveJob::DeserializationError).to receive(:cause).and_return(ActiveRecord::RecordNotFound)
       perform_enqueued_jobs { enqueue_job }
     end
   end
