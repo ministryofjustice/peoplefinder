@@ -94,7 +94,7 @@ feature 'Login flow' do
           token_login_step_with_expectation
           expect(confirm_page).to be_displayed
           expect(confirm_page).to be_all_there
-          expect(confirm_page.form).to be_all_there
+          expect(confirm_page.form).to be_visible
           expect(confirm_page).to have_content "Create profile"
           expect(confirm_page.person_confirm_results).to have_confirmation_results count: 2
           expect(confirm_page.person_confirm_results.name_links).to include '/people/john-doe'
