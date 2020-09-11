@@ -82,7 +82,7 @@ RSpec.describe PeopleController, type: :controller do
       end
 
       it 'assigns a newly created person as @person' do
-        post :create, params: { erson: valid_attributes }
+        post :create, params: { person: valid_attributes }
         expect(assigns(:person)).to be_a(Person)
         expect(assigns(:person)).to be_persisted
       end
