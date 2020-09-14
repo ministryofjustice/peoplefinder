@@ -114,7 +114,7 @@ feature 'Audit trail' do
     end
 
     visit '/audit_trail'
-    within('tbody tr:first-child') do
+    within('tbody tr:nth-child(2)') do
       expect(page).to have_text('New Membership')
       expect(page).to have_text('Person set to: Bob Smith')
       expect(page).to have_text('Team set to: Digital Justice')
