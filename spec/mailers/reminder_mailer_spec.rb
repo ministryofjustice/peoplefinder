@@ -5,7 +5,8 @@ RSpec.describe ReminderMailer do
 
   let(:person) { create(:person, given_name: 'John', surname: 'Coe', email: 'test.user@digital.justice.gov.uk') }
 
-  let(:group)  do
+  let!(:group)  do
+    person.reload
     team = create(:group)
     team.people << person
     person.memberships.first.update(leader: true)
