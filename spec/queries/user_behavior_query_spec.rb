@@ -96,7 +96,7 @@ describe UserBehaviorQuery, versioning: true do
           ancestors: [moj.name, csg.name].join(' > '),
           login_count: 0,
           last_login_at: nil,
-          updates_count: 0
+          updates_count: 4 
         },
         {
           id: person1.id,
@@ -107,7 +107,7 @@ describe UserBehaviorQuery, versioning: true do
           ancestors: [moj.name, csg.name].join(' > '),
           login_count: 0,
           last_login_at: nil,
-          updates_count: 0
+          updates_count: 4
         },
         {
           id: person1.id,
@@ -118,7 +118,7 @@ describe UserBehaviorQuery, versioning: true do
           ancestors: moj.name,
           login_count: 0,
           last_login_at: nil,
-          updates_count: 0
+          updates_count: 4
         },
         {
           id: person2.id,
@@ -129,7 +129,7 @@ describe UserBehaviorQuery, versioning: true do
           ancestors: nil,
           login_count: 2,
           last_login_at: "22-05-2017",
-          updates_count: 0
+          updates_count: 1
         },
         {
           id: person3.id,
@@ -140,7 +140,7 @@ describe UserBehaviorQuery, versioning: true do
           ancestors: nil,
           login_count: 3,
           last_login_at: "21-05-2016",
-          updates_count: 2
+          updates_count: 3
         }
       ]
     end
@@ -157,6 +157,7 @@ describe UserBehaviorQuery, versioning: true do
     end
 
     it 'returns expected collections and format' do
+      # binding.pry
       expect(subject).to match_array expected_collections
     end
 
