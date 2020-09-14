@@ -40,7 +40,7 @@ feature 'Audit trail' do
       expect(page).to have_text('Surname set to: Smith')
 
       expect do
-        within('table > tbody > tr:nth-child(3)') do
+        within('table > tbody > tr:nth-child(2)') do
           click_button 'undo', match: :first
         end
       end.to change(Person, :count).by(-1)
@@ -51,14 +51,18 @@ feature 'Audit trail' do
     with_versioning do
       person = create(:person, surname: 'Dan', given_name: 'Greg')
       visit person_path(person)
+
       click_delete_profile
 
       visit '/audit_trail'
+
       expect(page).to have_text('Deleted Person')
       expect(page).to have_text('Name: Greg Dan')
 
       expect do
-        click_button 'undo', match: :first
+        within('table > tbody > tr:nth-child(2)') do
+          click_button 'undo', match: :first
+        end
       end.to change(Person, :count).by(1)
     end
   end
@@ -115,7 +119,7 @@ feature 'Audit trail' do
     end
 
     visit '/audit_trail'
-    within('tbody tr:nth-child(2)') do
+    within('tbody tr:nth-child(1)') do
       expect(page).to have_text('New Membership')
       expect(page).to have_text('Person set to: Bob Smith')
       expect(page).to have_text('Team set to: Digital Justice')
@@ -135,7 +139,6 @@ feature 'Audit trail' do
     Timecop.freeze(1.day.from_now) do
       with_versioning do
         visit edit_person_path(person)
-        save_and_open_page
         within last_membership do
           click_link 'Leave team'
         end
@@ -144,7 +147,6 @@ feature 'Audit trail' do
     end
 
     visit '/audit_trail'
-    save_and_open_page
     within('tbody tr:first-child') do
       expect(page).to have_text('Deleted Membership')
       expect(page).to have_text('Person was: Joe Bob')
