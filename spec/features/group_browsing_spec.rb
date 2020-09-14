@@ -116,7 +116,7 @@ feature 'Group browsing' do
         expect(page).to have_text('People not assigned to a sub-team')
       end
 
-      expect(page).to have_text("People in #{team.name} not assigned to a sub-team")
+      expect(page).to have_text("People in #{team.name} not assigned to a sub-team", normalize_ws: true)
       names.each do |name|
         expect(page).to have_link(name.join(' '))
       end
