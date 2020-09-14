@@ -56,7 +56,7 @@ module CsvPublisher
 
     def csv_record record_hash
       csv_record = []
-      record_hash.values.each([]) do |value|
+      record_hash.values.each_with_object([]) do |value|
         csv_record += [value]
       end
       csv_record
