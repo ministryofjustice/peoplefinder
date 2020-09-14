@@ -10,6 +10,7 @@ RSpec.describe TeamDescriptionNotifier, type: :service do
   let(:group)  do
     team = create(:group)
     team.people << person
+    person.reload
     person.memberships.first.update(leader: true)
     team
   end
