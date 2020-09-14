@@ -95,12 +95,12 @@ RSpec.describe ReminderMailer do
       team_name = group.name # also creates group
       %w(html plain).each do |type|
         text = get_message_part(mail, type)
-        expect(text).to have_text('Name John Coe')
-        expect(text).to have_text("Team #{team_name} - you are a team leader")
-        expect(text).to have_text('Role -')
-        expect(text).to have_text('Location -')
-        expect(text).to have_text('Primary phone number -')
-        expect(text).to have_text('Current project(s) -')
+        expect(text).to have_text('Name John Coe', normalize_ws: true)
+        expect(text).to have_text("Team #{team_name} - you are a team leader", normalize_ws: true)
+        expect(text).to have_text('Role -', normalize_ws: true)
+        expect(text).to have_text('Location -', normalize_ws: true)
+        expect(text).to have_text('Primary phone number -', normalize_ws: true)
+        expect(text).to have_text('Current project(s) -', normalize_ws: true)
       end
     end
   end
