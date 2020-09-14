@@ -21,7 +21,6 @@ feature 'Audit trail' do
 
       click_button 'undo', match: :first
 
-      person.reload
       expect(person.surname).to eq('original surname')
     end
   end
@@ -41,7 +40,9 @@ feature 'Audit trail' do
       expect(page).to have_text('Surname set to: Smith')
 
       expect do
-        click_button 'undo', match: :first
+        within('table > tbody > tr:nth-child(3)') do
+          click_button 'undo', match: :first
+        end
       end.to change(Person, :count).by(-1)
     end
   end
