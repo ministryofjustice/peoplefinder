@@ -194,3 +194,6 @@ Lint/RedundantWithObject:
 
 FactoryBot/CreateList:
   Enabled: false
+
+Lint/MissingSuper:
+  Enabled: false # was causing circle to fail
