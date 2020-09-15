@@ -7,7 +7,7 @@ class TokenLogin
   end
 
   def call view
-    if token && token.active?
+    if token&.active?
       if view.supported_browser?
         login_and_render(view)
       else

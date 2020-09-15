@@ -20,6 +20,7 @@ RSpec.describe PersonChangesPresenter, type: :presenter do
 
   describe 'delegation' do
     before { person.email = new_email }
+
     it 'delegates [] to #changes' do
       expect(subject[:email]).to eq subject.changes[:email]
     end
@@ -28,8 +29,9 @@ RSpec.describe PersonChangesPresenter, type: :presenter do
   describe '#raw' do
     subject { described_class.new(person.changes).raw }
     before { person.email = new_email }
+
     it 'returns orginal changes' do
-      is_expected.to be_a Hash
+      expect(subject).to be_a Hash
       expect(subject[:email].first).to eql old_email
     end
   end
@@ -67,17 +69,17 @@ RSpec.describe PersonChangesPresenter, type: :presenter do
     it_behaves_like '#changes on changes_presenter'
 
     it 'returns expected format of data' do
-      is_expected.to eql valid_format
+      expect(subject).to eql valid_format
     end
 
     it 'ignores empty strings as changes' do
-      is_expected.to_not have_key :description
+      expect(subject).to_not have_key :description
     end
 
     it 'returns single message for work days' do
       person.works_saturday = true
       person.works_monday = false
-      is_expected.to include valid_workdays
+      expect(subject).to include valid_workdays
     end
   end
 
@@ -103,8 +105,8 @@ RSpec.describe PersonChangesPresenter, type: :presenter do
     include_examples 'serializability'
 
     it 'returns JSON of raw changes only' do
-      is_expected.to include_json(valid_json_hash)
-      is_expected.not_to include_json(message: "Changed email from #{old_email} to #{new_email}")
+      expect(subject).to include_json(valid_json_hash)
+      expect(subject).not_to include_json(message: "Changed email from #{old_email} to #{new_email}")
     end
   end
 

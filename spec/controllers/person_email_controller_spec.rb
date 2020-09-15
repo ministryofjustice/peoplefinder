@@ -102,7 +102,7 @@ RSpec.describe PersonEmailController, type: :controller do
 
       it 'redirects to profile page, ignoring desired path' do
         request.session[:desired_path] = new_group_path
-        is_expected.to redirect_to person_path(person, prompt: 'profile')
+        expect(subject).to redirect_to person_path(person, prompt: 'profile')
       end
 
       it 'sets a flash message' do

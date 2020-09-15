@@ -8,13 +8,13 @@ class MembershipChangeSet
 
   def added?
     raw_changes[:group_id].first.nil?
-  rescue
+  rescue StandardError
     false
   end
 
   def removed?
     raw_changes[:group_id].second.nil?
-  rescue
+  rescue StandardError
     false
   end
 
@@ -59,7 +59,8 @@ class MembershipChangeSet
       if raw_changes.key?(attribute_name_from_method)
         change = change(raw_changes[attribute_name_from_method])
         val = change.new_val || change.old_val
-        return val.present? if @method_name.to_s =~ /\?$/
+        return val.present? if /\?$/.match?(@method_name.to_s)
+
         val
       end
     else

@@ -115,6 +115,7 @@ class PeopleController < ApplicationController
 
   def namesakes?
     return false if params['continue_from_duplication'].present?
+
     @people = Person.namesakes(@person)
     @people.present?
   end

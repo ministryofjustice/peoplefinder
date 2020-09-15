@@ -39,6 +39,7 @@ RSpec.describe NeverLoggedInNotifier, type: :service do
   describe 'send_never_logged_in_reminder?' do
     context 'when person created within last 30 days' do
       before { person.update(created_at: less_than_30_days_ago) }
+
       it 'returns false' do
         expect(described_class.send_never_logged_in_reminder?(person, 30.days)).to be false
       end

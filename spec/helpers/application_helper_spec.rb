@@ -14,7 +14,7 @@ RSpec.describe ApplicationHelper, type: :helper do
     end
   end
 
-  context '#last_update' do
+  describe '#last_update' do
     before do
       @last_updated_at = stubbed_time
     end
@@ -41,7 +41,7 @@ RSpec.describe ApplicationHelper, type: :helper do
     end
   end
 
-  context '#govspeak' do
+  describe '#govspeak' do
     it 'renders Markdown starting from h3' do
       source = "# Header\n\nPara para"
       fragment = Capybara::Node::Simple.new(govspeak(source))
@@ -56,20 +56,20 @@ RSpec.describe ApplicationHelper, type: :helper do
     let(:options) { {} }
 
     it 'applies span around the term' do
-      is_expected.to have_selector('span', text: 'bold text')
+      expect(subject).to have_selector('span', text: 'bold text')
     end
 
     it 'applies bold-term class to span around the term' do
-      is_expected.to have_selector('span.bold-term', text: 'bold text')
+      expect(subject).to have_selector('span.bold-term', text: 'bold text')
     end
 
     it 'appends bold-term to other classes passed in' do
       options[:class] = 'my-other-class'
-      is_expected.to include('bold-term', 'my-other-class')
+      expect(subject).to include('bold-term', 'my-other-class')
     end
   end
 
-  context '#call_to' do
+  describe '#call_to' do
     it 'returns an a with a tel: href' do
       generated = call_to('07700900123')
       fragment = Capybara::Node::Simple.new(generated)
@@ -93,7 +93,7 @@ RSpec.describe ApplicationHelper, type: :helper do
     end
   end
 
-  context '#role_translate' do
+  describe '#role_translate' do
     let(:current_user) { build(:person) }
 
     it 'uses the "mine" translation when the user is the current user' do

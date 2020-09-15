@@ -37,7 +37,7 @@ module SpecSupport
 
     def govuk_label_click locator
       el = page.find("label[for='#{locator}']")
-    rescue
+    rescue StandardError
       nil
     ensure
       el ||= page.find('label', text: locator)

@@ -1,4 +1,3 @@
-# encoding: utf-8
 require 'fastimage'
 
 class ImageUploader < CarrierWave::Uploader::Base

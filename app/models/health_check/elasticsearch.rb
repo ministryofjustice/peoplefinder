@@ -2,13 +2,14 @@ module HealthCheck
   class Elasticsearch < Component
     def available?
       client.ping.tap { |ok| log_error("Could not connect to #{hosts}") unless ok }
-    rescue => err
-      log_unknown_error err
+    rescue StandardError => e
+      log_unknown_error e
       false
     end
 
     def accessible?
       return true if cluster_status?('green')
+
       log_error("Cluster status is #{client.cluster.health['status']}")
       false
     end

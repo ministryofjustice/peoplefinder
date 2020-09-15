@@ -81,6 +81,7 @@ class QueuedNotification < ApplicationRecord
                       current_user_id: group.current_user_id).order(:id)
     return false if recs.map(&:edit_finalised?).include?(true)
     return false if recs.last.created_at < GRACE_PERIOD.ago
+
     true
   end
 

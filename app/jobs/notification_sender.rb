@@ -41,8 +41,8 @@ class NotificationSender
     aggregator = ProfileChangeAggregator.new(notifications)
     changes_presenter = ProfileChangesPresenter.new(aggregator.aggregate_raw_changes)
     UserUpdateMailer.updated_profile_email(@person,
-      changes_presenter.serialize,
-      @logged_in_user.try(:email)).deliver_later
+                                           changes_presenter.serialize,
+                                           @logged_in_user.try(:email)).deliver_later
   end
 
 end

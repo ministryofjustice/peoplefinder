@@ -22,6 +22,7 @@ class SuggestionDelivery
 
   def deliver_for_person
     return unless @suggestion.for_person?
+
     SuggestionMailer.person_email(@person, @suggester, @suggestion.to_hash).
       deliver_later
     @recipient_count += 1
@@ -29,6 +30,7 @@ class SuggestionDelivery
 
   def deliver_for_admin
     return unless @suggestion.for_admin?
+
     @person.groups.flat_map(&:leaders).each do |leader|
       SuggestionMailer.
         team_admin_email(@person, @suggester, @suggestion.to_hash, leader).

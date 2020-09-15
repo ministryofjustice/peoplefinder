@@ -23,6 +23,7 @@ describe TokensController, type: :controller do
 
       context 'when desired path is set' do
         before { request.session[:desired_path] = new_group_path }
+
         it 'redirects to desired path' do
           get :show, params: { id: token }
           expect(response).to redirect_to new_group_path
@@ -43,6 +44,7 @@ describe TokensController, type: :controller do
 
       context 'when desired path is set' do
         before { request.session[:desired_path] = new_group_path }
+
         it 'redirects to desired path' do
           get :show, params: { id: token }
           expect(response).to redirect_to new_group_path
@@ -70,6 +72,7 @@ describe TokensController, type: :controller do
 
     context 'token usage' do
       before { PermittedDomain.find_or_create_by(domain: 'digital.justice.gov.uk') }
+
       let!(:token) { create(:token) }
 
       it 'token gets spent after use' do

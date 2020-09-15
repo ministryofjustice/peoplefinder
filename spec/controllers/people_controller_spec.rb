@@ -131,11 +131,11 @@ RSpec.describe PeopleController, type: :controller do
       end
 
       it 'creates the person' do
-        is_expected.to be_persisted
+        expect(subject).to be_persisted
       end
 
       it 'creates person, but not as super admin' do
-        is_expected.not_to be_super_admin
+        expect(subject).not_to be_super_admin
       end
     end
   end
@@ -325,6 +325,7 @@ RSpec.describe PeopleController, type: :controller do
           expect(response).to redirect_to person_path(person)
         end
       end
+
       context 'with duplicates in database' do
         before do
           create :person, given_name: 'Francis', surname: 'Drake', email: 'fd@digital.justice.gov.uk'

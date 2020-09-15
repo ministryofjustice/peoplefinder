@@ -43,23 +43,23 @@ RSpec.describe SuggestionFormBuilder, type: :form_builder do
     end
 
     it 'returns govuk styled check box' do
-      is_expected.to eql output
+      expect(subject).to eql output
     end
 
     it 'adds outer form-group div' do
-      is_expected.to match(/<div class="form-group">.*<\/div>/)
+      expect(subject).to match(/<div class="form-group">.*<\/div>/)
     end
 
     it 'adds a selectable block-label inside the form-group' do
-      is_expected.to match(/.*form-group.*<label class="block-label selection-button-checkbox" for="suggestion_test_field">.*<\/label>/)
+      expect(subject).to match(/.*form-group.*<label class="block-label selection-button-checkbox" for="suggestion_test_field">.*<\/label>/)
     end
 
     it 'adds a checkbox inside the label' do
-      is_expected.to match(/<label.*<input type="checkbox" value="1" name="suggestion\[test_field\]" id="suggestion_test_field" \/>.*<\/label>/)
+      expect(subject).to match(/<label.*<input type="checkbox" value="1" name="suggestion\[test_field\]" id="suggestion_test_field" \/>.*<\/label>/)
     end
 
     it 'adds label from translation defined in specific scope' do
-      is_expected.to include 'My test label'
+      expect(subject).to include 'My test label'
     end
 
   end

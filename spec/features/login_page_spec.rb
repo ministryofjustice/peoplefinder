@@ -1,32 +1,33 @@
 require 'rails_helper'
 
-feature 'Login page' do
+describe 'Login page' do
   include PermittedDomainHelper
 
   let(:login_page) { Pages::Login.new }
   let(:token_created_page) { Pages::TokenCreated.new }
 
   context 'User from outside the network' do
-    scenario 'Is presented with standard login page and copy' do
+    it 'Is presented with standard login page and copy' do
       visit '/'
 
       expect(login_page).to be_displayed
       expect(login_page.description).to have_text('We will email you a secure link so you can log in to People Finder and create or edit profiles.')
     end
   end
+
   context 'User from inside the network' do
     before do
       mock_readonly_user
     end
 
-    scenario 'Is presented with standard login page and copy if they decide to login' do
+    it 'Is presented with standard login page and copy if they decide to login' do
       visit '/sessions/new'
 
       expect(login_page).to be_displayed
       expect(login_page.description).to have_text('We will email you a secure link so you can log in to People Finder and create or edit profiles.')
     end
 
-    scenario 'Is presented with special login page and copy if they are forced to login to make changes' do
+    it 'Is presented with special login page and copy if they are forced to login to make changes' do
       person = create(:person)
 
       visit person_path(person)

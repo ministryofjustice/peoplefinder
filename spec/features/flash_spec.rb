@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-feature 'Flash messages' do
+describe 'Flash messages' do
   include PermittedDomainHelper
 
   RSpec::Matchers.define :appear_before do |later_content|
@@ -20,7 +20,7 @@ feature 'Flash messages' do
       person.memberships.destroy_all
     end
 
-    scenario 'display flash messages above search box for home page' do
+    it 'display flash messages above search box for home page' do
       visit person_path(person)
       click_delete_profile
       expect(current_path).to eql '/'
@@ -28,7 +28,7 @@ feature 'Flash messages' do
       expect(searchbox).not_to appear_before flash_messages
     end
 
-    scenario 'display flash messages below search box' do
+    it 'display flash messages below search box' do
       visit group_path(dept)
       click_link 'Add new sub-team'
       fill_in 'Team name', with: 'Digital'

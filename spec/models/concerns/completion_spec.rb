@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'Completion' do # rubocop:disable RSpec/DescribeClass
+RSpec.describe 'Completion' do
   include PermittedDomainHelper
 
   let(:completed_attributes) do
@@ -25,7 +25,7 @@ RSpec.describe 'Completion' do # rubocop:disable RSpec/DescribeClass
     create(:person)
   end
 
-  context '#completion_score' do
+  describe '#completion_score' do
     it 'returns 0 if all fields are empty' do
       person = Person.new
       expect(person.completion_score).to eql(0)
@@ -78,7 +78,7 @@ RSpec.describe 'Completion' do # rubocop:disable RSpec/DescribeClass
     end
   end
 
-  context '.overall_completion' do
+  describe '.overall_completion' do
     it 'calls method encapsulating contruction of raw SQL for average completion score' do
       expect(Person).to receive(:average_completion_score)
       Person.overall_completion
@@ -128,7 +128,7 @@ RSpec.describe 'Completion' do # rubocop:disable RSpec/DescribeClass
     end
   end
 
-  context '.completion_score_calculation' do
+  describe '.completion_score_calculation' do
     it 'constructs sql to calculate score based on existence of values for important fields' do
       sql_regex = /COALESCE.*CASE WHEN length\(.*\,0\)\)::float.*/mi
       expect(Person.completion_score_calculation).to match(sql_regex)
@@ -140,7 +140,7 @@ RSpec.describe 'Completion' do # rubocop:disable RSpec/DescribeClass
     end
   end
 
-  context '.average_completion_score' do
+  describe '.average_completion_score' do
     it 'executes raw SQL for scalability/performance' do
       conn = double.as_null_object
       expect(ActiveRecord::Base).to receive(:connection).at_least(:once).and_return(conn)

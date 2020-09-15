@@ -8,6 +8,7 @@ class GroupSearch
 
   def perform_search
     return @results if @query.blank?
+
     fetch_results
   end
 
@@ -28,6 +29,7 @@ class GroupSearch
   def partial_matches
     words = words(@query)
     return if words.empty?
+
     results = words.inject(Group) do |search, word|
       search.where('name ILIKE ?', "%#{word}%")
     end

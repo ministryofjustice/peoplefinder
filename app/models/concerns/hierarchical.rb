@@ -17,6 +17,7 @@ module Concerns::Hierarchical
     # Group.find_or_create_by!(name: 'Content', parent: technology )
     def self.find_or_create_by! attributes, &block
       return super unless attributes.include?(:parent) || attributes.include?(:parent_id)
+
       parent_id = sanitize_and_get_parent_id(attributes)
 
       if find_by(attributes) && (find_by(attributes).parent_id == parent_id || find_by(attributes).parent == parent)

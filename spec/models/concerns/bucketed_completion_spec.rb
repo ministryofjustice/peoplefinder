@@ -1,14 +1,12 @@
 require 'rails_helper'
 
-RSpec.describe 'BucketedCompletion' do # rubocop:disable RSpec/DescribeClass
+RSpec.describe 'BucketedCompletion' do
   include PermittedDomainHelper
 
-  context '.bucketed_completion' do
+  describe '.bucketed_completion' do
     def create_bucketed_people
       create(:person)
-      2.times do
-        create(:person, :with_details, city: nil, building: nil)
-      end
+      create_list(:person, 2, :with_details, city: nil, building: nil)
       create(:person, :with_details, :with_photo)
     end
 

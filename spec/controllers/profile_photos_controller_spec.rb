@@ -70,7 +70,7 @@ RSpec.describe ProfilePhotosController, type: :controller do
 
     it 'renders JSON error as text for compatability with IE' do
       post :create, params: { profile_photo: invalid_params }
-      
+
       expect(response.header['Content-Type']).to include 'text/plain'
     end
   end

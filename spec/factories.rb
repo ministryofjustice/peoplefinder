@@ -1,4 +1,3 @@
-
 FactoryBot.define do
 
   sequence(:email) { |n| 'example.user.%d@digital.justice.gov.uk' % n }
@@ -68,7 +67,7 @@ FactoryBot.define do
       surname { Faker::Name.unique.last_name }
       email { "#{given_name}.#{surname}@example.com" }
       primary_phone_number { Faker::PhoneNumber.phone_number }
-      login_count { Random.rand(20) + 1 }
+      login_count { Random.rand(1..20) }
       last_login_at { login_count == 0 ? nil : Random.rand(15).days.ago }
     end
 
@@ -83,7 +82,7 @@ FactoryBot.define do
       sequence(:email) { |n| '%{given_name}.%{surname}.%{unique}.@digital.justice.gov.uk' % [given_name: given_name, surname: surname, unique: n] }
       primary_phone_number { Faker::PhoneNumber.phone_number }
       secondary_phone_number { Faker::PhoneNumber.phone_number }
-      login_count { Random.rand(20) + 1 }
+      login_count { Random.rand(1..20) }
       last_login_at { login_count == 0 ? nil : Random.rand(15).days.ago }
       description { Faker::Lorem.sentences.join(' ') }
     end
@@ -148,32 +147,42 @@ FactoryBot.define do
   end
 
   factory :profile_photo do
-    image { Rack::Test::UploadedFile.new(
-      Rails.root.join('spec/fixtures/profile_photo_valid.png').to_s
-    ) }
+    image {
+      Rack::Test::UploadedFile.new(
+        Rails.root.join('spec/fixtures/profile_photo_valid.png').to_s
+      )
+    }
 
     trait :invalid_extension do
-      image { Rack::Test::UploadedFile.new(
-        Rails.root.join('spec/fixtures/placeholder.bmp').to_s
-      ) }
+      image {
+        Rack::Test::UploadedFile.new(
+          Rails.root.join('spec/fixtures/placeholder.bmp').to_s
+        )
+      }
     end
 
     trait :non_image do
-      image { Rack::Test::UploadedFile.new(
-        Rails.root.join('spec/fixtures/invalid_rows.csv').to_s
-      ) }
+      image {
+        Rack::Test::UploadedFile.new(
+          Rails.root.join('spec/fixtures/invalid_rows.csv').to_s
+        )
+      }
     end
 
     trait :too_small_dimensions do
-      image { Rack::Test::UploadedFile.new(
-        Rails.root.join('spec/fixtures/profile_photo_too_small_dimensions.png').to_s
-      ) }
+      image {
+        Rack::Test::UploadedFile.new(
+          Rails.root.join('spec/fixtures/profile_photo_too_small_dimensions.png').to_s
+        )
+      }
     end
 
     trait :large_dimensions do
-      image { Rack::Test::UploadedFile.new(
-        Rails.root.join('spec/fixtures/profile_photo_large.png').to_s
-      ) }
+      image {
+        Rack::Test::UploadedFile.new(
+          Rails.root.join('spec/fixtures/profile_photo_large.png').to_s
+        )
+      }
     end
   end
 

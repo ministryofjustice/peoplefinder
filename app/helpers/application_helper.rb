@@ -22,6 +22,7 @@ module ApplicationHelper
   def flash_messages
     messages = flash.keys.map(&:to_s) & FLASH_NOTICE_KEYS
     return if messages.empty?
+
     content_tag(:div, class: 'inner-block') do
       content_tag(:div, id: 'flash-messages') do
         messages.inject(ActiveSupport::SafeBuffer.new) do |html, type|
@@ -55,6 +56,7 @@ module ApplicationHelper
 
   def call_to(telno)
     return nil unless telno
+
     digits = telno.gsub(/[^0-9+#*,]+/, '')
     content_tag(:a, href: "tel:#{digits}") { telno }
   end

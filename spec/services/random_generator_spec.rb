@@ -19,6 +19,7 @@ RSpec.describe RandomGenerator do
       expect { child_group.reload }.to raise_error(ActiveRecord::RecordNotFound)
       expect { grand_child_group.reload }.to raise_error(ActiveRecord::RecordNotFound)
     end
+
     it 'does not delete groups which are not ancestors' do
       expect(same_level_group.reload).to eql(same_level_group)
     end

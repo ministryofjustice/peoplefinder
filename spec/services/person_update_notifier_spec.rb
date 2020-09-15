@@ -56,10 +56,12 @@ RSpec.describe PersonUpdateNotifier, type: :service do
 
       context 'when no last reminder sent' do
         before { person.update(last_reminder_email_at: nil) }
+
         it 'returns true when last update more than 6 months ago' do
           person.update(updated_at: more_than_six_months_ago)
           check_send_update_reminder true
         end
+
         it 'returns false when last update less than 6 months ago' do
           person.update(updated_at: less_than_six_months_ago)
           check_send_update_reminder false
@@ -68,10 +70,12 @@ RSpec.describe PersonUpdateNotifier, type: :service do
 
       context 'when last reminder sent more than 6 months ago' do
         before { person.update(last_reminder_email_at: more_than_six_months_ago) }
+
         it 'returns true when last update more than 6 months ago' do
           person.update(updated_at: more_than_six_months_ago)
           check_send_update_reminder true
         end
+
         it 'returns false when last update less than 6 months ago' do
           person.update(updated_at: less_than_six_months_ago)
           check_send_update_reminder false
@@ -80,10 +84,12 @@ RSpec.describe PersonUpdateNotifier, type: :service do
 
       context 'when last reminder sent less than 6 months ago' do
         before { person.update(last_reminder_email_at: less_than_six_months_ago) }
+
         it 'returns false when last update more than 6 months ago' do
           person.update(updated_at: more_than_six_months_ago)
           check_send_update_reminder false
         end
+
         it 'returns false when last update less than 6 months ago' do
           person.update(updated_at: less_than_six_months_ago)
           check_send_update_reminder false

@@ -32,7 +32,6 @@ Rails.application.configure do
     config.cache_store = :null_store
   end
 
-
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log
 
@@ -67,6 +66,6 @@ Rails.application.configure do
   config.action_mailer.asset_host = ENV['ACTION_MAILER_DEFAULT_URL'] || 'http://localhost:3000'
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = { address: 'localhost', port: 1025 }
-  
+
   # config.file_watcher = ActiveSupport::EventedFileUpdateChecker
 end

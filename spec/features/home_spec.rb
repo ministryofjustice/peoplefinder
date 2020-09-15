@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-feature 'Home page' do
+describe 'Home page' do
   include PermittedDomainHelper
 
   let(:home_page) { Pages::Home.new }
@@ -57,6 +57,7 @@ feature 'Home page' do
           expect(home_page).to_not have_unsupported_browser_warning
         end
       end
+
       context 'Internet Explorer 8+' do
         let(:user_agent) { ie8 }
         it 'displays no warning' do
@@ -91,7 +92,7 @@ feature 'Home page' do
       visit '/'
     end
 
-    scenario 'can view the page' do
+    it 'can view the page' do
       expect(home_page).to be_displayed
     end
   end
@@ -102,7 +103,7 @@ feature 'Home page' do
       visit '/'
     end
 
-    scenario 'can view the page' do
+    it 'can view the page' do
       expect(home_page).to be_displayed
     end
   end

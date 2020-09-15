@@ -38,6 +38,7 @@ end
 if Rails.env.test?
   CarrierWave::Uploader::Base.descendants.each do |klass|
     next if klass.anonymous?
+
     klass.class_eval do
       def base_upload_dir
         "#{Rails.root}/spec/support/"

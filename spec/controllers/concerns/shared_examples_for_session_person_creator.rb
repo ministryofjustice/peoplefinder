@@ -22,13 +22,13 @@ shared_examples_for "session_person_creatable" do
 
   shared_examples 'existing person returned' do
     it 'returns the matching person' do
-      is_expected.to eql(person)
+      expect(subject).to eql(person)
     end
   end
 
   shared_examples 'new person created' do
     it 'returns a person model' do
-      is_expected.to be_a(Person)
+      expect(subject).to be_a(Person)
     end
 
     describe 'the person' do

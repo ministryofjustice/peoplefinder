@@ -49,8 +49,7 @@ RSpec.describe PersonCreator, type: :service do
           with(current_user).
           and_return(false)
         expect(class_double('UserUpdateMailer').as_stubbed_const).
-          to receive(:new_profile_email).
-          never
+          not_to receive(:new_profile_email)
         subject.create!
       end
 

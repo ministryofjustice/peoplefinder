@@ -19,11 +19,11 @@ RSpec.describe UpdateGroupMembersCompletionScoreJob, type: :job do
     subject { proc { described_class.perform_later(group) } }
 
     it 'enqueues on low priority queue' do
-      is_expected.to have_enqueued_job(described_class).on_queue('low_priority')
+      expect(subject).to have_enqueued_job(described_class).on_queue('low_priority')
     end
 
     it 'enqueues with group params' do
-      is_expected.to have_enqueued_job.with(group)
+      expect(subject).to have_enqueued_job.with(group)
     end
 
     it 'checks job is not already enqueued' do
@@ -32,9 +32,10 @@ RSpec.describe UpdateGroupMembersCompletionScoreJob, type: :job do
     end
   end
 
-  context '#error_handler' do
+  describe '#error_handler' do
     let!(:group) { create(:group) }
     before { group.destroy! }
+
     subject(:enqueue_job) { described_class.perform_later(group) }
 
     it 'rescues from ActiveJob::DeserializationError' do
@@ -70,6 +71,7 @@ RSpec.describe UpdateGroupMembersCompletionScoreJob, type: :job do
 
     context 'with group with nil parent' do
       before { group.parent = nil }
+
       it 'does not create new job for parent' do
         expect(described_class).not_to receive(:perform_later).with(parent)
         described_class.perform_now(group)

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-feature 'Regression' do
+describe 'Regression' do
   include PermittedDomainHelper
 
   let(:login_page) { Pages::Login.new }
@@ -9,7 +9,7 @@ feature 'Regression' do
     token_log_in_as 'test.user@digital.justice.gov.uk'
   end
 
-  scenario 'Gracefully handle a session when the logged in person deletes their profile' do
+  it 'Gracefully handle a session when the logged in person deletes their profile' do
     visit person_path(Person.last)
     click_delete_profile
     expect(login_page).to be_displayed

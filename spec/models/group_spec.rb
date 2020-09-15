@@ -37,7 +37,7 @@ RSpec.describe Group, type: :model do
     expect { group.save! }.to raise_error(Exception)
   end
 
-  context '#after_save' do
+  describe '#after_save' do
     let!(:group) { build(:group, parent: nil) }
 
     it 'calls method to enqueue job for completion score update' do

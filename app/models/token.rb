@@ -63,6 +63,7 @@ class Token < ApplicationRecord
 
   def active?
     return scanned_token_active? if Rails.host.dev? || Rails.host.staging?
+
     token_active?
   end
 

@@ -22,7 +22,7 @@ class ProfileChangesPresenter < ChangesPresenter
 
   private
 
-  MEMBERSHIP_KEY_PATTERN = /membership_.*/
+  MEMBERSHIP_KEY_PATTERN = /membership_.*/.freeze
 
   def split_presenters raw_changes
     [

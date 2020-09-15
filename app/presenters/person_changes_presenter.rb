@@ -5,6 +5,7 @@ class PersonChangesPresenter < ChangesPresenter
   def format raw_changes
     raw_changes.inject({}) do |memo, (field, raw_change)|
       next memo unless changed? raw_change
+
       if work_days? field
         add_or_create_work_days(memo, field, raw_change)
       elsif profile_photo? field

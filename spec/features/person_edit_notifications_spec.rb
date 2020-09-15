@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-feature 'Person edit notifications' do
+describe 'Person edit notifications' do
   include ActiveJobHelper
   include PermittedDomainHelper
 
@@ -9,7 +9,7 @@ feature 'Person edit notifications' do
     token_log_in_as(person.email)
   end
 
-  scenario 'Creating a person with different email' do
+  it 'Creating a person with different email' do
     visit new_person_path
 
     fill_in 'First name', with: 'Bob'
@@ -17,7 +17,7 @@ feature 'Person edit notifications' do
     fill_in 'Main email', with: 'bob.smith@digital.justice.gov.uk'
     expect do
       click_button 'Save', match: :first
-    end.to change { QueuedNotification.count }.by(1)
+    end.to change(QueuedNotification, :count).by(1)
 
     notification = QueuedNotification.last
     expect(notification.current_user_id).to eq person.id
@@ -40,7 +40,7 @@ feature 'Person edit notifications' do
     )
   end
 
-  scenario 'Deleting a person with different email' do
+  it 'Deleting a person with different email' do
     person = create(:person, email: 'bob.smith@digital.justice.gov.uk')
     visit person_path(person)
     expect { click_delete_profile }.to change { ActionMailer::Base.deliveries.count }.by(1)
@@ -49,7 +49,7 @@ feature 'Person edit notifications' do
     check_email_to_and_from
   end
 
-  scenario 'Editing a person with different email' do
+  it 'Editing a person with different email' do
     digital = create(:group, name: 'Digital')
     person = create(:person, :member_of, team: digital, given_name: 'Bob', surname: 'Smith', email: 'bob.smith@digital.justice.gov.uk')
     visit person_path(person)
@@ -57,11 +57,11 @@ feature 'Person edit notifications' do
     fill_in 'Last name', with: 'Smelly Pants'
     expect do
       click_button 'Save', match: :first
-    end.to change { QueuedNotification.count }.by(1)
+    end.to change(QueuedNotification, :count).by(1)
     expect(QueuedNotification.last.changes_hash['data']['raw']['surname']).to eq(["Smith", "Smelly Pants"])
   end
 
-  scenario 'Editing a person with same email' do
+  it 'Editing a person with same email' do
     visit person_path(person)
     click_edit_profile
     fill_in 'Last name', with: 'Smelly Pants'
@@ -70,7 +70,7 @@ feature 'Person edit notifications' do
     end.not_to change { ActionMailer::Base.deliveries.count }
   end
 
-  scenario 'Verifying the link to bob that is render in the emails' do
+  it 'Verifying the link to bob that is render in the emails' do
     bob = create(:person, email: 'bob@digital.justice.gov.uk', surname: 'bob')
     visit token_url(Token.for_person(bob), desired_path: person_path(bob))
 

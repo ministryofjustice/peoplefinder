@@ -86,7 +86,7 @@ class ChangesPresenter
   # ignore nil => empty string or vice versa changes
   def changed? change
     change.first&.gsub(/\s/, '').present? || change.second&.gsub(/\s/, '').present?
-  rescue
+  rescue StandardError
     true
   end
 

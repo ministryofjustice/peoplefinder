@@ -61,7 +61,7 @@ class PersonEmailController < ApplicationController
   end
 
   def alternative_email
-    @person.secondary_email.blank? ? @person.email : @person.secondary_email
+    @person.secondary_email.presence || @person.email
   end
 
   def person_email_params

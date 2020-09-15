@@ -111,6 +111,7 @@ RSpec.describe TokenSender, type: :service do
         before do
           allow(subject).to receive(:user_email_error?).and_return false
         end
+
         it 'calls render_create_view with nil token' do
           expect(view).to receive(:render_create_view).with(token: nil)
           subject.call(view)

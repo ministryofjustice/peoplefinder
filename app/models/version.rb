@@ -37,6 +37,7 @@ class Version < PaperTrail::Version
 
   def undo
     return if membership?
+
     creation? ? item.destroy : reify.save
   end
 

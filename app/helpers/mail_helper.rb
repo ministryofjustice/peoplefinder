@@ -10,7 +10,7 @@ module MailHelper
 
   def easy_copy_link_to(url:)
     content_tag(:div, style: 'padding: 10px 25px;') do
-      link_to url, url, target: '_blank'
+      link_to url, url, target: '_blank', rel: 'noopener'
     end
   end
 
@@ -25,7 +25,7 @@ module MailHelper
   end
 
   def link_to_guidance
-    link_to('MoJ Intranet', APP_GUIDANCE_PAGE, target: '_blank')
+    link_to('MoJ Intranet', APP_GUIDANCE_PAGE, target: '_blank', rel: 'noopener')
   end
 
   # try relative path then specific scope:

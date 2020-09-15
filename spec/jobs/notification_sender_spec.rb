@@ -21,9 +21,7 @@ describe NotificationSender do
     context 'processing started by another process after this job started' do
       it 'does not send any mails' do
         Timecop.freeze 1.hour.ago do
-          2.times do
-            create :queued_notification, session_id: 'abc', person_id: 22, current_user_id: 333
-          end
+          create_list :queued_notification, 2, session_id: 'abc', person_id: 22, current_user_id: 333
         end
         sender = described_class.new
         QueuedNotification.update_all(processing_started_at: 1.minute.ago)

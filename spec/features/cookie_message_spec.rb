@@ -1,9 +1,9 @@
 require 'rails_helper'
 
-feature 'Cookie message', js: true do
+describe 'Cookie message', js: true do
   let(:message_text) { 'GOV.UK uses cookies to make the site simpler' }
 
-  scenario 'first visit' do
+  it 'first visit' do
     visit '/'
     expect(page).to have_text(message_text)
 
@@ -11,7 +11,7 @@ feature 'Cookie message', js: true do
     expect(page).to have_content('How cookies are used on People Finder')
   end
 
-  scenario 'subsequent visits' do
+  it 'subsequent visits' do
     visit '/'
     visit '/'
     expect(page).not_to have_text(message_text)

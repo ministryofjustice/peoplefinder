@@ -1,4 +1,3 @@
-
 if ENV['INTERCEPTED_EMAIL_RECIPIENT'].present?
   def login_subject_text
     I18n.t('token_mailer.new_token_email.subject')

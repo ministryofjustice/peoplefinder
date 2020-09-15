@@ -62,6 +62,7 @@ class ApplicationController < ActionController::Base
 
   def ensure_user
     return true if logged_in?
+
     session[:desired_path] = request.fullpath
     redirect_to new_sessions_path
   end

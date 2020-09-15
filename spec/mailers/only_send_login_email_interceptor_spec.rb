@@ -23,8 +23,8 @@ RSpec.describe OnlySendLoginEmailInterceptor do
 
   let(:interceptor) do
     described_class.new(recipient_string,
-      subject_prefix: subject_prefix,
-      login_email_subject: login_email_subject)
+                        subject_prefix: subject_prefix,
+                        login_email_subject: login_email_subject)
   end
 
   def deliver_mail subject_text: 'some subject'

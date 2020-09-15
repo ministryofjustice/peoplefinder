@@ -31,6 +31,7 @@ class Group < ApplicationRecord
 
   def slug_candidates
     return [name] unless parent
+
     [name, [parent.name, name], [parent.name, name_and_sequence]]
   end
 
@@ -39,8 +40,8 @@ class Group < ApplicationRecord
   end
 
   has_many :memberships,
-    -> { includes(:person).order('people.surname') },
-    dependent: :destroy
+           -> { includes(:person).order('people.surname') },
+           dependent: :destroy
   has_many :people, through: :memberships
   has_many :leaderships, -> { where(leader: true) }, class_name: 'Membership'
   has_many :leaders, through: :leaderships, source: :person
@@ -85,7 +86,7 @@ class Group < ApplicationRecord
   end
 
   def short_name
-    acronym.present? ? acronym : name
+    acronym.presence || name
   end
 
   def deletable?

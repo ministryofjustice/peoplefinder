@@ -190,6 +190,7 @@ RSpec.describe QueuedNotification, type: :model do
   context 'grouped items' do
 
     before(:all) { populate_notifications }
+
     after(:all) { described_class.destroy_all }
 
     # rubocop:disable Metrics/AbcSize
@@ -231,12 +232,12 @@ RSpec.describe QueuedNotification, type: :model do
     # rubocop:disable Metrics/ParameterLists
     def create_notification(session_id, person_id, user_id, finalised, processing_started_at, sent)
       create(:queued_notification,
-        session_id: session_id,
-        person_id: person_id,
-        current_user_id: user_id,
-        processing_started_at: processing_started_at,
-        edit_finalised: finalised,
-        sent: sent)
+             session_id: session_id,
+             person_id: person_id,
+             current_user_id: user_id,
+             processing_started_at: processing_started_at,
+             edit_finalised: finalised,
+             sent: sent)
     end
     # rubocop:enable Metrics/ParameterLists
 

@@ -56,6 +56,7 @@ class TokensController < ApplicationController
 
   def ensure_token_auth_enabled!
     return if feature_enabled?('token_auth')
+
     flash[:notice] = t('.token_auth_disabled')
     redirect_to(new_sessions_path)
   end

@@ -26,7 +26,7 @@ RSpec.describe Token, type: :model do
     expect do
       2.times { token.save }
       token.reload
-    end.not_to change { token.value }
+    end.not_to change(token, :value)
   end
 
   it 'will be valid with valid email address' do
@@ -77,15 +77,19 @@ RSpec.describe Token, type: :model do
     it '.spent' do
       expect(described_class.spent).to match_array([spent])
     end
+
     it '.unspent' do
       expect(described_class.unspent).to match_array([token, expired, half_hour_ago])
     end
+
     it '.unexpired' do
       expect(described_class.unexpired).to match_array([token, spent, half_hour_ago])
     end
+
     it '.expired' do
       expect(described_class.expired).to match_array([expired])
     end
+
     it '.in_the_last_hour' do
       expect(described_class.in_the_last_hour).to match_array([token, spent, half_hour_ago])
     end
@@ -96,7 +100,7 @@ RSpec.describe Token, type: :model do
       expect(unspent).to eq(half_hour_ago)
     end
 
-    context '.find_securely' do
+    describe '.find_securely' do
       it 'uses constant-time comparison alogrithm to prevent timing attacks' do
         expect(Secure).to receive(:compare).at_least(:once)
         described_class.find_securely(spent.value)
@@ -122,6 +126,7 @@ RSpec.describe Token, type: :model do
 
     context 'destroys all tokens older than the throttle limit' do
       before { Delayed::Worker.delay_jobs = false }
+
       after { Delayed::Worker.delay_jobs = true }
 
       it 'destroys all expired tokens' do
@@ -170,7 +175,7 @@ RSpec.describe Token, type: :model do
           expect do
             token.spend!
             token.reload
-          end.to change { token.spent? }.from(false).to(true)
+          end.to change(token, :spent?).from(false).to(true)
         end
 
         it 'returns false if token is 86400 seconds or more old' do
@@ -204,6 +209,7 @@ RSpec.describe Token, type: :model do
 
       context 'expiring tokens' do
         before { token.save }
+
         let(:new_token) { build(:token, user_email: token.user_email) }
 
         describe '#save or #create for new tokens' do
@@ -211,7 +217,7 @@ RSpec.describe Token, type: :model do
             expect do
               new_token.save
               token.reload
-            end.to change { token.active? }.from(true).to(false)
+            end.to change(token, :active?).from(true).to(false)
           end
         end
 
@@ -220,14 +226,14 @@ RSpec.describe Token, type: :model do
             expect do
               token.spend!
               token.reload
-            end.to change { token.spent? }.from(false).to(true)
+            end.to change(token, :spent?).from(false).to(true)
           end
 
           it 'makes the token inactive' do
             expect do
               token.spend!
               token.reload
-            end.to change { token.active? }.from(true).to(false)
+            end.to change(token, :active?).from(true).to(false)
           end
         end
       end

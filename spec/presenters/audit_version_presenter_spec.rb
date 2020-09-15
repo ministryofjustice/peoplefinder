@@ -24,10 +24,10 @@ RSpec.describe AuditVersionPresenter, type: :presenter do
 
   let(:version) do
     double('version',
-      created_at: created_at,
-      whodunnit: whodunnit,
-      event: event,
-      object_changes: object_changes
+           created_at: created_at,
+           whodunnit: whodunnit,
+           event: event,
+           object_changes: object_changes
           )
   end
   let(:presenter)  { described_class.new(version) }

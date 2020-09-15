@@ -16,7 +16,7 @@ RSpec.describe ReadonlyUser, type: :model do
       end
 
       it "returns instance of #{described_class}" do
-        is_expected.to be_readonly_user
+        expect(subject).to be_readonly_user
       end
     end
 
@@ -26,8 +26,8 @@ RSpec.describe ReadonlyUser, type: :model do
       end
 
       it 'returns nil' do
-        is_expected.to_not be_readonly_user
-        is_expected.to be_nil
+        expect(subject).to_not be_readonly_user
+        expect(subject).to be_nil
       end
     end
 
@@ -41,7 +41,7 @@ RSpec.describe ReadonlyUser, type: :model do
         (2..4).each do |i|
           it "accepts IP 127.0.0.#{i}" do
             request.remote_addr = "127.0.0.#{i}"
-            is_expected.to be_readonly_user
+            expect(subject).to be_readonly_user
           end
         end
       end
@@ -50,7 +50,7 @@ RSpec.describe ReadonlyUser, type: :model do
         [1, 5].each do |i|
           it "rejects IP 127.0.0.#{i}" do
             request.remote_addr = "127.0.0.#{i}"
-            is_expected.to be_nil
+            expect(subject).to be_nil
           end
         end
       end

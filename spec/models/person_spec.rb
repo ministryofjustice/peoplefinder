@@ -179,7 +179,7 @@ RSpec.describe Person, type: :model do
     end
 
     it 'returns AssociationRelation of memberships' do
-      is_expected.to be_kind_of ActiveRecord::AssociationRelation
+      expect(subject).to be_kind_of ActiveRecord::AssociationRelation
       expect(subject.first).to be_kind_of Membership
     end
 
@@ -236,7 +236,7 @@ RSpec.describe Person, type: :model do
     end
 
     it 'returns people matching given and surname of specified person OR email prefix' do
-      is_expected.to eql 2
+      expect(subject).to eql 2
     end
   end
 
@@ -304,7 +304,7 @@ RSpec.describe Person, type: :model do
     end
   end
 
-  context '#slug' do
+  describe '#slug' do
     it 'generates from the first part of the email address if present' do
       person = create(:person, email: 'user.example@digital.justice.gov.uk')
       person.reload
@@ -428,12 +428,12 @@ RSpec.describe Person, type: :model do
       end
 
       it 'stores addition of a membership' do
-        is_expected.to include valid_membership_changes
+        expect(subject).to include valid_membership_changes
       end
     end
   end
 
-  context '#path' do
+  describe '#path' do
     let(:person) { described_class.new }
 
     context 'when there are no memberships' do

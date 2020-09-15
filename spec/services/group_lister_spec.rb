@@ -29,7 +29,7 @@ RSpec.describe GroupLister, type: :service do
   end
 
   context 'a node with a hierarchy' do
-    subject { described_class.new.list.sort_by(&:id).last }
+    subject { described_class.new.list.max_by(&:id) }
 
     it 'has the name of the group' do
       expect(subject.name).to eq(leaf_node.name)
@@ -65,7 +65,7 @@ RSpec.describe GroupLister, type: :service do
   end
 
   context 'a top-level node' do
-    subject { described_class.new.list.sort_by(&:id).first }
+    subject { described_class.new.list.min_by(&:id) }
 
     it 'has nil parent id' do
       expect(subject.parent_id).to be_nil

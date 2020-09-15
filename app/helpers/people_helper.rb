@@ -33,8 +33,8 @@ module PeopleHelper
 
   def edit_person_link(name, person, options = {})
     link_to name,
-      edit_person_path(person, activity: options[:activity]),
-      options.
+            edit_person_path(person, activity: options[:activity]),
+            options.
       except(:activity).
       merge(data: edit_profile_analytics_attributes(person.id))
   end

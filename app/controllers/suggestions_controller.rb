@@ -20,6 +20,7 @@ class SuggestionsController < ApplicationController
   end
 
   private
+
   def suggestion_params
     params.require(:suggestion).permit!
   end

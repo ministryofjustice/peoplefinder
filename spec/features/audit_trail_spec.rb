@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-feature 'Audit trail' do
+describe 'Audit trail' do
   include PermittedDomainHelper
 
   let(:person) { create(:super_admin, email: 'test.user@digital.justice.gov.uk') }
@@ -8,7 +8,7 @@ feature 'Audit trail' do
     token_log_in_as person.email
   end
 
-  scenario 'Auditing an edit of a person' do
+  it 'Auditing an edit of a person' do
     with_versioning do
       person = create(:person, surname: 'original surname')
       visit edit_person_path(person)
@@ -25,7 +25,7 @@ feature 'Audit trail' do
     end
   end
 
-  scenario 'Auditing the creation of a person' do
+  it 'Auditing the creation of a person' do
     with_versioning do
       visit new_person_path
       fill_in 'First name', with: 'Jon'
@@ -47,7 +47,7 @@ feature 'Audit trail' do
     end
   end
 
-  scenario 'Auditing the deletion of a person' do
+  it 'Auditing the deletion of a person' do
     with_versioning do
       person = create(:person, surname: 'Dan', given_name: 'Greg')
       visit person_path(person)
@@ -67,7 +67,7 @@ feature 'Audit trail' do
     end
   end
 
-  scenario 'Auditing an edit of a group' do
+  it 'Auditing an edit of a group' do
     with_versioning do
       group = create(:group, name: 'original name')
       visit edit_group_path(group)
@@ -80,7 +80,7 @@ feature 'Audit trail' do
     end
   end
 
-  scenario 'Auditing the creation of a group' do
+  it 'Auditing the creation of a group' do
     with_versioning do
       visit new_group_group_path(Group.department.id)
       fill_in 'Team name', with: 'Jon'
@@ -92,7 +92,7 @@ feature 'Audit trail' do
     end
   end
 
-  scenario 'Auditing the deletion of a group' do
+  it 'Auditing the deletion of a group' do
     with_versioning do
       group = create(:group, name: 'original name')
       visit edit_group_path(group)
@@ -104,7 +104,7 @@ feature 'Audit trail' do
     end
   end
 
-  scenario 'Auditing the creation of a membership', js: true do
+  it 'Auditing the creation of a membership', js: true do
     create(:group, name: 'Digital Justice')
     person = create(:person, given_name: 'Bob', surname: 'Smith')
     person.memberships.destroy_all
@@ -130,7 +130,7 @@ feature 'Audit trail' do
   end
 
   # FIXME: works via app but not here
-  scenario 'Auditing the deletion of a membership', skip: 'FIXME: works via app but not here' do
+  it 'Auditing the deletion of a membership', skip: 'FIXME: works via app but not here' do
     group = create(:group, name: 'Digital Justice')
     person = create(:person, given_name: 'Joe', surname: 'Bob')
     person.memberships.destroy_all

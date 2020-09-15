@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-feature 'Group browsing' do
+describe 'Group browsing' do
   include PermittedDomainHelper
 
   let!(:department) { create(:department) }
@@ -20,7 +20,7 @@ feature 'Group browsing' do
     token_log_in_as 'test.user@digital.justice.gov.uk'
   end
 
-  scenario 'Drilling down through groups' do
+  it 'Drilling down through groups' do
     visit group_path(department)
 
     expect(page).to have_title("#{department.name} - #{app_title}")
@@ -35,7 +35,7 @@ feature 'Group browsing' do
     expect(page).to have_link('A Leaf Node')
   end
 
-  scenario 'A team and subteams without people' do
+  it 'A team and subteams without people' do
     current_group = team
     visit group_path(current_group)
 
@@ -44,7 +44,7 @@ feature 'Group browsing' do
     expect(page).not_to have_link("View 0 people not assigned to a sub-team")
   end
 
-  scenario 'A team with no subteams (leaf_node) and some people' do
+  it 'A team with no subteams (leaf_node) and some people' do
     current_group = leaf_node
     add_people_to_group(names, current_group)
     visit group_path(current_group)
@@ -56,7 +56,7 @@ feature 'Group browsing' do
     end
   end
 
-  scenario 'A team with no subteams (leaf_node) and no people' do
+  it 'A team with no subteams (leaf_node) and no people' do
     current_group = leaf_node
     visit group_path(leaf_node)
 
@@ -73,7 +73,7 @@ feature 'Group browsing' do
       add_people_to_group(subteam_names, subteam)
     end
 
-    scenario 'viewing top level group' do
+    it 'viewing top level group' do
       add_people_to_group([%w(Perm Sec)], department)
 
       visit group_path(department)
@@ -82,7 +82,7 @@ feature 'Group browsing' do
       expect(page).to have_link("View printable organogram")
     end
 
-    scenario 'viewing text on page' do
+    it 'viewing text on page' do
       visit group_path(team)
       expect(page).to have_text("Teams within #{team.name}")
       expect(page).to have_link("View all people")
@@ -90,7 +90,7 @@ feature 'Group browsing' do
       expect(page).to have_text("#{subteam.members_completion_score}% of profile information completed")
     end
 
-    scenario 'following the view all people link' do
+    it 'following the view all people link' do
       visit group_path(team)
       click_link("View all people")
 
@@ -106,7 +106,7 @@ feature 'Group browsing' do
       end
     end
 
-    scenario 'following link to view people not assigned to a sub-team' do
+    it 'following link to view people not assigned to a sub-team' do
       visit group_path(team)
       click_link('View 3 people not assigned to a sub-team')
 
@@ -122,7 +122,7 @@ feature 'Group browsing' do
       end
     end
 
-    scenario 'following the view printable organogram link' do
+    it 'following the view printable organogram link' do
       visit group_path(team)
       click_link("View printable organogram")
 
@@ -136,7 +136,7 @@ feature 'Group browsing' do
     end
   end
 
-  scenario 'redirecting from /groups' do
+  it 'redirecting from /groups' do
     create(:group, name: 'moj')
 
     visit '/groups/moj'
