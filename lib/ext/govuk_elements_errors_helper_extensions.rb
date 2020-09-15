@@ -19,7 +19,7 @@ module GovukElementsErrorsHelperExtensions
     parent.__send__(association).
       each_with_object([]).
       with_index do |(associated_object, memo), index|
-        if associated_object.errors.keys.include?(attribute) && block_given?
+        if associated_object.errors.key?(attribute) && block_given?
           yield error_tag_for_nested_attribute(associated_object, index, attribute), memo
         end
       end
@@ -58,7 +58,7 @@ module GovukElementsErrorsHelperExtensions
 
   def error_html_attributes form_object, attribute
     {
-      class: ('error' if form_object.object.errors.keys.include?(attribute)).to_s,
+      class: ('error' if form_object.object.errors.key?(attribute)).to_s,
       id: dom_id_for_nested_error(form_object.object.class.name.downcase, form_object.index, attribute)
     }
   end

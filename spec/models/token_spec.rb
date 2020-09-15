@@ -164,8 +164,8 @@ RSpec.describe Token, type: :model do
 
       context 'when in a production environment' do
         it 'returns true if token is less than 86400 seconds old and not spent' do
-          expect(token.active?).to be_truthy
-          expect(token.spent?).to be_falsey
+          expect(token).to be_active
+          expect(token).not_to be_spent
           Timecop.freeze(86_390.seconds.from_now) do
             expect(token).to be_active
           end
