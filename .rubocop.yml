@@ -197,3 +197,6 @@ FactoryBot/CreateList:
 
 Lint/MissingSuper:
   Enabled: false # was causing circle to fail
+
+RSpec/LeakyConstantDeclaration:
+  Enabled: false # possibly reenable, after fixing impage_dimension_validator_spec.rb

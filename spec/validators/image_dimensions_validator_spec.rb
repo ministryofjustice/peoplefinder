@@ -14,7 +14,7 @@ RSpec.describe ImageDimensionsValidator, type: :validator do
     allow(subject).to receive(:upload_dimensions).and_return(width: width, height: height)
   end
 
-  context 'image with dimensions less than minimum' do
+  context 'when image has dimensions less than minimum' do
     let(:width) { 649 }
     let(:height) { 647 }
     it { is_expected.to be_invalid }
@@ -26,19 +26,25 @@ RSpec.describe ImageDimensionsValidator, type: :validator do
     end
   end
 
-  context 'image with dimensions equal to the minimum' do
+  context 'when image has dimensions equal to the minimum' do
     let(:width) { 648 }
     let(:height) { 648 }
     it { is_expected.to be_valid }
   end
 
-  context 'image with dimensions over the minimum' do
+  context 'when image has dimensions over the minimum' do
     let(:width) { 649 }
     let(:height) { 649 }
     it { is_expected.to be_valid }
   end
 
-  context 'image with dimensions more than the maximum' do
+  context 'when image has dimensions under the minimum' do
+    let(:width) { 640 }
+    let(:height) { 640 }
+    it { is_expected.to be_invalid }
+  end
+
+  context 'when image has dimensions more than the maximum' do
     let(:width) { 8193 }
     let(:height) { 8192 }
     it { is_expected.to be_invalid }
@@ -50,16 +56,9 @@ RSpec.describe ImageDimensionsValidator, type: :validator do
     end
   end
 
-  context 'image with dimensions equal to the maximum' do
+  context 'when image has dimensions equal to the maximum' do
     let(:width) { 8192 }
     let(:height) { 8192 }
     it { is_expected.to be_valid }
   end
-
-  context 'image with dimensions under the maximum' do
-    let(:width) { 648 }
-    let(:height) { 648 }
-    it { is_expected.to be_valid }
-  end
-
 end
