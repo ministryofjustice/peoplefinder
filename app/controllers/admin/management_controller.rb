@@ -6,7 +6,7 @@ module Admin
     def generate_user_behavior_report
       generate CsvPublisher::UserBehaviorReport
       notice :generate_user_behavior_report
-      redirect_to :back
+      redirect_back(fallback_location: home_path)
     end
 
     def user_behavior_report
@@ -32,7 +32,7 @@ module Admin
         )
       else
         warning :file_not_generated
-        redirect_to :back
+        redirect_back(fallback_location: home_path)
       end
     end
 
