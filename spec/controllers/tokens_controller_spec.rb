@@ -10,7 +10,7 @@ describe TokensController, type: :controller do
     let(:person) { create(:person) }
     let(:token) { create(:token, user_email: person.email) }
 
-    context 'user is logged in' do
+    context 'when a user is logged in' do
       before do
         allow(controller).to receive(:current_user).and_return person
         allow(controller).to receive(:logged_in_regular?).and_return true
@@ -31,7 +31,7 @@ describe TokensController, type: :controller do
       end
     end
 
-    context 'user is not logged in' do
+    context 'when a user is not logged in' do
       before do
         allow(controller).to receive(:current_user).and_return nil
         allow(controller).to receive(:logged_in_regular?).and_return false
@@ -52,7 +52,7 @@ describe TokensController, type: :controller do
       end
     end
 
-    context 'securly verifies that a token is valid and active' do
+    context 'when securly verifying that a token is valid and active' do
       describe 'avoiding a method with differning repsonse times for valid and invalid tokens' do
         it 'does not use Token.where(value: param[:id]).first' do
           expect(Token).not_to receive(:where)
@@ -70,7 +70,7 @@ describe TokensController, type: :controller do
       end
     end
 
-    context 'token usage' do
+    context 'with token usage' do
       before { PermittedDomain.find_or_create_by(domain: 'digital.justice.gov.uk') }
 
       let!(:token) { create(:token) }

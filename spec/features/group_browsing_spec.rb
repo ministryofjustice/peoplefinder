@@ -66,7 +66,7 @@ describe 'Group browsing' do
     expect(page).not_to have_link("View printable organogram")
   end
 
-  context 'A team with people and subteams with people' do
+  context 'with a team with people and subteams of people' do
     before do
       current_group = team
       add_people_to_group(names, current_group)

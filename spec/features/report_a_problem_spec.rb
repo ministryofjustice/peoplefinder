@@ -12,7 +12,7 @@ describe 'Report a problem', js: true do
     ActionMailer::Base.deliveries.clear
   end
 
-  context 'When logged in' do
+  context 'when logged in' do
     let(:me) { create(:person) }
     let(:group) { create(:group) }
 
@@ -41,7 +41,7 @@ describe 'Report a problem', js: true do
     end
   end
 
-  context 'When not logged in' do
+  context 'when not logged in' do
     it 'Reporting a problem', js: true do
       visit new_sessions_path
 

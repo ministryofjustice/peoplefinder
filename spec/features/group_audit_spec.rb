@@ -21,7 +21,7 @@ describe 'View group audit' do
     end
   end
 
-  context 'as an admin user' do
+  context 'when an admin user' do
     before do
       token_log_in_as(super_admin.email)
     end
@@ -45,7 +45,7 @@ describe 'View group audit' do
     end
   end
 
-  context 'as a regular user' do
+  context 'when a regular user' do
     before do
       token_log_in_as(person.email)
     end

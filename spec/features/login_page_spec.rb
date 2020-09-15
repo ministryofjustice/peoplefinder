@@ -6,7 +6,7 @@ describe 'Login page' do
   let(:login_page) { Pages::Login.new }
   let(:token_created_page) { Pages::TokenCreated.new }
 
-  context 'User from outside the network' do
+  context 'with a user from outside the network' do
     it 'Is presented with standard login page and copy' do
       visit '/'
 
@@ -15,7 +15,7 @@ describe 'Login page' do
     end
   end
 
-  context 'User from inside the network' do
+  context 'with a user from inside the network' do
     before do
       mock_readonly_user
     end

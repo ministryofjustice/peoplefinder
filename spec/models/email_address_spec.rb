@@ -56,12 +56,12 @@ RSpec.describe EmailAddress do
   end
 
   describe '.valid_format' do
-    context 'is badly formatted' do
+    context 'when it is badly formatted' do
       let(:email) { 'me-at-example.co.uk' }
       it { is_expected.not_to be_valid_format }
     end
 
-    context 'is correctly formatted' do
+    context 'when it is correctly formatted' do
       let(:email) { 'me@example.co.uk' }
       it { is_expected.to be_valid_format }
     end
@@ -101,7 +101,7 @@ RSpec.describe EmailAddress do
     end
   end
 
-  context 'name inferral' do
+  context 'with name inferral' do
     let(:email_john_smith) { described_class.new('john.smith.1@example.com') }
     let(:email_smithy) { described_class.new('smithy@example.com') }
     let(:email_anne_marie) { described_class.new('anne-marie.boris-smythe@example.com') }

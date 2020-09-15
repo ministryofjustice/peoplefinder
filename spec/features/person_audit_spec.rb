@@ -15,7 +15,7 @@ describe 'View person audit' do
 
   let(:author) { create(:person) }
 
-  context 'modern versioning' do
+  context 'with modern versioning' do
     before do
       with_versioning do
         PaperTrail.request.whodunnit = author.id
@@ -25,7 +25,7 @@ describe 'View person audit' do
       end
     end
 
-    context 'as an admin user' do
+    context 'with an admin user' do
       before do
         token_log_in_as(super_admin.email)
       end
@@ -70,7 +70,7 @@ describe 'View person audit' do
       end
     end
 
-    context 'as a regular user' do
+    context 'with a regular user' do
       before do
         token_log_in_as(person.email)
       end
@@ -82,7 +82,7 @@ describe 'View person audit' do
     end
   end
 
-  context 'legacy versioning as an admin' do
+  context 'with legacy versioning as an admin' do
     before do
       with_versioning do
         PaperTrail.request.whodunnit = 'Michael Mouse'

@@ -82,7 +82,7 @@ describe 'Login flow' do
         expect(edit_profile_page.flash_message).to have_selector('.warning', text: create_profile_warning)
       end
 
-      context 'and I have namesakes' do
+      context 'when I have namesakes' do
         let(:email) { 'john.doe3@digital.justice.gov.uk' }
         before do
           create(:person, given_name: 'John', surname: 'Doe', email: 'john.doe@digital.justice.gov.uk')
@@ -201,9 +201,9 @@ describe 'Login flow' do
           expect(person.email).to eql email
         end
 
-        context 'selecting an existing namesake' do
+        context 'when selecting an existing namesake' do
 
-          context 'using token login' do
+          context 'when using token login' do
             before do
               when_i_am_prompted_to_login
               and_i_login_using_token

@@ -25,7 +25,7 @@ RSpec.describe ImageUploader, type: :uploader do
       end
     end
 
-    context 'stores uploaded file dimensions' do
+    context 'when storing uploaded file dimensions' do
       it 'in before cache callback' do
         expect_any_instance_of(described_class).to receive :store_upload_dimensions
         subject

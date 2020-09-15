@@ -31,13 +31,13 @@ RSpec.describe ReadonlyUser, type: :model do
       end
     end
 
-    context 'whitelist' do
+    context 'with whitelist' do
       let(:ip_whitelist) { '127.0.0.2/31;127.0.0.4/32' }
       before do
         allow(Rails.configuration).to receive(:readonly_ip_whitelist).and_return ip_whitelist
       end
 
-      context "For IPs in CIDR range" do
+      context "when IPs in CIDR range" do
         (2..4).each do |i|
           it "accepts IP 127.0.0.#{i}" do
             request.remote_addr = "127.0.0.#{i}"
@@ -46,7 +46,7 @@ RSpec.describe ReadonlyUser, type: :model do
         end
       end
 
-      context "For IPs outside CIDR range" do
+      context "with IPs outside CIDR range" do
         [1, 5].each do |i|
           it "rejects IP 127.0.0.#{i}" do
             request.remote_addr = "127.0.0.#{i}"

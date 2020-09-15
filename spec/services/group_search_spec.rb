@@ -12,7 +12,7 @@ RSpec.describe GroupSearch, elastic: true do
   describe '#perform_search' do
     it_behaves_like 'a search'
 
-    context 'exact match flag' do
+    context 'with an exact match flag' do
       it 'is case-insensitive' do
         results = search('team name')
         expect(results.contains_exact_match).to eq true
@@ -29,7 +29,7 @@ RSpec.describe GroupSearch, elastic: true do
       end
     end
 
-    context 'result set' do
+    context 'with a result set' do
       it 'returns matches when query is exact match for group name' do
         set = result_set('Team name')
         expect(set).to include(team)

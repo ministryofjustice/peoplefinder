@@ -35,7 +35,7 @@ RSpec.describe Membership, type: :model do
   # that they are the leader of the top-most team (a.k.a department,
   # Ministry of Justice)
   #
-  context 'validates uniqueness of Permanent Secretary' do
+  context 'when it validates uniqueness of Permanent Secretary' do
     let(:csg) { create :group, name: 'Corporate Services Group' }
     let(:person) { create :person, :member_of, team: csg }
     let(:membership) { person.memberships.first }

@@ -1,7 +1,7 @@
 require 'rails_helper'
 require_relative './token_user_email_shared'
 
-RSpec.shared_context "token_auth feature disabled" do
+RSpec.shared_context "with token_auth feature disabled" do
   extend FeatureFlagSpecHelper
   disable_feature :token_auth
 end
@@ -99,12 +99,12 @@ describe 'Token Authentication' do
     expect(page).to have_text("The authentication token has expired.")
   end
 
-  context "logging in with a valid token" do
+  context "when logging in with a valid token" do
     let(:ff31) { 'Mozilla/5.0 (Windows NT 5.2; rv:31.0) Gecko/20100101 Firefox/31.0' }
     let(:ie6) { 'Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.2; SV1; .NET CLR 1.1.4322; .NET CLR 2.0.50727; .NET CLR 3.0.04506.648; .NET CLR 3.5.21022)' }
     let(:token) { create(:token) }
 
-    context "on an unsupported browser", js: true do
+    context "when on an unsupported browser", js: true do
       before do
         page.driver.headers = { "User-Agent" => ie6 }
         visit token_path(token)
@@ -118,7 +118,7 @@ describe 'Token Authentication' do
       end
     end
 
-    context "on supported browser", js: true do
+    context "when on supported browser", js: true do
       before do
         page.driver.headers = { "User-Agent" => ff31 }
         visit token_path(token)
@@ -210,8 +210,8 @@ describe 'Token Authentication' do
     expect(page).to have_text('Signed in as Example User')
   end
 
-  context 'token_auth feature disabled' do
-    include_context "token_auth feature disabled"
+  context 'when token_auth feature disabled' do
+    include_context "with token_auth feature disabled"
     let(:token) { create(:token) }
 
     it 'following a valid link from an email redirects to login' do

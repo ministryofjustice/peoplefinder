@@ -48,7 +48,7 @@ RSpec.describe PersonImportJob, type: :job do
 
   context 'when performed' do
 
-    context 'now' do
+    context 'when now' do
 
       it 'uses the PersonCreator' do
         expect(PersonCreator).to receive(:new).

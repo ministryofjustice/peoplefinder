@@ -5,7 +5,7 @@ RSpec.describe VersionsController, type: :controller do
 
   describe '#index' do
 
-    context 'readonly user' do
+    context 'when a readonly user' do
       before do
         mock_readonly_user
         get :index
@@ -16,7 +16,7 @@ RSpec.describe VersionsController, type: :controller do
       end
     end
 
-    context 'regular user' do
+    context 'when a regular user' do
       before do
         mock_logged_in_user
         get :index
@@ -27,7 +27,7 @@ RSpec.describe VersionsController, type: :controller do
       end
     end
 
-    context 'for a super admin' do
+    context 'when a super admin' do
       before do
         mock_logged_in_user super_admin: true
         get :index

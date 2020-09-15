@@ -65,7 +65,7 @@ shared_examples 'geckoboard publishable report' do
       expect(subject.publish!).to eql true
     end
 
-    context 'handles conflict errors' do
+    context 'when handling conflict errors' do
       before do
         mock_expectations do |client|
           allow(client).to receive(:datasets).and_return datasets_client

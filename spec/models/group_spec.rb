@@ -160,7 +160,7 @@ RSpec.describe Group, type: :model do
         expect(team.people_outside_subteams_count).to eq(0)
       end
 
-      context 'after update_members_completion_score! called' do
+      context 'when after update_members_completion_score! called' do
         it 'has members_completion_score equal to zero' do
           team.update_members_completion_score!
           expect(team.members_completion_score).to eq(0)
@@ -175,7 +175,7 @@ RSpec.describe Group, type: :model do
         bob.reload
       end
 
-      context 'and bob is a team leader' do
+      context 'when bob is a team leader' do
 
         before do
           bob.memberships.first.update(leader: true)
@@ -222,14 +222,14 @@ RSpec.describe Group, type: :model do
         expect(team.people_outside_subteams_count).to eq(1)
       end
 
-      context 'after update_members_completion_score! called' do
+      context 'when after update_members_completion_score! called' do
         it 'has members_completion_score equal to bob\'s completion_score' do
           team.update_members_completion_score!
           expect(team.members_completion_score).to eq(bob.completion_score)
         end
       end
 
-      context 'and alice in the subteam' do
+      context 'with alice in the subteam' do
         before do
           subteam.people << alice
           alice.reload
@@ -251,7 +251,7 @@ RSpec.describe Group, type: :model do
           expect(team.people_outside_subteams_count).to eq(1)
         end
 
-        context 'after update_members_completion_score! called' do
+        context 'when update_members_completion_score! called' do
           it 'has members_completion_score equal to average of bob and alice\'s completion_score' do
             team.update_members_completion_score!
             average_score = ((bob.completion_score + alice.completion_score) / 2.0).round(0)
@@ -259,7 +259,7 @@ RSpec.describe Group, type: :model do
           end
         end
 
-        context 'and bob also in the subteam' do
+        context 'when bob also in the subteam' do
           before { subteam.people << bob }
 
           it 'has 2 in all_people array' do
@@ -282,7 +282,7 @@ RSpec.describe Group, type: :model do
             expect(team.all_people.map(&:name)).to eql(['alice smith', 'bob smith'])
           end
 
-          context 'after update_members_completion_score! called' do
+          context 'when after update_members_completion_score! called' do
             it 'has members_completion_score equal to average of bob and alice\'s completion_score' do
               team.update_members_completion_score!
               average_score = ((bob.completion_score + alice.completion_score) / 2.0).round(0)
@@ -377,13 +377,13 @@ RSpec.describe Group, type: :model do
     let(:dept_acronym) { 'HMCTS' }
     let(:dept) { create(:group, name: dept_name) }
 
-    context 'if a group does not have an acronym' do
+    context 'when a group does not have an acronym' do
       it 'returns the full name' do
         expect(dept.short_name).to eql(dept_name)
       end
     end
 
-    context 'if a group does have an acronym' do
+    context 'when a group does have an acronym' do
       it 'returns the acronym' do
         dept.acronym = dept_acronym
         expect(dept.short_name).to eql(dept_acronym)

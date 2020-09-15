@@ -62,7 +62,7 @@ RSpec.describe Token, type: :model do
     end
   end
 
-  context 'scopes' do
+  context 'with scopes' do
     before do
       # Seems like a smell, but if I don't then it kills all the expired records
       # before the individual specs run.
@@ -113,7 +113,7 @@ RSpec.describe Token, type: :model do
     end
   end
 
-  context 'creating a new token' do
+  context 'when creating a new token' do
     let!(:expiring_tokens) { create_list(:token, 3) }
 
     it 'enqueues delayed job for destroying expired tokens' do
@@ -124,7 +124,7 @@ RSpec.describe Token, type: :model do
       expect { token.save }.to delay_method(:remove_expired_tokens)
     end
 
-    context 'destroys all tokens older than the throttle limit' do
+    context 'when destroying all tokens older than the throttle limit' do
       before { Delayed::Worker.delay_jobs = false }
 
       after { Delayed::Worker.delay_jobs = true }
@@ -152,7 +152,7 @@ RSpec.describe Token, type: :model do
     end
   end
 
-  context 'time dependent tokens' do
+  context 'with time dependent tokens' do
     describe '#ttl' do
       it 'defaults to 86400 seconds (24 hours)' do
         expect(token.ttl).to eql(86_400)
@@ -162,7 +162,7 @@ RSpec.describe Token, type: :model do
     describe '#active?' do
       before { token.save }
 
-      context 'in production environment' do
+      context 'when in a production environment' do
         it 'returns true if token is less than 86400 seconds old and not spent' do
           expect(token.active?).to be_truthy
           expect(token.spent?).to be_falsey
@@ -185,7 +185,7 @@ RSpec.describe Token, type: :model do
         end
       end
 
-      context 'on dev and staging - to avoid virus scanner link followers spending the token prematurely' do
+      context 'when on dev and staging - to avoid virus scanner link followers spending the token prematurely' do
         before do
           allow(Rails).to receive_message_chain(:host, :dev?).and_return false
           allow(Rails).to receive_message_chain(:host, :staging?).and_return true
@@ -207,7 +207,7 @@ RSpec.describe Token, type: :model do
         end
       end
 
-      context 'expiring tokens' do
+      context 'with expiring tokens' do
         before { token.save }
 
         let(:new_token) { build(:token, user_email: token.user_email) }
@@ -240,7 +240,7 @@ RSpec.describe Token, type: :model do
     end
   end
 
-  context 'throttling token generation' do
+  context 'when throttling token generation' do
     describe '#save or #create of a new token' do
       it 'throws and error if more than 8 tokens have been generated in the past hour for the same person' do
         8.times do

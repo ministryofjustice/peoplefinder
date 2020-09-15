@@ -48,7 +48,7 @@ RSpec.describe Person, type: :model do
   it { should respond_to(:pager_number) }
   it { should respond_to(:skip_group_completion_score_updates) }
 
-  context 'test factory' do
+  context 'with a test factory' do
     describe '#create(:person)' do
       let(:person) { create(:person) }
       it 'creates a valid person' do
@@ -88,7 +88,7 @@ RSpec.describe Person, type: :model do
     end
   end
 
-  context 'who has never logged in' do
+  context 'when someone who has never logged in' do
     before { person.save }
 
     it 'is returned by .never_logged_in' do
@@ -100,7 +100,7 @@ RSpec.describe Person, type: :model do
     end
   end
 
-  context 'who has logged in' do
+  context 'when someone who has logged in' do
     before do
       person.login_count = 1
       person.save!
@@ -312,7 +312,7 @@ RSpec.describe Person, type: :model do
     end
   end
 
-  context 'search' do
+  context 'with search' do
     it 'deletes indexes' do
       expect(described_class.__elasticsearch__).to receive(:delete_index!).
         with(index: 'test_people')
@@ -320,7 +320,7 @@ RSpec.describe Person, type: :model do
     end
   end
 
-  context 'elasticsearch indexing helpers' do
+  context 'with elasticsearch indexing helpers' do
     before do
       person.save!
       digital_services = create(:group, name: 'Digital Services')
@@ -335,7 +335,7 @@ RSpec.describe Person, type: :model do
     end
   end
 
-  context 'group member completion score update' do
+  context 'when group member completion score updates' do
     include ActiveJob::TestHelper
 
     let(:person) { build(:person) }
@@ -395,7 +395,7 @@ RSpec.describe Person, type: :model do
       person.save!
     end
 
-    context 'adding a membership' do
+    context 'when adding a membership' do
 
       let(:mass_assignment_params) do
         {

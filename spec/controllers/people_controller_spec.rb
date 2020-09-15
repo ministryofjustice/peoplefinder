@@ -57,7 +57,7 @@ RSpec.describe PeopleController, type: :controller do
       expect(assigns(:person)).to eq(person)
     end
 
-    context 'building memberships' do
+    context 'when building memberships' do
       it 'builds a membership if there isn\'t one already' do
         person.memberships.destroy_all
         expect(person.memberships.count).to eq 0
@@ -316,9 +316,9 @@ RSpec.describe PeopleController, type: :controller do
     end
   end
 
-  context 'action routing' do
-    context 'create' do
-      context 'save button pressed' do
+  context 'when action routing' do
+    context 'with create' do
+      context 'when save button pressed' do
         it 'updates and shows the edit person page' do
           post :create, params: { person: valid_attributes.merge(given_name: 'Francis', surname: 'Drake', email: 'francis.drake@digital.justice.gov.uk') }
           person = Person.friendly.find('francis-drake')
@@ -331,14 +331,14 @@ RSpec.describe PeopleController, type: :controller do
           create :person, given_name: 'Francis', surname: 'Drake', email: 'fd@digital.justice.gov.uk'
         end
 
-        context 'save button presssed with duplicate person in database' do
+        context 'when save button presssed with duplicate person in database' do
           it 'displays duplicate confirmation page' do
             post :create, params: { person: valid_attributes.merge(given_name: 'Francis', surname: 'Drake', email: 'francis.drake@digital.justice.gov.uk') }
             expect(response).to render_template(:confirm)
           end
         end
 
-        context 'pressing confirm on duplicate confirmation page' do
+        context 'when pressing confirm on duplicate confirmation page' do
           it 'updates and shows the person edit page' do
             post :create, params: { person: valid_attributes.merge(given_name: 'Francis', surname: 'Drake', email: 'francis.drake@digital.justice.gov.uk'), continue_from_duplication: '1' }
             person = Person.friendly.find('francis-drake')

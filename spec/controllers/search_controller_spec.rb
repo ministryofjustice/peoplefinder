@@ -67,7 +67,7 @@ RSpec.describe SearchController, type: :controller do
     #   end
     # end
 
-    context 'filtering' do
+    context 'when filtering' do
       let(:query) { 'whichever' }
       let(:people_results) { double(SearchResults, set: [person], contains_exact_match: true, size: 1) }
       let(:team_results) { double(SearchResults, set: [group], contains_exact_match: true, size: 1) }
@@ -81,7 +81,7 @@ RSpec.describe SearchController, type: :controller do
         end
       end
 
-      context 'on people and team' do
+      context 'with on people and team' do
         let(:search_filters) { %w(people teams) }
         it 'searches people and teams' do
           subject
@@ -90,7 +90,7 @@ RSpec.describe SearchController, type: :controller do
         end
       end
 
-      context 'only on teams' do
+      context 'with only on teams' do
         let(:search_filters) { ['teams'] }
         it 'searches teams only' do
           subject

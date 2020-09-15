@@ -63,13 +63,13 @@ RSpec.describe SearchHelper, type: :helper do
         expect(helper.result_summary).to match(/\A.*bold-term.*4 results.*/)
       end
 
-      context 'unfiltered' do
+      context 'when unfiltered' do
         it 'outputs expected text including sub-counts' do
           expect(helper.result_summary).to match(/\A.*4 results.* from people \(3\) and teams \(1\)\z/)
         end
       end
 
-      context 'filtered on people' do
+      context 'when filtered on people' do
         before do
           allow(helper).to receive(:team_count).and_return 0
           @search_filters = ['people']
@@ -80,7 +80,7 @@ RSpec.describe SearchHelper, type: :helper do
         end
       end
 
-      context 'filtered on teams' do
+      context 'when filtered on teams' do
         before do
           allow(helper).to receive(:people_count).and_return 0
           @search_filters = ['teams']
@@ -102,7 +102,7 @@ RSpec.describe SearchHelper, type: :helper do
         expect(helper.result_summary).to match(/bold-term.*joel<\/.* not found/)
       end
 
-      context 'unfiltered' do
+      context 'when unfiltered' do
         before { @search_filters = %w(people teams) }
 
         it 'outputs expected text, including sub-counts' do
@@ -110,7 +110,7 @@ RSpec.describe SearchHelper, type: :helper do
         end
       end
 
-      context 'filtered on people' do
+      context 'when filtered on people' do
         before do
           allow(helper).to receive(:team_count).and_return 0
           @search_filters = ['people']
@@ -121,7 +121,7 @@ RSpec.describe SearchHelper, type: :helper do
         end
       end
 
-      context 'filtered on teams' do
+      context 'when filtered on teams' do
         before do
           allow(helper).to receive(:people_count).and_return 0
           @search_filters = ['teams']
@@ -138,13 +138,13 @@ RSpec.describe SearchHelper, type: :helper do
           allow(helper).to receive(:team_count).and_return 0
         end
 
-        context 'unfiltered' do
+        context 'when unfiltered' do
           it 'outputs expected text, not including sub counts' do
             expect(helper.result_summary).to match(/\A.* not found - 0 similar results from people and teams\z/)
           end
         end
 
-        context 'filtered on people' do
+        context 'when filtered on people' do
           before { @search_filters = ['people'] }
 
           it 'outputs expected text, not including sub counts' do
@@ -152,7 +152,7 @@ RSpec.describe SearchHelper, type: :helper do
           end
         end
 
-        context 'filtered on teams' do
+        context 'when filtered on teams' do
           before { @search_filters = ['teams'] }
 
           it 'outputs expected text, not including sub counts' do

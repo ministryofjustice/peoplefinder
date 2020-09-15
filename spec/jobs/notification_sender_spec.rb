@@ -18,7 +18,7 @@ describe NotificationSender do
       sender.send!
     end
 
-    context 'processing started by another process after this job started' do
+    context 'when processing started by another process after this job started' do
       it 'does not send any mails' do
         Timecop.freeze 1.hour.ago do
           create_list :queued_notification, 2, session_id: 'abc', person_id: 22, current_user_id: 333
@@ -31,7 +31,7 @@ describe NotificationSender do
       end
     end
 
-    context 'first queued notification is new email template' do
+    context 'when first queued notification is new email template' do
       it 'sends a new_profile_email' do
         create_qn(email_template: 'new_profile_email')
         create_qn(email_template: 'updated_profile_email', edit_finalised: true)
@@ -43,7 +43,7 @@ describe NotificationSender do
       end
     end
 
-    context 'all queued notifications email templates are updated_email_template' do
+    context 'when all queued notifications email templates are updated_email_template' do
       it 'sends an updated profile email' do
         create_qn(email_template: 'updated_profile_email')
         create_qn(email_template: 'updated_profile_email', edit_finalised: true)
@@ -60,7 +60,7 @@ describe NotificationSender do
       end
     end
 
-    context 'one grouped session sent and a second group with same ids unsent' do
+    context 'when one grouped session sent and a second group with same ids unsent' do
       it 'sends and email for the second group' do
         # This tests the edge case where a group of queued notifications has been processed, and there is another
         # unprocessed group with the same session id, current user and person.  We have to be sure that the first

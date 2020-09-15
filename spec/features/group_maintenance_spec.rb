@@ -21,7 +21,7 @@ describe 'Group maintenance' do
     click_link 'Edit'
   end
 
-  context 'for a regular user', user: :regular, js: true do
+  context 'when a regular user', user: :regular, js: true do
     before do
       dept
     end
@@ -283,7 +283,7 @@ describe 'Group maintenance' do
     end
   end
 
-  context 'for a readonly user', user: :readonly do
+  context 'when a readonly user', user: :readonly do
     it 'Is not allowed to create a new team' do
       visit group_path(dept)
       click_link 'Add new sub-team'

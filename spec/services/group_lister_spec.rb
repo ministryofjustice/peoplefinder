@@ -28,7 +28,7 @@ RSpec.describe GroupLister, type: :service do
     end
   end
 
-  context 'a node with a hierarchy' do
+  context 'with a node with a hierarchy' do
     subject { described_class.new.list.max_by(&:id) }
 
     it 'has the name of the group' do
@@ -64,7 +64,7 @@ RSpec.describe GroupLister, type: :service do
     end
   end
 
-  context 'a top-level node' do
+  context 'with a top-level node' do
     subject { described_class.new.list.min_by(&:id) }
 
     it 'has nil parent id' do

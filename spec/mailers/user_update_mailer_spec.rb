@@ -5,7 +5,7 @@ shared_examples "observe token_auth feature flag" do
     expect(mail.body).to have_text(token_url(Token.last, desired_path: person_path(person)))
   end
 
-  context 'token_auth feature disabled' do
+  context 'with token_auth feature disabled' do
     it "includes the person show url without an auth token" do
       without_feature('token_auth') do
         expect(mail.body).to have_text(person_url(person))
@@ -121,7 +121,7 @@ describe UserUpdateMailer do
       end
     end
 
-    context 'recipients' do
+    context 'with recipients' do
       it 'emails the changed person' do
         expect(mail.to).to include 'test.user@digital.justice.gov.uk'
         expect(mail.cc).to be_empty
@@ -135,7 +135,7 @@ describe UserUpdateMailer do
       end
     end
 
-    context 'mail content' do
+    context 'with mail content' do
       before do
         # mock controller mass assignment behaviour for applying changes
         person.reload

@@ -25,17 +25,17 @@ RSpec.describe TeamDescriptionNotifier, type: :service do
   describe 'send_reminders' do
     context 'when never-logged-in person created more than 30 days ago has' do
 
-      context 'no reminder email sent' do
+      context 'with no reminder email sent' do
         let(:description_reminder_email_at) { nil }
         include_examples 'sends reminder email', :team_description_missing
       end
 
-      context 'reminder email sent over 30 days ago' do
+      context 'with a reminder email sent over 30 days ago' do
         let(:description_reminder_email_at) { 31.days.ago }
         include_examples 'sends reminder email', :team_description_missing
       end
 
-      context 'reminder email sent within last 30 days' do
+      context 'with a reminder email sent within last 30 days' do
         let(:description_reminder_email_at) { 30.days.ago }
 
         it 'does not send email' do

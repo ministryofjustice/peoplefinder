@@ -13,7 +13,7 @@ RSpec.describe FileSizeValidator, type: :validator do
     allow(subject.image).to receive(:size).and_return(file_size)
   end
 
-  context 'image with byte size over the maximum' do
+  context 'with an image with byte size over the maximum' do
     let(:file_size) { 6.01.megabytes }
     it { is_expected.to be_invalid }
 
@@ -24,12 +24,12 @@ RSpec.describe FileSizeValidator, type: :validator do
     end
   end
 
-  context 'image with byte size equal to the maximum' do
+  context 'with an image with byte size equal to the maximum' do
     let(:file_size) { 6.megabytes }
     it { is_expected.to be_valid }
   end
 
-  context 'image with byte size under the maximum' do
+  context 'with an image with byte size under the maximum' do
     let(:file_size) { 5.99.megabytes }
     it { is_expected.to be_valid }
   end

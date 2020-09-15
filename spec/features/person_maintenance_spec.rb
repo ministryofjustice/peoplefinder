@@ -30,16 +30,16 @@ describe 'Person maintenance' do
     'Fill in the highlighted fields to achieve 100% profile completion'
   end
 
-  context 'Creating a person' do
+  context 'when Creating a person' do
 
-    context 'for a read only user', user: :readonly do
+    context 'with a read only user', user: :readonly do
       it 'is not allowed without login' do
         new_profile_page.load
         expect(login_page).to be_displayed
       end
     end
 
-    context 'for a regular user', user: :regular do
+    context 'when a regular user', user: :regular do
       it 'Creating a person from a group' do
         team = create(:group)
         subteam = create(:group, parent: team)
@@ -174,8 +174,8 @@ describe 'Person maintenance' do
     end
   end
 
-  context 'Editing a person' do
-    context 'for a read only user', user: :readonly do
+  context 'when Editing a person' do
+    context 'with a read only user', user: :readonly do
       it 'is not allowed without login' do
         visit person_path(create(:person, person_attributes))
         click_edit_profile
@@ -183,7 +183,7 @@ describe 'Person maintenance' do
       end
     end
 
-    context 'for a regular user', user: :regular do
+    context 'with a regular user', user: :regular do
       it 'Editing a person', js: true do
         visit person_path(create(:person, person_attributes))
         click_edit_profile
@@ -343,8 +343,8 @@ describe 'Person maintenance' do
     end
   end
 
-  context 'Deleting a person' do
-    context 'for a regular user', user: :regular do
+  context 'when Deleting a person' do
+    context 'with a regular user', user: :regular do
       it 'Deleting a person' do
         person = create :person
         email_address = person.email
@@ -370,7 +370,7 @@ describe 'Person maintenance' do
     end
   end
 
-  context 'Viewing my own profile', user: :regular do
+  context 'when Viewing my own profile', user: :regular do
     it 'when it is complete' do
       complete_profile!(person)
       visit person_path(person)
@@ -385,9 +385,9 @@ describe 'Person maintenance' do
     end
   end
 
-  context 'Viewing another person\'s profile' do
+  context 'when Viewing another person\'s profile' do
 
-    context 'for the readonly user', user: :readonly do
+    context 'with the readonly user', user: :readonly do
       it 'when it is complete' do
         complete_profile!(another_person)
         visit person_path(another_person)
@@ -402,7 +402,7 @@ describe 'Person maintenance' do
       end
     end
 
-    context 'for a regular user', user: :regular do
+    context 'with a regular user', user: :regular do
       it 'when it is complete' do
         complete_profile!(another_person)
         visit person_path(another_person)

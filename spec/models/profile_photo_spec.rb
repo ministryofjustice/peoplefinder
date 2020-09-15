@@ -52,8 +52,8 @@ RSpec.describe ProfilePhoto, type: :model do
   describe 'validations' do
     subject { build(:profile_photo) }
 
-    context 'file' do
-      context 'extension is whitelisted' do
+    context 'with file' do
+      context 'with extension is whitelisted' do
         it do
           subject.image = non_white_list_image
           expect(subject).to be_invalid
@@ -65,7 +65,7 @@ RSpec.describe ProfilePhoto, type: :model do
         end
       end
 
-      context 'size must be less than or equal to 6M' do
+      context 'when size must be less than or equal to 6M' do
         it do
           allow(subject.image).to receive(:size).and_return 6.001.megabytes
           expect(subject).to be_invalid
@@ -78,8 +78,8 @@ RSpec.describe ProfilePhoto, type: :model do
       end
     end
 
-    context 'image dimensions' do
-      context 'must be greater than 648x648 pixels' do
+    context 'with image dimensions' do
+      context 'when it is greater than 648x648 pixels' do
         it do
           allow(subject).to receive(:upload_dimensions).and_return(width: 649, height: 647)
           expect(subject).to be_invalid
@@ -91,7 +91,7 @@ RSpec.describe ProfilePhoto, type: :model do
         end
       end
 
-      context 'must be less than or equal to 8192x8192 pixels' do
+      context 'when it is less than or equal to 8192x8192 pixels' do
         it do
           allow(subject).to receive(:upload_dimensions).and_return(width: 8193, height: 8192)
           expect(subject).to be_invalid
@@ -104,7 +104,7 @@ RSpec.describe ProfilePhoto, type: :model do
       end
     end
 
-    context 'saving file' do
+    context 'when a saving file' do
       context 'with non image' do
         subject { build :profile_photo, :non_image }
 

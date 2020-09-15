@@ -81,7 +81,7 @@ RSpec.describe PeopleHelper, type: :helper do
       expect(profile_image_tag(person, options)).to match(/.*\/medium_no_photo.png.*/)
     end
 
-    context 'environments using local storage' do
+    context 'when environments using local storage' do
       subject { profile_image_tag(person, options) }
 
       before do
@@ -93,7 +93,7 @@ RSpec.describe PeopleHelper, type: :helper do
       end
     end
 
-    context 'environments using S3 storage' do
+    context 'when environments using S3 storage' do
       subject { profile_image_tag(person, options) }
 
       let(:version) do
