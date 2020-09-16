@@ -208,6 +208,9 @@ RSpec/DescribeClass:
   Exclude:
     - 'spec/features/**/*'
 
+Capybara/VisibilityMatcher:
+  Enabled: false 
+       
 Style/FormatStringToken:
   Enabled: false
 
