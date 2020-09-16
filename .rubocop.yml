@@ -200,3 +200,10 @@ Lint/MissingSuper:
 
 RSpec/LeakyConstantDeclaration:
   Enabled: false # possibly reenable, after fixing impage_dimension_validator_spec.rb
+
+Rails/HelperInstanceVariable:
+  Enabled: false # would need some thought about refactor will not do before upgrade to rails 5
+
+RSpec/DescribeClass:
+  Exclude:
+    - 'spec/features/**/*'
