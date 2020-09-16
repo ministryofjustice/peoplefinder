@@ -373,7 +373,7 @@ Style/InverseMethods:
     - 'app/presenters/profile_changes_presenter.rb'
 
 # Offense count: 2
-Lint/MissingSuper:
+Style/MethodMissingSuper:
   Exclude:
     - 'app/presenters/membership_change_set.rb'
     - 'lib/rails_host.rb'

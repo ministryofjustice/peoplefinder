@@ -195,7 +195,7 @@ Lint/RedundantWithObject:
 FactoryBot/CreateList:
   Enabled: false
 
-Lint/MissingSuper:
+Style/MethodMissingSuper:
   Enabled: false # was causing circle to fail
 
 RSpec/LeakyConstantDeclaration:
