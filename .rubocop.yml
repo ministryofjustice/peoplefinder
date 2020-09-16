@@ -208,6 +208,9 @@ RSpec/DescribeClass:
   Exclude:
     - 'spec/features/**/*'
 
+Style/FormatStringToken:
+  Enabled: false
+
 Rails/ApplicationController:
   Exclude:
     - 'app/controllers/health_check_controller.rb'
