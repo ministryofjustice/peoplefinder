@@ -48,10 +48,10 @@ class PersonSearch
 
   def exact_match_exists?
     @exact_match_exists ||= if single_word_query?
-                       matches.records.present?
-                     else
-                       any_exact_matches?
-                     end
+                              matches.records.present?
+                            else
+                              any_exact_matches?
+                            end
   end
 
   def any_partial_name_matches? results
