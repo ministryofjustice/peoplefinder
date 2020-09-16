@@ -226,6 +226,18 @@ Rails/UniqueValidationWithoutIndex:
 Rails/HasManyOrHasOneDependent:
   Enabled: false
 
+RSpec/SubjectStub:
+  Enabled: false
+
+Rails/LexicallyScopedActionFilter:
+  Enabled: false
+
+Style/MissingRespondToMissing:
+  Enabled: false
+
+Style/MissingRespondToMissing:
+  Enabled: false
+
 Rails/ApplicationController:
   Exclude:
     - 'app/controllers/health_check_controller.rb'
