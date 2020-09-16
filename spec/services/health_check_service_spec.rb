@@ -24,6 +24,7 @@ describe HealthCheckService do
     expect(result.messages).to eq 'All Components OK'
   end
 
+  # rubocop:disable RSpec/MultipleExpectations
   it 'collects error messages if any checks fail' do
     expect_any_instance_of(HealthCheck::Database).
       to receive(:available?).and_return(false)
@@ -62,4 +63,5 @@ describe HealthCheckService do
       ]
     )
   end
+  # rubocop:enable RSpec/MultipleExpectations
 end
