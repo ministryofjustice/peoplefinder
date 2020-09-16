@@ -103,7 +103,7 @@ module GeckoboardPublisher
     end
 
     def cron_logger
-      @logger ||= Logger.new(STDOUT).tap do |log|
+      @cron_logger ||= Logger.new(STDOUT).tap do |log|
         log.progname = 'Worker cron job'
         log.level = Rails.env.test? ? Logger::UNKNOWN : Logger::DEBUG
       end

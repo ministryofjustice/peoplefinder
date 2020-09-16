@@ -212,3 +212,7 @@ Rails/ApplicationController:
   Exclude:
     - 'app/controllers/health_check_controller.rb'
     - 'app/controllers/ping_controller.rb'
+
+Naming/MemoizedInstanceVariableName:
+  Exclude:
+    - 'lib/geckoboard_publisher/profiles_percentage_report.rb'

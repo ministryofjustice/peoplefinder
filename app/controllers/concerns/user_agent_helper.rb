@@ -11,7 +11,7 @@ module UserAgentHelper
     helper_method :unsupported_browser?, :user_agent
 
     def user_agent
-      @ua ||= UserAgent.parse(request.user_agent)
+      @user_agent ||= UserAgent.parse(request.user_agent)
     end
 
     def supported_browser?

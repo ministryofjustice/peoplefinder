@@ -47,7 +47,7 @@ class PersonSearch
   end
 
   def exact_match_exists?
-    @exact_match ||= if single_word_query?
+    @exact_match_exists ||= if single_word_query?
                        matches.records.present?
                      else
                        any_exact_matches?
