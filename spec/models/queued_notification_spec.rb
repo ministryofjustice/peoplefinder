@@ -78,6 +78,7 @@ RSpec.describe QueuedNotification, type: :model do
           end
         end
 
+        # context no group changes
         context 'when a final edit' do
           it 'creates a new email template with edit finalised true' do
             allow(creator).to receive(:edit_finalised?).and_return(true)
@@ -94,7 +95,7 @@ RSpec.describe QueuedNotification, type: :model do
             expect(qn.changes_hash).to eq expected_create_changes_hash
           end
         end
-      end # context no group changes
+      end
 
       context 'with group changes' do
         context 'when not a final edit' do
