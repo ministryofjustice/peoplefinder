@@ -217,6 +217,15 @@ Naming/MethodParameterName:
 Style/FormatStringToken:
   Enabled: false
 
+Rails/InverseOf:
+  Enabled: false
+
+Rails/UniqueValidationWithoutIndex:
+  Enabled: false
+
+Rails/HasManyOrHasOneDependent:
+  Enabled: false
+
 Rails/ApplicationController:
   Exclude:
     - 'app/controllers/health_check_controller.rb'
