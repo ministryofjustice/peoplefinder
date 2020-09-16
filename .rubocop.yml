@@ -207,3 +207,8 @@ Rails/HelperInstanceVariable:
 RSpec/DescribeClass:
   Exclude:
     - 'spec/features/**/*'
+
+Rails/ApplicationController:
+  Exclude:
+    - 'app/controllers/health_check_controller.rb'
+    - 'app/controllers/ping_controller.rb'
