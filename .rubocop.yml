@@ -210,6 +210,9 @@ RSpec/DescribeClass:
 
 Capybara/VisibilityMatcher:
   Enabled: false 
+
+Naming/MethodParameterName:
+  Enabled: false
        
 Style/FormatStringToken:
   Enabled: false
