@@ -28,7 +28,7 @@ describe 'Upload CSV' do
   it 'only super admins can access uploader' do
     Person.find_by(email: email).update(super_admin: false)
     visit new_admin_person_upload_path
-    expect(current_path).to eql home_path
+    expect(page).to have_current_path(home_path)
     expect(page).to have_selector('.flash-message.warning', text: 'Unauthorised')
   end
 
@@ -38,7 +38,7 @@ describe 'Upload CSV' do
       click_button 'Upload'
     end.to change(Person, :count).by(2)
 
-    expect(current_path).to eql(new_admin_person_upload_path)
+    expect(page).to have_current_path(new_admin_person_upload_path)
     expect(page).to have_text('Successfully uploaded 2 people')
 
     %w(
@@ -58,7 +58,7 @@ describe 'Upload CSV' do
       click_button 'Upload'
     end.to change(Person, :count).by(2)
 
-    expect(current_path).to eql(new_admin_person_upload_path)
+    expect(page).to have_current_path(new_admin_person_upload_path)
     expect(page).to have_text('Successfully uploaded 2 people')
 
     %w(
@@ -77,7 +77,7 @@ describe 'Upload CSV' do
       click_button 'Upload'
     end.not_to change(Person, :count)
 
-    expect(current_path).to eql(admin_person_uploads_path)
+    expect(page).to have_current_path(admin_person_uploads_path)
     expect(page).to have_govuk_errors(field: 'File is required')
   end
 
@@ -87,7 +87,7 @@ describe 'Upload CSV' do
       click_button 'Upload'
     end.not_to change(Person, :count)
 
-    expect(current_path).to eql(admin_person_uploads_path)
+    expect(page).to have_current_path(admin_person_uploads_path)
     expect(page).to have_govuk_errors(field: 'File is an invalid type')
   end
 
@@ -97,7 +97,7 @@ describe 'Upload CSV' do
       click_button 'Upload'
     end.not_to change(Person, :count)
 
-    expect(current_path).to eql(admin_person_uploads_path)
+    expect(page).to have_current_path(admin_person_uploads_path)
     expect(page).to have_govuk_errors
   end
 
@@ -107,7 +107,7 @@ describe 'Upload CSV' do
       click_button 'Upload'
     end.not_to change(Person, :count)
 
-    expect(current_path).to eql(admin_person_uploads_path)
+    expect(page).to have_current_path(admin_person_uploads_path)
     expect(page).to have_govuk_errors
   end
 

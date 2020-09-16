@@ -140,13 +140,13 @@ describe 'Group browsing' do
     create(:group, name: 'moj')
 
     visit '/groups/moj'
-    expect(current_path).to eql('/teams/moj')
+    expect(page).to have_current_path('/teams/moj')
 
     visit '/groups/moj/edit'
-    expect(current_path).to eql('/teams/moj/edit')
+    expect(page).to have_current_path('/teams/moj/edit')
 
     visit '/groups/moj/people'
-    expect(current_path).to eql('/teams/moj/people')
+    expect(page).to have_current_path('/teams/moj/people')
   end
 
   def add_people_to_group(names, group)

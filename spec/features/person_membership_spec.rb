@@ -248,7 +248,7 @@ describe "Person maintenance" do
     end
     expect(edit_profile_page).to have_selector('.membership.panel', visible: true, count: 1)
     click_button 'Save'
-    expect(current_path).to eql(person_path(person))
+    expect(page).to have_current_path(person_path(person))
     expect(page).to have_content("Thank you for helping to improve People Finder")
     expect(person.reload.memberships.count).to eql 1
   end

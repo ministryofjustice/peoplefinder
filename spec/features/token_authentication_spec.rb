@@ -111,7 +111,7 @@ describe 'Token Authentication' do
       end
 
       it "displays unsupported browser warning page" do
-        expect(page.current_path).to eql unsupported_browser_token_path(token)
+        expect(page).to have_current_path(unsupported_browser_token_path(token))
         expect(page).to have_text 'You are nearly there...'
         expect(page).to have_text 'Internet Explorer 6.0'
         expect(page).to have_text token_path(token)

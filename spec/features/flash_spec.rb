@@ -23,7 +23,7 @@ describe 'Flash messages' do
     it 'display flash messages above search box for home page' do
       visit person_path(person)
       click_delete_profile
-      expect(current_path).to eql '/'
+      expect(page).to have_current_path('/')
       expect(flash_messages).to appear_before searchbox
       expect(searchbox).not_to appear_before flash_messages
     end
