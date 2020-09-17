@@ -89,7 +89,7 @@ references:
     run:
       name: Run unit tests
       command: |
-        bundle exec rspec
+        SKIP_SIMPLECOV=true bundle exec rspec
 # This command is from the CircleCI docs and is for running in a time
 # base system. We currenly are not using it, but here if we want to
 # implement it
