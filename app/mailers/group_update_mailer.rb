@@ -1,6 +1,6 @@
-class GroupUpdateMailer < ActionMailer::Base
+class GroupUpdateMailer < ApplicationMailer
 
-  layout 'email'
+  # layout 'email'
   add_template_helper MailHelper
 
   def inform_subscriber(recipient, group, instigator)

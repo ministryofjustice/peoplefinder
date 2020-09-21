@@ -38,7 +38,7 @@ RSpec.describe PersonCsvImporter, type: :service do
     before { subject }
 
     context 'when csv has valid format' do
-      context 'and all required and optional columns provided' do
+      context 'when all required and optional columns provided' do
         let(:csv) do
           <<-CSV.strip_heredoc
             given_name, surname, email, primary_phone_number, secondary_phone_number, pager_number, building, location_in_building, city, role, description
@@ -57,7 +57,7 @@ RSpec.describe PersonCsvImporter, type: :service do
         end
       end
 
-      context 'and all people have surname and email' do
+      context 'when all people have surname and email' do
         let(:csv) do
           <<-CSV.strip_heredoc
             email,given_name,surname
@@ -73,7 +73,7 @@ RSpec.describe PersonCsvImporter, type: :service do
         end
       end
 
-      context 'and some people have incorrect details' do
+      context 'when some people have incorrect details' do
         let(:csv) do
           <<-CSV.strip_heredoc
             email,given_name,surname
@@ -126,7 +126,7 @@ RSpec.describe PersonCsvImporter, type: :service do
     end
 
     context 'when the csv has columns that cannot be infered' do
-      context 'for required columns' do
+      context 'with required columns' do
         let(:csv) do
           <<-CSV.strip_heredoc
             email,wrong_name,wrongname
@@ -150,7 +150,7 @@ RSpec.describe PersonCsvImporter, type: :service do
         end
       end
 
-      context 'for optional columns' do
+      context 'with optional columns' do
         let(:csv) do
           <<-CSV.strip_heredoc
             email,given_name,surname,primary_phome_number,builming location
@@ -225,7 +225,7 @@ RSpec.describe PersonCsvImporter, type: :service do
   end
 
   describe '#import' do
-    context 'for a valid csv' do
+    context 'with a valid csv' do
       before { ActiveJob::Base.queue_adapter.enqueued_jobs.clear }
 
       let(:csv) do
@@ -253,7 +253,7 @@ RSpec.describe PersonCsvImporter, type: :service do
 
     end
 
-    context 'for an invalid csv (including duplicates)' do
+    context 'with an invalid csv (including duplicates)' do
       let(:csv) do
         <<-CSV.strip_heredoc
           email,given_name,surname

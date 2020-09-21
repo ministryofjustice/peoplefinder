@@ -14,7 +14,7 @@ RSpec.describe Concerns::WorkDays do
     end
 
     it 'returns true for a person who works on both a Saturday and Sunday' do
-      weekend_person.update_attributes(works_sunday: true)
+      weekend_person.update(works_sunday: true)
       expect(weekend_person.works_sunday).to eql(true)
       expect(weekend_person.works_saturday).to eql(true)
       expect(weekend_person.works_weekends?).to eql(true)

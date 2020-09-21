@@ -41,8 +41,7 @@ RSpec.describe PersonDestroyer, type: :service do
         with(current_user).
         and_return(false)
       expect(class_double('UserUpdateMailer').as_stubbed_const).
-        to receive(:deleted_profile_email).
-        never
+        not_to receive(:deleted_profile_email)
       subject.destroy!
     end
 

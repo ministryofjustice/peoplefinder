@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-feature 'Home page' do
+describe 'Home page' do
   include PermittedDomainHelper
 
   let(:home_page) { Pages::Home.new }
@@ -14,14 +14,14 @@ feature 'Home page' do
     create(:person, :member_of, team: department, leader: true, role: 'Permanent Secretary', given_name: 'Richard', surname: 'Heaton')
   end
 
-  context 'page structure' do
+  context 'with a page structure' do
     before do
       page.driver.headers = { "User-Agent" => user_agent }
       mock_readonly_user
       visit '/'
     end
 
-    context 'using a supported browser', js: true do
+    context 'when using a supported browser', js: true do
       let(:user_agent) { ff31 }
 
       it 'is all there' do
@@ -51,13 +51,14 @@ feature 'Home page' do
         expect(home_page.department_overview).to have_text "Teams within #{department}"
       end
 
-      context 'Firefox 31+' do
+      context 'with Firefox 31+' do
         it 'displays no warning' do
           expect(home_page).to be_displayed
           expect(home_page).to_not have_unsupported_browser_warning
         end
       end
-      context 'Internet Explorer 8+' do
+
+      context 'with Internet Explorer 8+' do
         let(:user_agent) { ie8 }
         it 'displays no warning' do
           expect(home_page).to be_displayed
@@ -66,8 +67,8 @@ feature 'Home page' do
       end
     end
 
-    context 'using an unsupported browser', js: true do
-      context 'Internet Explorer 6.0' do
+    context 'when using an unsupported browser', js: true do
+      context 'with Internet Explorer 6.0' do
         let(:user_agent) { ie6 }
         it 'displays a warning' do
           expect(home_page).to be_displayed
@@ -75,7 +76,7 @@ feature 'Home page' do
         end
       end
 
-      context 'Internet Explorer 7.0' do
+      context 'with Internet Explorer 7.0' do
         let(:user_agent) { ie7 }
         it 'displays a warning' do
           expect(home_page).to be_displayed
@@ -85,24 +86,24 @@ feature 'Home page' do
     end
   end
 
-  context 'for a regular user' do
+  context 'with a regular user' do
     before do
       token_log_in_as 'test.user@digital.justice.gov.uk'
       visit '/'
     end
 
-    scenario 'can view the page' do
+    it 'can view the page' do
       expect(home_page).to be_displayed
     end
   end
 
-  context 'for a readonly user' do
+  context 'with a readonly user' do
     before do
       mock_readonly_user
       visit '/'
     end
 
-    scenario 'can view the page' do
+    it 'can view the page' do
       expect(home_page).to be_displayed
     end
   end

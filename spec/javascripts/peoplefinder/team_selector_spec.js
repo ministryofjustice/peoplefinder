@@ -120,11 +120,11 @@ describe("Team Selector", function() {
       beforeEach(function(){
           obj.find('#addTeamLink').trigger('click');
       });
-      setTimeout(function(){
         it("should display the new team input field", function(){
-          expect(obj.find('.new-team').is(':visible')).toBe(true);
+          setTimeout(function(){
+            expect(obj.find('.new-team').is(':visible')).toBe(true);
+          }, 100);
         });
-      }, 100);
     });
 
     describe("Clicking the add team link", function(){

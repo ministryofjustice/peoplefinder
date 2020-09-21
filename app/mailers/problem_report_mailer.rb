@@ -1,5 +1,5 @@
-class ProblemReportMailer < ActionMailer::Base
-  layout 'email'
+class ProblemReportMailer < ApplicationMailer
+  # layout 'email'
 
   def problem_report(details_hash)
     @problem_report = ProblemReport.new(details_hash)

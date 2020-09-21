@@ -63,7 +63,7 @@ RSpec.describe ProfileChangesPresenter, type: :presenter do
   describe '#raw' do
     subject { described_class.new(person.all_changes).raw }
     it 'returns orginal changes' do
-      is_expected.to be_a Hash
+      expect(subject).to be_a Hash
       expect(subject[:email].first).to eql old_email
     end
   end

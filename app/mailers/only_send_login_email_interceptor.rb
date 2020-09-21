@@ -8,7 +8,7 @@ class OnlySendLoginEmailInterceptor
   def initialize recipient_string, subject_prefix:, login_email_subject:
     @subject_prefix = subject_prefix
     @interceptor = RecipientInterceptor.new(recipient_string,
-      subject_prefix: subject_prefix)
+                                            subject_prefix: subject_prefix)
     @login_email_subject = login_email_subject
   end
 

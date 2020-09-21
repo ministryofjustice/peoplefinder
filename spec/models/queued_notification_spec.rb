@@ -51,7 +51,7 @@ RSpec.describe QueuedNotification, type: :model do
       person.works_friday = false
     end
 
-    context 'called by person creator' do
+    context 'when called by person creator' do
 
       let(:person) { create :person, given_name: 'Stephen', surname: 'Jones', slug: 'stephen-richards', email: 'sr@digital.justice.gov.uk' }
       let(:creator) { double(PersonCreator, person: person, current_user: current_user, session_id: session_id) }
@@ -60,8 +60,8 @@ RSpec.describe QueuedNotification, type: :model do
         allow(creator).to receive(:is_a?).with(PersonCreator).and_return(true)
       end
 
-      context 'no group changes (except default)' do
-        context 'not final edit' do
+      context 'when no group changes (except default)' do
+        context 'when not final edit' do
           it 'creates a new email template with edit finalised false' do
             allow(creator).to receive(:edit_finalised?).and_return(false)
 
@@ -78,7 +78,8 @@ RSpec.describe QueuedNotification, type: :model do
           end
         end
 
-        context 'final edit' do
+        # context no group changes
+        context 'when a final edit' do
           it 'creates a new email template with edit finalised true' do
             allow(creator).to receive(:edit_finalised?).and_return(true)
 
@@ -94,10 +95,10 @@ RSpec.describe QueuedNotification, type: :model do
             expect(qn.changes_hash).to eq expected_create_changes_hash
           end
         end
-      end # context no group changes
+      end
 
       context 'with group changes' do
-        context 'not final edit' do
+        context 'when not a final edit' do
           let(:person)  { build :person, given_name: 'Stephen', surname: 'Jones', slug: 'stephen-richards', email: 'sr@digital.justice.gov.uk' }
 
           it 'creates a queued notification with group changes' do
@@ -156,7 +157,7 @@ RSpec.describe QueuedNotification, type: :model do
 
     end
 
-    context 'called by person updater' do
+    context 'when called by person updater' do
       let(:person) { create :person, given_name: 'Stephen', surname: 'Jones', slug: 'stephen-richards', email: 'sr@digital.justice.gov.uk' }
       let(:updater) { double(PersonUpdater, person: person, current_user: current_user, session_id: session_id) }
 
@@ -168,7 +169,7 @@ RSpec.describe QueuedNotification, type: :model do
           person.save!
         end
 
-        context 'not the final edit' do
+        context 'when not the final edit' do
           it 'creates a queued notification with updated profile template and edit_finalsed false' do
             allow(updater).to receive(:edit_finalised?).and_return(false)
 
@@ -187,9 +188,10 @@ RSpec.describe QueuedNotification, type: :model do
     end
   end
 
-  context 'grouped items' do
+  context 'when grouped items' do
 
     before(:all) { populate_notifications }
+
     after(:all) { described_class.destroy_all }
 
     # rubocop:disable Metrics/AbcSize
@@ -231,12 +233,12 @@ RSpec.describe QueuedNotification, type: :model do
     # rubocop:disable Metrics/ParameterLists
     def create_notification(session_id, person_id, user_id, finalised, processing_started_at, sent)
       create(:queued_notification,
-        session_id: session_id,
-        person_id: person_id,
-        current_user_id: user_id,
-        processing_started_at: processing_started_at,
-        edit_finalised: finalised,
-        sent: sent)
+             session_id: session_id,
+             person_id: person_id,
+             current_user_id: user_id,
+             processing_started_at: processing_started_at,
+             edit_finalised: finalised,
+             sent: sent)
     end
     # rubocop:enable Metrics/ParameterLists
 
@@ -288,7 +290,7 @@ RSpec.describe QueuedNotification, type: :model do
     end
   end
 
-  context 'private class method' do
+  context 'when a private class method' do
     describe '.unfinalised_and_within_grace_period' do
       it 'raises an error if called' do
         expect {

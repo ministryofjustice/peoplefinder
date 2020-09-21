@@ -69,7 +69,7 @@ RSpec.describe TokenSender, type: :service do
     context 'when no token exists for given user_email' do
       include_examples 'generates token'
 
-      context 'and error when saving new token' do
+      context 'with an error when saving new token' do
         let(:error_message) { 'Email address is not formatted correctly' }
         before do
           new_token = double(save: false, errors: { user_email: [error_message] })
@@ -96,7 +96,7 @@ RSpec.describe TokenSender, type: :service do
         allow(Token).to receive(:new).with(user_email: email).and_return new_token
       end
 
-      context 'and a specific type of error is raised (email invalid or token limit exceeded)' do
+      context 'with a specific type of error is raised (email invalid or token limit exceeded)' do
         before do
           allow(subject).to receive(:user_email_error?).and_return true
         end
@@ -107,10 +107,11 @@ RSpec.describe TokenSender, type: :service do
         end
       end
 
-      context 'and an unexpected error is raised' do
+      context 'when an unexpected error is raised' do
         before do
           allow(subject).to receive(:user_email_error?).and_return false
         end
+
         it 'calls render_create_view with nil token' do
           expect(view).to receive(:render_create_view).with(token: nil)
           subject.call(view)

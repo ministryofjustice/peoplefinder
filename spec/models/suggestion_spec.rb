@@ -7,6 +7,7 @@ RSpec.describe Suggestion, type: :model do
     it 'returns false by default' do
       expect(default_suggestion.for_person?).to eq false
     end
+
     describe 'missing_fields true' do
       let(:missing_fields_suggested) { described_class.new(missing_fields: true) }
       it 'returns true' do

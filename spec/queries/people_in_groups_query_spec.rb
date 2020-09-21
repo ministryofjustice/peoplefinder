@@ -13,7 +13,7 @@ describe PeopleInGroupsQuery do
       expect(described_class.new([group]).call).to be_an_instance_of(Person::ActiveRecord_Relation)
     end
 
-    context 'finding' do
+    context 'when finding' do
       before(:all) do
         PermittedDomain.create(domain: 'digital.justice.gov.uk') unless PermittedDomain.exists?(domain: 'digital.justice.gov.uk')
         @moj = create :department

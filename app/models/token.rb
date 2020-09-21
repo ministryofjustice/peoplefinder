@@ -11,7 +11,7 @@
 #
 require 'secure'
 
-class Token < ActiveRecord::Base
+class Token < ApplicationRecord
   class TTLRaceCondition < StandardError; end
 
   include Concerns::Sanitizable
@@ -63,6 +63,7 @@ class Token < ActiveRecord::Base
 
   def active?
     return scanned_token_active? if Rails.host.dev? || Rails.host.staging?
+
     token_active?
   end
 
@@ -75,7 +76,7 @@ class Token < ActiveRecord::Base
   end
 
   def spend!
-    update_attributes!(spent: true)
+    update!(spent: true)
   end
 
   def self.max_tokens_per_hour

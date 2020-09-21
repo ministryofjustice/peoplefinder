@@ -15,7 +15,7 @@ RSpec.describe PersonCreator, type: :service do
   let(:current_user) { double('Current User', email: 'user@example.com', id: 25) }
   subject { described_class.new(person: person, current_user: current_user, state_cookie: smc) }
 
-  context 'Saving profile' do
+  context 'when Saving a profile' do
     let(:smc) { double StateManagerCookie, save_profile?: true }
 
     describe 'valid?' do
@@ -27,7 +27,7 @@ RSpec.describe PersonCreator, type: :service do
     end
 
     describe 'create!' do
-      context 'person membership defaults' do
+      context 'with person membership defaults' do
         subject { described_class.new(person: person_object, current_user: current_user, state_cookie: smc).create! }
         let!(:moj) { create(:department) }
         let(:person_object) { build(:person) }
@@ -49,8 +49,7 @@ RSpec.describe PersonCreator, type: :service do
           with(current_user).
           and_return(false)
         expect(class_double('UserUpdateMailer').as_stubbed_const).
-          to receive(:new_profile_email).
-          never
+          not_to receive(:new_profile_email)
         subject.create!
       end
 
@@ -62,7 +61,7 @@ RSpec.describe PersonCreator, type: :service do
     end
   end
 
-  context 'Not saving profile' do
+  context 'when not saving a profile' do
     let(:smc) { double StateManagerCookie, save_profile?: false }
 
     it 'does not  a notification' do

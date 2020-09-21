@@ -60,7 +60,7 @@ RSpec.describe PeopleHelper, type: :helper do
     end
 
     it 'adds a link_uri and alt_text to options hash' do
-      expect { profile_image_tag(person, options) }.to change { options.keys }.from([:class, :version]).to([:class, :version, :link_uri, :alt_text])
+      expect { profile_image_tag(person, options) }.to change(options, :keys).from([:class, :version]).to([:class, :version, :link_uri, :alt_text])
     end
 
     it 'does not output internally used options' do
@@ -81,7 +81,7 @@ RSpec.describe PeopleHelper, type: :helper do
       expect(profile_image_tag(person, options)).to match(/.*\/medium_no_photo.png.*/)
     end
 
-    context 'environments using local storage' do
+    context 'when environments using local storage' do
       subject { profile_image_tag(person, options) }
 
       before do
@@ -89,32 +89,34 @@ RSpec.describe PeopleHelper, type: :helper do
       end
 
       it 'uses local file as image src' do
-        is_expected.to match(/.*src=\".*\/uploads\/peoplefinder\/profile_photo\/image\/[\d]+\/medium_.*\.png\".*/)
+        expect(subject).to match(/.*src=\".*\/uploads\/peoplefinder\/profile_photo\/image\/[\d]+\/medium_.*\.png\".*/)
       end
     end
 
-    context 'environments using S3 storage' do
+    context 'when environments using S3 storage' do
       subject { profile_image_tag(person, options) }
 
       let(:version) do
         double 'version',
-          file: file
+               file: file
       end
 
       let(:file) do
         double 'file',
-          authenticated_url: 'https://my-prod-bucket.s3.amazonaws.com/dir1/dir2/medium_photo_1.jpg?X-Amz-Signature=XnXXX12345xxx'
+               authenticated_url: 'https://my-prod-bucket.s3.amazonaws.com/dir1/dir2/medium_photo_1.jpg?X-Amz-Signature=XnXXX12345xxx'
       end
 
+      # rubocop:disable RSpec/ExpectInHook
       before do
         options.delete(:version)
         expect(person.profile_image).to receive(:medium).and_return version
         expect(version).to receive(:file).and_return file
       end
+      # rubocop:enable RSpec/ExpectInHook
 
       it 'uses pre-signed, time-limited, url for image src' do
         expect(file).to receive(:authenticated_url)
-        is_expected.to include file.authenticated_url
+        expect(subject).to include file.authenticated_url
       end
     end
   end
@@ -136,7 +138,7 @@ RSpec.describe PeopleHelper, type: :helper do
     end
 
     it 'adds a link uri to options hash' do
-      expect { team_image_tag(team, options) }.to change { options.keys }.from([:class]).to([:class, :link_uri, :alt_text])
+      expect { team_image_tag(team, options) }.to change(options, :keys).from([:class]).to([:class, :link_uri, :alt_text])
     end
   end
 

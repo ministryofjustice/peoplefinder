@@ -1,4 +1,4 @@
-class GenerateReportJob < ActiveJob::Base
+class GenerateReportJob < ApplicationJob
 
   queue_as :generate_report
 

@@ -1,5 +1,5 @@
-require "codeclimate-test-reporter"
-CodeClimate::TestReporter.start
+# require "codeclimate-test-reporter"
+# CodeClimate::TestReporter.start
 
 # This file is copied to spec/ when you run 'rails generate rspec:install'
 ENV['RAILS_ENV'] ||= 'test'
@@ -33,6 +33,7 @@ end
 # Capybara.javascript_driver = :poltergeist # uncomment to enable console.log
 Capybara.javascript_driver = :poltergeist_silent # uncomment this to disable console.log (including warn)
 Capybara.default_max_wait_time = 3
+Capybara.server = :puma, { Silent: true }
 
 # Fix load order issue on Circle CI 2.0
 require File.expand_path('../support/pages/base.rb', __FILE__)
@@ -64,7 +65,7 @@ RSpec.configure do |config|
   end
 
   config.infer_spec_type_from_file_location!
-  config.include FactoryGirl::Syntax::Methods
+  config.include FactoryBot::Syntax::Methods
   config.include SpecSupport::Login
   config.include SpecSupport::Search
   config.include SpecSupport::Carrierwave

@@ -2,7 +2,7 @@ class ReadonlyUser
 
   class ActionDispatch::Request
     def readonly_ip_whitelist
-      @whitelist ||= IpAddressMatcher.new(Rails.configuration.readonly_ip_whitelist)
+      @readonly_ip_whitelist ||= IpAddressMatcher.new(Rails.configuration.readonly_ip_whitelist)
     end
 
     def remote_ip_whitelisted?

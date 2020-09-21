@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-feature 'Group maintenance' do
+describe 'Group maintenance' do
   include PermittedDomainHelper
   include ActiveJobHelper
 
@@ -21,12 +21,15 @@ feature 'Group maintenance' do
     click_link 'Edit'
   end
 
-  context 'for a regular user', user: :regular, js: true do
-    background do
+  context 'when a regular user', user: :regular, js: true do
+    before do
       dept
     end
 
-    scenario 'Creating a top-level department' do
+    let(:group_three_deep) { create(:group, name: 'Digital Services', parent: parent_group) }
+    let(:sibling_group) { create(:group, name: 'Technology', parent: parent_group) }
+    let(:parent_group) { create(:group, name: 'CSG', parent: dept) }
+    it 'Creating a top-level department' do
       Group.destroy_all
       name = 'Ministry of Justice'
       visit new_group_path
@@ -44,7 +47,7 @@ feature 'Group maintenance' do
       expect(dept.parent).to be_nil
     end
 
-    scenario 'Creating a team inside the department' do
+    it 'Creating a team inside the department' do
       visit group_path(dept)
       click_link 'Add new sub-team'
 
@@ -59,7 +62,7 @@ feature 'Group maintenance' do
       expect(team.parent).to eql(dept)
     end
 
-    scenario 'Creating a subteam inside a team from that team\'s page' do
+    it 'Creating a subteam inside a team from that team\'s page' do
       team = create(:group, parent: dept, name: 'Corporate Services')
       visit group_path(team)
       click_link 'Add new sub-team'
@@ -75,7 +78,7 @@ feature 'Group maintenance' do
       expect(subteam.parent).to eql(team)
     end
 
-    scenario 'Creating a team and choosing the parent from the org browser' do
+    it 'Creating a team and choosing the parent from the org browser' do
       create(:group, name: 'Corporate Services')
 
       visit new_group_path
@@ -90,7 +93,7 @@ feature 'Group maintenance' do
       end
     end
 
-    scenario 'Deleting a team' do
+    it 'Deleting a team' do
       group = create(:group)
       visit edit_group_path(group)
       expect(page).to have_text('cannot be undone')
@@ -100,17 +103,13 @@ feature 'Group maintenance' do
       expect { Group.find(group.id) }.to raise_error(ActiveRecord::RecordNotFound)
     end
 
-    scenario 'Prevent deletion of a team that has memberships' do
+    it 'Prevent deletion of a team that has memberships' do
       membership = create(:membership)
       group = membership.group
       visit edit_group_path(group)
       expect(page).not_to have_link('Delete this team')
       expect(page).to have_text('deletion is only possible if there are no people')
     end
-
-    let(:parent_group) { create(:group, name: 'CSG', parent: dept) }
-    let(:sibling_group) { create(:group, name: 'Technology', parent: parent_group) }
-    let(:group_three_deep) { create(:group, name: 'Digital Services', parent: parent_group) }
 
     def setup_three_level_group
       sibling_group
@@ -123,7 +122,7 @@ feature 'Group maintenance' do
       user
     end
 
-    scenario 'Editing a team name' do
+    it 'Editing a team name' do
       group = setup_three_level_group
       user = setup_group_member group
       visit_edit_view(group)
@@ -146,7 +145,7 @@ feature 'Group maintenance' do
       expect(last_email.body.encoded).to match(group_url(group))
     end
 
-    scenario 'Change parent to department via clicking "Back"' do
+    it 'Change parent to department via clicking "Back"' do
       group = setup_three_level_group
       setup_group_member group
       expect(dept.name).to eq 'Ministry of Justice'
@@ -164,7 +163,7 @@ feature 'Group maintenance' do
       expect(group.parent).to eql(dept)
     end
 
-    scenario 'Changing a team parent via clicking sibling team name' do
+    it 'Changing a team parent via clicking sibling team name' do
       group = setup_three_level_group
       setup_group_member group
       visit_edit_view(group)
@@ -184,7 +183,7 @@ feature 'Group maintenance' do
       expect(group.parent).to eql(sibling_group)
     end
 
-    scenario 'Changing a team parent via clicking sibling team\'s subteam name', skip: 'skip until capybara/poltegeist update to try and fix as flickers regularly after site_prism bump to 2.9' do
+    it 'Changing a team parent via clicking sibling team\'s subteam name', skip: 'skip until capybara/poltegeist update to try and fix as flickers regularly after site_prism bump to 2.9' do
       group = setup_three_level_group
       subteam_group = create(:group, name: 'Test team', parent: sibling_group)
       setup_group_member group
@@ -215,7 +214,7 @@ feature 'Group maintenance' do
       expect(group.parent).to eql(subteam_group)
     end
 
-    scenario 'Showing the acronym' do
+    it 'Showing the acronym' do
       group = create(:group, name: 'HM Courts and Tribunal Service', acronym: 'HMCTS')
 
       visit group_path(group)
@@ -232,7 +231,7 @@ feature 'Group maintenance' do
       expect(page).not_to have_selector('.group-title h2')
     end
 
-    scenario 'Not responding to the selection of impossible parent nodes' do
+    it 'Not responding to the selection of impossible parent nodes' do
       parent_group = create(:group, name: 'CSG', parent: dept)
       group = create(:group, name: 'Digital Services', parent: parent_group)
       visit_edit_view(group)
@@ -252,7 +251,7 @@ feature 'Group maintenance' do
       expect(group.parent).to eql(parent_group)
     end
 
-    scenario 'UI elements on the new/edit pages' do
+    it 'UI elements on the new/edit pages' do
       visit new_group_path
       expect(page).not_to have_selector('.mod-search-form')
 
@@ -265,18 +264,18 @@ feature 'Group maintenance' do
       expect(page).not_to have_selector('.mod-search-form')
     end
 
-    scenario 'Cancelling an edit' do
+    it 'Cancelling an edit' do
       group = create(:group)
       visit edit_group_path(group)
       expect(page).to have_link('Cancel', href: group_path(group))
     end
 
-    scenario 'Cancelling a new form' do
+    it 'Cancelling a new form' do
       visit new_group_path
       expect(page).to have_link('Cancel', href: 'javascript:history.back()')
     end
 
-    scenario 'Not displaying an edit parent field for a department' do
+    it 'Not displaying an edit parent field for a department' do
       dept = create(:group).parent
 
       visit edit_group_path(dept)
@@ -284,14 +283,14 @@ feature 'Group maintenance' do
     end
   end
 
-  context 'for a readonly user', user: :readonly do
-    scenario 'Is not allowed to create a new team' do
+  context 'when a readonly user', user: :readonly do
+    it 'Is not allowed to create a new team' do
       visit group_path(dept)
       click_link 'Add new sub-team'
       expect(login_page).to be_displayed
     end
 
-    scenario 'Is not allowed to edit a team' do
+    it 'Is not allowed to edit a team' do
       group = create(:group, name: 'Digital Services', parent: dept)
       visit edit_group_path(group)
       expect(login_page).to be_displayed

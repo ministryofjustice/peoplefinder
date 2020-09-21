@@ -33,7 +33,7 @@ module CsvPublisher
       private
 
       def tmp_dir
-        @tmp_dir ||= Rails.root.join('tmp', 'reports')
+        @tmp_dir ||= Rails.root.join('tmp/reports')
       end
 
       # e.g. peoplefinder_staging_user_behavior_report

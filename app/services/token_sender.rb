@@ -2,7 +2,7 @@ require 'secure'
 
 class TokenSender
 
-  REPORT_EMAIL_ERROR_REGEXP = %r{(not formatted correctly|reached the limit|access People)}
+  REPORT_EMAIL_ERROR_REGEXP = %r{(not formatted correctly|reached the limit|access People)}.freeze
 
   def initialize(user_email)
     @user_email = user_email
@@ -33,7 +33,7 @@ class TokenSender
 
   def build_token
     token = Token.find_unspent_by_user_email(@user_email)
-    if token && token.active?
+    if token&.active?
       rebuild_token(token)
     else
       Token.new(user_email: @user_email)

@@ -21,15 +21,15 @@ AllCops:
     - 'smoke_test'
     - 'spec/mailers/previews/*'
     - 'lib/generators/**/*'
-  TargetRubyVersion: 2.3
-  TargetRailsVersion: 4.2
+  TargetRubyVersion: 2.5
+  TargetRailsVersion: 5.0
 
 Rails:
   Enabled: true
 
 # Just indent parameters by two spaces. It's less volatile if methods change,
 # and there's less busy work lining things up.
-Layout/AlignParameters:
+Layout/ParameterAlignment:
   EnforcedStyle: with_fixed_indentation
 
 Style/CollectionMethods:
@@ -50,7 +50,7 @@ Style/FormatString:
 Style/GuardClause:
   Enabled: false
 
-Metrics/LineLength:
+Layout/LineLength:
   Max: 120
   Exclude:
     - 'spec/**/*'
@@ -107,13 +107,22 @@ Layout/EmptyLinesAroundModuleBody:
 Style/MethodDefParentheses:
   Enabled: false
 
-Layout/AlignHash:
+Layout/HashAlignment:
+  Enabled: false
+
+Layout/EmptyLinesAroundAttributeAccessor:
   Enabled: false
 
 Style/BlockDelimiters:
   Enabled: false
 
 Style/DoubleNegation:
+  Enabled: false
+
+Style/WordArray:
+  Enabled: false
+
+Naming/HeredocDelimiterNaming:
   Enabled: false
 
 Metrics/ClassLength:
@@ -151,7 +160,7 @@ Style/ClassVars:
   Exclude:
     - 'spec/**/*'
 
-Layout/IndentArray:
+Layout/FirstArrayElementIndentation:
   Exclude:
     - 'spec/**/*'
 
@@ -177,3 +186,63 @@ RSpec/InstanceVariable:
 
 Rails/ScopeArgs:
   Enabled: false
+
+# Switch off due to upgrade
+
+Lint/RedundantWithObject:
+  Enabled: false
+
+FactoryBot/CreateList:
+  Enabled: false
+
+Style/MethodMissingSuper:
+  Enabled: false # was causing circle to fail
+
+RSpec/LeakyConstantDeclaration:
+  Enabled: false # possibly reenable, after fixing impage_dimension_validator_spec.rb
+
+Rails/HelperInstanceVariable:
+  Enabled: false # would need some thought about refactor will not do before upgrade to rails 5
+
+RSpec/DescribeClass:
+  Exclude:
+    - 'spec/features/**/*'
+
+Capybara/VisibilityMatcher:
+  Enabled: false 
+
+Naming/MethodParameterName:
+  Enabled: false
+       
+Style/FormatStringToken:
+  Enabled: false
+
+Rails/InverseOf:
+  Enabled: false
+
+Rails/UniqueValidationWithoutIndex:
+  Enabled: false
+
+Rails/HasManyOrHasOneDependent:
+  Enabled: false
+
+RSpec/SubjectStub:
+  Enabled: false
+
+Rails/LexicallyScopedActionFilter:
+  Enabled: false
+
+Style/MissingRespondToMissing:
+  Enabled: false
+
+Style/MissingRespondToMissing:
+  Enabled: false
+
+Rails/ApplicationController:
+  Exclude:
+    - 'app/controllers/health_check_controller.rb'
+    - 'app/controllers/ping_controller.rb'
+
+Naming/MemoizedInstanceVariableName:
+  Exclude:
+    - 'lib/geckoboard_publisher/profiles_percentage_report.rb'

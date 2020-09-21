@@ -22,6 +22,7 @@ shared_examples 'geckoboard publishable report' do
     expect(ENV).to receive(:[]).with('GECKOBOARD_API_KEY').and_return 'fake-API-key'
     expect(Geckoboard).to receive(:client).with('fake-API-key').and_return client
     return client if exit_without_ping
+
     expect(client).to receive(:ping).and_return true
     yield client if block_given?
   end
@@ -64,7 +65,7 @@ shared_examples 'geckoboard publishable report' do
       expect(subject.publish!).to eql true
     end
 
-    context 'handles conflict errors' do
+    context 'when handling conflict errors' do
       before do
         mock_expectations do |client|
           allow(client).to receive(:datasets).and_return datasets_client
@@ -109,7 +110,7 @@ end
 
 shared_examples 'returns valid items structure' do
   it 'returns a geckoboard compatible format' do
-    is_expected.to be_an(Array)
+    expect(subject).to be_an(Array)
     expect(subject.first).to be_a(Hash)
     expect { subject.to_json }.not_to raise_error
   end

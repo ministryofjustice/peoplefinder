@@ -1,10 +1,10 @@
 RSpec::Matchers.define :be_json do
   match do |actual|
-    begin
-      JSON.parse(actual)
-    rescue JSON::ParserError
-      false
-    end
+
+    JSON.parse(actual)
+  rescue JSON::ParserError
+    false
+
   end
 
   failure_message do |actual|

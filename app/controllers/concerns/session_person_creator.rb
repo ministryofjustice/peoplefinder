@@ -5,6 +5,7 @@ module SessionPersonCreator
     def person_from_oauth(auth_hash)
       email = EmailAddress.new(auth_hash['info']['email'])
       return unless email.permitted_domain?
+
       find_or_create_person(email) do |new_person|
         new_person.given_name = auth_hash['info']['first_name']
         new_person.surname = auth_hash['info']['last_name']
@@ -64,6 +65,7 @@ module SessionPersonCreator
 
     def namesakes?
       return false if params['commit'] == 'Continue, it is not one of these'
+
       @people = Person.namesakes(@person)
       @people.present?
     end

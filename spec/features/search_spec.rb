@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-feature 'Searching feature', elastic: true do
+describe 'Searching feature', elastic: true do
   extend FeatureFlagSpecHelper
 
   def create_test_data
@@ -41,20 +41,20 @@ feature 'Searching feature', elastic: true do
     visit home_path
   end
 
-  scenario 'does not error on null search' do
+  it 'does not error on null search' do
     click_button 'Search'
     expect(page).to have_content('not found')
   end
 
-  feature 'for people' do
+  describe 'for people' do
 
-    scenario 'retrieves single exact match for email' do
+    it 'retrieves single exact match for email' do
       fill_in 'query', with: 'jon.browne@digital.justice.gov.uk'
       click_button 'Search'
       expect(page).to have_selector('.cb-person', count: 1)
     end
 
-    scenario 'retrieves the details of matching people' do
+    it 'retrieves the details of matching people' do
       fill_in 'query', with: 'Browne'
       click_button 'Search'
       expect(page).to have_title("Search results - #{app_title}")
@@ -75,8 +75,8 @@ feature 'Searching feature', elastic: true do
     end
   end
 
-  feature 'for groups' do
-    scenario 'retrieves the details of the matching group and people in that group' do
+  describe 'for groups' do
+    it 'retrieves the details of the matching group and people in that group' do
       fill_in 'query', with: 'HMP Wilsden'
       click_button 'Search'
       expect(page).to have_selector('.cb-group-name', text: 'HMP Wilsden')
@@ -84,9 +84,9 @@ feature 'Searching feature', elastic: true do
     end
   end
 
-  feature 'higlighting of search terms' do
+  describe 'higlighting of search terms' do
 
-    scenario 'highlights entire matching email address' do
+    it 'highlights entire matching email address' do
       fill_in 'query', with: 'jon.browne@digital.justice.gov.uk'
       click_button 'Search'
       within '.cb-person-email' do
@@ -94,7 +94,7 @@ feature 'Searching feature', elastic: true do
       end
     end
 
-    scenario 'highlights individual role and group terms' do
+    it 'highlights individual role and group terms' do
       fill_in 'query', with: 'HMP Wilsden'
       click_button 'Search'
       within '.cb-person-memberships' do
@@ -103,7 +103,7 @@ feature 'Searching feature', elastic: true do
       end
     end
 
-    scenario 'highlights individual name terms' do
+    it 'highlights individual name terms' do
       fill_in 'query', with: 'Jon Browne'
       click_button 'Search'
       within '#person-results' do
@@ -112,7 +112,7 @@ feature 'Searching feature', elastic: true do
       end
     end
 
-    scenario 'highlights individual current project terms' do
+    it 'highlights individual current project terms' do
       pending "TODO CT-2691 - commented out test to get ES update working"
       fill_in 'query', with: 'Digital Prisons Browne'
       click_button 'Search'
@@ -122,7 +122,7 @@ feature 'Searching feature', elastic: true do
       end
     end
 
-    scenario 'does not highlight unsanitary attribute values' do
+    it 'does not highlight unsanitary attribute values' do
       fill_in 'query', with: 'dodgy bloke'
       click_button 'Search'
       within '.cb-person-name' do

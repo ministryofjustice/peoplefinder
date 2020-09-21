@@ -7,7 +7,7 @@ references:
 # Sets up the docker images and environment variables that we use
   test_container_config: &test_container_config
     docker:
-      - image: circleci/ruby:2.3.7-node-browsers-legacy
+      - image: circleci/ruby:2.5.1-node-browsers-legacy
         environment:
           RAILS_ENV: test
           RACK_ENV: test
@@ -39,7 +39,7 @@ references:
     run:
       name: Install bundler
       command: |
-        gem install bundler -v 1.14.6
+        gem install bundler -v 1.17.1
 
   check_bundler_version: &check_bundler_version
     run:
@@ -58,6 +58,7 @@ references:
     run:
       name: Install dependencies
       command: |
+        bundle install --path vendor/bundle && bundle clean
         if [ "${CIRCLE_NODE_INDEX}" == "0" ]; then
           bundle check --path vendor/bundle || bundle install --path vendor/bundle && bundle clean
         fi
@@ -88,7 +89,7 @@ references:
     run:
       name: Run unit tests
       command: |
-        bundle exec rspec
+        SKIP_SIMPLECOV=true bundle exec rspec
 # This command is from the CircleCI docs and is for running in a time
 # base system. We currenly are not using it, but here if we want to
 # implement it

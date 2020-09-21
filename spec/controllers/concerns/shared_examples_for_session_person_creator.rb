@@ -22,13 +22,13 @@ shared_examples_for "session_person_creatable" do
 
   shared_examples 'existing person returned' do
     it 'returns the matching person' do
-      is_expected.to eql(person)
+      expect(subject).to eql(person)
     end
   end
 
   shared_examples 'new person created' do
     it 'returns a person model' do
-      is_expected.to be_a(Person)
+      expect(subject).to be_a(Person)
     end
 
     describe 'the person' do
@@ -48,7 +48,7 @@ shared_examples_for "session_person_creatable" do
       view.person_from_oauth(auth_hash)
     end
 
-    context 'for an existing person' do
+    context 'when an existing person' do
       let!(:person) { create(:person_with_multiple_logins, email: valid_auth_hash['info']['email'], surname: 'Bob') }
       let(:auth_hash) { valid_auth_hash }
 
@@ -61,12 +61,12 @@ shared_examples_for "session_person_creatable" do
       end
     end
 
-    context 'for invalid email' do
+    context 'when invalid email' do
       let(:auth_hash) { rogue_auth_hash }
       it { is_expected.to be_nil }
     end
 
-    context 'for a new person' do
+    context 'when a new person' do
       let(:auth_hash) { valid_auth_hash }
 
       it_behaves_like 'new person created' do
@@ -80,14 +80,14 @@ shared_examples_for "session_person_creatable" do
     let(:token) { create(:token, user_email: 'aled.jones@digital.justice.gov.uk') }
     subject { described_class.new.person_from_token(token) }
 
-    context 'for a new person' do
+    context 'when a new person' do
       it_behaves_like 'new person created' do
         let(:expected_email) { token.user_email }
         let(:expected_name) { 'Aled Jones' }
       end
     end
 
-    context 'for an existing person' do
+    context 'when an existing person' do
       let!(:person) { create(:person_with_multiple_logins, given_name: 'aled', surname: 'jones', email: 'aled.jones@digital.justice.gov.uk') }
       it_behaves_like 'existing person returned'
     end

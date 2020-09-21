@@ -24,7 +24,7 @@ RSpec.describe PeopleController, type: :controller do
 
   describe 'GET index' do
     it 'redirects to the root' do
-      get :index, {}
+      get :index
       expect(response).to redirect_to('/')
     end
   end
@@ -32,19 +32,19 @@ RSpec.describe PeopleController, type: :controller do
   describe 'GET show' do
     it 'assigns the requested person as @person' do
       person = create(:person, valid_attributes)
-      get :show, id: person.to_param
+      get :show, params: { id: person.to_param }
       expect(assigns(:person)).to eq(person)
     end
   end
 
   describe 'GET new' do
     it 'assigns a new person as @person' do
-      get :new, {}
+      get :new
       expect(assigns(:person)).to be_a_new(Person)
     end
 
     it 'builds a membership object' do
-      get :new, {}
+      get :new
       expect(assigns(:person).memberships.length).to eql(1)
     end
   end
@@ -53,21 +53,21 @@ RSpec.describe PeopleController, type: :controller do
     let(:person) { create(:person, valid_attributes) }
 
     it 'assigns the requested person as @person' do
-      get :edit, id: person.to_param
+      get :edit, params: { id: person.to_param }
       expect(assigns(:person)).to eq(person)
     end
 
-    context 'building memberships' do
+    context 'when building memberships' do
       it 'builds a membership if there isn\'t one already' do
         person.memberships.destroy_all
         expect(person.memberships.count).to eq 0
-        get :edit, id: person.to_param
+        get :edit, params: { id: person.to_param }
         expect(assigns(:person).memberships.length).to eql(1)
       end
 
       it 'does not build a membership when there is one already' do
         expect(person.memberships.count).to eq 1
-        get :edit, id: person.to_param
+        get :edit, params: { id: person.to_param }
         expect(assigns(:person).memberships.length).to eql(1)
       end
     end
@@ -77,12 +77,12 @@ RSpec.describe PeopleController, type: :controller do
     describe 'with valid params' do
       it 'creates a new Person' do
         expect do
-          post :create, person: valid_attributes
+          post :create, params: { person: valid_attributes }
         end.to change(Person, :count).by(1)
       end
 
       it 'assigns a newly created person as @person' do
-        post :create, person: valid_attributes
+        post :create, params: { person: valid_attributes }
         expect(assigns(:person)).to be_a(Person)
         expect(assigns(:person)).to be_persisted
       end
@@ -90,7 +90,7 @@ RSpec.describe PeopleController, type: :controller do
       it 'redirects to the created person' do
         attributes = valid_attributes
         email = attributes[:email]
-        post :create, person: attributes
+        post :create, params: { person: attributes }
         expect(response).to redirect_to(Person.find_by_email(email))
       end
     end
@@ -99,7 +99,7 @@ RSpec.describe PeopleController, type: :controller do
       render_views
 
       before do
-        post :create, person: invalid_attributes
+        post :create, params: { person: invalid_attributes }
       end
 
       it 'assigns a newly created but unsaved person as @person' do
@@ -119,7 +119,7 @@ RSpec.describe PeopleController, type: :controller do
       it 'renders the confirm template' do
         create(:person, given_name: 'Bo', surname: 'Diddley')
         duplicate_person_params = valid_attributes.merge(given_name: 'Bo', surname: 'Diddley', email: 'bo.diddley@digital.justice.gov.uk')
-        post :create, person: duplicate_person_params
+        post :create, params: { person: duplicate_person_params }
         expect(response).to render_template('confirm')
       end
     end
@@ -127,15 +127,15 @@ RSpec.describe PeopleController, type: :controller do
     describe 'when trying to create a super admin' do
       subject { assigns(:person) }
       before do
-        post :create, person: attributes_for(:super_admin).merge(default_membership_attributes)
+        post :create, params: { person: attributes_for(:super_admin).merge(default_membership_attributes) }
       end
 
       it 'creates the person' do
-        is_expected.to be_persisted
+        expect(subject).to be_persisted
       end
 
       it 'creates person, but not as super admin' do
-        is_expected.not_to be_super_admin
+        expect(subject).not_to be_super_admin
       end
     end
   end
@@ -144,7 +144,7 @@ RSpec.describe PeopleController, type: :controller do
     let(:person) { current_user }
 
     before do
-      put :update, id: person.to_param, person: new_attributes, commit: 'Save'
+      put :update, params: { id: person.to_param, person: new_attributes, commit: 'Save' }
     end
 
     describe 'with valid params' do
@@ -192,7 +192,7 @@ RSpec.describe PeopleController, type: :controller do
       end
 
       before do
-        put :update, id: person.to_param, person: new_attributes, commit: 'Save'
+        put :update, params: { id: person.to_param, person: new_attributes, commit: 'Save' }
       end
 
       it 'updates the requested person apart from e-mail' do
@@ -224,7 +224,7 @@ RSpec.describe PeopleController, type: :controller do
 
     describe 'with invalid params' do
       before do
-        put :update, id: person.to_param, person: invalid_attributes
+        put :update, params: { id: person.to_param, person: invalid_attributes }
       end
 
       it 'assigns the person as @person' do
@@ -244,12 +244,12 @@ RSpec.describe PeopleController, type: :controller do
       end
 
       it 'when fundamental info amended it renders the confirm template' do
-        put :update, id: person.to_param, person: { given_name: 'Bo', surname: 'Diddley' }
+        put :update, params: { id: person.to_param, person: { given_name: 'Bo', surname: 'Diddley' } }
         expect(response).to render_template :confirm
       end
 
       it 'when fundamental info NOT altered it redirects to profile page' do
-        put :update, id: person.to_param, person: { current_project: 'whatevers' }
+        put :update, params: { id: person.to_param, person: { current_project: 'whatevers' } }
         expect(response).to redirect_to person_path(person)
       end
     end
@@ -260,7 +260,7 @@ RSpec.describe PeopleController, type: :controller do
       end
 
       before do
-        put :update, id: person.to_param, person: attributes_with_super_admin
+        put :update, params: { id: person.to_param, person: attributes_with_super_admin }
       end
 
       it 'does not grant super admin privileges' do
@@ -274,7 +274,7 @@ RSpec.describe PeopleController, type: :controller do
     it 'destroys the requested person' do
       person = create(:person, valid_attributes)
       expect do
-        delete :destroy, id: person.to_param
+        delete :destroy, params: { id: person.to_param }
       end.to change(Person, :count).by(-1)
     end
 
@@ -286,14 +286,14 @@ RSpec.describe PeopleController, type: :controller do
           create :membership, person: person, group: group
         end
 
-        delete :destroy, id: person.to_param
+        delete :destroy, params: { id: person.to_param }
         expect(response).to redirect_to(group_path(groups.first))
       end
     end
 
     it 'sets a flash message' do
       person = create(:person, valid_attributes)
-      delete :destroy, id: person.to_param
+      delete :destroy, params: { id: person.to_param }
       expect(flash[:notice]).to include("Deleted #{person}’s profile")
     end
   end
@@ -310,36 +310,37 @@ RSpec.describe PeopleController, type: :controller do
       let(:person) { create(:person) }
 
       it 'renders add_membership template' do
-        get :add_membership, id: person
+        get :add_membership, params: { id: person }
         expect(response).to render_template('add_membership')
       end
     end
   end
 
-  context 'action routing' do
-    context 'create' do
-      context 'save button pressed' do
+  context 'when action routing' do
+    context 'with create' do
+      context 'when save button pressed' do
         it 'updates and shows the edit person page' do
-          post :create, person: valid_attributes.merge(given_name: 'Francis', surname: 'Drake', email: 'francis.drake@digital.justice.gov.uk')
+          post :create, params: { person: valid_attributes.merge(given_name: 'Francis', surname: 'Drake', email: 'francis.drake@digital.justice.gov.uk') }
           person = Person.friendly.find('francis-drake')
           expect(response).to redirect_to person_path(person)
         end
       end
+
       context 'with duplicates in database' do
         before do
           create :person, given_name: 'Francis', surname: 'Drake', email: 'fd@digital.justice.gov.uk'
         end
 
-        context 'save button presssed with duplicate person in database' do
+        context 'when save button presssed with duplicate person in database' do
           it 'displays duplicate confirmation page' do
-            post :create, person: valid_attributes.merge(given_name: 'Francis', surname: 'Drake', email: 'francis.drake@digital.justice.gov.uk')
+            post :create, params: { person: valid_attributes.merge(given_name: 'Francis', surname: 'Drake', email: 'francis.drake@digital.justice.gov.uk') }
             expect(response).to render_template(:confirm)
           end
         end
 
-        context 'pressing confirm on duplicate confirmation page' do
+        context 'when pressing confirm on duplicate confirmation page' do
           it 'updates and shows the person edit page' do
-            post :create, person: valid_attributes.merge(given_name: 'Francis', surname: 'Drake', email: 'francis.drake@digital.justice.gov.uk'), continue_from_duplication: '1'
+            post :create, params: { person: valid_attributes.merge(given_name: 'Francis', surname: 'Drake', email: 'francis.drake@digital.justice.gov.uk'), continue_from_duplication: '1' }
             person = Person.friendly.find('francis-drake')
             expect(response).to redirect_to person_path(person)
           end

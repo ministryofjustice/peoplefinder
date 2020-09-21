@@ -10,8 +10,6 @@ RSpec.describe MembershipChangesPresenter, type: :presenter do
 
   subject { described_class.new(person.changes) }
 
-  it_behaves_like 'a changes_presenter'
-
   let(:mass_assignment_params) do
     {
       memberships_attributes: {
@@ -34,11 +32,12 @@ RSpec.describe MembershipChangesPresenter, type: :presenter do
       }
     }
   end
-
   before do
     person.assign_attributes(mass_assignment_params)
     person.save!
   end
+
+  it_behaves_like 'a changes_presenter'
 
   describe '#raw' do
     subject { described_class.new(person.membership_changes).raw }
@@ -64,7 +63,7 @@ RSpec.describe MembershipChangesPresenter, type: :presenter do
     end
 
     it 'returns all original changes' do
-      is_expected.to be_a Hash
+      expect(subject).to be_a Hash
       expect(subject.size).to eq 3
       expect(subject.values).to include(*membership_changes)
     end
@@ -106,11 +105,11 @@ RSpec.describe MembershipChangesPresenter, type: :presenter do
     it_behaves_like '#changes on changes_presenter'
 
     it 'returns expected format of data for additions' do
-      is_expected.to include membership_changes_for_ds
+      expect(subject).to include membership_changes_for_ds
     end
 
     it 'returns expected format of data for removals' do
-      is_expected.to include membership_changes_for_moj
+      expect(subject).to include membership_changes_for_moj
     end
 
     it 'returns a set for each membership' do

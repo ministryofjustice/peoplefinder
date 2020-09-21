@@ -27,6 +27,7 @@ class GroupLister
 
     def name_with_path
       return name if ancestors.empty?
+
       "#{name} [#{ancestors.join(' > ')}]"
     end
   end
@@ -47,6 +48,7 @@ class GroupLister
 
   def scope_with_maximum_depth(max_depth)
     return Group unless max_depth
+
     tbl = Group.arel_table
     Group.where(tbl[:ancestry_depth].lt(max_depth))
   end

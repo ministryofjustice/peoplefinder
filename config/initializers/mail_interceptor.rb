@@ -1,11 +1,10 @@
-
 if ENV['INTERCEPTED_EMAIL_RECIPIENT'].present?
   def login_subject_text
     I18n.t('token_mailer.new_token_email.subject')
   end
 
   if login_subject_text[/translation missing/]
-    I18n.load_path += Dir[Rails.root.join('config', 'locales', '*.{rb,yml}')]
+    I18n.load_path += Dir[Rails.root.join('config/locales/*.{rb,yml}')]
     I18n.default_locale = :en
     I18n.reload!
   end

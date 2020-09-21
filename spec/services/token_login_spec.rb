@@ -16,8 +16,8 @@ RSpec.describe TokenLogin, type: :service do
       service
     end
 
-    context 'for active tokens' do
-      context 'used in supported browsers' do
+    context 'with active tokens' do
+      context 'when used in supported browsers' do
         let(:view) { double(supported_browser?: true) }
 
         it 'logs in and renders view' do
@@ -33,7 +33,7 @@ RSpec.describe TokenLogin, type: :service do
         end
       end
 
-      context 'used in unsupported browsers' do
+      context 'when used in unsupported browsers' do
         let(:view) { double(supported_browser?: false) }
         it 'redirects to unsupported browser page' do
           expect(view).to receive(:redirect_to_unsupported_browser_warning)
@@ -42,7 +42,7 @@ RSpec.describe TokenLogin, type: :service do
       end
     end
 
-    context 'for inactive/spent token' do
+    context 'with inactive/spent token' do
       let(:token) { create(:token, spent: true) }
       it 'renders expired token message' do
         expect(view).to receive(:render_new_sessions_path_with_expired_token_message)

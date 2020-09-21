@@ -3,7 +3,7 @@ require 'rails_helper'
 describe HealthCheck::Elasticsearch do
   subject { described_class.new }
 
-  context '#available?' do
+  describe '#available?' do
     it 'returns true if Elasticsearch responds to ping' do
       expect(subject).to be_available
     end
@@ -14,7 +14,7 @@ describe HealthCheck::Elasticsearch do
     end
   end
 
-  context '#accessible?' do
+  describe '#accessible?' do
     it 'returns true if Elasticsearch cluster health is green' do
       allow(subject).to receive(:cluster_status?).and_return(true)
       expect(subject).to be_accessible
@@ -32,7 +32,7 @@ describe HealthCheck::Elasticsearch do
 
   end
 
-  context '#errors' do
+  describe '#errors' do
     it 'returns the exception messages if there is an error accessing the database' do
       allow(Elasticsearch::Model.client).to receive(:ping).and_return(false)
       subject.available?

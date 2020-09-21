@@ -46,6 +46,7 @@ module GeckoboardPublisher
     def update_set row
       set = find_set row['full_name']
       return false if set.nil?
+
       set[:emails] = (set[:emails] + ', ' + row['email']).slice(0, MAX_STRING_LENGTH)
       set[:count] += 1
       true

@@ -15,7 +15,7 @@
 #  updated_at            :datetime         not null
 #
 
-class QueuedNotification < ActiveRecord::Base
+class QueuedNotification < ApplicationRecord
 
   GRACE_PERIOD = 15.minutes
 
@@ -23,7 +23,7 @@ class QueuedNotification < ActiveRecord::Base
   scope :unprocessed, -> { where(processing_started_at: nil) }
 
   belongs_to :person
-  belongs_to :current_user, class_name: Person
+  belongs_to :current_user, class_name: 'Person'
 
   # expects an instance of PersonUpdater or PersonCreator to be passed as a parameter
   def self.queue!(updater)
@@ -81,6 +81,7 @@ class QueuedNotification < ActiveRecord::Base
                       current_user_id: group.current_user_id).order(:id)
     return false if recs.map(&:edit_finalised?).include?(true)
     return false if recs.last.created_at < GRACE_PERIOD.ago
+
     true
   end
 

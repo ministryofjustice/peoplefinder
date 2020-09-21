@@ -23,8 +23,8 @@ RSpec.describe PersonImportJob, type: :job do
 
   let(:serialized_group_ids) { YAML.dump([group.id]) }
 
-  subject(:perform_later) { described_class.perform_later(serialized_people, serialized_group_ids) }
-  subject(:perform_now)   { described_class.perform_now(serialized_people, serialized_group_ids) }
+  let(:perform_later) { described_class.perform_later(serialized_people, serialized_group_ids) }
+  let(:perform_now)   { described_class.perform_now(serialized_people, serialized_group_ids) }
   subject(:job) { described_class.new }
 
   it "enqueues with appropriate config settings" do
@@ -48,7 +48,7 @@ RSpec.describe PersonImportJob, type: :job do
 
   context 'when performed' do
 
-    context 'now' do
+    context 'when now' do
 
       it 'uses the PersonCreator' do
         expect(PersonCreator).to receive(:new).

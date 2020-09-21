@@ -28,7 +28,7 @@ RSpec.describe PersonEmailController, type: :controller do
     end
 
     context 'without authentication' do
-      let(:request) { get :edit, person_id: person.to_param }
+      let(:request) { get :edit, params: { person_id: person.to_param } }
 
       it 'raises routing error for handling by server as Not Found' do
         expect { request }.to raise_error ActionController::RoutingError, 'Not Found'
@@ -45,7 +45,7 @@ RSpec.describe PersonEmailController, type: :controller do
         end
       end
 
-      let(:request) { get :edit, person_id: person.to_param }
+      let(:request) { get :edit, params: { person_id: person.to_param } }
 
       it 'raises routing error for handling by server as Not Found' do
         expect { request }.to raise_error ActionController::RoutingError, 'Not Found'
@@ -55,7 +55,7 @@ RSpec.describe PersonEmailController, type: :controller do
     context 'with token authentication' do
       context 'with a valid token' do
         before do
-          get :edit, person_id: person.to_param, token_value: token.value
+          get :edit, params: { person_id: person.to_param, token_value: token.value }
         end
 
         include_examples 'renders edit template'
@@ -63,7 +63,7 @@ RSpec.describe PersonEmailController, type: :controller do
 
       context 'with an expired token' do
         let(:token) { create(:token, user_email: new_email, spent: true, created_at: (Token::DEFAULT_EXTRA_EXPIRY_PERIOD+1).ago) }
-        let(:request) { get :edit, person_id: person.to_param, token_value: token.value }
+        let(:request) { get :edit, params: { person_id: person.to_param, token_value: token.value } }
 
         it 'raises routing error for handling by server as Not Found' do
           expect { request }.to raise_error ActionController::RoutingError, 'Not Found'
@@ -78,7 +78,7 @@ RSpec.describe PersonEmailController, type: :controller do
 
     context 'without authentication' do
       subject(:request) do
-        put :update, person_id: person.to_param, person: new_attributes
+        put :update, params: { person_id: person.to_param, person: new_attributes }
       end
 
       it 'raises routing error for handling by server as Not Found' do
@@ -102,7 +102,7 @@ RSpec.describe PersonEmailController, type: :controller do
 
       it 'redirects to profile page, ignoring desired path' do
         request.session[:desired_path] = new_group_path
-        is_expected.to redirect_to person_path(person, prompt: 'profile')
+        expect(subject).to redirect_to person_path(person, prompt: 'profile')
       end
 
       it 'sets a flash message' do
@@ -112,14 +112,14 @@ RSpec.describe PersonEmailController, type: :controller do
     end
 
     context 'with a valid token' do
-      subject { put :update, person_id: person.to_param, person: new_attributes, token_value: token.value }
+      subject { put :update, params: { person_id: person.to_param, person: new_attributes, token_value: token.value } }
 
       include_examples 'updates the person'
     end
 
     context 'with an expired token' do
       let(:token) { create(:token, user_email: new_email, spent: true, created_at: (Token::DEFAULT_EXTRA_EXPIRY_PERIOD+1).ago) }
-      let(:request) { put :update, person_id: person.to_param, person: new_attributes, token_value: token.value }
+      let(:request) { put :update, params: { person_id: person.to_param, person: new_attributes, token_value: token.value } }
 
       it 'raises routing error for handling by server as Not Found' do
         expect { request }.to raise_error ActionController::RoutingError, 'Not Found'

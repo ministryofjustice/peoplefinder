@@ -5,7 +5,7 @@ shared_examples "observe token_auth feature flag" do
     expect(mail.body).to have_text(token_url(Token.last, desired_path: person_path(person)))
   end
 
-  context 'token_auth feature disabled' do
+  context 'with token_auth feature disabled' do
     it "includes the person show url without an auth token" do
       without_feature('token_auth') do
         expect(mail.body).to have_text(person_url(person))
@@ -121,7 +121,7 @@ describe UserUpdateMailer do
       end
     end
 
-    context 'recipients' do
+    context 'with recipients' do
       it 'emails the changed person' do
         expect(mail.to).to include 'test.user@digital.justice.gov.uk'
         expect(mail.cc).to be_empty
@@ -135,23 +135,24 @@ describe UserUpdateMailer do
       end
     end
 
-    context 'mail content' do
+    context 'with mail content' do
       before do
         # mock controller mass assignment behaviour for applying changes
+        person.reload
         person.assign_attributes(mass_assignment_params)
         person.save!
       end
 
       it 'includes team membership additions' do
         %w(plain html).each do |part_type|
-          expect(get_message_part(mail, part_type)).to have_content(/Added you to the Digital Services team as Lead Developer\. You are a leader of the team/m)
-          expect(get_message_part(mail, part_type)).to have_content(/Added you to the Corporate Services Group team as Product Manager/m)
+          expect(get_message_part(mail, part_type)).to have_text(/Added you to the Digital Services team as Lead Developer\. You are a leader of the team/m, normalize_ws: true)
+          expect(get_message_part(mail, part_type)).to have_text(/Added you to the Corporate Services Group team as Product Manager/m, normalize_ws: true)
         end
       end
 
       it 'includes team membership removals' do
         %w(plain html).each do |part_type|
-          expect(get_message_part(mail, part_type)).to have_content(/Removed you from the Ministry of Justice team/m)
+          expect(get_message_part(mail, part_type)).to have_text(/Removed you from the Ministry of Justice team/m, normalize_ws: true)
         end
       end
 
@@ -159,46 +160,47 @@ describe UserUpdateMailer do
         person.assign_attributes(team_reassignment)
         person.save!
         %w(plain html).each do |part_type|
-          expect(get_message_part(mail, part_type)).to have_content(/Changed your membership of the Human Resources team to the Digital Services team/m)
+          expect(get_message_part(mail, part_type)).to have_text(/Changed your membership of the Human Resources team to the Digital Services team/m, normalize_ws: true)
         end
       end
 
       it 'includes team membership role modifications' do
         %w(plain html).each do |part_type|
-          expect(get_message_part(mail, part_type)).to have_content(/Changed your role from Administrative Officer to Chief Executive Officer in the Human Resources team/m)
+          expect(get_message_part(mail, part_type)).to have_text(/Changed your role from Administrative Officer to Chief Executive Officer in the Human Resources team/m, normalize_ws: true)
         end
       end
 
       it 'includes team membership leadership modifications' do
         %w(plain html).each do |part_type|
-          expect(get_message_part(mail, part_type)).to have_content(/Made you leader of the Human Resources team/m)
+          expect(get_message_part(mail, part_type)).to have_text(/Made you leader of the Human Resources team/m, normalize_ws: true)
         end
       end
 
       it 'includes team membership subscription modifications' do
         %w(plain html).each do |part_type|
-          expect(get_message_part(mail, part_type)).to have_content(/Changed your notification settings so you don't get notifications if changes are made to the Human Resources team./m)
+          expect(get_message_part(mail, part_type)).to have_text(/Changed your notification settings so you don't get notifications if changes are made to the Human Resources team./m, normalize_ws: true)
         end
       end
 
       it 'includes list of presented changed person attributes' do
         changes_presenter.each_pair do |_field, change|
           %w(plain html).each do |part_type|
-            expect(get_message_part(mail, part_type)).to have_content(/#{change}/m)
+            expect(get_message_part(mail, part_type)).to have_text(/#{change}/m, normalize_ws: true)
           end
         end
       end
 
       it 'includes profile photo changes' do
         %w(plain html).each do |part_type|
-          expect(get_message_part(mail, part_type)).to have_content(/Changed your profile photo/m)
-          expect(get_message_part(mail, part_type)).to_not have_content(/Changed your profile photo id from/m)
+          expect(get_message_part(mail, part_type)).to have_text(/Changed your profile photo/m, normalize_ws: true)
+          expect(get_message_part(mail, part_type)).to_not have_text(/Changed your profile photo id from/m, normalize_ws: true)
         end
       end
 
       it 'includes extra info changes' do
         %w(plain html).each do |part_type|
-          expect(get_message_part(mail, part_type)).to have_content(/Changed your extra information/m)
+          expect(get_message_part(mail, part_type)).to have_text(/Changed your extra information/m, normalize_ws: true)
+
         end
       end
     end

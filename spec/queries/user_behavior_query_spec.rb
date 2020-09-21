@@ -63,7 +63,7 @@ describe UserBehaviorQuery, versioning: true do
     end
 
     it 'returns an arel relation' do
-      is_expected.to be_an_instance_of(Person::ActiveRecord_Relation)
+      expect(subject).to be_an_instance_of(Person::ActiveRecord_Relation)
     end
 
     it 'returns expected columns' do
@@ -146,7 +146,7 @@ describe UserBehaviorQuery, versioning: true do
     end
 
     it 'returns an array of hashes' do
-      is_expected.to be_an_instance_of(Array)
+      expect(subject).to be_an_instance_of(Array)
       expect(subject.first).to be_an_instance_of(Hash)
     end
 
@@ -157,6 +157,7 @@ describe UserBehaviorQuery, versioning: true do
     end
 
     it 'returns expected collections and format' do
+      # binding.pry
       expect(subject).to match_array expected_collections
     end
 

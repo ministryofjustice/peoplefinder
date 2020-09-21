@@ -26,7 +26,7 @@ RSpec.describe Token, type: :model do
     expect do
       2.times { token.save }
       token.reload
-    end.not_to change { token.value }
+    end.not_to change(token, :value)
   end
 
   it 'will be valid with valid email address' do
@@ -62,7 +62,7 @@ RSpec.describe Token, type: :model do
     end
   end
 
-  context 'scopes' do
+  context 'with scopes' do
     before do
       # Seems like a smell, but if I don't then it kills all the expired records
       # before the individual specs run.
@@ -77,15 +77,19 @@ RSpec.describe Token, type: :model do
     it '.spent' do
       expect(described_class.spent).to match_array([spent])
     end
+
     it '.unspent' do
       expect(described_class.unspent).to match_array([token, expired, half_hour_ago])
     end
+
     it '.unexpired' do
       expect(described_class.unexpired).to match_array([token, spent, half_hour_ago])
     end
+
     it '.expired' do
       expect(described_class.expired).to match_array([expired])
     end
+
     it '.in_the_last_hour' do
       expect(described_class.in_the_last_hour).to match_array([token, spent, half_hour_ago])
     end
@@ -96,7 +100,7 @@ RSpec.describe Token, type: :model do
       expect(unspent).to eq(half_hour_ago)
     end
 
-    context '.find_securely' do
+    describe '.find_securely' do
       it 'uses constant-time comparison alogrithm to prevent timing attacks' do
         expect(Secure).to receive(:compare).at_least(:once)
         described_class.find_securely(spent.value)
@@ -109,7 +113,7 @@ RSpec.describe Token, type: :model do
     end
   end
 
-  context 'creating a new token' do
+  context 'when creating a new token' do
     let!(:expiring_tokens) { create_list(:token, 3) }
 
     it 'enqueues delayed job for destroying expired tokens' do
@@ -120,8 +124,9 @@ RSpec.describe Token, type: :model do
       expect { token.save }.to delay_method(:remove_expired_tokens)
     end
 
-    context 'destroys all tokens older than the throttle limit' do
+    context 'when destroying all tokens older than the throttle limit' do
       before { Delayed::Worker.delay_jobs = false }
+
       after { Delayed::Worker.delay_jobs = true }
 
       it 'destroys all expired tokens' do
@@ -147,7 +152,7 @@ RSpec.describe Token, type: :model do
     end
   end
 
-  context 'time dependent tokens' do
+  context 'with time dependent tokens' do
     describe '#ttl' do
       it 'defaults to 86400 seconds (24 hours)' do
         expect(token.ttl).to eql(86_400)
@@ -157,10 +162,10 @@ RSpec.describe Token, type: :model do
     describe '#active?' do
       before { token.save }
 
-      context 'in production environment' do
+      context 'when in a production environment' do
         it 'returns true if token is less than 86400 seconds old and not spent' do
-          expect(token.active?).to be_truthy
-          expect(token.spent?).to be_falsey
+          expect(token).to be_active
+          expect(token).not_to be_spent
           Timecop.freeze(86_390.seconds.from_now) do
             expect(token).to be_active
           end
@@ -170,7 +175,7 @@ RSpec.describe Token, type: :model do
           expect do
             token.spend!
             token.reload
-          end.to change { token.spent? }.from(false).to(true)
+          end.to change(token, :spent?).from(false).to(true)
         end
 
         it 'returns false if token is 86400 seconds or more old' do
@@ -180,7 +185,7 @@ RSpec.describe Token, type: :model do
         end
       end
 
-      context 'on dev and staging - to avoid virus scanner link followers spending the token prematurely' do
+      context 'when on dev and staging - to avoid virus scanner link followers spending the token prematurely' do
         before do
           allow(Rails).to receive_message_chain(:host, :dev?).and_return false
           allow(Rails).to receive_message_chain(:host, :staging?).and_return true
@@ -202,8 +207,9 @@ RSpec.describe Token, type: :model do
         end
       end
 
-      context 'expiring tokens' do
+      context 'with expiring tokens' do
         before { token.save }
+
         let(:new_token) { build(:token, user_email: token.user_email) }
 
         describe '#save or #create for new tokens' do
@@ -211,7 +217,7 @@ RSpec.describe Token, type: :model do
             expect do
               new_token.save
               token.reload
-            end.to change { token.active? }.from(true).to(false)
+            end.to change(token, :active?).from(true).to(false)
           end
         end
 
@@ -220,21 +226,21 @@ RSpec.describe Token, type: :model do
             expect do
               token.spend!
               token.reload
-            end.to change { token.spent? }.from(false).to(true)
+            end.to change(token, :spent?).from(false).to(true)
           end
 
           it 'makes the token inactive' do
             expect do
               token.spend!
               token.reload
-            end.to change { token.active? }.from(true).to(false)
+            end.to change(token, :active?).from(true).to(false)
           end
         end
       end
     end
   end
 
-  context 'throttling token generation' do
+  context 'when throttling token generation' do
     describe '#save or #create of a new token' do
       it 'throws and error if more than 8 tokens have been generated in the past hour for the same person' do
         8.times do

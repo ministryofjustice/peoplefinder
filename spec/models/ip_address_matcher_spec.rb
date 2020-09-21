@@ -24,7 +24,7 @@ RSpec.describe IpAddressMatcher do
 
   it 'aliases include? to ===' do
     matcher = described_class.new('12.34.0.0/16;127.0.0.0/24')
-    expect(matcher.include?('127.0.0.1')).to be_truthy
-    expect(matcher.include?('12.33.44.44')).to be_falsy
+    expect(matcher).to include('127.0.0.1')
+    expect(matcher).not_to include('12.33.44.44')
   end
 end

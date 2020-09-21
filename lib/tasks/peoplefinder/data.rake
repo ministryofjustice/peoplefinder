@@ -105,7 +105,7 @@ namespace :peoplefinder do
     end
 
     def csv_record(email_prefix = nil)
-      person = FactoryGirl.build(:person, :for_demo_csv)
+      person = FactoryBot.build(:person, :for_demo_csv)
       person.email.prepend(email_prefix) if email_prefix.present?
       csv_header.each_with_object([]) do |attribute, memo|
         memo << person.__send__(attribute) if person.attributes.include? attribute.to_s

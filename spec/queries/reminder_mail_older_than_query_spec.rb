@@ -23,7 +23,7 @@ describe ReminderMailOlderThanQuery do
       %q{
         SELECT "people".*
         FROM "people"
-        WHERE (last_reminder_email_at IS NULL OR last_reminder_email_at < '2017-01-14 12:26:01.000000')
+        WHERE (last_reminder_email_at IS NULL OR last_reminder_email_at < '2017-01-14 12:26:01')
         ORDER BY "people"."surname" ASC, "people"."given_name" ASC
       }
     end

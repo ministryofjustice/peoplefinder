@@ -10,6 +10,10 @@
 # Cop supports --auto-correct.
 # Configuration parameters: Include, TreatCommentsAsGroupSeparators.
 # Include: **/Gemfile, **/gems.rb
+require:
+  - rubocop-performance
+  - rubocop-rails
+  
 Bundler/OrderedGems:
   Exclude:
     - 'Gemfile'
@@ -294,7 +298,7 @@ Rails/DynamicFindBy:
     - 'spec/features/person_membership_spec.rb'
 
 # Offense count: 12
-Rails/FilePath:
+RSpec/FilePath:
   Exclude:
     - 'config/environments/production.rb'
     - 'config/initializers/carrierwave.rb'
@@ -361,6 +365,9 @@ Style/FormatStringToken:
 Style/FrozenStringLiteralComment:
   Enabled: false
 
+Rails/FilePath:
+  Enabled: false
+
 # Offense count: 1
 # Cop supports --auto-correct.
 # Configuration parameters: InverseMethods, InverseBlocks.
@@ -369,7 +376,7 @@ Style/InverseMethods:
     - 'app/presenters/profile_changes_presenter.rb'
 
 # Offense count: 2
-Style/MethodMissing:
+Style/MethodMissingSuper:
   Exclude:
     - 'app/presenters/membership_change_set.rb'
     - 'lib/rails_host.rb'
@@ -430,7 +437,7 @@ Style/TernaryParentheses:
 # Offense count: 4
 # Configuration parameters: EnforcedStyle, SupportedStyles.
 # SupportedStyles: snake_case, normalcase, non_integer
-Style/VariableNumber:
+Naming/VariableNumber:
   Exclude:
     - 'spec/queries/people_in_groups_query_spec.rb'
     - 'spec/services/group_update_service_spec.rb'

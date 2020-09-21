@@ -11,7 +11,7 @@
 require 'rails_helper'
 
 RSpec.describe ProfilePhoto, type: :model do
-  subject { create(:profile_photo) }
+  subject { build_stubbed(:profile_photo) }
 
   it { is_expected.to respond_to :upload_dimensions }
   it { is_expected.to respond_to :crop_x }
@@ -52,59 +52,59 @@ RSpec.describe ProfilePhoto, type: :model do
   describe 'validations' do
     subject { build(:profile_photo) }
 
-    context 'file' do
-      context 'extension is whitelisted' do
+    context 'with file' do
+      context 'with extension is whitelisted' do
         it do
           subject.image = non_white_list_image
-          is_expected.to be_invalid
+          expect(subject).to be_invalid
         end
 
         it do
           subject.image = valid_image
-          is_expected.to be_valid
+          expect(subject).to be_valid
         end
       end
 
-      context 'size must be less than or equal to 6M' do
+      context 'when size must be less than or equal to 6M' do
         it do
           allow(subject.image).to receive(:size).and_return 6.001.megabytes
-          is_expected.to be_invalid
+          expect(subject).to be_invalid
         end
 
         it do
           allow(subject.image).to receive(:size).and_return 6.megabytes
-          is_expected.to be_valid
+          expect(subject).to be_valid
         end
       end
     end
 
-    context 'image dimensions' do
-      context 'must be greater than 648x648 pixels' do
+    context 'with image dimensions' do
+      context 'when it is greater than 648x648 pixels' do
         it do
           allow(subject).to receive(:upload_dimensions).and_return(width: 649, height: 647)
-          is_expected.to be_invalid
+          expect(subject).to be_invalid
         end
 
         it do
           allow(subject).to receive(:upload_dimensions).and_return(width: 648, height: 648)
-          is_expected.to be_valid
+          expect(subject).to be_valid
         end
       end
 
-      context 'must be less than or equal to 8192x8192 pixels' do
+      context 'when it is less than or equal to 8192x8192 pixels' do
         it do
           allow(subject).to receive(:upload_dimensions).and_return(width: 8193, height: 8192)
-          is_expected.to be_invalid
+          expect(subject).to be_invalid
         end
 
         it do
           allow(subject).to receive(:upload_dimensions).and_return(width: 8192, height: 8192)
-          is_expected.to be_valid
+          expect(subject).to be_valid
         end
       end
     end
 
-    context 'saving file' do
+    context 'when a saving file' do
       context 'with non image' do
         subject { build :profile_photo, :non_image }
 

@@ -21,7 +21,7 @@ RSpec.describe Concerns::Activation do
     create(:profile_photo)
   end
 
-  context '.activated_percentage' do
+  describe '.activated_percentage' do
 
     it 'uses .completion_score_calculation for scalablility' do
       expect(Person).to receive(:completion_score_calculation).and_return(0.81)

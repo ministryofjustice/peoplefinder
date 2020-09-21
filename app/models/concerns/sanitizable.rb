@@ -12,6 +12,7 @@ module Concerns::Sanitizable
     fields_to_sanitize.each do |field, options|
       value = send(field)
       next unless value
+
       sanitize_value! value, options
     end
   end

@@ -8,6 +8,6 @@
 #  updated_at :datetime
 #
 
-class PermittedDomain < ActiveRecord::Base
+class PermittedDomain < ApplicationRecord
   validates :domain, presence: true, uniqueness: true
 end

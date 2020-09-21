@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-feature 'Person browsing' do
+describe 'Person browsing' do
   include PermittedDomainHelper
 
   let(:department) { create(:department) }
@@ -9,7 +9,7 @@ feature 'Person browsing' do
     token_log_in_as 'test.user@digital.justice.gov.uk'
   end
 
-  scenario 'Using breadcrumbs on a profile page', skip: "HELP REQUIRED" do
+  it 'Using breadcrumbs on a profile page', skip: "HELP REQUIRED" do
     group_a = create_group_hierarchy('Ministry of Justice', 'Apple', 'Biwa')
     group_b = create_group_hierarchy('Ministry of Justice', 'Cherry', 'Durian')
     person = create(:person)
@@ -27,7 +27,7 @@ feature 'Person browsing' do
     let(:weekday_person) { create(:person, works_monday: true, works_friday: true) }
     let(:weekend_person) { create(:person, works_saturday: true, works_sunday: true) }
 
-    scenario 'A person who only works weekdays should not see Saturday & Sunday listed' do
+    it 'A person who only works weekdays should not see Saturday & Sunday listed' do
       visit person_path(weekday_person)
       expect(page).to have_xpath("//li[@alt='Monday']")
       expect(page).to have_xpath("//li[@alt='Friday']")
@@ -36,7 +36,7 @@ feature 'Person browsing' do
       expect(page).to_not have_xpath("//li[@alt='Saturday']")
     end
 
-    scenario 'A person who works one or more days on a weekend should have their days listed' do
+    it 'A person who works one or more days on a weekend should have their days listed' do
       visit person_path(weekend_person)
 
       expect(page).to have_xpath("//li[@alt='Sunday']")

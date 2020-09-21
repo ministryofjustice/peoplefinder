@@ -5,7 +5,7 @@ RSpec.describe GroupPolicy, type: :policy do
 
   subject { described_class.new(user, group) }
 
-  context 'for a regular user' do
+  context 'with a regular user' do
     let(:user) { build_stubbed(:person) }
 
     it { is_expected.to permit_action(:show) }
@@ -16,7 +16,7 @@ RSpec.describe GroupPolicy, type: :policy do
     it { is_expected.to permit_action(:destroy) }
   end
 
-  context 'for the readonly user' do
+  context 'with the readonly user' do
     let(:user) { build_stubbed(:readonly_user) }
 
     it { is_expected.to permit_action(:show) }

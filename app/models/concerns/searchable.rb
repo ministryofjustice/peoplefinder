@@ -10,7 +10,7 @@ module Concerns::Searchable
     # Don't know if we still need this, as we have removed community feature.
     after_commit -> { __elasticsearch__.index_document }, on: :update
 
-    index_name [Rails.env, model_name.collection.gsub(/\//, '-')].join('_')
+    index_name [Rails.env, model_name.collection.tr('/', '-')].join('_')
 
     def self.delete_indexes
       __elasticsearch__.delete_index! index: index_name
@@ -24,7 +24,7 @@ module Concerns::Searchable
       filter: {
         name_synonyms_expand: {
           type: 'synonym',
-          synonyms: File.readlines(Rails.root.join('config', 'initializers', 'name_synonyms.csv')).map(&:chomp)
+          synonyms: File.readlines(Rails.root.join('config/initializers/name_synonyms.csv')).map(&:chomp)
         }
       },
       analyzer: {

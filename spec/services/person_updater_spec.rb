@@ -16,7 +16,7 @@ RSpec.describe PersonUpdater, type: :service do
 
   subject { described_class.new(person: person, current_user: current_user, state_cookie: smc) }
 
-  context 'Saving profile on update' do
+  context 'when saving profile on update' do
 
     let(:smc) { double StateManagerCookie, save_profile?: true, create?: false }
 
@@ -72,7 +72,7 @@ RSpec.describe PersonUpdater, type: :service do
     end
   end
 
-  context 'saving profile on create' do
+  context 'when saving profile on create' do
     let(:smc) { double StateManagerCookie, save_profile?: true, create?: true }
 
     it 'queues a update notification' do

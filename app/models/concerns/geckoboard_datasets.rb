@@ -90,7 +90,7 @@ module Concerns::GeckoboardDatasets
 
     def completions_set group
       {
-        team: group.acronym.present? ? group.acronym : group.name,
+        team: group.acronym.presence || group.name,
         total: all_in_subtree(group).count,
         with_photos: all_in_subtree(group).photo_profiles.count,
         with_additional_info: all_in_subtree(group).additional_info_profiles.count

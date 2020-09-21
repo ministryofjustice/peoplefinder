@@ -46,7 +46,7 @@ class EmailAddress
   end
 
   def globally_addressable_domain?
-    domain && domain.match(/
+    domain&.match(/
       \A           # beginning of string
       (?:          # one or more of:
         [0-9a-z-]+ #   domain part (can include digits and hyphens)

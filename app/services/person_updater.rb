@@ -12,6 +12,7 @@ class PersonUpdater
     if person.new_record?
       raise NewRecordError, 'cannot update a new Person record'
     end
+
     @person = person
     @current_user = current_user
     @state_cookie = state_cookie

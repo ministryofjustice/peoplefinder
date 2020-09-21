@@ -3,14 +3,14 @@ require 'rails_helper'
 describe ProfileChangeAggregator do
 
   describe '#aggregate_raw_changes' do
-    context 'just one record in the group' do
+    context 'with just one record in the group' do
       it 'produces raw changes identical to the one record in the group' do
         agg = described_class.new([qn1])
         expect(agg.aggregate_raw_changes).to eq qn1.changes_hash['data']['raw']
       end
     end
 
-    context 'two records changing different fields' do
+    context 'with two records changing different fields' do
       it 'produces raw changes that are merged from the two records' do
         agg = described_class.new([qn1, qn2])
         expect(agg.aggregate_raw_changes).to eq merged_qn1_qn2_changes
@@ -28,7 +28,7 @@ describe ProfileChangeAggregator do
       end
     end
 
-    context 'three records changing the same fields' do
+    context 'with three records changing the same fields' do
       it 'produces raw changes that reflect the first value and the last value when the same field is updated serveral times' do
         agg = described_class.new([qn1, qn2, qn3])
         expect(agg.aggregate_raw_changes).to eq merged_qn1_qn2_qn3_changes
@@ -47,7 +47,7 @@ describe ProfileChangeAggregator do
       end
     end
 
-    context 'two records that change the value of one field back to the original' do
+    context 'with two records that change the value of one field back to the original' do
       it 'removes the fields that were changed back to the original value' do
         agg = described_class.new([qn1, qn4])
         expect(agg.aggregate_raw_changes).to eq merged_qn1_qn4_changes
@@ -61,15 +61,15 @@ describe ProfileChangeAggregator do
       end
     end
 
-    context 'changes to meberships' do
-      context 'just one change' do
+    context 'with changes to meberships' do
+      context 'with just one change' do
         it 'produces the same change set' do
           agg = described_class.new([mqn1])
           expect(agg.aggregate_raw_changes).to eq mqn1.changes_hash['data']['raw']
         end
       end
 
-      context 'two changes for two different memberships' do
+      context 'with two changes for two different memberships' do
         it 'merges the two changes sets' do
           agg = described_class.new([mqn1, mqn2])
           expect(agg.aggregate_raw_changes).to eq merged_mqn1_mqn2_changes
@@ -92,7 +92,7 @@ describe ProfileChangeAggregator do
         end
       end
 
-      context 'multiple changes for the same membership' do
+      context 'with multiple changes for the same membership' do
         it 'does a deep merge on the changes for each membership' do
           agg = described_class.new([mqn1, mqn2, mqn3])
           expect(agg.aggregate_raw_changes).to eq merged_mqn1_mqn2_mqn3_changes

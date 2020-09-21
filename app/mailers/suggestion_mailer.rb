@@ -1,6 +1,6 @@
-class SuggestionMailer < ActionMailer::Base
+class SuggestionMailer < ApplicationMailer
 
-  layout 'email'
+  # layout 'email'
   add_template_helper MailHelper
 
   def person_email(person, suggester, suggestion_hash)

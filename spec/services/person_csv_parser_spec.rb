@@ -6,7 +6,7 @@ RSpec.describe PersonCsvParser, type: :service do
     described_class.new(csv)
   end
 
-  context 'clean CSV, without optional headers' do
+  context 'with a clean CSV, without optional headers' do
     let(:csv) do
       <<-END.strip_heredoc
         email,given_name,surname
@@ -52,7 +52,7 @@ RSpec.describe PersonCsvParser, type: :service do
     end
   end
 
-  context 'clean CSV, with optional headers' do
+  context 'with a clean CSV, with optional headers' do
     let(:csv) do
       <<-END.strip_heredoc
         email,given_name,surname,primary_phone_number,secondary_phone_number,pager_number,building,location_in_building,city,role,description

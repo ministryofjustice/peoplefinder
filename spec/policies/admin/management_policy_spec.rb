@@ -6,7 +6,7 @@ RSpec.describe Admin::ManagementPolicy, type: :policy do
 
   ACTIONS = %w(show user_behavior_report generate_user_behavior_report).map(&:to_sym)
 
-  context 'for a super admin user' do
+  context 'with a super admin user' do
     let(:user) { build_stubbed(:person, super_admin: true) }
 
     ACTIONS.each do |action|
@@ -14,7 +14,7 @@ RSpec.describe Admin::ManagementPolicy, type: :policy do
     end
   end
 
-  context 'for a regular user' do
+  context 'with a regular user' do
     let(:user) { build_stubbed(:person, super_admin: false) }
 
     ACTIONS.each do |action|
@@ -22,7 +22,7 @@ RSpec.describe Admin::ManagementPolicy, type: :policy do
     end
   end
 
-  context 'for the readonly user' do
+  context 'with the readonly user' do
     let(:user) { build_stubbed(:readonly_user) }
 
     ACTIONS.each do |action|

@@ -1,4 +1,4 @@
-class Report < ActiveRecord::Base
+class Report < ApplicationRecord
 
   def to_csv_file
     file = File.open(tmp_file_path, 'w')
@@ -14,7 +14,7 @@ class Report < ActiveRecord::Base
   private
 
   def tmp_dir
-    @tmp_dir ||= Rails.root.join('tmp', 'reports')
+    @tmp_dir ||= Rails.root.join('tmp/reports')
   end
 
   def tmp_file_name

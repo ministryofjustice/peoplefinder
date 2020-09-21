@@ -9,8 +9,8 @@ RSpec.describe GenerateReportJob, type: :job do
     }.to_json
   end
 
-  subject(:perform_later) { described_class.perform_later(serialized_csv_report) }
-  subject(:perform_now) { described_class.perform_now(serialized_csv_report) }
+  let(:perform_later) { described_class.perform_later(serialized_csv_report) }
+  let(:perform_now) { described_class.perform_now(serialized_csv_report) }
   subject(:job) { described_class.new }
 
   context 'when enqueued' do

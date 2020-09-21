@@ -45,7 +45,7 @@ RSpec.describe GroupsController, type: :controller do
   let(:person) { create(:person) }
 
   describe 'GET index' do
-    subject { get :index, {}, valid_session }
+    subject { get :index, param: {}, flash: valid_session }
 
     it 'without any groups, it redirects to the new group page' do
       expect(subject).to redirect_to(new_group_path)
@@ -66,7 +66,7 @@ RSpec.describe GroupsController, type: :controller do
   describe 'GET show' do
     it 'assigns the requested group as @group' do
       group = create(:group, valid_attributes)
-      get :show, { id: group.to_param }, valid_session
+      get :show, params: { id: group.to_param }, flash: valid_session
       expect(assigns(:group)).to eq(group)
     end
   end
@@ -75,7 +75,7 @@ RSpec.describe GroupsController, type: :controller do
     let(:group) { create(:group, valid_attributes) }
     let!(:people) { instance_double(Person::ActiveRecord_Relation) }
 
-    subject { get :all_people, { id: group.to_param, page: 2 }, valid_session }
+    subject { get :all_people, params: { id: group.to_param, page: 2 }, flash: valid_session }
 
     it 'assigns @group to a Group instance' do
       subject
@@ -97,12 +97,12 @@ RSpec.describe GroupsController, type: :controller do
 
   describe 'GET new' do
     it 'assigns a new group as @group' do
-      get :new, {}, valid_session
+      get :new, params: {}, flash: valid_session
       expect(assigns(:group)).to be_a_new(Group)
     end
 
     it 'assigns a membership object' do
-      get :new, {}, valid_session
+      get :new, params: {}, flash: valid_session
       expect(assigns(:group).memberships.length).to eql(1)
     end
   end
@@ -111,7 +111,7 @@ RSpec.describe GroupsController, type: :controller do
     let(:group) { create(:group, valid_attributes) }
 
     it 'assigns the requested group as @group' do
-      get :edit, { id: group.to_param }, valid_session
+      get :edit, params: { id: group.to_param }, flash: valid_session
       expect(assigns(:group)).to eql(group)
     end
   end
@@ -121,19 +121,19 @@ RSpec.describe GroupsController, type: :controller do
       describe 'with valid params' do
         it 'creates a new Group' do
           expect do
-            post :create, { group: valid_attributes }, valid_session
+            post :create, params: { group: valid_attributes }, flash: valid_session
           end.to change(Group, :count).by(1)
         end
 
         it 'assigns a newly created group as @group' do
-          post :create, { group: valid_attributes }, valid_session
+          post :create, params: { group: valid_attributes }, flash: valid_session
           expect(assigns(:group)).to be_a(Group)
           expect(assigns(:group)).to be_persisted
         end
 
         it 'redirects to the created group' do
           group_attrs = valid_attributes
-          post :create, { group: group_attrs }, valid_session
+          post :create, params: { group: group_attrs }, flash: valid_session
           expect(response).to redirect_to(Group.find_by(name: group_attrs[:name]))
         end
       end
@@ -150,19 +150,19 @@ RSpec.describe GroupsController, type: :controller do
 
         it 'creates a new Group' do
           expect do
-            post :create, { group: valid_attributes }, valid_session
+            post :create, params: { group: valid_attributes }, flash: valid_session
           end.to change(Group, :count).by(1)
         end
 
         it 'assigns a newly created group as @group' do
-          post :create, { group: valid_attributes }, valid_session
+          post :create, params: { group: valid_attributes }, flash: valid_session
           expect(assigns(:group)).to be_a(Group)
           expect(assigns(:group)).to be_persisted
         end
 
         it 'redirects to the created group' do
           group_attrs = valid_attributes
-          post :create, { group: group_attrs }, valid_session
+          post :create, params: { group: group_attrs }, flash: valid_session
           expect(response).to redirect_to(Group.find_by(name: group_attrs[:name]))
         end
       end
@@ -173,7 +173,7 @@ RSpec.describe GroupsController, type: :controller do
         parent_group = create(:group, attributes_for(:group))
 
         attributes = valid_attributes.merge(parent_id: parent_group.id)
-        post :create, { group: attributes, format: :json }, valid_session
+        post :create, params: { group: attributes, format: :json }, flash: valid_session
         expect(response.code).to eq '201'
 
         group = Group.find_by_name(attributes[:name])
@@ -191,7 +191,7 @@ RSpec.describe GroupsController, type: :controller do
         create(:department)
 
         attributes = valid_attributes.merge(parent_id: nil)
-        post :create, { group: attributes, format: :json }, valid_session
+        post :create, params: { group: attributes, format: :json }, flash: valid_session
 
         expect(response.code).to eq '422'
         expect(response.body).to eq '{"parent_id":["is required"]}'
@@ -202,7 +202,7 @@ RSpec.describe GroupsController, type: :controller do
       render_views
 
       before do
-        post :create, { group: invalid_attributes }, valid_session
+        post :create, params: { group: invalid_attributes }, flash: valid_session
       end
 
       it 'assigns a newly created but unsaved group as @group' do
@@ -220,7 +220,7 @@ RSpec.describe GroupsController, type: :controller do
 
     describe 'with invalid params including parent_id and format json' do
       before do
-        post :create, { group: invalid_attributes, format: :json }, valid_session
+        post :create, params: { group: invalid_attributes, format: :json }, flash: valid_session
       end
 
       it 'returns errors as json' do
@@ -238,20 +238,20 @@ RSpec.describe GroupsController, type: :controller do
 
       it 'updates the requested group' do
         group = create(:group, valid_attributes)
-        put :update, { id: group.to_param, group: new_attributes }, valid_session
+        put :update, params: { id: group.to_param, group: new_attributes }, flash: valid_session
         group.reload
         expect(group.name).to eql(new_attributes[:name])
       end
 
       it 'assigns the requested group as @group' do
         group = create(:group, valid_attributes)
-        put :update, { id: group.to_param, group: valid_attributes }, valid_session
+        put :update, params: { id: group.to_param, group: valid_attributes }, flash: valid_session
         expect(assigns(:group)).to eq(group)
       end
 
       it 'redirects to the group' do
         group = create(:group, valid_attributes)
-        put :update, { id: group.to_param, group: valid_attributes }, valid_session
+        put :update, params: { id: group.to_param, group: valid_attributes }, flash: valid_session
         expect(response).to redirect_to(group)
       end
     end
@@ -262,7 +262,7 @@ RSpec.describe GroupsController, type: :controller do
       let(:group) { create(:group, valid_attributes) }
 
       before do
-        put :update, { id: group.to_param, group: invalid_attributes }, valid_session
+        put :update, params: { id: group.to_param, group: invalid_attributes }, flash: valid_session
       end
 
       it 'assigns the group as @group' do
@@ -283,14 +283,14 @@ RSpec.describe GroupsController, type: :controller do
     it 'destroys the requested group' do
       group = create(:group, valid_attributes)
       expect do
-        delete :destroy, { id: group.to_param }, valid_session
+        delete :destroy, params: { id: group.to_param }, flash: valid_session
       end.to change(Group, :count).by(-1)
     end
 
     it 'redirects to the parent group' do
       parent = create(:group, parent: nil)
       group = create(:group, parent: parent)
-      delete :destroy, { id: group.to_param }, valid_session
+      delete :destroy, params: { id: group.to_param }, flash: valid_session
       expect(response).to redirect_to(parent)
     end
   end

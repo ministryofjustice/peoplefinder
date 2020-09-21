@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.context 'on initialization', type: :initializer do
+RSpec.context 'when initializing', type: :initializer do
 
   it 'sets max attempts to a low number to prevent unnecessary erroring job repetition' do
     expect(Delayed::Worker.max_attempts).to be_between(3, 7)

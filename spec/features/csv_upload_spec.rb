@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-feature 'Upload CSV' do
+describe 'Upload CSV' do
   include ActiveJobHelper
   include PermittedDomainHelper
 
@@ -25,20 +25,20 @@ feature 'Upload CSV' do
     end
   end
 
-  scenario 'only super admins can access uploader' do
+  it 'only super admins can access uploader' do
     Person.find_by(email: email).update(super_admin: false)
     visit new_admin_person_upload_path
-    expect(current_path).to eql home_path
+    expect(page).to have_current_path(home_path)
     expect(page).to have_selector('.flash-message.warning', text: 'Unauthorised')
   end
 
-  scenario 'uploading a good CSV file' do
+  it 'uploading a good CSV file' do
     expect do
-      attach_file 'Upload CSV file', File.expand_path('../../fixtures/valid.csv', __FILE__)
+      attach_file 'Upload CSV file', File.expand_path('../fixtures/valid.csv', __dir__)
       click_button 'Upload'
     end.to change(Person, :count).by(2)
 
-    expect(current_path).to eql(new_admin_person_upload_path)
+    expect(page).to have_current_path(new_admin_person_upload_path)
     expect(page).to have_text('Successfully uploaded 2 people')
 
     %w(
@@ -52,13 +52,13 @@ feature 'Upload CSV' do
     end
   end
 
-  scenario 'uploading a good CSV file with optionals' do
+  it 'uploading a good CSV file with optionals' do
     expect do
-      attach_file 'Upload CSV file', File.expand_path('../../fixtures/valid_with_optionals.csv', __FILE__)
+      attach_file 'Upload CSV file', File.expand_path('../fixtures/valid_with_optionals.csv', __dir__)
       click_button 'Upload'
     end.to change(Person, :count).by(2)
 
-    expect(current_path).to eql(new_admin_person_upload_path)
+    expect(page).to have_current_path(new_admin_person_upload_path)
     expect(page).to have_text('Successfully uploaded 2 people')
 
     %w(
@@ -72,42 +72,42 @@ feature 'Upload CSV' do
     end
   end
 
-  scenario 'uploading nothing' do
+  it 'uploading nothing' do
     expect do
       click_button 'Upload'
     end.not_to change(Person, :count)
 
-    expect(current_path).to eql(admin_person_uploads_path)
+    expect(page).to have_current_path(admin_person_uploads_path)
     expect(page).to have_govuk_errors(field: 'File is required')
   end
 
-  scenario 'uploading a non-CSV file type' do
+  it 'uploading a non-CSV file type' do
     expect do
-      attach_file 'Upload CSV file', File.expand_path('../../fixtures/placeholder.png', __FILE__)
+      attach_file 'Upload CSV file', File.expand_path('../fixtures/placeholder.png', __dir__)
       click_button 'Upload'
     end.not_to change(Person, :count)
 
-    expect(current_path).to eql(admin_person_uploads_path)
+    expect(page).to have_current_path(admin_person_uploads_path)
     expect(page).to have_govuk_errors(field: 'File is an invalid type')
   end
 
-  scenario 'uploading a CSV file with bad records' do
+  it 'uploading a CSV file with bad records' do
     expect do
-      attach_file 'Upload CSV file', File.expand_path('../../fixtures/invalid_rows.csv', __FILE__)
+      attach_file 'Upload CSV file', File.expand_path('../fixtures/invalid_rows.csv', __dir__)
       click_button 'Upload'
     end.not_to change(Person, :count)
 
-    expect(current_path).to eql(admin_person_uploads_path)
+    expect(page).to have_current_path(admin_person_uploads_path)
     expect(page).to have_govuk_errors
   end
 
-  scenario 'uploading a bad CSV file with optionals' do
+  it 'uploading a bad CSV file with optionals' do
     expect do
-      attach_file 'Upload CSV file', File.expand_path('../../fixtures/invalid_rows_with_optionals.csv', __FILE__)
+      attach_file 'Upload CSV file', File.expand_path('../fixtures/invalid_rows_with_optionals.csv', __dir__)
       click_button 'Upload'
     end.not_to change(Person, :count)
 
-    expect(current_path).to eql(admin_person_uploads_path)
+    expect(page).to have_current_path(admin_person_uploads_path)
     expect(page).to have_govuk_errors
   end
 

@@ -34,12 +34,14 @@ class PersonCsvImporter
 
   def valid?
     return @valid unless @valid.nil?
+
     @errors = column_errors.any? ? column_errors : row_errors
     @valid = @errors.empty?
   end
 
   def import
     return nil unless valid?
+
     PersonImportJob.perform_later(serialized_records, serialized_group_ids)
     people.length
   end

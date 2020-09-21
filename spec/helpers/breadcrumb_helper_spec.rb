@@ -1,7 +1,11 @@
 require 'rails_helper'
 
 RSpec.describe BreadcrumbHelper, type: :helper do
-  context '#breadcrumbs' do
+  describe '#breadcrumbs' do
+    let(:hrbp) { create(:group, parent: hr, name: 'Human Resources Business Partners', acronym: 'HRBP') }
+    let(:hr) { create(:group, parent: csg, name: 'Human Resources', acronym: 'HR') }
+    let(:csg) { create(:group, parent: moj, name: 'Corporate Services Group', acronym: 'CSG') }
+    let(:moj) { create(:department, acronym: 'MOJ') }
     it 'builds linked breadcrumbs' do
       justice = create(:department)
       digital_service = create(:group, parent: justice, name: 'Digital Services')
@@ -10,11 +14,6 @@ RSpec.describe BreadcrumbHelper, type: :helper do
       expect(fragment).to have_selector('a[href="/teams/ministry-of-justice"]', text: 'Ministry of Justice')
       expect(fragment).to have_selector('a[href="/teams/digital-services"]', text: 'Digital Services')
     end
-
-    let(:moj) { create(:department, acronym: 'MOJ') }
-    let(:csg) { create(:group, parent: moj, name: 'Corporate Services Group', acronym: 'CSG') }
-    let(:hr) { create(:group, parent: csg, name: 'Human Resources', acronym: 'HR') }
-    let(:hrbp) { create(:group, parent: hr, name: 'Human Resources Business Partners', acronym: 'HRBP') }
 
     it 'builds linked breadcrumbs only showing acronyms for first two levels' do
       generated = breadcrumbs([moj, csg, hr, hrbp])

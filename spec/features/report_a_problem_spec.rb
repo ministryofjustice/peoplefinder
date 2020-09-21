@@ -1,17 +1,18 @@
 require 'rails_helper'
 
-feature 'Report a problem', js: true do
+describe 'Report a problem', js: true do
   include ActiveJobHelper
   include PermittedDomainHelper
 
   before(:all) { Timecop.travel(Time.at(1_410_298_020)) }
+
   after(:all) { Timecop.return }
 
   before do
     ActionMailer::Base.deliveries.clear
   end
 
-  context 'When logged in' do
+  context 'when logged in' do
     let(:me) { create(:person) }
     let(:group) { create(:group) }
 
@@ -19,7 +20,7 @@ feature 'Report a problem', js: true do
       token_log_in_as(me.email)
     end
 
-    scenario 'Reporting a problem', js: true do
+    it 'Reporting a problem', js: true do
       visit group_path(group)
 
       click_link 'Report a problem' # includes a wait, which is required for the slideToggle jquery behaviour
@@ -27,7 +28,7 @@ feature 'Report a problem', js: true do
       fill_in 'What went wrong?', with: 'Custard'
       expect { click_button 'Report' }.to change { ActionMailer::Base.deliveries.count }.by(1)
 
-      expect(current_path).to eq group_path(group)
+      expect(page).to have_current_path group_path(group), ignore_query: true
       expect(last_email.to).to eq([Rails.configuration.support_email])
       body = last_email.body.encoded
 
@@ -40,8 +41,8 @@ feature 'Report a problem', js: true do
     end
   end
 
-  context 'When not logged in' do
-    scenario 'Reporting a problem', js: true do
+  context 'when not logged in' do
+    it 'Reporting a problem', js: true do
       visit new_sessions_path
 
       click_link 'Report a problem' # includes a wait, which is required for the slideToggle jquery behaviour
@@ -50,7 +51,7 @@ feature 'Report a problem', js: true do
       fill_in 'Your email', with: 'test@example.com'
       expect { click_button 'Report' }.to change { ActionMailer::Base.deliveries.count }.by(1)
 
-      expect(current_path).to eq(new_sessions_path)
+      expect(page).to have_current_path(new_sessions_path, ignore_query: true)
 
       expect(last_email.to).to eq([Rails.configuration.support_email])
       body = last_email.body.encoded

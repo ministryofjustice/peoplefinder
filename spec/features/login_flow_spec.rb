@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-feature 'Login flow' do
+describe 'Login flow' do
   include PermittedDomainHelper
 
   let(:email) { 'test.user@digital.justice.gov.uk' }
@@ -25,19 +25,19 @@ feature 'Login flow' do
   end
 
   describe 'Choosing to login' do
-    scenario 'When a user logs in for the first time, they are directed to edit their profile' do
+    it 'When a user logs in for the first time, they are directed to edit their profile' do
       token_log_in_as(email)
       expect(edit_profile_page).to be_displayed
     end
 
-    scenario 'When and existing user logs in, their profile page is displayed' do
+    it 'When and existing user logs in, their profile page is displayed' do
       login_count = 5
       create(:person_with_multiple_logins, email: email, login_count: login_count)
       token_log_in_as(email)
       expect(profile_page).to be_displayed
     end
 
-    scenario 'Login counter is updated every time user logs in' do
+    it 'Login counter is updated every time user logs in' do
       login_count = 3
       person = create(:person_with_multiple_logins, email: email, login_count: login_count)
       token_log_in_as(email)
@@ -45,13 +45,13 @@ feature 'Login flow' do
       expect(person.login_count).to eql(4)
     end
 
-    scenario 'When super user logs in they see the manage link in the banner' do
+    it 'When super user logs in they see the manage link in the banner' do
       create(:super_admin, email: email)
       token_log_in_as(email)
       expect(base_page).to have_manage_link
     end
 
-    scenario 'When a normal user logs in they do not see the manage link in the banner' do
+    it 'When a normal user logs in they do not see the manage link in the banner' do
       create(:person, email: email)
       token_log_in_as(email)
       expect(base_page).to have_no_manage_link
@@ -64,7 +64,7 @@ feature 'Login flow' do
     let(:create_profile_warning) { 'You need to create or update a People Finder account to finish signing in' }
 
     context 'when I have a profile' do
-      scenario 'attempting a new|edit action redirects via login back to that action\'s template page with NO flash notice' do
+      it 'attempting a new|edit action redirects via login back to that action\'s template page with NO flash notice' do
         create(:person, email: email)
         visit new_group_path
         token_login_step_with_expectation
@@ -74,7 +74,7 @@ feature 'Login flow' do
     end
 
     context 'when I do not have a profile' do
-      scenario 'attempting a new|edit action redirects via login back to their own edit profile page and flashes a notice that their own profile was just created' do
+      it 'attempting a new|edit action redirects via login back to their own edit profile page and flashes a notice that their own profile was just created' do
         visit new_group_path
         token_login_step_with_expectation
         expect(edit_profile_page).to be_displayed
@@ -82,25 +82,25 @@ feature 'Login flow' do
         expect(edit_profile_page.flash_message).to have_selector('.warning', text: create_profile_warning)
       end
 
-      context 'and I have namesakes' do
+      context 'when I have namesakes' do
         let(:email) { 'john.doe3@digital.justice.gov.uk' }
         before do
           create(:person, given_name: 'John', surname: 'Doe', email: 'john.doe@digital.justice.gov.uk')
           create(:person, given_name: 'Johnny', surname: 'Doe-Smyth', email: 'john.doe2@digital.justice.gov.uk')
         end
 
-        scenario 'I am redirected to person confirmation page' do
+        it 'I am redirected to person confirmation page' do
           visit new_group_path
           token_login_step_with_expectation
           expect(confirm_page).to be_displayed
           expect(confirm_page).to be_all_there
-          expect(confirm_page.form).to be_all_there
+          expect(confirm_page.form).to be_visible
           expect(confirm_page).to have_content "Create profile"
           expect(confirm_page.person_confirm_results).to have_confirmation_results count: 2
           expect(confirm_page.person_confirm_results.name_links).to include '/people/john-doe'
         end
 
-        scenario 'confirming I need a new profile signs me in and redirects to edit my profile' do
+        it 'confirming I need a new profile signs me in and redirects to edit my profile' do
           visit new_group_path
           token_login_step_with_expectation
           expect(confirm_page).to be_displayed
@@ -201,19 +201,19 @@ feature 'Login flow' do
           expect(person.email).to eql email
         end
 
-        context 'selecting an existing namesake' do
+        context 'when selecting an existing namesake' do
 
-          context 'using token login' do
-            background do
+          context 'when using token login' do
+            before do
               when_i_am_prompted_to_login
               and_i_login_using_token
             end
 
-            scenario 'with an alternative email' do
+            it 'with an alternative email' do
               with_alternative_email_scenario
             end
 
-            scenario 'without an alternative email' do
+            it 'without an alternative email' do
               without_alternative_email_scenario
             end
           end

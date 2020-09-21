@@ -47,11 +47,11 @@ class PersonSearch
   end
 
   def exact_match_exists?
-    @exact_match ||= if single_word_query?
-                       matches.records.present?
-                     else
-                       any_exact_matches?
-                     end
+    @exact_match_exists ||= if single_word_query?
+                              matches.records.present?
+                            else
+                              any_exact_matches?
+                            end
   end
 
   def any_partial_name_matches? results
@@ -151,6 +151,7 @@ class PersonSearch
         name: {
           query: @query,
           analyzer: 'name_synonyms_analyzer', # this is the default name field's analyzer
+          # analyzer: 'standard', # this is the default name field's analyzer
           boost: 4.0 # boost to prioritise synonym matches to 2nd rank
         }
       }

@@ -15,13 +15,13 @@
 #  members_completion_score      :integer
 #
 
-class Group < ActiveRecord::Base
+class Group < ApplicationRecord
   include Concerns::Hierarchical
   include Concerns::Placeholder
 
   MAX_DESCRIPTION = 1000
 
-  has_paper_trail class_name: 'Version',
+  has_paper_trail versions: { class_name: 'Version' },
                   ignore: [:updated_at, :created_at, :slug, :id,
                            :description_reminder_email_at,
                            :members_completion_score]
@@ -31,6 +31,7 @@ class Group < ActiveRecord::Base
 
   def slug_candidates
     return [name] unless parent
+
     [name, [parent.name, name], [parent.name, name_and_sequence]]
   end
 
@@ -39,8 +40,8 @@ class Group < ActiveRecord::Base
   end
 
   has_many :memberships,
-    -> { includes(:person).order('people.surname') },
-    dependent: :destroy
+           -> { includes(:person).order('people.surname') },
+           dependent: :destroy
   has_many :people, through: :memberships
   has_many :leaderships, -> { where(leader: true) }, class_name: 'Membership'
   has_many :leaders, through: :leaderships, source: :person
@@ -85,7 +86,7 @@ class Group < ActiveRecord::Base
   end
 
   def short_name
-    acronym.present? ? acronym : name
+    acronym.presence || name
   end
 
   def deletable?

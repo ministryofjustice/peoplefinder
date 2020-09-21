@@ -45,7 +45,7 @@ RSpec.describe TokenMailer do
       end
     end
 
-    context 'probation users' do
+    context 'with probation users' do
       let(:requestor) { create(:person, email: 'requestor@probation.gsi.gov.uk') }
 
       it 'has text part only for probation email' do

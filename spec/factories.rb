@@ -1,5 +1,4 @@
-
-FactoryGirl.define do
+FactoryBot.define do
 
   sequence(:email) { |n| 'example.user.%d@digital.justice.gov.uk' % n }
   sequence(:given_name) { |n| "First name #{('a'.ord + (n % 25)).chr}" }
@@ -12,7 +11,7 @@ FactoryGirl.define do
   sequence(:phone_number) { |n| '07700 %06d' % (900_000 + n) }
 
   factory :permitted_domain do
-    domain 'digital.justice.gov.uk'
+    domain { 'digital.justice.gov.uk' }
   end
 
   factory :department, class: 'Group' do
@@ -33,9 +32,9 @@ FactoryGirl.define do
     group
 
     factory :membership_default do
-      role nil
-      leader false
-      subscribed true
+      role { nil }
+      leader { false }
+      subscribed { true }
       group_id { create(:department).id }
     end
   end
@@ -68,7 +67,7 @@ FactoryGirl.define do
       surname { Faker::Name.unique.last_name }
       email { "#{given_name}.#{surname}@example.com" }
       primary_phone_number { Faker::PhoneNumber.phone_number }
-      login_count { Random.rand(20) + 1 }
+      login_count { Random.rand(1..20) }
       last_login_at { login_count == 0 ? nil : Random.rand(15).days.ago }
     end
 
@@ -83,7 +82,7 @@ FactoryGirl.define do
       sequence(:email) { |n| '%{given_name}.%{surname}.%{unique}.@digital.justice.gov.uk' % [given_name: given_name, surname: surname, unique: n] }
       primary_phone_number { Faker::PhoneNumber.phone_number }
       secondary_phone_number { Faker::PhoneNumber.phone_number }
-      login_count { Random.rand(20) + 1 }
+      login_count { Random.rand(1..20) }
       last_login_at { login_count == 0 ? nil : Random.rand(15).days.ago }
       description { Faker::Lorem.sentences.join(' ') }
     end
@@ -101,11 +100,11 @@ FactoryGirl.define do
 
     trait :member_of do
       transient do
-        team nil
-        leader false
-        subscribed true
-        role nil
-        sole_membership false
+        team { nil }
+        leader { false }
+        subscribed { true }
+        role { nil }
+        sole_membership { false }
       end
       after(:build) do |peep, evaluator|
         if peep.memberships.map(&:group).include? evaluator.team
@@ -129,18 +128,18 @@ FactoryGirl.define do
     end
 
     factory :person_with_multiple_logins do
-      login_count 10
+      login_count { 10 }
       last_login_at { 1.day.ago }
     end
 
     factory :super_admin do
-      super_admin true
+      super_admin { true }
     end
 
   end
 
   factory :information_request do
-    message "This is the information request message body"
+    message { "This is the information request message body" }
   end
 
   factory :token do
@@ -148,32 +147,42 @@ FactoryGirl.define do
   end
 
   factory :profile_photo do
-    image Rack::Test::UploadedFile.new(
-      File.join(Rails.root, 'spec', 'fixtures', 'profile_photo_valid.png')
-    )
+    image {
+      Rack::Test::UploadedFile.new(
+        Rails.root.join('spec/fixtures/profile_photo_valid.png').to_s
+      )
+    }
 
     trait :invalid_extension do
-      image Rack::Test::UploadedFile.new(
-        File.join(Rails.root, 'spec', 'fixtures', 'placeholder.bmp')
-      )
+      image {
+        Rack::Test::UploadedFile.new(
+          Rails.root.join('spec/fixtures/placeholder.bmp').to_s
+        )
+      }
     end
 
     trait :non_image do
-      image Rack::Test::UploadedFile.new(
-        File.join(Rails.root, 'spec', 'fixtures', 'invalid_rows.csv')
-      )
+      image {
+        Rack::Test::UploadedFile.new(
+          Rails.root.join('spec/fixtures/invalid_rows.csv').to_s
+        )
+      }
     end
 
     trait :too_small_dimensions do
-      image Rack::Test::UploadedFile.new(
-        File.join(Rails.root, 'spec', 'fixtures', 'profile_photo_too_small_dimensions.png')
-      )
+      image {
+        Rack::Test::UploadedFile.new(
+          Rails.root.join('spec/fixtures/profile_photo_too_small_dimensions.png').to_s
+        )
+      }
     end
 
     trait :large_dimensions do
-      image Rack::Test::UploadedFile.new(
-        File.join(Rails.root, 'spec', 'fixtures', 'profile_photo_large.png')
-      )
+      image {
+        Rack::Test::UploadedFile.new(
+          Rails.root.join('spec/fixtures/profile_photo_large.png').to_s
+        )
+      }
     end
   end
 
@@ -181,21 +190,18 @@ FactoryGirl.define do
   end
 
   factory :report do
-    content <<~CSV
-      id,full_name,login_count
-      1,John Smith,5
-    CSV
-    name 'factory_test_report'
-    extension 'csv'
-    mime_type 'text/csv'
+    content { "id,full_name,login_count\n1,John Smith,5\n" }
+    name { 'factory_test_report' }
+    extension { 'csv' }
+    mime_type { 'text/csv' }
   end
 
   factory :queued_notification do
-    session_id "MyString"
-    person_id 1
-    current_user_id 1
-    changes_json '{}'
-    edit_finalised false
-    sent false
+    session_id { "MyString" }
+    person_id { 1 }
+    current_user_id { 1 }
+    changes_json { '{}' }
+    edit_finalised { false }
+    sent { false }
   end
 end

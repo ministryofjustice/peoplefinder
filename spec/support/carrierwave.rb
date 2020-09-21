@@ -2,14 +2,15 @@ module SpecSupport
   module Carrierwave
     RSpec.configure do |config|
       config.after(:suite) do
-        FileUtils.rm_rf(Rails.root.join('spec', 'support', 'uploads'))
-        FileUtils.rm_rf(Rails.root.join('public', 'uploads', 'tmp'))
+        FileUtils.rm_rf(Rails.root.join('spec/support/uploads'))
+        FileUtils.rm_rf(Rails.root.join('public/uploads/tmp'))
       end
     end
 
     def test_image file_name, extension = 'png'
       Rack::Test::UploadedFile.new(
-        File.join(Rails.root, 'spec', 'fixtures', "#{file_name}.#{extension}")
+        # File.join(Rails.root, 'spec', 'fixtures', "#{file_name}.#{extension}")
+        Rails.root.join("spec/fixtures/#{file_name}.#{extension}")
       )
     end
 

@@ -1,8 +1,8 @@
-class UserUpdateMailer < ActionMailer::Base
+class UserUpdateMailer < ApplicationMailer
   include FeatureHelper
   extend Forwardable
 
-  layout 'email'
+  # layout 'email'
   add_template_helper MailHelper
 
   def new_profile_email(person, by_email = nil)

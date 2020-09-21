@@ -12,6 +12,7 @@ class PersonDestroyer
     if person.new_record?
       raise NewRecordError, 'cannot destroy a new Person record'
     end
+
     @person = person
     @current_user = current_user
   end

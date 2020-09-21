@@ -19,7 +19,7 @@ require 'rails_helper'
 RSpec.describe Version, type: :model do
   include PermittedDomainHelper
 
-  context '#whodunnit' do
+  describe '#whodunnit' do
     let(:author) { create(:person) }
 
     it 'returns a string for the user when a string was stored' do

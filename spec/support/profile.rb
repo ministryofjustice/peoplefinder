@@ -27,7 +27,7 @@ module SpecSupport
 
     def complete_profile!(person)
       profile_photo = create(:profile_photo)
-      person.update_attributes(
+      person.update(
         person_attributes.
           except(:email).
           merge(profile_photo_id: profile_photo.id)
@@ -37,7 +37,7 @@ module SpecSupport
 
     def govuk_label_click locator
       el = page.find("label[for='#{locator}']")
-    rescue
+    rescue StandardError
       nil
     ensure
       el ||= page.find('label', text: locator)
