@@ -199,6 +199,7 @@ var PhotoUpload = (function (){
       PhotoUpload.setState(els, 'cropped');
 
       $('.save-cancel-actions input').show();
+      $('.save-cancel-actions input').prop('disabled', false);
     },
 
     cropAgain: function ( event ){
