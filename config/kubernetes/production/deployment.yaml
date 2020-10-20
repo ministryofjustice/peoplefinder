@@ -91,7 +91,7 @@ spec:
                 name: environment-variables
           readinessProbe:
             httpGet:
-              path: /healthcheck
+              path: /ping
               port: 3000
               httpHeaders:
                 - name: X-Forwarded-Proto
@@ -102,7 +102,7 @@ spec:
               periodSeconds: 60
           livenessProbe:
             httpGet:
-              path: /healthcheck
+              path: /ping
               port: 3000
               httpHeaders:
                 - name: X-Forwarded-Proto
