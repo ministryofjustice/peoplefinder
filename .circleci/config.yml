@@ -312,10 +312,10 @@ jobs:
           message: 'Deployed *${BUILD_TAG}* to *Demo*'
           webhook: ${SLACK_WEBHOOK}
 
-  deploy_branch_to_staging: *do_demo_deployment_tasks
-  deploy_master_to_staging: *do_staging_deployment_tasks
+  deploy_branch_to_demo: *do_demo_deployment_tasks
+  deploy_master_to_demo: *do_demo_deployment_tasks
 
-  staging_deployment_tasks: &do_demo_deployment_tasks
+  staging_deployment_tasks: &do_staging_deployment_tasks
     <<: *deploy_container_config
     <<: *defaults
     steps:
