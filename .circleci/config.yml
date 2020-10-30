@@ -151,7 +151,7 @@ references:
     run:
       name: Run unit and feature tests
       command: |
-        bundle exec rspec
+        SKIP_SIMPLECOV=true bundle exec rspec
 
   set_up_aws_cli: &set_up_aws_cli
     run:
