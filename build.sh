@@ -56,6 +56,7 @@ function _build() {
 
   # 5. Ensure the current checked out commit is the head of the current branch unless circleci
   if  [ $(git rev-parse HEAD) == $(git rev-parse @{u}) ] || [ $1 == 'circleci' ]
+  then
     p "Building app container image from git using $short_version"
   else
     p "\e[31mFatal error: Local git branch is out of sync with origin\e[0m"
