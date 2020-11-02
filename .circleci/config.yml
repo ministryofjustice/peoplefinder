@@ -46,12 +46,6 @@ references:
 
 # These are defining the steps which are used below in the jobs
 
-  install_psql: &install_psql
-    run:
-      name: Install psql client
-      command: |
-         sudo apt update && sudo apt install postgresql-client
-
   install_expect: &install_expect
     run:
       name: Install Expect
@@ -233,7 +227,6 @@ jobs:
       - *restore_cache
       - *install_bundler
       - *check_bundler_version
-      - *install_psql
       - *install_dependencies
       - *save_cache
       - *wait_for_db
