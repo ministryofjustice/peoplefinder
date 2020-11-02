@@ -220,7 +220,7 @@ jobs:
 
   build_and_test:
     <<: *test_container_config
-    resource_class: small
+    resource_class: medium
     working_directory: ~/peoplefinder
     steps:
       - checkout
@@ -236,8 +236,7 @@ jobs:
 
   build_branch_and_push_to_ecr:
     <<: *deploy_container_config
-    working_directory: ~/peoplefinder
-    resource_class: medium
+    <<: *defaults
     steps:
       - checkout
       - attach_workspace:
