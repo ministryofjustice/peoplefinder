@@ -1,8 +1,12 @@
-version: 2
+version: 2.1
+
+orbs:
+  slack: circleci/slack@3.4.2
 
 references:
   defaults: &defaults
     working_directory: ~/peoplefinder
+    resource_class: small
 
 # Sets up the docker images and environment variables that we use
   test_container_config: &test_container_config
@@ -35,6 +39,59 @@ references:
           - http.port: 9200
           - discovery.type: single-node
 
+  deploy_container_config: &deploy_container_config
+    docker:
+      - image: ${ECR_ENDPOINT}/cloud-platform/tools:circleci
+
+
+# These are defining the steps which are used below in the jobs
+
+  install_expect: &install_expect
+    run:
+      name: Install Expect
+      command: |
+        apk add \
+          --no-cache \
+          --no-progress \
+          expect
+
+  install_gpg: &install_gpg
+    run:
+      name: Install GPG
+      command: |
+        apk add \
+          --no-cache \
+          --no-progress \
+          gnupg
+
+  create_gpg_key_file: &create_gpg_key_file
+    run:
+      name: Create GPG Key file from Environment variable
+      command: |
+        echo -e ${GPG_PRIVATE_KEY} > PRIVATE_GPG_KEY.asc
+
+  configure_gpg: &configure_gpg
+    run:
+      name: Configure GPG
+      command: |
+        gpg --import --batch --allow-secret-key-import PRIVATE_GPG_KEY.asc
+
+  delete_gpg_key_file: &delete_gpg_key_file
+    run:
+        name: Delete GPG Key file after import
+        command: ¬
+          rm PRIVATE_GPG_KEY.asc
+
+  decrypt_secrets: &decrypt_secrets
+    run:
+      name: Decrypt secrets file
+      command: |
+        gpgconf --kill gpg-agent
+        gpg-agent --daemon --allow-preset-passphrase
+        /usr/libexec/gpg-preset-passphrase --preset --passphrase $GPG_PASSPHRASE $GPG_KEY_KEYGRIP_ID
+        expect -c "spawn gpg --edit-key $GPG_KEY_ID trust quit; send \"5\ry\r\"; expect eof"
+        git-crypt unlock
+
   install_bundler: &install_bundler
     run:
       name: Install bundler
@@ -50,22 +107,21 @@ references:
   restore_cache: &restore_cache
     restore_cache:
       keys:
-        - people-finder-{{ checksum "Gemfile.lock" }}
+        - peoplefinder-{{ checksum "Gemfile.lock" }}
         # fallback to using the latest cache if no exact match is found
-        - people-finder-
+        - peoplefinder-
 
   install_dependencies: &install_dependencies
     run:
       name: Install dependencies
       command: |
-        bundle install --path vendor/bundle && bundle clean
         if [ "${CIRCLE_NODE_INDEX}" == "0" ]; then
           bundle check --path vendor/bundle || bundle install --path vendor/bundle && bundle clean
         fi
 
   save_cache: &save_cache
     save_cache:
-      key: people-finder-{{ checksum "Gemfile.lock" }}
+      key: peoplefinder-{{ checksum "Gemfile.lock" }}
       paths:
         - vendor/bundle
 
@@ -83,62 +139,91 @@ references:
   rubocop: &rubocop
     run:
       name: Run rubocop
-      command: bundler exec rubocop
+      command: bundle exec rubocop
 
-  run_unit_tests: &run_unit_tests
+  run_unit_and_feature_tests: &run_unit_and_feature_tests
     run:
-      name: Run unit tests
+      name: Run unit and feature tests
       command: |
         SKIP_SIMPLECOV=true bundle exec rspec
-# This command is from the CircleCI docs and is for running in a time
-# base system. We currenly are not using it, but here if we want to
-# implement it
-#
-# bundle exec rspec --profile 10 \
-#                   --format RspecJunitFormatter \
-#                   --out test_results/rspec.xml \
-#                   --format progress \
-#                   $(circleci tests glob "spec/**/*_spec.rb" | circleci tests split --split-by=timings)
 
-  # deploy_to_dev: &deploy_to_dev
-  #   run:
-  #     name: Deploy to dev environment
-  #     command: |
-  #       setup-kube-auth
-  #       kubectl config use-context development
-  #       sed -i -e s/:latest/:$CIRCLE_SHA1/ k8s-deploy/development/deployment.yaml
-  #       kubectl apply --record=false -f ./k8s-deploy/development/
+  set_up_aws_cli: &set_up_aws_cli
+    run:
+      # this is needed to get a token from the cloud platform to use kubernetes
+      name: Set up AWS CLI
+      command: |
+        sudo apt-get update
+        sudo apt-get --assume-yes install python3-pip
+        sudo pip3 install awscli
 
-  # deploy_to_staging: &deploy_to_staging
-  #   run:
-  #     name: Deploy to staging environment
-  #     command: |
-  #       setup-kube-auth
-  #       kubectl config use-context staging
-  #       sed -i -e s/:latest/:$CIRCLE_SHA1/ k8s-deploy/staging/deployment.yaml
-  #       kubectl apply --record=false -f ./k8s-deploy/staging/
-  #
-  # deploy_to_production: &deploy_to_production
-  #   run:
-  #     name: Deploy to production environment
-  #     command: |
-  #       setup-kube-auth
-  #       kubectl config use-context production
-  #       sed -i -e s/:latest/:$CIRCLE_SHA1/ k8s-deploy/production/deployment.yaml
-  #       kubectl apply --record=false -f ./k8s-deploy/production/
+  configure_aws_profile: &configure_aws_profile
+    run:
+      name: Configure AWS CLI
+      command: |
+        aws configure set aws_access_key_id ${AWS_ACCESS_KEY_ID} --profile ecr-live-1-peoplefinder
+        aws configure set aws_secret_access_key ${AWS_SECRET_ACCESS_KEY} --profile ecr-live-1-peoplefinder
+        aws configure set default.region ${AWS_DEFAULT_REGION} --profile ecr-live-1-peoplefinder
 
-#  These are the jobs which run the steps. The jobs are used by the workflows.
+  build_and_push_docker_image: &build_and_push_docker_image
+    run:
+      name: Build docker image
+      command: |
+        . build.sh circleci
+        mkdir -p workspace
+        echo $BUILD_TAG > workspace/build_tag
+
+  deploy_to_dev: &deploy_to_dev
+    run:
+      name: Deploy to Development environment
+      command: |
+        setup-kube-auth
+        kubectl config use-context development
+        build_tag=`cat /tmp/workspace/build_tag`
+        ./deploy.sh $build_tag development circleci
+        echo "export BUILD_TAG=${build_tag}" >> $BASH_ENV
+        source $BASH_ENV
+
+  deploy_to_demo: &deploy_to_demo
+    run:
+      name: Deploy to Demo environment
+      command: |
+        setup-kube-auth
+        kubectl config use-context demo
+        build_tag=`cat /tmp/workspace/build_tag`
+        ./deploy.sh $build_tag demo circleci
+        echo "export BUILD_TAG=${build_tag}" >> $BASH_ENV
+        source $BASH_ENV
+
+  deploy_to_staging: &deploy_to_staging
+    run:
+      name: Deploy to Staging environment
+      command: |
+        setup-kube-auth
+        kubectl config use-context staging
+        build_tag=`cat /tmp/workspace/build_tag`
+        ./deploy.sh $build_tag staging circleci
+        echo "export BUILD_TAG=${build_tag}" >> $BASH_ENV
+        source $BASH_ENV
+
+  deploy_to_production: &deploy_to_production
+    run:
+      name: Deploy to production environment
+      command: |
+        setup-kube-auth
+        kubectl config use-context production
+        build_tag=`cat /tmp/workspace/build_tag`
+        ./deploy.sh $build_tag production circleci
+        echo "export BUILD_TAG=${build_tag}" >> $BASH_ENV
+        source $BASH_ENV
 
 jobs:
-  build:
+
+  build_and_test:
     <<: *test_container_config
-    <<: *defaults
+    resource_class: medium
+    working_directory: ~/peoplefinder
     steps:
       - checkout
-      - setup_remote_docker:
-          docker_layer_caching: true
-      - attach_workspace:
-          at: ~/repo
       - *restore_cache
       - *install_bundler
       - *check_bundler_version
@@ -147,44 +232,190 @@ jobs:
       - *wait_for_db
       - *set_up_the_database
       - *rubocop
-      - *run_unit_tests
+      - *run_unit_and_feature_tests
 
-#  Workflows combine jobs to perform the actions
+  build_branch_and_push_to_ecr:
+    <<: *deploy_container_config
+    <<: *defaults
+    steps:
+      - checkout
+      - attach_workspace:
+          at: /tmp/workspace
+      - setup_remote_docker:
+          docker_layer_caching: true
+      - *configure_aws_profile
+      - *build_and_push_docker_image
+      - persist_to_workspace:
+          root: workspace
+          paths:
+            - build_tag
+
+  build_master_and_push_to_ecr:
+    <<: *deploy_container_config
+    <<: *defaults
+    steps:
+      - checkout
+      - attach_workspace:
+          at: /tmp/workspace
+      - setup_remote_docker:
+          docker_layer_caching: true
+      - *configure_aws_profile
+      - *build_and_push_docker_image
+      - persist_to_workspace:
+          root: workspace
+          paths:
+            - build_tag
+
+  dev_deployment_tasks: &do_dev_deployment_tasks
+    <<: *deploy_container_config
+    <<: *defaults
+    steps:
+      - checkout
+      - attach_workspace:
+          at: /tmp/workspace
+      - *install_gpg
+      - *install_expect
+      - *create_gpg_key_file
+      - *configure_gpg
+      - *decrypt_secrets
+      - *deploy_to_dev
+      - slack/notify:
+          color: '#1d990c'
+          message: 'Deployed *${BUILD_TAG}* to *Development*'
+          webhook: ${SLACK_WEBHOOK}
+
+  deploy_branch_to_dev: *do_dev_deployment_tasks
+  deploy_master_to_dev: *do_dev_deployment_tasks
+
+  demo_deployment_tasks: &do_demo_deployment_tasks
+    <<: *deploy_container_config
+    <<: *defaults
+    steps:
+      - checkout
+      - attach_workspace:
+          at: /tmp/workspace
+      - *install_gpg
+      - *install_expect
+      - *create_gpg_key_file
+      - *configure_gpg
+      - *decrypt_secrets
+      - *deploy_to_staging
+      - slack/notify:
+          color: '#1d990c'
+          message: 'Deployed *${BUILD_TAG}* to *Demo*'
+          webhook: ${SLACK_WEBHOOK}
+
+  deploy_branch_to_demo: *do_demo_deployment_tasks
+  deploy_master_to_demo: *do_demo_deployment_tasks
+
+  staging_deployment_tasks: &do_staging_deployment_tasks
+    <<: *deploy_container_config
+    <<: *defaults
+    steps:
+      - checkout
+      - attach_workspace:
+          at: /tmp/workspace
+      - *install_gpg
+      - *install_expect
+      - *create_gpg_key_file
+      - *configure_gpg
+      - *decrypt_secrets
+      - *deploy_to_staging
+      - slack/notify:
+          color: '#1d990c'
+          message: 'Deployed *${BUILD_TAG}* to *Staging*'
+          webhook: ${SLACK_WEBHOOK}
+
+  deploy_branch_to_staging: *do_staging_deployment_tasks
+  deploy_master_to_staging: *do_staging_deployment_tasks
+
+  deploy_master_to_production:
+    <<: *deploy_container_config
+    <<: *defaults
+    steps:
+      - checkout
+      - attach_workspace:
+          at: /tmp/workspace
+      - *install_gpg
+      - *install_expect
+      - *create_gpg_key_file
+      - *configure_gpg
+      - *decrypt_secrets
+      - *deploy_to_production
+      - slack/notify:
+          color: '#1d990c'
+          mentions: 'staff-tools-team'
+          message: 'Deployed *${BUILD_TAG}* to *Production*'
+          webhook: ${SLACK_WEBHOOK_SS_CIRCLECI}
+      - slack/notify:
+          color: '#1d990c'
+          message: 'Deployed *${BUILD_TAG}* to *Production*'
+          webhook: ${SLACK_WEBHOOK}
 
 workflows:
   version: 2
-  build_and_run_tests:
+
+  build_and_deploy_master:
     jobs:
-      - build
-      # - deploy_to_dev:
-      #     requires:
-      #       - build_and_test
-      #     filters:
-      #       branches:
-      #         only: master
-      # - deploy_staging_approval:
-      #     type: approval
-      #     requires:
-      #       - build_and_test
-      #     filters:
-      #       branches:
-      #         only: master
-      # - deploy_staging:
-      #     requires:
-      #       - deploy_staging_approval
-      #     filters:
-      #       branches:
-      #         only: master
-      # - deploy_production_approval:
-      #     type: approval
-      #     requires:
-      #       - build_and_test
-      #     filters:
-      #       branches:
-      #         only: master
-      # - deploy_production:
-      #     requires:
-      #       - deploy_production_approval
-      #     filters:
-      #       branches:
-      #         only: master
+      - build_and_test:
+          filters:
+            branches:
+              only: master
+      - build_master_and_push_to_ecr:
+          requires:
+            - build_and_test
+      - deploy_master_to_dev:
+          requires:
+            - build_master_and_push_to_ecr
+      - deploy_master_to_demo:
+          requires:
+            - deploy_master_to_dev            
+      - deploy_master_to_staging_approval:
+          type: approval
+          requires:
+            - deploy_master_to_dev
+      - deploy_master_to_staging:
+          requires:
+            - deploy_master_to_staging_approval
+      - deploy_master_to_production_approval:
+          type: approval
+          requires:
+            - deploy_master_to_staging
+      - deploy_master_to_production:
+          requires:
+            - deploy_master_to_production_approval
+
+  build_and_deploy_branch:
+    jobs:
+      - build_and_test:
+          filters:
+            branches:
+              ignore: master
+      - build_branch_and_push_to_ecr_approval:
+          type: approval
+          requires:
+            - build_and_test
+      - build_branch_and_push_to_ecr:
+          requires:
+            - build_branch_and_push_to_ecr_approval
+      - deploy_branch_to_dev_approval:
+          type: approval
+          requires:
+            - build_branch_and_push_to_ecr
+      - deploy_branch_to_dev:
+          requires:
+            - deploy_branch_to_dev_approval
+      - deploy_branch_to_demo_approval:
+          type: approval
+          requires:
+            - build_branch_and_push_to_ecr
+      - deploy_branch_to_demo:
+          requires:
+            - deploy_branch_to_demo_approval
+      - deploy_branch_to_staging_approval:
+          type: approval
+          requires:
+            - build_branch_and_push_to_ecr
+      - deploy_branch_to_staging:
+          requires:
+            - deploy_branch_to_staging_approval
