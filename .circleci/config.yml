@@ -236,7 +236,8 @@ jobs:
 
   build_branch_and_push_to_ecr:
     <<: *deploy_container_config
-    <<: *defaults
+    working_directory: ~/peoplefinder
+    resource_class: medium
     steps:
       - checkout
       - attach_workspace:
