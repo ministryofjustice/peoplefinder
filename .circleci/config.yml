@@ -367,9 +367,13 @@ workflows:
       - deploy_master_to_dev:
           requires:
             - build_master_and_push_to_ecr
+      - deploy_master_to_demo_approval:
+          type: approval
+          requires:
+            - build_master_and_push_to_ecr      
       - deploy_master_to_demo:
           requires:
-            - deploy_master_to_dev            
+            - deploy_master_to_demo_approval           
       - deploy_master_to_staging_approval:
           type: approval
           requires:
