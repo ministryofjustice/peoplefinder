@@ -233,8 +233,7 @@ jobs:
       - checkout
       - attach_workspace:
           at: /tmp/workspace
-      - setup_remote_docker:
-          docker_layer_caching: true
+      - setup_remote_docker
       - *configure_aws_profile
       - *build_and_push_docker_image
       - persist_to_workspace:
