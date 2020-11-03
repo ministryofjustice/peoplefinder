@@ -224,7 +224,15 @@ jobs:
     working_directory: ~/peoplefinder
     steps:
       - checkout
-
+      - *restore_cache
+      - *install_bundler
+      - *check_bundler_version
+      - *install_dependencies
+      - *save_cache
+      - *wait_for_db
+      - *set_up_the_database
+      - *rubocop
+      - *run_unit_and_feature_tests
 
   build_branch_and_push_to_ecr:
     <<: *deploy_container_config
