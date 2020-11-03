@@ -323,7 +323,7 @@ jobs:
       - *deploy_to_staging
       - slack/notify:
           color: '#1d990c'
-          message: 'Deployed *${BUILD_TAG}* to *Staging*'
+          message: "${CIRCLE_USERNAME} deployed *${BUILD_TAG}* to *Staging*"
           webhook: ${SLACK_WEBHOOK}
 
   deploy_branch_to_staging: *do_staging_deployment_tasks
@@ -345,11 +345,11 @@ jobs:
       - slack/notify:
           color: '#1d990c'
           mentions: 'staff-tools-team'
-          message: 'Deployed *${BUILD_TAG}* to *Production*'
+          message: "${CIRCLE_USERNAME} deployed *${BUILD_TAG}* to *Production*"
           webhook: ${SLACK_WEBHOOK_SS_CIRCLECI}
       - slack/notify:
           color: '#1d990c'
-          message: 'Deployed *${BUILD_TAG}* to *Production*'
+          message: "${CIRCLE_USERNAME} deployed *${BUILD_TAG}* to *Production*"
           webhook: ${SLACK_WEBHOOK}
 
 workflows:

@@ -11,13 +11,23 @@ ARG VERSION_NUMBER
 ARG COMMIT_ID
 ARG BUILD_DATE
 ARG BUILD_TAG
-ENV VERSION_NUMBER=${VERSION_NUMBER}
-ENV COMMIT_ID=${COMMIT_ID}
-ENV BUILD_DATE=${BUILD_DATE}
-ENV BUILD_TAG=${BUILD_TAG}
 
 RUN addgroup --gid 1000 --system appgroup && \
     adduser --uid 1000 --system appuser --ingroup appgroup
+
+# Override imagemagick policy with recommended
+# mitagation policy for imagetragick bug
+# CVE-2016–3714 https://imagetragick.com/
+COPY policy.xml /etc/ImageMagick-6/policy.xml
+
+# Pre-install gems with native code to reduce build times
+# Note these versions need to be in sync with gem versions in Gemfile.lock
+RUN gem install --conservative kgio -v 2.9.3 && \
+    gem install --conservative pg -v 0.18.1 && \
+    gem install --conservative raindrops -v 0.13.0 && \
+    gem install --conservative unf_ext -v 0.0.6 && \
+    gem install --conservative nokogiri -v 1.10.5 && \
+    gem install --conservative unicorn -v 4.8.3
 
 EXPOSE $UNICORN_PORT
 
@@ -51,20 +61,6 @@ RUN apt-get update && apt-get install -y \
     echo 'install: --no-document' >> $HOME/.gemrc && \
     echo 'update: --no-document' >> $HOME/.gemrc
 
-# Override imagemagick policy with recommended
-# mitagation policy for imagetragick bug
-# CVE-2016–3714 https://imagetragick.com/
-COPY policy.xml /etc/ImageMagick-6/policy.xml
-
-# Pre-install gems with native code to reduce build times
-# Note these versions need to be in sync with gem versions in Gemfile.lock
-RUN gem install --conservative kgio -v 2.9.3 && \
-    gem install --conservative pg -v 0.18.1 && \
-    gem install --conservative raindrops -v 0.13.0 && \
-    gem install --conservative unf_ext -v 0.0.6 && \
-    gem install --conservative nokogiri -v 1.10.5 && \
-    gem install --conservative unicorn -v 4.8.3
-
 WORKDIR /usr/src/app
 
 COPY Gemfile /usr/src/app/
@@ -83,3 +79,8 @@ RUN chown -R appuser:appgroup ./*
 # RUN chmod +x /usr/src/app/config/docker/*
 
 RUN bundle exec rake assets:precompile RAILS_ENV=assets SUPPORT_EMAIL='' 2> /dev/null
+
+ENV VERSION_NUMBER=${VERSION_NUMBER}
+ENV COMMIT_ID=${COMMIT_ID}
+ENV BUILD_DATE=${BUILD_DATE}
+ENV BUILD_TAG=${BUILD_TAG}
