@@ -281,7 +281,7 @@ jobs:
       - *deploy_to_dev
       - slack/notify:
           color: '#1d990c'
-          message: 'Deployed *${BUILD_TAG}* to *Development*'
+          message: "${CIRCLE_USERNAME} deployed *${BUILD_TAG}* to *Development*"
           webhook: ${SLACK_WEBHOOK}
 
   deploy_branch_to_dev: *do_dev_deployment_tasks
@@ -302,7 +302,7 @@ jobs:
       - *deploy_to_staging
       - slack/notify:
           color: '#1d990c'
-          message: 'Deployed *${BUILD_TAG}* to *Demo*'
+          message: "${CIRCLE_USERNAME} deployed *${BUILD_TAG}* to *Demo*"
           webhook: ${SLACK_WEBHOOK}
 
   deploy_branch_to_demo: *do_demo_deployment_tasks
