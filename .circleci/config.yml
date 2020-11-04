@@ -241,8 +241,7 @@ jobs:
       - checkout
       - attach_workspace:
           at: /tmp/workspace
-      - setup_remote_docker:
-          docker_layer_caching: true
+      - setup_remote_docker
       - *configure_aws_profile
       - *build_and_push_docker_image
       - persist_to_workspace:
@@ -281,7 +280,7 @@ jobs:
       - *deploy_to_dev
       - slack/notify:
           color: '#1d990c'
-          message: 'Deployed *${BUILD_TAG}* to *Development*'
+          message: "${CIRCLE_USERNAME} deployed *${BUILD_TAG}* to *Development*"
           webhook: ${SLACK_WEBHOOK}
 
   deploy_branch_to_dev: *do_dev_deployment_tasks
@@ -302,7 +301,7 @@ jobs:
       - *deploy_to_staging
       - slack/notify:
           color: '#1d990c'
-          message: 'Deployed *${BUILD_TAG}* to *Demo*'
+          message: "${CIRCLE_USERNAME} deployed *${BUILD_TAG}* to *Demo*"
           webhook: ${SLACK_WEBHOOK}
 
   deploy_branch_to_demo: *do_demo_deployment_tasks
@@ -323,7 +322,7 @@ jobs:
       - *deploy_to_staging
       - slack/notify:
           color: '#1d990c'
-          message: 'Deployed *${BUILD_TAG}* to *Staging*'
+          message: "${CIRCLE_USERNAME} deployed *${BUILD_TAG}* to *Staging*"
           webhook: ${SLACK_WEBHOOK}
 
   deploy_branch_to_staging: *do_staging_deployment_tasks
@@ -345,11 +344,11 @@ jobs:
       - slack/notify:
           color: '#1d990c'
           mentions: 'staff-tools-team'
-          message: 'Deployed *${BUILD_TAG}* to *Production*'
+          message: "${CIRCLE_USERNAME} deployed *${BUILD_TAG}* to *Production*"
           webhook: ${SLACK_WEBHOOK_SS_CIRCLECI}
       - slack/notify:
           color: '#1d990c'
-          message: 'Deployed *${BUILD_TAG}* to *Production*'
+          message: "${CIRCLE_USERNAME} deployed *${BUILD_TAG}* to *Production*"
           webhook: ${SLACK_WEBHOOK}
 
 workflows:
