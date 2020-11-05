@@ -165,6 +165,8 @@ function _deploy() {
     
     kubectl set image -f config/kubernetes/${environment}/cron-photo-profiles-report.yaml \
             jobs=${docker_image_tag} --local --output yaml | kubectl apply -n $namespace -f -
+  
+    kubectl apply -f config/kubernetes/${environment}/cronjob-delete-old-ecr-images.yaml -n $namespace
   fi
 }
 
