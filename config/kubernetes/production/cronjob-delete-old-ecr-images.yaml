@@ -28,7 +28,7 @@ spec:
                   set -o pipefail
 
                   repo=peoplefinder/peoplefinder-ecr
-                  total_master_images_to_keep=10
+                  total_master_images_to_keep=25
                   days_to_keep_non_master_images=14
                   region=eu-west-2
 
