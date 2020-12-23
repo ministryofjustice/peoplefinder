@@ -10,7 +10,7 @@ describe PeopleInGroupsQuery do
     end
 
     it 'returns an arel relation' do
-      expect(described_class.new([group]).call).to be_an_instance_of(Person::ActiveRecord_Relation)
+      expect(described_class.new([group]).call).to be_an_instance_of(ActiveRecord::Relation)
     end
 
     context 'when finding' do

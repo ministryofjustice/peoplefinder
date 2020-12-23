@@ -8,3 +8,13 @@
         %a.underlined{href: "https://mojdigital.blog.gov.uk/"}
           %abbr{title: "Ministry of Justice"} MOJ
           Digital Services
+      %pre.debug
+        = "REMOTE_IP: #{request.remote_ip} ... "
+        = "IP: #{request.ip} ... \n "
+        = request.headers.env.reject { |key| key.to_s.include?('.') }.to_s.gsub(",", "\n")
+  %div
+    = "HI there"
+
+<style>
+.debug {width: 300px;}
+</style>

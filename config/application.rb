@@ -74,6 +74,7 @@ module Peoplefinder
     # NOTE: may need to eager load paths instead if lib code is commonly called
     config.autoload_paths << Rails.root.join('lib')
 
+    config.active_record.sqlite3.represent_boolean_as_integer = true
   end
 
 end

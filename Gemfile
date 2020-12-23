@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-gem 'rails', '~> 5.0.7.2'
+gem 'rails', '~> 5.2.4.4'
 gem 'text'
 gem 'ancestry'
 gem 'awesome_print'
@@ -67,7 +67,6 @@ end
 
 group :development do
   gem 'foreman'
-  gem 'mailcatcher'
   gem 'spring-commands-rspec'
   gem 'rb-fsevent', require: RUBY_PLATFORM[/darwin/i].to_s.size > 0
   gem 'meta_request'
