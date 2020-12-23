@@ -45,7 +45,7 @@ RSpec.describe GroupsController, type: :controller do
   let(:person) { create(:person) }
 
   describe 'GET index' do
-    subject { get :index, param: {}, flash: valid_session }
+    subject { get :index, params: {}, flash: valid_session }
 
     it 'without any groups, it redirects to the new group page' do
       expect(subject).to redirect_to(new_group_path)
