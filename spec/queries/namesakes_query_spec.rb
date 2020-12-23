@@ -31,7 +31,7 @@ describe NamesakesQuery do
       %q{
         SELECT "people".*
         FROM "people"
-        WHERE ("people"."id" IS NOT NULL)
+        WHERE "people"."id" IS NOT NULL
         AND (
           (LOWER(surname) = 'richards' AND LOWER(given_name) = 'stephen')
         OR
