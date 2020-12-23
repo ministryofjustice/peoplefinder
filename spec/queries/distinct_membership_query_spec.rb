@@ -49,7 +49,7 @@ describe DistinctMembershipQuery do
 
   it 'returns an arel' do
     query = described_class.new(group: group, leadership: true)
-    expect(query.call).to be_instance_of(Person::ActiveRecord_Relation)
+    expect(query.call).to be_instance_of(Person.const_get(:ActiveRecord_Relation))
   end
 
   it 'can be chained' do

@@ -32,7 +32,7 @@ describe #{class_name}Query do
     end
 
     it 'returns an arel relation' do
-      expect(#{class_name}Query.new.call).to be_an_instance_of(Person::ActiveRecord_Relation)
+      expect(#{class_name}Query.new.call).to be_an_instance_of(Person.const_get(:ActiveRecord_Relation))
     end
 
     it 'returns expected records' do

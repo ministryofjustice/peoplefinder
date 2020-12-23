@@ -73,7 +73,7 @@ RSpec.describe GroupsController, type: :controller do
 
   describe 'GET all_people' do
     let(:group) { create(:group, valid_attributes) }
-    let!(:people) { instance_double(Person::ActiveRecord_Relation) }
+    let!(:people) { instance_double(Person.const_get(:ActiveRecord_Relation)) }
 
     subject { get :all_people, params: { id: group.to_param, page: 2 }, flash: valid_session }
 
@@ -84,7 +84,7 @@ RSpec.describe GroupsController, type: :controller do
 
     it 'assigns @people_in_subtree to a Person AR relation' do
       subject
-      expect(assigns(:people_in_subtree)).to be_a(Person::ActiveRecord_Relation)
+      expect(assigns(:people_in_subtree)).to be_a(Person.const_get(:ActiveRecord_Relation))
     end
 
     it 'sends all_people message to instance of group and paginates people results to 500 (to avoid server timeouts)' do

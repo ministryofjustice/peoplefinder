@@ -8,7 +8,7 @@ describe PeopleNeverLoggedInQuery do
     end
 
     it 'returns an arel relation' do
-      expect(described_class.new.call).to be_an_instance_of(Person::ActiveRecord_Relation)
+      expect(described_class.new.call).to be_an_instance_of(Person.const_get(:ActiveRecord_Relation))
     end
 
     it 'returns only those people who have never logged in' do
