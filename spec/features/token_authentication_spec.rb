@@ -34,7 +34,7 @@ describe 'Token Authentication' do
 
   describe 'trying to log in more than 8 times per hour' do
     before do
-      allow_any_instance_of(Token). to receive(:tokens_in_the_last_hour).and_return 8
+      allow_any_instance_of(Token).to receive(:tokens_in_the_last_hour).and_return 8
     end
 
     it 'is not permitted' do
