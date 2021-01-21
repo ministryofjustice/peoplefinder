@@ -81,6 +81,7 @@ group :test do
   gem 'database_cleaner'
   gem 'site_prism'
   gem 'webmock'
+  gem 'webdrivers', '~> 4.4'
   gem 'rspec-json_expectations'
 end
 
@@ -91,10 +92,10 @@ group :development, :test do
   gem 'factory_bot_rails'
   gem 'launchy'
   gem 'minitest'
-  gem 'poltergeist'
   gem 'pry-rails'
   gem 'pry-byebug'
   gem 'rspec-rails', '~> 3.9'
+  gem 'selenium-webdriver', '~> 3.142.6'
   gem 'shoulda-matchers'
   gem 'simplecov'
   gem 'simplecov-rcov'
