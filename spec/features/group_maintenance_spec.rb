@@ -97,7 +97,9 @@ describe 'Group maintenance' do
       group = create(:group)
       visit edit_group_path(group)
       expect(page).to have_text('cannot be undone')
-      click_link('Delete this team')
+      page.accept_confirm do
+        click_link('Delete this team')
+      end
 
       expect(page).to have_content("Deleted #{group.name}")
       expect { Group.find(group.id) }.to raise_error(ActiveRecord::RecordNotFound)

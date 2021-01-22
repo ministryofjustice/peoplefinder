@@ -16,12 +16,12 @@ describe 'Home page' do
 
   context 'with a page structure' do
     before do
-      page.driver.headers = { "User-Agent" => user_agent }
+      page.driver.header "User-Agent", user_agent
       mock_readonly_user
       visit '/'
     end
 
-    context 'when using a supported browser', js: true do
+    context 'when using a supported browser' do
       let(:user_agent) { ff31 }
 
       it 'is all there' do
@@ -67,7 +67,7 @@ describe 'Home page' do
       end
     end
 
-    context 'when using an unsupported browser', js: true do
+    context 'when using an unsupported browser' do
       context 'with Internet Explorer 6.0' do
         let(:user_agent) { ie6 }
         it 'displays a warning' do
