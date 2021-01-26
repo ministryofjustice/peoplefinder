@@ -247,6 +247,27 @@ Rails/LexicallyScopedActionFilter:
 Style/MissingRespondToMissing:
   Enabled: false
 
+Style/ExponentialNotation:
+  Enabled: true
+
+Style/HashEachMethods:
+  Enabled: true
+
+Style/HashTransformKeys:
+  Enabled: true
+
+Style/HashTransformValues:
+  Enabled: true
+
+Style/RedundantRegexpCharacterClass:
+  Enabled: false
+
+Style/RedundantRegexpEscape:
+  Enabled: false
+
+Style/SlicingWithRange:
+  Enabled: true
+
 Rails/ApplicationController:
   Exclude:
     - 'app/controllers/health_check_controller.rb'
@@ -255,18 +276,3 @@ Rails/ApplicationController:
 Naming/MemoizedInstanceVariableName:
   Exclude:
     - 'lib/geckoboard_publisher/profiles_percentage_report.rb'
-
-Style/ExponentialNotation:
-  Enabled: true
-Style/HashEachMethods:
-  Enabled: true
-Style/HashTransformKeys:
-  Enabled: true
-Style/HashTransformValues:
-  Enabled: true
-Style/RedundantRegexpCharacterClass:
-  Enabled: false
-Style/RedundantRegexpEscape:
-  Enabled: false
-Style/SlicingWithRange:
-  Enabled: true
