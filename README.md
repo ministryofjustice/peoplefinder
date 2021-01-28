@@ -191,6 +191,8 @@ Cron jobs are handled using Kubernetes Cron jobs. The files are located in confi
 
 ### In Development
 
+Viewing in the browser on local should be done using the IP address: http://127.0.0.1:3000/ rather than localhost - to avoid this error: ::1 contains invalid characters.
+
 E-mails in development environment are setup to be delivered using `mailcatcher` gem. For that `mailcatcher` has to be started and then accessed on `http://localhost:1080` to read the delivered e-mails.
 
 ## Search
