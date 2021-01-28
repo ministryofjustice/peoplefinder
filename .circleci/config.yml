@@ -298,7 +298,7 @@ jobs:
       - *create_gpg_key_file
       - *configure_gpg
       - *decrypt_secrets
-      - *deploy_to_staging
+      - *deploy_to_demo
       - slack/notify:
           color: '#1d990c'
           message: "${CIRCLE_USERNAME} deployed *${BUILD_TAG}* to *Demo*"
