@@ -24,11 +24,11 @@ module SpecSupport
     end
 
     def click_on_team_in_org_browser(text)
-      find('.org-browser .team-link', text: text).trigger(:click)
+      find('.org-browser .team-link', text: text).click
     end
 
     def click_on_subteam_in_org_browser(text)
-      find('.org-browser .subteam-link', text: text).trigger(:click)
+      find('.org-browser .subteam-link', text: text).click
     end
   end
 end

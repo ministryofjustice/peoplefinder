@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-gem 'rails', '~> 5.0.7.2'
+gem 'rails', '~> 5.2.4.4'
 gem 'text'
 gem 'ancestry'
 gem 'awesome_print'
@@ -67,7 +67,6 @@ end
 
 group :development do
   gem 'foreman'
-  gem 'mailcatcher'
   gem 'spring-commands-rspec'
   gem 'rb-fsevent', require: RUBY_PLATFORM[/darwin/i].to_s.size > 0
   gem 'meta_request'
@@ -82,6 +81,7 @@ group :test do
   gem 'database_cleaner'
   gem 'site_prism'
   gem 'webmock'
+  gem 'webdrivers', '~> 4.4'
   gem 'rspec-json_expectations'
 end
 
@@ -92,10 +92,10 @@ group :development, :test do
   gem 'factory_bot_rails'
   gem 'launchy'
   gem 'minitest'
-  gem 'poltergeist'
   gem 'pry-rails'
   gem 'pry-byebug'
   gem 'rspec-rails', '~> 3.9'
+  gem 'selenium-webdriver', '~> 3.142.6'
   gem 'shoulda-matchers'
   gem 'simplecov'
   gem 'simplecov-rcov'

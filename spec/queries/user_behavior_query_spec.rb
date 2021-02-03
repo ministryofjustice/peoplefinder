@@ -63,7 +63,7 @@ describe UserBehaviorQuery, versioning: true do
     end
 
     it 'returns an arel relation' do
-      expect(subject).to be_an_instance_of(Person::ActiveRecord_Relation)
+      expect(subject).to be_an_instance_of(Person.const_get(:ActiveRecord_Relation))
     end
 
     it 'returns expected columns' do

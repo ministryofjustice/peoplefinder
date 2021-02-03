@@ -15,7 +15,7 @@ RSpec.configure do |config|
 
   Kernel.srand config.seed
 
-  WebMock.disable_net_connect!(allow_localhost: true)
+  WebMock.disable_net_connect!(allow_localhost: true, allow: 'chromedriver.storage.googleapis.com')
 
   config.before :each, geckoboard: true do
     stub_request(:get, "https://api.geckoboard.com/").

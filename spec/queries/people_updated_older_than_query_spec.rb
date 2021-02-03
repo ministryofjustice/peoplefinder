@@ -10,7 +10,7 @@ describe PeopleUpdatedOlderThanQuery do
     end
 
     it 'returns an arel relation' do
-      expect(described_class.new(2.days.ago).call).to be_an_instance_of(Person::ActiveRecord_Relation)
+      expect(described_class.new(2.days.ago).call).to be_an_instance_of(Person.const_get(:ActiveRecord_Relation))
     end
 
     it 'returns expected records' do

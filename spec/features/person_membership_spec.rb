@@ -115,7 +115,7 @@ describe "Person maintenance" do
     expect(page).to have_selector('.editable-fields', visible: :visible)
     expect(page).to have_selector('.button-add-team', visible: :visible)
 
-    find('a.button-add-team').trigger('click')
+    find('a.button-add-team').click
     expect(page).to have_selector('.new-team', visible: :visible)
     within('.new-team') do
       fill_in 'AddTeam', with: 'New team'

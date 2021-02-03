@@ -252,7 +252,7 @@ RSpec.describe Person, type: :model do
     end
 
     it 'returns a Person::ActiveRecord_Relation' do
-      expect(described_class.all_in_subtree(team).class).to be Person::ActiveRecord_Relation
+      expect(described_class.all_in_subtree(team).class).to be described_class.const_get(:ActiveRecord_Relation)
     end
 
     it 'returns relation that includes aggregate role_names column' do

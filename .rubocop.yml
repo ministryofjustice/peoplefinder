@@ -27,6 +27,8 @@ AllCops:
 Rails:
   Enabled: true
 
+require: rubocop-rspec
+
 # Just indent parameters by two spaces. It's less volatile if methods change,
 # and there's less busy work lining things up.
 Layout/ParameterAlignment:
@@ -87,10 +89,20 @@ Style/CaseEquality:
 Lint/AssignmentInCondition:
   AllowSafeAssignment: false
 
+Lint/DeprecatedOpenSSLConstant:
+  Enabled: true
+
+Lint/MixedRegexpCaptureTypes:
+  Enabled: true
+
+Lint/RaiseException:
+  Enabled: true
+
+Lint/StructNewOverride:
+  Enabled: true
+
 Style/ClassAndModuleChildren:
   Enabled: false
-
-require: rubocop-rspec
 
 Style/RegexpLiteral:
   Enabled: false
@@ -112,6 +124,9 @@ Layout/HashAlignment:
 
 Layout/EmptyLinesAroundAttributeAccessor:
   Enabled: false
+
+Layout/SpaceAroundMethodCallOperator:
+  Enabled: true
 
 Style/BlockDelimiters:
   Enabled: false
@@ -136,6 +151,7 @@ RSpec/DescribeClass:
   Exclude:
     - 'spec/views/**/*'
     - 'spec/config/schedule_spec.rb'
+    - 'spec/features/**/*'
 
 Metrics/AbcSize:
   Exclude:
@@ -204,16 +220,12 @@ RSpec/LeakyConstantDeclaration:
 Rails/HelperInstanceVariable:
   Enabled: false # would need some thought about refactor will not do before upgrade to rails 5
 
-RSpec/DescribeClass:
-  Exclude:
-    - 'spec/features/**/*'
-
 Capybara/VisibilityMatcher:
-  Enabled: false 
+  Enabled: false
 
 Naming/MethodParameterName:
   Enabled: false
-       
+
 Style/FormatStringToken:
   Enabled: false
 
@@ -235,8 +247,26 @@ Rails/LexicallyScopedActionFilter:
 Style/MissingRespondToMissing:
   Enabled: false
 
-Style/MissingRespondToMissing:
+Style/ExponentialNotation:
+  Enabled: true
+
+Style/HashEachMethods:
+  Enabled: true
+
+Style/HashTransformKeys:
+  Enabled: true
+
+Style/HashTransformValues:
+  Enabled: true
+
+Style/RedundantRegexpCharacterClass:
   Enabled: false
+
+Style/RedundantRegexpEscape:
+  Enabled: false
+
+Style/SlicingWithRange:
+  Enabled: true
 
 Rails/ApplicationController:
   Exclude:

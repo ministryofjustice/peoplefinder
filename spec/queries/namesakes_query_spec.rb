@@ -11,7 +11,7 @@ describe NamesakesQuery do
     end
 
     it 'returns an arel relation' do
-      expect(described_class.new(person).call).to be_an_instance_of(Person::ActiveRecord_Relation)
+      expect(described_class.new(person).call).to be_an_instance_of(Person.const_get(:ActiveRecord_Relation))
     end
 
     it 'returns expected records' do
@@ -31,7 +31,7 @@ describe NamesakesQuery do
       %q{
         SELECT "people".*
         FROM "people"
-        WHERE ("people"."id" IS NOT NULL)
+        WHERE "people"."id" IS NOT NULL
         AND (
           (LOWER(surname) = 'richards' AND LOWER(given_name) = 'stephen')
         OR

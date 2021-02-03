@@ -42,7 +42,7 @@ RSpec.describe SuggestionsController, type: :controller do
   end
 
   describe 'POST create' do
-    let(:params) { { foo: 'bar' } }
+    let(:params) { ActionController::Parameters.new(foo: 'bar').permit! }
 
     describe 'invalid suggestion' do
       let(:suggestion) { double('suggestion', 'valid?': false) }

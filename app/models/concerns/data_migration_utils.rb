@@ -23,8 +23,6 @@ module Concerns::DataMigrationUtils
       SQL
     end
 
-    private
-
     def non_member_sql
       <<~SQL
         NOT EXISTS (SELECT 1 FROM memberships WHERE memberships.person_id = people.id)
@@ -34,6 +32,8 @@ module Concerns::DataMigrationUtils
     def department_members_in_other_teams_query
       unscoped.joins(:memberships).where(department_members_in_other_teams_conditions)
     end
+
+    private
 
     def department_members_in_other_teams_conditions
       dept_id = Group.department.id

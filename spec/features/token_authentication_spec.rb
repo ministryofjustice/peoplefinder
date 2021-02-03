@@ -34,7 +34,7 @@ describe 'Token Authentication' do
 
   describe 'trying to log in more than 8 times per hour' do
     before do
-      allow_any_instance_of(Token). to receive(:tokens_in_the_last_hour).and_return 8
+      allow_any_instance_of(Token).to receive(:tokens_in_the_last_hour).and_return 8
     end
 
     it 'is not permitted' do
@@ -104,9 +104,12 @@ describe 'Token Authentication' do
     let(:ie6) { 'Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.2; SV1; .NET CLR 1.1.4322; .NET CLR 2.0.50727; .NET CLR 3.0.04506.648; .NET CLR 3.5.21022)' }
     let(:token) { create(:token) }
 
-    context "when on an unsupported browser", js: true do
+    # This example formerly used JS driver, removed because we need to use webkit
+    # in order to set the header on the driver
+    # https://github.com/thoughtbot/capybara-webkit#non-standard-driver-methods
+    context "when on an unsupported browser" do
       before do
-        page.driver.headers = { "User-Agent" => ie6 }
+        page.driver.header "User-Agent", ie6
         visit token_path(token)
       end
 
@@ -118,9 +121,12 @@ describe 'Token Authentication' do
       end
     end
 
-    context "when on supported browser", js: true do
+    # This example formerly used JS driver, removed because we need to use webkit
+    # in order to set the header on the driver
+    # https://github.com/thoughtbot/capybara-webkit#non-standard-driver-methods
+    context "when on supported browser" do
       before do
-        page.driver.headers = { "User-Agent" => ff31 }
+        page.driver.header "User-Agent", ff31
         visit token_path(token)
       end
 
