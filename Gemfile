@@ -41,6 +41,8 @@ gem 'rack-protection', '>= 1.5.5'
 gem 'recipient_interceptor', '~> 0.1.2'
 gem 'sanitize', '>= 4.6.3'
 gem 'sass-rails', '~> 5.0.6'
+gem 'sentry-ruby'
+gem 'sentry-rails'
 gem 'sprockets', '>= 3.7.2'
 
 gem 'uglifier', '>= 2.7.2'
