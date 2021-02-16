@@ -13,7 +13,7 @@ module HealthCheck
 
     def available?
       begin
-        result = ActiveRecord::Base.connected?
+        result = ActiveRecord::Base.connection.active?
         log_error unless result == true
       rescue StandardError => e
         log_unknown_error(e)
