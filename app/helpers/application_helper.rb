@@ -14,7 +14,7 @@ module ApplicationHelper
   def govspeak(source)
     options = { header_offset: 2 }
     doc = Govspeak::Document.new(source, options)
-    doc.to_sanitized_html.html_safe
+    doc.to_html.html_safe
   end
 
   FLASH_NOTICE_KEYS = %w(error notice warning).freeze
