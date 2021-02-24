@@ -27,6 +27,8 @@ spec:
           env:
             - name: RAILS_SERVE_STATIC_FILES
               value: 'true'
+            - name: GOVUK_APP_DOMAIN
+              value: 'development.peoplefinder.service.gov.uk'
             - name: MOJ_PF_ES_URL
               value: 'http://aws-es-proxy-service:9200'
             - name: SECRET_KEY_BASE
@@ -123,6 +125,8 @@ spec:
           command: ["./run.sh"]
           args: ["worker"]
           env:
+            - name: GOVUK_APP_DOMAIN
+              value: 'development.peoplefinder.service.gov.uk'
             - name: SECRET_KEY_BASE
               valueFrom:
                 secretKeyRef:
