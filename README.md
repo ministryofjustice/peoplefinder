@@ -434,26 +434,33 @@ A support email address is set as SUPPORT_EMAIL.
 To prevent the commitment of secrets and credentials into git repositories we use awslabs / git-secrets (https://github.com/awslabs/git-secrets)
 
 For MacOS, git-secrets can be install via Homebrew.  From the terminal run the following:
-
-    $ brew install git-secrets
+```
+$ brew install git-secrets
+```
 
 Then install the git hooks:
 
-    $ cd /path/to/my/repo
-    $ git secrets --install
-    $ git secrets --register-aws
+```
+$ cd /path/to/my/repo
+$ git secrets --install
+$ git secrets --register-aws
+```
 
 A 'canary' string has been added to the first line of the secrets.yaml files on all environments.  Git Secrets has to be set to look for this string with:
 
-    $ git secrets --add --literal '#WARNING_Secrets_Are_Not_Encrypted!'
+```
+$ git secrets --add --literal '#WARNING_Secrets_Are_Not_Encrypted!'
+```
 
 **Please note** please make sure use --literal with exact string, forget to use this flag and change any bit of the string will cause the checking for those files skippped 
 
 Finally checking the installation result:-
 First, check the hooks, open your local repository .git/hooks/, a few new hooks should have installed: pre-commit, commit-msg, prepare-commit-msg, each file should look something like this:
 
-    #!/usr/bin/env bash
-    git secrets --pre_commit_hook -- "$@"
+```
+#!/usr/bin/env bash
+git secrets --pre_commit_hook -- "$@"
+```
 
 Second, check the .git/config, a new section called [secrets] should have been added by end of this file, you should be able to see the rules from aws and the one for 'canary' string.
 
