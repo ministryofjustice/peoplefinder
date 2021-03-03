@@ -426,3 +426,69 @@ If the Peoplefinder is to be successful, profiles need to be populated and maint
 ###Support
 
 A support email address is set as SUPPORT_EMAIL.
+
+## Keeping secrets and sensitive information secure
+
+### git-secrets
+
+To prevent the commitment of secrets and credentials into git repositories we use awslabs / git-secrets (https://github.com/awslabs/git-secrets)
+
+For MacOS, git-secrets can be install via Homebrew.  From the terminal run the following:
+```
+$ brew install git-secrets
+```
+
+Then install the git hooks:
+
+```
+$ cd /path/to/my/repo
+$ git secrets --install
+$ git secrets --register-aws
+```
+
+A 'canary' string has been added to the first line of the secrets.yaml files on all environments.  Git Secrets has to be set to look for this string with:
+
+```
+$ git secrets --add --literal '#WARNING_Secrets_Are_Not_Encrypted!'
+```
+
+**Please note** please make sure use --literal with exact string, forget to use this flag and change any bit of the string will cause the checking for those files skippped 
+
+Finally checking the installation result:-
+First, check the hooks, open your local repository .git/hooks/, a few new hooks should have installed: pre-commit, commit-msg, prepare-commit-msg, each file should look something like this:
+
+```
+#!/usr/bin/env bash
+git secrets --pre_commit_hook -- "$@"
+```
+
+Second, check the .git/config, a new section called [secrets] should have been added by end of this file, you should be able to see the rules from aws and the one for 'canary' string.
+
+**How it works**
+
+When committing a branch change git-secrets scans the whole repository for a specific set of strings.  In this case, the 'canary' string (described above) has been placed in all the secrets files. So, if the encrypted secrets files are unlocked, you will be warned before pushing the branch.
+
+
+### git-crypt
+
+The tool is used for encryping sensitive information such as secrets or keys information
+e.g. 
+Sensitive information required to deploy the application into Cloud Platform
+are stored in the appropriate environment settings folders found in
+
+```
+config/kubernetes/<environment>/secrets.yaml
+```
+For MacOS brew users: `brew install git-crypt`
+
+For other installation guides: https://github.com/AGWA/git-crypt
+
+To decrypt secrets, you must require authorization from your line manager.
+
+**Are about to add new secret files?**
+Please remember:
+Add the 'canary' string into the new secret file. 
+Make sure this file is within the scope defined in the .gitattributes, if not, you need to add it in 
+
+If in doubt about handling any secure credentials please do not hesitate to `#ask-cloud-platform`
+or `#security` in MOJ Slack.
