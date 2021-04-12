@@ -1,4 +1,4 @@
-class EnforceMembershipIntegrity < ActiveRecord::Migration
+class EnforceMembershipIntegrity < ActiveRecord::Migration[4.2]
   def change
     change_column_null :memberships, :person_id, false
     change_column_null :memberships, :group_id, false

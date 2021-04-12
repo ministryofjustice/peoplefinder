@@ -1,5 +1,5 @@
 # This migration comes from peoplefinder (originally 20141029113248)
-class AddCommunities < ActiveRecord::Migration
+class AddCommunities < ActiveRecord::Migration[4.2]
   def change
     create_table "communities", force: true do |t|
       t.string  "name"

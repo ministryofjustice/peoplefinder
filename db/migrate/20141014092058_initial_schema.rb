@@ -1,4 +1,4 @@
-class InitialSchema < ActiveRecord::Migration
+class InitialSchema < ActiveRecord::Migration[4.2]
   def change
      create_table "groups", force: true do |t|
       t.text     "name"

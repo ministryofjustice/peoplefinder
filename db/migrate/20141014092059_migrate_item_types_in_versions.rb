@@ -1,5 +1,5 @@
 # This migration comes from peoplefinder (originally 20141010090624)
-class MigrateItemTypesInVersions < ActiveRecord::Migration
+class MigrateItemTypesInVersions < ActiveRecord::Migration[4.2]
   def up
     execute <<-SQL
       UPDATE versions

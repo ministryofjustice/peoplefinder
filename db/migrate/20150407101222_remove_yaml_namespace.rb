@@ -1,4 +1,4 @@
-class RemoveYamlNamespace < ActiveRecord::Migration
+class RemoveYamlNamespace < ActiveRecord::Migration[4.2]
   def up
     execute <<-SQL
       UPDATE versions

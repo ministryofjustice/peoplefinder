@@ -1,5 +1,5 @@
 # This migration comes from peoplefinder (originally 20150319122348)
-class NormalizeEmailCase < ActiveRecord::Migration
+class NormalizeEmailCase < ActiveRecord::Migration[4.2]
   def up
     execute <<-SQL
       UPDATE people

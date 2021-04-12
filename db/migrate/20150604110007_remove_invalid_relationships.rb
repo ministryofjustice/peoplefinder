@@ -1,4 +1,4 @@
-class RemoveInvalidRelationships < ActiveRecord::Migration
+class RemoveInvalidRelationships < ActiveRecord::Migration[4.2]
   def up
     execute <<-SQL.strip_heredoc
       DELETE FROM memberships
