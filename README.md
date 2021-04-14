@@ -175,6 +175,13 @@ authentication token. This can be done by entering their email address
 message containing a link with a unique random token. Clicking on the link
 will allow them to login.
 
+For local testing - you can view the server logs and copy the token from there, then paste it into the URL. See the image below:
+
+![image](https://user-images.githubusercontent.com/22935203/114713734-4e6e3f00-9d29-11eb-86f2-a7a18a4f9eb7.png)
+
+Then use the token on this URL: http://127.0.0.1:3000/tokens/3da4f4e2-8001-4437-b3ab-7e2b3f6e768c <-- replace with your token.
+
+Or you can use mailcatcher to pick up the Emails with the token link (see below). 
 
 ## E-mails
 
