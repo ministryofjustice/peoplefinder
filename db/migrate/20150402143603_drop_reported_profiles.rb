@@ -1,5 +1,5 @@
 # This migration comes from peoplefinder (originally 20150303153605)
-class DropReportedProfiles < ActiveRecord::Migration
+class DropReportedProfiles < ActiveRecord::Migration[4.2]
   def up
     drop_table :reported_profiles
   end

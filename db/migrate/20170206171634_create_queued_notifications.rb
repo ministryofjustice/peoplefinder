@@ -1,4 +1,4 @@
-class CreateQueuedNotifications < ActiveRecord::Migration
+class CreateQueuedNotifications < ActiveRecord::Migration[4.2]
   def change
     create_table :queued_notifications do |t|
       t.string :email_template

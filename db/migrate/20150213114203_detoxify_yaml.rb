@@ -1,6 +1,6 @@
 require 'image_uploader'
 require 'person'
-class DetoxifyYaml < ActiveRecord::Migration
+class DetoxifyYaml < ActiveRecord::Migration[4.2]
   class Version < ActiveRecord::Base
   end
 

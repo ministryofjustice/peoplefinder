@@ -1,4 +1,4 @@
-class RemoveCommunities < ActiveRecord::Migration
+class RemoveCommunities < ActiveRecord::Migration[4.2]
   def change
     remove_column :people, :community_id
 

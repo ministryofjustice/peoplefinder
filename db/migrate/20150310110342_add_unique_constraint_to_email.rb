@@ -1,5 +1,5 @@
 # This migration comes from peoplefinder (originally 20150217105036)
-class AddUniqueConstraintToEmail < ActiveRecord::Migration
+class AddUniqueConstraintToEmail < ActiveRecord::Migration[4.2]
   def up
     execute <<-SQL
       CREATE UNIQUE INDEX index_people_on_lowercase_email
