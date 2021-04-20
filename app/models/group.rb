@@ -19,7 +19,7 @@ class Group < ApplicationRecord
   include Concerns::Hierarchical
   include Concerns::Placeholder
 
-  MAX_DESCRIPTION = 1000
+  MAX_DESCRIPTION = 2000
 
   has_paper_trail versions: { class_name: 'Version' },
                   ignore: [:updated_at, :created_at, :slug, :id,
