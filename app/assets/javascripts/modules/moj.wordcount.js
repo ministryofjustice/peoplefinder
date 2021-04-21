@@ -21,7 +21,7 @@ jQuery(function ($){
       var limit = $textarea.data('limit');
       var $counterBox = $(
         '<p class="textarea-word-count form-hint">' +
-        'Maximum ' + limit + ' characters, including spaces. ' +
+        'Maximum ' + limit + ' characters, including spaces and new lines. ' +
         '<span class="chars-remaining">(' + limit + ' remaining)</span>' +
         '<p/>'
       );

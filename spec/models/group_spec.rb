@@ -21,7 +21,7 @@ RSpec.describe Group, type: :model do
   include PermittedDomainHelper
 
   it { should have_many(:leaders) }
-  it { should validate_length_of(:description).is_at_most(1000) }
+  it { should validate_length_of(:description).is_at_most(2000) }
 
   it "gives first orphaned groups as department" do
     parent = create(:department)
