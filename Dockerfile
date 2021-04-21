@@ -58,11 +58,11 @@ COPY policy.xml /etc/ImageMagick-6/policy.xml
 
 # Pre-install gems with native code to reduce build times
 # Note these versions need to be in sync with gem versions in Gemfile.lock
-RUN gem install --conservative kgio -v 2.9.3 && \
-    gem install --conservative pg -v 0.18.1 && \
-    gem install --conservative raindrops -v 0.13.0 && \
-    gem install --conservative unf_ext -v 0.0.6 && \
-    gem install --conservative nokogiri -v 1.10.5 && \
+RUN gem install --conservative kgio -v 2.11.3 && \
+    gem install --conservative pg -v 1.2.3 && \
+    gem install --conservative raindrops -v 0.19.1 && \
+    gem install --conservative unf_ext -v 0.0.7.7 && \
+    gem install --conservative nokogiri -v 1.11.3 && \
     gem install --conservative unicorn -v 4.8.3
 
 WORKDIR /usr/src/app
@@ -70,6 +70,7 @@ WORKDIR /usr/src/app
 COPY Gemfile /usr/src/app/
 COPY Gemfile.lock /usr/src/app/
 
+RUN gem install bundler:2.2.14
 RUN bundle install
 
 COPY . /usr/src/app
