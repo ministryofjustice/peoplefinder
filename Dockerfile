@@ -1,4 +1,4 @@
-FROM ruby:2.5.1
+FROM ruby:2.7.2
 
 # https://github.com/ministryofjustice/docker-templates/issues/37
 # UTF 8 issue during bundle install
