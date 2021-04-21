@@ -50,4 +50,6 @@ Rails.application.configure do
 
   # mock the fact we are NOT on an IP whitelist for test runs
   config.readonly_ip_whitelist = nil
+
+  config.assets.css_compressor = nil
 end
