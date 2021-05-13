@@ -61,7 +61,16 @@ spec:
                   secretKeyRef:
                     name: app-secrets
                     key: SENDGRID_PASSWORD
-            envFrom: 
+              - name: GOVUK_APP_DOMAIN
+                value: 'peoplefinder.service.gov.uk'
+              - name: GOVUK_WEBSITE_ROOT
+                value: 'www'
+              - name: SENTRY_DSN
+                valueFrom:
+                  secretKeyRef:
+                    name: app-secrets
+                    key: SENTRY_DSN
+            envFrom:
             - configMapRef:
                 name: environment-variables
             command:
