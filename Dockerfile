@@ -27,7 +27,7 @@ RUN addgroup --gid 1000 --system appgroup && \
 
 COPY . .
 
-#RUN bundle exec rake assets:precompile RAILS_ENV=assets SUPPORT_EMAIL='' 2> /dev/null
+RUN bundle exec rake assets:precompile RAILS_ENV=assets SUPPORT_EMAIL='' 2> /dev/null
 
 # RUN mkdir log tmp
 RUN chown -R appuser:appgroup /usr/src/app/
