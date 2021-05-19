@@ -1,7 +1,7 @@
 FROM ruby:2.7.2-alpine
 
 # Note: .ruby-gemdeps libc-dev gcc libxml2-dev libxslt-dev make postgresql-dev build-base curl-dev with bundle install issues. 
-RUN apk add --no-cache --virtual .ruby-gemdeps libc-dev gcc libxml2-dev libxslt-dev make postgresql-dev build-base curl-dev git nodejs zip postgresql-client runit
+RUN apk add --no-cache --virtual .ruby-gemdeps libc-dev gcc libxml2-dev libxslt-dev make postgresql-dev build-base curl-dev git nodejs zip postgresql-client runit imagemagick ffmpeg graphicsmagick
 
 # set WORKDIR
 RUN mkdir -p /usr/src/app && mkdir -p /usr/src/app/tmp
