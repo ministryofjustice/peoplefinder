@@ -1,10 +1,43 @@
-FROM ruby:2.7.2
+FROM ruby:2.7.2-alpine
+
+# Note: .ruby-gemdeps libc-dev gcc libxml2-dev libxslt-dev make postgresql-dev build-base curl-dev with bundle install issues. 
+RUN apk add --no-cache --virtual .ruby-gemdeps libc-dev gcc libxml2-dev libxslt-dev make postgresql-dev build-base curl-dev git nodejs zip postgresql-client runit imagemagick ffmpeg graphicsmagick
+
+# set WORKDIR
+RUN mkdir -p /usr/src/app && mkdir -p /usr/src/app/tmp
+WORKDIR /usr/src/app
+
+RUN apk -U upgrade
 
 # https://github.com/ministryofjustice/docker-templates/issues/37
 # UTF 8 issue during bundle install
 ENV LC_ALL C.UTF-8
 ENV APPUSER moj
 ENV UNICORN_PORT 3000
+
+COPY Gemfile* ./
+RUN gem install bundler -v 2.2.14
+RUN bundle config --global frozen 1 && \
+    bundle config --path=vendor/bundle && \
+    bundle config --global without test:development && \
+    bundle install
+
+RUN addgroup --gid 1000 --system appgroup && \
+    adduser --uid 1000 --system appuser --ingroup appgroup
+
+COPY . .
+
+RUN bundle exec rake assets:precompile RAILS_ENV=assets SUPPORT_EMAIL='' 2> /dev/null
+
+# RUN mkdir log tmp
+RUN chown -R appuser:appgroup /usr/src/app/
+USER appuser
+USER 1000
+
+RUN chown -R appuser:appgroup ./* && \
+chmod +x ./run.sh
+
+EXPOSE $UNICORN_PORT
 
 # expect/add ping environment variables
 ARG VERSION_NUMBER
@@ -15,72 +48,3 @@ ENV VERSION_NUMBER=${VERSION_NUMBER}
 ENV COMMIT_ID=${COMMIT_ID}
 ENV BUILD_DATE=${BUILD_DATE}
 ENV BUILD_TAG=${BUILD_TAG}
-
-RUN addgroup --gid 1000 --system appgroup && \
-    adduser --uid 1000 --system appuser --ingroup appgroup
-
-EXPOSE $UNICORN_PORT
-
-# Add Githubs public keys into known_hosts
-# Add application user
-# add official nodejs repo
-# install runit and nodejs
-# Throw errors if Gemfile has been modified since Gemfile.lock
-# Don't use any gems installed into the system. This makes the gem tree standalone
-# Don't install documentation with gems
-RUN apt-get update && apt-get install -y \
-                              apt-transport-https && \
-    mkdir $HOME/.ssh && \
-    touch /root/.ssh/known_hosts && \
-    ssh-keyscan github.com >> /root/.ssh/known_hosts && \
-    adduser $APPUSER --home /usr/src/app --shell /bin/bash --disabled-password --gecos "" && \
-    curl -s https://deb.nodesource.com/gpgkey/nodesource.gpg.key | apt-key add - && \
-    echo 'deb https://deb.nodesource.com/node jessie main' > /etc/apt/sources.list.d/nodesource.list && \
-    apt-get install -y \
-            runit \
-            nodejs && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/* && rm -fr *Release* *Sources* *Packages* && \
-    truncate -s 0 /var/log/*log && \
-    mkdir -p /usr/src/app && \
-    mkdir -p /usr/src/app/public/assets && \
-    bundle config --global frozen 1 && \
-    bundle config --global disable_shared_gems 1 && \
-    bundle config --global without test:development && \
-    echo ':verbose: true' > $HOME/.gemrc && \
-    echo 'install: --no-document' >> $HOME/.gemrc && \
-    echo 'update: --no-document' >> $HOME/.gemrc
-
-# Override imagemagick policy with recommended
-# mitagation policy for imagetragick bug
-# CVE-2016–3714 https://imagetragick.com/
-COPY policy.xml /etc/ImageMagick-6/policy.xml
-
-# Pre-install gems with native code to reduce build times
-# Note these versions need to be in sync with gem versions in Gemfile.lock
-RUN gem install --conservative kgio -v 2.11.3 && \
-    gem install --conservative pg -v 1.2.3 && \
-    gem install --conservative raindrops -v 0.19.1 && \
-    gem install --conservative unf_ext -v 0.0.7.7 && \
-    gem install --conservative nokogiri -v 1.11.3 && \
-    gem install --conservative unicorn -v 4.8.3
-
-WORKDIR /usr/src/app
-
-COPY Gemfile /usr/src/app/
-COPY Gemfile.lock /usr/src/app/
-
-RUN gem install bundler:2.2.14
-RUN bundle install
-
-COPY . /usr/src/app
-
-# RUN mkdir log tmp
-RUN chown -R appuser:appgroup /usr/src/app/
-USER appuser
-USER 1000
-
-RUN chown -R appuser:appgroup ./*
-# RUN chmod +x /usr/src/app/config/docker/*
-
-RUN bundle exec rake assets:precompile RAILS_ENV=assets SUPPORT_EMAIL='' 2> /dev/null

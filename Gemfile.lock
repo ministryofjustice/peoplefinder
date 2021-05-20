@@ -512,6 +512,8 @@ GEM
     timecop (0.9.1)
     tzinfo (1.2.9)
       thread_safe (~> 0.1)
+    tzinfo-data (1.2021.1)
+      tzinfo (>= 1.0.0)
     uglifier (4.2.0)
       execjs (>= 0.3.0, < 3)
     unf (0.1.4)
@@ -629,6 +631,7 @@ DEPENDENCIES
   sprockets (>= 3.7.2)
   text
   timecop
+  tzinfo-data
   uglifier (>= 2.7.2)
   unf
   unicorn

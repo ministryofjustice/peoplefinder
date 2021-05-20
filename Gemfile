@@ -44,7 +44,6 @@ gem 'sass-rails', '~> 5.0.6'
 gem 'sentry-ruby'
 gem 'sentry-rails'
 gem 'sprockets', '>= 3.7.2'
-
 gem 'uglifier', '>= 2.7.2'
 gem 'unf'
 gem 'unicorn'
@@ -53,7 +52,7 @@ gem 'useragent', '~> 0.10'
 gem 'virtus'
 gem 'will_paginate', '~> 3.0', '>=3.0.3'
 gem 'will_paginate-bootstrap', '~> 1.0', '>= 1.0.1'
-
+gem 'tzinfo-data'
 gem 'carrierwave',
     git: 'https://github.com/carrierwaveuploader/carrierwave.git',
     tag: 'cc39842e44edcb6187b2d379a606ec48a6b5e4a8'
