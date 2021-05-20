@@ -41,8 +41,7 @@ references:
 
   deploy_container_config: &deploy_container_config
     docker:
-      - image: ${ECR_ENDPOINT}/cloud-platform/tools:circleci
-
+      - image: ministryofjustice/cloud-platform-tools:1.29
 
 # These are defining the steps which are used below in the jobs
 
@@ -54,15 +53,6 @@ references:
           --no-cache \
           --no-progress \
           expect
-
-  install_gpg: &install_gpg
-    run:
-      name: Install GPG
-      command: |
-        apk add \
-          --no-cache \
-          --no-progress \
-          gnupg
 
   create_gpg_key_file: &create_gpg_key_file
     run:
@@ -147,15 +137,6 @@ references:
       command: |
         SKIP_SIMPLECOV=true bundle exec rspec
 
-  set_up_aws_cli: &set_up_aws_cli
-    run:
-      # this is needed to get a token from the cloud platform to use kubernetes
-      name: Set up AWS CLI
-      command: |
-        sudo apt-get update
-        sudo apt-get --assume-yes install python3-pip
-        sudo pip3 install awscli
-
   configure_aws_profile: &configure_aws_profile
     run:
       name: Configure AWS CLI
@@ -171,6 +152,7 @@ references:
         . build.sh circleci
         mkdir -p workspace
         echo $BUILD_TAG > workspace/build_tag
+        python3 config/pipeline/aws_ecr_scan_results.py --search peoplefinder-ecr --tag $BUILD_TAG --slack_webhook $SLACK_WEBHOOK
 
   deploy_to_dev: &deploy_to_dev
     run:
@@ -272,7 +254,6 @@ jobs:
       - checkout
       - attach_workspace:
           at: /tmp/workspace
-      - *install_gpg
       - *install_expect
       - *create_gpg_key_file
       - *configure_gpg
@@ -293,7 +274,6 @@ jobs:
       - checkout
       - attach_workspace:
           at: /tmp/workspace
-      - *install_gpg
       - *install_expect
       - *create_gpg_key_file
       - *configure_gpg
@@ -314,7 +294,6 @@ jobs:
       - checkout
       - attach_workspace:
           at: /tmp/workspace
-      - *install_gpg
       - *install_expect
       - *create_gpg_key_file
       - *configure_gpg
@@ -335,7 +314,6 @@ jobs:
       - checkout
       - attach_workspace:
           at: /tmp/workspace
-      - *install_gpg
       - *install_expect
       - *create_gpg_key_file
       - *configure_gpg
