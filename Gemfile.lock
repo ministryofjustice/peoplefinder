@@ -16,6 +16,13 @@ GIT
     sentry-raven (3.0.0)
       faraday (>= 1.0)
 
+GIT
+  remote: https://github.com/sinatra/sinatra.git
+  revision: 0a50b5608d3ff4fda563cc3d3a600d581c57d8e0
+  specs:
+    rack-protection (2.1.0)
+      rack
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -362,8 +369,6 @@ GEM
     rack (2.2.3)
     rack-contrib (2.2.0)
       rack (~> 2.0)
-    rack-protection (2.0.8.1)
-      rack
     rack-test (1.1.0)
       rack (>= 1.0, < 3)
     rails (5.2.6)
@@ -606,7 +611,7 @@ DEPENDENCIES
   pry-rails
   puma
   pundit (~> 2.1)
-  rack-protection (>= 1.5.5)
+  rack-protection!
   rails (~> 5.2.6)
   rails-controller-testing
   rb-fsevent
