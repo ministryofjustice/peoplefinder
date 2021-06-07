@@ -37,7 +37,6 @@ gem 'premailer-rails', '~> 1.9'
 gem 'prometheus-client'
 gem 'pundit', '~>2.1'
 gem 'puma'
-gem 'rack-protection', '>= 1.5.5'
 gem 'recipient_interceptor', '~> 0.1.2'
 gem 'sanitize', '~> 5.2.3'
 gem 'sass-rails', '~> 5.0.6'
@@ -57,6 +56,9 @@ gem 'carrierwave',
     git: 'https://github.com/carrierwaveuploader/carrierwave.git',
     tag: 'cc39842e44edcb6187b2d379a606ec48a6b5e4a8'
 
+github 'sinatra/sinatra' do
+  gem 'rack-protection'
+end
 group :assets do
   gem 'coffee-rails'
 end
