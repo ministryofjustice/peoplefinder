@@ -69,7 +69,6 @@ group :production do
 end
 
 group :development do
-  gem 'foreman'
   gem 'spring-commands-rspec'
   gem 'rb-fsevent', require: RUBY_PLATFORM[/darwin/i].to_s.size > 0
   gem 'meta_request'
