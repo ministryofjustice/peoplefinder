@@ -37,8 +37,8 @@ function _deploy() {
     # deploy image-tag to development
     ./deploy.sh peoplefinder-CT-1234-cloud-deploy-6bece953 development
 
-    # deploy latest image of master to production
-    ./deploy.sh peoplefinder-master-6bece953 production
+    # deploy latest image of main to production
+    ./deploy.sh peoplefinder-main-6bece953 production
     "
 
   # Ensure the script is called with two or three arguments

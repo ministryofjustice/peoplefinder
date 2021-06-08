@@ -231,7 +231,7 @@ jobs:
           paths:
             - build_tag
 
-  build_master_and_push_to_ecr:
+  build_main_and_push_to_ecr:
     <<: *deploy_container_config
     <<: *defaults
     steps:
@@ -265,7 +265,7 @@ jobs:
           webhook: ${SLACK_WEBHOOK}
 
   deploy_branch_to_dev: *do_dev_deployment_tasks
-  deploy_master_to_dev: *do_dev_deployment_tasks
+  deploy_main_to_dev: *do_dev_deployment_tasks
 
   demo_deployment_tasks: &do_demo_deployment_tasks
     <<: *deploy_container_config
@@ -285,7 +285,7 @@ jobs:
           webhook: ${SLACK_WEBHOOK}
 
   deploy_branch_to_demo: *do_demo_deployment_tasks
-  deploy_master_to_demo: *do_demo_deployment_tasks
+  deploy_main_to_demo: *do_demo_deployment_tasks
 
   staging_deployment_tasks: &do_staging_deployment_tasks
     <<: *deploy_container_config
@@ -305,9 +305,9 @@ jobs:
           webhook: ${SLACK_WEBHOOK}
 
   deploy_branch_to_staging: *do_staging_deployment_tasks
-  deploy_master_to_staging: *do_staging_deployment_tasks
+  deploy_main_to_staging: *do_staging_deployment_tasks
 
-  deploy_master_to_production:
+  deploy_main_to_production:
     <<: *deploy_container_config
     <<: *defaults
     steps:
@@ -332,46 +332,46 @@ jobs:
 workflows:
   version: 2
 
-  build_and_deploy_master:
+  build_and_deploy_main:
     jobs:
       - build_and_test:
           filters:
             branches:
-              only: master
-      - build_master_and_push_to_ecr:
+              only: main
+      - build_main_and_push_to_ecr:
           requires:
             - build_and_test
-      - deploy_master_to_dev:
+      - deploy_main_to_dev:
           requires:
-            - build_master_and_push_to_ecr
-      - deploy_master_to_demo_approval:
+            - build_main_and_push_to_ecr
+      - deploy_main_to_demo_approval:
           type: approval
           requires:
-            - build_master_and_push_to_ecr
-      - deploy_master_to_demo:
+            - build_main_and_push_to_ecr
+      - deploy_main_to_demo:
           requires:
-            - deploy_master_to_demo_approval
-      - deploy_master_to_staging_approval:
+            - deploy_main_to_demo_approval
+      - deploy_main_to_staging_approval:
           type: approval
           requires:
-            - deploy_master_to_dev
-      - deploy_master_to_staging:
+            - deploy_main_to_dev
+      - deploy_main_to_staging:
           requires:
-            - deploy_master_to_staging_approval
-      - deploy_master_to_production_approval:
+            - deploy_main_to_staging_approval
+      - deploy_main_to_production_approval:
           type: approval
           requires:
-            - deploy_master_to_staging
-      - deploy_master_to_production:
+            - deploy_main_to_staging
+      - deploy_main_to_production:
           requires:
-            - deploy_master_to_production_approval
+            - deploy_main_to_production_approval
 
   build_and_deploy_branch:
     jobs:
       - build_and_test:
           filters:
             branches:
-              ignore: master
+              ignore: main
       - build_branch_and_push_to_ecr_approval:
           type: approval
           requires:
