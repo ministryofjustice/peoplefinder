@@ -77,7 +77,7 @@ function _build() {
 
   # 7. Tag and push the image to the ECR
   case $current_branch in
-    master)
+    main)
       latest_tag=${docker_registry}:${component}-latest
       ;;
     *)
