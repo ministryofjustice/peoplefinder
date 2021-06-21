@@ -23,22 +23,14 @@ class SuggestionsController < ApplicationController
 
   def suggestion_params
     params.require(:suggestion).permit(
-      :missing_fields,
-      :missing_fields_info,
-      :incorrect_fields,
-      :incorrect_first_name,
-      :incorrect_last_name,
-      :incorrect_roles,
-      :incorrect_location_of_work,
-      :incorrect_working_days,
-      :incorrect_phone_number,
-      :incorrect_pager_number,
-      :incorrect_image,
-      :duplicate_profile,
-      :inappropriate_content,
-      :inappropriate_content_info,
-      :person_left,
-      :person_left_info
+      :missing_fields, :missing_fields_info,
+      :incorrect_fields, :incorrect_first_name,
+      :incorrect_last_name, :incorrect_roles,
+      :incorrect_location_of_work, :incorrect_working_days,
+      :incorrect_phone_number, :incorrect_pager_number,
+      :incorrect_image, :duplicate_profile,
+      :inappropriate_content, :inappropriate_content_info,
+      :person_left, :person_left_info
     )
   end
 
