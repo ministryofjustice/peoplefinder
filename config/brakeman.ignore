@@ -59,8 +59,28 @@
       "user_input": "completion_score_calculation",
       "confidence": "Weak",
       "note": "Calls method that returns dynamically generated SQL but with no injection possible"
+    },
+    {
+      "warning_type": "SQL Injection",
+      "warning_code": 0,
+      "fingerprint": "cbc7ef3a54f9d006a9d1fd593bed3d4af8776a2103e8463ea145c9efd6a71055",
+      "check_name": "SQL",
+      "message": "Possible SQL injection",
+      "file": "app/jobs/update_group_members_completion_score_job.rb",
+      "line": 25,
+      "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
+      "code": "Delayed::Job.where(\"substring(handler from 'job_class: #{self.class}') IS NOT NULL\")",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "UpdateGroupMembersCompletionScoreJob",
+        "method": "enqueued?"
+      },
+      "user_input": "self.class",
+      "confidence": "Weak",
+      "note": "Injection is class constant not based on user input - therefore no issue."
     }
   ],
-  "updated": "2021-06-21 15:04:11 +0100",
+  "updated": "2021-06-21 15:42:32 +0100",
   "brakeman_version": "5.0.2"
 }
