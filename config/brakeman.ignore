@@ -1,6 +1,26 @@
 {
   "ignored_warnings": [
     {
+      "warning_type": "SQL Injection",
+      "warning_code": 0,
+      "fingerprint": "593a9ebd06b12ecae2fb54cd01811e0ae6665428c999c05fe16c64a553df8b58",
+      "check_name": "SQL",
+      "message": "Possible SQL injection",
+      "file": "app/queries/namesakes_query.rb",
+      "line": 16,
+      "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
+      "code": "Person.all.ordered_by_name.where.not(:id => person.id).where(\"(LOWER(surname) = :surname AND LOWER(given_name) = :given_name) OR #{email_prefix_sql} = :email_prefix\", :surname => person.surname.downcase, :given_name => person.given_name.downcase, :email_prefix => person.email_prefix)",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "NamesakesQuery",
+        "method": "call"
+      },
+      "user_input": "email_prefix_sql",
+      "confidence": "Medium",
+      "note": "Not issue as 'injection' is static string from method."
+    },
+    {
       "warning_type": "File Access",
       "warning_code": 16,
       "fingerprint": "7aa6639270e3d5f07e3d51bf9ab37fa01ccac4f02be731316368710cd279edea",
@@ -41,6 +61,6 @@
       "note": "Calls method that returns dynamically generated SQL but with no injection possible"
     }
   ],
-  "updated": "2021-06-21 13:47:56 +0100",
+  "updated": "2021-06-21 15:04:11 +0100",
   "brakeman_version": "5.0.2"
 }
