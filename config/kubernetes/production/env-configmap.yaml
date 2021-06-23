@@ -9,3 +9,8 @@ data:
   ACTION_MAILER_DEFAULT_URL: 'peoplefinder.service.gov.uk'
   GA_TRACKING_ID: 'UA-53656606-1'
   SENTRY_ENVIRONMENT: 'production'
+  RAILS_SERVE_STATIC_FILES: 'true'
+  S3_REGION: 'eu-west-2'
+  GOVUK_APP_DOMAIN: 'peoplefinder.service.gov.uk'
+  GOVUK_WEBSITE_ROOT: 'www'
+  MOJ_PF_ES_URL: 'http://aws-es-proxy-service:9200'

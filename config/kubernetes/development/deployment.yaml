@@ -25,44 +25,6 @@ spec:
             - containerPort: 3000
           command: ["./run.sh"]
           env:
-            - name: RAILS_SERVE_STATIC_FILES
-              value: 'true'
-            - name: GOVUK_APP_DOMAIN
-              value: 'peoplefinder.service.gov.uk'
-            - name: GOVUK_WEBSITE_ROOT
-              value: 'development'
-            - name: MOJ_PF_ES_URL
-              value: 'http://aws-es-proxy-service:9200'
-            - name: SECRET_KEY_BASE
-              valueFrom:
-                secretKeyRef:
-                  name: app-secrets
-                  key: SECRET_KEY_BASE
-            - name: SUPPORT_EMAIL
-              valueFrom:
-                secretKeyRef:
-                  name: app-secrets
-                  key: SUPPORT_EMAIL
-            - name: READONLY_IP_WHITELIST
-              valueFrom:
-                secretKeyRef:
-                  name: app-secrets
-                  key: READONLY_IP_WHITELIST
-            - name: ADMIN_IP_RANGES
-              valueFrom:
-                secretKeyRef:
-                  name: app-secrets
-                  key: ADMIN_IP_RANGES
-            - name: SENDGRID_USERNAME
-              valueFrom:
-                secretKeyRef:
-                  name: app-secrets
-                  key: SENDGRID_USERNAME
-            - name: SENDGRID_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: app-secrets
-                  key: SENDGRID_PASSWORD
             - name: DATABASE_URL
               valueFrom:
                 secretKeyRef:
@@ -88,16 +50,11 @@ spec:
                 secretKeyRef:
                   name: peoplefinder-s3-output
                   key: secret_access_key
-            - name: S3_REGION
-              value: 'eu-west-2'
-            - name: SENTRY_DSN
-              valueFrom:
-                secretKeyRef:
-                  name: app-secrets
-                  key: SENTRY_DSN
           envFrom:
             - configMapRef:
                 name: environment-variables
+            - secretRef:
+                name: app-secrets
           readinessProbe:
             httpGet:
               path: /ping
@@ -127,20 +84,6 @@ spec:
           command: ["./run.sh"]
           args: ["worker"]
           env:
-            - name: GOVUK_APP_DOMAIN
-              value: 'peoplefinder.service.gov.uk'
-            - name: GOVUK_WEBSITE_ROOT
-              value: 'development'
-            - name: SECRET_KEY_BASE
-              valueFrom:
-                secretKeyRef:
-                  name: app-secrets
-                  key: SECRET_KEY_BASE
-            - name: SUPPORT_EMAIL
-              valueFrom:
-                secretKeyRef:
-                  name: app-secrets
-                  key: SUPPORT_EMAIL
             - name: DATABASE_URL
               valueFrom:
                 secretKeyRef:
@@ -166,24 +109,8 @@ spec:
                 secretKeyRef:
                   name: peoplefinder-s3-output
                   key: secret_access_key
-            - name: S3_REGION
-              value: 'eu-west-2'
-            - name: SENDGRID_USERNAME
-              valueFrom:
-                secretKeyRef:
-                  name: app-secrets
-                  key: SENDGRID_USERNAME
-            - name: SENDGRID_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: app-secrets
-                  key: SENDGRID_PASSWORD
-            - name: SENTRY_DSN
-              valueFrom:
-                secretKeyRef:
-                  name: app-secrets
-                  key: SENTRY_DSN
           envFrom:
             - configMapRef:
                 name: environment-variables
-
+            - secretRef:
+                name: app-secrets

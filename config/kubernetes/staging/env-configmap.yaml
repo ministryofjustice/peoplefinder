@@ -8,3 +8,9 @@ data:
   RAILS_ENV: 'production'
   ACTION_MAILER_DEFAULT_URL: 'staging.peoplefinder.service.gov.uk'
   SENTRY_ENVIRONMENT: 'staging'
+  RAILS_SERVE_STATIC_FILES: 'true'
+  S3_REGION: 'eu-west-2'
+  GOVUK_APP_DOMAIN: 'peoplefinder.service.gov.uk'
+  GOVUK_WEBSITE_ROOT: 'staging'
+  MOJ_PF_ES_URL: 'http://aws-es-proxy-service:9200'
+  

@@ -14,16 +14,6 @@ spec:
             image: 754256621582.dkr.ecr.eu-west-2.amazonaws.com/peoplefinder/peoplefinder-ecr:latest
             imagePullPolicy: IfNotPresent
             env:
-              - name: SECRET_KEY_BASE
-                valueFrom:
-                  secretKeyRef:
-                    name: app-secrets
-                    key: SECRET_KEY_BASE
-              - name: SUPPORT_EMAIL
-                valueFrom:
-                  secretKeyRef:
-                    name: app-secrets
-                    key: SUPPORT_EMAIL
               - name: DATABASE_URL
                 valueFrom:
                   secretKeyRef:
@@ -49,30 +39,11 @@ spec:
                   secretKeyRef:
                     name: peoplefinder-s3-output
                     key: secret_access_key
-              - name: S3_REGION
-                value: 'eu-west-2'
-              - name: SENDGRID_USERNAME
-                valueFrom:
-                  secretKeyRef:
-                    name: app-secrets
-                    key: SENDGRID_USERNAME
-              - name: SENDGRID_PASSWORD
-                valueFrom:
-                  secretKeyRef:
-                    name: app-secrets
-                    key: SENDGRID_PASSWORD
-              - name: GOVUK_APP_DOMAIN
-                value: 'peoplefinder.service.gov.uk'
-              - name: GOVUK_WEBSITE_ROOT
-                value: 'www'
-              - name: SENTRY_DSN
-                valueFrom:
-                  secretKeyRef:
-                    name: app-secrets
-                    key: SENTRY_DSN
             envFrom:
             - configMapRef:
                 name: environment-variables
+            - secretRef:
+                name: app-secrets
             command:
               - /bin/sh
               - "-c"
