@@ -96,7 +96,8 @@ describe UserBehaviorQuery, versioning: true do
           ancestors: [moj.name, csg.name].join(' > '),
           login_count: 0,
           last_login_at: nil,
-          updates_count: 0
+          updates_count: 0,
+          percent_complete: person1.completion_score
         },
         {
           id: person1.id,
@@ -107,7 +108,8 @@ describe UserBehaviorQuery, versioning: true do
           ancestors: [moj.name, csg.name].join(' > '),
           login_count: 0,
           last_login_at: nil,
-          updates_count: 0
+          updates_count: 0,
+          percent_complete: person1.completion_score
         },
         {
           id: person1.id,
@@ -118,7 +120,8 @@ describe UserBehaviorQuery, versioning: true do
           ancestors: moj.name,
           login_count: 0,
           last_login_at: nil,
-          updates_count: 0
+          updates_count: 0,
+          percent_complete: person1.completion_score
         },
         {
           id: person2.id,
@@ -129,7 +132,8 @@ describe UserBehaviorQuery, versioning: true do
           ancestors: nil,
           login_count: 2,
           last_login_at: "22-05-2017",
-          updates_count: 0
+          updates_count: 0,
+          percent_complete: person2.completion_score
         },
         {
           id: person3.id,
@@ -140,7 +144,8 @@ describe UserBehaviorQuery, versioning: true do
           ancestors: nil,
           login_count: 3,
           last_login_at: "21-05-2016",
-          updates_count: 2
+          updates_count: 2,
+          percent_complete: person3.completion_score
         }
       ]
     end

@@ -1,5 +1,7 @@
 class UserBehaviorQuery < BaseQuery
 
+  include Concerns::Completion
+
   DATE_STRING_FORMAT = '%d-%m-%Y'.freeze
 
   attr_reader :relation
@@ -25,7 +27,8 @@ class UserBehaviorQuery < BaseQuery
         team_role: rec.team_role,
         login_count: rec.login_count,
         last_login_at: rec.last_login_at&.strftime(DATE_STRING_FORMAT),
-        updates_count: rec.updates_count
+        updates_count: rec.updates_count,
+        percent_complete: self.class.average_completion_score(rec.id)
       }
     end
   end
