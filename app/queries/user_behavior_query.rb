@@ -28,7 +28,7 @@ class UserBehaviorQuery < BaseQuery
         login_count: rec.login_count,
         last_login_at: rec.last_login_at&.strftime(DATE_STRING_FORMAT),
         updates_count: rec.updates_count,
-        percent_complete: self.class.average_completion_score(rec.id)
+        percent_complete: rec.completion_score
       }
     end
   end
