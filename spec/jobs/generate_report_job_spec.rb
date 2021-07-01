@@ -3,11 +3,7 @@ require 'rails_helper'
 RSpec.describe GenerateReportJob, type: :job do
 
   let(:csv_report) { CsvPublisher::UserBehaviorReport }
-  let(:serialized_csv_report) do
-    {
-      'json_class' => csv_report.name
-    }.to_json
-  end
+  let(:serialized_csv_report) { csv_report.name }
 
   let(:perform_later) { described_class.perform_later(serialized_csv_report) }
   let(:perform_now) { described_class.perform_now(serialized_csv_report) }
@@ -16,7 +12,7 @@ RSpec.describe GenerateReportJob, type: :job do
   context 'when enqueued' do
     it "enqueues with appropriate config settings" do
       expect(job.queue_name).to eq 'generate_report'
-      expect(job.max_run_time).to eq 20.minutes
+      expect(job.max_run_time).to eq 10.minutes
       expect(job.max_attempts).to eq 3
       expect(job.destroy_failed_jobs?).to eq true
     end

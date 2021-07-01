@@ -16,8 +16,7 @@ module Admin
     private
 
     def generate report_klass
-      report = serialize(report_klass)
-      GenerateReportJob.perform_later(report)
+      GenerateReportJob.perform_later(report_klass.to_s)
     end
 
     def download name:
