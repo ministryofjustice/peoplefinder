@@ -12,7 +12,7 @@ class GenerateReportJob < ApplicationJob
   end
 
   def max_run_time
-    10.minutes
+    20.minutes
   end
 
   def destroy_failed_jobs?
