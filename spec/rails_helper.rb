@@ -18,7 +18,6 @@ if ENV['SKIP_SIMPLECOV'].to_s.downcase == "false"
     add_filter '/gem/'
     add_filter '.bundle'
   end
-  SimpleCov.minimum_coverage 95
 end
 
 Capybara.register_driver :chrome do |app|
