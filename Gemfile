@@ -79,7 +79,6 @@ end
 
 group :test do
   gem 'rails-controller-testing'
-  gem 'codeclimate-test-reporter', require: nil
   gem 'database_cleaner'
   gem 'site_prism'
   gem 'webmock'
@@ -99,7 +98,7 @@ group :development, :test do
   gem 'rspec-rails', '~> 3.9'
   gem 'selenium-webdriver', '~> 3.142.6'
   gem 'shoulda-matchers'
-  gem 'simplecov'
+  gem 'simplecov', '~> 0.17.1'
   gem 'simplecov-rcov'
   gem 'timecop'
   gem 'guard-jasmine'
