@@ -14,7 +14,6 @@ require 'webdrivers'
 
 if ENV['SKIP_SIMPLECOV'].to_s.downcase == "false"
   require 'simplecov'
-  SimpleCov.formatter = SimpleCov::Formatter::RcovFormatter
   SimpleCov.start 'rails' do
     add_filter '/gem/'
     add_filter '.bundle'
