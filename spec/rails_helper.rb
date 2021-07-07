@@ -1,6 +1,3 @@
-# require "codeclimate-test-reporter"
-# CodeClimate::TestReporter.start
-
 # This file is copied to spec/ when you run 'rails generate rspec:install'
 ENV['RAILS_ENV'] ||= 'test'
 require 'spec_helper'
@@ -15,7 +12,7 @@ require 'site_prism'
 require 'awesome_print'
 require 'webdrivers'
 
-unless ENV['SKIP_SIMPLECOV']
+if ENV['SKIP_SIMPLECOV'].to_s.downcase == "false"
   require 'simplecov'
   require 'simplecov-rcov'
   SimpleCov.formatter = SimpleCov::Formatter::RcovFormatter
@@ -25,8 +22,6 @@ unless ENV['SKIP_SIMPLECOV']
   end
   SimpleCov.minimum_coverage 95
 end
-
-
 
 Capybara.register_driver :chrome do |app|
   Capybara::Selenium::Driver.new(app, browser: :chrome)
