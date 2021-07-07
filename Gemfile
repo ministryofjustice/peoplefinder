@@ -99,7 +99,6 @@ group :development, :test do
   gem 'selenium-webdriver', '~> 3.142.6'
   gem 'shoulda-matchers'
   gem 'simplecov', '~> 0.17.1'
-  gem 'simplecov-rcov'
   gem 'timecop'
   gem 'guard-jasmine'
   gem 'jasmine-rails'
