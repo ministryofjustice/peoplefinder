@@ -21,7 +21,6 @@ references:
           PGUSER: postgres
           PGHOST: 127.0.0.1
           POSTGRES_DB: peoplefinder_test
-          CC_TEST_REPORTER_ID: e90f692c5ece4c61d9d041c8448c0ac1c87ea6ebe72c87c3fe9aed822364ae6a
 
       - image: circleci/postgres:9.5-alpine
         environment:
