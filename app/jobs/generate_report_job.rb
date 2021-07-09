@@ -3,7 +3,7 @@ class GenerateReportJob < ApplicationJob
   queue_as :generate_report
 
   def perform(report)
-    report = deserialize report
+    report = report.constantize
     report.publish!
   end
 
@@ -17,12 +17,6 @@ class GenerateReportJob < ApplicationJob
 
   def destroy_failed_jobs?
     true
-  end
-
-  private
-
-  def deserialize json
-    JSON.parse(json)['json_class'].constantize
   end
 
 end

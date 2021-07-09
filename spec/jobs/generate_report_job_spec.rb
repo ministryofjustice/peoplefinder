@@ -3,11 +3,7 @@ require 'rails_helper'
 RSpec.describe GenerateReportJob, type: :job do
 
   let(:csv_report) { CsvPublisher::UserBehaviorReport }
-  let(:serialized_csv_report) do
-    {
-      'json_class' => csv_report.name
-    }.to_json
-  end
+  let(:serialized_csv_report) { csv_report.name }
 
   let(:perform_later) { described_class.perform_later(serialized_csv_report) }
   let(:perform_now) { described_class.perform_now(serialized_csv_report) }

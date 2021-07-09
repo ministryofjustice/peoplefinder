@@ -16,18 +16,13 @@ class UserBehaviorQuery < BaseQuery
   end
 
   def data
-    call.map do |rec|
-      { id: rec.id,
-        full_name: rec.full_name,
-        address: rec.address, # can't use location as the name as this is a method on person model
-        team_name: rec.team_name,
-        ancestors: team_name_map(rec.ancestors),
-        team_role: rec.team_role,
-        login_count: rec.login_count,
-        last_login_at: rec.last_login_at&.strftime(DATE_STRING_FORMAT),
-        updates_count: rec.updates_count
-      }
+    data = []
+    call.find_in_batches do |people|
+      people.each do |person|
+        data << map_data_hash(person)
+      end
     end
+    data
   end
 
   def team_mapping
@@ -47,6 +42,21 @@ class UserBehaviorQuery < BaseQuery
   end
 
   private
+
+  def map_data_hash(rec)
+    {
+      id: rec.id,
+      full_name: rec.full_name,
+      address: rec.address, # can't use location as the name as this is a method on person model
+      team_name: rec.team_name,
+      ancestors: team_name_map(rec.ancestors),
+      team_role: rec.team_role,
+      login_count: rec.login_count,
+      last_login_at: rec.last_login_at&.strftime(DATE_STRING_FORMAT),
+      updates_count: rec.updates_count,
+      percent_complete: rec.completion_score
+    }
+  end
 
   def joins_sql
     <<~SQL
