@@ -110,8 +110,6 @@ GEM
       xpath (~> 3.2)
     childprocess (1.0.1)
       rake (< 13.0)
-    codeclimate-test-reporter (1.0.7)
-      simplecov
     coderay (1.1.3)
     coercible (1.0.0)
       descendants_tracker (~> 0.0.1)
@@ -139,7 +137,7 @@ GEM
     descendants_tracker (0.0.4)
       thread_safe (~> 0.3, >= 0.3.1)
     diff-lcs (1.3)
-    docile (1.3.2)
+    docile (1.4.0)
     dotenv (2.7.5)
     dotenv-rails (2.7.5)
       dotenv (= 2.7.5)
@@ -286,7 +284,7 @@ GEM
       rails-dom-testing (>= 1, < 3)
       railties (>= 4.2.0)
       thor (>= 0.14, < 2.0)
-    json (2.3.0)
+    json (2.5.1)
     keen (1.1.1)
       addressable (~> 2.5)
       multi_json (~> 1.12)
@@ -486,12 +484,11 @@ GEM
     shellany (0.0.1)
     shoulda-matchers (4.3.0)
       activesupport (>= 4.2.0)
-    simplecov (0.18.5)
+    simplecov (0.17.1)
       docile (~> 1.1)
-      simplecov-html (~> 0.11)
-    simplecov-html (0.12.2)
-    simplecov-rcov (0.2.3)
-      simplecov (>= 0.4.1)
+      json (>= 1.8, < 3)
+      simplecov-html (~> 0.10.0)
+    simplecov-html (0.10.2)
     site_prism (3.4.2)
       addressable (~> 2.5)
       capybara (~> 3.3)
@@ -565,7 +562,6 @@ DEPENDENCIES
   byebug
   capybara
   carrierwave!
-  codeclimate-test-reporter
   coffee-rails
   daemon
   database_cleaner
@@ -625,8 +621,7 @@ DEPENDENCIES
   sentry-raven!
   sentry-ruby
   shoulda-matchers
-  simplecov
-  simplecov-rcov
+  simplecov (~> 0.17.1)
   site_prism
   spring-commands-rspec
   sprockets (>= 3.7.2)
