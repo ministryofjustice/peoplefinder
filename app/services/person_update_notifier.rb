@@ -21,6 +21,7 @@ module PersonUpdateNotifier
     person.reload
     if send_update_reminder? person, within
       ReminderMailer.person_profile_update(person).deliver_later
+      person.skip_must_have_team = true
       person.update(last_reminder_email_at: Time.zone.now)
     end
   end
