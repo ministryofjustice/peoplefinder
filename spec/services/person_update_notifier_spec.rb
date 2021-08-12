@@ -7,6 +7,7 @@ RSpec.describe PersonUpdateNotifier, type: :service do
   subject { described_class }
 
   let(:person) { create(:person, login_count: 1) }
+  let(:person_two) { create(:person, surname: 'test_last_update', login_count: 1) }
   let(:mailer) { double(ReminderMailer) }
   let(:mailer_params) { [person] }
   let(:more_than_six_months_ago) { Time.now - (6.months + 1.day) }
@@ -34,6 +35,7 @@ RSpec.describe PersonUpdateNotifier, type: :service do
         subject.send_reminders
       end
     end
+
   end
 
   describe 'send_update_reminder?' do
@@ -95,7 +97,46 @@ RSpec.describe PersonUpdateNotifier, type: :service do
           check_send_update_reminder false
         end
       end
+    end
 
+    describe 'sending emails when a person is not on a team' do
+      context 'when last_reminder_email_at is nil' do
+        it 'last_reminder_email_at is updated' do
+          person_two.skip_must_have_team = true
+          person_two.update(
+            last_reminder_email_at: nil,
+            memberships: [],
+            updated_at: more_than_six_months_ago
+          )
+          person_two.skip_must_have_team = false
+
+          expect(described_class.send_update_reminder?(person_two, 6.months)).to be true
+          described_class.send(:send_reminder, person_two, 6.months)
+          person_two.reload
+
+          expect(person_two.last_reminder_email_at).to_not be(nil)
+          expect(person_two.last_reminder_email_at.class).to be(ActiveSupport::TimeWithZone)
+        end
+      end
+
+      context 'when last_reminder_email_at is > six months ago' do
+        it 'last_reminder_email_at is updated' do
+          person_two.skip_must_have_team = true
+          person_two.update(
+            last_reminder_email_at: more_than_six_months_ago,
+            memberships: [],
+            updated_at: more_than_six_months_ago
+          )
+          person_two.skip_must_have_team = false
+
+          expect(described_class.send_update_reminder?(person_two, 6.months)).to be true
+          described_class.send(:send_reminder, person_two, 6.months)
+          person_two.reload
+
+          expect(person_two.last_reminder_email_at).to_not be(more_than_six_months_ago)
+          expect(person_two.last_reminder_email_at.class).to be(ActiveSupport::TimeWithZone)
+        end
+      end
     end
   end
 
