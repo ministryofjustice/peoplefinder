@@ -76,7 +76,7 @@ module Peoplefinder
 
     require Rails.root.join('lib', 'csv_publisher', 'user_behavior_report.rb')
 
-    require Rails.root.join('lib', 'geckoboard_publisher', 'photo_profiles_report.rb')
+    require Rails.root.join('lib', 'geckoboard_publisher', 'report.rb')
     require Rails.root.join('lib', 'geckoboard_publisher', 'profile_completions_report.rb')
     # Dir[config.root.join('lib', 'geckoboard_publisher', '**', '*.rb')].each do |file|
     #   require file
