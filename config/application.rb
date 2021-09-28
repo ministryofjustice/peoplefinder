@@ -77,11 +77,10 @@ module Peoplefinder
     require Rails.root.join('lib', 'csv_publisher', 'user_behavior_report.rb')
 
     require Rails.root.join('lib', 'geckoboard_publisher', 'report.rb')
-    require Rails.root.join('lib', 'geckoboard_publisher', 'profile_completions_report.rb')
-    # Dir[config.root.join('lib', 'geckoboard_publisher', '**', '*.rb')].each do |file|
-    #   require file
-    # end
-    
+    Dir[config.root.join('lib', 'geckoboard_publisher', '**', '*.rb')].sort.each do |file|
+      require file
+    end
+
     config.active_record.sqlite3.represent_boolean_as_integer = true
 
     Sentry.init do |config|
