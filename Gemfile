@@ -7,7 +7,7 @@ gem 'ancestry'
 gem 'awesome_print'
 gem 'aws-sdk', '~> 2.7.3'
 gem 'delayed_job_active_record', '~> 4.1.0'
-gem "daemons"
+gem 'daemons'
 gem 'elasticsearch-model', '~> 6.1.0'
 gem 'elasticsearch-rails', '~> 6.1.0'
 gem 'faker', '~> 1.7'

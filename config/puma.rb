@@ -49,6 +49,6 @@ plugin :tmp_restart
 # Activerecord Connection Pool Metrics
 require 'prometheus_exporter/instrumentation'
 PrometheusExporter::Instrumentation::ActiveRecord.start(
-  custom_labels: { type: "puma_single_mode" }, #optional params
-  config_labels: [:database, :host] #optional params
+  custom_labels: { type: 'puma_single_mode' }, # optional params
+  config_labels: [:database, :host] # optional params
 )
