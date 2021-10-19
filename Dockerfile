@@ -13,7 +13,7 @@ RUN apk -U upgrade
 # UTF 8 issue during bundle install
 ENV LC_ALL C.UTF-8
 ENV APPUSER moj
-ENV UNICORN_PORT 3000
+ENV PUMA_PORT 3000
 
 COPY Gemfile* ./
 RUN gem install bundler -v 2.2.14
@@ -35,9 +35,9 @@ USER appuser
 USER 1000
 
 RUN chown -R appuser:appgroup ./* && \
-chmod +x ./run.sh
+RUN chmod +x /usr/src/app/config/docker/*
 
-EXPOSE $UNICORN_PORT
+EXPOSE $PUMA_PORT
 
 # expect/add ping environment variables
 ARG VERSION_NUMBER
