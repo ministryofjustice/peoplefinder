@@ -34,7 +34,7 @@ RUN chown -R appuser:appgroup /usr/src/app/
 USER appuser
 USER 1000
 
-RUN chown -R appuser:appgroup ./* && \
+RUN chown -R appuser:appgroup ./*
 RUN chmod +x /usr/src/app/config/docker/*
 
 EXPOSE $PUMA_PORT
