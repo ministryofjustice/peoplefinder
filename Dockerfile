@@ -13,7 +13,7 @@ RUN apk -U upgrade
 # UTF 8 issue during bundle install
 ENV LC_ALL C.UTF-8
 ENV APPUSER moj
-ENV UNICORN_PORT 3000
+ENV PUMA_PORT 3000
 
 COPY Gemfile* ./
 RUN gem install bundler -v 2.2.14
@@ -27,17 +27,17 @@ RUN addgroup --gid 1000 --system appgroup && \
 
 COPY . .
 
-RUN bundle exec rake assets:precompile RAILS_ENV=assets SUPPORT_EMAIL='' 2> /dev/null
+RUN RAILS_ENV=production GOVUK_APP_DOMAIN=not_real GOVUK_WEBSITE_ROOT=not_real SUPPORT_EMAIL=not_real bundle exec rake assets:clean assets:precompile SECRET_KEY_BASE=required_but_does_not_matter_for_assets 2> /dev/null
 
 # RUN mkdir log tmp
 RUN chown -R appuser:appgroup /usr/src/app/
 USER appuser
 USER 1000
 
-RUN chown -R appuser:appgroup ./* && \
-chmod +x ./run.sh
+RUN chown -R appuser:appgroup ./*
+RUN chmod +x /usr/src/app/config/docker/*
 
-EXPOSE $UNICORN_PORT
+EXPOSE $PUMA_PORT
 
 # expect/add ping environment variables
 ARG VERSION_NUMBER

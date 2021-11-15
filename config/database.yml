@@ -1,4 +1,4 @@
-# PostgreSQL. Versions 8.2 and up are supported.
+# PostgreSQL. Versions 12 and up are supported.
 #
 # Install the pg driver:
 #   gem install pg
@@ -14,15 +14,12 @@
 # Configure Using Gemfile
 # gem 'pg'
 #
+# For details on connection pooling, see rails configuration guide
+# http://guides.rubyonrails.org/configuring.html#database-pooling
 default: &default
   adapter: postgresql
   encoding: unicode
-  # For details on connection pooling, see rails configuration guide
-  # http://guides.rubyonrails.org/configuring.html#database-pooling
-  pool: 5
-
-assets:
-  <<: *default
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 50 } %>
 
 development:
   <<: *default
@@ -60,12 +57,7 @@ development:
 # Do not set this db to the same as development or production.
 test:
   <<: *default
-<% if ENV.key?('DB_TEST_URL') %>
-  url: <%= ENV.fetch('DB_TEST_URL') %>
-<% else %>
-  database: peoplefinder_test
-<% end %>
-  # min_messages: error
+  url: <%= ENV.fetch('DB_TEST_URL', 'postgres://localhost/peoplefinder_test') %>
 
 # As with config/secrets.yml, you never want to store sensitive information,
 # like your database password, in your source code. If your source code is
@@ -88,3 +80,4 @@ test:
 #
 production:
   <<: *default
+  url: <%= ENV.fetch('DATABASE_URL', '') %>

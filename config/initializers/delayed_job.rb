@@ -8,4 +8,6 @@ Delayed::Worker.queue_attributes = {
 
 Delayed::Worker.max_attempts = 5
 Delayed::Worker.max_run_time = 1.hour
-Delayed::Worker.logger = Logger.new(Rails.root.join('log/delayed_job.log')) if Rails.env.development?
+Delayed::Worker.destroy_failed_jobs = false
+Delayed::Worker.raise_signal_exceptions = :term
+Delayed::Worker.logger = Logger.new(Rails.root.join('log/delayed_job.log')) if ENV['ENV'] != 'production'
