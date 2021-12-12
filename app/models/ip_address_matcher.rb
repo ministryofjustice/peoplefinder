@@ -9,7 +9,7 @@ class IpAddressMatcher
   def ===(other)
     if Rails.env.development?
       true
-    else 
+    else
       other = NetAddr::IPv4.parse(other)
       @cidrs.any? { |cidr| cidr.contains(other) }
     end
