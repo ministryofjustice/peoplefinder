@@ -37,30 +37,19 @@ Point your browser to http://0.0.0.0:3000 and you should see the application's s
 
 ### Mac OSX install
 
-PeopleFinder uses Ruby 2.3.7 and bundler 1.14.6
+PeopleFinder uses Ruby 2.7.2 and bundler 2.2.14
 
-Install Ruby 2.3.7 using rbenv or rvm then install bundler using
+Install Ruby 2.7.2 using rbenv or rvm then install bundler using
 
-`gem install bundler:1.14.6`
-
-PeopleFinder relies on Elasticsearch for its search functionality, and ElasticSearch requires Java to be installed on your Mac. Presently we use Elastisearch 1.7 which requires Java 8.
-
-Oracle recently changed the licensing for Java such that you need to agree to their updated licence agreement before you download it. This in turn has meant that they have broken all previous methods for obtaining older versions of Java, so most of the suggestions that previously worked no longer do. At time of writing (late 2019) the best method is to install OpenJDK using homebrew as follows.
-
-```cmd
-$ brew tap homebrew/cask-versions
-$ brew cask install homebrew/cask-versions/adoptopenjdk8
-```
-
-If you need to have other versions of Java installed, you may need to add this to your `~/.bash_profile` file or find some other way of switching the active version.
-
-```
-export JAVA_HOME=`/usr/libexec/java_home -v 1.8`
-```
+`gem install bundler:2.2.14`
 
 [Install Homebrew](http://brew.sh/) if it is not on your machine.
 
-Regarding Elasticsearch, unfortunately the version we use is no longer available from Homebrew. The easiest thing to do is run the Elasticsearch server in Docker and keep it running in a separate terminal window for local development use:
+Install elasticsearch through brew, find the right version of elasticsearch you want install by using following command
+```
+brew search elasticsearch
+```
+The version of elasticsearch we use is 7.10.x
 
 ```cmd
 docker run --name elasticsearch  --publish 9200:9200 bitnami/elasticsearch:6.8.6-r1
@@ -175,13 +164,19 @@ authentication token. This can be done by entering their email address
 message containing a link with a unique random token. Clicking on the link
 will allow them to login.
 
-For local testing - you can view the server logs and copy the token from there, then paste it into the URL. See the image below:
+For local testing - There are a few ways you can get the token
+1. Search your token from local development database
+```
+ select * from tokens where user_email = <the email you use for asking token from app> order by id desc;
+```
+http://localhost:3000/tokens/<token>
 
+2. you can view the server logs and copy the token from there, then paste it into the URL. See the image below:
 ![image](https://user-images.githubusercontent.com/22935203/114713734-4e6e3f00-9d29-11eb-86f2-a7a18a4f9eb7.png)
 
-Then use the token on this URL: http://127.0.0.1:3000/tokens/3da4f4e2-8001-4437-b3ab-7e2b3f6e768c <-- replace with your token.
+Then use the token on this URL: http://localhost:3000/tokens/3da4f4e2-8001-4437-b3ab-7e2b3f6e768c <-- replace with your token.3 
 
-Or you can use mailcatcher to pick up the Emails with the token link (see below). 
+3. Or you can use mailcatcher to pick up the Emails with the token link (see below). 
 
 ## E-mails
 
@@ -197,8 +192,6 @@ In production, periodic emails are sent to users that have:
 Cron jobs are handled using Kubernetes Cron jobs. The files are located in config/kubernetes. These are responsible for Emails like the one that you received when someone updates your profile.
 
 ### In Development
-
-Viewing in the browser on local should be done using the IP address: http://127.0.0.1:3000/ rather than localhost - to avoid this error: ::1 contains invalid characters.
 
 E-mails in development environment are setup to be delivered using `mailcatcher` gem. For that `mailcatcher` has to be started and then accessed on `http://localhost:1080` to read the delivered e-mails.
 
@@ -499,3 +492,11 @@ Make sure this file is within the scope defined in the .gitattributes, if not, y
 
 If in doubt about handling any secure credentials please do not hesitate to `#ask-cloud-platform`
 or `#security` in MOJ Slack.
+
+### prometheus_exporter
+if you want to check/debug prometheus_exporter under local development environment, just open a separated terminial and get into this project root foler
+and run the following command from command line
+```
+>prometheus_exporter
+```
+and also comment out the line for checking Rails.env from puma.rb and prometheus_exporter.rb temporarily
