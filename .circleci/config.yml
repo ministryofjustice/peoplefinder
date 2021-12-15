@@ -167,7 +167,7 @@ references:
         . build.sh circleci
         mkdir -p workspace
         echo $BUILD_TAG > workspace/build_tag
-        python3 config/pipeline/aws_ecr_scan_results.py --search peoplefinder-ecr --tag $BUILD_TAG --slack_webhook $SLACK_WEBHOOK
+        python3 config/pipeline/aws_ecr_scan_results.py --search peoplefinder-ecr --tag $BUILD_TAG --slack_webhook $SLACK_WEBHOOK || true
 
   deploy_to_dev: &deploy_to_dev
     run:
