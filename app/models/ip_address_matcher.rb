@@ -7,8 +7,12 @@ class IpAddressMatcher
   end
 
   def ===(other)
-    other = NetAddr::IPv4.parse(other)
-    @cidrs.any? { |cidr| cidr.contains(other) }
+    if Rails.env.development?
+      true
+    else
+      other = NetAddr::IPv4.parse(other)
+      @cidrs.any? { |cidr| cidr.contains(other) }
+    end
   end
   alias include? ===
 
