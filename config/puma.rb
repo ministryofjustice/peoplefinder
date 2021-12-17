@@ -47,8 +47,8 @@ end
 plugin :tmp_restart
 
 # Activerecord Connection Pool Metrics
-if Rails.env.production?
-  after_worker_boot do
+after_worker_boot do
+  if Rails.env.production?
     require 'prometheus_exporter/instrumentation'
     require 'prometheus_exporter/client'
     PrometheusExporter::Instrumentation::Puma.start
