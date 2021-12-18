@@ -1,4 +1,3 @@
-# require File.expand_path('../boot', __FILE__)
 require_relative 'boot'
 require 'rails/all'
 
@@ -81,12 +80,6 @@ module Peoplefinder
       require file
     end
 
-    config.active_record.sqlite3.represent_boolean_as_integer = true
-
-    Sentry.init do |config|
-      config.dsn = ENV['SENTRY_DSN']
-      config.breadcrumbs_logger = [:active_support_logger]
-    end
   end
 
 end
