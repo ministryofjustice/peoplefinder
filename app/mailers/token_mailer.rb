@@ -1,7 +1,7 @@
 class TokenMailer < ApplicationMailer
 
   # layout 'email'
-  add_template_helper MailHelper
+  helper MailHelper
 
   def new_token_email(token)
     @token = token

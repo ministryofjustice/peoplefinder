@@ -1,5 +1,19 @@
 module GovukElementsErrorsHelperExtensions
-  def error_summary_message object, attribute, child_to_parents
+
+  def error_summary_list object
+    content_tag(:ul, class: 'error-summary-list') do
+      messages = error_summary_messages(object)
+      messages.flatten.join('').html_safe
+    end
+  end
+
+  def error_summary_messages object
+    object.errors.attribute_names.map do |attribute|
+      error_summary_message object, attribute
+    end
+  end
+
+  def error_summary_message object, attribute
     if nested_attribute?(object, attribute)
       association = association_from_attribute(attribute)
       nested_attribute = association_attribute_from_attribute(attribute)
@@ -11,8 +25,18 @@ module GovukElementsErrorsHelperExtensions
         messages << error_tag
       end
     else
-      super
+      messages = object.errors.full_messages_for attribute
+      messages.map do |message|
+        object_prefixes = object_prefixes object
+        link = link_to_error(object_prefixes, attribute)
+        message.sub! default_label(attribute), localized_label(object_prefixes, attribute)
+        content_tag(:li, content_tag(:a, message, href: link))
+      end
     end
+  end
+
+  def object_prefixes object
+    [underscore_name(object)]
   end
 
   def map_association_error_tag parent:, association:, attribute:, &_block

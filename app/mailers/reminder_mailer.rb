@@ -2,8 +2,8 @@ class ReminderMailer < ApplicationMailer
   include FeatureHelper
 
   # layout 'email'
-  add_template_helper PeopleHelper
-  add_template_helper MailHelper
+  helper PeopleHelper
+  helper MailHelper
 
   def never_logged_in(person)
     @person = person

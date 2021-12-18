@@ -3,7 +3,7 @@ class UserUpdateMailer < ApplicationMailer
   extend Forwardable
 
   # layout 'email'
-  add_template_helper MailHelper
+  helper MailHelper
 
   def new_profile_email(person, by_email = nil)
     @person = person
