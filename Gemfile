@@ -76,7 +76,7 @@ end
 
 group :test do
   gem 'rails-controller-testing'
-  gem 'database_cleaner'
+  gem 'database_cleaner', '~> 1.8.5'
   gem 'site_prism'
   gem 'webmock'
   gem 'webdrivers', '~> 4.4'
