@@ -45,7 +45,7 @@ module GeckoboardPublisher
     # geckoboard-ruby gem's dataset.find_or_create id attribute
     # e.g. peoplefinder-staging.total_profiles_report
     def id
-      Rails.application.class.parent_name.underscore +
+      Rails.application.class.module_parent_name.underscore +
         '-' +
         (ENV['ENV'] || Rails.env).downcase +
         '.' +
