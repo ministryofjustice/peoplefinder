@@ -215,7 +215,7 @@ GEM
       fog-core
       nokogiri (>= 1.5.11, < 2.0.0)
     formatador (0.3.0)
-    friendly_id (5.2.5)
+    friendly_id (5.4.2)
       activerecord (>= 4.0.0)
     geckoboard-ruby (0.4.0)
     globalid (1.0.0)
@@ -592,7 +592,7 @@ DEPENDENCIES
   fastimage (~> 2.1)
   ffi (>= 1.9.24)
   fog-aws
-  friendly_id (~> 5.2.1)
+  friendly_id
   geckoboard-ruby (~> 0.4.0)
   govspeak
   govuk_elements_form_builder (= 0.1.1)
