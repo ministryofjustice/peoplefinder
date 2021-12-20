@@ -14,11 +14,14 @@ module MailHelper
     end
   end
 
+  #rubocop:disable Rails/OutputSafety
+  # The content from following function is from other inside functions, os it is safe
   def app_guidance
     content_tag(:p) do
-      mailer_t(:app_guidance_html, link: link_to_guidance)
+      mailer_t(:app_guidance_html, link: link_to_guidance).html_safe
     end
   end
+  #rubocop:enable Rails/OutputSafety
 
   def do_not_reply
     content_tag(:p, mailer_t(:do_not_reply))
