@@ -30,7 +30,7 @@ RSpec.describe 'search/person', type: :view do
     end
 
     people_results.each_with_hit.with_index do |(person, hit), idx|
-      render partial: 'search/person', locals: { person: person, hit: hit, index: idx, current_user: controller.current_user}
+      render partial: 'search/person', locals: { person: person, hit: hit, index: idx, current_user: controller.current_user }
     end
   end
 
