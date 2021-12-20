@@ -33,12 +33,18 @@ Rails.application.configure do
 
   # Disable request forgery protection in test environment.
   config.action_controller.allow_forgery_protection = false
-  config.action_mailer.perform_caching = false
 
   # Tell Action Mailer not to deliver emails to the real world.
   # The :test delivery method accumulates sent emails in the
   # ActionMailer::Base.deliveries array.
+  config.action_mailer.perform_caching = false
+  config.action_mailer.delivery_job = "ActionMailer::MailDeliveryJob"
   config.action_mailer.delivery_method = :test
+  config.action_mailer.default_url_options = {
+    host: 'www.example.com',
+    protocol: 'http'
+  }
+  config.action_mailer.asset_host = 'http://www.example.com'
 
   # Print deprecation notices to the stderr.
   config.active_support.deprecation = :stderr
@@ -54,12 +60,6 @@ Rails.application.configure do
 
   # Annotate rendered view with file names.
   # config.action_view.annotate_rendered_view_with_filenames = true
-  config.active_job.queue_adapter = :test
-  config.action_mailer.default_url_options = {
-    host: 'www.example.com',
-    protocol: 'http'
-  }
-  config.action_mailer.asset_host = 'http://www.example.com'
   config.active_job.queue_adapter = :test
 
   # mock the fact we are NOT on an IP whitelist for test runs
