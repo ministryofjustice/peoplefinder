@@ -44,7 +44,7 @@ module Peoplefinder
     config.action_controller.default_protect_from_forgery = true
 
     # Use SHA-1 instead of MD5 to generate non-sensitive digests, such as the ETag header.
-    config.active_support.use_sha1_digests = true
+    config.active_support.hash_digest_class = ::Digest::SHA1
 
     # Make `form_with` generate id attributes for any generated HTML tags.
     config.action_view.form_with_generates_ids = true
