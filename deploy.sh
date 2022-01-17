@@ -177,15 +177,18 @@ function _deploy() {
     p "Target namespace: \e[32m$namespace\e[0m"
     p "--------------------------------------------------"
 
+    if [[ "$3" == "circleci" ]]
+    then
     #authenticate to live cluster
-    p "Authenticating to live..."
-    echo -n $KUBE_ENV_LIVE_DEVELOPMENT_CACERT | base64 -d > ./live_ca.crt
-    kubectl config set-cluster $KUBE_ENV_LIVE_CLUSTER_NAME --certificate-authority=./live_ca.crt --server=https://$KUBE_ENV_LIVE_CLUSTER_NAME
-    kubectl config set-credentials circleci --token=$KUBE_ENV_LIVE_DEVELOPMENT_TOKEN
-    kubectl config set-context $KUBE_ENV_LIVE_CLUSTER_NAME --cluster=$KUBE_ENV_LIVE_CLUSTER_NAME --user=circleci --namespace=$namespace
-    kubectl config use-context $KUBE_ENV_LIVE_CLUSTER_NAME
-    kubectl config current-context
-    kubectl --namespace=$namespace get pods
+      p "Authenticating to live..."
+      echo -n $KUBE_ENV_LIVE_DEVELOPMENT_CACERT | base64 -d > ./live_ca.crt
+      kubectl config set-cluster $KUBE_ENV_LIVE_CLUSTER_NAME --certificate-authority=./live_ca.crt --server=https://$KUBE_ENV_LIVE_CLUSTER_NAME
+      kubectl config set-credentials circleci --token=$KUBE_ENV_LIVE_DEVELOPMENT_TOKEN
+      kubectl config set-context $KUBE_ENV_LIVE_CLUSTER_NAME --cluster=$KUBE_ENV_LIVE_CLUSTER_NAME --user=circleci --namespace=$namespace
+      kubectl config use-context $KUBE_ENV_LIVE_CLUSTER_NAME
+      kubectl config current-context
+      kubectl --namespace=$namespace get pods
+    fi
 
     #deploy to live cluster
     p "Authenticated, deploying to live..."
