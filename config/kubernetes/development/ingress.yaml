@@ -3,6 +3,9 @@ kind: Ingress
 metadata:
   name: peoplefinder-ingress
   namespace: peoplefinder-development
+  annotations:
+    external-dns.alpha.kubernetes.io/set-identifier: peoplefinder-ingress-peoplefinder-development-blue
+    external-dns.alpha.kubernetes.io/aws-weight: "100"
 spec:
   tls:
     - hosts:
