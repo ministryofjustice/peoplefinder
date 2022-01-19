@@ -181,7 +181,7 @@ function _deploy() {
     then
     #authenticate to live cluster
       p "Authenticating to live..."
-      echo -n $KUBE_ENV_LIVE_CACERT | base64 -d > ./live_ca.crt
+      echo -n $KUBE_ENV_LIVE_CA_CERT | base64 -d > ./live_ca.crt
       kubectl config set-cluster $KUBE_ENV_LIVE_CLUSTER_NAME --certificate-authority=./live_ca.crt --server=https://$KUBE_ENV_LIVE_CLUSTER_NAME
       kubectl config set-credentials circleci --token=$KUBE_ENV_LIVE_DEVELOPMENT_TOKEN
       kubectl config set-context $KUBE_ENV_LIVE_CLUSTER_NAME --cluster=$KUBE_ENV_LIVE_CLUSTER_NAME --user=circleci --namespace=$namespace
