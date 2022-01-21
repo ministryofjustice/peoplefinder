@@ -1,4 +1,3 @@
-# require File.expand_path('../boot', __FILE__)
 require_relative 'boot'
 require 'rails/all'
 
@@ -26,6 +25,29 @@ module Peoplefinder
     # config.i18n.default_locale = :de
 
     ActionView::Base.default_form_builder = GovukElementsFormBuilder::FormBuilder
+
+    # Use AES-256-GCM authenticated encryption for encrypted cookies.
+    # Also, embed cookie expiry in signed or encrypted cookies for increased security.
+    #
+    # This option is not backwards compatible with earlier Rails versions.
+    # It's best enabled when your entire app is migrated and stable on 5.2.
+    #
+    # Existing cookies will be converted on read then written with the new scheme.
+    config.action_dispatch.use_authenticated_cookie_encryption = true
+
+    # Use AES-256-GCM authenticated encryption as default cipher for encrypting messages
+    # instead of AES-256-CBC, when use_authenticated_message_encryption is set to true.
+    config.active_support.use_authenticated_message_encryption = true
+
+    # Add default protection from forgery to ActionController::Base instead of in
+    # ApplicationController.
+    config.action_controller.default_protect_from_forgery = true
+
+    # Use SHA-1 instead of MD5 to generate non-sensitive digests, such as the ETag header.
+    config.active_support.hash_digest_class = ::Digest::SHA1
+
+    # Make `form_with` generate id attributes for any generated HTML tags.
+    config.action_view.form_with_generates_ids = true
 
     # app title appears in the header bar
     config.app_title = 'People Finder'
@@ -81,12 +103,6 @@ module Peoplefinder
       require file
     end
 
-    config.active_record.sqlite3.represent_boolean_as_integer = true
-
-    Sentry.init do |config|
-      config.dsn = ENV['SENTRY_DSN']
-      config.breadcrumbs_logger = [:active_support_logger]
-    end
   end
 
 end

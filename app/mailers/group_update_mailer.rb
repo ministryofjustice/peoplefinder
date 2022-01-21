@@ -1,7 +1,7 @@
 class GroupUpdateMailer < ApplicationMailer
 
   # layout 'email'
-  add_template_helper MailHelper
+  helper MailHelper
 
   def inform_subscriber(recipient, group, instigator)
     @person = recipient

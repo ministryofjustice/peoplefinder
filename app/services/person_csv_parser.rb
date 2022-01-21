@@ -14,7 +14,7 @@ class PersonCsvParser
 
   def initialize(serialized)
     @unrecognized_columns = []
-    @rows = CSV.new(serialized).to_a
+    @rows = CSV.new(serialized.force_encoding("utf-8")).to_a
     @header = parse_header(@rows.first)
     @records = parse_records(@rows.drop(1))
   end

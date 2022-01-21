@@ -3,7 +3,7 @@ class PermanentSecretaryUniqueValidator < ActiveModel::Validator
   def validate(record)
     @record = record
     if perm_sec? && perm_sec_exists?
-      record.errors[:leader] << perm_sec_unique_message
+      record.errors.add(:leader, perm_sec_unique_message)
     end
   end
 

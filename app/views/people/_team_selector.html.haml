@@ -5,7 +5,7 @@
 
 .editable-container
   .editable-summary.parent-summary
-    - if membership.errors.keys.include?(:group)
+    - if membership.errors.attribute_names.include?(:group)
       %span.error-message
         = membership.errors.full_messages_for(:group).first
     - if membership.group

@@ -1,7 +1,7 @@
 class SuggestionMailer < ApplicationMailer
 
   # layout 'email'
-  add_template_helper MailHelper
+  helper MailHelper
 
   def person_email(person, suggester, suggestion_hash)
     @person = person

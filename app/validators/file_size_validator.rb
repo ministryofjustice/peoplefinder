@@ -20,7 +20,7 @@ class FileSizeValidator < ActiveModel::EachValidator
   private
 
   def add_error(record, attribute, message)
-    record.errors[attribute] << message
+    record.errors.add(attribute, message)
   end
 
   def scope_t
