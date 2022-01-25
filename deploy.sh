@@ -131,7 +131,8 @@ function _deploy() {
       echo -n $KUBE_ENV_LIVE_CA_CERT | base64 -d > ./live_ca.crt
       kubectl config set-cluster $KUBE_ENV_LIVE_CLUSTER_NAME --certificate-authority=./live_ca.crt --server=https://$KUBE_ENV_LIVE_CLUSTER_NAME
       
-      if [ $environment == "development" ] then
+      if [[ $environment == "development" ]]
+      then
         kubectl config set-credentials circleci --token=$KUBE_ENV_LIVE_DEVELOPMENT_TOKEN
       else
         kubectl config set-credentials circleci --token=$KUBE_ENV_LIVE_STAGING_TOKEN
