@@ -114,6 +114,7 @@ function _deploy() {
     fi
   fi
 
+  ingress_yaml_file = ingress.yaml
   # Deploy to Live cluster
   if [ $environment == "development" ] || [ $environment == "staging" ]
   then
@@ -124,6 +125,8 @@ function _deploy() {
     p "Target namespace: \e[32m$namespace\e[0m"
     p "--------------------------------------------------"
 
+    ingress_yaml_file = ingress-live.yaml
+
     if [[ "$3" == "circleci" ]]
     then
     #authenticate to live cluster
@@ -133,10 +136,12 @@ function _deploy() {
       
       if [[ $environment == "development" ]]
       then
-        kubectl config set-credentials circleci --token=$KUBE_ENV_LIVE_DEVELOPMENT_TOKEN
+        live_token=$KUBE_ENV_LIVE_DEVELOPMENT_TOKEN
       else
-        kubectl config set-credentials circleci --token=$KUBE_ENV_LIVE_STAGING_TOKEN
+        live_token=$KUBE_ENV_LIVE_STAGING_TOKEN
       fi
+      
+      kubectl config set-credentials circleci --token=$live_token
       kubectl config set-context $KUBE_ENV_LIVE_CLUSTER_NAME --cluster=$KUBE_ENV_LIVE_CLUSTER_NAME --user=circleci --namespace=$namespace
       kubectl config use-context $KUBE_ENV_LIVE_CLUSTER_NAME
       kubectl config current-context
@@ -160,7 +165,7 @@ function _deploy() {
   # Apply non-image specific config
   kubectl apply \
     -f config/kubernetes/${environment}/service.yaml \
-    -f config/kubernetes/${environment}/ingress.yaml \
+    -f config/kubernetes/${environment}/${ingress_yaml_file} \
     -f config/kubernetes/${environment}/secrets.yaml \
     -n $namespace
 
