@@ -114,7 +114,7 @@ function _deploy() {
     fi
   fi
 
-  ingress_yaml_file = ingress.yaml
+  ingress_yaml_file=ingress.yaml
   # Deploy to Live cluster
   if [ $environment == "development" ] || [ $environment == "staging" ]
   then
@@ -125,7 +125,7 @@ function _deploy() {
     p "Target namespace: \e[32m$namespace\e[0m"
     p "--------------------------------------------------"
 
-    ingress_yaml_file = ingress-live.yaml
+    ingress_yaml_file=ingress-live.yaml
 
     if [[ "$3" == "circleci" ]]
     then
