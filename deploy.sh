@@ -116,7 +116,7 @@ function _deploy() {
 
   ingress_yaml_file=ingress.yaml
   # Deploy to Live cluster
-  if [ $environment == "development" ] || [ $environment == "staging" ]
+  if [ $environment == "development" ] || [ $environment == "staging" || [ $environment == "demo" ]
   then
     p "--------------------------------------------------"
     p "Deploying People Finder to kubernetes cluster: Live"
@@ -137,8 +137,16 @@ function _deploy() {
       if [[ $environment == "development" ]]
       then
         live_token=$KUBE_ENV_LIVE_DEVELOPMENT_TOKEN
-      else
+      fi
+
+      if [[ $environment == "staging" ]]
+      then
         live_token=$KUBE_ENV_LIVE_STAGING_TOKEN
+      fi
+
+      if [[ $environment == "demo" ]]
+      then
+        live_token=$KUBE_ENV_LIVE_DEMO_TOKEN
       fi
       
       kubectl config set-credentials circleci --token=$live_token
