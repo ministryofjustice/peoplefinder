@@ -23,7 +23,7 @@ spec:
           image: 754256621582.dkr.ecr.eu-west-2.amazonaws.com/peoplefinder/peoplefinder-ecr:latest
           ports:
             - containerPort: 3000
-          command: ["./run.sh"]
+          command: ["./config/docker/entrypoint-webapp.sh"]
           env:
             - name: DATABASE_URL
               valueFrom:
