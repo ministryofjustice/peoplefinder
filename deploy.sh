@@ -116,7 +116,7 @@ function _deploy() {
 
   ingress_yaml_file=ingress.yaml
   # Deploy to Live cluster
-  if [ $environment == "development" ] || [ $environment == "staging" || [ $environment == "demo" ]
+  if [ $environment == "development" ] || [ $environment == "staging" ] || [ $environment == "demo" ]
   then
     p "--------------------------------------------------"
     p "Deploying People Finder to kubernetes cluster: Live"
