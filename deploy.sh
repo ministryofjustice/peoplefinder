@@ -114,6 +114,44 @@ function _deploy() {
     fi
   fi
 
+  ingress_yaml_file=ingress.yaml
+  # Deploy to Live cluster
+  if [ $environment == "development" ] || [ $environment == "staging" ]
+  then
+    p "--------------------------------------------------"
+    p "Deploying People Finder to kubernetes cluster: Live"
+    p "Environment: \e[32m$environment\e[0m"
+    p "Docker image: \e[32m$image_tag\e[0m"
+    p "Target namespace: \e[32m$namespace\e[0m"
+    p "--------------------------------------------------"
+
+    ingress_yaml_file=ingress-live.yaml
+
+    if [[ "$3" == "circleci" ]]
+    then
+    #authenticate to live cluster
+      p "Authenticating to live..."
+      echo -n $KUBE_ENV_LIVE_CA_CERT | base64 -d > ./live_ca.crt
+      kubectl config set-cluster $KUBE_ENV_LIVE_CLUSTER_NAME --certificate-authority=./live_ca.crt --server=https://$KUBE_ENV_LIVE_CLUSTER_NAME
+      
+      if [[ $environment == "development" ]]
+      then
+        live_token=$KUBE_ENV_LIVE_DEVELOPMENT_TOKEN
+      else
+        live_token=$KUBE_ENV_LIVE_STAGING_TOKEN
+      fi
+      
+      kubectl config set-credentials circleci --token=$live_token
+      kubectl config set-context $KUBE_ENV_LIVE_CLUSTER_NAME --cluster=$KUBE_ENV_LIVE_CLUSTER_NAME --user=circleci --namespace=$namespace
+      kubectl config use-context $KUBE_ENV_LIVE_CLUSTER_NAME
+      kubectl config current-context
+      kubectl --namespace=$namespace get pods
+    fi
+
+    #deploy to live cluster
+    p "Authenticated, deploying to live..."
+  fi
+
   # Apply config map updates
   kubectl apply \
     -f config/kubernetes/${environment}/env-configmap.yaml -n $namespace
@@ -127,7 +165,7 @@ function _deploy() {
   # Apply non-image specific config
   kubectl apply \
     -f config/kubernetes/${environment}/service.yaml \
-    -f config/kubernetes/${environment}/ingress.yaml \
+    -f config/kubernetes/${environment}/${ingress_yaml_file} \
     -f config/kubernetes/${environment}/secrets.yaml \
     -n $namespace
 
@@ -167,49 +205,6 @@ function _deploy() {
     kubectl apply -f config/kubernetes/${environment}/cronjob-delete-old-ecr-images.yaml -n $namespace
   fi
 
-  # Deploy to Live cluster
-  if [ $environment == "development" ]
-  then
-    p "--------------------------------------------------"
-    p "Deploying People Finder to kubernetes cluster: Live"
-    p "Environment: \e[32m$environment\e[0m"
-    p "Docker image: \e[32m$image_tag\e[0m"
-    p "Target namespace: \e[32m$namespace\e[0m"
-    p "--------------------------------------------------"
-
-    if [[ "$3" == "circleci" ]]
-    then
-    #authenticate to live cluster
-      p "Authenticating to live..."
-      echo -n $KUBE_ENV_LIVE_CA_CERT | base64 -d > ./live_ca.crt
-      kubectl config set-cluster $KUBE_ENV_LIVE_CLUSTER_NAME --certificate-authority=./live_ca.crt --server=https://$KUBE_ENV_LIVE_CLUSTER_NAME
-      kubectl config set-credentials circleci --token=$KUBE_ENV_LIVE_DEVELOPMENT_TOKEN
-      kubectl config set-context $KUBE_ENV_LIVE_CLUSTER_NAME --cluster=$KUBE_ENV_LIVE_CLUSTER_NAME --user=circleci --namespace=$namespace
-      kubectl config use-context $KUBE_ENV_LIVE_CLUSTER_NAME
-      kubectl config current-context
-      kubectl --namespace=$namespace get pods
-    fi
-
-    #deploy to live cluster
-    p "Authenticated, deploying to live..."
-
-    #configmap
-    kubectl apply \
-      -f config/kubernetes/${environment}/env-configmap.yaml -n $namespace
-
-    #deployment
-    kubectl set image -f config/kubernetes/${environment}/deployment.yaml \
-        webapp=${docker_image_tag} \
-        jobs=${docker_image_tag} \
-         --local --output yaml | kubectl apply -n $namespace -f -
-
-    #Non-image specific
-    kubectl apply \
-      -f config/kubernetes/${environment}/service.yaml \
-      -f config/kubernetes/${environment}/ingress-live.yaml \
-      -f config/kubernetes/${environment}/secrets.yaml \
-      -n $namespace
-  fi
 }
 
 _deploy $@
