@@ -114,9 +114,61 @@ function _deploy() {
     fi
   fi
 
-  ingress_yaml_file=ingress.yaml
+  # Apply config map updates
+  kubectl apply \
+    -f config/kubernetes/${environment}/env-configmap.yaml -n $namespace
+
+  # Apply image specific config
+  kubectl set image -f config/kubernetes/${environment}/deployment.yaml \
+          webapp=${docker_image_tag} \
+          metrics=${docker_image_tag} \
+          jobs=${docker_image_tag} --local --output yaml | kubectl apply -n $namespace -f -
+
+  # Apply non-image specific config
+  kubectl apply \
+    -f config/kubernetes/${environment}/service.yaml \
+    -f config/kubernetes/${environment}/ingress.yaml \
+    -f config/kubernetes/${environment}/secrets.yaml \
+    -n $namespace
+
+  #Add cron jobs if production
+  if [[ $environment == "production" ]]
+  then
+    kubectl set image -f config/kubernetes/${environment}/cron-person-notifier.yaml \
+            jobs=${docker_image_tag} --local --output yaml | kubectl apply -n $namespace -f -
+
+    kubectl set image -f config/kubernetes/${environment}/cron-team-description-notifier.yaml \
+            jobs=${docker_image_tag} --local --output yaml | kubectl apply -n $namespace -f -
+
+    kubectl set image -f config/kubernetes/${environment}/cron-never-logged-in-notifier.yaml \
+            jobs=${docker_image_tag} --local --output yaml | kubectl apply -n $namespace -f -
+
+    kubectl set image -f config/kubernetes/${environment}/cron-person-update-reminder.yaml \
+            jobs=${docker_image_tag} --local --output yaml | kubectl apply -n $namespace -f -
+
+    kubectl set image -f config/kubernetes/${environment}/cron-user-behaviour-report.yaml \
+            jobs=${docker_image_tag} --local --output yaml | kubectl apply -n $namespace -f -
+
+    kubectl set image -f config/kubernetes/${environment}/cron-profile-completions-report.yaml \
+            jobs=${docker_image_tag} --local --output yaml | kubectl apply -n $namespace -f -
+
+    kubectl set image -f config/kubernetes/${environment}/cron-profile-changed-report.yaml \
+            jobs=${docker_image_tag} --local --output yaml | kubectl apply -n $namespace -f -
+  
+    kubectl set image -f config/kubernetes/${environment}/cron-total-profiles-report.yaml \
+            jobs=${docker_image_tag} --local --output yaml | kubectl apply -n $namespace -f -
+
+    kubectl set image -f config/kubernetes/${environment}/cron-profile-percentage-report.yaml \
+              jobs=${docker_image_tag} --local --output yaml | kubectl apply -n $namespace -f -
+    
+    kubectl set image -f config/kubernetes/${environment}/cron-photo-profiles-report.yaml \
+            jobs=${docker_image_tag} --local --output yaml | kubectl apply -n $namespace -f -
+  
+    kubectl apply -f config/kubernetes/${environment}/cronjob-delete-old-ecr-images.yaml -n $namespace
+  fi
+
   # Deploy to Live cluster
-  if [ $environment == "development" ] || [ $environment == "staging" ] || [ $environment == "demo" ]
+  if [ $environment == "development" ] || [ $environment == "staging" ] || [ $environment == "demo" ] || [ $environment == "production" ]
   then
     p "--------------------------------------------------"
     p "Deploying People Finder to kubernetes cluster: Live"
@@ -124,8 +176,6 @@ function _deploy() {
     p "Docker image: \e[32m$image_tag\e[0m"
     p "Target namespace: \e[32m$namespace\e[0m"
     p "--------------------------------------------------"
-
-    ingress_yaml_file=ingress-live.yaml
 
     if [[ "$3" == "circleci" ]]
     then
@@ -148,7 +198,12 @@ function _deploy() {
       then
         live_token=$KUBE_ENV_LIVE_DEMO_TOKEN
       fi
-      
+
+      if [[ $environment == "production" ]]
+      then
+        live_token=$KUBE_ENV_LIVE_PRODUCTION_TOKEN
+      fi
+
       kubectl config set-credentials circleci --token=$live_token
       kubectl config set-context $KUBE_ENV_LIVE_CLUSTER_NAME --cluster=$KUBE_ENV_LIVE_CLUSTER_NAME --user=circleci --namespace=$namespace
       kubectl config use-context $KUBE_ENV_LIVE_CLUSTER_NAME
@@ -173,7 +228,7 @@ function _deploy() {
   # Apply non-image specific config
   kubectl apply \
     -f config/kubernetes/${environment}/service.yaml \
-    -f config/kubernetes/${environment}/${ingress_yaml_file} \
+    -f config/kubernetes/${environment}/ingress-live.yaml \
     -f config/kubernetes/${environment}/secrets.yaml \
     -n $namespace
 
