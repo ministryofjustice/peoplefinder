@@ -4,8 +4,8 @@ metadata:
   name: peoplefinder-ingress
   namespace: peoplefinder-production
   annotations:
-    external-dns.alpha.kubernetes.io/set-identifier: peoplefinder-ingress-peoplefinder-production-blue
-    external-dns.alpha.kubernetes.io/aws-weight: "0"
+    external-dns.alpha.kubernetes.io/set-identifier: peoplefinder-ingress-peoplefinder-production-green
+    external-dns.alpha.kubernetes.io/aws-weight: "100"
 spec:
   tls:
     - hosts:
