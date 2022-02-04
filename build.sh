@@ -15,8 +15,7 @@ function _build() {
   component=peoplefinder
 
   region='eu-west-2'
-  context='live-1'
-  aws_profile='ecr-live-1-peoplefinder'
+    aws_profile='ecr-live-peoplefinder'
 
   git_remote_url="https://github.com/ministryofjustice/peoplefinder.git";
   docker_endpoint=754256621582.dkr.ecr.eu-west-2.amazonaws.com

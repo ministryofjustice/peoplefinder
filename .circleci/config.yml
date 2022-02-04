@@ -156,9 +156,9 @@ references:
     run:
       name: Configure AWS CLI
       command: |
-        aws configure set aws_access_key_id ${AWS_ACCESS_KEY_ID} --profile ecr-live-1-peoplefinder
-        aws configure set aws_secret_access_key ${AWS_SECRET_ACCESS_KEY} --profile ecr-live-1-peoplefinder
-        aws configure set default.region ${AWS_DEFAULT_REGION} --profile ecr-live-1-peoplefinder
+        aws configure set aws_access_key_id ${AWS_ACCESS_KEY_ID} --profile ecr-live-peoplefinder
+        aws configure set aws_secret_access_key ${AWS_SECRET_ACCESS_KEY} --profile ecr-live-peoplefinder
+        aws configure set default.region ${AWS_DEFAULT_REGION} --profile ecr-live-peoplefinder
 
   build_and_push_docker_image: &build_and_push_docker_image
     run:
@@ -173,8 +173,6 @@ references:
     run:
       name: Deploy to Development environment
       command: |
-        setup-kube-auth
-        kubectl config use-context development
         build_tag=`cat /tmp/workspace/build_tag`
         ./deploy.sh $build_tag development circleci
         echo "export BUILD_TAG=${build_tag}" >> $BASH_ENV
@@ -184,8 +182,6 @@ references:
     run:
       name: Deploy to Demo environment
       command: |
-        setup-kube-auth
-        kubectl config use-context demo
         build_tag=`cat /tmp/workspace/build_tag`
         ./deploy.sh $build_tag demo circleci
         echo "export BUILD_TAG=${build_tag}" >> $BASH_ENV
@@ -195,8 +191,6 @@ references:
     run:
       name: Deploy to Staging environment
       command: |
-        setup-kube-auth
-        kubectl config use-context staging
         build_tag=`cat /tmp/workspace/build_tag`
         ./deploy.sh $build_tag staging circleci
         echo "export BUILD_TAG=${build_tag}" >> $BASH_ENV
@@ -206,8 +200,6 @@ references:
     run:
       name: Deploy to production environment
       command: |
-        setup-kube-auth
-        kubectl config use-context production
         build_tag=`cat /tmp/workspace/build_tag`
         ./deploy.sh $build_tag production circleci
         echo "export BUILD_TAG=${build_tag}" >> $BASH_ENV
