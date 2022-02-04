@@ -114,14 +114,6 @@ function _deploy() {
     fi
   fi
 
-  # Deploy to Live cluster
-  p "--------------------------------------------------"
-  p "Deploying People Finder to kubernetes cluster: Live"
-  p "Environment: \e[32m$environment\e[0m"
-  p "Docker image: \e[32m$image_tag\e[0m"
-  p "Target namespace: \e[32m$namespace\e[0m"
-  p "--------------------------------------------------"
-
   if [[ "$3" == "circleci" ]]
   then
     #authenticate to live cluster
