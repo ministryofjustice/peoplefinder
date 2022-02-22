@@ -7,6 +7,7 @@ data:
   RACK_ENV: 'production'
   RAILS_ENV: 'production'
   ACTION_MAILER_DEFAULT_URL: 'staging.peoplefinder.service.gov.uk'
+  GA_TRACKING_ID: 'UA-53656606-1'
   SENTRY_ENVIRONMENT: 'staging'
   RAILS_SERVE_STATIC_FILES: 'true'
   S3_REGION: 'eu-west-2'
