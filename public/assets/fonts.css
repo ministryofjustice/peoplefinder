@@ -1,0 +1,49 @@
+/* The below comment needs a ! so that the copyright message doesn't get removed during the minification step. See: http://sass-lang.com/docs/yardoc/file.SASS_REFERENCE.html#comments */
+
+/*! Copyright (c) 2011 by Margaret Calvert & Henrik Kubel. All rights reserved. The font has been customised for exclusive use on gov.uk. This cut is not commercially available. */
+
+
+
+@font-face {
+  font-family: 'nta';
+  src: url(/assets/fonts/v1-2c037cf7e1-light-1a1bd902f82aaab4185bc1995206ccdead57a5b0adc91ff8403468fe7047c1b4.eot);
+  src: url(/assets/fonts/v1-2c037cf7e1-light-1a1bd902f82aaab4185bc1995206ccdead57a5b0adc91ff8403468fe7047c1b4.eot?#iefix) format('embedded-opentype'),
+    url(/assets/fonts/v1-f38ad40456-light-b98fe790388f58c950f2bed1ca8ad02fa168d6effa7aae7cb7fee81e51183f46.woff2) format('woff2'),
+    url(/assets/fonts/v1-458f8ea81c-light-048b93884a1b51d20f2a3140541d450cb6b82c6c2cf69128ea1d09fdd9699f30.woff) format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: fallback;
+}
+
+@font-face {
+  font-family: 'nta';
+  src: url(/assets/fonts/v1-fb2676462a-bold-a49a59a7c9fc3873b9b864f9185ba79d7848db4b4e0f248ce87a819ee48fff93.eot);
+  src: url(/assets/fonts/v1-fb2676462a-bold-a49a59a7c9fc3873b9b864f9185ba79d7848db4b4e0f248ce87a819ee48fff93.eot?#iefix) format('embedded-opentype'),
+    url(/assets/fonts/v1-a2452cb66f-bold-be83c947da6c602697be56d5f04bab2074ad9e8e7fe39807f814654fd691d328.woff2) format('woff2'),
+    url(/assets/fonts/v1-f38c792ac2-bold-01c73d5dd84423dd2fc30aabd1de09a86b36b6de9e2e240d954c09cbb1d97aba.woff) format('woff');
+  font-weight: bold;
+  font-style: normal;
+  font-display: fallback;
+}
+
+@font-face {
+  font-family: 'ntatabularnumbers';
+  src: url(/assets/fonts/v1-498ea8ffe2-tabular-light-c45387d8b19c716ac713adceddbbfaafc62bc7f94ee1745cc3497b1afbe7eb58.eot);
+  src: url(/assets/fonts/v1-498ea8ffe2-tabular-light-c45387d8b19c716ac713adceddbbfaafc62bc7f94ee1745cc3497b1afbe7eb58.eot?#iefix) format('embedded-opentype'),
+    url(/assets/fonts/v1-851b10ccdd-tabular-light-5f44884b5bbefe279fb3529a09941c7c1cad0ed751dc369f5e549dcd7d58d429.woff2) format('woff2'),
+    url(/assets/fonts/v1-62cc6f0a28-tabular-light-b36c2402a99df8f8195129efa8edbd6ec60260ce8b8bd3ffe3dbb87042fb6a99.woff) format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: fallback;
+}
+
+@font-face {
+  font-family: 'ntatabularnumbers';
+  src: url(/assets/fonts/v1-357fdfbcc3-tabular-bold-0cff7dfafbfd65a765046861e6967892b25a903675cb8900b85d2fa4f4554f95.eot);
+  src: url(/assets/fonts/v1-357fdfbcc3-tabular-bold-0cff7dfafbfd65a765046861e6967892b25a903675cb8900b85d2fa4f4554f95.eot?#iefix) format('embedded-opentype'),
+    url(/assets/fonts/v1-b89238d840-tabular-bold-93bffa08f1c078b5d95e15683b5e77b9b3258297355710490228ddfb5f06f8a7.woff2) format('woff2'),
+    url(/assets/fonts/v1-784c21afb8-tabular-bold-d75e574d251becd00e5f90b6b4698042f9c8151ad228d20685f8be0b8c3d8589.woff) format('woff');
+  font-weight: bold;
+  font-style: normal;
+  font-display: fallback;
+}
