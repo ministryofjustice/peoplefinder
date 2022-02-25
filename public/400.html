@@ -2,10 +2,10 @@
 <html lang="en">
     <head>
         <meta charset="utf-8" />
-        <title>Error - 500 - Internal server error - People Finder</title>
+        <title>Error - 400 - Bad request - People Finder</title>
 
         <link rel="stylesheet" media="all" href="/assets/application.css" />
-        <link href="/assets/govuk-template.css" media="screen" rel="stylesheet" /><!--<![endif]-->
+        <link href="/assets/govuk-template.css" media="screen" rel="stylesheet" />
         <link href="/assets/govuk-template-print.css" media="print" rel="stylesheet" />
         <link href="/assets/fonts.css" media="all" rel="stylesheet" />
 
@@ -22,7 +22,7 @@
         </div>
 
         <header role="banner" id="global-header" class="with-proposition">
-                        <div class="header-wrapper">
+            <div class="header-wrapper">
                 <div class="header-global">
                     <div class="header-logo">
                         <a href="https://www.gov.uk/" title="Go to the GOV.UK homepage" id="logo" class="content">
@@ -46,7 +46,7 @@
                         <header class="page-header group">
                             <h1 class="heading-xlarge">Sorry, there is a problem with the service</h1>
                         </header>
-                        <p>Please contact<br><a href="mailto:people-finder-support@digital.justice.gov.uk?subject=500 error report">people-finder-support@digital.justice.gov.uk</a> with the details to report this issue.</p>
+                        <p>Please contact<br><a href="mailto:people-finder-support@digital.justice.gov.uk?subject=400 error report">people-finder-support@digital.justice.gov.uk</a> with the details on how you got here to report this issue.</p>
                     </section>
                 </div>
 
@@ -72,6 +72,7 @@
         </footer>
 
         <div id="global-app-error" class="app-error hidden"></div>
+
         <script>
             (function (i, s, o, g, r, a, m) {
               i['GoogleAnalyticsObject'] = r;
@@ -85,7 +86,6 @@
             })
             (window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
             ga('create', 'UA-53656606-1', 'auto');
-            ga('send', 'pageview');
-        </script>
+            ga('send', 'pageview');</script>
     </body>
 </html>
