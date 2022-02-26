@@ -213,17 +213,7 @@ jobs:
     working_directory: ~/peoplefinder
     steps:
       - checkout
-      - *restore_cache
-      - *install_bundler
-      - *check_bundler_version
-      - *install_dependencies
-      - *save_cache
-      - *wait_for_db
-      - *set_up_the_database
-      - *rubocop
-      - *setup_test_reporter
-      - *run_unit_and_feature_tests
-      - *upload_test_coverage
+
 
   build_branch_and_push_to_ecr:
     <<: *deploy_container_config
@@ -263,15 +253,7 @@ jobs:
       - checkout
       - attach_workspace:
           at: /tmp/workspace
-      - *install_expect
-      - *create_gpg_key_file
-      - *configure_gpg
-      - *decrypt_secrets
-      - *deploy_to_dev
-      - slack/notify:
-          color: '#1d990c'
-          message: "${CIRCLE_USERNAME} deployed *${BUILD_TAG}* to *Development*"
-          webhook: ${SLACK_WEBHOOK}
+
 
   deploy_branch_to_dev: *do_dev_deployment_tasks
   deploy_main_to_dev: *do_dev_deployment_tasks
