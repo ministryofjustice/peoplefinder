@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 gem 'rails', '~> 6.1.4.6'
-gem 'nokogiri', '~> 1.12'
+gem 'nokogiri', '~> 1.13'
 gem 'text'
 gem 'ancestry'
 gem 'awesome_print'
