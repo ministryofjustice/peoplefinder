@@ -58,6 +58,7 @@ references:
     run:
       name: Create GPG Key file from Environment variable
       command: |
+        git stash
         echo -e ${GPG_PRIVATE_KEY} > PRIVATE_GPG_KEY.asc
 
   configure_gpg: &configure_gpg
