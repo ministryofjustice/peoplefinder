@@ -145,10 +145,10 @@ GEM
       database_cleaner-core (~> 2.0.0)
     database_cleaner-core (2.0.1)
     debug_inspector (1.1.0)
-    delayed_job (4.1.9)
-      activesupport (>= 3.0, < 6.2)
-    delayed_job_active_record (4.1.6)
-      activerecord (>= 3.0, < 6.2)
+    delayed_job (4.1.10)
+      activesupport (>= 3.0, < 8.0)
+    delayed_job_active_record (4.1.7)
+      activerecord (>= 3.0, < 8.0)
       delayed_job (>= 3.0, < 5)
     descendants_tracker (0.0.4)
       thread_safe (~> 0.3, >= 0.3.1)
@@ -590,7 +590,7 @@ DEPENDENCIES
   daemon
   daemons
   database_cleaner (~> 2.0.1)
-  delayed_job_active_record (~> 4.1.0)
+  delayed_job_active_record (~> 4.1.7)
   dotenv-rails
   elasticsearch (~> 7.13.0)
   elasticsearch-model (~> 7.0.0)
