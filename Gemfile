@@ -100,7 +100,7 @@ group :development, :test do
   gem 'guard-jasmine'
   gem 'jasmine-rails'
   gem 'rubocop', '~> 0.85.0'
-  gem 'rubocop-rspec', '~> 1.39.0', require: false
+  gem 'rubocop-rspec', '~> 1.41.0', require: false
   gem 'rubocop-ast', '~> 0.0.3', require: false
   gem 'rubocop-performance', '~> 1.6.0', require: false
   gem 'rubocop-rails', require: false
