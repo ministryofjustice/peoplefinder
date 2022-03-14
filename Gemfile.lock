@@ -365,7 +365,7 @@ GEM
     premailer-rails (1.11.1)
       actionmailer (>= 3)
       premailer (~> 1.7, >= 1.7.9)
-    prometheus_exporter (1.0.0)
+    prometheus_exporter (2.0.2)
       webrick
     pry (0.13.1)
       coderay (~> 1.1)
