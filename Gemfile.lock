@@ -502,7 +502,7 @@ GEM
       faraday
     sexp_processor (4.16.0)
     shellany (0.0.1)
-    shoulda-matchers (5.0.0)
+    shoulda-matchers (5.1.0)
       activesupport (>= 5.2.0)
     simplecov (0.17.1)
       docile (~> 1.1)
