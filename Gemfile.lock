@@ -173,7 +173,7 @@ GEM
       multi_json
     erubi (1.10.0)
     erubis (2.7.0)
-    excon (0.89.0)
+    excon (0.92.0)
     execjs (2.8.1)
     factory_bot (6.2.0)
       activesupport (>= 5.0.0)
@@ -207,15 +207,15 @@ GEM
     faraday-retry (1.0.3)
     fastimage (2.2.6)
     ffi (1.15.5)
-    fog-aws (3.12.0)
+    fog-aws (3.13.0)
       fog-core (~> 2.1)
       fog-json (~> 1.1)
       fog-xml (~> 0.1)
       ipaddress (~> 0.8)
-    fog-core (2.2.4)
+    fog-core (2.3.0)
       builder
       excon (~> 0.71)
-      formatador (~> 0.2)
+      formatador (>= 0.2, < 2.0)
       mime-types
     fog-json (1.2.0)
       fog-core
@@ -223,7 +223,7 @@ GEM
     fog-xml (0.1.4)
       fog-core
       nokogiri (>= 1.5.11, < 2.0.0)
-    formatador (0.3.0)
+    formatador (1.1.0)
     friendly_id (5.4.2)
       activerecord (>= 4.0.0)
     geckoboard-ruby (0.4.0)
@@ -338,7 +338,7 @@ GEM
     method_source (1.0.0)
     mime-types (3.4.1)
       mime-types-data (~> 3.2015)
-    mime-types-data (3.2021.1115)
+    mime-types-data (3.2022.0105)
     mini_magick (4.11.0)
     mini_mime (1.1.2)
     mini_portile2 (2.8.0)
