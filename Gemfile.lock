@@ -312,9 +312,8 @@ GEM
     listen (3.7.0)
       rb-fsevent (~> 0.10, >= 0.10.3)
       rb-inotify (~> 0.9, >= 0.9.10)
-    logstash-event (1.2.02)
-    logstasher (0.6.5)
-      logstash-event (~> 1.2.0)
+    logstasher (2.1.5)
+      activesupport (>= 5.2)
       request_store
     loofah (2.14.0)
       crass (~> 1.0.2)
@@ -421,7 +420,7 @@ GEM
     recipient_interceptor (0.1.2)
       mail
     regexp_parser (2.2.0)
-    request_store (1.5.0)
+    request_store (1.5.1)
       rack (>= 1.4)
     rexml (3.2.5)
     rinku (2.0.6)
@@ -606,7 +605,7 @@ DEPENDENCIES
   jquery-rails
   keen
   launchy
-  logstasher (~> 0.6.2)
+  logstasher (~> 2.1.5)
   mail
   meta_request
   mini_magick (>= 4.9.4)

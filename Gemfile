@@ -62,7 +62,7 @@ group :assets do
 end
 
 group :production do
-  gem 'logstasher', '~> 0.6.2'
+  gem 'logstasher', '~> 2.1.5'
 end
 
 group :development do
