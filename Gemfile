@@ -7,10 +7,10 @@ gem 'text'
 gem 'ancestry'
 gem 'awesome_print'
 gem 'aws-sdk', '~> 2.7.3'
-gem 'delayed_job_active_record', '~> 4.1.0'
+gem 'delayed_job_active_record', '~> 4.1.7'
 gem 'daemons'
 gem 'elasticsearch', '~> 7.13.0'
-gem 'elasticsearch-model', '~> 7.0.0'
+gem 'elasticsearch-model', '~> 7.2.1'
 gem 'elasticsearch-rails', '~> 7.0.0'
 gem 'faker', '~> 1.7'
 gem 'fastimage', '~> 2.1'
@@ -34,7 +34,7 @@ gem 'paper_trail'
 gem 'pg'
 gem 'premailer-rails', '~> 1.9'
 gem 'prometheus_exporter'
-gem 'pundit', '~>2.1'
+gem 'pundit', '~>2.2'
 gem 'puma'
 gem 'recipient_interceptor', '~> 0.1.2'
 gem 'sanitize'
@@ -62,7 +62,7 @@ group :assets do
 end
 
 group :production do
-  gem 'logstasher', '~> 0.6.2'
+  gem 'logstasher', '~> 2.1.5'
 end
 
 group :development do
@@ -99,10 +99,10 @@ group :development, :test do
   gem 'timecop'
   gem 'guard-jasmine'
   gem 'jasmine-rails'
-  gem 'rubocop', '~> 0.85.0'
-  gem 'rubocop-rspec', '~> 1.39.0', require: false
+  gem 'rubocop', '~> 0.86.0'
+  gem 'rubocop-rspec', '~> 1.41.0', require: false
   gem 'rubocop-ast', '~> 0.0.3', require: false
-  gem 'rubocop-performance', '~> 1.6.0', require: false
+  gem 'rubocop-performance', '~> 1.7.1', require: false
   gem 'rubocop-rails', require: false
   gem 'annotate'
 end
