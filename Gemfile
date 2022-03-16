@@ -95,7 +95,7 @@ group :development, :test do
   gem 'rspec-rails'
   gem 'selenium-webdriver'
   gem 'shoulda-matchers'
-  gem 'simplecov', '~> 0.17.1'
+  gem 'simplecov', '~> 0.21.2'
   gem 'timecop'
   gem 'guard-jasmine'
   gem 'jasmine-rails'
