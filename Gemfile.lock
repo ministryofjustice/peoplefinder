@@ -162,7 +162,7 @@ GEM
       activesupport (> 3)
       elasticsearch (~> 7)
       hashie
-    elasticsearch-rails (7.0.0)
+    elasticsearch-rails (7.2.1)
     elasticsearch-transport (7.13.3)
       faraday (~> 1)
       multi_json
@@ -589,7 +589,7 @@ DEPENDENCIES
   dotenv-rails
   elasticsearch (~> 7.13.0)
   elasticsearch-model (~> 7.2.1)
-  elasticsearch-rails (~> 7.0.0)
+  elasticsearch-rails (~> 7.2.1)
   factory_bot_rails
   faker (~> 1.7)
   fastimage (~> 2.1)
