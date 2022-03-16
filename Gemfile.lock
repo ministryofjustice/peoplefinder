@@ -175,8 +175,8 @@ GEM
     factory_bot_rails (6.2.0)
       factory_bot (~> 6.2.0)
       railties (>= 5.0.0)
-    faker (1.9.6)
-      i18n (>= 0.7)
+    faker (2.20.0)
+      i18n (>= 1.8.11, < 2)
     faraday (1.10.0)
       faraday-em_http (~> 1.0)
       faraday-em_synchrony (~> 1.0)
@@ -591,7 +591,7 @@ DEPENDENCIES
   elasticsearch-model (~> 7.2.1)
   elasticsearch-rails (~> 7.0.0)
   factory_bot_rails
-  faker (~> 1.7)
+  faker (~> 2.20)
   fastimage (~> 2.1)
   ffi (>= 1.9.24)
   fog-aws
