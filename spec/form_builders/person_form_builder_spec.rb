@@ -43,7 +43,7 @@ RSpec.describe PersonFormBuilder, type: :form_builder do
     end
 
     it 'returns govuk styled check box' do
-      expect(subject).to eql output
+      expect(subject).to match output
     end
 
     it 'adds outer form-group div' do
