@@ -34,7 +34,7 @@ RSpec.describe SuggestionFormBuilder, type: :form_builder do
       <<~HTML.squish_heredoc
         <div class="form-group">
           <label class="block-label selection-button-checkbox" for="suggestion_test_field">
-            <input name="suggestion[test_field]" type="hidden" value="0" />
+            <input name="suggestion[test_field]" type="hidden" value="0" autocomplete="off" />
             <input type="checkbox" value="1" name="suggestion[test_field]" id="suggestion_test_field" />
             My test label
           </label>
