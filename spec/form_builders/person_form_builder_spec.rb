@@ -34,7 +34,7 @@ RSpec.describe PersonFormBuilder, type: :form_builder do
       <<~HTML.squish_heredoc
         <div class="form-group">
           <label class="block-label selection-button-checkbox" for="person_works_monday">
-            <input name="person[works_monday]" type="hidden" value="0" />
+            <input name="person[works_monday]" type="hidden" value="0" autocomplete="off" />
             <input type="checkbox" value="1" name="person[works_monday]" id="person_works_monday" />
             Monday
           </label>
