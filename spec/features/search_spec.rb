@@ -113,10 +113,9 @@ describe 'Searching feature', elastic: true do
     end
 
     it 'highlights individual current project terms' do
-      pending "TODO CT-2691 - commented out test to get ES update working"
       fill_in 'query', with: 'Digital Prisons Browne'
       click_button 'Search'
-      within '.cb-person-current-project' do
+      within '.cb-person-current-project', match: :first do
         expect(page).to have_selector('.es-highlight', text: 'Digital')
         expect(page).to have_selector('.es-highlight', text: 'Prisons')
       end

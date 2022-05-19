@@ -52,7 +52,7 @@ brew search elasticsearch
 The version of elasticsearch we use is 7.10.x
 
 ```cmd
-docker run --name elasticsearch  --publish 9200:9200 bitnami/elasticsearch:6.8.6-r1
+docker run --name elasticsearch  --publish 9200:9200 bitnami/elasticsearch:7.10.2
 ```
 
 Install remaining dependencies on Mac OSX:
@@ -235,10 +235,11 @@ Or, alternatively:
 rake peoplefinder:es:index_people
 ```
 
-Or you can create the index from the console:
+Or you can create the index from the console if the above rake commands fail:
 
-```
-Person.__elasticsearch__.create_index! index: Person.index_name, force: true`
+```ruby
+Elasticsearch::Client.new.index(index: Person.index_name, body: {})
+Person.__elasticsearch__.create_index! index: Person.index_name, force: true
 ```
 
 And populate it:
@@ -252,6 +253,10 @@ You can also delete the index:
 To run specs without Elasticsearch:
 
 `bundle exec rspec . --tag ~elastic`
+
+If your shell is Zsh, you have to escape `~` by using `\~`.
+
+**Note:** Unfortunately, at the moment there is no way to avoid having ES running locally, but you can use a docker container as mentioned above.
 
 ## Images
 

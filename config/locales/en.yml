@@ -53,6 +53,9 @@ en:
       heading_other: Enter your MOJ email address
       log_in_google: Log in
       log_in_email: Request link
+      contact_support_html: |
+        Contact us at <a href="mailto:people-finder-support@digital.justice.gov.uk">people-finder-support@digital.justice.gov.uk</a>
+        if you experience a problem with People Finder.
     unsupported_browser:
       unsupported_browser_warning_html: |
         <h1 id='error-summary-heading' class='heading-medium error-summary-heading'>
