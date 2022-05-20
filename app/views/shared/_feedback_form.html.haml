@@ -1,3 +1,5 @@
+- return unless logged_in_regular?
+
 #feedback_container
   %a{href: '#feedback', id: 'feedbackToggle'}
     Report a problem
@@ -7,9 +9,7 @@
 
     = f.text_area :problem
 
-    - unless logged_in_regular?
-      = f.text_field :person_email
-
     = f.hidden_field :browser
 
-    = f.submit class: 'button'
+    .form-group
+      = f.submit class: 'button'

@@ -42,26 +42,9 @@ describe 'Report a problem', js: true do
   end
 
   context 'when not logged in' do
-    it 'Reporting a problem', js: true do
+    it 'does not show the feedback form' do
       visit new_sessions_path
-
-      click_link 'Report a problem' # includes a wait, which is required for the slideToggle jquery behaviour
-      fill_in 'What were you trying to do?', with: 'Rhubarb'
-      fill_in 'What went wrong?', with: 'Custard'
-      fill_in 'Your email', with: 'test@example.com'
-      expect { click_button 'Report' }.to change { ActionMailer::Base.deliveries.count }.by(1)
-
-      expect(page).to have_current_path(new_sessions_path, ignore_query: true)
-
-      expect(last_email.to).to eq([Rails.configuration.support_email])
-      body = last_email.body.encoded
-
-      expect(body).to have_text('Rhubarb')
-      expect(body).to have_text('Custard')
-      expect(body).to match(/Browser: .*?Mozilla/)
-      expect(body).to have_text('Email: test@example.com')
-      expect(body).to have_text('Person ID: unknown')
-      expect(body).to match(/Reported: 2014-09-09T21:27:..Z/)
+      expect(page).not_to have_selector('#feedback_container')
     end
   end
 end
