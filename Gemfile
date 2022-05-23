@@ -1,8 +1,7 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-gem 'rails', '~> 6.1.5.1'
-gem 'nokogiri', '~> 1.13'
+gem 'rails', '~> 6.1'
 gem 'text'
 gem 'ancestry'
 gem 'awesome_print'
@@ -36,6 +35,7 @@ gem 'premailer-rails', '~> 1.9'
 gem 'prometheus_exporter'
 gem 'pundit', '~>2.2'
 gem 'puma'
+gem 'rack-protection'
 gem 'recipient_interceptor', '~> 0.3.1'
 gem 'sanitize'
 gem 'sass-rails'
@@ -52,10 +52,6 @@ gem 'tzinfo-data'
 gem 'carrierwave',
     git: 'https://github.com/carrierwaveuploader/carrierwave.git',
     tag: 'cc39842e44edcb6187b2d379a606ec48a6b5e4a8'
-
-github 'sinatra/sinatra' do
-  gem 'rack-protection'
-end
 
 group :assets do
   gem 'coffee-rails'
