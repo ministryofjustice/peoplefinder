@@ -1,13 +1,10 @@
-
 # MoJ People Finder
 
-![Build Status](https://circleci.com/gh/ministryofjustice/peoplefinder.png?circle-token=7af6dba1153f14c5e9b4ca7aec831720aeb00b1c)
+[![CircleCI](https://circleci.com/gh/ministryofjustice/peoplefinder/tree/main.svg?style=svg)](https://circleci.com/gh/ministryofjustice/peoplefinder/tree/main)
 [![Code
 Climate](https://codeclimate.com/github/ministryofjustice/peoplefinder/badges/gpa.svg)](https://codeclimate.com/github/ministryofjustice/peoplefinder)
 [![Test
 Coverage](https://codeclimate.com/github/ministryofjustice/peoplefinder/badges/coverage.svg)](https://codeclimate.com/github/ministryofjustice/peoplefinder/coverage)
-[![Dependency Status](https://gemnasium.com/badges/github.com/ministryofjustice/peoplefinder.svg)](https://gemnasium.com/github.com/ministryofjustice/peoplefinder)
-
 
 ## Installing for development
 
