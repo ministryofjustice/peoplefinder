@@ -4,9 +4,6 @@ on:
   schedule:
     # 8am every Sunday
     - cron: '0 8 * * 0'
-  push:
-    branches:
-      - CDPT-132-image-cleaner
 jobs:
   cleanup-script:
     runs-on: ubuntu-latest
