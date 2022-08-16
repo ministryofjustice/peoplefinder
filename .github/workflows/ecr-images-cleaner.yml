@@ -1,4 +1,4 @@
-ame: Cleanup ECR images
+name: Cleanup ECR images
 on:
   workflow_dispatch:
   schedule:
