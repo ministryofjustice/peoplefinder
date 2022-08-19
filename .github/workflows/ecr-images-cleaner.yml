@@ -1,0 +1,23 @@
+name: Cleanup ECR images
+on:
+  workflow_dispatch:
+  schedule:
+    # 8am every Sunday
+    - cron: '0 8 * * 0'
+jobs:
+  cleanup-script:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run ECR cleanup script
+        uses: ministryofjustice/ecr-images-cleaner-action@v1.0.1
+        with:
+          aws-access-key-id: ${{ secrets.ECR_AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.ECR_AWS_SECRET_ACCESS_KEY }}
+          kube-cert: ${{ secrets.KUBE_PROD_CERT }}
+          kube-token: ${{ secrets.KUBE_PROD_TOKEN }}
+          kube-cluster: ${{ secrets.KUBE_PROD_CLUSTER }}
+          kube-namespace: ${{ secrets.KUBE_PROD_NAMESPACE }}
+          ecr-repo-name: peoplefinder/peoplefinder-ecr
+          max-old-images-to-keep: 30
+          days-to-keep-old-images: 30
+          additional-tags-regex: .*latest.* 
