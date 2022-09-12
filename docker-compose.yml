@@ -1,38 +1,114 @@
-es:
-  image: elasticsearch
-  ports:
-    - "9200"
-pg:
-  image: postgres:9.4
-  ports:
-    - "5432"
+version: '3.8'
 
-app:
-  build: .
-  links:
-    - "es"
-    - "pg"
-  ports:
-    - "3000:3000"
-  command: app
-  environment:
-    DOCKER_STATE: migrate
-    RAILS_ENV: production
-    DATABASE_URL: postgres://postgres:@pg:5432/postgres
-    MOJ_PF_ES_URL: http://es:9200/
-    SUPPORT_EMAIL:
-    SECRET_KEY_BASE:
+volumes:
+  postgres-data:
+  elasticsearch-data:
+  gems:
+  spec-gems:
 
-worker:
-  build: .
-  links:
-    - "pg"
-  command: worker
-  environment:
-    RAILS_ENV: production
-    DATABASE_URL: postgres://postgres:@pg:5432/postgres
-    SUPPORT_EMAIL:
-    SECRET_KEY_BASE:
-    SENDGRID_USERNAME:
-    SENDGRID_PASSWORD:
-    ACTION_MAILER_DEFAULT_URL:
+services:
+
+  app:
+    shm_size: '256mb'
+    env_file: .env
+    environment:
+      VIRTUAL_HOST: ${SERVER_NAME}
+      VIRTUAL_PORT: 3000
+    build:
+      args:
+        development_mode: "true"
+      context: .
+      dockerfile: .local/Dockerfile
+      target: dev
+    stdin_open: true
+    tty: true
+    ports:
+      - "3000:3000"
+      - "3001:3001"
+      - "3002:3002"
+    depends_on:
+      - postgres
+    volumes:
+      - .:/usr/src/app/
+      - ~/.aws:/root/.aws
+      - gems:/usr/local/bundle
+
+  spec:
+    shm_size: '256mb'
+    build:
+      args:
+        development_mode: "true"
+      context: .
+      dockerfile: .local/Dockerfile
+      target: spec
+    tty: true
+    environment:
+      MOJ_PF_ES_URL: http://elasticsearch:9200
+    depends_on:
+      - postgres
+    volumes:
+      - .:/usr/src/app/
+      - ~/.aws:/root/.aws
+      - spec-gems:/home/circleci/.rubygems
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.4.0
+    environment:
+      VIRTUAL_HOST: elasticsearch.${SERVER_NAME}
+      VIRTUAL_PORT: 9200
+      xpack.security.enabled: false
+      discovery.type: single-node
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+      nofile:
+        soft: 65536
+        hard: 65536
+    cap_add:
+      - IPC_LOCK
+    volumes:
+      - elasticsearch-data:/usr/share/elasticsearch/data
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:7.4.0
+    environment:
+      VIRTUAL_HOST: kibana.${SERVER_NAME}
+      VIRTUAL_PORT: 5601
+      ELASTICSEARCH_HOSTS: http://elasticsearch:9200
+    ports:
+      - "5601:5601"
+    depends_on:
+      - elasticsearch
+
+  postgres:
+    image: postgres:12.5
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_HOST_AUTH_METHOD: trust
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+
+  db_admin:
+    image: dpage/pgadmin4
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: dbadmin@${SERVER_NAME}
+      PGADMIN_DEFAULT_PASSWORD: letMeIn
+    ports:
+      - "5050:80"
+    depends_on:
+      - postgres
+    links:
+      - postgres
+
+  mailcatcher:
+    image: schickling/mailcatcher
+    environment:
+      VIRTUAL_HOST: mail.${SERVER_NAME}
+      VIRTUAL_PORT: 1080

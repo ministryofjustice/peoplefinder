@@ -1,5 +1,13 @@
 require "active_support/core_ext/integer/time"
 
+Rails.application.config.hosts = [
+  IPAddr.new("0.0.0.0/0"),        # All IPv4 addresses.
+  IPAddr.new("::/0"),             # All IPv6 addresses.
+  "localhost",                    # The localhost reserved domain.
+  ENV["RAILS_DEVELOPMENT_HOST_DNS"],  # Additional host for development.
+  ENV["RAILS_DEVELOPMENT_HOST_NAME"]
+]
+
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
   #
@@ -55,7 +63,6 @@ Rails.application.configure do
   # This option may cause significant delays in view rendering with a large
   # number of complex assets.
   config.assets.debug = true
-  config.assets.raise_runtime_errors = true
 
   # Suppress logger output for asset requests.
   config.assets.quiet = true
@@ -78,12 +85,15 @@ Rails.application.configure do
   config.action_mailer.perform_caching = false
 
   config.action_mailer.default_url_options = {
-    host: 'localhost',
-    port: 3000,
+    host: ENV['ACTION_MAILER_DEFAULT_URL'] || 'localhost',
     protocol: 'http'
   }
-  config.action_mailer.asset_host = ENV['ACTION_MAILER_DEFAULT_URL'] || 'http://localhost:3000'
+
+  config.action_mailer.asset_host = ENV['ACTION_MAILER_ASSET_HOST'] || 'http://localhost:3000'
   config.action_mailer.delivery_method = :smtp
-  config.action_mailer.smtp_settings = { address: 'localhost', port: 1025 }
+  config.action_mailer.smtp_settings = {
+    address: ENV['ACTION_MAILER_SMTP_ADDRESS'] || 'localhost',
+    port: 1025
+  }
 
 end

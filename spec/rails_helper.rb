@@ -59,6 +59,12 @@ Dir[File.expand_path('../controllers/concerns/shared_examples*.rb', __FILE__)].e
 ActiveRecord::Migration.maintain_test_schema!
 
 RSpec.configure do |config|
+
+  #DatabaseCleaner.url_allowlist = ['postgres://postgres@postgres', 'postgres://postgres@postgres/peoplefinder_test']
+  # ^ not available when `docker compose` needs it...
+  # ... using whitelist instead:
+  DatabaseCleaner.url_whitelist = ['postgres://postgres@postgres', 'postgres://postgres@postgres/peoplefinder_test']
+
   config.use_transactional_fixtures = false
 
   config.before(:suite) do
