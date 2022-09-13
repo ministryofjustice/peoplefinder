@@ -81,15 +81,3 @@ specs: docker-check
 docker-check:
 	@chmod +x ./.local/bin/check-docker-running.sh
 	@./.local/bin/check-docker-running.sh
-
-# Used exclusively to manage docker environment drop-in files; pre-commit only
-# Can be removed when committed to source
-hidden:
-	rm -rf __MACOSX
-	echo '' >> .gitignore
-	echo '# TEMP - docker environment files' >> .gitignore
-	echo '.local' >> .gitignore
-	echo 'cts-dev*' >> .gitignore
-	echo 'docker-*' >> .gitignore
-	echo 'Makefile' >> .gitignore
-	echo 'README.docker.md' >> .gitignore
