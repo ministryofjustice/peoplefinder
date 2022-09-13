@@ -13,7 +13,7 @@ if ! bundle show rspec-core 2>/dev/null; then
   bundler install | indent
 
   sub_header_divider "${YELLOW}Preparing database for testing${NC}"
-  rails db:setup | indent
+  bundle exec rake db:setup | indent
 
   sub_header_divider "${YELLOW}Storing environment value in DB${NC}"
   bin/rails db:environment:set RAILS_ENV=test

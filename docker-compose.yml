@@ -42,8 +42,6 @@ services:
       dockerfile: .local/Dockerfile
       target: spec
     tty: true
-    environment:
-      MOJ_PF_ES_URL: http://elasticsearch:9200
     depends_on:
       - postgres
     volumes:

@@ -42,15 +42,16 @@ ENV APP_BUILD_TAG=${BUILD_TAG}
 FROM cimg/ruby:2.7.6-browsers AS base-test
 RUN sudo apt --allow-releaseinfo-change-suite update && sudo apt install postgresql-client curl libc-dev gcc libxml2-dev libxslt-dev
 
-RUN sudo curl https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
-RUN sudo sh -c 'echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list'
-RUN sudo apt --allow-releaseinfo-change-suite update
-RUN sudo apt-get install -y google-chrome-stable
+# Chrome
+RUN sudo curl https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add - && \
+    sudo sh -c 'echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list' && \
+    sudo apt --allow-releaseinfo-change-suite update && \
+    sudo apt-get install -y google-chrome-stable
 
 # docker compose, spec service; required for ease of running an rspec dedicated environment
 RUN echo "export DATABASE_URL=postgres://postgres@postgres" >> ~/.bashrc && \
     echo "export DB_TEST_URL=postgres://postgres@postgres/peoplefinder_test" >> ~/.bashrc && \
-    echo "export MOJ_PF_ES_URL=http://elasticsearch" >> ~/.bashrc && \
+    echo "export MOJ_PF_ES_URL=elasticsearch" >> ~/.bashrc && \
     echo "export RAILS_ENV=test" >> ~/.bashrc && \
     echo "export RAKE_ENV=test" >> ~/.bashrc && \
     echo "export SUPPRESS_JASMINE_DEPRECATION=true" >> ~/.bashrc && \
