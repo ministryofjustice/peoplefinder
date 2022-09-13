@@ -3,7 +3,7 @@
         "1": {
             "Name": "PeopleFinder",
             "Group": "Servers",
-            "Host": "db",
+            "Host": "postgres",
             "Port": 5432,
             "MaintenanceDB": "postgres",
             "Username": "postgres",
