@@ -63,6 +63,7 @@ RSpec.configure do |config|
   #DatabaseCleaner.url_allowlist = ['postgres://postgres@postgres', 'postgres://postgres@postgres/peoplefinder_test']
   # ^ not available when `docker compose` needs it...
   # ... using whitelist instead:
+  puts ENV["DATABASE_URL"]
   DatabaseCleaner.url_whitelist = [
     ENV["DATABASE_URL"],
     'postgres://postgres@postgres',
