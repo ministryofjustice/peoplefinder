@@ -23,10 +23,13 @@ Rails.application.configure do
     'Cache-Control' => "public, max-age=#{1.hour.to_i}"
   }
 
-  config.elastic_search_url = (ENV['MOJ_PF_ES_URL'] || 'localhost')
+  # supports local development
+  if ENV.value?("peoplefinder.docker")
+    config.elastic_search_url = 'elasticsearch'
+  end
 
   # Show full error reports and disable caching.
-  config.consider_all_requests_local       = true
+  config.consider_all_requests_local = true
   config.action_controller.perform_caching = false
   config.cache_store = :null_store
 

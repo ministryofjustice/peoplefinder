@@ -44,7 +44,10 @@ Rails.application.configure do
     config.cache_store = :null_store
   end
 
-  config.elastic_search_url = (ENV['MOJ_PF_ES_URL'] || 'localhost')
+  # supports local development
+  if ENV.value?("peoplefinder.docker")
+    config.elastic_search_url = 'elasticsearch'
+  end
 
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log

@@ -172,6 +172,9 @@ Lint/Debugger:
 Style/SingleLineBlockParams:
   Enabled: false
 
+Style/RedundantFetchBlock:
+  Enabled: false
+
 Style/ClassVars:
   Exclude:
     - 'spec/**/*'
@@ -181,6 +184,30 @@ Layout/FirstArrayElementIndentation:
     - 'spec/**/*'
 
 Layout/SpaceAroundOperators:
+  Enabled: false
+
+Performance/AncestorsInclude:
+  Enabled: true
+
+Performance/BigDecimalWithNumericArgument:
+  Enabled: false
+
+Performance/RedundantSortBlock:
+  Enabled: false
+
+Performance/RedundantStringChars:
+  Enabled: false
+
+Performance/ReverseFirst:
+  Enabled: false
+
+Performance/SortReverse:
+  Enabled: false
+
+Performance/Squeeze:
+  Enabled: false
+
+Performance/StringInclude:
   Enabled: false
 
 Performance/TimesMap:
