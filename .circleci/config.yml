@@ -144,7 +144,7 @@ references:
     run:
       name: Run unit and feature tests
       command: |
-        puts ENV["DATABASE_URL"]
+        echo ENV["DATABASE_URL"]
         SKIP_SIMPLECOV=false bundle exec rspec
 
   upload_test_coverage: &upload_test_coverage
