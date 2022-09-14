@@ -11,7 +11,7 @@ references:
 # Sets up the docker images and environment variables that we use
   test_container_config: &test_container_config
     docker:
-      - image: cimg/ruby:2.7.6-browsers
+      - image: circleci/ruby:2.7.2-node-browsers-legacy
         environment:
           RAILS_ENV: test
           RACK_ENV: test
@@ -22,7 +22,7 @@ references:
           PGHOST: 127.0.0.1
           POSTGRES_DB: peoplefinder_test
 
-      - image: cimg/postgres:12.11
+      - image: circleci/postgres:9.5-alpine
         environment:
           PG_PASSWORD: ""
           PG_USER: postgres
@@ -34,7 +34,7 @@ references:
         environment:
           - cluster.name: es-test-cluster
           - xpack.security.enabled: false
-          - transport.host: elasticsearch
+          - transport.host: localhost
           - network.host: 127.0.0.1
           - http.port: 9200
           - discovery.type: single-node
