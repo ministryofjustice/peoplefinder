@@ -51,7 +51,6 @@ RUN sudo curl https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-k
 # docker compose, spec service; required for ease of running an rspec dedicated environment
 RUN echo "export DATABASE_URL=postgres://postgres@postgres" >> ~/.bashrc && \
     echo "export DB_TEST_URL=postgres://postgres@postgres/peoplefinder_test" >> ~/.bashrc && \
-    echo "export MOJ_PF_ES_URL=elasticsearch" >> ~/.bashrc && \
     echo "export RAILS_ENV=test" >> ~/.bashrc && \
     echo "export RAKE_ENV=test" >> ~/.bashrc && \
     echo "export SUPPRESS_JASMINE_DEPRECATION=true" >> ~/.bashrc && \

@@ -10,7 +10,7 @@ services:
 
   app:
     shm_size: '256mb'
-    env_file: .env.local
+    env_file: .env
     environment:
       VIRTUAL_HOST: ${PF_HOST_NAME}
       VIRTUAL_PORT: 3000
@@ -50,7 +50,7 @@ services:
       - spec-gems:/home/circleci/.rubygems
 
   elasticsearch:
-    image: docker.elastic.co/elasticsearch/elasticsearch:${MOJ_PF_ES_VERSION}
+    image: docker.elastic.co/elasticsearch/elasticsearch:${PF_ELASTICSEARCH_VERSION}
     environment:
       VIRTUAL_HOST: elasticsearch.${PF_HOST_NAME}
       VIRTUAL_PORT: 9200
@@ -72,7 +72,7 @@ services:
       - "9300:9300"
 
   kibana:
-    image: docker.elastic.co/kibana/kibana:${MOJ_PF_ES_VERSION}
+    image: docker.elastic.co/kibana/kibana:${PF_ELASTICSEARCH_VERSION}
     environment:
       VIRTUAL_HOST: kibana.${PF_HOST_NAME}
       VIRTUAL_PORT: 5601
