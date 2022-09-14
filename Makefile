@@ -16,50 +16,50 @@ rebuild: dc-reset-bg servers
 servers: docker-check setup browser-sync server
 
 env:
-	@[ -f "./.env" ] || cp .env.example .env
+	@[ -f "./.env.local" ] || cp .env.example .env.local
 
 dc:
-	docker compose up -d app
-	docker compose run --rm --entrypoint=/bin/sh app
+	docker compose --env-file=.env.local up -d app
+	docker compose --env-file=.env.local run --rm --entrypoint=/bin/sh app
 
 dc-clean:
 	rm -rf ./log* ./tmp* ./.local/.setup-complete
-	docker compose down -v
+	docker compose --env-file=.env.local down -v
 	docker system prune -f
 	clear
 
 dc-reset: dc-clean
-	docker compose up --build
+	docker compose --env-file=.env.local up --build
 
 dc-reset-bg: dc-clean
-	docker compose up -d --build
+	docker compose --env-file=.env.local up -d --build
 
 dc-build: # no cleaning
-	docker compose up -d --build
+	docker compose --env-file=.env.local up -d --build
 
 down:
-	docker compose down
+	docker compose --env-file=.env.local down
 
 up: env
-	docker compose up
+	docker compose --env-file=.env.local up
 
 upd: env
-	docker compose up -d
+	docker compose --env-file=.env.local --env-file=.env.local up -d
 
 setup:
-	docker compose exec app /usr/bin/install.sh
+	docker compose --env-file=.env.local exec app /usr/bin/install.sh
 
 spec-setup:
 	@/usr/bin/install-spec.sh
 
 browser-sync:
-	docker compose exec -d app /usr/bin/browserSync.sh
+	docker compose --env-file=.env.local exec -d app /usr/bin/browserSync.sh
 
 server:
-	docker compose exec app /usr/bin/app-server-start.sh
+	docker compose --env-file=.env.local exec app /usr/bin/app-server-start.sh
 
 restart:
-	docker-compose down
+	docker-compose --env-file=.env.local down
 	make dc
 
 # Remove ignored git files
@@ -67,16 +67,16 @@ clean:
 	@if [ -d ".git" ]; then git clean -xdf --exclude ".env" --exclude ".idea"; fi
 
 shell:
-	docker compose exec --workdir /usr/src/app app /bin/sh
+	docker compose --env-file=.env.local exec --workdir /usr/src/app app /bin/sh
 
 worker:
 	clear
-	@docker compose exec --workdir /usr/src/app app bundle exec rake jobs:work
+	@docker compose --env-file=.env.local exec --workdir /usr/src/app app bundle exec rake jobs:work
 
 specs: docker-check
 	clear
 	@chmod +x .local/bin/spec-intro.sh && .local/bin/spec-intro.sh
-	@docker compose exec --workdir /usr/src/app spec bash
+	@docker compose --env-file=.env.local exec --workdir /usr/src/app spec bash
 
 docker-check:
 	@chmod +x ./.local/bin/check-docker-running.sh

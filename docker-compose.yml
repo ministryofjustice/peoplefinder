@@ -10,7 +10,7 @@ services:
 
   app:
     shm_size: '256mb'
-    env_file: .env
+    env_file: .env.local
     environment:
       VIRTUAL_HOST: ${PF_HOST_NAME}
       VIRTUAL_PORT: 3000

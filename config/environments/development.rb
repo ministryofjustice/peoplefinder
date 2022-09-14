@@ -10,9 +10,8 @@ Rails.application.config.hosts = [
 
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
-  #
-  # Used primarily to set Google+ API client ID and secret to
-  # allow log in authentication for local development.
+
+  # Used primarily by docker compose.
   config.before_configuration do
     Dotenv.load Rails.root.join('.env.local')
   end
