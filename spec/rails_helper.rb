@@ -60,8 +60,8 @@ ActiveRecord::Migration.maintain_test_schema!
 RSpec.configure do |config|
 
   unless ENV.fetch("DATABASE_URL", "").empty?
-    #DatabaseCleaner.url_allowlist = ['postgres://postgres@postgres', 'postgres://postgres@postgres/peoplefinder_test']
-    # ^ not available when `docker compose` needs it...
+    #DatabaseCleaner.url_allowlist = %w[postgres://postgres@postgres postgres://postgres@postgres/peoplefinder_test]
+    # ^ ! allowlist not available
     # ... using whitelist instead:
     DatabaseCleaner.url_whitelist = %w[postgres://postgres@postgres postgres://postgres@postgres/peoplefinder_test]
   end
