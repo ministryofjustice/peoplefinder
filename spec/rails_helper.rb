@@ -41,7 +41,6 @@ end
 
 Capybara.javascript_driver = :headless_chrome
 
-
 Capybara.default_max_wait_time = 3
 Capybara.server = :puma, { Silent: true }
 
@@ -64,8 +63,7 @@ RSpec.configure do |config|
   # ^ not available when `docker compose` needs it...
   # ... using whitelist instead:
   DatabaseCleaner.url_whitelist = [
-    ENV["DATABASE_URL"],
-    'postgres://postgres@postgres',
+    '', 'postgres://postgres@postgres',
     'postgres://postgres@postgres/peoplefinder_test'
   ]
 
