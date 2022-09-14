@@ -4,6 +4,6 @@ if Rails.env.test?
     'chromedriver.storage.googleapis.com',
     Rails.application.config.elastic_search_url
   ]
-  WebMock.disable_net_connect!(allow: allowed_connect)
+  WebMock.disable_net_connect!(allow_localhost: true, allow: allowed_connect)
   WebMock.allow_net_connect!(net_http_connect_on_start: true)
 end
