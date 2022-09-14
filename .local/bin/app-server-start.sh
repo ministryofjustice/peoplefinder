@@ -7,10 +7,10 @@ if ! bundle show puma > /dev/null 2>&1; then
 fi
 
 printf "\n\e[32m***> \e[0mConnection details"
-printf '\n\e[32m*****> \e[0m\e[33mAPP: http://%s/\e[0m' "$SERVER_NAME"
-printf '\n\e[32m*****> \e[0m\e[33mMAIL: http://%s/\e[0m' "mail.$SERVER_NAME"
-printf '\n\e[32m*****> \e[0m\e[33mKIBANA: http://%s/\e[0m' "kibana.$SERVER_NAME"
-printf '\n\e[32m*****> \e[0m\e[33mPGAdmin4: http://%s/\e[0m\n\n\n' "$SERVER_NAME:5050"
+printf '\n\e[32m*****> \e[0m\e[33mAPP: http://%s/\e[0m' "$PF_HOST_NAME"
+printf '\n\e[32m*****> \e[0m\e[33mMAIL: http://%s/\e[0m' "mail.$PF_HOST_NAME"
+printf '\n\e[32m*****> \e[0m\e[33mKIBANA: http://%s/\e[0m' "kibana.$PF_HOST_NAME"
+printf '\n\e[32m*****> \e[0m\e[33mPGAdmin4: http://%s/\e[0m\n\n\n' "$PF_HOST_NAME:5050"
 
 printf '\e[33mINFO: Launching Puma\e[0m\n'
 bundle exec puma -C config/puma.rb
