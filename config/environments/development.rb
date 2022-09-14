@@ -44,6 +44,8 @@ Rails.application.configure do
     config.cache_store = :null_store
   end
 
+  config.elastic_search_url = (ENV['MOJ_PF_ES_URL'] || 'localhost')
+
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log
 
