@@ -26,6 +26,7 @@ cd peoplefinder
 dory up
 make build
 ```
+**_Nb._** _Puma will be operational in your terminal. You should leave this process running as is and open another terminal to continue._
 
 The application will be available at the following addresses:
 
@@ -35,7 +36,7 @@ http://peoplefinder.docker/
 **Mailcatcher***\
 http://mail.peoplefinder.docker/
 
-To get the mail server working; in a separate terminal run the following
+To get the mail server working; in a separate terminal run the following.
 ```
 make worker
 ```
@@ -49,26 +50,35 @@ http://elasticsearch.peoplefinder.docker/
 **Kibana** : _for viewing ElasticSearch data_ \
 http://kibana.peoplefinder.docker/
 
---------
+------
 
-To gain access to a command prompt in your running application, please, run the following in a separate
-terminal window.
+
+### Working on the code
+Run the following in a separate terminal window. This will give access to a command prompt in your running application:
 
 ```
-make docker-shell
+make shell
 ```
-... this is the default make command so you could simply run
-``` 
-make
-```
+
 From this prompt, You can run `irb` and a host of other commands.
 
-Once the installation process has completed, a Puma server will be running in your terminal.
+All `make` commands are run from the root of the application, on your host system.
 
-IMPORTANT; the following removes all data and volumes... to nuke the entire installation and rebuild the app, run:
+IMPORTANT; the following removes all data and volumes... \
+... to nuke the entire installation and rebuild the app, run:
 
 ```
 make rebuild 
+```
+When you are done developing this app, run
+
+```
+make down
+```
+
+To get back up and running from the point you left, run
+```
+make launch
 ```
 
 
