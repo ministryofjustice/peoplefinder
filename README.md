@@ -81,6 +81,31 @@ To get back up and running from the point you left, run
 make launch
 ```
 
+If you make any changes to the Dockerfile in the `.local` directory, you will need to _soft-rebuild_ by running:
+
+```
+make build
+```
+
+### Other Commands
+
+| Command&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | Description                                                                                                                                                           |
+|---------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `make setup`                                                                                                                          | Jump into the app container and execute the `install.sh` script                                                                                                       |
+| `make browser-sync`                                                                                                                   | Launch BrowserSync in the background.                                                                                                                                 |
+| `make server`                                                                                                                         | Launch Puma at the command prompt.                                                                                                                                    |
+| `make servers`                                                                                                                        | A helper to ensure app setup and asynchronously start all servers in this order; Sidekiq, BrowserSync and Puma.                                                       |
+| `make dc-clean`                                                                                                                       | Stop all CTS docker containers, delete all CTS images, volumes and network. Clean the application directory ready for a fresh installation. Nukes databases and Gems. |
+| `make dc-reset`                                                                                                                       | Clean and rebuild the app, displays stdout ***doesn't restart the servers***                                                                                          |
+| `make down`                                                                                                                           | Alias of `docker compose --env-file=.env.local down`                                                                                                                  |
+| `make up`                                                                                                                             | Alias of `docker compose --env-file=.env.local up`                                                                                                                    |
+| `make up-daemon`                                                                                                                      | Alias of `docker compose --env-file=.env.local up -d app` - run docker compose in the background                                                                      |
+| `make restart`                                                                                                                        | Stop docker compose (`down`), relaunch (`up`) and display an interactive shell on the app container                                                                   |
+| `make shell`                                                                                                                          | Open an interactive command prompt on the app container                                                                                                               |
+| `make test`                                                                                                                           | Run tests on the application.                                                                                                                                         |
+
+
+---------------
 
 ### Ubuntu install
 
