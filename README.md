@@ -8,16 +8,83 @@ Coverage](https://codeclimate.com/github/ministryofjustice/peoplefinder/badges/c
 
 ## Installing for development
 
-This is not how people finder is actually deployed but provides an environment to do development on the app.
+Get the application up and running:
+
+Install the [Dory Proxy](https://github.com/FreedomBen/dory#dory). Dory will manage DNS on your system and proxy to your localhost, allowing you to have multiple applications running at once.
+
+```
+brew install dory
+```
+
+In a terminal window, change directory to the location you would like to install People Finder and do:
+```
+git clone https://github.com/ministryofjustice/peoplefinder.git
+cd peoplefinder
+```
+
+```
+dory up
+make build
+```
+
+The application will be available at the following addresses:
+
+**Application** \
+http://peoplefinder.docker/
+
+**Mailcatcher***\
+http://mail.peoplefinder.docker/
+
+To get the mail server working; in a separate terminal run the following
+```
+make worker
+```
+
+**DBAdmin4** : _for viewing Postgres data_ \
+http://peoplefinder.docker:5050/
+
+**ElasticSearch** : _endpoint for ElasticSearch_ \
+http://elasticsearch.peoplefinder.docker/
+
+**Kibana** : _for viewing ElasticSearch data_ \
+http://kibana.peoplefinder.docker/
+
+--------
+
+To gain access to a command prompt in your running application, please, run the following in a separate
+terminal window.
+
+```
+make docker-shell
+```
+... this is the default make command so you could simply run
+``` 
+make
+```
+From this prompt, You can run `irb` and a host of other commands.
+
+Once the installation process has completed, a Puma server will be running in your terminal.
+
+IMPORTANT; the following removes all data and volumes... to nuke the entire installation and rebuild the app, run:
+
+```
+make rebuild 
+```
+
 
 ### Ubuntu install
+
+```diff
+- Nb. some of the information here is heavily out of date.
+- Please adjust the guidance below (if needed) to suit modern OS architecture. 
+```
 
 On a Ubuntu 12.04 LTE box:
 
 - install curl, git, postgresql, postgresql-dev-all, nodejs
 - install rails through rvm. One way is:
-  - `gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3`
-  - `\curl -L https://get.rvm.io | bash -s stable --ruby`
+    - `gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3`
+    - `\curl -L https://get.rvm.io | bash -s stable --ruby`
 - start a new shell
 - `rvm gemset use global`
 - `gem install bundler`
@@ -126,13 +193,13 @@ You can configure your local machine for authentication by obtaining an OAuth Cl
 
 To create your own ID and SECRET:
 
-  * visit the [Google Developers Console](https://console.developers.google.com/).
-  * Create a project, optionally naming it `PeopleFinder-local`, and wait for the process to complete.
+* visit the [Google Developers Console](https://console.developers.google.com/).
+* Create a project, optionally naming it `PeopleFinder-local`, and wait for the process to complete.
 
-  * Select **Google+ API** from the central panel "Overview", then hit the Enable button. Wait for process to complete then follow link to **Go to Credentials** or choose **Credentials** from left sidebar, then follow the steps required to create an **OAuth 2.0 client ID** for a **Web application**.
+* Select **Google+ API** from the central panel "Overview", then hit the Enable button. Wait for process to complete then follow link to **Go to Credentials** or choose **Credentials** from left sidebar, then follow the steps required to create an **OAuth 2.0 client ID** for a **Web application**.
 
-  * On **OAuth consent page** you can optonally set the **Product name** to `PeopleFinder-local`
-  * On the credentials page:
+* On **OAuth consent page** you can optonally set the **Product name** to `PeopleFinder-local`
+* On the credentials page:
     * set Application type to Web application
     * set Name to `PeopleFinder-local`
     * set **Authorized JavaScript origins** to the root (e.g. `http://localhost:3000`)
@@ -169,11 +236,11 @@ For local testing - There are a few ways you can get the token
 http://localhost:3000/tokens/<token>
 
 2. you can view the server logs and copy the token from there, then paste it into the URL. See the image below:
-![image](https://user-images.githubusercontent.com/22935203/114713734-4e6e3f00-9d29-11eb-86f2-a7a18a4f9eb7.png)
+   ![image](https://user-images.githubusercontent.com/22935203/114713734-4e6e3f00-9d29-11eb-86f2-a7a18a4f9eb7.png)
 
-Then use the token on this URL: http://localhost:3000/tokens/3da4f4e2-8001-4437-b3ab-7e2b3f6e768c <-- replace with your token.3 
+Then use the token on this URL: http://localhost:3000/tokens/3da4f4e2-8001-4437-b3ab-7e2b3f6e768c <-- replace with your token.3
 
-3. Or you can use mailcatcher to pick up the Emails with the token link (see below). 
+3. Or you can use mailcatcher to pick up the Emails with the token link (see below).
 
 ## E-mails
 
@@ -409,11 +476,11 @@ Windows XP for their OS and IE7 for their browser. Consequently considerable sty
 
 #### Optional config for your VM for local development:
 
-  * enable host to VM copy/paste
+* enable host to VM copy/paste
 
-    ```
-    vbox > machine > settings > General(tab) > Advanced(tab) > Shared clipboard(dropdown) > Bidirectionl
-    ```
+  ```
+  vbox > machine > settings > General(tab) > Advanced(tab) > Shared clipboard(dropdown) > Bidirectionl
+  ```
 
 ### Development tools
 
@@ -454,7 +521,7 @@ A 'canary' string has been added to the first line of the secrets.yaml files on 
 $ git secrets --add --literal '#WARNING_Secrets_Are_Not_Encrypted!'
 ```
 
-**Please note** please make sure use --literal with exact string, forget to use this flag and change any bit of the string will cause the checking for those files skippped 
+**Please note** please make sure use --literal with exact string, forget to use this flag and change any bit of the string will cause the checking for those files skippped
 
 Finally checking the installation result:-
 First, check the hooks, open your local repository .git/hooks/, a few new hooks should have installed: pre-commit, commit-msg, prepare-commit-msg, each file should look something like this:
@@ -474,7 +541,7 @@ When committing a branch change git-secrets scans the whole repository for a spe
 ### git-crypt
 
 The tool is used for encryping sensitive information such as secrets or keys information
-e.g. 
+e.g.
 Sensitive information required to deploy the application into Cloud Platform
 are stored in the appropriate environment settings folders found in
 
@@ -489,8 +556,8 @@ To decrypt secrets, you must require authorization from your line manager.
 
 **Are about to add new secret files?**
 Please remember:
-Add the 'canary' string into the new secret file. 
-Make sure this file is within the scope defined in the .gitattributes, if not, you need to add it in 
+Add the 'canary' string into the new secret file.
+Make sure this file is within the scope defined in the .gitattributes, if not, you need to add it in
 
 If in doubt about handling any secure credentials please do not hesitate to `#ask-cloud-platform`
 or `#security` in MOJ Slack.
