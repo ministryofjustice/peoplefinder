@@ -162,12 +162,14 @@ namespace :peoplefinder do
               old_team.people.delete_all
               old_team.delete
               print '.........'
+            else
+              puts "Could not find `from` and `to` teams"
             end
           rescue => err
             puts "Failed to move team members for #{team[:from]}: #{err}"
           end
-          puts "done"
         end
+        puts "done"
       end
     end
 
