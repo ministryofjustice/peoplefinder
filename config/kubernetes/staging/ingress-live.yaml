@@ -1,4 +1,4 @@
-apiVersion: networking.k8s.io/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: peoplefinder-ingress
@@ -9,6 +9,7 @@ metadata:
     external-dns.alpha.kubernetes.io/set-identifier: peoplefinder-ingress-peoplefinder-staging-green
     external-dns.alpha.kubernetes.io/aws-weight: "100"
 spec:
+  ingressClassName: default
   tls:
     - hosts:
       - staging.peoplefinder.service.gov.uk
@@ -17,7 +18,10 @@ spec:
     - host: staging.peoplefinder.service.gov.uk
       http:
         paths:
-          - path: /
-            backend:
-              serviceName: peoplefinder-service
-              servicePort: 3000
+        - path: /
+          pathType: ImplementationSpecific
+          backend:
+            service:
+              name: peoplefinder-service
+              port: 
+                number: 3000
