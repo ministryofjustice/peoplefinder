@@ -16,7 +16,10 @@
 - content_for :head do
 
   = stylesheet_link_tag "application", media: "all"
-  = csrf_meta_tag
+
+  javascript:
+    (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-MRLL6W5');
+  
   %meta{name: "format-detection", content: "telephone=no"}
 
   /[if IE 6]
@@ -31,6 +34,10 @@
 
 - content_for :body_classes do
   = " controller-" + controller.controller_name
+
+- content_for :body_start do
+  noscript
+    iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MRLL6W5" height="0" width="0" style="display:none;visibility:hidden"
 
 - content_for :header_class do
   = "with-proposition"
@@ -47,14 +54,11 @@
 - content_for :footer_top do
   = render 'shared/feedback_form'
 
-
 - content_for :footer_support_links do
   = render 'layouts/footer'
 
-
 - content_for :body_end do
   = javascript_include_tag 'application'
-  = render 'layouts/ga'
 
 - content_for :content do
   %main#content
