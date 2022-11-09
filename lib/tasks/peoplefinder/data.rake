@@ -146,7 +146,9 @@ namespace :peoplefinder do
         {from: 'hmp-lewes-do-not-use', to: 'hmp-lewes'},
         {from: 'hmp-coldingley-do-not-use', to: 'hmp-coldingley'},
         {from: 'south-central-prisons-group-hmp-huntercombe-do-not-use-2',
-            to: 'south-central-prisons-group-hmp-huntercombe-2'}
+            to: 'south-central-prisons-group-hmp-huntercombe-2'},
+        {from: 'south-central-prisons-group-hmp-winchester-do-not-use',
+            to: 'south-central-prisons-group-hmp-winchester'}
       ]
 
       desc 'Bulk move people from an old to a new team, preserving existing members in new team, and delete the old team'
