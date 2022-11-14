@@ -49,6 +49,7 @@ moj.Modules.LoadTime = {
 	},
 
 	sendEventToGoogle: function(pageName, label, loadTime) {
+		ga('create', 'UA-53656606-1');
 		ga('send', 'event', this.category, pageName, label, parseInt(loadTime));
 	}
 }
