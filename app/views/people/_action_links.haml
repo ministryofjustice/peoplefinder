@@ -4,8 +4,4 @@
     method: :delete,
     class: "button button-secondary",
     data: { confirm: "Are you sure you want to delete #{ @person }? #{ info_text('profile_deletable') }." }
-  = button_to info_text('delete_this_profile), 
-    @person,
-    method: :delete,
-    class: "button button-secondary",
   = edit_person_link 'Edit this profile', @person, class: 'button'
