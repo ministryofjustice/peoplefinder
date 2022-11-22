@@ -68,9 +68,7 @@ module SpecSupport
     end
 
     def click_delete_profile(matcher = :first)
-      accept_alert do
-        click_link('Delete this profile', match: matcher)
-      end
+      click_link('Delete this profile', match: matcher)
     end
 
     def fill_in_membership_details(team_name)

@@ -351,7 +351,9 @@ describe 'Person maintenance' do
         given_name = person.given_name
 
         visit person_path(person)
-        click_delete_profile
+        accept_alert do
+          click_delete_profile
+        end
         sleep 1
         expect { Person.find(person.id) }.to raise_error(ActiveRecord::RecordNotFound)
 
@@ -364,7 +366,9 @@ describe 'Person maintenance' do
         membership = create(:membership)
         person = membership.person
         visit person_path(person)
-        click_delete_profile
+        accept_alert do
+          click_delete_profile
+        end
         sleep 1
         expect { Membership.find(membership.id) }.to raise_error(ActiveRecord::RecordNotFound)
         expect { Person.find(person.id) }.to raise_error(ActiveRecord::RecordNotFound)
