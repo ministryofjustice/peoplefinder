@@ -38,4 +38,18 @@ RSpec.configure do |config|
     end
   end
 
+
+end
+
+RSpec.configure do |config|
+  config.around(:each, :with_csrf_protection) do |example|
+    orig = ActionController::Base.allow_forgery_protection
+
+    begin
+      ActionController::Base.allow_forgery_protection = true
+      example.run
+    ensure
+      ActionController::Base.allow_forgery_protection = orig
+    end
+  end
 end
