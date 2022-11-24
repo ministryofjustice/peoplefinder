@@ -204,6 +204,18 @@ describe UserUpdateMailer do
         end
       end
     end
+
+    context 'updating deleted person' do
+      let(:person) { nil }
+      let(:changes_presenter) { nil }
+      let(:serialized_changes) do
+        { "data": { "raw": { "given_name":[ "Smith", "Jones" ] } } }.to_json
+      end
+
+      it 'does not error' do
+        expect { mail }.to_not raise_error
+      end
+    end
   end
 
   describe ".deleted_profile_email" do

@@ -13,8 +13,10 @@ class UserUpdateMailer < ApplicationMailer
   end
 
   def updated_profile_email(person, changes, by_email = nil)
+    return if person.nil?
+
     @person = person
-    present changes
+    present(changes)
     @by_email = by_email
     @profile_url = profile_url(person)
     mail to: person.email, cc: @changes.raw['email']&.first
@@ -32,7 +34,7 @@ class UserUpdateMailer < ApplicationMailer
     person_url(person)
   end
 
-  def present changes
+  def present(changes)
     @changes = ProfileChangesPresenter.deserialize(changes)
   end
 end
