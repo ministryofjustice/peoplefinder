@@ -205,11 +205,11 @@ describe UserUpdateMailer do
       end
     end
 
-    context 'updating deleted person' do
+    context 'when updating deleted person' do
       let(:person) { nil }
       let(:changes_presenter) { nil }
       let(:serialized_changes) do
-        { "data": { "raw": { "given_name":[ "Smith", "Jones" ] } } }.to_json
+        { 'data': { 'raw': { 'given_name': ['Smith', 'Jones'] } } }.to_json
       end
 
       it 'does not error' do
