@@ -401,6 +401,7 @@ en:
         secondary_email: Alternative work email address (optional)
         primary_phone_number: Main phone number (optional)
         secondary_phone_number: Alternative phone number (optional)
+        swap_email_display: Display alternative as main email (optional)
         pager_number: Pager number (optional)
         location_in_building: Location in building (optional)
         building: Building (optional)
