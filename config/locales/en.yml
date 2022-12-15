@@ -469,6 +469,7 @@ en:
         current_project: List the names of current projects this person is working on. Use a comma to separate project names.
         working_days: Select all that apply
         description: Include details about where this person works on different days, any days out of the office, and if this person starts early or late.
+        secondary_email: If you want this email to be shown as your Main email, select "Display alternative" option below
       membership:
         role: Role within this team
       group:
