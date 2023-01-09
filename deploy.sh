@@ -49,7 +49,7 @@ function _deploy() {
   if [[ "$3" == "circleci" ]]
   then
     image_tag=$1
-  else  
+  else
     if [[ "$1" =~ ^pf- ]]
     then
       image_tag=$1
@@ -73,13 +73,6 @@ function _deploy() {
       return 0
       ;;
   esac
-
-  # Ensure that the git-crypt secrets are unlocked ready for deployment
-  if grep -rq "\x0GITCRYPT" config/kubernetes/$environment/secrets.yaml; then
-    p "\e[31mFatal error: repository is locked with git-crypt\e[0m"
-    p "\e[31mUnlock using 'git-crypt unlock'\e[0m\n"
-    return 0
-  fi
 
   # Confirm what's going to happen and ask for confirmation if not circle ci
   docker_image_tag=${docker_registry}:${image_tag}
@@ -120,7 +113,7 @@ function _deploy() {
     p "Authenticating to live..."
     echo -n $KUBE_ENV_LIVE_CA_CERT | base64 -d > ./live_ca.crt
     kubectl config set-cluster $KUBE_ENV_LIVE_CLUSTER_NAME --certificate-authority=./live_ca.crt --server=https://$KUBE_ENV_LIVE_CLUSTER_NAME
-    
+
     if [[ $environment == "development" ]]
     then
       live_token=$KUBE_ENV_LIVE_DEVELOPMENT_TOKEN
@@ -166,7 +159,6 @@ function _deploy() {
   kubectl apply \
     -f config/kubernetes/${environment}/service.yaml \
     -f config/kubernetes/${environment}/ingress-live.yaml \
-    -f config/kubernetes/${environment}/secrets.yaml \
     -n $namespace
 
   #Add cron jobs if production
@@ -192,13 +184,13 @@ function _deploy() {
 
     kubectl set image -f config/kubernetes/${environment}/cron-profile-changed-report.yaml \
             jobs=${docker_image_tag} --local --output yaml | kubectl apply -n $namespace -f -
-  
+
     kubectl set image -f config/kubernetes/${environment}/cron-total-profiles-report.yaml \
             jobs=${docker_image_tag} --local --output yaml | kubectl apply -n $namespace -f -
 
     kubectl set image -f config/kubernetes/${environment}/cron-profile-percentage-report.yaml \
               jobs=${docker_image_tag} --local --output yaml | kubectl apply -n $namespace -f -
-    
+
     kubectl set image -f config/kubernetes/${environment}/cron-photo-profiles-report.yaml \
             jobs=${docker_image_tag} --local --output yaml | kubectl apply -n $namespace -f -
   fi
