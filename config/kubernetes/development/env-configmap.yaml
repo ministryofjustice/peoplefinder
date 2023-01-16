@@ -12,5 +12,5 @@ data:
   S3_REGION: 'eu-west-2'
   GOVUK_APP_DOMAIN: 'peoplefinder.service.gov.uk'
   GOVUK_WEBSITE_ROOT: 'development'
-  MOJ_PF_ES_URL: 'http://aws-es-proxy-service:9200'
+  MOJ_PF_ES_URL: 'aws-es-proxy-service:9200'
   
