@@ -46,10 +46,10 @@ Install elasticsearch through brew, find the right version of elasticsearch you 
 ```
 brew search elasticsearch
 ```
-The version of elasticsearch we use is 7.10.x
+The version of elasticsearch we use is 7.9
 
 ```cmd
-docker run --name elasticsearch  --publish 9200:9200 bitnami/elasticsearch:7.10.2
+docker run --name elasticsearch  --publish 9200:9200 bitnami/elasticsearch:7.9.0
 ```
 
 Install remaining dependencies on Mac OSX:
@@ -192,30 +192,25 @@ E-mails in development environment are setup to be delivered using `mailcatcher`
 
 ## Search
 
-To run the engine in production mode, `config.elastic_search_url` must be set in, for example, config/application.rb.
+To run the engine in production mode, `config.elastic_search_url` must be set in, for example, config/application.rb. The environment variable used to set it is `MOJ_PF_ES_URL`
 See 'Configurable elements' above.
 
-Heroku provides [Bonsai Elasticsearch](https://devcenter.heroku.com/articles/bonsai)
-as an add-on.
+replace `aws-es-proxy-service:9200` with `localhost:9200` when calling Elastic search locally.
 
-You can install a development version from [Elasticsearch 1.7.3 downloads](https://www.elastic.co/downloads/past-releases/elasticsearch-1-7-3)
-or with a package manager.
-e.g. `brew install elasticsearch17`.
+The following commands on kubernetes environments will call the elastic search proxy pod, which will then call elastic search on AWS to read or update data.
 
-Elasticsearch requires [jdk version 7 or greater](http://www.oracle.com/technetwork/java/javase/downloads/jdk7-downloads-1880260.html).
-
-To check the health of the elasticsearch (ES) stack you can use the following, from either host instance:
+To check the health of the elasticsearch (ES) stack you can use the following, from either host instance. `wget` will download the information onto the pods so you can read the files using `cat`. Locally you can just use `curl`.
 
 ```
-curl 'localhost:9200/_cat/health?v'
+wget 'aws-es-proxy-service:9200/_cat/health?v'
 ```
 
 or view ES settings and stats:
 
 ```
-curl 'localhost:9200/_cluster/stats/?pretty'
-curl 'localhost:9200/_cat/indices?v'
-curl 'localhost:9200/_cat/nodes?v'
+wget 'aws-es-proxy-service:9200/_cluster/stats/?pretty'
+wget 'aws-es-proxy-service:9200/_cat/indices?v'
+wget 'aws-es-proxy-service:9200/_cat/nodes?v'
 ```
 
 If you get an IndexMissingException, you will need to index the Person model:
