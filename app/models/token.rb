@@ -61,10 +61,9 @@ class Token < ApplicationRecord
     Token.create!(user_email: person.email)
   end
 
+  # NOTE: emails may be scanned which will spend the token, so we have a brief validity period
   def active?
-    return scanned_token_active? if Rails.host.dev? || Rails.host.staging?
-
-    token_active?
+    token_active? || within_validity_period?
   end
 
   def self.ttl
@@ -100,12 +99,6 @@ class Token < ApplicationRecord
   end
 
   private
-
-  # NOTE: dev and staging mails are scanned (possibly because they are not gov.uk)
-  # and this will spend them so
-  def scanned_token_active?
-    token_active? || within_validity_period?
-  end
 
   def token_active?
     (created_at > ttl.seconds.ago) && !spent?
