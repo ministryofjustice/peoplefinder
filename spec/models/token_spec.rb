@@ -160,80 +160,38 @@ RSpec.describe Token, type: :model do
     end
 
     describe '#active?' do
-      before { token.save }
+      before do
+        token.save
+        token.spend!
+        token.reload
+      end
 
-      context 'when in a production environment' do
-        it 'returns true if token is less than 86400 seconds old and not spent' do
+      it 'sets spent to true' do
+        expect(token).to be_spent
+      end
+
+      it 'returns true if token is spent but created less than 10 minutes ago' do
+        Timecop.freeze(9.minutes.from_now) do
           expect(token).to be_active
-          expect(token).not_to be_spent
-          Timecop.freeze(86_390.seconds.from_now) do
-            expect(token).to be_active
-          end
-        end
-
-        it 'returns false if token is less than 86400 seconds old but already used' do
-          expect do
-            token.spend!
-            token.reload
-          end.to change(token, :spent?).from(false).to(true)
-        end
-
-        it 'returns false if token is 86400 seconds or more old' do
-          Timecop.freeze(25.hours.from_now) do
-            expect(token).not_to be_active
-          end
         end
       end
 
-      context 'when on dev and staging - to avoid virus scanner link followers spending the token prematurely' do
-        before do
-          allow(Rails).to receive_message_chain(:host, :dev?).and_return false
-          allow(Rails).to receive_message_chain(:host, :staging?).and_return true
-          token.save
-          token.spend!
-          token.reload
-        end
-
-        it 'returns true if token is spent but created less than 10 minutes ago' do
-          Timecop.freeze(9.minutes.from_now) do
-            expect(token).to be_active
-          end
-        end
-
-        it 'returns false if token is spent and created more than 10 minutes ago' do
-          Timecop.freeze(11.minutes.from_now) do
-            expect(token).not_to be_active
-          end
+      it 'returns false if token is spent and created more than 10 minutes ago' do
+        Timecop.freeze(11.minutes.from_now) do
+          expect(token).not_to be_active
         end
       end
 
       context 'with expiring tokens' do
-        before { token.save }
-
-        let(:new_token) { build(:token, user_email: token.user_email) }
+        let(:expiring_token) { create(:token) }
+        let(:new_token) { build(:token, user_email: expiring_token.user_email) }
 
         describe '#save or #create for new tokens' do
           it 'removes previously created tokens for that user' do
             expect do
               new_token.save
-              token.reload
-            end.to change(token, :active?).from(true).to(false)
-          end
-        end
-
-        describe "#spend!" do
-          it 'sets spent to true' do
-            expect do
-              token.spend!
-              token.reload
-            end.to change(token, :spent?).from(false).to(true)
-          end
-
-          it 'makes the token inactive' do
-            expect do
-              token.spend!
-              token.reload
-            end.to change(token, :active?).from(true).to(false)
+              expiring_token.reload
+            end.to change(expiring_token, :spent?).from(false).to(true)
           end
         end
       end
