@@ -42,11 +42,13 @@ RSpec.describe TokenLogin, type: :service do
       end
     end
 
-    context 'with inactive/spent token' do
+    context 'with expired token' do
       let(:token) { create(:token, spent: true) }
       it 'renders expired token message' do
-        expect(view).to receive(:render_new_sessions_path_with_expired_token_message)
-        service.call view
+        Timecop.travel(Time.now + token.ttl) do
+          expect(view).to receive(:render_new_sessions_path_with_expired_token_message)
+          service.call view
+        end
       end
     end
   end
