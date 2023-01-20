@@ -228,7 +228,7 @@ rake peoplefinder:es:index_people
 Or you can create the index from the console if the above rake commands fail:
 
 ```ruby
-Elasticsearch::Client.new.index(index: Person.index_name, body: {})
+Elasticsearch::Model.client = Elasticsearch::Client.new(url: Rails.configuration.elastic_search_url).index(index: Person.index_name, body: {})
 Person.__elasticsearch__.create_index! index: Person.index_name, force: true
 ```
 
