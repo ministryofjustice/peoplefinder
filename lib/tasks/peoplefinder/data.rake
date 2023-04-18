@@ -141,5 +141,39 @@ namespace :peoplefinder do
       end
     end
 
+    namespace :etc do
+      teams_to_migrate = [
+        {from: 'hmp-lewes-do-not-use', to: 'hmp-lewes'},
+        {from: 'hmp-coldingley-do-not-use', to: 'hmp-coldingley'},
+        {from: 'south-central-prisons-group-hmp-huntercombe-do-not-use-2',
+            to: 'south-central-prisons-group-hmp-huntercombe-2'},
+        {from: 'south-central-prisons-group-hmp-winchester-do-not-use',
+            to: 'south-central-prisons-group-hmp-winchester'}
+      ]
+
+      desc 'Bulk move people from an old to a new team, preserving existing members in new team, and delete the old team'
+      task :bulk_move_lewes_huntercombe_coldingley => :environment do
+        teams_to_migrate.each do |team|
+          begin
+            puts "Assign #{team[:from]} members to #{team[:to]}"
+            old_team = Group.find_by_slug team[:from]
+            new_team = Group.find_by_slug team[:to]
+            if old_team && new_team
+              puts "Copying #{old_team.people.count} members"
+              new_team.people << old_team.people
+              old_team.people.delete_all
+              old_team.delete
+              print '.........'
+            else
+              puts "Could not find `from` and `to` teams"
+            end
+          rescue => err
+            puts "Failed to move team members for #{team[:from]}: #{err}"
+          end
+        end
+        puts "done"
+      end
+    end
+
   end
 end
