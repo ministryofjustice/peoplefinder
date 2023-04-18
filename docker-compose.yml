@@ -5,6 +5,8 @@ volumes:
   elasticsearch-data:
   gems:
   spec-gems:
+  pf-app-sync:
+    external: true
 
 services:
 
@@ -13,7 +15,7 @@ services:
     env_file: .env.local
     environment:
       VIRTUAL_HOST: ${PF_HOST_NAME}
-      VIRTUAL_PORT: 3000
+      VIRTUAL_PORT: 3100
     build:
       args:
         development_mode: "true"
@@ -23,15 +25,14 @@ services:
     stdin_open: true
     tty: true
     ports:
-      - "3000:3000"
-      - "3001:3001"
-      - "3002:3002"
+      - "3100:3100"
     depends_on:
       - postgres
     volumes:
       - .:/usr/src/app/
       - ~/.aws:/root/.aws
       - gems:/usr/local/bundle
+      - pf-app-sync:/usr/src/app/:nocopy
 
   spec:
     shm_size: '256mb'
@@ -50,7 +51,7 @@ services:
       - spec-gems:/home/circleci/.rubygems
 
   elasticsearch:
-    image: docker.elastic.co/elasticsearch/elasticsearch:${PF_ELASTICSEARCH_VERSION}
+    image: elasticsearch:${PF_ELASTICSEARCH_VERSION}
     environment:
       VIRTUAL_HOST: elasticsearch.${PF_HOST_NAME}
       VIRTUAL_PORT: 9200
@@ -68,17 +69,17 @@ services:
     volumes:
       - elasticsearch-data:/usr/share/elasticsearch/data
     ports:
-      - "9200:9200"
-      - "9300:9300"
+      - "9201:9201"
+      - "9301:9301"
 
   kibana:
-    image: docker.elastic.co/kibana/kibana:${PF_ELASTICSEARCH_VERSION}
+    image: kibana:${PF_ELASTICSEARCH_VERSION}
     environment:
       VIRTUAL_HOST: kibana.${PF_HOST_NAME}
       VIRTUAL_PORT: 5601
-      ELASTICSEARCH_HOSTS: http://elasticsearch:9200
+      ELASTICSEARCH_HOSTS: http://elasticsearch:9201
     ports:
-      - "5601:5601"
+      - "5602:5602"
     depends_on:
       - elasticsearch
 
@@ -99,7 +100,7 @@ services:
       PGADMIN_DEFAULT_EMAIL: dbadmin@${PF_HOST_NAME}
       PGADMIN_DEFAULT_PASSWORD: letMeIn
     ports:
-      - "5050:80"
+      - "5060:80"
     depends_on:
       - postgres
     links:
@@ -110,3 +111,6 @@ services:
     environment:
       VIRTUAL_HOST: mail.${PF_HOST_NAME}
       VIRTUAL_PORT: 1080
+    ports:
+      - "1080:1080"
+      - "1025:1025"
