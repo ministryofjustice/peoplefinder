@@ -34,5 +34,7 @@
 /spec/fixtures/csv_load_tester.csv
 /spec/support/uploads
 
+.docker-sync
 .local/.setup-complete
-secrets*.*
+nohup.out
+build
