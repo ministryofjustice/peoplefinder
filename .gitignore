@@ -37,4 +37,6 @@
 .docker-sync
 .local/.setup-complete
 nohup.out
+pid_puma.txt
+pid_mail_worker.txt
 build
