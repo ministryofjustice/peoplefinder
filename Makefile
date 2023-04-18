@@ -23,7 +23,7 @@ dc:
 	docker compose --env-file=.env.local run --rm --entrypoint=/bin/sh app
 
 dc-clean: docker-sync-stop
-	rm -rf ./log* ./tmp* ./.local-dev/.setup-complete
+	rm -rf ./log* ./tmp* ./.local/.setup-complete
 	docker compose --env-file=.env.local down -v
 	docker system prune -f
 	clear
