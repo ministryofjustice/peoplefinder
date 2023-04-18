@@ -1,5 +1,7 @@
 #!/bin/sh
 
+bundle config unset frozen
+
 gem install eventmachine -v 1.0.5 -- --with-cppflags=-I/usr/local/opt/openssl/include
 
 # fix for Nokogiri on arm64; helps to install platform agnostic/specific software
