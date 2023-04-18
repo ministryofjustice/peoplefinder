@@ -15,7 +15,7 @@ services:
     env_file: .env.local
     environment:
       VIRTUAL_HOST: ${PF_HOST_NAME}
-      VIRTUAL_PORT: 3100
+      VIRTUAL_PORT: 3000
     build:
       args:
         development_mode: "true"
@@ -25,7 +25,7 @@ services:
     stdin_open: true
     tty: true
     ports:
-      - "3100:3100"
+      - "3000:3000"
     depends_on:
       - postgres
     volumes:
@@ -69,8 +69,8 @@ services:
     volumes:
       - elasticsearch-data:/usr/share/elasticsearch/data
     ports:
-      - "9201:9201"
-      - "9301:9301"
+      - "9200:9200"
+      - "9300:9300"
 
   kibana:
     image: kibana:${PF_ELASTICSEARCH_VERSION}
