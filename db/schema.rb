@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2017_02_28_181641) do
+ActiveRecord::Schema.define(version: 2022_12_15_113851) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -86,6 +86,7 @@ ActiveRecord::Schema.define(version: 2017_02_28_181641) do
     t.datetime "last_reminder_email_at"
     t.string "current_project"
     t.text "pager_number"
+    t.boolean "swap_email_display"
     t.index "lower(email)", name: "index_people_on_lowercase_email", unique: true
     t.index ["slug"], name: "index_people_on_slug", unique: true
   end
