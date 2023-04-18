@@ -1,20 +1,20 @@
 require "active_support/core_ext/integer/time"
 
+# Used primarily by docker compose.
+Rails.application.config.before_configuration do
+  Dotenv.load Rails.root.join('.env.local')
+end
+
 Rails.application.config.hosts = [
-  IPAddr.new("0.0.0.0/0"), # All IPv4 addresses.
-  IPAddr.new("::/0"), # All IPv6 addresses.
-  "localhost", # The localhost reserved domain.
+  IPAddr.new("0.0.0.0/0"),        # All IPv4 addresses.
+  IPAddr.new("::/0"),             # All IPv6 addresses.
+  "localhost",                    # The localhost reserved domain.
   ENV["RAILS_DEVELOPMENT_HOST_DNS"], # Additional host for development.
   ENV["RAILS_DEVELOPMENT_HOST_NAME"]
 ]
 
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
-
-  # Used primarily by docker compose.
-  config.before_configuration do
-    Dotenv.load Rails.root.join('.env.local')
-  end
 
   # In the development environment your application's code is reloaded any time
   # it changes. This slows down response time but is perfect for development
@@ -102,3 +102,4 @@ Rails.application.configure do
   }
 
 end
+
