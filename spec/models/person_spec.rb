@@ -62,7 +62,6 @@ RSpec.describe Person, type: :model do
   end
 
   describe '#email' do
-
     it 'does not raise an invalid format error if blank' do
       person = build :person, email: ''
       expect(person.save).to be false
@@ -85,6 +84,18 @@ RSpec.describe Person, type: :model do
     it 'returns name and email' do
       person = create(:person, given_name: 'Sue', surname: 'Boe', email: 'User.Example@digital.justice.gov.uk')
       expect(person.email_address_with_name).to eq 'Sue Boe <user.example@digital.justice.gov.uk>'
+    end
+  end
+
+  describe "#secondary_email" do
+    it "is required if swap_email_display is false" do
+      person.swap_email_display = false
+      expect(person).to be_valid
+    end
+
+    it "is required if swap_email_display is true" do
+      person.swap_email_display = true
+      expect(person).to_not be_valid
     end
   end
 

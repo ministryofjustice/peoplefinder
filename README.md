@@ -148,10 +148,10 @@ Install elasticsearch through brew, find the right version of elasticsearch you 
 ```
 brew search elasticsearch
 ```
-The version of elasticsearch we use is 7.10.x
+The version of elasticsearch we use is 7.9
 
 ```cmd
-docker run --name elasticsearch  --publish 9200:9200 bitnami/elasticsearch:7.10.2
+docker run --name elasticsearch  --publish 9200:9200 bitnami/elasticsearch:7.9.0
 ```
 
 Install remaining dependencies on Mac OSX:
@@ -203,8 +203,6 @@ defined on a per environment basis.
 `config.disable_token_auth` Disable the 'token-based authentication' feature
 
 `config.elastic_search_url` Required for production (see Search section below)
-
-`config.ga_tracking_id` Google Analytics tracking id [optional]. e.g. 'XXXX-XXX'
 
 `config.support_email` e.g. 'peoplefinder-support@example.com'
 
@@ -296,30 +294,25 @@ E-mails in development environment are setup to be delivered using `mailcatcher`
 
 ## Search
 
-To run the engine in production mode, `config.elastic_search_url` must be set in, for example, config/application.rb.
+To run the engine in production mode, `config.elastic_search_url` must be set in, for example, config/application.rb. The environment variable used to set it is `MOJ_PF_ES_URL`
 See 'Configurable elements' above.
 
-Heroku provides [Bonsai Elasticsearch](https://devcenter.heroku.com/articles/bonsai)
-as an add-on.
+replace `aws-es-proxy-service:9200` with `localhost:9200` when calling Elastic search locally.
 
-You can install a development version from [Elasticsearch 1.7.3 downloads](https://www.elastic.co/downloads/past-releases/elasticsearch-1-7-3)
-or with a package manager.
-e.g. `brew install elasticsearch17`.
+The following commands on kubernetes environments will call the elastic search proxy pod, which will then call elastic search on AWS to read or update data.
 
-Elasticsearch requires [jdk version 7 or greater](http://www.oracle.com/technetwork/java/javase/downloads/jdk7-downloads-1880260.html).
-
-To check the health of the elasticsearch (ES) stack you can use the following, from either host instance:
+To check the health of the elasticsearch (ES) stack you can use the following, from either host instance. `wget` will download the information onto the pods so you can read the files using `cat`. Locally you can just use `curl`.
 
 ```
-curl 'localhost:9200/_cat/health?v'
+wget 'aws-es-proxy-service:9200/_cat/health?v'
 ```
 
 or view ES settings and stats:
 
 ```
-curl 'localhost:9200/_cluster/stats/?pretty'
-curl 'localhost:9200/_cat/indices?v'
-curl 'localhost:9200/_cat/nodes?v'
+wget 'aws-es-proxy-service:9200/_cluster/stats/?pretty'
+wget 'aws-es-proxy-service:9200/_cat/indices?v'
+wget 'aws-es-proxy-service:9200/_cat/nodes?v'
 ```
 
 If you get an IndexMissingException, you will need to index the Person model:
@@ -337,7 +330,7 @@ rake peoplefinder:es:index_people
 Or you can create the index from the console if the above rake commands fail:
 
 ```ruby
-Elasticsearch::Client.new.index(index: Person.index_name, body: {})
+Elasticsearch::Model.client = Elasticsearch::Client.new(url: Rails.configuration.elastic_search_url).index(index: Person.index_name, body: {})
 Person.__elasticsearch__.create_index! index: Person.index_name, force: true
 ```
 
@@ -533,69 +526,7 @@ A support email address is set as SUPPORT_EMAIL.
 
 ## Keeping secrets and sensitive information secure
 
-### git-secrets
-
-To prevent the commitment of secrets and credentials into git repositories we use awslabs / git-secrets (https://github.com/awslabs/git-secrets)
-
-For MacOS, git-secrets can be install via Homebrew.  From the terminal run the following:
-```
-$ brew install git-secrets
-```
-
-Then install the git hooks:
-
-```
-$ cd /path/to/my/repo
-$ git secrets --install
-$ git secrets --register-aws
-```
-
-A 'canary' string has been added to the first line of the secrets.yaml files on all environments.  Git Secrets has to be set to look for this string with:
-
-```
-$ git secrets --add --literal '#WARNING_Secrets_Are_Not_Encrypted!'
-```
-
-**Please note** please make sure use --literal with exact string, forget to use this flag and change any bit of the string will cause the checking for those files skippped
-
-Finally checking the installation result:-
-First, check the hooks, open your local repository .git/hooks/, a few new hooks should have installed: pre-commit, commit-msg, prepare-commit-msg, each file should look something like this:
-
-```
-#!/usr/bin/env bash
-git secrets --pre_commit_hook -- "$@"
-```
-
-Second, check the .git/config, a new section called [secrets] should have been added by end of this file, you should be able to see the rules from aws and the one for 'canary' string.
-
-**How it works**
-
-When committing a branch change git-secrets scans the whole repository for a specific set of strings.  In this case, the 'canary' string (described above) has been placed in all the secrets files. So, if the encrypted secrets files are unlocked, you will be warned before pushing the branch.
-
-
-### git-crypt
-
-The tool is used for encryping sensitive information such as secrets or keys information
-e.g.
-Sensitive information required to deploy the application into Cloud Platform
-are stored in the appropriate environment settings folders found in
-
-```
-config/kubernetes/<environment>/secrets.yaml
-```
-For MacOS brew users: `brew install git-crypt`
-
-For other installation guides: https://github.com/AGWA/git-crypt
-
-To decrypt secrets, you must require authorization from your line manager.
-
-**Are about to add new secret files?**
-Please remember:
-Add the 'canary' string into the new secret file.
-Make sure this file is within the scope defined in the .gitattributes, if not, you need to add it in
-
-If in doubt about handling any secure credentials please do not hesitate to `#ask-cloud-platform`
-or `#security` in MOJ Slack.
+There should be *absolutely no secure credentials* committed in this repo. Information about secret management can be found in the related confluence pages.
 
 ### prometheus_exporter
 if you want to check/debug prometheus_exporter under local development environment, just open a separated terminial and get into this project root foler

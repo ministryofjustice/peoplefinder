@@ -35,3 +35,4 @@
 /spec/support/uploads
 
 .local/.setup-complete
+secrets*.*
