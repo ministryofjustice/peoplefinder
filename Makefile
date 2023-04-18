@@ -4,10 +4,10 @@
 docker-shell: env dc
 
 # build the application
-build: env dc-build servers
+build: env docker-sync dc-build servers
 
 # start docker and the app server
-launch: docker-check upd servers
+launch: docker-check docker-sync upd servers
 
 # destroy everything and start again
 rebuild: dc-reset-bg servers
@@ -22,22 +22,22 @@ dc:
 	docker compose --env-file=.env.local up -d app
 	docker compose --env-file=.env.local run --rm --entrypoint=/bin/sh app
 
-dc-clean:
-	rm -rf ./log* ./tmp* ./.local/.setup-complete
+dc-clean: docker-sync-stop
+	rm -rf ./log* ./tmp* ./.local-dev/.setup-complete
 	docker compose --env-file=.env.local down -v
 	docker system prune -f
 	clear
 
-dc-reset: dc-clean
+dc-reset: dc-clean docker-sync
 	docker compose --env-file=.env.local up --build
 
-dc-reset-bg: dc-clean
+dc-reset-bg: dc-clean docker-sync
 	docker compose --env-file=.env.local up -d --build
 
 dc-build: # no cleaning
 	docker compose --env-file=.env.local up -d --build
 
-down:
+down: docker-sync-stop
 	docker compose --env-file=.env.local down
 
 up: env
@@ -45,6 +45,13 @@ up: env
 
 upd: env
 	docker compose --env-file=.env.local --env-file=.env.local up -d
+
+docker-sync: env
+	docker-sync start
+
+docker-sync-stop: env
+	docker-sync stop
+	docker-sync clean
 
 setup:
 	docker compose --env-file=.env.local exec app /usr/bin/install.sh
