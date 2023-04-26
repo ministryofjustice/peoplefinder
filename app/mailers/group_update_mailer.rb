@@ -1,6 +1,4 @@
 class GroupUpdateMailer < ApplicationMailer
-
-  # layout 'email'
   helper MailHelper
 
   def inform_subscriber(recipient, group, instigator)
@@ -8,6 +6,6 @@ class GroupUpdateMailer < ApplicationMailer
     @group = group
     @instigator = instigator
     @group_url = group_url(group)
-    mail to: recipient.email
+    sendmail(to: recipient.email)
   end
 end
