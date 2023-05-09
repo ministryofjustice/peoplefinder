@@ -1,6 +1,6 @@
 class TokenMailer < GovukNotifyRails::Mailer
   def new_token_email(token)
-    set_template('new_token')
+    set_template('539c30de-c483-4002-b7b1-b84d1bbaa6ac')
 
     set_personalisation(
       token_url: token_url(token),
