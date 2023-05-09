@@ -82,13 +82,6 @@ cd peoplefinder
 bundle exec rake jobs:work
 ```
 
-To catch emails in development, in a separate terminal, run `mailcatcher` and view emails at `http://localhost:1080`:
-
-```cmd
-cd peoplefinder
-mailcatcher
-```
-
 ## Configuration
 
 These should be defined in the config/application.rb or in the enviroments/__environment__.rb files if the settings need to be
@@ -171,7 +164,6 @@ http://localhost:3000/tokens/<token>
 
 Then use the token on this URL: http://localhost:3000/tokens/3da4f4e2-8001-4437-b3ab-7e2b3f6e768c <-- replace with your token.3
 
-3. Or you can use mailcatcher to pick up the Emails with the token link (see below).
 
 ## E-mails
 
@@ -185,10 +177,6 @@ In production, periodic emails are sent to users that have:
 - not added a team description when they are a team leader.
 
 Cron jobs are handled using Kubernetes Cron jobs. The files are located in config/kubernetes. These are responsible for Emails like the one that you received when someone updates your profile.
-
-### In Development
-
-E-mails in development environment are setup to be delivered using `mailcatcher` gem. For that `mailcatcher` has to be started and then accessed on `http://localhost:1080` to read the delivered e-mails.
 
 ## Search
 
