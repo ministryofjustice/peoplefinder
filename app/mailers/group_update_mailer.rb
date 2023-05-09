@@ -6,7 +6,7 @@ class GroupUpdateMailer < GovukNotifyRails::Mailer
       person_name: recipient.given_name,
       group: group.to_s,
       instigator_email: instigator.email,
-      group_url: group_url(group),
+      group_url: group_url(group)
     )
 
     mail(to: recipient.email)
