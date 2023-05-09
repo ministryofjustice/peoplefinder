@@ -60,6 +60,8 @@ module Peoplefinder
 
     config.support_email = ENV.fetch('SUPPORT_EMAIL')
 
+    config.govuk_notify_api_key = ENV.fetch('GOVUK_NOTIFY_API_KEY')
+
     config.action_mailer.default_options = {
       from:  config.support_email
     }
