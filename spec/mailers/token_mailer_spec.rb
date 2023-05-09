@@ -24,10 +24,9 @@ RSpec.describe TokenMailer do
     end
 
     it 'sets the personalisation keys' do
-      expect(mail.govuk_notify_personalisation.keys.sort)
-        .to eq([
-          :token_url
-        ])
+      expect(mail.govuk_notify_personalisation.keys.sort).to eq [
+        :token_url
+      ]
     end
   end
 end

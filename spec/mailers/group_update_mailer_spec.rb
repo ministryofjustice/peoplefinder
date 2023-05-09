@@ -21,13 +21,12 @@ RSpec.describe GroupUpdateMailer do
     end
 
     it 'sets the personalisation keys' do
-      expect(mail.govuk_notify_personalisation.keys.sort)
-        .to eq([
-          :group,
-          :group_url,
-          :instigator_email,
-          :person_name
-        ])
+      expect(mail.govuk_notify_personalisation.keys.sort).to eq [
+        :group,
+        :group_url,
+        :instigator_email,
+        :person_name
+      ]
     end
   end
 end
