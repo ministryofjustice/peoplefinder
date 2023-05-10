@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 class GroupUpdateMailer < GovukNotifyRails::Mailer
   def inform_subscriber(recipient, group, instigator)
     set_template('fabc29b0-084d-481c-95eb-09eebe4fcd29')
@@ -11,18 +10,5 @@ class GroupUpdateMailer < GovukNotifyRails::Mailer
     )
 
     mail(to: recipient.email)
-=======
-class GroupUpdateMailer < ApplicationMailer
-
-  # layout 'email'
-  helper MailHelper
-
-  def inform_subscriber(recipient, group, instigator)
-    @person = recipient
-    @group = group
-    @instigator = instigator
-    @group_url = group_url(group)
-    mail to: recipient.email
->>>>>>> parent of 98b60115 (Setup Notify)
   end
 end
