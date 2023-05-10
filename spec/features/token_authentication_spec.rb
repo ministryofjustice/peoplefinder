@@ -21,7 +21,7 @@ describe 'Token Authentication' do
   it 'trying to log in with a valid email address' do
     visit '/'
     fill_in 'token_user_email', with: 'valid.email@digital.justice.gov.uk'
-    expect(TokenMailer).to receive(:new_token_email).at_least(1).times.and_call_original
+    expect(TokenMailer).to receive(:new_token_email).at_least(:once).times.and_call_original
     click_button 'Request link'
     expect(page).to have_text('When it arrives, click on the link (which is active for 1 day)')
   end

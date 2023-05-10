@@ -134,7 +134,7 @@ describe 'Group maintenance' do
       new_name = 'Cyberdigital Cyberservices'
       fill_in 'Team name', with: new_name
 
-      expect(GroupUpdateMailer).to receive(:inform_subscriber).with(user, group, current_user).at_least(1).times.and_call_original
+      expect(GroupUpdateMailer).to receive(:inform_subscriber).with(user, group, current_user).at_least(:once).times.and_call_original
 
       click_button 'Save'
 
