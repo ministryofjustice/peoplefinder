@@ -1,7 +1,3 @@
-class ApplicationMailer < Mail::Notify::Mailer
+class ApplicationMailer < ActionMailer::Base
   layout 'email'
-
-  def sendmail(**args)
-    view_mail('00b59047-6493-450d-833f-14ffe9136356', args)
-  end
 end

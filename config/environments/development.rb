@@ -83,12 +83,7 @@ Rails.application.configure do
     protocol: 'http'
   }
   config.action_mailer.asset_host = ENV['ACTION_MAILER_DEFAULT_URL'] || 'http://localhost:3000'
-  # config.action_mailer.delivery_method = :smtp
-  # config.action_mailer.smtp_settings = { address: 'localhost', port: 1025 }
-
-  config.action_mailer.delivery_method = :notify
-  config.action_mailer.notify_settings = {
-    api_key: "ap_test-79d2ee68-5e58-4f2a-9279-a5978d84500b-9affe8b6-48b8-4ffc-9c81-fea74fccd01c"
-  }
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = { address: 'localhost', port: 1025 }
 
 end

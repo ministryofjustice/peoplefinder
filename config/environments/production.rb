@@ -100,20 +100,15 @@ Rails.application.configure do
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
 
-  config.action_mailer.delivery_method = :notify
-  config.action_mailer.notify_settings = {
-    api_key: YOUR_NOTIFY_API_KEY
+  config.action_mailer.smtp_settings = {
+    address: 'smtp.sendgrid.net',
+    port: '587',
+    authentication: :plain,
+    user_name: ENV['SENDGRID_USERNAME'],
+    password: ENV['SENDGRID_PASSWORD'],
+    domain: ENV['SENDGRID_DOMAIN'] || 'people-finder.dsd.io',
+    enable_starttls_auto: true
   }
-
-  # config.action_mailer.smtp_settings = {
-  #   address: 'smtp.sendgrid.net',
-  #   port: '587',
-  #   authentication: :plain,
-  #   user_name: ENV['SENDGRID_USERNAME'],
-  #   password: ENV['SENDGRID_PASSWORD'],
-  #   domain: ENV['SENDGRID_DOMAIN'] || 'people-finder.dsd.io',
-  #   enable_starttls_auto: true
-  # }
   config.filter_parameters += [
     :given_name, :surname, :email, :primary_phone_number,
     :secondary_phone_number, :location, :email

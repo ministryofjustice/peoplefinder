@@ -1,25 +1,26 @@
 class ReminderMailer < ApplicationMailer
   include FeatureHelper
 
+  # layout 'email'
   helper PeopleHelper
   helper MailHelper
 
   def never_logged_in(person)
     @person = person
     @token_url = token_url_for(person)
-    sendmail to: @person.email_address_with_name
+    mail to: @person.email_address_with_name
   end
 
   def team_description_missing(person, group)
     @group = group
     @person = person
-    sendmail to: @person.email_address_with_name
+    mail to: @person.email_address_with_name
   end
 
   def person_profile_update(person)
     @person = person
     @token_url = token_url_for(person)
-    sendmail to: @person.email_address_with_name
+    mail to: @person.email_address_with_name
   end
 
   private

@@ -1,11 +1,13 @@
 class SuggestionMailer < ApplicationMailer
+
+  # layout 'email'
   helper MailHelper
 
   def person_email(person, suggester, suggestion_hash)
     @person = person
     @suggester = suggester
     @suggestion = Suggestion.new(suggestion_hash)
-    sendmail to: person.email
+    mail to: person.email
   end
 
   def team_admin_email(person, suggester, suggestion_hash, admin)
@@ -13,6 +15,6 @@ class SuggestionMailer < ApplicationMailer
     @suggester = suggester
     @admin = admin
     @suggestion = Suggestion.new(suggestion_hash)
-    sendmail to: admin.email
+    mail to: admin.email
   end
 end
