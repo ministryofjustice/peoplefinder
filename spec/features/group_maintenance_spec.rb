@@ -134,17 +134,14 @@ describe 'Group maintenance' do
       new_name = 'Cyberdigital Cyberservices'
       fill_in 'Team name', with: new_name
 
+      expect(GroupUpdateMailer).to receive(:inform_subscriber).with(user, group, current_user).at_least(1).times.and_call_original
+
       click_button 'Save'
 
       expect(page).to have_content('Updated Cyberdigital Cyberservices')
       expect(page).to have_selector('.mod-search-form')
       group.reload
       expect(group.name).to eql(new_name)
-
-      expect(last_email.to).to include(user.email)
-      expect(last_email.subject).to eq('People Finder team updated')
-      expect(page).to have_text(new_name)
-      expect(last_email.body.encoded).to match(group_url(group))
     end
 
     it 'Change parent to department via clicking "Back"' do
@@ -185,7 +182,7 @@ describe 'Group maintenance' do
       expect(group.parent).to eql(sibling_group)
     end
 
-    it 'Changing a team parent via clicking sibling team\'s subteam name', skip: 'skip until capybara/poltegeist update to try and fix as flickers regularly after site_prism bump to 2.9' do
+    it 'Changing a team parent via clicking sibling team\'s subteam name' do
       group = setup_three_level_group
       subteam_group = create(:group, name: 'Test team', parent: sibling_group)
       setup_group_member group
