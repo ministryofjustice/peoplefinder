@@ -347,8 +347,6 @@ describe 'Person maintenance' do
     context 'with a regular user', user: :regular do
       it 'Deleting a person' do
         person = create :person
-        email_address = person.email
-        given_name = person.given_name
 
         visit person_path(person)
         accept_alert do
