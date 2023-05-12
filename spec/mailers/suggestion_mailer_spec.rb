@@ -28,32 +28,18 @@ RSpec.describe SuggestionMailer do
 
     let(:mail) { described_class.person_email(person, suggester, suggestion_hash).deliver_now }
 
-    include_examples 'common mailer template elements'
-
-    it 'is sent from the support address' do
-      expect(mail.from).to include(Rails.configuration.support_email)
+    it 'sets the template' do
+      expect(mail.govuk_notify_template).to eq '481a02b5-5783-453a-87c4-d7ec1d55842e'
     end
 
     it 'is sent to the profile email' do
       expect(mail.to).to include(person.email)
     end
 
-    it 'contains the name of the suggester' do
-      expect_mail_body_text(suggester.name)
-    end
-
-    describe 'when missing fields suggested' do
-      it 'contains contents of missing_fields_info' do
-        expect_mail_body_text(missing_fields_info)
-      end
-    end
-
-    describe 'when incorrect fields suggested' do
-      it 'contains list of fields in incorrect_fields_info' do
-        expect_mail_body_text('First name')
-        expect_mail_body_text('Last name')
-        expect_mail_body_text('Location of work')
-      end
+    it 'sets personalisation options' do
+      expect(mail.govuk_notify_personalisation[:suggester_name]).to eq suggester.name
+      expect(mail.govuk_notify_personalisation[:suggestion_missing_fields]).to eq missing_fields_info
+      expect(mail.govuk_notify_personalisation[:suggestion_incorrect_fields]).to eq "First name, Last name, Location of work"
     end
   end
 
@@ -79,10 +65,8 @@ RSpec.describe SuggestionMailer do
       ).deliver_now
     end
 
-    include_examples 'common mailer template elements'
-
-    it 'is sent from the support address' do
-      expect(mail.from).to include(Rails.configuration.support_email)
+    it 'sets the template' do
+      expect(mail.govuk_notify_template).to eq '48109d13-7b60-44b8-8dc1-3bded70468cc'
     end
 
     it 'is sent to the provided team admin' do
@@ -90,44 +74,64 @@ RSpec.describe SuggestionMailer do
     end
 
     it 'contains the first name of the team admin' do
-      expect_mail_body_text(admin.given_name)
+      expect(mail.govuk_notify_personalisation[:admin_name]).to eq admin.given_name
     end
 
     it 'contains the name of the suggester' do
-      expect_mail_body_text(suggester.name)
+      expect(mail.govuk_notify_personalisation[:suggester_name]).to eq suggester.name
     end
 
     it 'contains the name of the person whose profile it concerns' do
-      expect_mail_body_text(person.name)
+      expect(mail.govuk_notify_personalisation[:person_name]).to eq person.name
     end
 
     it 'contains a link to the profile it concerns' do
-      expect_mail_body_text(person_url(person))
+      expect(mail.govuk_notify_personalisation[:person_url]).to eq person_url(person)
     end
 
     describe 'when duplicate profile suggested' do
-      it 'contains the text "duplicate profile"' do
-        expect_mail_body_text('duplicate profile')
+      it 'contains duplicate_profile as true' do
+        expect(mail.govuk_notify_personalisation[:duplicate_profile]).to eq true
       end
     end
 
     describe 'when inappropriate content suggested' do
-      it 'contains the text "inappropriate content"' do
-        expect_mail_body_text('inappropriate content')
+      it 'contains inappropriate_content as true' do
+        expect(mail.govuk_notify_personalisation[:inappropriate_content]).to eq true
       end
 
       it 'contains inappropriate content info' do
-        expect_mail_body_text(inappropriate_content_info)
+        expect(mail.govuk_notify_personalisation[:inappropriate_content_info]).to eq "They provided the following information about inappropriate content: #{inappropriate_content_info}"
+      end
+    end
+
+    describe 'when inappropriate content not suggested' do
+      before do
+        suggestion_hash[:inappropriate_content_info] = nil
+      end
+
+      it 'contains empty inappropriate content info' do
+        expect(mail.govuk_notify_personalisation[:inappropriate_content_info]).to eq ""
       end
     end
 
     describe 'when suggested that person left' do
-      it 'contains the text "person left"' do
-        expect_mail_body_text('person left')
+      it 'contains person_left as true' do
+        expect(mail.govuk_notify_personalisation[:person_left]).to eq true
       end
 
       it 'contains person left info' do
-        expect_mail_body_text(person_left_info)
+        expect(mail.govuk_notify_personalisation[:person_left_info]).to eq "They provided the following information about the person leaving: #{person_left_info}"
+      end
+    end
+
+    describe 'when person left not suggested' do
+      before do
+        suggestion_hash[:person_left_info] = nil
+      end
+
+      it 'contains empty person left info' do
+        expect(mail.govuk_notify_personalisation[:person_left_info]).to eq ""
       end
     end
   end

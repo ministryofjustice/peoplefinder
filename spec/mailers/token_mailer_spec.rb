@@ -23,10 +23,8 @@ RSpec.describe TokenMailer do
       expect(mail.to).to include(requestor.email)
     end
 
-    it 'sets the personalisation keys' do
-      expect(mail.govuk_notify_personalisation.keys.sort).to eq [
-        :token_url
-      ]
+    it 'sets the personalisation data' do
+      expect(mail.govuk_notify_personalisation[:token_url]).to eq token_url(token)
     end
   end
 end

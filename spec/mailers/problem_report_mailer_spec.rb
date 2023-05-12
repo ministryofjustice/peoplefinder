@@ -20,37 +20,25 @@ RSpec.describe ProblemReportMailer do
 
   describe '.problem_report' do
     let(:mail) do
-      described_class.problem_report(details_hash).
-        deliver_now
+      described_class.problem_report(details_hash)
+    end
+
+    it 'sets the template' do
+      expect(mail.govuk_notify_template).to eq 'edd53a46-569e-40bf-8639-ceaecabddafd'
     end
 
     it 'is sent to support mailbox' do
       expect(mail.to).to include(support_email)
     end
 
-    it 'sets reply-to to persons email for automated response' do
-      expect(mail.reply_to).to include(reporter.email)
-    end
-
-    it 'has text part only' do
-      expect(mail.multipart?).to be false
-      expect(mail.content_type).to include 'text/plain'
-    end
-
-    it 'includes the email of the reporter when provided' do
-      expect(mail.body).to have_text(reporter.email)
-    end
-
-    it 'includes the IP address of the reporter' do
-      expect(mail.body).to have_text('255.255.255.255')
-    end
-
-    it 'includes the date reported in UTC iso8601 format' do
-      expect(mail.body).to have_text(Time.at(reported).utc.iso8601)
-    end
-
-    it 'includes the user agent details' do
-      expect(mail.body).to have_text('IE99')
+    it 'sets the personalisation data' do
+      expect(mail.govuk_notify_personalisation[:browser]).to eq 'IE99'
+      expect(mail.govuk_notify_personalisation[:ip_address]).to eq '255.255.255.255'
+      expect(mail.govuk_notify_personalisation[:person_email]).to eq reporter.email
+      expect(mail.govuk_notify_personalisation[:person_id]).to eq reporter.id
+      expect(mail.govuk_notify_personalisation[:problem]).to eq 'It broke'
+      expect(mail.govuk_notify_personalisation[:reported_at]).to eq Time.at(reported).utc.iso8601
+      expect(mail.govuk_notify_personalisation[:trying_to_do]).to eq 'Something daft'
     end
 
     context 'without reporter details' do
@@ -64,18 +52,13 @@ RSpec.describe ProblemReportMailer do
         }
       end
 
-      it 'does not set reply to' do
-        expect(mail.reply_to).to be_empty
-      end
-
       it 'includes unknown for ID' do
-        expect(mail.body).to have_text('Person ID: unknown')
+        expect(mail.govuk_notify_personalisation[:person_id]).to eq 'unknown'
       end
 
       it 'includes unknown for email' do
-        expect(mail.body).to have_text('Email: unknown')
+        expect(mail.govuk_notify_personalisation[:person_email]).to eq 'unknown'
       end
     end
-
   end
 end

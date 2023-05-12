@@ -13,97 +13,74 @@ RSpec.describe ReminderMailer do
     team
   end
 
-  shared_examples 'sets email to and from correctly' do
-    it 'sets the sender' do
-      expect(mail.from).to include(Rails.configuration.support_email)
-    end
-
+  shared_examples 'sets email recipient correctly' do
     it 'sets the correct recipient' do
       expect(mail.to).to include(person.email)
     end
   end
 
-  shared_examples 'subject contains' do |subject|
-    it 'sets the subject' do
-      expect(mail.subject).to have_text(subject)
-    end
-  end
-
-  shared_examples 'body contains' do |text|
-    it 'includes body text' do
-      %w(plain html).each do |part_type|
-        expect(get_message_part(mail, part_type)).to have_text(text)
-      end
-    end
-  end
-
-  shared_examples 'includes link to edit person' do
-    it 'includes the person edit url' do
-      %w(plain html).each do |part_type|
-        expect(get_message_part(mail, part_type)).to have_text(edit_person_url(person))
-      end
+  shared_examples 'includes name' do |name|
+    it 'includes data' do
+      expect(mail.govuk_notify_personalisation[:name]).to eq name
     end
   end
 
   shared_examples 'includes link to edit group' do
     it 'includes the person edit url' do
       edit_url = edit_group_url(group)
-      html = get_message_part(mail, 'html')
-      expect(html).to have_link('your team’s information', href: edit_url)
-      expect(html).to have_link(edit_url, href: edit_url)
-
-      plain_text = get_message_part(mail, 'plain')
-      expect(plain_text).to have_text(edit_url)
+      expect(mail.govuk_notify_personalisation[:edit_group_url]).to eq edit_url
     end
   end
 
   shared_examples 'includes link to token login' do
     it 'includes the token login url' do
-      expect(get_message_part(mail, 'text')).to have_text('http://www.example.com/tokens/')
+      expect(mail.govuk_notify_personalisation[:token_url]).to have_text('http://www.example.com/tokens/')
     end
   end
 
   describe '.never_logged_in' do
     let(:mail) { described_class.never_logged_in(person).deliver_now }
 
-    include_examples 'common mailer template elements'
-    include_examples 'sets email to and from correctly'
-    include_examples 'subject contains', 'Are your People Finder details up to date?'
-    include_examples 'body contains', 'Hello John'
+    include_examples 'sets email recipient correctly'
+    include_examples 'includes name', 'John'
     include_examples 'includes link to token login'
+
+    it 'sets the template' do
+      expect(mail.govuk_notify_template).to eq 'afea2e90-d721-4cbe-be97-a89dd6973af6'
+    end
+
   end
 
   describe '.team_description_missing' do
     let(:mail) { described_class.team_description_missing(person, group).deliver_now }
 
-    include_examples 'common mailer template elements'
-    include_examples 'sets email to and from correctly'
-    include_examples 'subject contains', 'Improve your team’s profile on People Finder'
-    include_examples 'body contains', 'Hello John'
+    include_examples 'sets email recipient correctly'
+    include_examples 'includes name', 'John'
     include_examples 'includes link to edit group'
+
+    it 'sets the template' do
+      expect(mail.govuk_notify_template).to eq 'eecbbb2a-b8c9-4783-b70f-c48b2bacaed8'
+    end
+
   end
 
   describe '.person_profile_update' do
     let(:mail) { described_class.person_profile_update(person).deliver_now }
 
-    include_examples 'common mailer template elements'
-    include_examples 'sets email to and from correctly'
-    include_examples 'subject contains', 'Are your People Finder details up to date?'
-    include_examples 'body contains', 'Hello John'
+    include_examples 'sets email recipient correctly'
     include_examples 'includes link to token login'
 
     it 'includes profile details' do
-      team_name = group.name # also creates group
-      %w(html plain).each do |type|
-        text = get_message_part(mail, type)
-        expect(text).to have_text('Name John Coe', normalize_ws: true)
-        expect(text).to have_text("Team #{team_name} - you are a team leader", normalize_ws: true)
-        expect(text).to have_text('Role -', normalize_ws: true)
-        expect(text).to have_text('Location -', normalize_ws: true)
-        expect(text).to have_text('Primary phone number -', normalize_ws: true)
-        expect(text).to have_text('Current project(s) -', normalize_ws: true)
-      end
+      data = mail.govuk_notify_personalisation
+      expect(data[:given_name]).to eq 'John'
+      expect(data[:person_name]).to eq 'John Coe'
+      expect(data[:location]).to eq '-'
+      expect(data[:primary_phone_number]).to eq '-'
+      expect(data[:current_projects]).to eq '-'
+    end
+
+    it 'sets the template' do
+      expect(mail.govuk_notify_template).to eq 'ad85435b-3c8f-4092-865a-4320ff5745f1'
     end
   end
-
 end
