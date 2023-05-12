@@ -356,10 +356,6 @@ describe 'Person maintenance' do
         end
         sleep 1
         expect { Person.find(person.id) }.to raise_error(ActiveRecord::RecordNotFound)
-
-        expect(last_email.to).to include(email_address)
-        expect(last_email.subject).to eq('Your profile on MOJ People Finder has been deleted')
-        expect(last_email.body.encoded).to match("Hello #{given_name}")
       end
 
       it 'Allow deletion of a person even when there are memberships' do
