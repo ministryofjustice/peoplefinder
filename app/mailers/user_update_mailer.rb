@@ -1,5 +1,5 @@
 class UserUpdateMailer < ApplicationMailer
-  def new_profile_email(person, by_email = nil)
+  def new_profile_email(person, _by_email = nil)
     set_template('9bc86cfd-588e-4318-8653-d1544ceeab8b')
 
     set_personalisation(

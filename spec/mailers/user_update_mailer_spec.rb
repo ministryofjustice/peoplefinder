@@ -195,7 +195,7 @@ describe UserUpdateMailer do
       expect(mail.govuk_notify_personalisation[:contact]).to eq "#{instigator.email} directly"
     end
 
-    context "instigator is unknown" do
+    context "when instigator is unknown" do
       let(:instigator) { nil }
 
       it "includes empty deleted_by" do
