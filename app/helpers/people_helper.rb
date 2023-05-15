@@ -53,7 +53,7 @@ module PeopleHelper
     person.memberships.group_by(&:group).map do |group, memberships|
       info = "Team: #{group.name}"
       info += ' - you are a team leader' if memberships.any?(&:leader)
-      info += " with role #{roles_for_memberships(memberships)}"
+      info + " with role #{roles_for_memberships(memberships)}"
     end.join("; ")
   end
 
