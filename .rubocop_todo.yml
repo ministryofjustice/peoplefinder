@@ -13,7 +13,7 @@
 require:
   - rubocop-performance
   - rubocop-rails
-  
+
 Bundler/OrderedGems:
   Exclude:
     - 'Gemfile'
@@ -155,7 +155,6 @@ RSpec/EmptyLineAfterSubject:
     - 'spec/jobs/generate_report_job_spec.rb'
     - 'spec/jobs/person_import_job_spec.rb'
     - 'spec/jobs/update_group_members_completion_score_job_spec.rb'
-    - 'spec/models/health_check/send_grid_spec.rb'
     - 'spec/presenters/person_changes_presenter_spec.rb'
     - 'spec/presenters/profile_changes_presenter_spec.rb'
     - 'spec/services/login_spec.rb'
