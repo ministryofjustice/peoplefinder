@@ -49,6 +49,18 @@ module PeopleHelper
     end.join(' ')
   end
 
+  def teams_and_roles(person)
+    results = []
+    person.memberships.group_by(&:group).each do |group, memberships|
+      info =  "Team: #{group.name}"
+      info += '- you are a team leader' if memberships.any?(&:leader)
+      roles = memberships.map(&:role).select(&:present?).sort.join(', ')
+      info += " with role #{roles.presence || '-'}"
+      results << info
+    end
+    results.join("; ")
+  end
+
   private
 
   def image_tag_wrapper src, options

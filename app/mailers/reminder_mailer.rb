@@ -30,6 +30,7 @@ class ReminderMailer < ApplicationMailer
       given_name: person.given_name,
       person_name: person.name,
       days_worked: days_worked(person),
+      teams_and_roles: teams_and_roles(person),
       location: person.location.presence || '-',
       secondary_email: person.secondary_email,
       primary_phone_number: person.primary_phone_number.presence || '-',
