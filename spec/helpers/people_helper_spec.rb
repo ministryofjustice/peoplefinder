@@ -168,12 +168,12 @@ RSpec.describe PeopleHelper, type: :helper do
       create(:person,
              memberships: [
                build(:membership, group: team_1, role: "Developer", person: nil),
-               build(:membership, group: team_2, person: nil)
+               build(:membership, group: team_2, leader: true, person: nil)
              ])
     end
 
     it 'includes the membership details' do
-      expect(teams_and_roles(person)).to eq "Team: HMPPS with role Developer; Team: Legal Aid Agency with role -"
+      expect(teams_and_roles(person)).to eq "Team: HMPPS with role Developer; Team: Legal Aid Agency - you are a team leader with role -"
     end
   end
 end
