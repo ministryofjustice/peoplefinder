@@ -225,7 +225,7 @@ RSpec/MessageSpies:
 
 # Offense count: 284
 RSpec/MultipleExpectations:
-  Max: 9
+  Max: 6
 
 # Offense count: 286
 RSpec/NamedSubject:
