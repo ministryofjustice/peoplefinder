@@ -1,0 +1,7 @@
+version: "2"
+options:
+  verbose: true
+syncs:
+  pf-app-sync:
+    src: .
+    sync_excludes: ['.circle-ci', '.git-crypt', '.git', '.github']

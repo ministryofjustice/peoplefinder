@@ -8,6 +8,13 @@ require "active_support/core_ext/integer/time"
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
+  # Used primarily by docker compose.
+  config.before_configuration do
+    if File.exist?('.env.local')
+      Dotenv.load Rails.root.join('.env.local')
+    end
+  end
+
   config.assets.css_compressor = nil
   config.cache_classes = true
   config.action_view.cache_template_loading = true
@@ -23,8 +30,13 @@ Rails.application.configure do
     'Cache-Control' => "public, max-age=#{1.hour.to_i}"
   }
 
+  # supports local development
+  if ENV.value?("peoplefinder.docker")
+    config.elastic_search_url = 'elasticsearch'
+  end
+
   # Show full error reports and disable caching.
-  config.consider_all_requests_local       = true
+  config.consider_all_requests_local = true
   config.action_controller.perform_caching = false
   config.cache_store = :null_store
 

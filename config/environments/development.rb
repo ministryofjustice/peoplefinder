@@ -1,13 +1,20 @@
 require "active_support/core_ext/integer/time"
 
+# Used primarily by docker compose.
+Rails.application.config.before_configuration do
+  Dotenv.load Rails.root.join('.env.local')
+end
+
+Rails.application.config.hosts = [
+  IPAddr.new("0.0.0.0/0"),        # All IPv4 addresses.
+  IPAddr.new("::/0"),             # All IPv6 addresses.
+  "localhost",                    # The localhost reserved domain.
+  ENV["RAILS_DEVELOPMENT_HOST_DNS"], # Additional host for development.
+  ENV["RAILS_DEVELOPMENT_HOST_NAME"]
+]
+
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
-  #
-  # Used primarily to set Google+ API client ID and secret to
-  # allow log in authentication for local development.
-  config.before_configuration do
-    Dotenv.load Rails.root.join('.env.local')
-  end
 
   # In the development environment your application's code is reloaded any time
   # it changes. This slows down response time but is perfect for development
@@ -34,6 +41,11 @@ Rails.application.configure do
     config.action_controller.perform_caching = false
 
     config.cache_store = :null_store
+  end
+
+  # supports local development
+  if ENV.value?("peoplefinder.docker")
+    config.elastic_search_url = 'elasticsearch'
   end
 
   # Print deprecation notices to the Rails logger.
@@ -78,12 +90,15 @@ Rails.application.configure do
   config.action_mailer.perform_caching = false
 
   config.action_mailer.default_url_options = {
-    host: 'localhost',
-    port: 3000,
+    host: ENV['ACTION_MAILER_DEFAULT_URL'] || 'localhost',
     protocol: 'http'
   }
-  config.action_mailer.asset_host = ENV['ACTION_MAILER_DEFAULT_URL'] || 'http://localhost:3000'
+
+  config.action_mailer.asset_host = ENV['ACTION_MAILER_ASSET_HOST'] || 'http://localhost:3000'
   config.action_mailer.delivery_method = :smtp
-  config.action_mailer.smtp_settings = { address: 'localhost', port: 1025 }
+  config.action_mailer.smtp_settings = {
+    address: ENV['ACTION_MAILER_SMTP_ADDRESS'] || 'localhost',
+    port: 1025
+  }
 
 end

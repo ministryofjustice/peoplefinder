@@ -33,4 +33,10 @@
 # load tester file produced by rake task by default
 /spec/fixtures/csv_load_tester.csv
 /spec/support/uploads
-secrets*.*
+
+.docker-sync
+.local/.setup-complete
+nohup.out
+pid_puma.txt
+pid_mail_worker.txt
+build

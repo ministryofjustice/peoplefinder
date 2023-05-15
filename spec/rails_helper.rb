@@ -41,7 +41,6 @@ end
 
 Capybara.javascript_driver = :headless_chrome
 
-
 Capybara.default_max_wait_time = 3
 Capybara.server = :puma, { Silent: true }
 
@@ -59,6 +58,14 @@ Dir[File.expand_path('../controllers/concerns/shared_examples*.rb', __FILE__)].e
 ActiveRecord::Migration.maintain_test_schema!
 
 RSpec.configure do |config|
+
+  unless ENV.fetch("DATABASE_URL", "").empty?
+    #DatabaseCleaner.url_allowlist = %w[postgres://postgres@postgres postgres://postgres@postgres/peoplefinder_test]
+    # ^ ! allowlist not available
+    # ... using whitelist instead:
+    DatabaseCleaner.url_whitelist = %w[postgres://postgres@postgres postgres://postgres@postgres/peoplefinder_test]
+  end
+
   config.use_transactional_fixtures = false
 
   config.before(:suite) do
