@@ -43,8 +43,6 @@ describe HealthCheckService do
       [
         'DB Message 1',
         'DB Message 2',
-        'SG Message 1',
-        'SG Message 2',
         'ES Message 1',
         'ES Message 2'
       ]
