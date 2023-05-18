@@ -17,6 +17,10 @@ describe UserUpdateMailer do
       expect(mail.govuk_notify_personalisation[:name]).to eq person.given_name
     end
 
+    it 'includes the added_by' do
+      expect(mail.govuk_notify_personalisation[:added_by]).to include instigator.email
+    end
+
     it 'includes the person show url' do
       expect(mail.govuk_notify_personalisation[:profile_url]).to eq person_url(person)
     end

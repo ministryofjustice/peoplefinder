@@ -1,9 +1,16 @@
 class UserUpdateMailer < ApplicationMailer
-  def new_profile_email(person, _by_email = nil)
+  def new_profile_email(person, by_email = nil)
     set_template('9bc86cfd-588e-4318-8653-d1544ceeab8b')
+
+    added_by = ""
+
+    if by_email.present?
+      added_by = "- by #{by_email}."
+    end
 
     set_personalisation(
       name: person.given_name,
+      added_by: added_by,
       profile_url: person_url(person)
     )
 
