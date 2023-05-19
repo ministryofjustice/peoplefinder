@@ -52,9 +52,7 @@ gem 'virtus'
 gem 'will_paginate', '~> 3.0', '>=3.0.3'
 gem 'will_paginate-bootstrap', '~> 1.0', '>= 1.0.1'
 gem 'tzinfo-data'
-gem 'carrierwave',
-    git: 'https://github.com/carrierwaveuploader/carrierwave.git',
-    tag: 'cc39842e44edcb6187b2d379a606ec48a6b5e4a8'
+gem 'carrierwave'
 
 group :assets do
   gem 'coffee-rails'
