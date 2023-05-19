@@ -88,7 +88,6 @@ group :development, :test do
   gem 'capybara'
   gem 'factory_bot_rails'
   gem 'launchy'
-  gem 'minitest'
   gem 'rspec-rails'
   gem 'selenium-webdriver'
   gem 'shoulda-matchers'
@@ -96,9 +95,9 @@ group :development, :test do
   gem 'timecop'
   gem 'guard-jasmine'
   gem 'jasmine-rails'
-  gem 'rubocop', '~> 0.86.0'
+  gem 'rubocop', '1.31'
   gem 'rubocop-rspec', '~> 1.41.0', require: false
-  gem 'rubocop-ast', '~> 0.0.3', require: false
+  gem 'rubocop-ast', require: false
   gem 'rubocop-performance', '~> 1.7.1', require: false
   gem 'rubocop-rails', require: false
   gem 'annotate'

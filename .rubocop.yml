@@ -22,6 +22,7 @@ AllCops:
     - 'lib/generators/**/*'
   TargetRubyVersion: 2.5
   TargetRailsVersion: 5.0
+  DisabledByDefault: true
 
 Rails:
   Enabled: true
@@ -211,7 +212,7 @@ Lint/RedundantWithObject:
 FactoryBot/CreateList:
   Enabled: false
 
-Style/MethodMissingSuper:
+Lint/MissingSuper:
   Enabled: false # was causing circle to fail
 
 RSpec/LeakyConstantDeclaration:
