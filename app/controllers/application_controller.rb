@@ -75,19 +75,19 @@ class ApplicationController < ActionController::Base
     full_key = [
       :controllers, controller_path.tr('/', '.'), *partial_key
     ].join('.')
-    flash[type] = I18n.t(full_key, options)
+    flash[type] = I18n.t(full_key, **options)
   end
 
   def warning(*partial_key, **options)
-    i18n_flash :warning, partial_key, options
+    i18n_flash :warning, *partial_key, **options
   end
 
   def notice(*partial_key, **options)
-    i18n_flash :notice, partial_key, options
+    i18n_flash :notice, *partial_key, **options
   end
 
   def error(*partial_key, **options)
-    i18n_flash :error, partial_key, options
+    i18n_flash :error, *partial_key, **options
   end
 
   def user_not_authorized
