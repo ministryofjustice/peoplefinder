@@ -1,11 +1,13 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
+ruby '3.2.2'
+
 gem 'rails', '~> 6.1'
 gem 'text'
 gem 'ancestry'
 gem 'awesome_print'
-gem 'aws-sdk', '~> 2.7.3'
+gem 'aws-sdk-s3'
 gem 'delayed_job_active_record', '~> 4.1.7'
 gem 'daemons'
 gem 'elasticsearch', '~> 7.13.0'
@@ -28,6 +30,7 @@ gem 'jquery-rails'
 gem 'keen'
 gem 'mail'
 gem 'mini_magick', '>= 4.9.4'
+gem 'net-smtp', require: false
 gem 'netaddr', '~> 2.0.4'
 gem 'paper_trail'
 gem 'pg'
@@ -80,14 +83,12 @@ group :test do
 end
 
 group :development, :test do
-  gem 'byebug'
+  gem 'debug'
   gem 'brakeman', require: false
   gem 'capybara'
   gem 'factory_bot_rails'
   gem 'launchy'
   gem 'minitest'
-  gem 'pry-rails'
-  gem 'pry-byebug'
   gem 'rspec-rails'
   gem 'selenium-webdriver'
   gem 'shoulda-matchers'
