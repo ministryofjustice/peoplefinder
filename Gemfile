@@ -76,6 +76,7 @@ end
 group :test do
   gem 'rails-controller-testing'
   gem 'database_cleaner', '~> 1.8.5'
+  gem 'simplecov', '~> 0.21.2', require: false
   gem 'site_prism'
   gem 'webmock'
   gem 'webdrivers'
@@ -91,7 +92,6 @@ group :development, :test do
   gem 'rspec-rails'
   gem 'selenium-webdriver'
   gem 'shoulda-matchers'
-  gem 'simplecov', '~> 0.21.2'
   gem 'timecop'
   gem 'guard-jasmine'
   gem 'jasmine-rails'
