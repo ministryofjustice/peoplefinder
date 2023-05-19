@@ -519,7 +519,7 @@ GEM
     shellany (0.0.1)
     shoulda-matchers (5.1.0)
       activesupport (>= 5.2.0)
-    simplecov (0.21.2)
+    simplecov (0.22.0)
       docile (~> 1.1)
       simplecov-html (~> 0.11)
       simplecov_json_formatter (~> 0.1)
@@ -658,7 +658,7 @@ DEPENDENCIES
   sentry-rails
   sentry-ruby
   shoulda-matchers
-  simplecov (~> 0.21.2)
+  simplecov (~> 0.22)
   site_prism
   spring-commands-rspec
   sprockets (~> 3.7.2)

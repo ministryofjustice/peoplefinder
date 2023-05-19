@@ -1,8 +1,3 @@
-if ENV['SKIP_SIMPLECOV'].to_s.downcase == "false"
-  require 'simplecov'
-  SimpleCov.start 'rails'
-end
-
 # This file is copied to spec/ when you run 'rails generate rspec:install'
 ENV['RAILS_ENV'] ||= 'test'
 require 'spec_helper'
@@ -15,6 +10,14 @@ require 'capybara/rspec'
 require 'site_prism'
 require 'awesome_print'
 require 'webdrivers'
+
+if ENV['SKIP_SIMPLECOV'].to_s.downcase == "false"
+  require 'simplecov'
+  SimpleCov.start 'rails' do
+    add_filter '/gem/'
+    add_filter '.bundle'
+  end
+end
 
 Capybara.register_driver :chrome do |app|
   Capybara::Selenium::Driver.new(app, browser: :chrome)

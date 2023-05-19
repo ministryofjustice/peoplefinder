@@ -76,7 +76,7 @@ end
 group :test do
   gem 'rails-controller-testing'
   gem 'database_cleaner', '~> 1.8.5'
-  gem 'simplecov', '~> 0.21.2', require: false
+  gem 'simplecov', '~> 0.22', require: false
   gem 'site_prism'
   gem 'webmock'
   gem 'webdrivers'
