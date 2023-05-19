@@ -1,6 +1,6 @@
-FROM ruby:2.7.2-alpine
+FROM ruby:3.2.2-alpine
 
-# Note: .ruby-gemdeps libc-dev gcc libxml2-dev libxslt-dev make postgresql-dev build-base curl-dev with bundle install issues. 
+# Note: .ruby-gemdeps libc-dev gcc libxml2-dev libxslt-dev make postgresql-dev build-base curl-dev with bundle install issues.
 RUN apk add --no-cache --virtual .ruby-gemdeps libc-dev gcc libxml2-dev libxslt-dev make postgresql-dev build-base curl-dev git nodejs zip postgresql-client runit imagemagick ffmpeg graphicsmagick
 
 # set WORKDIR
@@ -16,7 +16,7 @@ ENV APPUSER moj
 ENV PUMA_PORT 3000
 
 COPY Gemfile* ./
-RUN gem install bundler -v 2.2.14
+RUN gem install bundler -v 2.4.13
 RUN bundle config --global frozen 1 && \
     bundle config --path=vendor/bundle && \
     bundle config --global without test:development && \
