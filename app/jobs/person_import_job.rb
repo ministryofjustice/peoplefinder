@@ -38,9 +38,7 @@ class PersonImportJob < ApplicationJob
       if Person.find_by(email: person.email)
         Rails.logger.warn "Person identified by email #{person.email} already exists. Skipping!"
       else
-        PersonCreator.new(person: person,
-                          current_user: nil,
-                          state_cookie: StateManagerCookie.static_create_and_save).create!
+        PersonCreator.new(person, nil, StateManagerCookie.static_create_and_save).create!
       end
     end
 

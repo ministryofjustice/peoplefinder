@@ -128,10 +128,7 @@ class PeopleController < ApplicationController
     if namesakes?
       render(:confirm)
     else
-      creator = PersonCreator.new(person: @person,
-                                  current_user: current_user,
-                                  state_cookie: StateManagerCookie.new(cookies),
-                                  session_id: session.id)
+      creator = PersonCreator.new(@person, current_user, StateManagerCookie.new(cookies), session.id)
       creator.create!
       notice(:profile_created, **{ person: @person }) if state_cookie_saving_profile?
       redirect_to redirection_destination
