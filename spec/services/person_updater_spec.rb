@@ -4,7 +4,7 @@ RSpec.describe PersonUpdater, type: :service do
   let(:person) do
     double(
       'Person',
-      all_changes: { email: ['test.user@digital.justice.gov.uk', 'changed.user@digital.justice.gov.uk'], membership12: { group_id: [1, nil] } },
+      all_changes: { email: ['test.user@digital.justice.gov.uk', 'changed.user@digital.justice.gov.uk'], membership_12: { group_id: [1, nil] } },
       save!: true,
       new_record?: false,
       notify_of_change?: false
