@@ -33,6 +33,4 @@ worker:
     DATABASE_URL: postgres://postgres:@pg:5432/postgres
     SUPPORT_EMAIL:
     SECRET_KEY_BASE:
-    SENDGRID_USERNAME:
-    SENDGRID_PASSWORD:
     ACTION_MAILER_DEFAULT_URL:

@@ -155,7 +155,6 @@ RSpec/EmptyLineAfterSubject:
     - 'spec/jobs/generate_report_job_spec.rb'
     - 'spec/jobs/person_import_job_spec.rb'
     - 'spec/jobs/update_group_members_completion_score_job_spec.rb'
-    - 'spec/models/health_check/send_grid_spec.rb'
     - 'spec/presenters/person_changes_presenter_spec.rb'
     - 'spec/presenters/profile_changes_presenter_spec.rb'
     - 'spec/services/login_spec.rb'
@@ -176,7 +175,6 @@ RSpec/HookArgument:
     - 'spec/features/application_health_check_spec.rb'
     - 'spec/jobs/person_import_job_spec.rb'
     - 'spec/mailers/only_send_login_email_interceptor_spec.rb'
-    - 'spec/models/health_check/send_grid_spec.rb'
     - 'spec/models/queued_notification_spec.rb'
     - 'spec/support/feature_flag_spec_helper.rb'
 

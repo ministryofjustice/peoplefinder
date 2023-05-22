@@ -161,4 +161,19 @@ RSpec.describe PeopleHelper, type: :helper do
     end
   end
 
+  describe 'teams_and_roles' do
+    let(:team_1) { create(:group, name: "HMPPS") }
+    let(:team_2) { create(:group, name: "Legal Aid Agency") }
+    let(:person) do
+      create(:person,
+             memberships: [
+               build(:membership, group: team_1, role: "Developer", person: nil),
+               build(:membership, group: team_2, leader: true, person: nil)
+             ])
+    end
+
+    it 'includes the membership details' do
+      expect(teams_and_roles(person)).to eq "Team: HMPPS with role Developer; Team: Legal Aid Agency - you are a team leader with role -"
+    end
+  end
 end

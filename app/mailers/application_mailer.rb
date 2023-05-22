@@ -1,3 +1,2 @@
-class ApplicationMailer < ActionMailer::Base
-  layout 'email'
+class ApplicationMailer < GovukNotifyRails::Mailer
 end

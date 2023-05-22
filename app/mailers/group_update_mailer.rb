@@ -1,13 +1,14 @@
 class GroupUpdateMailer < ApplicationMailer
-
-  # layout 'email'
-  helper MailHelper
-
   def inform_subscriber(recipient, group, instigator)
-    @person = recipient
-    @group = group
-    @instigator = instigator
-    @group_url = group_url(group)
-    mail to: recipient.email
+    set_template('fabc29b0-084d-481c-95eb-09eebe4fcd29')
+
+    set_personalisation(
+      name: recipient.given_name,
+      group: group.to_s,
+      instigator_email: instigator.email,
+      group_url: group_url(group)
+    )
+
+    mail(to: recipient.email)
   end
 end

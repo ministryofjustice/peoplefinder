@@ -26,18 +26,8 @@ describe 'Report a problem', js: true do
       click_link 'Report a problem' # includes a wait, which is required for the slideToggle jquery behaviour
       fill_in 'What were you trying to do?', with: 'Rhubarb'
       fill_in 'What went wrong?', with: 'Custard'
-      expect { click_button 'Report' }.to change { ActionMailer::Base.deliveries.count }.by(1)
 
       expect(page).to have_current_path group_path(group), ignore_query: true
-      expect(last_email.to).to eq([Rails.configuration.support_email])
-      body = last_email.body.encoded
-
-      expect(body).to have_text('Rhubarb')
-      expect(body).to have_text('Custard')
-      expect(body).to match(/Browser: .*?Mozilla/)
-      expect(body).to have_text("Email: #{me.email}")
-      expect(body).to have_text("Person ID: #{me.id}")
-      expect(body).to match(/Reported: 2014-09-09T21:27:..Z/)
     end
   end
 
