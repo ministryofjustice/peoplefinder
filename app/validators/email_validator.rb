@@ -4,10 +4,10 @@ class EmailValidator < ActiveModel::EachValidator
     unless value.blank?
       if email_address.valid_format?
         unless email_address.permitted_domain?
-          record.errors.add(attribute, :invalid_domain, options)
+          record.errors.add(attribute, :invalid_domain, **options)
         end
       else
-        record.errors.add(attribute, :invalid_format, options)
+        record.errors.add(attribute, :invalid_format, **options)
       end
     end
   end
