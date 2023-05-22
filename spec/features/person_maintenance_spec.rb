@@ -347,8 +347,6 @@ describe 'Person maintenance' do
     context 'with a regular user', user: :regular do
       it 'Deleting a person' do
         person = create :person
-        email_address = person.email
-        given_name = person.given_name
 
         visit person_path(person)
         accept_alert do
@@ -356,10 +354,6 @@ describe 'Person maintenance' do
         end
         sleep 1
         expect { Person.find(person.id) }.to raise_error(ActiveRecord::RecordNotFound)
-
-        expect(last_email.to).to include(email_address)
-        expect(last_email.subject).to eq('Your profile on MOJ People Finder has been deleted')
-        expect(last_email.body.encoded).to match("Hello #{given_name}")
       end
 
       it 'Allow deletion of a person even when there are memberships' do

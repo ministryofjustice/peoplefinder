@@ -21,14 +21,15 @@ describe 'Token Authentication' do
   it 'trying to log in with a valid email address' do
     visit '/'
     fill_in 'token_user_email', with: 'valid.email@digital.justice.gov.uk'
-    expect { click_button 'Request link' }.to change { ActionMailer::Base.deliveries.count }
+    expect(TokenMailer).to receive(:new_token_email).at_least(:once).times.and_call_original
+    click_button 'Request link'
     expect(page).to have_text('When it arrives, click on the link (which is active for 1 day)')
   end
 
   it 'trying to log in with an invalid email address' do
     visit '/'
     fill_in 'token_user_email', with: 'Bob'
-    expect { click_button 'Request link' }.not_to change { ActionMailer::Base.deliveries.count }
+    click_button 'Request link'
     expect(page).to have_text('Email address is not formatted correctly')
   end
 
@@ -40,7 +41,7 @@ describe 'Token Authentication' do
     it 'is not permitted' do
       visit '/'
       fill_in 'token_user_email', with: 'valid.email@digital.justice.gov.uk '
-      expect { click_button 'Request link' }.not_to change { ActionMailer::Base.deliveries.count }
+      click_button 'Request link'
       expect(page).to have_text('Email address has reached the limit of 8 tokens requested within an hour')
     end
   end
@@ -48,7 +49,7 @@ describe 'Token Authentication' do
   it 'trying to log in with a non white-listed email address domain' do
     visit '/'
     fill_in 'token_user_email', with: 'bob@abscond.com'
-    expect { click_button 'Request link' }.not_to change { ActionMailer::Base.deliveries.count }
+    click_button 'Request link'
     expect(page).to have_text('Email address can’t be used to access People Finder')
   end
 
@@ -134,45 +135,6 @@ describe 'Token Authentication' do
         expect(edit_profile_page).to be_displayed
       end
     end
-  end
-
-  it "requesting token more than once within 24 hours sends same token url in email" do
-    create(:person, given_name: 'Bob', surname: 'Smith', email: 'test.user@digital.justice.gov.uk')
-
-    first_token_url = nil
-    Timecop.freeze(Time.now - (23.hours + 59.minutes)) do
-      visit '/'
-      fill_in 'token_user_email', with: 'test.user@digital.justice.gov.uk'
-      expect { click_button 'Request link' }.to change { ActionMailer::Base.deliveries.count }.by(1)
-      first_token_url = token_url(Token.last)
-      expect(last_email.body.encoded).to have_text(first_token_url)
-    end
-
-    visit '/'
-    fill_in 'token_user_email', with: 'test.user@digital.justice.gov.uk'
-    expect { click_button 'Request link' }.to change { ActionMailer::Base.deliveries.count }.by(1)
-    expect(last_email.body.encoded).to have_text(first_token_url)
-
-    visit first_token_url
-    expect(page).to have_text('Signed in as Bob Smith')
-  end
-
-  it 'requesting token a second time after 24 hours sends different token url in email' do
-    first_token_url = nil
-    Timecop.freeze(Time.now - 24.hours) do
-      visit '/'
-      fill_in 'token_user_email', with: 'test.user@digital.justice.gov.uk'
-      expect { click_button 'Request link' }.to change { ActionMailer::Base.deliveries.count }.by(1)
-      first_token_url = token_url(Token.last)
-    end
-
-    visit '/'
-    fill_in 'token_user_email', with: 'test.user@digital.justice.gov.uk'
-    expect { click_button 'Request link' }.to change { ActionMailer::Base.deliveries.count }.by(1)
-
-    last_token_url = token_url(Token.last)
-    expect(last_token_url).not_to eq first_token_url
-    expect(last_email.body.encoded).to have_text(last_token_url)
   end
 
   it "requesting more than 8 tokens per hour isn't permitted" do

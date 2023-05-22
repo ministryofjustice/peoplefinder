@@ -8,13 +8,9 @@ describe HealthCheckService do
   it 'calls accessible and available on all checks' do
     expect_any_instance_of(HealthCheck::Database).
       to receive(:available?).and_return(true)
-    expect_any_instance_of(HealthCheck::SendGrid).
-      to receive(:available?).and_return(true)
     expect_any_instance_of(HealthCheck::Elasticsearch).
       to receive(:available?).and_return(true)
     expect_any_instance_of(HealthCheck::Database).
-      to receive(:accessible?).and_return(true)
-    expect_any_instance_of(HealthCheck::SendGrid).
       to receive(:accessible?).and_return(true)
     expect_any_instance_of(HealthCheck::Elasticsearch).
       to receive(:accessible?).and_return(true)
@@ -24,7 +20,6 @@ describe HealthCheckService do
     expect(result.messages).to eq 'All Components OK'
   end
 
-  # rubocop:disable RSpec/MultipleExpectations
   it 'collects error messages if any checks fail' do
     expect_any_instance_of(HealthCheck::Database).
       to receive(:available?).and_return(false)
@@ -33,14 +28,6 @@ describe HealthCheckService do
     expect_any_instance_of(HealthCheck::Database).
       to receive(:errors).
       and_return(['DB Message 1', 'DB Message 2'])
-
-    expect_any_instance_of(HealthCheck::SendGrid).
-      to receive(:available?).and_return(false)
-    expect_any_instance_of(HealthCheck::SendGrid).
-      to receive(:accessible?).and_return(false)
-    expect_any_instance_of(HealthCheck::SendGrid).
-      to receive(:errors).
-      and_return(['SG Message 1', 'SG Message 2'])
 
     expect_any_instance_of(HealthCheck::Elasticsearch).
       to receive(:available?).and_return(false)
@@ -56,12 +43,9 @@ describe HealthCheckService do
       [
         'DB Message 1',
         'DB Message 2',
-        'SG Message 1',
-        'SG Message 2',
         'ES Message 1',
         'ES Message 2'
       ]
     )
   end
-  # rubocop:enable RSpec/MultipleExpectations
 end

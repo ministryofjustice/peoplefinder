@@ -20,6 +20,12 @@ class ProfileChangesPresenter < ChangesPresenter
     end
   end
 
+  def all_messages
+    messages = []
+    each_pair { |_, b| messages << b }
+    messages
+  end
+
   private
 
   MEMBERSHIP_KEY_PATTERN = /membership_.*/.freeze

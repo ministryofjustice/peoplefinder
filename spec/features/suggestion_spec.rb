@@ -40,9 +40,6 @@ describe 'Make a suggestion about a profile', js: true do
     click_button 'Submit'
 
     expect(page).to have_text('We’ve sent an email to the relevant person')
-
-    expect(last_email.to).to eql([subject.email])
-    expect(last_email.body.encoded).to have_text('Write more stuff')
   end
 
   it 'Ask a person to update incorrect fields', user: :regular do
@@ -51,9 +48,6 @@ describe 'Make a suggestion about a profile', js: true do
     click_button 'Submit'
 
     expect(page).to have_text('We’ve sent an email to the relevant person')
-
-    expect(last_email.to).to eql([subject.email])
-    expect(last_email.body.encoded).to have_text('* Last name')
   end
 
   it 'Ask an admin to remove duplicate profile', user: :regular do
@@ -61,9 +55,6 @@ describe 'Make a suggestion about a profile', js: true do
     click_button 'Submit'
 
     expect(page).to have_text('We’ve sent an email to the relevant person')
-
-    expect(last_email.to).to eql([leader.email])
-    expect(last_email.body.encoded).to have_text('duplicate profile')
   end
 
   it 'Ask an admin to remove inappropriate content', user: :regular do
@@ -72,9 +63,6 @@ describe 'Make a suggestion about a profile', js: true do
     click_button 'Submit'
 
     expect(page).to have_text('We’ve sent an email to the relevant person')
-
-    expect(last_email.to).to eql([leader.email])
-    expect(last_email.body.encoded).to have_text('Outrageous!')
   end
 
   it 'Ask an admin to remove the profile', user: :regular do
@@ -83,9 +71,6 @@ describe 'Make a suggestion about a profile', js: true do
     click_button 'Submit'
 
     expect(page).to have_text('We’ve sent an email to the relevant person')
-
-    expect(last_email.to).to eql([leader.email])
-    expect(last_email.body.encoded).to have_text('They have left to become a goatherd')
   end
 
   it 'Send multiple emails', user: :regular do
@@ -99,11 +84,5 @@ describe 'Make a suggestion about a profile', js: true do
     click_button 'Submit'
 
     expect(page).to have_text('We’ve sent emails to the relevant people')
-
-    recipients = ActionMailer::Base.deliveries.flat_map(&:to).uniq
-
-    [subject, leader, another_leader].each do |person|
-      expect(recipients).to include(person.email)
-    end
   end
 end

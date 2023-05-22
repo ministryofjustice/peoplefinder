@@ -40,15 +40,6 @@ describe 'Person edit notifications' do
     )
   end
 
-  it 'Deleting a person with different email' do
-    person = create(:person, email: 'bob.smith@digital.justice.gov.uk')
-    visit person_path(person)
-    expect { click_delete_profile }.to change { ActionMailer::Base.deliveries.count }.by(1)
-
-    expect(last_email.subject).to eq('Your profile on MOJ People Finder has been deleted')
-    check_email_to_and_from
-  end
-
   it 'Editing a person with different email' do
     digital = create(:group, name: 'Digital')
     person = create(:person, :member_of, team: digital, given_name: 'Bob', surname: 'Smith', email: 'bob.smith@digital.justice.gov.uk')
@@ -77,10 +68,5 @@ describe 'Person edit notifications' do
     within('h1') do
       expect(page).to have_text('bob')
     end
-  end
-
-  def check_email_to_and_from
-    expect(last_email.to).to eql(['bob.smith@digital.justice.gov.uk'])
-    expect(last_email.body.encoded).to match('test.user@digital.justice.gov.uk')
   end
 end

@@ -139,8 +139,7 @@ class MembershipChangesPresenter < ChangesPresenter
     elsif change.removal?
       "Removed you from #{team_name(change.old_val)} team"
     elsif change.modification?
-      "Changed your membership of #{team_name(change.old_val)} team \
-      to #{team_name(change.new_val)} team"
+      "Changed your membership of #{team_name(change.old_val)} team to #{team_name(change.new_val)} team"
     end
   end
 

@@ -9,32 +9,22 @@ RSpec.describe GroupUpdateMailer do
 
   describe '.inform_subscriber' do
     let(:mail) do
-      described_class.inform_subscriber(recipient, group, instigator).
-        deliver_now
+      described_class.inform_subscriber(recipient, group, instigator)
     end
 
-    include_examples 'common mailer template elements'
-
-    it 'includes the name of the group changed' do
-      %w(plain html).each do |part_type|
-        expect(get_message_part(mail, part_type)).to have_text(group.name)
-      end
+    it 'sets the template' do
+      expect(mail.govuk_notify_template).to eq 'fabc29b0-084d-481c-95eb-09eebe4fcd29'
     end
 
-    it 'includes a link to the group changed' do
-      %w(plain html).each do |part_type|
-        expect(get_message_part(mail, part_type)).to have_text(group_url(group))
-      end
-    end
-
-    it 'includes the email of the person who changed the group' do
-      %w(plain html).each do |part_type|
-        expect(get_message_part(mail, part_type)).to have_text(instigator.email)
-      end
-    end
-
-    it 'is sent to the recipient' do
+    it 'is sent to requestor' do
       expect(mail.to).to include(recipient.email)
+    end
+
+    it 'sets the personalisation data' do
+      expect(mail.govuk_notify_personalisation[:group]).to eq group.to_s
+      expect(mail.govuk_notify_personalisation[:group_url]).to eq group_url(group)
+      expect(mail.govuk_notify_personalisation[:instigator_email]).to eq instigator.email
+      expect(mail.govuk_notify_personalisation[:name]).to eq recipient.given_name
     end
   end
 end
