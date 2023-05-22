@@ -53,9 +53,9 @@ RSpec.describe ProfilePhoto, type: :model do
     subject { build(:profile_photo) }
 
     context 'with file' do
-      context 'with extension is whitelisted' do
+      context 'with extension is allowlisted' do
         it do
-          subject.image = non_white_list_image
+          subject.image = non_allowlist_image
           expect(subject).to be_invalid
         end
 
