@@ -142,7 +142,7 @@ class GroupsController < ApplicationController
 
   def load_versions
     versions = @group.versions
-    @last_updated_at = versions.last ? versions.last.created_at : nil
+    @last_updated_at = versions.last&.created_at
     if super_admin?
       @versions = AuditVersionPresenter.wrap(versions)
     end
