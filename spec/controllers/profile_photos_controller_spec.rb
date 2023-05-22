@@ -56,7 +56,7 @@ RSpec.describe ProfilePhotosController, type: :controller do
       allow(photo).to receive_message_chain(:errors, :full_messages).and_return ['not a real error', 'nor is this']
     end
 
-    it 'non white listed extensions do not create ProfilePhoto' do
+    it 'non allowlisted extensions do not create ProfilePhoto' do
       expect do
         post :create, params: { profile_photo: invalid_params }
       end.not_to change(ProfilePhoto, :count)

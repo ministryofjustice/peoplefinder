@@ -62,7 +62,7 @@ class ImageUploader < CarrierWave::Uploader::Base
     mounted_as.to_s.sub(/^legacy_/, '')
   end
 
-  # white list of permissable file extensions for upload
+  # list of permissable file extensions for upload
   def extension_allowlist
     %w( jpg jpeg gif png )
   end
