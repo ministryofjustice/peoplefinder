@@ -13,7 +13,7 @@ RSpec.describe PersonCreator, type: :service do
     )
   end
   let(:current_user) { double('Current User', email: 'user@example.com', id: 25) }
-  subject { described_class.new(person: person, current_user: current_user, state_cookie: smc) }
+  subject { described_class.new(person, current_user, smc) }
 
   context 'when Saving a profile' do
     let(:smc) { double StateManagerCookie, save_profile?: true }
@@ -28,7 +28,7 @@ RSpec.describe PersonCreator, type: :service do
 
     describe 'create!' do
       context 'with person membership defaults' do
-        subject { described_class.new(person: person_object, current_user: current_user, state_cookie: smc).create! }
+        subject { described_class.new(person_object, current_user, smc).create! }
         let!(:moj) { create(:department) }
         let(:person_object) { build(:person) }
 
