@@ -11,7 +11,7 @@ references:
 # Sets up the docker images and environment variables that we use
   test_container_config: &test_container_config
     docker:
-      - image: circleci/ruby:2.7.2-node-browsers-legacy
+      - image: cimg/ruby:3.2.2-browsers
         environment:
           RAILS_ENV: test
           RACK_ENV: test
@@ -58,7 +58,7 @@ references:
     run:
       name: Install bundler
       command: |
-        gem install bundler -v 2.2.14
+        gem install bundler -v 2.4.13
 
   check_bundler_version: &check_bundler_version
     run:

@@ -6,7 +6,7 @@ class PersonCreator
   def_delegators :person, :valid?
 
   attr_reader :person, :current_user, :session_id
-  def initialize(person:, current_user:, state_cookie:, session_id: nil)
+  def initialize(person, current_user, state_cookie, session_id = nil)
     @person = person
     @current_user = current_user
     @state_cookie = state_cookie

@@ -374,7 +374,7 @@ Style/InverseMethods:
     - 'app/presenters/profile_changes_presenter.rb'
 
 # Offense count: 2
-Style/MethodMissingSuper:
+Lint/MissingSuper:
   Exclude:
     - 'app/presenters/membership_change_set.rb'
     - 'lib/rails_host.rb'
@@ -437,5 +437,7 @@ Style/TernaryParentheses:
 # SupportedStyles: snake_case, normalcase, non_integer
 Naming/VariableNumber:
   Exclude:
+    - 'spec/helpers/people_helper_spec.rb'
     - 'spec/queries/people_in_groups_query_spec.rb'
     - 'spec/services/group_update_service_spec.rb'
+    - 'spec/services/person_updater_spec.rb'

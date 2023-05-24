@@ -12,7 +12,7 @@ class AuditVersionPresenter
   end
 
   def changes
-    YAML.load(@version.object_changes).map do |field, (_, new)|
+    YAML.unsafe_load(@version.object_changes).map do |field, (_, new)|
       value = new.presence || '(deleted)'
       [field, value]
     end

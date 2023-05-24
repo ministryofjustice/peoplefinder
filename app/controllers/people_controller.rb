@@ -128,12 +128,9 @@ class PeopleController < ApplicationController
     if namesakes?
       render(:confirm)
     else
-      creator = PersonCreator.new(person: @person,
-                                  current_user: current_user,
-                                  state_cookie: StateManagerCookie.new(cookies),
-                                  session_id: session.id)
+      creator = PersonCreator.new(@person, current_user, StateManagerCookie.new(cookies), session.id)
       creator.create!
-      notice(:profile_created, person: @person) if state_cookie_saving_profile?
+      notice(:profile_created, **{ person: @person }) if state_cookie_saving_profile?
       redirect_to redirection_destination
     end
   end
@@ -149,7 +146,7 @@ class PeopleController < ApplicationController
                                   session_id: session.id)
       updater.update!
       type = @person == current_user ? :mine : :other
-      notice(:profile_updated, type, person: @person) if state_cookie_saving_profile?
+      notice(:profile_updated, type, **{ person: @person.to_s }) if state_cookie_saving_profile?
       redirect_to redirection_destination
     end
   end
@@ -166,7 +163,7 @@ class PeopleController < ApplicationController
 
   def load_versions
     versions = @person.versions
-    @last_updated_at = versions.last ? versions.last.created_at : nil
+    @last_updated_at = versions.last&.created_at
     if super_admin?
       @versions = AuditVersionPresenter.wrap(versions)
     end

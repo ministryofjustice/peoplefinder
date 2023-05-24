@@ -1,11 +1,13 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
+ruby '3.2.2'
+
 gem 'rails', '~> 6.1'
 gem 'text'
 gem 'ancestry'
 gem 'awesome_print'
-gem 'aws-sdk', '~> 2.7.3'
+gem 'aws-sdk-s3'
 gem 'delayed_job_active_record', '~> 4.1.7'
 gem 'daemons'
 gem 'elasticsearch', '~> 7.13.0'
@@ -29,6 +31,7 @@ gem 'jquery-rails'
 gem 'keen'
 gem 'mail'
 gem 'mini_magick', '>= 4.9.4'
+gem 'net-smtp', require: false
 gem 'netaddr', '~> 2.0.4'
 gem 'paper_trail'
 gem 'pg'
@@ -50,9 +53,7 @@ gem 'virtus'
 gem 'will_paginate', '~> 3.0', '>=3.0.3'
 gem 'will_paginate-bootstrap', '~> 1.0', '>= 1.0.1'
 gem 'tzinfo-data'
-gem 'carrierwave',
-    git: 'https://github.com/carrierwaveuploader/carrierwave.git',
-    tag: 'cc39842e44edcb6187b2d379a606ec48a6b5e4a8'
+gem 'carrierwave'
 
 group :assets do
   gem 'coffee-rails'
@@ -74,6 +75,7 @@ end
 group :test do
   gem 'rails-controller-testing'
   gem 'database_cleaner', '~> 1.8.5'
+  gem 'simplecov', '~> 0.22', require: false
   gem 'site_prism'
   gem 'webmock'
   gem 'webdrivers'
@@ -81,24 +83,20 @@ group :test do
 end
 
 group :development, :test do
-  gem 'byebug'
+  gem 'debug'
   gem 'brakeman', require: false
   gem 'capybara'
   gem 'factory_bot_rails'
   gem 'launchy'
-  gem 'minitest'
-  gem 'pry-rails'
-  gem 'pry-byebug'
   gem 'rspec-rails'
   gem 'selenium-webdriver'
   gem 'shoulda-matchers'
-  gem 'simplecov', '~> 0.21.2'
   gem 'timecop'
   gem 'guard-jasmine'
   gem 'jasmine-rails'
-  gem 'rubocop', '~> 0.86.0'
+  gem 'rubocop', '1.51'
   gem 'rubocop-rspec', '~> 1.41.0', require: false
-  gem 'rubocop-ast', '~> 0.0.3', require: false
+  gem 'rubocop-ast', require: false
   gem 'rubocop-performance', '~> 1.7.1', require: false
   gem 'rubocop-rails', require: false
   gem 'annotate'

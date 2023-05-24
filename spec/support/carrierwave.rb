@@ -30,7 +30,7 @@ module SpecSupport
       test_image :profile_photo_large
     end
 
-    def non_white_list_image
+    def non_allowlist_image
       test_image :placeholder, :bmp
     end
 

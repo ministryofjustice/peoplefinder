@@ -46,7 +46,7 @@ RSpec.describe ProfilePhotosController, type: :controller do
   end
 
   describe 'with invalid params' do
-    let(:invalid_params) { { image: non_white_list_image } }
+    let(:invalid_params) { { image: non_allowlist_image } }
     let(:photo_id) { 123 }
     let(:photo) { double('photo', to_json: { id: photo_id }.to_json) }
 
@@ -56,7 +56,7 @@ RSpec.describe ProfilePhotosController, type: :controller do
       allow(photo).to receive_message_chain(:errors, :full_messages).and_return ['not a real error', 'nor is this']
     end
 
-    it 'non white listed extensions do not create ProfilePhoto' do
+    it 'non allowlisted extensions do not create ProfilePhoto' do
       expect do
         post :create, params: { profile_photo: invalid_params }
       end.not_to change(ProfilePhoto, :count)

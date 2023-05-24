@@ -273,7 +273,7 @@ RSpec.describe QueuedNotification, type: :model do
     end
 
     describe '.start_processing_grouped_item' do
-      let(:grouped_item) { described_class.unsent_groups.detect { |rec| rec.session_id == 'def' } }
+      let(:grouped_item) { described_class.unsent_groups.find { |rec| rec.session_id == 'def' } }
 
       it 'returns all records in the group' do
         records = described_class.start_processing_grouped_item(grouped_item)

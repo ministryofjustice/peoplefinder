@@ -3,7 +3,6 @@ ENV['RAILS_ENV'] ||= 'test'
 require 'spec_helper'
 require File.expand_path('../../config/environment', __FILE__)
 require 'rspec/rails'
-require 'pry-byebug'
 require 'timecop'
 require 'paper_trail/frameworks/rspec'
 require 'shoulda-matchers'
@@ -36,7 +35,7 @@ Capybara.register_driver :headless_chrome do |app|
     options.add_argument('--enable-features=NetworkService,NetworkServiceInProcess')
   end
 
-  Capybara::Selenium::Driver.new(app, browser: :chrome, options: options)
+  Capybara::Selenium::Driver.new(app, browser: :chrome, options:)
 end
 
 Capybara.javascript_driver = :headless_chrome

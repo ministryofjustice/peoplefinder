@@ -17,6 +17,7 @@ shared_examples 'geckoboard publishable report' do
   it { is_expected.to respond_to :force? }
   it { is_expected.to respond_to :published? }
 
+  # rubocop:disable Metrics/AbcSize
   def mock_expectations exit_without_ping = nil
     allow(ENV).to receive(:[]).with('ENV').and_return 'staging'
     expect(ENV).to receive(:[]).with('GECKOBOARD_API_KEY').and_return 'fake-API-key'
@@ -26,6 +27,7 @@ shared_examples 'geckoboard publishable report' do
     expect(client).to receive(:ping).and_return true
     yield client if block_given?
   end
+  # rubocop:enable Metrics/AbcSize
 
   describe '#new' do
     it 'connects to geckoboard using API key stored in ENV variable' do

@@ -94,7 +94,7 @@ var PhotoUpload = (function (){
         var uploadData = $.parseJSON(jsonText);
         var els = PhotoUpload.findElements($iframe);
         if (uploadData.error) {
-          // e.g. carrierwave whitelist errors
+          // e.g. carrierwave allowlist errors
           PhotoUpload.showError(els, uploadData.error);
           PhotoUpload.setState(els, 'cropped');
         } else {
