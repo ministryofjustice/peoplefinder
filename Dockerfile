@@ -15,7 +15,7 @@ ENV LC_ALL C.UTF-8
 ENV APPUSER moj
 ENV PUMA_PORT 3000
 
-COPY Gemfile* ./
+COPY Gemfile* .ruby-version ./
 RUN gem install bundler -v 2.4.13
 RUN bundle config --global frozen 1 && \
     bundle config --path=vendor/bundle && \
