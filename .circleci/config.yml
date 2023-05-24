@@ -22,7 +22,7 @@ references:
           PGHOST: 127.0.0.1
           POSTGRES_DB: peoplefinder_test
 
-      - image: circleci/postgres:9.5-alpine
+      - image: cimg/postgres:12.15
         environment:
           PG_PASSWORD: ""
           PG_USER: postgres
