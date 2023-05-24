@@ -34,11 +34,11 @@ Point your browser to http://0.0.0.0:3000 and you should see the application's s
 
 ### Mac OSX install
 
-PeopleFinder uses Ruby 2.7.2 and bundler 2.2.14
+PeopleFinder uses Ruby 3.2.2 and bundler 2.4.13
 
-Install Ruby 2.7.2 using rbenv or rvm then install bundler using
+Install Ruby 3.2.2 using rbenv or rvm then install bundler using
 
-`gem install bundler:2.2.14`
+`gem install bundler:2.4.13`
 
 [Install Homebrew](http://brew.sh/) if it is not on your machine.
 
