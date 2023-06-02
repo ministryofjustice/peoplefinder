@@ -150,15 +150,6 @@ references:
         echo "export BUILD_TAG=${build_tag}" >> $BASH_ENV
         source $BASH_ENV
 
-  deploy_to_demo: &deploy_to_demo
-    run:
-      name: Deploy to Demo environment
-      command: |
-        build_tag=`cat /tmp/workspace/build_tag`
-        ./deploy.sh $build_tag demo circleci
-        echo "export BUILD_TAG=${build_tag}" >> $BASH_ENV
-        source $BASH_ENV
-
   deploy_to_staging: &deploy_to_staging
     run:
       name: Deploy to Staging environment
@@ -245,23 +236,6 @@ jobs:
   deploy_branch_to_dev: *do_dev_deployment_tasks
   deploy_main_to_dev: *do_dev_deployment_tasks
 
-  demo_deployment_tasks: &do_demo_deployment_tasks
-    <<: *deploy_container_config
-    <<: *defaults
-    steps:
-      - checkout
-      - attach_workspace:
-          at: /tmp/workspace
-      - *install_expect
-      - *deploy_to_demo
-      - slack/notify:
-          color: '#1d990c'
-          message: "${CIRCLE_USERNAME} deployed *${BUILD_TAG}* to *Demo*"
-          webhook: ${SLACK_WEBHOOK}
-
-  deploy_branch_to_demo: *do_demo_deployment_tasks
-  deploy_main_to_demo: *do_demo_deployment_tasks
-
   staging_deployment_tasks: &do_staging_deployment_tasks
     <<: *deploy_container_config
     <<: *defaults
@@ -313,13 +287,6 @@ workflows:
       - deploy_main_to_dev:
           requires:
             - build_main_and_push_to_ecr
-      - deploy_main_to_demo_approval:
-          type: approval
-          requires:
-            - build_main_and_push_to_ecr
-      - deploy_main_to_demo:
-          requires:
-            - deploy_main_to_demo_approval
       - deploy_main_to_staging_approval:
           type: approval
           requires:
@@ -355,13 +322,6 @@ workflows:
       - deploy_branch_to_dev:
           requires:
             - deploy_branch_to_dev_approval
-      - deploy_branch_to_demo_approval:
-          type: approval
-          requires:
-            - build_branch_and_push_to_ecr
-      - deploy_branch_to_demo:
-          requires:
-            - deploy_branch_to_demo_approval
       - deploy_branch_to_staging_approval:
           type: approval
           requires:
