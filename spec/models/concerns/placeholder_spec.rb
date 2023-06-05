@@ -13,7 +13,7 @@ RSpec.describe Concerns::Placeholder do
   describe '#placeholder' do
     it 'looks up placeholder text via I18n' do
       expect(subject.placeholder(:field)).
-        to eq('translation missing: en.placeholders.test_model.field')
+        to eq('Translation missing: en.placeholders.test_model.field')
     end
   end
 
@@ -27,7 +27,7 @@ RSpec.describe Concerns::Placeholder do
     it 'returns the placeholder text if field is blank' do
       subject.field = ''
       expect(subject.with_placeholder_default(:field)).
-        to eq('translation missing: en.placeholders.test_model.field')
+        to eq('Translation missing: en.placeholders.test_model.field')
     end
   end
 end
