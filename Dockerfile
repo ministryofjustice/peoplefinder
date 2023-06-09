@@ -16,7 +16,7 @@ ENV APPUSER moj
 ENV PUMA_PORT 3000
 
 COPY Gemfile* .ruby-version ./
-RUN gem install bundler -v 2.4.13
+RUN gem install bundler -v 2.2.14
 RUN bundle config --global frozen 1 && \
     bundle config --path=vendor/bundle && \
     bundle config --global without test:development && \
