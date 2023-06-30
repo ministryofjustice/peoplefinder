@@ -18,13 +18,13 @@ class SuggestionDelivery
     self
   end
 
-  private
+private
 
   def deliver_for_person
     return unless @suggestion.for_person?
 
-    SuggestionMailer.person_email(@person, @suggester, @suggestion.to_hash).
-      deliver_later
+    SuggestionMailer.person_email(@person, @suggester, @suggestion.to_hash)
+      .deliver_later
     @recipient_count += 1
   end
 
@@ -32,9 +32,9 @@ class SuggestionDelivery
     return unless @suggestion.for_admin?
 
     @person.groups.flat_map(&:leaders).each do |leader|
-      SuggestionMailer.
-        team_admin_email(@person, @suggester, @suggestion.to_hash, leader).
-        deliver_later
+      SuggestionMailer
+        .team_admin_email(@person, @suggester, @suggestion.to_hash, leader)
+        .deliver_later
       @recipient_count += 1
     end
   end

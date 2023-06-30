@@ -1,9 +1,9 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe PeopleHelper, type: :helper do
   include PermittedDomainHelper
 
-  describe 'day_name' do
+  describe "day_name" do
     it "returns a name for each day" do
       expect(day_name(:works_wednesday)).to eql("Wednesday")
     end
@@ -13,7 +13,7 @@ RSpec.describe PeopleHelper, type: :helper do
     end
   end
 
-  describe 'person_form_class' do
+  describe "person_form_class" do
     let(:person) { double(Person, new_record?: false) }
 
     it 'includes "new_person" if person is a new record' do
@@ -31,39 +31,39 @@ RSpec.describe PeopleHelper, type: :helper do
     end
 
     it 'includes "completing" if activity is "complete"' do
-      expect(person_form_class(person, 'complete')).to match(/\bcompleting\b/)
+      expect(person_form_class(person, "complete")).to match(/\bcompleting\b/)
     end
   end
 
-  describe 'profile_image_tag' do
+  describe "profile_image_tag" do
     let(:person)  { create(:person, :with_photo) }
-    let(:options) { { class: 'my-class', version: :croppable } }
+    let(:options) { { class: "my-class", version: :croppable } }
 
-    it 'test builds person with photo' do
+    it "test builds person with photo" do
       expect(person.profile_photo.image).not_to be_nil
     end
 
-    it 'adds a link to the person profile by default' do
-      expect(profile_image_tag(person, options)).to match(/.*href=\"\/people\/.*\".*/)
+    it "adds a link to the person profile by default" do
+      expect(profile_image_tag(person, options)).to match(/.*href="\/people\/.*".*/)
     end
 
-    it 'adds alternative text to the person profile by default' do
-      expect(profile_image_tag(person, options)).to match(/.*alt=\"Current photo of.*\".*/)
+    it "adds alternative text to the person profile by default" do
+      expect(profile_image_tag(person, options)).to match(/.*alt="Current photo of.*".*/)
     end
 
-    it 'does not add a link to when option set' do
-      expect(profile_image_tag(person, options.merge(link: false))).to_not match(/.*href=.*/)
+    it "does not add a link to when option set" do
+      expect(profile_image_tag(person, options.merge(link: false))).not_to match(/.*href=.*/)
     end
 
-    it 'uses the specified image version' do
+    it "uses the specified image version" do
       expect(profile_image_tag(person, options)).to match(/.*profile_photo.*\/croppable.*/)
     end
 
-    it 'adds a link_uri and alt_text to options hash' do
-      expect { profile_image_tag(person, options) }.to change(options, :keys).from([:class, :version]).to([:class, :version, :link_uri, :alt_text])
+    it "adds a link_uri and alt_text to options hash" do
+      expect { profile_image_tag(person, options) }.to change(options, :keys).from(%i[class version]).to(%i[class version link_uri alt_text])
     end
 
-    it 'does not output internally used options' do
+    it "does not output internally used options" do
       html = profile_image_tag(person, options)
       expect(html).not_to match(/.*link=.*/)
       expect(html).not_to match(/.*link_uri=.*/)
@@ -71,39 +71,39 @@ RSpec.describe PeopleHelper, type: :helper do
       expect(html).not_to match(/.*version=.*/)
     end
 
-    it 'defaults to using the medium image version' do
+    it "defaults to using the medium image version" do
       options.delete(:version)
       expect(profile_image_tag(person, options)).to match(/.*profile_photo.*\/medium_.*/)
     end
 
-    it 'fallsback to using medium_no_photo.png' do
+    it "fallsback to using medium_no_photo.png" do
       person.profile_photo_id = nil
       expect(profile_image_tag(person, options)).to match(/.*\/medium_no_photo.png.*/)
     end
 
-    context 'when environments using local storage' do
+    context "when environments using local storage" do
       subject { profile_image_tag(person, options) }
 
       before do
         options.delete(:version)
       end
 
-      it 'uses local file as image src' do
-        expect(subject).to match(/.*src=\".*\/uploads\/peoplefinder\/profile_photo\/image\/[\d]+\/medium_.*\.png\".*/)
+      it "uses local file as image src" do
+        expect(subject).to match(/.*src=".*\/uploads\/peoplefinder\/profile_photo\/image\/\d+\/medium_.*\.png".*/)
       end
     end
 
-    context 'when environments using S3 storage' do
+    context "when environments using S3 storage" do
       subject { profile_image_tag(person, options) }
 
       let(:version) do
-        double 'version',
-               file: file
+        double "version",
+               file:
       end
 
       let(:file) do
-        double 'file',
-               authenticated_url: 'https://my-prod-bucket.s3.amazonaws.com/dir1/dir2/medium_photo_1.jpg?X-Amz-Signature=XnXXX12345xxx'
+        double "file",
+               authenticated_url: "https://my-prod-bucket.s3.amazonaws.com/dir1/dir2/medium_photo_1.jpg?X-Amz-Signature=XnXXX12345xxx"
       end
 
       # rubocop:disable RSpec/ExpectInHook
@@ -114,65 +114,65 @@ RSpec.describe PeopleHelper, type: :helper do
       end
       # rubocop:enable RSpec/ExpectInHook
 
-      it 'uses pre-signed, time-limited, url for image src' do
+      it "uses pre-signed, time-limited, url for image src" do
         expect(file).to receive(:authenticated_url)
         expect(subject).to include file.authenticated_url
       end
     end
   end
 
-  describe 'team_image_tag' do
+  describe "team_image_tag" do
     let(:team) { create(:group) }
-    let(:options) { { class: 'my-class' } }
+    let(:options) { { class: "my-class" } }
 
-    it 'adds a link to the team profile by default' do
-      expect(team_image_tag(team, options)).to match(/.*href=\"\/teams\/.*\".*/)
+    it "adds a link to the team profile by default" do
+      expect(team_image_tag(team, options)).to match(/.*href="\/teams\/.*".*/)
     end
 
-    it 'does not add a link to when option set' do
-      expect(team_image_tag(team, options.merge(link: false))).to_not match(/.*href=.*/)
+    it "does not add a link to when option set" do
+      expect(team_image_tag(team, options.merge(link: false))).not_to match(/.*href=.*/)
     end
 
-    it 'uses the medium team image' do
+    it "uses the medium team image" do
       expect(team_image_tag(team, options)).to match(/.*\/medium_team.*/)
     end
 
-    it 'adds a link uri to options hash' do
-      expect { team_image_tag(team, options) }.to change(options, :keys).from([:class]).to([:class, :link_uri, :alt_text])
+    it "adds a link uri to options hash" do
+      expect { team_image_tag(team, options) }.to change(options, :keys).from([:class]).to(%i[class link_uri alt_text])
     end
   end
 
-  describe 'edit_person_link' do
+  describe "edit_person_link" do
     include AnalyticsHelper
 
-    let(:person) { create :person, slug: 'fred-bloggs' }
+    let(:person) { create :person, slug: "fred-bloggs" }
 
-    it 'builds an anchor tag reference to edit page for the person' do
-      expect(edit_person_link('Edit profile', person)).to match(/href=\"\/people\/fred-bloggs\/edit\"/)
+    it "builds an anchor tag reference to edit page for the person" do
+      expect(edit_person_link("Edit profile", person)).to match(/href="\/people\/fred-bloggs\/edit"/)
     end
 
-    it 'inserts activity option as url param' do
-      expect(edit_person_link('Edit profile', person, activity: 'complete')).to include '?activity=complete'
+    it "inserts activity option as url param" do
+      expect(edit_person_link("Edit profile", person, activity: "complete")).to include "?activity=complete"
     end
 
-    it 'sends message to contruct google analytics attributes' do
+    it "sends message to contruct google analytics attributes" do
       expect(self).to receive(:edit_profile_analytics_attributes).with(person.id)
-      edit_person_link('Edit profile', person)
+      edit_person_link("Edit profile", person)
     end
   end
 
-  describe 'teams_and_roles' do
+  describe "teams_and_roles" do
     let(:team_1) { create(:group, name: "HMPPS") }
     let(:team_2) { create(:group, name: "Legal Aid Agency") }
     let(:person) do
       create(:person,
              memberships: [
                build(:membership, group: team_1, role: "Developer", person: nil),
-               build(:membership, group: team_2, leader: true, person: nil)
+               build(:membership, group: team_2, leader: true, person: nil),
              ])
     end
 
-    it 'includes the membership details' do
+    it "includes the membership details" do
       expect(teams_and_roles(person)).to eq "Team: HMPPS with role Developer; Team: Legal Aid Agency - you are a team leader with role -"
     end
   end

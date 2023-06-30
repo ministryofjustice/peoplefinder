@@ -1,18 +1,14 @@
 class GroupsController < ApplicationController
-  before_action :set_group, only: [
-    :show, :edit, :update, :destroy, :all_people, :people_outside_subteams, :organogram
+  before_action :set_group, only: %i[
+    show edit update destroy all_people people_outside_subteams organogram
   ]
-  before_action :set_org_structure, only: [:new, :edit, :create, :update]
+  before_action :set_org_structure, only: %i[new edit create update]
   before_action :load_versions, only: [:show]
 
   # GET /groups
   def index
     @group = Group.department || Group.first
-    if @group
-      redirect_to @group
-    else
-      redirect_to new_group_path
-    end
+    redirect_to @group || new_group_path
   end
 
   # GET /groups/1
@@ -33,8 +29,7 @@ class GroupsController < ApplicationController
   end
 
   # GET /teams/slug_or_id/organogram
-  def organogram
-  end
+  def organogram; end
 
   # GET /groups/new
   def new
@@ -68,7 +63,7 @@ class GroupsController < ApplicationController
     authorize @group
 
     group_update_service = GroupUpdateService.new(
-      group: @group, person_responsible: current_user
+      group: @group, person_responsible: current_user,
     )
     if group_update_service.update(group_params)
       notice :group_updated, group: @group
@@ -84,14 +79,14 @@ class GroupsController < ApplicationController
     authorize @group
 
     next_page = @group.parent ? group_path(@group.parent) : groups_path
-    @group.destroy
+    @group.destroy!
     notice :group_deleted, group: @group
     redirect_to next_page
   end
 
-  private
+private
 
-  def create_success_response format
+  def create_success_response(format)
     format.html do
       notice :group_created, group: @group
       redirect_to @group
@@ -101,7 +96,7 @@ class GroupsController < ApplicationController
     end
   end
 
-  def create_failure_response format
+  def create_failure_response(format)
     format.html do
       # error :create_error
       render :new
@@ -124,8 +119,8 @@ class GroupsController < ApplicationController
   # Never trust parameters from the scary internet, only allow the white list
   # through.
   def group_params
-    params.require(:group).
-      permit(:parent_id, :name, :acronym, :description)
+    params.require(:group)
+      .permit(:parent_id, :name, :acronym, :description)
   end
 
   def collection

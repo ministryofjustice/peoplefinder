@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + '/../../lib/rails_host.rb'
+require "#{File.dirname(__FILE__)}/../../lib/rails_host.rb"
 
 def Rails.host
   RailsHost

@@ -1,5 +1,4 @@
 class ReminderMailerPreview < ActionMailer::Preview
-
   include PreviewHelper
 
   def never_logged_in_email
@@ -13,5 +12,4 @@ class ReminderMailerPreview < ActionMailer::Preview
   def person_profile_update_email
     ReminderMailer.person_profile_update recipient
   end
-
 end

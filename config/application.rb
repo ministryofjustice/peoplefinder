@@ -1,5 +1,5 @@
-require_relative 'boot'
-require 'rails/all'
+require_relative "boot"
+require "rails/all"
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
@@ -50,59 +50,55 @@ module Peoplefinder
     config.action_view.form_with_generates_ids = true
 
     # app title appears in the header bar
-    config.app_title = 'People Finder'
+    config.app_title = "People Finder"
 
-    config.admin_ip_ranges = ENV.fetch('ADMIN_IP_RANGES', '127.0.0.1')
+    config.admin_ip_ranges = ENV.fetch("ADMIN_IP_RANGES", "127.0.0.1")
 
-    config.readonly_ip_whitelist = ENV.fetch('READONLY_IP_WHITELIST', '127.0.0.1')
+    config.readonly_ip_whitelist = ENV.fetch("READONLY_IP_WHITELIST", "127.0.0.1")
 
-    config.assets.paths << Rails.root.join('vendor/assets/components')
+    config.assets.paths << Rails.root.join("vendor/assets/components")
 
-    config.support_email = ENV.fetch('SUPPORT_EMAIL')
+    config.support_email = ENV.fetch("SUPPORT_EMAIL")
 
-    config.govuk_notify_api_key = ENV.fetch('GOVUK_NOTIFY_API_KEY', '')
+    config.govuk_notify_api_key = ENV.fetch("GOVUK_NOTIFY_API_KEY", "")
 
     config.action_mailer.default_options = {
-      from:  config.support_email
+      from: config.support_email,
     }
 
     config.active_job.queue_adapter = :delayed_job
 
     config.active_record.schema_format = :ruby
 
-    config.elastic_search_url = ENV['MOJ_PF_ES_URL']
+    config.elastic_search_url = ENV["MOJ_PF_ES_URL"]
 
-    config.rack_timeout = (ENV['RACK_TIMEOUT'] || 14)
+    config.rack_timeout = (ENV["RACK_TIMEOUT"] || 14)
 
-    config.max_tokens_per_hour = ENV['MAX_TOKENS_PER_HOUR']
+    config.max_tokens_per_hour = ENV["MAX_TOKENS_PER_HOUR"]
 
     config.action_mailer.default_url_options = {
-      host: ENV['ACTION_MAILER_DEFAULT_URL'],
-      protocol: 'https'
+      host: ENV["ACTION_MAILER_DEFAULT_URL"],
+      protocol: "https",
     }
 
-    config.action_mailer.asset_host = config.action_mailer.default_url_options[:protocol] +
-                                      '://' +
-                                      (config.action_mailer.default_url_options[:host] || 'localhost')
+    config.action_mailer.asset_host = "#{config.action_mailer.default_url_options[:protocol]}://#{config.action_mailer.default_url_options[:host] || 'localhost'}"
 
-    # Note: ENV is set to 'dev','staging','production' on dev,staging, production respectively
-    config.send_reminder_emails = (ENV['ENV'] == 'production')
+    # NOTE: ENV is set to 'dev','staging','production' on dev,staging, production respectively
+    config.send_reminder_emails = (ENV["ENV"] == "production")
 
     # The following values are required by the phase banner
-    config.phase = 'live'
-    config.feedback_url = 'https://docs.google.com/a/digital.justice.gov.uk/forms/d/1dJ9xQ66QFvk8K7raf60W4ZXfK4yTQ1U3EeO4OLLlq88/viewform'
+    config.phase = "live"
+    config.feedback_url = "https://docs.google.com/a/digital.justice.gov.uk/forms/d/1dJ9xQ66QFvk8K7raf60W4ZXfK4yTQ1U3EeO4OLLlq88/viewform"
 
     # make the geckoboard publisher available generally
     # NOTE: may need to eager load paths instead if lib code is commonly called
-    config.autoload_paths << Rails.root.join('lib')
+    config.autoload_paths << Rails.root.join("lib")
 
-    require Rails.root.join('lib', 'csv_publisher', 'user_behavior_report.rb')
+    require Rails.root.join("lib", "csv_publisher", "user_behavior_report.rb")
 
-    require Rails.root.join('lib', 'geckoboard_publisher', 'report.rb')
-    Dir[config.root.join('lib', 'geckoboard_publisher', '**', '*.rb')].sort.each do |file|
+    require Rails.root.join("lib", "geckoboard_publisher", "report.rb")
+    Dir[config.root.join("lib", "geckoboard_publisher", "**", "*.rb")].sort.each do |file|
       require file
     end
-
   end
-
 end

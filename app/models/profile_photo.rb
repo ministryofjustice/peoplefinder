@@ -24,5 +24,4 @@ class ProfilePhoto < ApplicationRecord
     self.crop_h = h
     image.recreate_versions!(*versions)
   end
-
 end

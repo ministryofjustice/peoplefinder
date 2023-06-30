@@ -1,11 +1,11 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe GroupPolicy, type: :policy do
-  let(:group) { build_stubbed(:group) }
-
   subject { described_class.new(user, group) }
 
-  context 'with a regular user' do
+  let(:group) { build_stubbed(:group) }
+
+  context "with a regular user" do
     let(:user) { build_stubbed(:person) }
 
     it { is_expected.to permit_action(:show) }
@@ -16,7 +16,7 @@ RSpec.describe GroupPolicy, type: :policy do
     it { is_expected.to permit_action(:destroy) }
   end
 
-  context 'with the readonly user' do
+  context "with the readonly user" do
     let(:user) { build_stubbed(:readonly_user) }
 
     it { is_expected.to permit_action(:show) }

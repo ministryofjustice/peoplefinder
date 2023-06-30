@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe EmailValidator, type: :validator do
   class EmailValidatorTestModel
@@ -6,29 +6,29 @@ RSpec.describe EmailValidator, type: :validator do
 
     attr_accessor :email
 
-    validates :email, 'email' => true
+    validates :email, "email" => true
   end
+
+  subject { EmailValidatorTestModel.new(email:) }
 
   before do
-    allow(PermittedDomain).to receive(:pluck).with(:domain).and_return(['valid.gov.uk'])
+    allow(PermittedDomain).to receive(:pluck).with(:domain).and_return(["valid.gov.uk"])
   end
 
-  subject { EmailValidatorTestModel.new(email: email) }
-
-  context 'when an email is a valid email with a supported domain' do
-    let(:email) { 'name.surname@valid.gov.uk' }
+  context "when an email is a valid email with a supported domain" do
+    let(:email) { "name.surname@valid.gov.uk" }
 
     it { is_expected.to be_valid }
   end
 
-  context 'when an email is a valid e-mail, but with an unsupported domain' do
-    let(:email) { 'name@invalid.gov.uk' }
+  context "when an email is a valid e-mail, but with an unsupported domain" do
+    let(:email) { "name@invalid.gov.uk" }
 
     it { is_expected.not_to be_valid }
   end
 
-  context 'when an email is not a valid e-mail, but with a supported domain' do
-    let(:email) { 'name surname@valid.gov.uk' }
+  context "when an email is not a valid e-mail, but with a supported domain" do
+    let(:email) { "name surname@valid.gov.uk" }
 
     it { is_expected.not_to be_valid }
   end

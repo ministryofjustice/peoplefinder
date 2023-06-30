@@ -1,5 +1,5 @@
 class Login
-  SESSION_KEY = 'current_user_id'.freeze
+  SESSION_KEY = "current_user_id".freeze
 
   def initialize(session, person)
     @session = session
@@ -9,7 +9,7 @@ class Login
   def login
     @person.login_count += 1
     @person.last_login_at = Time.zone.now
-    @person.save
+    @person.save!
 
     @session[SESSION_KEY] = @person.id
   end

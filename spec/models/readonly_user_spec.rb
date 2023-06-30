@@ -1,16 +1,16 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe ReadonlyUser, type: :model do
   subject { described_class.new }
 
   let(:be_readonly_user) { be_instance_of described_class }
 
-  describe '.from_request' do
-    let(:request) { ActionDispatch::TestRequest.create }
-
+  describe ".from_request" do
     subject { described_class.from_request(request) }
 
-    context 'when client IP is whitelisted' do
+    let(:request) { ActionDispatch::TestRequest.create }
+
+    context "when client IP is whitelisted" do
       # rubocop:disable RSpec/ExpectInHook
       before do
         expect(request).to receive(:remote_ip_whitelisted?).and_return(true)
@@ -22,21 +22,22 @@ RSpec.describe ReadonlyUser, type: :model do
       end
     end
 
-    context 'when client IP is not whitelisted' do
+    context "when client IP is not whitelisted" do
       # rubocop:disable RSpec/ExpectInHook
       before do
         expect(request).to receive(:remote_ip_whitelisted?).and_return(false)
       end
       # rubocop:enable RSpec/ExpectInHook
 
-      it 'returns nil' do
-        expect(subject).to_not be_readonly_user
+      it "returns nil" do
+        expect(subject).not_to be_readonly_user
         expect(subject).to be_nil
       end
     end
 
-    context 'with whitelist' do
-      let(:ip_whitelist) { '127.0.0.2/31;127.0.0.4/32' }
+    context "with whitelist" do
+      let(:ip_whitelist) { "127.0.0.2/31;127.0.0.4/32" }
+
       before do
         allow(Rails.configuration).to receive(:readonly_ip_whitelist).and_return ip_whitelist
       end
@@ -61,16 +62,15 @@ RSpec.describe ReadonlyUser, type: :model do
     end
   end
 
-  describe '#id' do
-    it 'returns :readonly' do
+  describe "#id" do
+    it "returns :readonly" do
       expect(subject.id).to be :readonly
     end
   end
 
-  describe '#super_admin?' do
-    it 'returns false' do
+  describe "#super_admin?" do
+    it "returns false" do
       expect(subject).not_to be_super_admin
     end
   end
-
 end

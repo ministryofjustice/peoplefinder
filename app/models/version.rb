@@ -16,29 +16,29 @@
 
 class Version < PaperTrail::Version
   def self.public_user
-    'Public user'
+    "Public user"
   end
 
   def creation?
-    event == 'create'
+    event == "create"
   end
 
   def destruction?
-    event == 'destroy'
+    event == "destroy"
   end
 
   def alteration?
-    event == 'update'
+    event == "update"
   end
 
   def membership?
-    item_type == 'Membership'
+    item_type == "Membership"
   end
 
   def undo
     return if membership?
 
-    creation? ? item.destroy : reify.save
+    creation? ? item.destroy! : reify.save!
   end
 
   def reify

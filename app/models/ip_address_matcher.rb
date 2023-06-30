@@ -1,7 +1,6 @@
-require 'netaddr'
+require "netaddr"
 
 class IpAddressMatcher
-
   def initialize(terms)
     @cidrs = cidrs(terms) || []
   end
@@ -14,12 +13,12 @@ class IpAddressMatcher
       @cidrs.any? { |cidr| cidr.contains(other) }
     end
   end
-  alias include? ===
+  alias_method :include?, :===
 
-  private
+private
 
   def cidrs(terms)
-    terms.split(';').map { |s| cidr(s) } unless terms.blank?
+    terms.split(";").map { |s| cidr(s) } if terms.present?
   end
 
   def cidr(term)

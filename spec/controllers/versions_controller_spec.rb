@@ -1,73 +1,71 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe VersionsController, type: :controller do
   include PermittedDomainHelper
 
-  describe '#index' do
-
-    context 'when a readonly user' do
+  describe "#index" do
+    context "when a readonly user" do
       before do
         mock_readonly_user
         get :index
       end
 
-      it 'redirects to login' do
+      it "redirects to login" do
         expect(response).to redirect_to new_sessions_path
       end
     end
 
-    context 'when a regular user' do
+    context "when a regular user" do
       before do
         mock_logged_in_user
         get :index
       end
 
-      it 'redirects to home' do
+      it "redirects to home" do
         expect(response).to redirect_to home_path
       end
     end
 
-    context 'when a super admin' do
+    context "when a super admin" do
       before do
         mock_logged_in_user super_admin: true
         get :index
       end
 
-      it 'redirects to login' do
+      it "redirects to login" do
         expect(response).to render_template :index
       end
     end
-
   end
 
-  describe '.undo' do
+  describe ".undo" do
     before do
       mock_logged_in_user super_admin: true
     end
 
-    it 'undoes a new person - by deleting it' do
+    it "undoes a new person - by deleting it" do
       with_versioning do
         person = create(:person)
-        version = PaperTrail::Version.where(item_type: 'Person').last
+        version = PaperTrail::Version.where(item_type: "Person").last
         put :undo, params: { id: version.id }
 
-        expect { Person.find(person.id) }.
-          to raise_error(ActiveRecord::RecordNotFound)
+        expect { Person.find(person.id) }
+          .to raise_error(ActiveRecord::RecordNotFound)
       end
     end
 
-    it 'undoes a deleted person - by renewing it' do
+    it "undoes a deleted person - by renewing it" do
       with_versioning do
-        person = create(:person, surname: 'Necro')
-        person.destroy
-        version = PaperTrail::Version.where(item_type: 'Person').last
+        person = create(:person, surname: "Necro")
+        person.destroy!
+        version = PaperTrail::Version.where(item_type: "Person").last
         put :undo, params: { id: version.id }
 
-        expect(Person.find_by_surname('Necro')).to be_present
+        expect(Person.find_by_surname("Necro")).to be_present
       end
     end
 
-    it 'does not undo a new membership' do
+    it "does not undo a new membership" do
       with_versioning do
         membership = create(:membership)
         version = PaperTrail::Version.last
@@ -77,15 +75,15 @@ RSpec.describe VersionsController, type: :controller do
       end
     end
 
-    it 'does not undo a deleted membership' do
+    it "does not undo a deleted membership" do
       with_versioning do
         membership = create(:membership)
-        membership.destroy
+        membership.destroy!
         version = PaperTrail::Version.last
         put :undo, params: { id: version.id }
 
-        expect { Membership.find(membership.id) }.
-          to raise_error(ActiveRecord::RecordNotFound)
+        expect { Membership.find(membership.id) }
+          .to raise_error(ActiveRecord::RecordNotFound)
       end
     end
   end

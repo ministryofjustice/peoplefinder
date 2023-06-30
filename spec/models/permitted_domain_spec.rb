@@ -8,8 +8,8 @@
 #  updated_at :datetime
 #
 
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe PermittedDomain, type: :model do
-  it { should validate_presence_of(:domain) }
+  it { is_expected.to validate_presence_of(:domain) }
 end

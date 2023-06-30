@@ -8,7 +8,7 @@ class SearchController < ApplicationController
     @people_results = search(PersonSearch) if people_filter?
   end
 
-  private
+private
 
   def search(klass)
     search = klass.new(@query, SearchResults.new)
@@ -24,12 +24,11 @@ class SearchController < ApplicationController
     input.encode(Encoding::UTF_32LE)
     input
   rescue Encoding::InvalidByteSequenceError
-    ''
+    ""
   end
 
   def set_search_args
     @query = query
     @search_filters = (params[:search_filters] || [])
   end
-
 end

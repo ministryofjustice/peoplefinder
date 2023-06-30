@@ -1,7 +1,6 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Concerns::Sanitizable do
-
   class SanitizableTestModel
     include ActiveModel::Model
     include ActiveModel::Validations::Callbacks
@@ -20,35 +19,35 @@ RSpec.describe Concerns::Sanitizable do
 
   subject do
     SanitizableTestModel.new(
-      color: ' Orange3 ',
-      shape: ' Square ',
-      flavor: ' Strawberry2 ',
-      smell: ' Rancid '
+      color: " Orange3 ",
+      shape: " Square ",
+      flavor: " Strawberry2 ",
+      smell: " Rancid ",
     )
   end
 
-  describe 'when model is validated' do
+  describe "when model is validated" do
     before do
       subject.valid?
     end
 
-    it 'removes digits when requested' do
+    it "removes digits when requested" do
       expect(subject.color).to match(/\AOrange3\z/i)
       expect(subject.flavor).to match(/\AStrawberry\z/i)
     end
 
-    it 'strips white spaces when requested' do
+    it "strips white spaces when requested" do
       expect(subject.color).to match(/\AOrange3\z/i)
       expect(subject.flavor).to match(/\AStrawberry\z/i)
     end
 
-    it 'downcases when requested' do
+    it "downcases when requested" do
       expect(subject.shape).to match(/square/)
       expect(subject.flavor).to match(/strawberry/)
     end
 
-    it 'leaves other fields unchanged' do
-      expect(subject.smell).to eql(' Rancid ')
+    it "leaves other fields unchanged" do
+      expect(subject.smell).to eql(" Rancid ")
     end
   end
 end

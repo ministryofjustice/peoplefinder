@@ -21,10 +21,13 @@ class Group < ApplicationRecord
 
   MAX_DESCRIPTION = 2000
 
-  has_paper_trail versions: { class_name: 'Version' },
-                  ignore: [:updated_at, :created_at, :slug, :id,
-                           :description_reminder_email_at,
-                           :members_completion_score]
+  has_paper_trail versions: { class_name: "Version" },
+                  ignore: %i[updated_at
+                             created_at
+                             slug
+                             id
+                             description_reminder_email_at
+                             members_completion_score]
 
   extend FriendlyId
   friendly_id :slug_candidates, use: :slugged
@@ -40,10 +43,10 @@ class Group < ApplicationRecord
   end
 
   has_many :memberships,
-           -> { includes(:person).order('people.surname') },
+           -> { includes(:person).order("people.surname") },
            dependent: :destroy
   has_many :people, through: :memberships
-  has_many :leaderships, -> { where(leader: true) }, class_name: 'Membership'
+  has_many :leaderships, -> { where(leader: true) }, class_name: "Membership"
   has_many :leaders, through: :leaderships, source: :person
   has_many :non_leaders, through: :non_leaderships, source: :person
 
@@ -61,7 +64,7 @@ class Group < ApplicationRecord
 
   default_scope { order(name: :asc) }
 
-  scope :without_description, -> { unscoped.where(description: ['', nil]) }
+  scope :without_description, -> { unscoped.where(description: ["", nil]) }
 
   after_save { |group| UpdateGroupMembersCompletionScoreJob.perform_later(group) }
 
@@ -74,7 +77,7 @@ class Group < ApplicationRecord
   end
 
   def self.percentage_with_description
-    if count == 0
+    if count.zero?
       0
     else
       100 - (without_description.count / count.to_f * 100).round(0)
@@ -133,24 +136,24 @@ class Group < ApplicationRecord
     memberships.subscribing.joins(:person).map(&:person)
   end
 
-  def description_reminder_email_sent? within_days:
+  def description_reminder_email_sent?(within_days:)
     description_reminder_email_at.present? &&
       description_reminder_email_at.end_of_day >= within_days.day.ago
   end
 
-  private
+private
 
   def not_second_root_group
     if parent_id.nil?
       department = Group.department
       root_group_exists = department.present? && department != self
-      errors.add(:parent_id, 'is required') if root_group_exists
+      errors.add(:parent_id, "is required") if root_group_exists
     end
   end
 
   def name_and_sequence
     slug = name.to_param
-    sequence = Group.where('slug like ?', "#{slug}-%").count + 2
+    sequence = Group.where("slug like ?", "#{slug}-%").count + 2
     "#{slug}-#{sequence}"
   end
 

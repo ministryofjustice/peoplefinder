@@ -1,6 +1,5 @@
 module PeopleHelper
-
-  def days_worked person
+  def days_worked(person)
     days = []
     Person::DAYS_WORKED.each do |day|
       days.push day_name(day) if person.send(day)
@@ -9,11 +8,11 @@ module PeopleHelper
   end
 
   def day_name(symbol)
-    I18n.t(symbol, scope: [:people, :day_names])
+    I18n.t(symbol, scope: %i[people day_names])
   end
 
   def day_symbol(symbol)
-    I18n.t(symbol, scope: [:people, :day_symbols])
+    I18n.t(symbol, scope: %i[people day_symbols])
   end
 
   # e.g. profile_image_tag person, link: false
@@ -24,8 +23,8 @@ module PeopleHelper
     profile_or_team_image_div source, options
   end
 
-  def team_image_tag team, options = {}
-    source = 'medium_team.png'
+  def team_image_tag(team, options = {})
+    source = "medium_team.png"
     options[:link_uri] = group_path(team) if add_image_link?(options)
     options[:alt_text] = "Team icon for #{team.name}"
     profile_or_team_image_div source, options
@@ -34,9 +33,9 @@ module PeopleHelper
   def edit_person_link(name, person, options = {})
     link_to name,
             edit_person_path(person, activity: options[:activity]),
-            options.
-      except(:activity).
-      merge(data: edit_profile_analytics_attributes(person.id))
+            options
+      .except(:activity)
+      .merge(data: edit_profile_analytics_attributes(person.id))
   end
 
   # Why do we need to go to this trouble to repeat new_person/edit_person? you
@@ -44,37 +43,37 @@ module PeopleHelper
   # augment it, and we rely on the default classes elsewhere.
   #
   def person_form_class(person, activity)
-    [person.new_record? ? 'new_person' : 'edit_person'].tap do |classes|
-      classes << 'completing' if activity == 'complete'
-    end.join(' ')
+    [person.new_record? ? "new_person" : "edit_person"].tap { |classes|
+      classes << "completing" if activity == "complete"
+    }.join(" ")
   end
 
   def teams_and_roles(person)
-    person.memberships.group_by(&:group).map do |group, memberships|
+    person.memberships.group_by(&:group).map { |group, memberships|
       info = "Team: #{group.name}"
-      info += ' - you are a team leader' if memberships.any?(&:leader)
+      info += " - you are a team leader" if memberships.any?(&:leader)
       info + " with role #{roles_for_memberships(memberships)}"
-    end.join("; ")
+    }.join("; ")
   end
 
-  private
+private
 
   def roles_for_memberships(memberships)
-    memberships.map(&:role).select(&:present?).sort.join(', ').presence || '-'
+    memberships.map(&:role).select(&:present?).sort.join(", ").presence || "-"
   end
 
-  def image_tag_wrapper src, options
+  def image_tag_wrapper(src, options)
     src = src.url if defined? src.url
     image_tag(
       src,
-      options.
-        except(:version, :link, :link_uri, :alt_text).
-        merge(alt: options[:alt_text], class: 'media-object')
+      options
+        .except(:version, :link, :link_uri, :alt_text)
+        .merge(alt: options[:alt_text], class: "media-object"),
     )
   end
 
-  def profile_or_team_image_div source, options
-    content_tag(:div, class: 'maginot') do
+  def profile_or_team_image_div(source, options)
+    content_tag(:div, class: "maginot") do
       if options.key?(:link_uri)
         content_tag(:a, href: options[:link_uri]) do
           image_tag_wrapper(source, options)
@@ -86,7 +85,7 @@ module PeopleHelper
   end
 
   # default to having an image link unless 'link: false' passed explicitly
-  def add_image_link? options
+  def add_image_link?(options)
     !options.key?(:link) || options[:link]
   end
 
@@ -95,12 +94,11 @@ module PeopleHelper
     url_for_image person.profile_image.try(version)
   end
 
-  def url_for_image image
+  def url_for_image(image)
     if image.try(:file).respond_to? :authenticated_url
       image.file.authenticated_url
     else
-      image || 'medium_no_photo.png'
+      image || "medium_no_photo.png"
     end
   end
-
 end

@@ -1,12 +1,10 @@
 module S3
-
   # wrapper for Aws::S3::Object
   # adds convenience methods for modifying
   # the ACL of the profile image object.
   #
   class ProfileImage
-
-    def initialize object
+    def initialize(object)
       @object = object
     end
 
@@ -14,7 +12,7 @@ module S3
     # see https://docs.aws.amazon.com/AmazonS3/latest/dev/acl-overview.html#canned-acl
     # for full list and meaning of each.
     #
-    CANNED_ACLS = %w(
+    CANNED_ACLS = %w[
       private
       public-read
       public-read-write
@@ -23,7 +21,7 @@ module S3
       bucket-owner-read
       bucket-owner-full-control
       log-delivery-write
-    ).freeze
+    ].freeze
 
     # define a method for each of the above canned ACLs for convenience
     # e.g. public_read! --> applies the 'public-read' canned-acl to the current object
@@ -35,11 +33,11 @@ module S3
     end
 
     def public_read?
-      acl.grants.map do |grant|
-        grant.permission == 'READ' &&
+      acl.grants.map { |grant|
+        grant.permission == "READ" &&
           grant.grantee.uri.present? &&
-          grant.grantee.uri.include?('AllUsers')
-      end.any?
+          grant.grantee.uri.include?("AllUsers")
+      }.any?
     end
 
     def private?

@@ -1,28 +1,27 @@
 # wrapper for geckoboard-ruby gem
 # see https://developer.geckoboard.com/api-reference/ruby/
 
-require 'geckoboard'
+require "geckoboard"
 
 module GeckoboardPublisher
   class Report
-
     # geckboard datasets can only accept 500 sets per POST or PUT
     # and only 5000 sets maximum
     ITEMS_CHUNK_SIZE = 500
     MAX_STRING_LENGTH = 100
 
     attr_reader :client, :dataset, :published, :force
-    alias published? published
-    alias force? force
+    alias_method :published?, :published
+    alias_method :force?, :force
 
     def initialize
       @published = false
       @force = false
-      @client = Geckoboard.client(ENV['GECKOBOARD_API_KEY'])
+      @client = Geckoboard.client(ENV["GECKOBOARD_API_KEY"])
       test_client
     end
 
-    def publish! force = false
+    def publish!(force = false)
       @force = force
       create_dataset!
       replace_dataset!.tap do |result|
@@ -45,11 +44,7 @@ module GeckoboardPublisher
     # geckoboard-ruby gem's dataset.find_or_create id attribute
     # e.g. peoplefinder-staging.total_profiles_report
     def id
-      Rails.application.class.module_parent_name.underscore +
-        '-' +
-        (ENV['ENV'] || Rails.env).downcase +
-        '.' +
-        self.class.name.demodulize.underscore
+      "#{Rails.application.class.module_parent_name.underscore}-#{(ENV['ENV'] || Rails.env).downcase}.#{self.class.name.demodulize.underscore}"
     end
 
     # geckoboard-ruby gem's dataset.find_or_create fields hash
@@ -65,22 +60,21 @@ module GeckoboardPublisher
     # geckoboard-ruby gem's dataset.find_or_create unique_by hash
     # e.g.
     # [:mydatefield]
-    def unique_by
-    end
+    def unique_by; end
 
     def items
       raise "Implement #{__method__} in subclass"
     end
 
-    private
+  private
 
     def create_dataset!
-      @dataset = client.datasets.find_or_create(id, fields: fields, unique_by: unique_by)
+      @dataset = client.datasets.find_or_create(id, fields:, unique_by:)
     end
 
     def replace_dataset!
       items.each_slice(ITEMS_CHUNK_SIZE).with_index do |chunk, idx|
-        @published = if idx == 0
+        @published = if idx.zero?
                        dataset.put(chunk)
                      else
                        dataset.post(chunk)
@@ -103,8 +97,8 @@ module GeckoboardPublisher
     end
 
     def cron_logger
-      @cron_logger ||= Logger.new(STDOUT).tap do |log|
-        log.progname = 'Worker cron job'
+      @cron_logger ||= Logger.new($stdout).tap do |log|
+        log.progname = "Worker cron job"
         log.level = Rails.env.test? ? Logger::UNKNOWN : Logger::DEBUG
       end
     end
@@ -113,8 +107,8 @@ end
 
 class Object
   def to_string_boolean
-    return 'failed' if [FalseClass, NilClass].include?(self.class)
-    return 'succeeded' if self.class == TrueClass
+    return "failed" if [FalseClass, NilClass].include?(self.class)
+    return "succeeded" if instance_of?(TrueClass)
 
     self
   end

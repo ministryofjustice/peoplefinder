@@ -4,9 +4,9 @@ module Metrics
 
     def index
       render json: {
-        'item' => Person.overall_completion,
-        'min' => { 'value' => 0 },
-        'max' => { 'value' => 100 }
+        "item" => Person.overall_completion,
+        "min" => { "value" => 0 },
+        "max" => { "value" => 100 },
       }
     end
   end

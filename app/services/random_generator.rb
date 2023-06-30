@@ -1,4 +1,4 @@
-require 'faker'
+require "faker"
 
 class RandomGenerator
   def initialize(group)
@@ -29,10 +29,10 @@ class RandomGenerator
     no_of_people.times { create_person @group }
   end
 
-  private
+private
 
   def permit_domain(domain)
-    PermittedDomain.find_or_create_by!(domain: domain)
+    PermittedDomain.find_or_create_by!(domain:)
   end
 
   def generate_level(group, level)
@@ -50,7 +50,7 @@ class RandomGenerator
   def create_group(parent)
     parent.children.create!(
       name: Faker::Commerce.department,
-      description: Faker::Lorem.paragraph
+      description: Faker::Lorem.paragraph,
     )
   end
 
@@ -66,13 +66,13 @@ class RandomGenerator
     surname = Faker::Name.last_name
 
     {
-      given_name: given_name,
-      surname: surname,
+      given_name:,
+      surname:,
       email: "#{given_name}.#{surname}@#{@domain}",
       primary_phone_number: Faker::PhoneNumber.phone_number,
       secondary_phone_number: Faker::PhoneNumber.phone_number,
       pager_number: [Faker::PhoneNumber.phone_number, nil].sample,
-      description: Faker::Lorem.sentence
+      description: Faker::Lorem.sentence,
     }
   end
 
@@ -84,7 +84,7 @@ class RandomGenerator
       works_thursday: [true, false].sample,
       works_friday: [true, false].sample,
       works_saturday: [true, false, false, false].sample,
-      works_sunday: [true, false, false, false].sample
+      works_sunday: [true, false, false, false].sample,
     }
   end
 
@@ -92,8 +92,7 @@ class RandomGenerator
     {
       location_in_building: Faker::Address.secondary_address,
       building: Faker::Address.street_address,
-      city: Faker::Address.city
+      city: Faker::Address.city,
     }
   end
-
 end

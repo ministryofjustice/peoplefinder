@@ -1,6 +1,5 @@
 class UserBehaviorQuery < BaseQuery
-
-  DATE_STRING_FORMAT = '%d-%m-%Y'.freeze
+  DATE_STRING_FORMAT = "%d-%m-%Y".freeze
 
   attr_reader :relation
 
@@ -9,10 +8,10 @@ class UserBehaviorQuery < BaseQuery
   end
 
   def call
-    @relation.
-      joins(joins_sql).
-      select(selected_columns).
-      order('people.id, full_name')
+    @relation
+      .joins(joins_sql)
+      .select(selected_columns)
+      .order("people.id, full_name")
   end
 
   def data
@@ -27,21 +26,21 @@ class UserBehaviorQuery < BaseQuery
 
   def team_mapping
     @team_mapping ||= \
-      Group.order(id: :asc).
-      pluck(:id, :name).
-      each_with_object({}) do |(id, name), mapping|
+      Group.order(id: :asc)
+      .pluck(:id, :name)
+      .each_with_object({}) do |(id, name), mapping|
         mapping.merge!(id => name)
       end
   end
 
-  def team_name_map ancestor_ids, delimiter = ' > '
+  def team_name_map(ancestor_ids, delimiter = " > ")
     names = ancestor_ids&.each_with_object([]) do |id, arr|
       arr.push team_mapping[id.to_i]
     end
     names&.join(delimiter)
   end
 
-  private
+private
 
   def map_data_hash(rec)
     {
@@ -54,7 +53,7 @@ class UserBehaviorQuery < BaseQuery
       login_count: rec.login_count,
       last_login_at: rec.last_login_at&.strftime(DATE_STRING_FORMAT),
       updates_count: rec.updates_count,
-      percent_complete: rec.completion_score
+      percent_complete: rec.completion_score,
     }
   end
 
@@ -90,5 +89,4 @@ class UserBehaviorQuery < BaseQuery
       #{select_updates_count} AS updates_count
     SQL
   end
-
 end

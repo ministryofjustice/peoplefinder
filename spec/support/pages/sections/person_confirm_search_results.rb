@@ -10,11 +10,11 @@ end
 module Pages
   module Sections
     class PersonConfirmSearchResults < SitePrism::Section
-      sections :confirmation_results, Sections::PersonConfirmSearchResultSection, '.cb-confirm-search-result'
+      sections :confirmation_results, Sections::PersonConfirmSearchResultSection, ".cb-confirm-search-result"
 
       def name_links
         confirmation_results.map do |sr|
-          sr.name_link['href']
+          sr.name_link["href"]
         end
       end
 

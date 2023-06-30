@@ -4,9 +4,9 @@ module Metrics
 
     def index
       render json: {
-        'item' => Group.percentage_with_description,
-        'min' => { 'value' => 0 },
-        'max' => { 'value' => 100 }
+        "item" => Group.percentage_with_description,
+        "min" => { "value" => 0 },
+        "max" => { "value" => 100 },
       }
     end
   end

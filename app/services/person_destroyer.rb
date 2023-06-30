@@ -1,4 +1,4 @@
-require 'forwardable'
+require "forwardable"
 
 class PersonDestroyer
   extend Forwardable
@@ -10,7 +10,7 @@ class PersonDestroyer
 
   def initialize(person, current_user)
     if person.new_record?
-      raise NewRecordError, 'cannot destroy a new Person record'
+      raise NewRecordError, "cannot destroy a new Person record"
     end
 
     @person = person
@@ -22,7 +22,7 @@ class PersonDestroyer
     person.destroy!
   end
 
-  private
+private
 
   def send_destroy_email!
     if @person.notify_of_change?(@current_user)

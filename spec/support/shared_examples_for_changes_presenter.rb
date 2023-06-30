@@ -7,19 +7,19 @@ shared_examples_for "a changes_presenter" do
   it { is_expected.to respond_to :each_pair }
 end
 
-shared_examples_for '#changes on changes_presenter' do
+shared_examples_for "#changes on changes_presenter" do
   it { is_expected.to be_a Hash }
   it { is_expected.to respond_to :[] }
   it { is_expected.to respond_to :each }
   it { is_expected.to respond_to :each_pair }
 end
 
-shared_examples_for 'serializability' do
+shared_examples_for "serializability" do
   it { is_expected.to be_json }
 
-  describe '.deserialize' do
-    it 'is deserializable' do
-      expect { described_class.deserialize(subject) }.to_not raise_error
+  describe ".deserialize" do
+    it "is deserializable" do
+      expect { described_class.deserialize(subject) }.not_to raise_error
     end
 
     it "deserializes to instance of #{described_class}" do

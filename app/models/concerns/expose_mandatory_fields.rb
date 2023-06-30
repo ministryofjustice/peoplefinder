@@ -3,8 +3,8 @@ module Concerns::ExposeMandatoryFields
 
   included do
     def self.mandates_presence_of?(field)
-      validators_on(field).map(&:class).
-        include?(ActiveRecord::Validations::PresenceValidator)
+      validators_on(field).map(&:class)
+        .include?(ActiveRecord::Validations::PresenceValidator)
     end
 
     def mandates_presence_of?(field)

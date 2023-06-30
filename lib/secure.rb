@@ -1,5 +1,4 @@
 class Secure
-
   def self.compare(a, b)
     return false if a.blank? || b.blank? || a.bytesize != b.bytesize
 
@@ -7,7 +6,6 @@ class Secure
 
     res = 0
     b.each_byte { |byte| res |= byte ^ l.shift }
-    res == 0
+    res.zero?
   end
-
 end

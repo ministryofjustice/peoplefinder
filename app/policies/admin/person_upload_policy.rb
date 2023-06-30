@@ -1,6 +1,5 @@
 module Admin
   class PersonUploadPolicy < ApplicationPolicy
-
     def new?
       admin_user?
     end
@@ -8,6 +7,5 @@ module Admin
     def create?
       admin_user?
     end
-
   end
 end

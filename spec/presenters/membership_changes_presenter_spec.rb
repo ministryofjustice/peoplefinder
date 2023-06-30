@@ -1,75 +1,76 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe MembershipChangesPresenter, type: :presenter do
   include PermittedDomainHelper
 
+  subject { described_class.new(person.changes) }
+
   let(:person) { create(:person) }
   let(:moj) { create(:department) }
-  let(:ds) { create(:group, name: 'Digital Services') }
-  let(:csg) { create(:group, name: 'Corporate Services Group') }
-
-  subject { described_class.new(person.changes) }
+  let(:ds) { create(:group, name: "Digital Services") }
+  let(:csg) { create(:group, name: "Corporate Services Group") }
 
   let(:mass_assignment_params) do
     {
       memberships_attributes: {
-        '0' => {
-          role: 'Lead Developer',
+        "0" => {
+          role: "Lead Developer",
           group_id: ds.id,
           leader: true,
-          subscribed: false
+          subscribed: false,
         },
-        '1' => {
-          role: 'Senior Developer',
+        "1" => {
+          role: "Senior Developer",
           group_id: csg.id,
           leader: false,
-          subscribed: true
+          subscribed: true,
         },
-        '2' => {
+        "2" => {
           id: person.memberships.find_by(group_id: moj.id).id,
-          _destroy: '1'
-        }
-      }
+          _destroy: "1",
+        },
+      },
     }
   end
+
   before do
     person.assign_attributes(mass_assignment_params)
     person.save!
   end
 
-  it_behaves_like 'a changes_presenter'
+  it_behaves_like "a changes_presenter"
 
-  describe '#raw' do
+  describe "#raw" do
     subject { described_class.new(person.membership_changes).raw }
 
     let(:membership_changes) do
       [
         {
-          group_id: [moj.id, nil]
+          group_id: [moj.id, nil],
         },
         {
           person_id: [nil, person.id],
           group_id: [nil, ds.id],
           role: [nil, "Lead Developer"],
           leader: [false, true],
-          subscribed: [true, false]
+          subscribed: [true, false],
         },
         {
           person_id: [nil, person.id],
           group_id: [nil, csg.id],
-          role: [nil, "Senior Developer"]
-        }
+          role: [nil, "Senior Developer"],
+        },
       ]
     end
 
-    it 'returns all original changes' do
+    it "returns all original changes" do
       expect(subject).to be_a Hash
       expect(subject.size).to eq 3
       expect(subject.values).to include(*membership_changes)
     end
   end
 
-  describe '#changes' do
+  describe "#changes" do
     subject { described_class.new(person.membership_changes).changes }
 
     let(:membership_changes_for_ds) do
@@ -81,11 +82,11 @@ RSpec.describe MembershipChangesPresenter, type: :presenter do
               group_id: [nil, ds.id],
               role: [nil, "Lead Developer"],
               leader: [false, true],
-              subscribed: [true, false]
+              subscribed: [true, false],
             },
-            message: "Added you to the Digital Services team as Lead Developer. You are a leader of the team"
-          }
-        }
+            message: "Added you to the Digital Services team as Lead Developer. You are a leader of the team",
+          },
+        },
       }
     end
 
@@ -94,33 +95,32 @@ RSpec.describe MembershipChangesPresenter, type: :presenter do
         "membership_#{moj.id}".to_sym => {
           removed: {
             raw: {
-              group_id: [moj.id, nil]
+              group_id: [moj.id, nil],
             },
-            message: "Removed you from the Ministry of Justice team"
-          }
-        }
+            message: "Removed you from the Ministry of Justice team",
+          },
+        },
       }
     end
 
-    it_behaves_like '#changes on changes_presenter'
+    it_behaves_like "#changes on changes_presenter"
 
-    it 'returns expected format of data for additions' do
+    it "returns expected format of data for additions" do
       expect(subject).to include membership_changes_for_ds
     end
 
-    it 'returns expected format of data for removals' do
+    it "returns expected format of data for removals" do
       expect(subject).to include membership_changes_for_moj
     end
 
-    it 'returns a set for each membership' do
-      expect(subject.size).to eql 3
+    it "returns a set for each membership" do
+      expect(subject.size).to be 3
     end
   end
 
-  describe '#serialize' do
+  describe "#serialize" do
     subject { described_class.new(person.membership_changes).serialize }
 
-    include_examples 'serializability'
+    include_examples "serializability"
   end
-
 end

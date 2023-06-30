@@ -1,5 +1,4 @@
 class ProfileChangeAggregator
-
   # takes a grouped queue notification record (produced by QueuedNotification.unsent_groups)
   def initialize(notifications)
     @notifications = notifications
@@ -18,7 +17,7 @@ class ProfileChangeAggregator
     eliminate_noops(full_change_set)
   end
 
-  private
+private
 
   def merge_changes(existing_changes, new_changes)
     new_changes.each do |field, change_set|
@@ -63,13 +62,13 @@ class ProfileChangeAggregator
   end
 
   def no_change?(changeset)
-    (changeset.first == '' && changeset.last.nil?) ||
-      (changeset.first.nil? && changeset.last == '') ||
+    (changeset.first == "" && changeset.last.nil?) ||
+      (changeset.first.nil? && changeset.last == "") ||
       (changeset.first == changeset.last)
   end
 
   def extract_raw_changes(rec)
-    rec.changes_hash['data']['raw']
+    rec.changes_hash["data"]["raw"]
   end
 
   # A change set for this field already exists in @raw changes, so we leave

@@ -1,5 +1,4 @@
 class BaseQuery
-
   class << self
     delegate :call, to: :new
   end
@@ -9,6 +8,6 @@ class BaseQuery
   end
 
   def call
-    raise '#call should be implemented in a sub class of BaseQuery'
+    raise "#call should be implemented in a sub class of BaseQuery"
   end
 end

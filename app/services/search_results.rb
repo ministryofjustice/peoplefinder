@@ -1,4 +1,4 @@
-require 'forwardable'
+require "forwardable"
 
 class SearchResults
   extend Forwardable
@@ -18,5 +18,4 @@ class SearchResults
       @set.each(&block)
     end
   end
-
 end

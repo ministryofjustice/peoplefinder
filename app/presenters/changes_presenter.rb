@@ -1,6 +1,5 @@
-require 'json'
+require "json"
 class ChangesPresenter
-
   #
   # helper to format changes to a dirty model
   # for output in a human friendly format.
@@ -40,7 +39,7 @@ class ChangesPresenter
     end
   end
 
-  def initialize raw_changes
+  def initialize(raw_changes)
     @raw = raw_changes
     changes
   end
@@ -51,19 +50,17 @@ class ChangesPresenter
 
   def serialize
     {
-      'json_class' => self.class.name,
-      'data' => { 'raw' => raw }
+      "json_class" => self.class.name,
+      "data" => { "raw" => raw },
     }.to_json
   end
 
-  def self.deserialize json
-    new(JSON.parse(json)['data']['raw'])
+  def self.deserialize(json)
+    new(JSON.parse(json)["data"]["raw"])
   end
 
-  def each
-    @changes.each do |change|
-      yield change
-    end
+  def each(&block)
+    @changes.each(&block)
   end
 
   def each_pair
@@ -73,7 +70,7 @@ class ChangesPresenter
   end
 
   # over-ride in subclasses requiring fields with special handling
-  def format raw_changes
+  def format(raw_changes)
     h = {}
     raw_changes.each do |field, raw_change|
       h.merge!(default(field, raw_change)) if changed? raw_change
@@ -81,37 +78,37 @@ class ChangesPresenter
     h.deep_symbolize_keys
   end
 
-  protected
+protected
 
   # ignore nil => empty string or vice versa changes
-  def changed? change
-    change.first&.gsub(/\s/, '').present? || change.second&.gsub(/\s/, '').present?
+  def changed?(change)
+    change.first&.gsub(/\s/, "").present? || change.second&.gsub(/\s/, "").present?
   rescue StandardError
     true
   end
 
-  def template field, &_block
+  def template(field, &_block)
     h = {
       field =>
         {
           raw: nil,
-          message: nil
-        }
+          message: nil,
+        },
     }
     yield h if block_given?
     h
   end
 
-  def default field, raw_change
+  def default(field, raw_change)
     template(field) do |h|
       h[field][:raw] = raw_change
       h[field][:message] = sentence(field, raw_change)&.humanize
     end
   end
 
-  private
+private
 
-  def sentence field, raw_change
+  def sentence(field, raw_change)
     change = Change.new(raw_change)
     if change.addition?
       "added a #{field}"
@@ -121,5 +118,4 @@ class ChangesPresenter
       "changed your #{field} from #{change.old_val} to #{change.new_val}"
     end
   end
-
 end

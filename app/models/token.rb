@@ -9,7 +9,7 @@
 #  updated_at :datetime
 #  spent      :boolean          default(FALSE)
 #
-require 'secure'
+require "secure"
 
 class Token < ApplicationRecord
   class TTLRaceCondition < StandardError; end
@@ -30,16 +30,16 @@ class Token < ApplicationRecord
 
   scope :spent,            -> { where(spent: true) }
   scope :unspent,          -> { where(spent: false) }
-  scope :unexpired,        -> { where('created_at > ?', ttl.seconds.ago) }
-  scope :expired,          -> { where('created_at < ?', ttl.seconds.ago) }
+  scope :unexpired,        -> { where("created_at > ?", ttl.seconds.ago) }
+  scope :expired,          -> { where("created_at < ?", ttl.seconds.ago) }
   scope :active,           -> { unspent.unexpired }
   scope :in_the_last_hour, -> { where(created_at: 1.hour.ago..Time.zone.now) }
 
-  def self.find_unspent_by_user_email user_email
+  def self.find_unspent_by_user_email(user_email)
     unspent.find_by_user_email(user_email)
   end
 
-  def self.find_securely token_value
+  def self.find_securely(token_value)
     find_each do |token|
       return token if Secure.compare(token.value, token_value)
     end
@@ -87,7 +87,7 @@ class Token < ApplicationRecord
   end
 
   def within_throttle_limit
-    raise TTLRaceCondition, 'throttling will not work with TTLs of 1 hour or less' if ttl <= 60
+    raise TTLRaceCondition, "throttling will not work with TTLs of 1 hour or less" if ttl <= 60
 
     if tokens_in_the_last_hour >= max_tokens_per_hour
       errors.add(:user_email, :token_throttle_limit, limit: max_tokens_per_hour)
@@ -98,7 +98,7 @@ class Token < ApplicationRecord
     spent? && created_at > DEFAULT_EXTRA_EXPIRY_PERIOD.ago
   end
 
-  private
+private
 
   def token_active?
     (created_at > ttl.seconds.ago) && !spent?
@@ -110,7 +110,7 @@ class Token < ApplicationRecord
   handle_asynchronously :remove_expired_tokens, queue: :high_priority
 
   def deactivate_tokens
-    self.class.unspent.where('user_email = ? AND id != ?', user_email, id).update_all(spent: true)
+    self.class.unspent.where("user_email = ? AND id != ?", user_email, id).update_all(spent: true)
   end
 
   def generate_value
@@ -118,6 +118,6 @@ class Token < ApplicationRecord
   end
 
   def tokens_in_the_last_hour
-    self.class.in_the_last_hour.where(user_email: user_email).count
+    self.class.in_the_last_hour.where(user_email:).count
   end
 end

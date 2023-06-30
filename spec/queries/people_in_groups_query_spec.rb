@@ -1,28 +1,27 @@
-require 'rails_helper'
+require "rails_helper"
 
 describe PeopleInGroupsQuery do
-
   let(:group) { create :group }
 
-  describe '#call' do
-    it 'generates the expected sql' do
+  describe "#call" do
+    it "generates the expected sql" do
       expect(described_class.new([2, 10]).call.to_sql).to match_sql expected_sql
     end
 
-    it 'returns an arel relation' do
+    it "returns an arel relation" do
       expect(described_class.new([group]).call).to be_an_instance_of(Person.const_get(:ActiveRecord_Relation))
     end
 
-    context 'when finding' do
+    context "when finding" do
       before(:all) do
-        PermittedDomain.create(domain: 'digital.justice.gov.uk') unless PermittedDomain.exists?(domain: 'digital.justice.gov.uk')
+        PermittedDomain.create!(domain: "digital.justice.gov.uk") unless PermittedDomain.exists?(domain: "digital.justice.gov.uk")
         @moj = create :department
-        @ds = create  :group, name: 'Digital Services', parent: @moj
-        @ds_dev = create :group, name: 'Digital Development', parent: @ds
-        @ds_content = create :group, name: 'Content', parent: @ds
-        @laa = create :group, name: 'LAA'
-        @laa_tech =  create :group, name: 'LAA Tech', parent: @laa
-        @laa_admin = create :group, name: 'LAA Admin', parent: @laa
+        @ds = create  :group, name: "Digital Services", parent: @moj
+        @ds_dev = create :group, name: "Digital Development", parent: @ds
+        @ds_content = create :group, name: "Content", parent: @ds
+        @laa = create :group, name: "LAA"
+        @laa_tech =  create :group, name: "LAA Tech", parent: @laa
+        @laa_admin = create :group, name: "LAA Admin", parent: @laa
 
         @moj_emp_0 = create :person, groups: [@moj]
         @ds_dev_content_emp_1 = create :person, groups: [@ds_dev, @ds_content]
@@ -39,27 +38,27 @@ describe PeopleInGroupsQuery do
         Person.destroy_all
       end
 
-      it 'finds all employees in the moj' do
+      it "finds all employees in the moj" do
         expect(described_class.new([@moj]).call).to match_array([@moj_emp_0])
       end
 
-      it 'finds all employees in DS dev' do
+      it "finds all employees in DS dev" do
         expect(described_class.new([@ds_dev]).call).to match_array([@ds_dev_content_emp_1, @ds_dev_emp2])
       end
 
-      it 'finds all employees in DS Dev And Content' do
+      it "finds all employees in DS Dev And Content" do
         expect(described_class.new([@ds_dev, @ds_content]).call).to match_array([@ds_dev_content_emp_1, @ds_dev_emp2, @ds_content_emp3])
       end
 
-      it 'finds all employees if one group not given as an array' do
+      it "finds all employees if one group not given as an array" do
         expect(described_class.new(@laa_tech).call).to match_array([@laa_tech_emp4])
       end
 
-      it 'finds all employees if just the id of the group is given' do
+      it "finds all employees if just the id of the group is given" do
         expect(described_class.new(@ds_dev.id).call).to match_array([@ds_dev_content_emp_1, @ds_dev_emp2])
       end
 
-      it 'finds all employees if multipls ids are given in an array' do
+      it "finds all employees if multipls ids are given in an array" do
         expect(described_class.new([@ds_dev.id, @ds_content.id]).call).to match_array([@ds_dev_content_emp_1, @ds_dev_emp2, @ds_content_emp3])
       end
     end

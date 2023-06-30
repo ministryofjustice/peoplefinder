@@ -1,4 +1,4 @@
-require 'forwardable'
+require "forwardable"
 
 class EmailAddress
   extend Forwardable
@@ -26,18 +26,18 @@ class EmailAddress
   end
 
   def inferred_last_name
-    capitalise(local.split('.')[(multipart_local? ? 1 : 0)])
+    capitalise(local.split(".")[(multipart_local? ? 1 : 0)])
   end
 
   def inferred_first_name
-    capitalise(local.split('.')[0]) if multipart_local?
+    capitalise(local.split(".")[0]) if multipart_local?
   end
 
   def multipart_local?
-    local.split('.').length > 1
+    local.split(".").length > 1
   end
 
-  private
+private
 
   attr_reader :valid_login_domains
 

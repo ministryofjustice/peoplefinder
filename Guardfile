@@ -1,7 +1,6 @@
 group :red_green_refactor, halt_on_fail: true do
-
-  guard :rspec, cmd: 'bundle exec spring rspec --fail-fast', all_on_start: false, failed_mode: :focus do
-    require 'guard/rspec/dsl'
+  guard :rspec, cmd: "bundle exec spring rspec --fail-fast", all_on_start: false, failed_mode: :focus do
+    require "guard/rspec/dsl"
     dsl = Guard::RSpec::Dsl.new(self)
 
     # RSpec files
@@ -15,7 +14,7 @@ group :red_green_refactor, halt_on_fail: true do
     dsl.watch_spec_files_for(ruby.lib_files)
 
     # Rails files
-    rails = dsl.rails(view_extensions: %w(erb haml slim))
+    rails = dsl.rails(view_extensions: %w[erb haml slim])
     dsl.watch_spec_files_for(rails.app_files)
     dsl.watch_spec_files_for(rails.views)
 
@@ -23,7 +22,7 @@ group :red_green_refactor, halt_on_fail: true do
       [
         rspec.spec.call("routing/#{m[1]}_routing"),
         rspec.spec.call("controllers/#{m[1]}_controller"),
-        rspec.spec.call("acceptance/#{m[1]}")
+        rspec.spec.call("acceptance/#{m[1]}"),
       ]
     end
 
@@ -38,7 +37,7 @@ group :red_green_refactor, halt_on_fail: true do
   end
 
   guard :jasmine do
-    watch(%r{spec/javascripts/spec\.(js\.coffee|js|coffee)$}) { 'spec/javascripts' }
+    watch(%r{spec/javascripts/spec\.(js\.coffee|js|coffee)$}) { "spec/javascripts" }
     watch(%r{spec/javascripts/.+_spec\.(js\.coffee|js|coffee)$})
     watch(%r{spec/javascripts/fixtures/.+$})
     watch(%r{app/assets/javascripts/(.+?)\.(js\.coffee|js|coffee)(?:\.\w+)*$}) do |m|
@@ -46,9 +45,8 @@ group :red_green_refactor, halt_on_fail: true do
     end
   end
 
-  guard :rubocop, cli: ['--fail-fast', '--display-cop-names'] do
+  guard :rubocop, cli: ["--fail-fast", "--display-cop-names"] do
     watch(%r{.+\.rb$})
     watch(%r{(?:.+/)?\.rubocop\.yml$}) { |m| File.dirname(m[0]) }
   end
-
 end

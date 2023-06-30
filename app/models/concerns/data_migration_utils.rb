@@ -6,15 +6,14 @@ module Concerns::DataMigrationUtils
     scope :department_members_in_other_teams, -> { department_members_in_other_teams_query }
 
     def department_memberships_with_no_role
-      memberships.
-        where(group_id: Group.department.id).
-        where(self.class.sql_blank?(:role))
+      memberships
+        .where(group_id: Group.department.id)
+        .where(self.class.sql_blank?(:role))
     end
   end
 
   class_methods do
-
-    def sql_blank? column_name
+    def sql_blank?(column_name)
       <<~SQL
         (
           length(regexp_replace(#{column_name},'[\s\t\n]+','','g')) = 0
@@ -33,7 +32,7 @@ module Concerns::DataMigrationUtils
       unscoped.joins(:memberships).where(department_members_in_other_teams_conditions)
     end
 
-    private
+  private
 
     def department_members_in_other_teams_conditions
       dept_id = Group.department.id
@@ -47,6 +46,5 @@ module Concerns::DataMigrationUtils
                     )
       SQL
     end
-
   end
 end

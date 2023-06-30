@@ -13,21 +13,21 @@ module Admin
       download(name: __method__)
     end
 
-    private
+  private
 
-    def generate report_klass
+    def generate(report_klass)
       GenerateReportJob.perform_later(report_klass.to_s)
     end
 
-    def download name:
-      report = Report.find_by(name: name)
+    def download(name:)
+      report = Report.find_by(name:)
       file = report&.to_csv_file
 
       if file && File.exist?(file)
         send_file(
           file,
           filename: report.client_filename,
-          type: report.mime_type
+          type: report.mime_type,
         )
       else
         warning :file_not_generated
@@ -35,9 +35,9 @@ module Admin
       end
     end
 
-    def serialize klass
+    def serialize(klass)
       {
-        'json_class' => klass.name
+        "json_class" => klass.name,
       }.to_json
     end
 
@@ -46,7 +46,7 @@ module Admin
     end
 
     def authorize_user
-      authorize 'Admin::Management'.to_sym, "#{action_name}?".to_sym
+      authorize "Admin::Management".to_sym, "#{action_name}?".to_sym
     end
   end
 end

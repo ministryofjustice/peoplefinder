@@ -1,7 +1,6 @@
-require 'csv'
+require "csv"
 
 class PersonCsvParser
-
   attr_reader :header, :records
 
   Header = Struct.new(:columns, :original, :unrecognized_columns) do
@@ -19,7 +18,7 @@ class PersonCsvParser
     @records = parse_records(@rows.drop(1))
   end
 
-  private
+private
 
   def parse_header(row)
     columns = row.map { |s| infer_header(s.strip) }.compact
@@ -51,7 +50,7 @@ class PersonCsvParser
       location_in_building: /location_in_building|location2|address2|room/i,
       city: /city|town/i,
       role: /role|job_title/i,
-      description: /description|extra_information/i
+      description: /description|extra_information/i,
     }
   end
 end

@@ -1,10 +1,9 @@
 module GeckoboardPublisher
   class TotalProfilesReport < Report
-
     def fields
       [
-        Geckoboard::NumberField.new(:count, name: 'Count'),
-        Geckoboard::DateField.new(:created_at, name: 'Created')
+        Geckoboard::NumberField.new(:count, name: "Count"),
+        Geckoboard::DateField.new(:created_at, name: "Created"),
       ]
     end
 
@@ -12,15 +11,14 @@ module GeckoboardPublisher
       parse Person.total_profiles_by_day
     end
 
-    private
+  private
 
-    def parse results
+    def parse(results)
       items = []
       results.each do |created_at, count|
-        items << { created_at: created_at.to_date.iso8601, count: count }
+        items << { created_at: created_at.to_date.iso8601, count: }
       end
       items
     end
-
   end
 end

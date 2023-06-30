@@ -1,6 +1,6 @@
-require 'rails_helper'
+require "rails_helper"
 
-describe 'Flash messages' do
+describe "Flash messages" do
   include PermittedDomainHelper
 
   RSpec::Matchers.define :appear_before do |later_content|
@@ -9,30 +9,30 @@ describe 'Flash messages' do
     end
   end
 
-  describe 'layout' do
+  describe "layout" do
     let!(:dept) { create :department }
     let(:person) { create :person }
-    let(:flash_messages) { 'flash-messages' }
-    let(:searchbox) { 'mod-search-form' }
+    let(:flash_messages) { "flash-messages" }
+    let(:searchbox) { "mod-search-form" }
 
     before do
-      token_log_in_as 'test.user@digital.justice.gov.uk'
+      token_log_in_as "test.user@digital.justice.gov.uk"
       person.memberships.destroy_all
     end
 
-    it 'display flash messages above search box for home page' do
+    it "display flash messages above search box for home page" do
       visit person_path(person)
       click_delete_profile
-      expect(page).to have_current_path('/')
+      expect(page).to have_current_path("/")
       expect(flash_messages).to appear_before searchbox
       expect(searchbox).not_to appear_before flash_messages
     end
 
-    it 'display flash messages below search box' do
+    it "display flash messages below search box" do
       visit group_path(dept)
-      click_link 'Add new sub-team'
-      fill_in 'Team name', with: 'Digital'
-      click_button 'Save'
+      click_link "Add new sub-team"
+      fill_in "Team name", with: "Digital"
+      click_button "Save"
       expect(searchbox).not_to appear_before flash_messages
       expect(flash_messages).to appear_before searchbox
     end

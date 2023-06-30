@@ -8,7 +8,7 @@
 #  updated_at :datetime
 #
 
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe ProfilePhoto, type: :model do
   subject { build_stubbed(:profile_photo) }
@@ -19,17 +19,17 @@ RSpec.describe ProfilePhoto, type: :model do
   it { is_expected.to respond_to :crop_w }
   it { is_expected.to respond_to :crop_h }
 
-  it 'has one person' do
+  it "has one person" do
     person_association = described_class.reflect_on_association(:person).macro
-    expect(person_association).to eql :has_one
+    expect(person_association).to be :has_one
   end
 
-  it 'stores upload dimensions' do
+  it "stores upload dimensions" do
     expect(subject.upload_dimensions).to eq width: 648, height: 648
   end
 
-  describe '#crop' do
-    it 'crops the image' do
+  describe "#crop" do
+    it "crops the image" do
       expect(subject.image).to receive(:recreate_versions!)
       subject.crop(1, 2, 3, 4)
       expect(subject.crop_x).to eq(1)
@@ -38,22 +38,22 @@ RSpec.describe ProfilePhoto, type: :model do
       expect(subject.crop_h).to eq(4)
     end
 
-    it 'accepts a specific version to crop' do
+    it "accepts a specific version to crop" do
       expect(subject.image).to receive(:recreate_versions!).with(:medium)
       subject.crop(1, 2, 3, 4, :medium)
     end
 
-    it 'defaults to cropping all versions' do
+    it "defaults to cropping all versions" do
       expect(subject.image).to receive(:recreate_versions!).with(no_args)
       subject.crop(1, 2, 3, 4)
     end
   end
 
-  describe 'validations' do
+  describe "validations" do
     subject { build(:profile_photo) }
 
-    context 'with file' do
-      context 'with extension is allowlisted' do
+    context "with file" do
+      context "with extension is allowlisted" do
         it do
           subject.image = non_allowlist_image
           expect(subject).to be_invalid
@@ -65,7 +65,7 @@ RSpec.describe ProfilePhoto, type: :model do
         end
       end
 
-      context 'when size must be less than or equal to 6M' do
+      context "when size must be less than or equal to 6M" do
         it do
           allow(subject.image).to receive(:size).and_return 6.001.megabytes
           expect(subject).to be_invalid
@@ -78,8 +78,8 @@ RSpec.describe ProfilePhoto, type: :model do
       end
     end
 
-    context 'with image dimensions' do
-      context 'when it is greater than 648x648 pixels' do
+    context "with image dimensions" do
+      context "when it is greater than 648x648 pixels" do
         it do
           allow(subject).to receive(:upload_dimensions).and_return(width: 649, height: 647)
           expect(subject).to be_invalid
@@ -91,7 +91,7 @@ RSpec.describe ProfilePhoto, type: :model do
         end
       end
 
-      context 'when it is less than or equal to 8192x8192 pixels' do
+      context "when it is less than or equal to 8192x8192 pixels" do
         it do
           allow(subject).to receive(:upload_dimensions).and_return(width: 8193, height: 8192)
           expect(subject).to be_invalid
@@ -104,56 +104,54 @@ RSpec.describe ProfilePhoto, type: :model do
       end
     end
 
-    context 'when a saving file' do
-      context 'with non image' do
+    context "when a saving file" do
+      context "with non image" do
         subject { build :profile_photo, :non_image }
 
-        it 'raises expected error' do
+        it "raises expected error" do
           expect { subject.save! }.to raise_error ActiveRecord::RecordInvalid, /not allowed to upload "csv" files, allowed types: jpg, jpeg, gif, png/
         end
       end
 
-      context 'with very large file' do
+      context "with very large file" do
         subject { build :profile_photo }
 
         before do
           allow(subject.image).to receive(:size).and_return 6.001.megabytes
         end
 
-        it 'raises expected error' do
+        it "raises expected error" do
           expect { subject.save! }.to raise_error ActiveRecord::RecordInvalid, /file size, 6 MB, is too large/
         end
       end
 
-      context 'with unwhitelisted extension' do
+      context "with unwhitelisted extension" do
         subject { build :profile_photo, :invalid_extension }
 
-        it 'raises expected error' do
+        it "raises expected error" do
           expect { subject.save! }.to raise_error ActiveRecord::RecordInvalid, /not allowed to upload "bmp" files, allowed types: jpg, jpeg, gif, png/
         end
       end
 
-      context 'with too small dimensions' do
+      context "with too small dimensions" do
         subject { build :profile_photo, :too_small_dimensions }
 
-        it 'raises expected error' do
+        it "raises expected error" do
           expect { subject.save! }.to raise_error ActiveRecord::RecordInvalid, /is 510x512 pixels. The minimum requirement is 648x648 pixels/
         end
       end
 
-      context 'with too large dimensions' do
+      context "with too large dimensions" do
         subject { build :profile_photo }
 
         before do
           allow(subject).to receive(:upload_dimensions).and_return(width: 8192, height: 8193)
         end
 
-        it 'raises expected error' do
+        it "raises expected error" do
           expect { subject.save! }.to raise_error ActiveRecord::RecordInvalid, /is 8192x8193 pixels. The maximum permitted is 8192x8192 pixels/
         end
       end
     end
-
   end
-
 end

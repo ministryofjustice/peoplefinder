@@ -1,11 +1,10 @@
 # Set RAILS_ROOT and load the environment if it's not already loaded.
 unless defined?(Rails)
-  ENV["RAILS_ROOT"] = File.expand_path('..', __dir__)
-  require File.expand_path('../config/environment', __dir__)
+  ENV["RAILS_ROOT"] = File.expand_path("..", __dir__)
+  require File.expand_path("../config/environment", __dir__)
 end
 
 Teaspoon.configure do |config|
-
   # Determines where the Teaspoon routes will be mounted. Changing this to "/jasmine" would allow you to browse to
   # `http://localhost:3000/jasmine` to run your tests.
   # config.mount_at = "/teaspoon"
@@ -35,7 +34,6 @@ Teaspoon.configure do |config|
   # - with the rake task: rake teaspoon suite=[suite_name]
   # - with the cli: teaspoon --suite=[suite_name]
   config.suite do |suite|
-
     suite.use_framework :mocha
 
     # Partial to be rendered in the head tag of the runner. You can use the provided ones or define your own by creating
@@ -54,7 +52,6 @@ Teaspoon.configure do |config|
     # Hooks allow you to use `Teaspoon.hook("fixtures")` before, after, or during your spec run. This will make a
     # synchronous Ajax request to the server that will call all of the blocks you've defined for that hook name.
     # suite.hook :fixtures, proc{ }
-
   end
 
   # Example suite. Since we're just filtering to files already within the root test/javascripts, these files will also
@@ -135,9 +132,8 @@ Teaspoon.configure do |config|
   config.use_coverage = :CI
 
   config.coverage :CI do |coverage|
-
     # Available: text-summary, text, html, lcov, lcovonly, cobertura, teamcity
-    coverage.reports = ["text", "text-summary", "html"]
+    coverage.reports = %w[text text-summary html]
 
     # The path that the coverage should be written to - when there's an artifact to write to disk.
     # Note: Relative to `config.root`.
@@ -149,7 +145,5 @@ Teaspoon.configure do |config|
     coverage.functions = 100
     coverage.branches = 80
     coverage.lines = 80
-
   end
-
 end

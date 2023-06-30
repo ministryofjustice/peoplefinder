@@ -34,7 +34,7 @@
 #
 
 class Person < ApplicationRecord
-  attr_accessor :working_days
+  attr_accessor :working_days, :crop_x, :crop_y, :crop_w, :crop_h, :skip_group_completion_score_updates, :skip_must_have_team
 
   include Concerns::Acquisition
   include Concerns::Activation
@@ -58,19 +58,24 @@ class Person < ApplicationRecord
 
   def as_indexed_json(_options = {})
     as_json(
-      only: [:surname, :current_project, :email],
-      methods: [:name, :role_and_group, :location]
+      only: %i[surname current_project email],
+      methods: %i[name role_and_group location],
     )
   end
 
-  has_paper_trail versions: { class_name: 'Version' },
-                  ignore: [:updated_at, :created_at, :id, :slug, :login_count, :last_login_at,
-                           :last_reminder_email_at]
+  has_paper_trail versions: { class_name: "Version" },
+                  ignore: %i[updated_at
+                             created_at
+                             id
+                             slug
+                             login_count
+                             last_login_at
+                             last_reminder_email_at]
 
   # TODO: eerrh! what is this trying to do, it breaks when attempting to create people with legacy image uploads
   def changes_for_paper_trail
     super.tap do |changes|
-      changes['image'].map! { |img| img.url && File.basename(img.url) } if changes.key?('image')
+      changes["image"].map! { |img| img.url && File.basename(img.url) } if changes.key?("image")
     end
   end
 
@@ -78,11 +83,9 @@ class Person < ApplicationRecord
   sanitize_fields :given_name, :surname, strip: true, remove_digits: true
   sanitize_fields :email, strip: true, downcase: true
 
-  attr_accessor :crop_x, :crop_y, :crop_w, :crop_h
   after_save :crop_profile_photo
   after_save :enqueue_group_completion_score_updates
 
-  attr_accessor :skip_group_completion_score_updates
   skip_callback :save, :after, :enqueue_group_completion_score_updates, if: :skip_group_completion_score_updates
 
   def enqueue_group_completion_score_updates
@@ -104,7 +107,7 @@ class Person < ApplicationRecord
   def profile_image
     if profile_photo
       profile_photo.image
-    elsif attributes['image']
+    elsif attributes["image"]
       legacy_image
     end
   end
@@ -115,40 +118,40 @@ class Person < ApplicationRecord
   validates :secondary_email, email: true, allow_blank: true
   validates :secondary_email, presence: true, if: :swap_email_display?
 
-  has_many :memberships, -> { includes(:group).order('groups.name') }, dependent: :destroy
+  has_many :memberships, -> { includes(:group).order("groups.name") }, dependent: :destroy
   has_many :groups, through: :memberships
-  attr_accessor :skip_must_have_team
+
   validate :must_have_team, unless: :skip_must_have_team
 
   accepts_nested_attributes_for :memberships, allow_destroy: true
 
   # default_scope { order(surname: :asc, given_name: :asc) }
 
-  scope :never_logged_in, PeopleNeverLoggedInQuery.new
-  scope :logged_in_at_least_once, PeopleLoggedInAtLeastOnceQuery.new
-  scope :last_reminder_email_older_than, -> (within) { ReminderMailOlderThanQuery.new(within).call }
-  scope :updated_at_older_than, -> (within) { PeopleUpdatedOlderThanQuery.new(within).call }
-  scope :updated_at_older_than, -> (within) { where('updated_at < ?', within) }
-  scope :created_at_older_than, -> (within) { where('created_at < ?', within) }
+  scope :never_logged_in, -> { PeopleNeverLoggedInQuery.new }
+  scope :logged_in_at_least_once, -> { PeopleLoggedInAtLeastOnceQuery.new }
+  scope :last_reminder_email_older_than, ->(within) { ReminderMailOlderThanQuery.new(within).call }
+  scope :updated_at_older_than, ->(within) { PeopleUpdatedOlderThanQuery.new(within).call }
+  scope :updated_at_older_than, ->(within) { where("updated_at < ?", within) }
+  scope :created_at_older_than, ->(within) { where("created_at < ?", within) }
 
-  scope :namesakes, -> (person) { NamesakesQuery.new(person).call }
+  scope :namesakes, ->(person) { NamesakesQuery.new(person).call }
   scope :ordered_by_name, -> { order(surname: :asc, given_name: :asc) }
 
   def email_prefix
-    email.split('@').first.gsub(/[\W]|[\d]/, '')
+    email.split("@").first.gsub(/\W|\d/, "")
   end
 
-  scope :all_in_groups_scope, -> (groups) { PeopleInGroupsQuery.new(groups).call }
+  scope :all_in_groups_scope, ->(groups) { PeopleInGroupsQuery.new(groups).call }
 
-  scope :all_in_subtree, -> (group) { PeopleInGroupsQuery.new(group.subtree_ids).call }
+  scope :all_in_subtree, ->(group) { PeopleInGroupsQuery.new(group.subtree_ids).call }
 
   def self.outside_subteams(group)
-    unscope(:order).
-      joins(:memberships).
-      where(memberships: { group_id: group.id }).
-      where(memberships: { leader: false }).
-      where('NOT EXISTS (SELECT 1 FROM memberships m2 WHERE m2.person_id = people.id AND m2.group_id != ?)', group.id).
-      distinct
+    unscope(:order)
+      .joins(:memberships)
+      .where(memberships: { group_id: group.id })
+      .where(memberships: { leader: false })
+      .where("NOT EXISTS (SELECT 1 FROM memberships m2 WHERE m2.person_id = people.id AND m2.group_id != ?)", group.id)
+      .distinct
   end
 
   # Does not return ActiveRecord::Relation
@@ -175,8 +178,8 @@ class Person < ApplicationRecord
   end
 
   def self.in_groups(group_ids)
-    Person.includes(:memberships).
-      where("memberships.group_id": group_ids)
+    Person.includes(:memberships)
+      .where("memberships.group_id": group_ids)
   end
 
   def to_s
@@ -184,7 +187,7 @@ class Person < ApplicationRecord
   end
 
   def role_and_group
-    memberships.join('; ')
+    memberships.join("; ")
   end
 
   def path
@@ -196,8 +199,8 @@ class Person < ApplicationRecord
   end
 
   include Concerns::ConcatenatedFields
-  concatenated_field :location, :location_in_building, :building, :city, join_with: ', '
-  concatenated_field :name, :given_name, :surname, join_with: ' '
+  concatenated_field :location, :location_in_building, :building, :city, join_with: ", "
+  concatenated_field :name, :given_name, :surname, join_with: " "
 
   def at_permitted_domain?
     EmailAddress.new(email).permitted_domain?
@@ -207,7 +210,7 @@ class Person < ApplicationRecord
     at_permitted_domain? && person_responsible.try(:email) != email
   end
 
-  def reminder_email_sent? within:
+  def reminder_email_sent?(within:)
     last_reminder_email_at.present? &&
       last_reminder_email_at.end_of_day >= within.ago
   end
@@ -218,12 +221,11 @@ class Person < ApplicationRecord
     address.format
   end
 
-  private
+private
 
   def must_have_team
     if memberships.reject(&:marked_for_destruction?).empty?
-      errors.add(:membership, 'of a team is required')
+      errors.add(:membership, "of a team is required")
     end
   end
-
 end

@@ -1,14 +1,13 @@
 module GeckoboardPublisher
   class ProfilesPercentageReport < Report
-
     def fields
       [
-        Geckoboard::PercentageField.new(:with_photos, name: 'With Photos'),
-        Geckoboard::PercentageField.new(:with_additional_info, name: 'With Additional Info'),
-        Geckoboard::PercentageField.new(:not_in_team, name: 'Not in any team nor MoJ'),
-        Geckoboard::PercentageField.new(:not_in_subteam, name: 'Not in a subteam - i.e. in MoJ'),
-        Geckoboard::PercentageField.new(:not_in_tip_team, name: 'Not in a branch tip team - e.g. at Agency level'),
-        Geckoboard::PercentageField.new(:not_edited, name: 'Never been edited')
+        Geckoboard::PercentageField.new(:with_photos, name: "With Photos"),
+        Geckoboard::PercentageField.new(:with_additional_info, name: "With Additional Info"),
+        Geckoboard::PercentageField.new(:not_in_team, name: "Not in any team nor MoJ"),
+        Geckoboard::PercentageField.new(:not_in_subteam, name: "Not in a subteam - i.e. in MoJ"),
+        Geckoboard::PercentageField.new(:not_in_tip_team, name: "Not in a branch tip team - e.g. at Agency level"),
+        Geckoboard::PercentageField.new(:not_edited, name: "Never been edited"),
       ]
     end
 
@@ -21,12 +20,12 @@ module GeckoboardPublisher
           not_in_team: @not_in_team,
           not_in_subteam: @not_in_subteam,
           not_in_tip_team: @not_in_tip_team,
-          not_edited: @not_edited
-        }
+          not_edited: @not_edited,
+        },
       ]
     end
 
-    private
+  private
 
     def setup
       percentage = PercentageOfTotal.new(Person)
@@ -39,16 +38,15 @@ module GeckoboardPublisher
     end
 
     class PercentageOfTotal
-      def initialize model_klass
+      def initialize(model_klass)
         @model_klass = model_klass
         @total = model_klass.count.to_f
       end
 
-      def value scope
+      def value(scope)
         count = @model_klass.__send__(scope).count
-        (count/@total).round(2)
+        (count / @total).round(2)
       end
     end
   end
-
 end
