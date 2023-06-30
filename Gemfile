@@ -91,8 +91,6 @@ group :development, :test do
   gem 'selenium-webdriver'
   gem 'shoulda-matchers'
   gem 'timecop'
-  gem 'guard-jasmine'
-  gem 'jasmine-rails'
   gem 'rubocop', '1.51'
   gem 'rubocop-rspec', '~> 1.41.0', require: false
   gem 'rubocop-ast', require: false
