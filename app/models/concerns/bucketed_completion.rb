@@ -12,9 +12,11 @@ module Concerns::BucketedCompletion
   private
 
     def bucket_case_statement(alias_name = avg_alias)
+      # rubocop:disable Style/StringConcatenation
       BUCKETS.inject("CASE") { |memo, range|
         memo + "\nWHEN #{alias_name} BETWEEN #{range.begin} AND #{range.end} THEN \'[#{range.begin},#{range.end}]\'"
       } + "\nEND AS bucket\n"
+      # rubocop:enable Style/StringConcatenation
     end
 
     def bucketed_completion_score_sql
