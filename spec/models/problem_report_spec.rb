@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe ProblemReport, type: :model do
-  let(:current_time) { Time.zone.at(1_410_298_077) }
+  let(:current_time) { Time.at(1_410_298_077) } # rubocop:disable Rails/TimeZone
 
   it "sets timestamp on instantiation" do
     subject = nil

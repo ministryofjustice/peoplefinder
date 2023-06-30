@@ -5,7 +5,7 @@ class IpAddressMatcher
     @cidrs = cidrs(terms) || []
   end
 
-  def ===(other)
+  def ==(other)
     if Rails.env.development?
       true
     else
@@ -13,7 +13,7 @@ class IpAddressMatcher
       @cidrs.any? { |cidr| cidr.contains(other) }
     end
   end
-  alias_method :include?, :===
+  alias_method :include?, :==
 
 private
 

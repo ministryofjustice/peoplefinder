@@ -127,8 +127,8 @@ class Person < ApplicationRecord
 
   # default_scope { order(surname: :asc, given_name: :asc) }
 
-  scope :never_logged_in, -> { PeopleNeverLoggedInQuery.new }
-  scope :logged_in_at_least_once, -> { PeopleLoggedInAtLeastOnceQuery.new }
+  scope :never_logged_in, PeopleNeverLoggedInQuery.new # rubocop:disable Rails/ScopeArgs
+  scope :logged_in_at_least_once, PeopleLoggedInAtLeastOnceQuery.new # rubocop:disable Rails/ScopeArgs
   scope :last_reminder_email_older_than, ->(within) { ReminderMailOlderThanQuery.new(within).call }
   scope :updated_at_older_than, ->(within) { PeopleUpdatedOlderThanQuery.new(within).call }
   scope :updated_at_older_than, ->(within) { where("updated_at < ?", within) }

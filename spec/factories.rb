@@ -1,10 +1,10 @@
 FactoryBot.define do
-  sequence(:email) { |n| "example.user.%d@digital.justice.gov.uk" % n }
+  sequence(:email) { |n| sprintf("example.user.%d@digital.justice.gov.uk", n) }
   sequence(:given_name) { |n| "First name #{('a'.ord + (n % 25)).chr}" }
   sequence(:surname) { |n| "Surname #{('a'.ord + (n % 25)).chr}" }
-  sequence(:building) { |n| "%d High Street" % n }
+  sequence(:building) { |n| sprintf("%d High Street", n) }
   sequence(:location_in_building) { |n| "Room #{n}, #{n.ordinalize}" }
-  sequence(:city) { |n| "Megacity %d" % n }
+  sequence(:city) { |n| sprintf("Megacity %d", n) }
   sequence(:primary_phone_number) { |n| sprintf("07708 %06d", (900_000 + n)) }
   sequence(:pager_number) { |n| sprintf("07600 %06d", (900_000 + n)) }
   sequence(:phone_number) { |n| sprintf("07700 %06d", (900_000 + n)) }
@@ -21,7 +21,7 @@ FactoryBot.define do
 
   factory :group do
     sequence :name do |n|
-      "Group-%04d" % n
+      sprintf("Group-%04d", n)
     end
     association :parent, factory: :department
   end

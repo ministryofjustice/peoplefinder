@@ -28,6 +28,9 @@ class GroupsController < ApplicationController
     @people_in_subtree = @group.all_people.paginate(page: params[:page], per_page: 500)
   end
 
+  # GET /teams/1/people-outside-subteams
+  def people_outside_subteams; end
+
   # GET /teams/slug_or_id/organogram
   def organogram; end
 

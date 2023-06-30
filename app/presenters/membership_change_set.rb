@@ -52,7 +52,7 @@ private
   # map undefined methods to membership attribute keys
   # to simplify value retrieval.
   # i.e. set.role, set.role?
-  def method_missing method_name, *args
+  def method_missing method_name, *args # rubocop:disable Style/MissingRespondToMissing
     @method_name = method_name
     if valid_missing_method
       if raw_changes.key?(attribute_name_from_method)

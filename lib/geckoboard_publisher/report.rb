@@ -21,7 +21,7 @@ module GeckoboardPublisher
       test_client
     end
 
-    def publish!(force = false)
+    def publish!(force: false)
       @force = force
       create_dataset!
       replace_dataset!.tap do |result|

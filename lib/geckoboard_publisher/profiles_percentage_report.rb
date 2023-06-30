@@ -27,6 +27,7 @@ module GeckoboardPublisher
 
   private
 
+    # rubocop:disable Naming/MemoizedInstanceVariableName
     def setup
       percentage = PercentageOfTotal.new(Person)
       @with_photos ||= percentage.value(:photo_profiles)
@@ -36,6 +37,7 @@ module GeckoboardPublisher
       @not_in_tip_team ||= percentage.value(:not_in_tip_team)
       @not_edited ||= percentage.value(:not_edited)
     end
+    # rubocop:enable Naming/MemoizedInstanceVariableName
 
     class PercentageOfTotal
       def initialize(model_klass)

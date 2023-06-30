@@ -5,7 +5,7 @@ class RailsHost
     ENV["ENV"]
   end
 
-  def self.method_missing(method)
+  def self.method_missing(method) # rubocop:disable Style/MissingRespondToMissing
     env_name = method.to_s.sub(/\?$/, "")
     if VALID_ENVS.include?(env_name)
       env == env_name

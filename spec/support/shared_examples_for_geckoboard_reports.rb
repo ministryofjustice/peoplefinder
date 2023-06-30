@@ -75,7 +75,7 @@ shared_examples "geckoboard publishable report" do
 
       it "by overwriting existing dataset when force specified" do
         expect(subject).to receive(:overwrite!)
-        subject.publish! true
+        subject.publish! force: true
       end
 
       it "by raising errors when force not specified" do

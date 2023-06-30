@@ -1,4 +1,4 @@
-class HealthCheckController < ApplicationController
+class HealthCheckController < ActionController::Base # rubocop:disable Rails/ApplicationController
   protect_from_forgery with: :exception
 
   def index
