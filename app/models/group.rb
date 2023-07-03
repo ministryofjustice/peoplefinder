@@ -55,7 +55,7 @@ class Group < ApplicationRecord
   end
 
   validates :name, presence: true
-  validates :slug, uniqueness: true
+  validates :slug, uniqueness: true # rubocop:disable Rails/UniqueValidationWithoutIndex
   validates :description, length: { maximum: MAX_DESCRIPTION }
 
   validate :not_second_root_group

@@ -1,3 +1,4 @@
+# rubocop:disable Rails/HelperInstanceVariable
 module SearchHelper
   FILTERS = {
     people: "people",
@@ -76,3 +77,4 @@ private
     safe_join(array, sep)
   end
 end
+# rubocop:enable Rails/HelperInstanceVariable

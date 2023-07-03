@@ -1,3 +1,4 @@
+# rubocop:disable Rails/HelperInstanceVariable
 module ApplicationHelper
   def pluralize_with_delimiter(number, text)
     "#{number_with_delimiter(number)} #{text.pluralize(number)}"
@@ -93,3 +94,4 @@ private
     end
   end
 end
+# rubocop:enable Rails/HelperInstanceVariable

@@ -15,6 +15,6 @@
 # multiple times should have the same end result as running it once). See
 # `permitted_domains.rb` for an example of this.
 
-$LOAD_PATH.unshift(Rails.root.join("db", "seeds"))
+$LOAD_PATH.unshift(Rails.root.join("db/seeds"))
 
 require "permitted_domains"

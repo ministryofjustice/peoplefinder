@@ -41,7 +41,7 @@ private
 
   def rebuild_token(original_token)
     new_token = Token.new(user_email: @user_email, value: original_token.value)
-    original_token.update_attribute(:value, SecureRandom.uuid) if new_token.valid? # disable:rubocop Rails/SkipsModelValidations
+    original_token.update_attribute(:value, SecureRandom.uuid) if new_token.valid? # rubocop:disable Rails/SkipsModelValidations
     new_token
   end
 end

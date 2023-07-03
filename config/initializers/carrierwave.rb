@@ -30,7 +30,7 @@ module CarrierWave
 
   module DirHelpers
     def base_upload_dir
-      Rails.env.test? ? "#{Rails.root}/spec/support/" : ""
+      Rails.env.test? ? Rails.root.join("spec/support") : ""
     end
   end
 end
@@ -41,7 +41,7 @@ if Rails.env.test?
 
     klass.class_eval do
       def base_upload_dir
-        "#{Rails.root}/spec/support/"
+        Rails.root.join("spec/support/")
       end
     end
   end

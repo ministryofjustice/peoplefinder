@@ -40,7 +40,7 @@ end
 
 namespace :peoplefinder do
   namespace :data do
-    require Rails.root.join("app", "services", "person_csv_importer")
+    require Rails.root.join("app/services/person_csv_importer")
 
     DOMAIN = "fake-moj.justice.gov.uk".freeze
 
@@ -107,7 +107,7 @@ namespace :peoplefinder do
     task :demo_csv, %i[count email_prefix file] => :environment do |_task, args|
       require "csv"
 
-      file = args[:file] || Rails.root.join("spec", "fixtures", "csv_load_tester.csv").to_path
+      file = args[:file] || Rails.root.join("spec/fixtures/csv_load_tester.csv").to_path
       count = (args[:count] || "500").to_i
       CSV.open(file, "w") do |csv|
         csv << csv_header

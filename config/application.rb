@@ -94,9 +94,9 @@ module Peoplefinder
     # NOTE: may need to eager load paths instead if lib code is commonly called
     config.autoload_paths << Rails.root.join("lib")
 
-    require Rails.root.join("lib", "csv_publisher", "user_behavior_report.rb")
+    require Rails.root.join("lib/csv_publisher/user_behavior_report.rb")
 
-    require Rails.root.join("lib", "geckoboard_publisher", "report.rb")
+    require Rails.root.join("lib/geckoboard_publisher/report.rb")
     Dir[config.root.join("lib", "geckoboard_publisher", "**", "*.rb")].sort.each do |file|
       require file
     end

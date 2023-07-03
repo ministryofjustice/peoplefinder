@@ -32,14 +32,14 @@ RSpec.describe Concerns::Acquisition do
     end
 
     context "when one person created yesterday who has logged in" do
-      let(:yesterday) { Date.today - 1.day }
+      let(:yesterday) { Time.zone.today - 1.day }
 
       before do
         create(:person, login_count: 1, created_at: yesterday)
       end
 
       it "returns 0 when from date is today" do
-        expect(Person.acquired_percentage(from: Date.today.to_s)).to eq(0)
+        expect(Person.acquired_percentage(from: Time.zone.today.to_s)).to eq(0)
       end
 
       it "returns 100 when from date is yesterday" do
@@ -51,7 +51,7 @@ RSpec.describe Concerns::Acquisition do
       end
 
       it "returns 100 when before date is today" do
-        expect(Person.acquired_percentage(before: Date.today.to_s)).to eq(100)
+        expect(Person.acquired_percentage(before: Time.zone.today.to_s)).to eq(100)
       end
     end
   end
