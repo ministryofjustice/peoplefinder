@@ -87,8 +87,6 @@ group :development, :test do
   gem "capybara"
   gem "debug"
   gem "factory_bot_rails"
-  gem "guard-jasmine"
-  gem "jasmine-rails"
   gem "launchy"
   gem "rspec-rails"
   gem "rubocop-govuk"

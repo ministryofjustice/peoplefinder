@@ -7,7 +7,6 @@
 .rspec
 .rubocop.yml
 .rubocop_todo.yml
-Guardfile
 LICENCE.txt
 Procfile
 README.md
