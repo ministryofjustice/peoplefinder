@@ -9,12 +9,12 @@ module HealthCheck
 
     attr_reader :errors
 
-    def log_unknown_error(e)
+    def log_unknown_error(error)
       #
       # Logs errors that are not component specific
       # StandardError -> Null
       #
-      @errors << "Error: #{e.message}\nDetails:#{e.backtrace}"
+      @errors << "Error: #{error.message}\nDetails:#{error.backtrace}"
     end
   end
 end

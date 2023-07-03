@@ -242,11 +242,11 @@ describe "Person maintenance" do
 
     visit edit_person_path(person)
     expect(person.memberships.count).to be 2
-    expect(edit_profile_page).to have_selector(".membership.panel", visible: true, count: 2)
+    expect(edit_profile_page).to have_selector(".membership.panel", visible: :visible, count: 2)
     within last_membership do
       click_link "Leave team"
     end
-    expect(edit_profile_page).to have_selector(".membership.panel", visible: true, count: 1)
+    expect(edit_profile_page).to have_selector(".membership.panel", visible: :visible, count: 1)
     click_button "Save"
     expect(page).to have_current_path(person_path(person))
     expect(page).to have_content("Thank you for helping to improve People Finder")

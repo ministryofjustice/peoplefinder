@@ -181,8 +181,8 @@ private
     sleep delay
   end
 
-  def step(s)
-    $stdout.print s, " ... "
+  def step(string)
+    $stdout.print string, " ... "
     $stdout.flush
     yield.tap { $stdout.puts "OK" }
   end

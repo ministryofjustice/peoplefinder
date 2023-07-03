@@ -174,11 +174,11 @@ RSpec.describe PersonCsvImporter, type: :service do
 
     context "when the CSV has too many header columns" do
       let(:csv) do
-        <<-END.strip_heredoc
+        <<-CSV.strip_heredoc
           #{all_headers.join(',')},city
           Jon,O'Carey,tom.o.carey@digital.justice.gov.uk
           Tom,Mason-Buggs,tom.mason-buggs@digital.justice.gov.uk,020 7947 76738,"102, Petty France","Room 5.02, 5th Floor, Blue Core",London
-        END
+        CSV
       end
 
       let(:errors) do
@@ -198,11 +198,11 @@ RSpec.describe PersonCsvImporter, type: :service do
       subject(:importer) { described_class.new(csv, creation_options) }
 
       let(:csv) do
-        <<-END.strip_heredoc
+        <<-CSV.strip_heredoc
           given_name,surname,email,primary_phone_number,building,location_in_building,city
           Tom,O'Carey,tom.o.carey@valid.gov.uk
           Tom,Mason-Buggs,tom.mason-buggs@valid.gov.uk,020 7947 6743,"102, Petty France","Room 5.02, 5th Floor, Orange Core","London, England"
-        END
+        CSV
       end
 
       let(:errors) do

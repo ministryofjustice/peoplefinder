@@ -1,11 +1,11 @@
 class Secure
-  def self.compare(a, b)
-    return false if a.blank? || b.blank? || a.bytesize != b.bytesize
+  def self.compare(aaa, bbb)
+    return false if aaa.blank? || bbb.blank? || aaa.bytesize != bbb.bytesize
 
-    l = a.unpack "C#{a.bytesize}"
+    l = a.unpack "C#{aaa.bytesize}"
 
     res = 0
-    b.each_byte { |byte| res |= byte ^ l.shift }
+    bbb.each_byte { |byte| res |= byte ^ l.shift }
     res.zero?
   end
 end

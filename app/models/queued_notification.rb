@@ -42,10 +42,10 @@ class QueuedNotification < ApplicationRecord
 
   # returns all the records for a grouped item returned by QueuedNotification.unsent_groups
   #
-  def self.all_for_grouped_item(gi)
-    where(session_id: gi.session_id,
-          person_id: gi.person_id,
-          current_user_id: gi.current_user_id,
+  def self.all_for_grouped_item(grouped_item)
+    where(session_id: grouped_item.session_id,
+          person_id: grouped_item.person_id,
+          current_user_id: grouped_item.current_user_id,
           processing_started_at: nil)
       .order(:id)
   end
@@ -54,8 +54,8 @@ class QueuedNotification < ApplicationRecord
   #
   # If the group is already being processed (i.e. the processed ), nil is returned.
   #
-  def self.start_processing_grouped_item(gi)
-    records = all_for_grouped_item(gi)
+  def self.start_processing_grouped_item(grouped_item)
+    records = all_for_grouped_item(grouped_item)
     if records.map(&:processing_started_at).uniq == [nil]
       ids = records.map(&:id)
       records.update_all(processing_started_at: Time.zone.now.utc)

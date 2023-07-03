@@ -106,14 +106,11 @@ RSpec.describe PeopleHelper, type: :helper do
                authenticated_url: "https://my-prod-bucket.s3.amazonaws.com/dir1/dir2/medium_photo_1.jpg?X-Amz-Signature=XnXXX12345xxx"
       end
 
-      # rubocop:disable RSpec/ExpectInHook
       before do
         options.delete(:version)
         expect(person.profile_image).to receive(:medium).and_return version
         expect(version).to receive(:file).and_return file
       end
-      # rubocop:enable RSpec/ExpectInHook
-
       it "uses pre-signed, time-limited, url for image src" do
         expect(file).to receive(:authenticated_url)
         expect(subject).to include file.authenticated_url

@@ -1,6 +1,5 @@
 require "rails_helper"
 
-# rubocop:disable RSpec/AnyInstance
 describe HealthCheckService do
   subject(:health_check_report) { described_class.new }
 
@@ -52,4 +51,3 @@ describe HealthCheckService do
     )
   end
 end
-# rubocop:enable RSpec/AnyInstance

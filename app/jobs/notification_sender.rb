@@ -14,8 +14,8 @@ class NotificationSender
 
   # private
 
-  def process_group(gi)
-    notifications = QueuedNotification.start_processing_grouped_item(gi)
+  def process_group(grouped_item)
+    notifications = QueuedNotification.start_processing_grouped_item(grouped_item)
     if notifications.present?
       @person = notifications.first.person
       @logged_in_user = notifications.first.current_user

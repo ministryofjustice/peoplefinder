@@ -53,7 +53,7 @@ RSpec.describe ProfilePhotosController, type: :controller do
     before do
       allow(ProfilePhoto).to receive(:create).and_return(photo)
       allow(photo).to receive(:valid?).and_return false
-      allow(photo).to receive_message_chain(:errors, :full_messages).and_return ["not a real error", "nor is this"] # rubocop:disable RSpec/MessageChain
+      allow(photo).to receive_message_chain(:errors, :full_messages).and_return ["not a real error", "nor is this"]
     end
 
     it "non allowlisted extensions do not create ProfilePhoto" do

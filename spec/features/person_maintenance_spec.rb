@@ -245,9 +245,9 @@ describe "Person maintenance" do
         visit person_path(another_person)
         expect(another_person.memberships.count).to be 1
         click_edit_profile
-        expect(edit_profile_page).to have_selector(".membership.panel", visible: true, count: 1)
+        expect(edit_profile_page).to have_selector(".membership.panel", visible: :visible, count: 1)
         click_link "Leave team"
-        expect(edit_profile_page).to have_selector(".membership.panel", visible: true, count: 0)
+        expect(edit_profile_page).to have_selector(".membership.panel", visible: :visible, count: 0)
         click_button "Save", match: :first
         expect(edit_profile_page.error_summary).to have_team_membership_required_error text: "Membership of a team is required"
         expect(edit_profile_page.form).to have_team_membership_error_destination_anchor

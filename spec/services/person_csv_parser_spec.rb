@@ -11,11 +11,11 @@ RSpec.describe PersonCsvParser, type: :service do
     end
 
     let(:csv) do
-      <<-END.strip_heredoc
+      <<-CSV.strip_heredoc
         email,given_name,surname
         peter.bly@valid.gov.uk,Peter,Bly
         jon.o.carey@valid.gov.uk,Jon,O'Carey
-      END
+      CSV
     end
 
     let(:expected) do
@@ -53,12 +53,12 @@ RSpec.describe PersonCsvParser, type: :service do
 
   context "with a clean CSV, with optional headers" do
     let(:csv) do
-      <<-END.strip_heredoc
+      <<-CSV.strip_heredoc
         email,given_name,surname,primary_phone_number,secondary_phone_number,pager_number,building,location_in_building,city,role,description
         peter.bly@valid.gov.uk,Peter,Bly
         jon.o.carey@valid.gov.uk,Jon,O'Carey
         tom.mason-buggs@valid.gov.uk,Tom,Mason-Buggs,020 7947 6743,07701 345 678,07600 123456,102 Petty France,Room 5.02 5th Floor Orange Core,London,My Cool Job Title,\"My extra information\"
-      END
+      CSV
     end
 
     let(:expected) do
@@ -92,12 +92,12 @@ RSpec.describe PersonCsvParser, type: :service do
 
   context "with misordered and inferable headers" do
     let(:csv) do
-      <<-END.strip_heredoc
+      <<-CSV.strip_heredoc
         First Name,Last Name,E-mail Display Name,Address2,Address1,town,secondary_phone,primary_phone,pager,extra_information,job_title
         Peter,Bly,peter.bly@valid.gov.uk
         Jon,O'Carey,jon.o.carey@valid.gov.uk
         Tom,Mason-Buggs,tom.mason-buggs@valid.gov.uk,Room 5.02 5th Floor Orange Core,102 Petty France,London,07701 001001,020 7947 6743,07600 123456,My extra information,The boss
-      END
+      CSV
     end
 
     let(:expected) do
@@ -151,12 +151,12 @@ RSpec.describe PersonCsvParser, type: :service do
 
   context "with partial headers" do
     let(:csv) do
-      <<-END.strip_heredoc
+      <<-CSV.strip_heredoc
         given_name,surname,email,primary_phone_number,city
         Peter,Bly,peter.bly@valid.gov.uk
         Jon,O'Carey,jon.o.carey@valid.gov.uk
         Tom,Mason-Buggs,tom.mason-buggs@valid.gov.uk,020 7947 6743,London
-      END
+      CSV
     end
 
     let(:expected) do
@@ -174,12 +174,12 @@ RSpec.describe PersonCsvParser, type: :service do
 
   context "with double-quoted comma'd values" do
     let(:csv) do
-      <<-END.strip_heredoc
+      <<-CSV.strip_heredoc
         given_name,surname,email,primary_phone_number,building,location_in_building,city
         Peter,Bly,peter.bly@valid.gov.uk
         Jon,O'Carey,jon.o.carey@valid.gov.uk
         Tom,Mason-Buggs,tom.mason-buggs@valid.gov.uk,020 7947 6743,"102, Petty France","Room 5.02, 5th Floor, Orange Core","London, England"
-      END
+      CSV
     end
 
     let(:expected) do
@@ -197,11 +197,11 @@ RSpec.describe PersonCsvParser, type: :service do
 
   context "with entirely unidentifiable headers" do
     let(:csv) do
-      <<-END.strip_heredoc
+      <<-CSV.strip_heredoc
         Foo,bar,BAZ
         Peter,Bly,peter.bly@valid.gov.uk
         Jon,O'Carey,jon.o.carey@valid.gov.uk
-      END
+      CSV
     end
 
     it "returns an empty hash for the fields" do
@@ -211,11 +211,11 @@ RSpec.describe PersonCsvParser, type: :service do
 
   context "with some unrecognizable header columns" do
     let(:csv) do
-      <<-END.strip_heredoc
+      <<-CSV.strip_heredoc
         email,givesn_name,surname,primary_phone_number,building,locations_in_building,city
         Peter,Bly,peter.bly@valid.gov.uk
         Jon,O'Carey,jon.o.carey@valid.gov.uk
-      END
+      CSV
     end
 
     it "populates @unrecognized_columns for use by importer" do

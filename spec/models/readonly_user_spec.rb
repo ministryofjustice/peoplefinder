@@ -11,24 +11,18 @@ RSpec.describe ReadonlyUser, type: :model do
     let(:request) { ActionDispatch::TestRequest.create }
 
     context "when client IP is whitelisted" do
-      # rubocop:disable RSpec/ExpectInHook
       before do
         expect(request).to receive(:remote_ip_whitelisted?).and_return(true)
       end
-      # rubocop:enable RSpec/ExpectInHook
-
       it "returns instance of #{described_class}" do
         expect(subject).to be_readonly_user
       end
     end
 
     context "when client IP is not whitelisted" do
-      # rubocop:disable RSpec/ExpectInHook
       before do
         expect(request).to receive(:remote_ip_whitelisted?).and_return(false)
       end
-      # rubocop:enable RSpec/ExpectInHook
-
       it "returns nil" do
         expect(subject).not_to be_readonly_user
         expect(subject).to be_nil
