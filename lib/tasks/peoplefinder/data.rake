@@ -1,31 +1,48 @@
+class DemoGroupMemberships
+  extend Forwardable
+
+  attr_reader :group_membership
+
+  def_delegators :group_membership, :each, :map, :[], :sample, :size
+
+  def initialize
+    create_groups
+  end
+
+  def create_groups
+    moj = Group.where(ancestry_depth: 0).first_or_create!(name: "Ministry of Justice", acronym: "MoJ")
+    csg = Group.find_or_create_by!(name: "Corporate Services Group", acronym: "CSG", parent: moj)
+    tech = Group.find_or_create_by!(name: "Technology", acronym: "Tech", parent: csg)
+    ds = Group.find_or_create_by!(name: "Digital Services", acronym: "DS", parent: csg)
+    cn = Group.find_or_create_by!(name: "Content", parent: ds)
+    dev = Group.find_or_create_by!(name: "Development", parent: ds)
+    ops = Group.find_or_create_by!(name: "Webops", parent: ds)
+    @group_membership = [[moj, 1], [csg, 1], [tech, 2], [ds, 2], [cn, 1], [dev, 3], [ops, 2]]
+  end
+end
+
+def csv_header
+  PersonCsvImporter::REQUIRED_COLUMNS + PersonCsvImporter::OPTIONAL_COLUMNS
+end
+
+def csv_record(email_prefix = nil)
+  person = FactoryBot.build(:person, :for_demo_csv)
+  person.email.prepend(email_prefix) if email_prefix.present?
+  csv_header.each_with_object([]) do |attribute, memo|
+    memo << person.__send__(attribute) if person.attributes.include? attribute.to_s
+    memo << person.memberships.first.__send__(attribute) if person.memberships.first.attributes.include? attribute.to_s
+  end
+end
+
+def department
+  @department ||= Group.department
+end
+
 namespace :peoplefinder do
   namespace :data do
     require Rails.root.join("app", "services", "person_csv_importer")
 
     DOMAIN = "fake-moj.justice.gov.uk".freeze
-
-    class DemoGroupMemberships
-      extend Forwardable
-
-      attr_reader :group_membership
-
-      def_delegators :group_membership, :each, :map, :[], :sample, :size
-
-      def initialize
-        create_groups
-      end
-
-      def create_groups
-        moj = Group.where(ancestry_depth: 0).first_or_create!(name: "Ministry of Justice", acronym: "MoJ")
-        csg = Group.find_or_create_by!(name: "Corporate Services Group", acronym: "CSG", parent: moj)
-        tech = Group.find_or_create_by!(name: "Technology", acronym: "Tech", parent: csg)
-        ds = Group.find_or_create_by!(name: "Digital Services", acronym: "DS", parent: csg)
-        cn = Group.find_or_create_by!(name: "Content", parent: ds)
-        dev = Group.find_or_create_by!(name: "Development", parent: ds)
-        ops = Group.find_or_create_by!(name: "Webops", parent: ds)
-        @group_membership = [[moj, 1], [csg, 1], [tech, 2], [ds, 2], [cn, 1], [dev, 3], [ops, 2]]
-      end
-    end
 
     # peoplefinder:data:demo
     #
@@ -100,24 +117,7 @@ namespace :peoplefinder do
       end
     end
 
-    def csv_header
-      PersonCsvImporter::REQUIRED_COLUMNS + PersonCsvImporter::OPTIONAL_COLUMNS
-    end
-
-    def csv_record(email_prefix = nil)
-      person = FactoryBot.build(:person, :for_demo_csv)
-      person.email.prepend(email_prefix) if email_prefix.present?
-      csv_header.each_with_object([]) do |attribute, memo|
-        memo << person.__send__(attribute) if person.attributes.include? attribute.to_s
-        memo << person.memberships.first.__send__(attribute) if person.memberships.first.attributes.include? attribute.to_s
-      end
-    end
-
     namespace :migration do
-      def department
-        @department ||= Group.department
-      end
-
       desc "Adds people not in a team to the Department level team"
       task move_unassigned_to_department: :environment do
         puts "Assign #{Person.non_team_members.count} people not in a team to #{department}"
