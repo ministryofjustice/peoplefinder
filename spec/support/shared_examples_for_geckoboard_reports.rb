@@ -25,9 +25,7 @@ shared_examples "geckoboard publishable report" do
     expect(client).to receive(:ping).and_return true
     yield client if block_given?
   end
-  # rubocop:enable Metrics/AbcSize
-
-  describe "#new" do
+    describe "#new" do
     it "connects to geckoboard using API key stored in ENV variable" do
       mock_expectations
       subject

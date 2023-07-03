@@ -1,18 +1,24 @@
 require "rails_helper"
 
 RSpec.describe ImageDimensionsValidator, type: :validator do
-  class ImageDimensionsTestModel
-    include ActiveModel::Model
+  subject(:image_dimensions_instance) { image_dimensions_test_model.new(image: sample_image) }
 
-    attr_accessor :image, :upload_dimensions
+  let(:image_dimensions_test_model) do
+    Class.new do
+      include ActiveModel::Model
 
-    validates :image, image_dimensions: { min_width: 648, min_height: 648, max_width: 8192, max_height: 8192 }
+      attr_accessor :image, :upload_dimensions
+
+      validates :image, image_dimensions: { min_width: 648, min_height: 648, max_width: 8192, max_height: 8192 }
+
+      def self.name
+        "ImageDimensionsTestModel"
+      end
+    end
   end
 
-  subject { ImageDimensionsTestModel.new(image: sample_image) }
-
   before do
-    allow(subject).to receive(:upload_dimensions).and_return(width:, height:)
+    allow(image_dimensions_instance).to receive(:upload_dimensions).and_return(width:, height:)
   end
 
   context "when image has dimensions less than minimum" do
@@ -22,9 +28,9 @@ RSpec.describe ImageDimensionsValidator, type: :validator do
     it { is_expected.to be_invalid }
 
     it "assigns a default error message" do
-      expect { subject.valid? }.to change(subject.errors, :count).by 1
-      subject.valid?
-      expect(subject.errors.full_messages).to include "Image is 649x647 pixels. The minimum requirement is 648x648 pixels"
+      expect { image_dimensions_instance.valid? }.to change(image_dimensions_instance.errors, :count).by 1
+      image_dimensions_instance.valid?
+      expect(image_dimensions_instance.errors.full_messages).to include "Image is 649x647 pixels. The minimum requirement is 648x648 pixels"
     end
   end
 
@@ -56,9 +62,9 @@ RSpec.describe ImageDimensionsValidator, type: :validator do
     it { is_expected.to be_invalid }
 
     it "assigns a default error message" do
-      expect { subject.valid? }.to change(subject.errors, :count).by 1
-      subject.valid?
-      expect(subject.errors.full_messages).to include "Image is 8193x8192 pixels. The maximum permitted is 8192x8192 pixels"
+      expect { image_dimensions_instance.valid? }.to change(image_dimensions_instance.errors, :count).by 1
+      image_dimensions_instance.valid?
+      expect(image_dimensions_instance.errors.full_messages).to include "Image is 8193x8192 pixels. The maximum permitted is 8192x8192 pixels"
     end
   end
 

@@ -307,6 +307,9 @@ GEM
       rexml
     launchy (2.5.0)
       addressable (~> 2.7)
+    listen (3.8.0)
+      rb-fsevent (~> 0.10, >= 0.10.3)
+      rb-inotify (~> 0.9, >= 0.9.10)
     logstasher (2.1.5)
       activesupport (>= 5.2)
       request_store
@@ -622,6 +625,7 @@ DEPENDENCIES
   jquery-rails
   keen
   launchy
+  listen
   logstasher (~> 2.1.5)
   mail (>= 2.8)
   meta_request
@@ -667,4 +671,4 @@ RUBY VERSION
    ruby 3.2.2p53
 
 BUNDLED WITH
-   2.2.14
+   2.4.15

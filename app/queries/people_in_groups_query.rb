@@ -1,5 +1,5 @@
 class PeopleInGroupsQuery < BaseQuery
-  def initialize(groups, relation = Person.all)
+  def initialize(groups, relation = Person.all) # rubocop:disable Lint/MissingSuper
     @groups = groups
     @relation = relation.ordered_by_name
   end

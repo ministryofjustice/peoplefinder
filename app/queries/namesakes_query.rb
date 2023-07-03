@@ -4,7 +4,7 @@ class NamesakesQuery < BaseQuery
   end
 
   # remove the initializer if not different from BaseQuery
-  def initialize(person)
+  def initialize(person) # rubocop:disable Lint/MissingSuper
     @relation = Person.all.ordered_by_name
     @person = person
   end

@@ -21,4 +21,3 @@ module ActionView::Helpers::JavaScriptHelper
 
   alias_method :j, :escape_javascript
 end
-# rubocop:enable Rails/OutputSafety

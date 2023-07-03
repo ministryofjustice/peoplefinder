@@ -1,5 +1,5 @@
 class DistinctMembershipQuery < BaseQuery
-  def initialize(group:, leadership:)
+  def initialize(group:, leadership:) # rubocop:disable Lint/MissingSuper
     @group = group
     @leadership = leadership
   end

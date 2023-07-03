@@ -21,7 +21,7 @@ RSpec.describe GeckoboardPublisher::ProfileCompletionsReport, geckoboard: true d
   end
 
   describe "#items" do
-    subject { described_class.new.items }
+    subject(:report_items) { described_class.new.items }
 
     let(:expected_items) do
       [
@@ -50,23 +50,23 @@ RSpec.describe GeckoboardPublisher::ProfileCompletionsReport, geckoboard: true d
       csg = create :group, name: "Corporate Services Group"
       ds = create :group, name: "Digital Services", acronym: " "
       noms = create :group, name: "National Offender Managment Service", acronym: "NOMS"
-      person = create :person, :member_of, team: csg, description: "description added"
-      person = create :person, :with_photo, :member_of, team: ds, current_project: " \n\t" # test whitespace exclusion
-      person = create :person, :with_photo, :member_of, team: noms, current_project: "mmmmm, donuts!"
-      person = create :person, :member_of, team: noms
+      create :person, :member_of, team: csg, description: "description added"
+      create :person, :with_photo, :member_of, team: ds, current_project: " \n\t" # test whitespace exclusion
+      create :person, :with_photo, :member_of, team: noms, current_project: "mmmmm, donuts!"
+      create :person, :member_of, team: noms
     end
 
     include_examples "returns valid items structure"
 
     it "uses acronyms if available" do
-      expect(subject).to include_hash_matching team: "NOMS"
-      expect(subject).not_to include_hash_matching team: " \n\t"
+      expect(report_items).to include_hash_matching team: "NOMS"
+      expect(report_items).not_to include_hash_matching team: " \n\t"
     end
 
     it "returns expected dataset items" do
-      expect(subject.size).to be 3
+      expect(report_items.size).to be 3
       expected_items.each do |item|
-        expect(subject).to include item
+        expect(report_items).to include item
       end
     end
   end

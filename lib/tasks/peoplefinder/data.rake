@@ -42,7 +42,9 @@ namespace :peoplefinder do
   namespace :data do
     require Rails.root.join("app/services/person_csv_importer")
 
-    DOMAIN = "fake-moj.justice.gov.uk".freeze
+    before do
+      stub_const(DOMAIN, "fake-moj.justice.gov.uk".freeze)
+    end
 
     # peoplefinder:data:demo
     #

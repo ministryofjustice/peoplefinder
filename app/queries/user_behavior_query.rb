@@ -3,7 +3,7 @@ class UserBehaviorQuery < BaseQuery
 
   attr_reader :relation
 
-  def initialize
+  def initialize # rubocop:disable Lint/MissingSuper
     @relation = Person.all.unscoped
   end
 

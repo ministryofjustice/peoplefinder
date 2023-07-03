@@ -1,5 +1,5 @@
 class PeopleUpdatedOlderThanQuery < BaseQuery
-  def initialize(within, relation = Person.all)
+  def initialize(within, relation = Person.all) # rubocop:disable Lint/MissingSuper
     @relation = relation.ordered_by_name
     @within = within
   end

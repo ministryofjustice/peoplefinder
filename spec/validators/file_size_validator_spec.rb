@@ -1,17 +1,23 @@
 require "rails_helper"
 
 RSpec.describe FileSizeValidator, type: :validator do
-  class FileSizeTestModel
-    include ActiveModel::Model
-    attr_accessor :image
+  subject(:file_size_test_instance) { file_size_test_model.new(image: sample_image) }
 
-    validates :image, file_size: { maximum: 6.megabytes }
+  let(:file_size_test_model) do
+    Class.new do
+      include ActiveModel::Model
+      attr_accessor :image
+
+      validates :image, file_size: { maximum: 6.megabytes }
+
+      def self.name
+        "FileSizeTestModel"
+      end
+    end
   end
 
-  subject { FileSizeTestModel.new(image: sample_image) }
-
   before do
-    allow(subject.image).to receive(:size).and_return(file_size)
+    allow(file_size_test_instance.image).to receive(:size).and_return(file_size)
   end
 
   context "with an image with byte size over the maximum" do
@@ -20,9 +26,9 @@ RSpec.describe FileSizeValidator, type: :validator do
     it { is_expected.to be_invalid }
 
     it "assigns a default error message" do
-      expect { subject.valid? }.to change(subject.errors, :count).by 1
-      subject.valid?
-      expect(subject.errors.full_messages).to include "Image file size, 6.01 MB, is too large"
+      expect { file_size_test_instance.valid? }.to change(file_size_test_instance.errors, :count).by 1
+      file_size_test_instance.valid?
+      expect(file_size_test_instance.errors.full_messages).to include "Image file size, 6.01 MB, is too large"
     end
   end
 

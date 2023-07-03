@@ -5,9 +5,7 @@ module GovukElementsErrorsHelperExtensions
       messages.flatten.join("").html_safe
     end
   end
-  # rubocop:enable Rails/OutputSafety
-
-  def error_summary_messages(object)
+    def error_summary_messages(object)
     object.errors.attribute_names.map do |attribute|
       error_summary_message object, attribute
     end

@@ -1,15 +1,20 @@
 require "rails_helper"
 
 RSpec.describe EmailValidator, type: :validator do
-  class EmailValidatorTestModel
-    include ActiveModel::Model
+  subject(:email_validator_test_instance) { email_validator_test_model.new(email:) }
 
-    attr_accessor :email
+  let(:email_validator_test_model) do
+    Class.new do
+      include ActiveModel::Model
+      attr_accessor :email
 
-    validates :email, "email" => true
+      validates :email, "email" => true
+
+      def self.name
+        "EmailValidatorTestModel"
+      end
+    end
   end
-
-  subject { EmailValidatorTestModel.new(email:) }
 
   before do
     allow(PermittedDomain).to receive(:pluck).with(:domain).and_return(["valid.gov.uk"])

@@ -59,7 +59,7 @@ describe "Person edit notifications" do
     fill_in "Last name", with: "Smelly Pants"
     expect {
       click_button "Save", match: :first
-    }.not_to change { ActionMailer::Base.deliveries.count }
+    }.not_to(change { ActionMailer::Base.deliveries.count })
   end
 
   it "Verifying the link to bob that is render in the emails" do

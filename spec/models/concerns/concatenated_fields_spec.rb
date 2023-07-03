@@ -1,24 +1,26 @@
 require "rails_helper"
 
 RSpec.describe Concerns::ConcatenatedFields do
-  class TestModel
-    attr_accessor :field_a, :field_b
+  subject(:test_model_instance) { test_model.new }
 
-    include Concerns::ConcatenatedFields
-    concatenated_field :concatenated, :field_a, :field_b, join_with: ", "
+  let(:test_model) do
+    Class.new do
+      attr_accessor :field_a, :field_b
+
+      include Concerns::ConcatenatedFields
+      concatenated_field :concatenated, :field_a, :field_b, join_with: ", "
+    end
   end
 
-  subject { TestModel.new }
-
   it "omits blank fields" do
-    subject.field_a = ""
-    subject.field_b = "bravo"
-    expect(subject.concatenated).to eq("bravo")
+    test_model_instance.field_a = ""
+    test_model_instance.field_b = "bravo"
+    expect(test_model_instance.concatenated).to eq("bravo")
   end
 
   it "joins using the specified join_with value" do
-    subject.field_a = "alpha"
-    subject.field_b = "bravo"
-    expect(subject.concatenated).to eq("alpha, bravo")
+    test_model_instance.field_a = "alpha"
+    test_model_instance.field_b = "bravo"
+    expect(test_model_instance.concatenated).to eq("alpha, bravo")
   end
 end

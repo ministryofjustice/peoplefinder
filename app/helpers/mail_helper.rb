@@ -19,9 +19,7 @@ module MailHelper
       mailer_t(:app_guidance_html, link: link_to_guidance).html_safe
     end
   end
-  # rubocop:enable Rails/OutputSafety
-
-  def do_not_reply
+    def do_not_reply
     content_tag(:p, mailer_t(:do_not_reply))
   end
 

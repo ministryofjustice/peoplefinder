@@ -88,6 +88,7 @@ group :development, :test do
   gem "debug"
   gem "factory_bot_rails"
   gem "launchy"
+  gem "listen"
   gem "rspec-rails"
   gem "rubocop-govuk"
   gem "selenium-webdriver"

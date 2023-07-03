@@ -65,7 +65,7 @@ describe TokensController, type: :controller do
           expect(Token).to receive(:find_each).and_yield(double("token", active?: false, value: "some token value"))
           expect(Secure).to receive(:compare).with("some token value", "some token value").and_return(true)
           expect(controller).to receive(:render_new_sessions_path_with_expired_token_message)
-          expect { get :show, params: { id: "some token value" } }.to raise_error { ActionView::MissingTemplate }
+          expect { get :show, params: { id: "some token value" } }.to(raise_error { ActionView::MissingTemplate })
         end
       end
     end
