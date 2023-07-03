@@ -222,7 +222,8 @@ RSpec.describe QueuedNotification, type: :model do
       create_notification("stu", 3, 100, false, 10.minutes.ago, false)
       create_notification("stu", 3, 100, true, 10.minutes.ago, false)
     end
-        def create_notification(session_id, person_id, user_id, finalised, processing_started_at, sent)
+
+    def create_notification(session_id, person_id, user_id, finalised, processing_started_at, sent)
       create(:queued_notification,
              session_id:,
              person_id:,
@@ -231,7 +232,7 @@ RSpec.describe QueuedNotification, type: :model do
              edit_finalised: finalised,
              sent:)
     end
-        describe ".unsent_groups" do
+    describe ".unsent_groups" do
       it "does not include any sent groups in the result set" do
         groups = described_class.unsent_groups
         expect(groups.map(&:session_id)).not_to include("abc")
