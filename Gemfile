@@ -91,7 +91,7 @@ group :development, :test do
   gem 'selenium-webdriver'
   gem 'shoulda-matchers'
   gem 'timecop'
-  gem 'rubocop', '1.51'
+  gem 'rubocop', '1.54.0'
   gem 'rubocop-rspec', '~> 1.41.0', require: false
   gem 'rubocop-ast', require: false
   gem 'rubocop-performance', '~> 1.7.1', require: false
