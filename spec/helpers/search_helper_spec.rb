@@ -19,7 +19,7 @@ RSpec.describe SearchHelper, type: :helper do
     end
 
     it "returns people results instance variable's size" do
-      expect(@people_results).to receive(:set).and_return %w[person1 person2]
+      allow(@people_results).to receive(:set).and_return %w[person1 person2]
       expect(helper.people_count).to be 2
     end
   end
@@ -30,7 +30,7 @@ RSpec.describe SearchHelper, type: :helper do
     end
 
     it "returns team results instance variable's size" do
-      expect(@team_results).to receive(:set).and_return %w[team1 team2 team3]
+      allow(@team_results).to receive(:set).and_return %w[team1 team2 team3]
       expect(helper.team_count).to be 3
     end
   end
@@ -41,8 +41,8 @@ RSpec.describe SearchHelper, type: :helper do
     end
 
     it "delegates to people and team result set sizes" do
-      expect(helper).to receive(:people_count).and_return 4
-      expect(helper).to receive(:team_count).and_return 1
+      allow(helper).to receive(:people_count).and_return 4
+      allow(helper).to receive(:team_count).and_return 1
       expect(helper.result_count).to eq 5
     end
   end

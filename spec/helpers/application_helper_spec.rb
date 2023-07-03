@@ -14,33 +14,6 @@ RSpec.describe ApplicationHelper, type: :helper do
     end
   end
 
-  describe "#last_update" do
-    before do
-      @last_updated_at = stubbed_time
-    end
-
-    it "shows last_update for a person by a system generated user" do
-      @person = double(:person, paper_trail_originator: originator)
-      expect(last_update).to eql("Last updated: 31 Oct 2012 02:02.")
-    end
-
-    it "shows last_update for a person by someone who is not the system user" do
-      @person = double(:person, paper_trail_originator: "Bob")
-      expect(last_update).to eql("Last updated: 31 Oct 2012 02:02 by Bob.")
-    end
-
-    it "shows last_update for a group" do
-      @group = double(:group, paper_trail_originator: originator)
-      expect(last_update).to eql("Last updated: 31 Oct 2012 02:02.")
-    end
-
-    it "does not show last_update for a new person" do
-      @person = double(:group, paper_trail_originator: originator)
-      @last_updated_at = nil
-      expect(last_update).to be_blank
-    end
-  end
-
   describe "#govspeak" do
     it "renders Markdown starting from h3" do
       source = "# Header\n\nPara para"
@@ -51,21 +24,21 @@ RSpec.describe ApplicationHelper, type: :helper do
   end
 
   describe "#bold_tag" do
-    subject { bold_tag("bold text", options) }
+    subject(:tag) { bold_tag("bold text", options) }
 
     let(:options) { {} }
 
     it "applies span around the term" do
-      expect(subject).to have_selector("span", text: "bold text")
+      expect(tag).to have_selector("span", text: "bold text")
     end
 
     it "applies bold-term class to span around the term" do
-      expect(subject).to have_selector("span.bold-term", text: "bold text")
+      expect(tag).to have_selector("span.bold-term", text: "bold text")
     end
 
     it "appends bold-term to other classes passed in" do
       options[:class] = "my-other-class"
-      expect(subject).to include("bold-term", "my-other-class")
+      expect(tag).to include("bold-term", "my-other-class")
     end
   end
 
@@ -97,14 +70,14 @@ RSpec.describe ApplicationHelper, type: :helper do
     let(:current_user) { build(:person) }
 
     it 'uses the "mine" translation when the user is the current user' do
-      expect(I18n).to receive(:t)
+      allow(I18n).to receive(:t)
         .with("foo.bar.mine", hash_including(name: current_user))
         .and_return("translation")
       expect(role_translate(current_user, "foo.bar")).to eq("translation")
     end
 
     it 'uses the "other" translation when the user is not the current user' do
-      expect(I18n).to receive(:t)
+      allow(I18n).to receive(:t)
         .with("foo.bar.other", hash_including(name: current_user))
         .and_return("translation")
       expect(role_translate(build(:person), "foo.bar")).to eq("translation")

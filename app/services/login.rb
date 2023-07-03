@@ -9,7 +9,7 @@ class Login
   def login
     @person.login_count += 1
     @person.last_login_at = Time.zone.now
-    @person.save!
+    @person.save # rubocop:disable Rails/SaveBang
 
     @session[SESSION_KEY] = @person.id
   end

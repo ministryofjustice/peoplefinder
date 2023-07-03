@@ -4,13 +4,6 @@ module ApplicationHelper
     "#{number_with_delimiter(number)} #{text.pluralize(number)}"
   end
 
-  def last_update
-    current_object = @person || @group
-    if current_object && @last_updated_at.present?
-      "#{updated_at(@last_updated_at)}#{updated_by(current_object)}."
-    end
-  end
-
   def govspeak(source)
     options = { header_offset: 2 }
     doc = Govspeak::Document.new(source, options)

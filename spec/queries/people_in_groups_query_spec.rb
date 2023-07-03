@@ -13,53 +13,46 @@ describe PeopleInGroupsQuery do
     end
 
     context "when finding" do
-      before(:all) do
+      let(:moj) { create :department }
+      let(:ds) { create  :group, name: "Digital Services", parent: moj }
+      let(:ds_dev) { create :group, name: "Digital Development", parent: ds }
+      let(:ds_content) { create :group, name: "Content", parent: ds }
+      let(:laa) { create :group, name: "LAA" }
+      let(:laa_tech) { create :group, name: "LAA Tech", parent: laa }
+      let(:laa_admin) { create :group, name: "LAA Admin", parent: laa }
+      let(:moj_emp_0) { create :person, groups: [moj] }
+      let(:ds_dev_content_emp_1) { create :person, groups: [ds_dev, ds_content] }
+      let(:ds_dev_emp2) { create :person, groups: [ds_dev] }
+      let(:ds_content_emp3) { create :person, groups: [ds_content] }
+      let(:laa_tech_emp4) { create :person, groups: [laa_tech] }
+      let(:laa_admin_emp5) { create :person, groups: [laa_admin] }
+
+      before do
         PermittedDomain.create!(domain: "digital.justice.gov.uk") unless PermittedDomain.exists?(domain: "digital.justice.gov.uk")
-        @moj = create :department
-        @ds = create  :group, name: "Digital Services", parent: @moj
-        @ds_dev = create :group, name: "Digital Development", parent: @ds
-        @ds_content = create :group, name: "Content", parent: @ds
-        @laa = create :group, name: "LAA"
-        @laa_tech =  create :group, name: "LAA Tech", parent: @laa
-        @laa_admin = create :group, name: "LAA Admin", parent: @laa
-
-        @moj_emp_0 = create :person, groups: [@moj]
-        @ds_dev_content_emp_1 = create :person, groups: [@ds_dev, @ds_content]
-        @ds_dev_emp2 = create :person, groups: [@ds_dev]
-        @ds_content_emp3 = create :person, groups: [@ds_content]
-        @laa_tech_emp4 = create :person, groups: [@laa_tech]
-        @laa_admin_emp5 = create :person, groups: [@laa_admin]
-      end
-
-      after(:all) do
-        PermittedDomain.destroy_all
-        Group.destroy_all
-        Membership.destroy_all
-        Person.destroy_all
       end
 
       it "finds all employees in the moj" do
-        expect(described_class.new([@moj]).call).to match_array([@moj_emp_0])
+        expect(described_class.new([moj]).call).to match_array([moj_emp_0])
       end
 
       it "finds all employees in DS dev" do
-        expect(described_class.new([@ds_dev]).call).to match_array([@ds_dev_content_emp_1, @ds_dev_emp2])
+        expect(described_class.new([ds_dev]).call).to match_array([ds_dev_content_emp_1, ds_dev_emp2])
       end
 
       it "finds all employees in DS Dev And Content" do
-        expect(described_class.new([@ds_dev, @ds_content]).call).to match_array([@ds_dev_content_emp_1, @ds_dev_emp2, @ds_content_emp3])
+        expect(described_class.new([ds_dev, ds_content]).call).to match_array([ds_dev_content_emp_1, ds_dev_emp2, ds_content_emp3])
       end
 
       it "finds all employees if one group not given as an array" do
-        expect(described_class.new(@laa_tech).call).to match_array([@laa_tech_emp4])
+        expect(described_class.new(laa_tech).call).to match_array([laa_tech_emp4])
       end
 
       it "finds all employees if just the id of the group is given" do
-        expect(described_class.new(@ds_dev.id).call).to match_array([@ds_dev_content_emp_1, @ds_dev_emp2])
+        expect(described_class.new(ds_dev.id).call).to match_array([ds_dev_content_emp_1, ds_dev_emp2])
       end
 
       it "finds all employees if multipls ids are given in an array" do
-        expect(described_class.new([@ds_dev.id, @ds_content.id]).call).to match_array([@ds_dev_content_emp_1, @ds_dev_emp2, @ds_content_emp3])
+        expect(described_class.new([ds_dev.id, ds_content.id]).call).to match_array([ds_dev_content_emp_1, ds_dev_emp2, ds_content_emp3])
       end
     end
 

@@ -3,8 +3,8 @@ require "rails_helper"
 RSpec.describe SuggestionDelivery do
   describe ".deliver" do
     let(:mailer) { SuggestionMailer }
-    let(:mail)   { double("mail") }
-    let(:suggestion_hash) { double("hash") }
+    let(:mail)   { instance_double(ActionMailer::MessageDelivery) }
+    let(:suggestion_hash) { instance_double(Hash) }
 
     before do
       allow(Suggestion).to receive(:new)
@@ -12,14 +12,14 @@ RSpec.describe SuggestionDelivery do
     end
 
     describe "for person" do
-      let(:person)     { double("person") }
-      let(:suggester)  { double("suggester") }
+      let(:person)     { instance_double(Person) }
+      let(:suggester)  { instance_double(Person) }
       let(:suggestion) do
-        double("suggestion", for_person?: true, for_admin?: false, to_hash: suggestion_hash)
+        instance_double(Suggestion, for_person?: true, for_admin?: false, to_hash: suggestion_hash)
       end
 
       it "is emailed to the person" do
-        expect(mailer).to receive(:person_email)
+        allow(mailer).to receive(:person_email)
           .with(person, suggester, suggestion_hash).and_return(mail)
         expect(mail).to receive(:deliver_later)
         described_class.deliver(person, suggester, suggestion)
@@ -34,23 +34,20 @@ RSpec.describe SuggestionDelivery do
     end
 
     describe "for team admin" do
-      let(:admin1)     { double("admin1") }
-      let(:admin2)     { double("admin2") }
-      let(:admin3)     { double("admin3") }
-      let(:admins)     { [admin1, admin2, admin3] }
+      let(:admins)     { [instance_double(Person), instance_double(Person), instance_double(Person)] }
 
-      let(:groups)     { double("groups") }
-      let(:person)     { double("person") }
-      let(:suggester)  { double("suggester") }
+      let(:groups)     { double("groups") } # rubocop:disable RSpec/VerifiedDoublesRSpec/VerifiedDoubles
+      let(:person)     { instance_double(Person) }
+      let(:suggester)  { instance_double(Person) }
       let(:suggestion) do
-        double("suggestion", for_admin?: true, for_person?: false, to_hash: suggestion_hash)
+        instance_double(Suggestion, for_admin?: true, for_person?: false, to_hash: suggestion_hash)
       end
 
       it "is emailed to all relevant team admins" do
-        expect(person).to receive(:groups).and_return(groups)
-        expect(groups).to receive(:flat_map).and_return(admins)
+        allow(person).to receive(:groups).and_return(groups)
+        allow(groups).to receive(:flat_map).and_return(admins)
         admins.each do |admin|
-          expect(mailer).to receive(:team_admin_email)
+          allow(mailer).to receive(:team_admin_email)
             .with(person, suggester, suggestion_hash, admin).and_return(mail)
         end
         expect(mail).to receive(:deliver_later).exactly(3).times

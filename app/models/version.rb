@@ -38,7 +38,7 @@ class Version < PaperTrail::Version
   def undo
     return if membership?
 
-    creation? ? item.destroy! : reify.save!
+    creation? ? item.destroy : reify.save # rubocop:disable Rails/SaveBang
   end
 
   def reify

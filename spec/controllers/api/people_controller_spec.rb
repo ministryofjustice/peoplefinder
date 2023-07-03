@@ -14,10 +14,10 @@ RSpec.describe Api::PeopleController, type: :controller do
     { surname: "" }
   end
 
-  let!(:group) { create(:group) }
+  before { create(:group) }
 
   describe "GET show" do
-    subject { create(:person, valid_attributes) }
+    subject(:person) { create(:person, valid_attributes) }
 
     context "with valid auth token" do
       let(:token) { create(:token) }
@@ -28,18 +28,18 @@ RSpec.describe Api::PeopleController, type: :controller do
       end
 
       it "assigns the requested person as @person" do
-        expect(assigns(:person)).to eq(subject)
+        expect(assigns(:person)).to eq(person)
       end
 
       it "returns a JSON representation of the person" do
-        expect(JSON.parse(response.body)).to eq(JSON.parse(subject.to_json))
+        expect(JSON.parse(response.body)).to eq(JSON.parse(person.to_json))
       end
     end
 
     context "without valid auth token" do
       before do
         request.headers["AUTHORIZATION"] = "xxxxxxxx"
-        get :show, params: { id: subject.to_param }
+        get :show, params: { id: person.to_param }
       end
 
       it "returns status 401" do

@@ -29,50 +29,50 @@ RSpec.describe GroupLister, type: :service do
   end
 
   context "with a node with a hierarchy" do
-    subject { described_class.new.list.max_by(&:id) }
+    subject(:group_lister) { described_class.new.list.max_by(&:id) }
 
     it "has the name of the group" do
-      expect(subject.name).to eq(leaf_node.name)
+      expect(group_lister.name).to eq(leaf_node.name)
     end
 
     it "has a parent id" do
-      expect(subject.parent_id).to eql(subteam.id)
+      expect(group_lister.parent_id).to eql(subteam.id)
     end
 
     it "has a parent" do
-      expect(subject.parent).to be_kind_of(described_class::ListedGroup)
-      expect(subject.parent.id).to eq(subteam.id)
+      expect(group_lister.parent).to be_kind_of(described_class::ListedGroup)
+      expect(group_lister.parent.id).to eq(subteam.id)
     end
 
     it "returns the name with path of each object" do
-      expect(subject.name_with_path)
+      expect(group_lister.name_with_path)
         .to eq("A Leaf Node [A Department > A Team > A Subteam]")
     end
 
     it "returns the ancestors of each node" do
-      expect(subject.ancestors.map(&:id))
+      expect(group_lister.ancestors.map(&:id))
         .to eq([department.id, team.id, subteam.id])
-      expect(subject.ancestors.first)
+      expect(group_lister.ancestors.first)
         .to be_kind_of(described_class::ListedGroup)
     end
 
     it "returns the path of each node" do
-      expect(subject.path.map(&:id))
+      expect(group_lister.path.map(&:id))
         .to eq([department.id, team.id, subteam.id, leaf_node.id])
-      expect(subject.path.first)
+      expect(group_lister.path.first)
         .to be_kind_of(described_class::ListedGroup)
     end
   end
 
   context "with a top-level node" do
-    subject { described_class.new.list.min_by(&:id) }
+    subject(:item) { described_class.new.list.min_by(&:id) }
 
     it "has nil parent id" do
-      expect(subject.parent_id).to be_nil
+      expect(item.parent_id).to be_nil
     end
 
     it "has nil parent" do
-      expect(subject.parent).to be_nil
+      expect(item.parent).to be_nil
     end
   end
 end

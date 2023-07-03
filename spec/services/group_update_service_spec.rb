@@ -18,8 +18,8 @@ RSpec.describe GroupUpdateService, type: :service do
   it "sends an email to each subscriber to the group" do
     subscribers = create_list(:person, 2)
     allow(group).to receive(:subscribers).and_return(subscribers)
-    email_1 = double(Mail::Message)
-    email_2 = double(Mail::Message)
+    email_1 = instance_double(ActionMailer::MessageDelivery)
+    email_2 = instance_double(ActionMailer::MessageDelivery)
 
     expect(GroupUpdateMailer)
       .to receive(:inform_subscriber)

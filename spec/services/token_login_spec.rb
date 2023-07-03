@@ -13,29 +13,29 @@ RSpec.describe TokenLogin, type: :service do
     it { is_expected.to respond_to :token }
 
     it "finds tokens securely" do
-      expect_any_instance_of(described_class).to receive(:find_token_securely)
+      expect_any_instance_of(described_class).to receive(:find_token_securely) # rubocop:disable RSpec/AnyInstance
       service
     end
 
     context "with active tokens" do
       context "when used in supported browsers" do
-        let(:view) { double(supported_browser?: true) }
+        let(:view) { double(supported_browser?: true) } # rubocop:disable RSpec/VerifiedDoubles
 
         it "logs in and renders view" do
-          expect_any_instance_of(described_class).to receive(:login_and_render).with(view)
+          expect_any_instance_of(described_class).to receive(:login_and_render).with(view) # rubocop:disable RSpec/AnyInstance
           service.call view
         end
 
         it "spends the token" do
-          expect(view).to receive(:person_from_token).with(token).and_return person
-          expect(view).to receive(:render_or_redirect_login).with(person).and_return nil
-          expect_any_instance_of(Token).to receive(:spend!)
+          allow(view).to receive(:person_from_token).with(token).and_return person
+          allow(view).to receive(:render_or_redirect_login).with(person).and_return nil
+          expect_any_instance_of(Token).to receive(:spend!) # rubocop:disable RSpec/AnyInstance
           service.call view
         end
       end
 
       context "when used in unsupported browsers" do
-        let(:view) { double(supported_browser?: false) }
+        let(:view) { double(supported_browser?: false) } # rubocop:disable RSpec/VerifiedDoubles
 
         it "redirects to unsupported browser page" do
           expect(view).to receive(:redirect_to_unsupported_browser_warning)

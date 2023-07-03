@@ -1,31 +1,33 @@
 require "rails_helper"
 
 RSpec.describe ReadonlyUser, type: :model do
-  subject { described_class.new }
+  subject(:read_only_user) { described_class.new }
 
   let(:be_readonly_user) { be_instance_of described_class }
 
   describe ".from_request" do
-    subject { described_class.from_request(request) }
+    subject(:from_request) { described_class.from_request(request) }
 
     let(:request) { ActionDispatch::TestRequest.create }
 
     context "when client IP is whitelisted" do
       before do
-        expect(request).to receive(:remote_ip_whitelisted?).and_return(true)
+        allow(request).to receive(:remote_ip_whitelisted?).and_return(true)
       end
+
       it "returns instance of #{described_class}" do
-        expect(subject).to be_readonly_user
+        expect(from_request).to be_readonly_user
       end
     end
 
     context "when client IP is not whitelisted" do
       before do
-        expect(request).to receive(:remote_ip_whitelisted?).and_return(false)
+        allow(request).to receive(:remote_ip_whitelisted?).and_return(false)
       end
+
       it "returns nil" do
-        expect(subject).not_to be_readonly_user
-        expect(subject).to be_nil
+        expect(from_request).not_to be_readonly_user
+        expect(from_request).to be_nil
       end
     end
 
@@ -40,7 +42,7 @@ RSpec.describe ReadonlyUser, type: :model do
         (2..4).each do |i|
           it "accepts IP 127.0.0.#{i}" do
             request.remote_addr = "127.0.0.#{i}"
-            expect(subject).to be_readonly_user
+            expect(from_request).to be_readonly_user
           end
         end
       end
@@ -49,7 +51,7 @@ RSpec.describe ReadonlyUser, type: :model do
         [1, 5].each do |i|
           it "rejects IP 127.0.0.#{i}" do
             request.remote_addr = "127.0.0.#{i}"
-            expect(subject).to be_nil
+            expect(from_request).to be_nil
           end
         end
       end
@@ -58,13 +60,13 @@ RSpec.describe ReadonlyUser, type: :model do
 
   describe "#id" do
     it "returns :readonly" do
-      expect(subject.id).to be :readonly
+      expect(read_only_user.id).to be :readonly
     end
   end
 
   describe "#super_admin?" do
     it "returns false" do
-      expect(subject).not_to be_super_admin
+      expect(read_only_user).not_to be_super_admin
     end
   end
 end

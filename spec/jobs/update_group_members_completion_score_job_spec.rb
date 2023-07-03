@@ -4,7 +4,7 @@ RSpec.describe UpdateGroupMembersCompletionScoreJob, type: :job do
   include ActiveJob::TestHelper
 
   let(:parent) { nil }
-  let(:group) { double(parent:) }
+  let(:group) { instance_double(Group, parent:) }
 
   context "with config" do
     subject(:job) { described_class.new }
@@ -15,20 +15,20 @@ RSpec.describe UpdateGroupMembersCompletionScoreJob, type: :job do
   end
 
   context "with enqueuing" do
-    subject { proc { described_class.perform_later(group) } }
+    subject(:queue) { proc { described_class.perform_later(group) } }
 
     let!(:group) { create(:group) }
 
     it "enqueues on low priority queue" do
-      expect(subject).to have_enqueued_job(described_class).on_queue("low_priority")
+      expect(queue).to have_enqueued_job(described_class).on_queue("low_priority")
     end
 
     it "enqueues with group params" do
-      expect(subject).to have_enqueued_job.with(group)
+      expect(queue).to have_enqueued_job.with(group)
     end
 
     it "checks job is not already enqueued" do
-      expect_any_instance_of(described_class).to receive(:enqueued?).with group
+      expect_any_instance_of(described_class).to receive(:enqueued?).with group # rubocop:disable RSpec/AnyInstance
       described_class.perform_later(group)
     end
   end
@@ -41,19 +41,19 @@ RSpec.describe UpdateGroupMembersCompletionScoreJob, type: :job do
     before { group.destroy! }
 
     it "rescues from ActiveJob::DeserializationError" do
-      expect_any_instance_of(described_class).to receive(:error_handler).with(ActiveJob::DeserializationError)
+      expect_any_instance_of(described_class).to receive(:error_handler).with(ActiveJob::DeserializationError) # rubocop:disable RSpec/AnyInstance
       perform_enqueued_jobs { enqueue_job }
     end
 
     it "logs the error" do
       logger = double
-      expect(Rails).to receive(:logger).and_return(logger)
+      allow(Rails).to receive(:logger).and_return(logger)
       expect(logger).to receive(:warn).with(/#{described_class}/)
       perform_enqueued_jobs { enqueue_job }
     end
 
     it "tests if original exception arises from deleted records" do
-      expect_any_instance_of(ActiveJob::DeserializationError).to receive(:cause).and_return(ActiveRecord::RecordNotFound)
+      expect_any_instance_of(ActiveJob::DeserializationError).to receive(:cause) # rubocop:disable RSpec/AnyInstance
       perform_enqueued_jobs { enqueue_job }
     end
   end

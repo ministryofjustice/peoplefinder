@@ -1,9 +1,7 @@
 require "rails_helper"
 
 RSpec.describe PersonCsvParser, type: :service do
-  subject do
-    described_class.new(csv)
-  end
+  subject(:parser) { described_class.new(csv) }
 
   context "with a clean CSV, without optional headers" do
     subject do
@@ -26,19 +24,19 @@ RSpec.describe PersonCsvParser, type: :service do
     end
 
     it "returns the line number of the header" do
-      expect(subject.header.line_number).to eq(1)
+      expect(parser.header.line_number).to eq(1)
     end
 
     it "returns the line number of each row" do
-      expect(subject.records.map(&:line_number)).to eq([2, 3])
+      expect(parser.records.map(&:line_number)).to eq([2, 3])
     end
 
     it "returns the original content of the header" do
-      expect(subject.header.original).to eq("email,given_name,surname")
+      expect(parser.header.original).to eq("email,given_name,surname")
     end
 
     it "returns the original content of each row" do
-      expect(subject.records.map(&:original)).to eq(
+      expect(parser.records.map(&:original)).to eq(
         [
           "peter.bly@valid.gov.uk,Peter,Bly",
           "jon.o.carey@valid.gov.uk,Jon,O'Carey",
@@ -47,7 +45,7 @@ RSpec.describe PersonCsvParser, type: :service do
     end
 
     it "returns a hash of fields" do
-      expect(subject.records.map(&:fields)).to eq(expected)
+      expect(parser.records.map(&:fields)).to eq(expected)
     end
   end
 
@@ -82,7 +80,7 @@ RSpec.describe PersonCsvParser, type: :service do
     end
 
     it "returns a hash of fields including the optional fields" do
-      subject.records.each_with_index do |record, index|
+      parser.records.each_with_index do |record, index|
         %i[given_name surname email primary_phone_number secondary_phone_number pager_number building location_in_building city role description].each do |attribute|
           expect(record.fields[attribute]).to eql expected[index][attribute]
         end
@@ -145,7 +143,7 @@ RSpec.describe PersonCsvParser, type: :service do
     end
 
     it "returns a hash of fields with cleaned keys" do
-      expect(subject.records.map(&:fields)).to eq(expected)
+      expect(parser.records.map(&:fields)).to eq(expected)
     end
   end
 
@@ -168,7 +166,7 @@ RSpec.describe PersonCsvParser, type: :service do
     end
 
     it "returns a hash of fields matching the partial header" do
-      expect(subject.records.map(&:fields)).to eq(expected)
+      expect(parser.records.map(&:fields)).to eq(expected)
     end
   end
 
@@ -191,7 +189,7 @@ RSpec.describe PersonCsvParser, type: :service do
     end
 
     it "returns a hash of fields including comma separated values" do
-      expect(subject.records.map(&:fields)).to eq(expected)
+      expect(parser.records.map(&:fields)).to eq(expected)
     end
   end
 
@@ -205,7 +203,7 @@ RSpec.describe PersonCsvParser, type: :service do
     end
 
     it "returns an empty hash for the fields" do
-      expect(subject.records.map(&:fields)).to eq([{}, {}])
+      expect(parser.records.map(&:fields)).to eq([{}, {}])
     end
   end
 
@@ -219,7 +217,7 @@ RSpec.describe PersonCsvParser, type: :service do
     end
 
     it "populates @unrecognized_columns for use by importer" do
-      expect(subject.header.unrecognized_columns).to match_array %w[givesn_name locations_in_building]
+      expect(parser.header.unrecognized_columns).to match_array %w[givesn_name locations_in_building]
     end
   end
 end

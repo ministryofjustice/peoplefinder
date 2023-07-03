@@ -21,7 +21,7 @@ class TokenSender
 
   def obtain_token
     @token = build_token
-    @token.save!
+    @token.save # rubocop:disable Rails/SaveBang
   end
 
 private

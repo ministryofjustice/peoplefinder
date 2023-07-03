@@ -4,7 +4,7 @@ require_relative "../../app/services/token_sender"
 RSpec.describe TokenSender, type: :service do
   include PermittedDomainHelper
 
-  subject { described_class.new(email) }
+  subject(:token_sender) { described_class.new(email) }
 
   let(:email) { "user.name@digital.justice.gov.uk" }
   let(:view) { double }
@@ -25,8 +25,8 @@ RSpec.describe TokenSender, type: :service do
 
   describe "#obtain_token" do
     context "when active token exists for given user_email" do
-      let!(:token) { double(active?: true, value: "xyz") }
-      let!(:new_token) { double(save: true, valid?: true) }
+      let!(:token) { instance_double(Token, active?: true, value: "xyz") }
+      let!(:new_token) { instance_double(Token, save: true, valid?: true) }
 
       before do
         allow(Token).to receive(:find_unspent_by_user_email).and_return token
@@ -34,27 +34,27 @@ RSpec.describe TokenSender, type: :service do
       end
 
       it "creates new token with same value as original" do
-        expect(Token).to receive(:new).with(user_email: email, value: "xyz").and_return new_token
+        allow(Token).to receive(:new).with(user_email: email, value: "xyz").and_return new_token
         allow(token).to receive(:update_attribute).with(:value, "abc")
-        subject.obtain_token
+        token_sender.obtain_token
         expect(assigned_token).to eql new_token
       end
 
       it "changes value of original token" do
         allow(Token).to receive(:new).with(user_email: email, value: "xyz").and_return new_token
         expect(token).to receive(:update_attribute).with(:value, "abc")
-        subject.obtain_token
+        token_sender.obtain_token
       end
 
       it "returns true" do
         allow(Token).to receive(:new).with(user_email: email, value: "xyz").and_return new_token
         allow(token).to receive(:update_attribute).with(:value, "abc")
-        expect(subject.obtain_token).to eq true
+        expect(token_sender.obtain_token).to eq true
       end
     end
 
     context "when inactive token exists for given user_email" do
-      let!(:token) { double(active?: false) }
+      let!(:token) { instance_double(Token, active?: false) }
 
       before do
         allow(Token).to receive(:find_unspent_by_user_email).and_return token
@@ -63,7 +63,7 @@ RSpec.describe TokenSender, type: :service do
       include_examples "generates token"
 
       it "does not rebuild the existing token" do
-        subject.obtain_token
+        token_sender.obtain_token
         expect(assigned_token).not_to eql token
       end
     end
@@ -75,16 +75,16 @@ RSpec.describe TokenSender, type: :service do
         let(:error_message) { "Email address is not formatted correctly" }
 
         before do
-          new_token = double(save: false, errors: { user_email: [error_message] })
+          new_token = instance_double(Token, save: false, errors: { user_email: [error_message] })
           allow(Token).to receive(:new).with(user_email: email).and_return new_token
         end
 
         it "returns false" do
-          expect(subject.obtain_token).to eq false
+          expect(token_sender.obtain_token).to eq false
         end
 
         it "assigns token with errors" do
-          subject.obtain_token
+          token_sender.obtain_token
           expect(assigned_token.errors[:user_email]).to include error_message
         end
       end
@@ -93,7 +93,7 @@ RSpec.describe TokenSender, type: :service do
 
   describe "#call with view" do
     context "when no token obtained" do
-      let(:new_token) { double(save: false, valid?: false, errors: { user_email: ["my error"] }) }
+      let(:new_token) { instance_double(Token, save: false, valid?: false, errors: { user_email: ["my error"] }) }
 
       before do
         allow(Token).to receive(:new).with(user_email: email).and_return new_token
@@ -101,30 +101,30 @@ RSpec.describe TokenSender, type: :service do
 
       context "with a specific type of error is raised (email invalid or token limit exceeded)" do
         before do
-          allow(subject).to receive(:user_email_error?).and_return true
+          allow(token_sender).to receive(:user_email_error?).and_return true # rubocop:disable RSpec/SubjectStub
         end
 
         it "calls render_new_view_with_errors with erroneous token" do
           expect(view).to receive(:render_new_view_with_errors).with(token: new_token)
-          subject.call(view)
+          token_sender.call(view)
         end
       end
 
       context "when an unexpected error is raised" do
         before do
-          allow(subject).to receive(:user_email_error?).and_return false
+          allow(token_sender).to receive(:user_email_error?).and_return false # rubocop:disable RSpec/SubjectStub
         end
 
         it "calls render_create_view with nil token" do
           expect(view).to receive(:render_create_view).with(token: nil)
-          subject.call(view)
+          token_sender.call(view)
         end
       end
     end
 
     context "when token obtained" do
-      let(:token) { double(save: true, valid?: true) }
-      let(:mailer) { double }
+      let(:token) { instance_double(Token, save: true, valid?: true) }
+      let(:mailer) { instance_double(ActionMailer::MessageDelivery) }
 
       before do
         allow(Token).to receive(:new).with(user_email: email).and_return token
@@ -135,13 +135,13 @@ RSpec.describe TokenSender, type: :service do
 
       it "calls render_create_view with token" do
         expect(view).to receive(:render_create_view).with(token:)
-        subject.call(view)
+        token_sender.call(view)
       end
 
       it "sends token email" do
-        expect(TokenMailer).to receive(:new_token_email).with(token).and_return mailer
+        allow(TokenMailer).to receive(:new_token_email).with(token).and_return mailer
         expect(mailer).to receive(:deliver_later).with(queue: :high_priority)
-        subject.call(view)
+        token_sender.call(view)
       end
     end
   end

@@ -69,7 +69,7 @@ describe "Person maintenance" do
 
       it "Creating an invalid person" do
         new_profile_page.load
-        new_profile_page.form.save!.click
+        new_profile_page.form.save_button.click
 
         expect(new_profile_page).to have_error_summary
         expect(new_profile_page.error_summary).to have_given_name_error
@@ -81,14 +81,14 @@ describe "Person maintenance" do
         existing_person = create(:person)
         new_profile_page.load
         new_profile_page.form.email.set existing_person.email
-        new_profile_page.form.save!.click
+        new_profile_page.form.save_button.click
         expect(new_profile_page.error_summary).to have_email_error
       end
 
       it "Creating a person with invalid e-mail raises an error" do
         new_profile_page.load
         new_profile_page.form.email.set "invalid email@digital.justice.gov.uk"
-        new_profile_page.form.save!.click
+        new_profile_page.form.save_button.click
 
         expect(new_profile_page.error_summary).to have_email_error
       end
@@ -96,7 +96,7 @@ describe "Person maintenance" do
       it "Creating a person with e-mail from an unsupported domain raises an error" do
         new_profile_page.load
         new_profile_page.form.email.set "name.surname@example.com"
-        new_profile_page.form.save!.click
+        new_profile_page.form.save_button.click
 
         expect(new_profile_page.error_summary).to have_email_error
       end
@@ -274,14 +274,14 @@ describe "Person maintenance" do
 
         edit_profile_page.load(slug: person.slug)
         edit_profile_page.form.email.set existing_person.email
-        edit_profile_page.form.save!.click
+        edit_profile_page.form.save_button.click
         expect(edit_profile_page.error_summary).to have_email_error
       end
 
       it "Editing a person to have an unpermitted e-mail raises an error" do
         edit_profile_page.load(slug: person.slug)
         edit_profile_page.form.email.set "whatevers@big.blackhole.com"
-        edit_profile_page.form.save!.click
+        edit_profile_page.form.save_button.click
 
         expect(edit_profile_page.error_summary).to have_email_error
       end
@@ -326,7 +326,7 @@ describe "Person maintenance" do
         edit_profile_page.load(slug: person.slug)
 
         edit_profile_page.form.surname.set ""
-        edit_profile_page.form.save!.click
+        edit_profile_page.form.save_button.click
 
         expect(edit_profile_page).to have_error_summary
         expect(edit_profile_page.error_summary).to have_surname_error

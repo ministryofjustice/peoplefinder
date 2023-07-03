@@ -2,7 +2,7 @@ require "spec_helper"
 require "health_check/database_configuration"
 
 describe HealthCheck::DatabaseConfiguration do
-  subject { described_class.new(config_hash) }
+  subject(:database_configuration) { described_class.new(config_hash) }
 
   describe "to_s" do
     context "with all safe fields" do
@@ -16,7 +16,7 @@ describe HealthCheck::DatabaseConfiguration do
       end
 
       it "lists all fields in alphabetical order" do
-        expect(subject.to_s)
+        expect(database_configuration.to_s)
           .to eq("adapter=postgresql database=foo_test host=db.example.com port=1337")
       end
     end
@@ -35,11 +35,11 @@ describe HealthCheck::DatabaseConfiguration do
       end
 
       it "excludes password" do
-        expect(subject.to_s).not_to match(/password|SuperSecret/)
+        expect(database_configuration.to_s).not_to match(/password|SuperSecret/)
       end
 
       it "excludes username" do
-        expect(subject.to_s).not_to match(/username|aoluser/)
+        expect(database_configuration.to_s).not_to match(/username|aoluser/)
       end
     end
 
@@ -52,27 +52,27 @@ describe HealthCheck::DatabaseConfiguration do
       end
 
       it "preserves non-url parameters" do
-        expect(subject.to_s).to match(/adapter=postgresql/)
+        expect(database_configuration.to_s).to match(/adapter=postgresql/)
       end
 
       it "extracts database" do
-        expect(subject.to_s).to match(/database=foo_test/)
+        expect(database_configuration.to_s).to match(/database=foo_test/)
       end
 
       it "extracts host" do
-        expect(subject.to_s).to match(/host=db\.example\.com/)
+        expect(database_configuration.to_s).to match(/host=db\.example\.com/)
       end
 
       it "extracts port" do
-        expect(subject.to_s).to match(/port=1337/)
+        expect(database_configuration.to_s).to match(/port=1337/)
       end
 
       it "excludes password" do
-        expect(subject.to_s).not_to match(/SuperSecret/)
+        expect(database_configuration.to_s).not_to match(/SuperSecret/)
       end
 
       it "excludes username" do
-        expect(subject.to_s).not_to match(/aoluser/)
+        expect(database_configuration.to_s).not_to match(/aoluser/)
       end
     end
 
@@ -85,7 +85,7 @@ describe HealthCheck::DatabaseConfiguration do
       end
 
       it "excludes port" do
-        expect(subject.to_s).not_to match(/port/)
+        expect(database_configuration.to_s).not_to match(/port/)
       end
     end
   end

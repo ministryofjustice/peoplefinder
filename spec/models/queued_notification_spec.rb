@@ -32,15 +32,11 @@ RSpec.describe QueuedNotification, type: :model do
   end
 
   describe ".queue!" do
-    before(:all) do
-      @moj = create :department
-      @ds = create :group, name: "digital services", parent: @moj
-      @tech = create :group, name: "technology", parent: @ds
-      @devs = create :group, name: "devs", parent: @tech
-      @archs = create :group, name: "archs", parent: @tech
-    end
-
-    after(:all) { Group.destroy_all }
+    let(:moj) { create :department }
+    let(:ds) { create :group, name: "digital services", parent: moj }
+    let(:tech) { create :group, name: "technology", parent: ds }
+    let(:devs) { create :group, name: "devs", parent: tech }
+    let(:archs) { create :group, name: "archs", parent: tech }
 
     let(:current_user) { create :person, given_name: "Liz", surname: "Truss", slug: "liz-truss", email: "liz@digital.justice.gov.uk" }
     let(:session_id) { "d9e2afcb4972cc2c963d8fe2802796b7" }
@@ -53,7 +49,7 @@ RSpec.describe QueuedNotification, type: :model do
 
     context "when called by person creator" do
       let(:person) { create :person, given_name: "Stephen", surname: "Jones", slug: "stephen-richards", email: "sr@digital.justice.gov.uk" }
-      let(:creator) { double(PersonCreator, person:, current_user:, session_id:) }
+      let(:creator) { instance_double(PersonCreator, person:, current_user:, session_id:) }
 
       before do
         allow(creator).to receive(:is_a?).with(PersonCreator).and_return(true)
@@ -101,14 +97,14 @@ RSpec.describe QueuedNotification, type: :model do
           let(:person)  { build :person, given_name: "Stephen", surname: "Jones", slug: "stephen-richards", email: "sr@digital.justice.gov.uk" }
 
           it "creates a queued notification with group changes" do
-            person.groups << @devs
-            person.groups << @archs
+            person.groups << devs
+            person.groups << archs
             person.save!
             allow(creator).to receive(:edit_finalised?).and_return(false)
 
             described_class.queue!(creator)
             expect(described_class.count).to eq 1
-            expect(described_class.first.changes_hash).to eq expected_create_changes_with_groups(@devs, @archs)
+            expect(described_class.first.changes_hash).to eq expected_create_changes_with_groups(devs, archs)
           end
         end
       end
@@ -122,8 +118,8 @@ RSpec.describe QueuedNotification, type: :model do
               "surname" => [nil, "Jones"],
               "email" => [nil, "sr@digital.justice.gov.uk"],
               "slug" => [nil, "stephen-richards"],
-              "membership_#{@moj.id}" => {
-                "group_id" => [nil, @moj.id],
+              "membership_#{moj.id}" => {
+                "group_id" => [nil, moj.id],
               },
             },
           },
@@ -140,8 +136,8 @@ RSpec.describe QueuedNotification, type: :model do
               "email" => [nil, "john.jones@digital.justice.gov.uk"],
               "slug" => [nil, "stephen-richards"],
               "works_friday" => [true, false],
-              "membership_#{@moj.id}" => {
-                "group_id" => [nil, @moj.id],
+              "membership_#{moj.id}" => {
+                "group_id" => [nil, moj.id],
               },
               "membership_#{devs.id}" => {
                 "group_id" => [nil, devs.id],
@@ -161,8 +157,8 @@ RSpec.describe QueuedNotification, type: :model do
 
       context "with group changes" do
         before do
-          person.groups << @devs
-          person.groups << @archs
+          person.groups << devs
+          person.groups << archs
           person.save!
         end
 
@@ -185,11 +181,11 @@ RSpec.describe QueuedNotification, type: :model do
   end
 
   context "when grouped items" do
-    before(:all) { populate_notifications }
+    let(:qn1) { create_notification("def", 1, 200, false, nil, false) }
+    let(:qn2) { create_notification("def", 1, 200, false, nil, false) }
+    let(:qn3) { create_notification("def", 1, 200, true, nil, false) }
 
-    after(:all) { described_class.destroy_all }
-
-    def populate_notifications
+    before do
       Timecop.freeze(30.minutes.ago) do
         # old session abc for person 1 current user 100 - sent
         create_notification("abc", 1, 100, false, Time.zone.now, true)
@@ -197,9 +193,9 @@ RSpec.describe QueuedNotification, type: :model do
         create_notification("abc", 1, 100, true, Time.zone.now, true)
 
         # old session def for person 1, current user 200 - not sent, but finalised
-        @qn1 = create_notification("def", 1, 200, false, nil, false)
-        @qn2 = create_notification("def", 1, 200, false, nil, false)
-        @qn3 = create_notification("def", 1, 200, true, nil, false)
+        qn1
+        qn2
+        qn3
 
         # old session efg for person 2, current user 200 - not sent, not finalised
         create_notification("efg", 2, 200, false, nil, false)
@@ -232,6 +228,7 @@ RSpec.describe QueuedNotification, type: :model do
              edit_finalised: finalised,
              sent:)
     end
+
     describe ".unsent_groups" do
       it "does not include any sent groups in the result set" do
         groups = described_class.unsent_groups
@@ -267,7 +264,7 @@ RSpec.describe QueuedNotification, type: :model do
       it "returns all records in the group" do
         records = described_class.start_processing_grouped_item(grouped_item)
         expect(records.size).to eq 3
-        expect(records).to include(@qn1, @qn2, @qn3)
+        expect(records).to include(qn1, qn2, qn3)
       end
 
       it "timestamps all records in the group" do

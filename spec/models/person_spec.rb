@@ -184,7 +184,7 @@ RSpec.describe Person, type: :model do
   end
 
   describe "#department_memberships_with_no_role" do
-    subject { person.department_memberships_with_no_role }
+    subject(:memberships) { person.department_memberships_with_no_role }
 
     before do
       person.save!
@@ -192,23 +192,23 @@ RSpec.describe Person, type: :model do
     end
 
     it "returns AssociationRelation of memberships" do
-      expect(subject).to be_kind_of ActiveRecord::AssociationRelation
-      expect(subject.first).to be_kind_of Membership
+      expect(memberships).to be_kind_of ActiveRecord::AssociationRelation
+      expect(memberships.first).to be_kind_of Membership
     end
 
     it "returns department memberships only" do
-      expect(subject.map(&:group)).to eql [Group.department]
+      expect(memberships.map(&:group)).to eql [Group.department]
     end
 
     it "returns department memberships with no role" do
-      expect(subject.count).to be 1
-      expect(subject.map(&:role)).to eq [nil]
+      expect(memberships.count).to be 1
+      expect(memberships.map(&:role)).to eq [nil]
     end
 
     it "treats whitespace only roles as null" do
       person.memberships.find_by(group_id: Group.department.id).update!(role: " ")
-      expect(subject.count).to be 1
-      expect(subject.map(&:role)).to eq [" "]
+      expect(memberships.count).to be 1
+      expect(memberships.map(&:role)).to eq [" "]
     end
   end
 
@@ -240,7 +240,7 @@ RSpec.describe Person, type: :model do
   end
 
   describe ".namesakes" do
-    subject { described_class.namesakes(person).count }
+    subject(:count) { described_class.namesakes(person).count }
 
     let(:person) { create(:person, given_name: "John", surname: "Doe", email: "john.doe@digital.justice.gov.uk") }
 
@@ -251,17 +251,20 @@ RSpec.describe Person, type: :model do
     end
 
     it "returns people matching given and surname of specified person OR email prefix" do
-      expect(subject).to be 2
+      expect(count).to be 2
     end
   end
 
   describe ".all_in_subtree" do
     let!(:team) { create(:group) }
-    let!(:subteam) { create(:group, parent: team) }
+
+    before do
+      create(:group, parent: team)
+    end
 
     it "calls PeopleInGroupsQuery with group subtrees" do
-      query = double PeopleInGroupsQuery
-      expect(PeopleInGroupsQuery).to receive(:new).with(team.subtree_ids).and_return(query)
+      query = instance_double PeopleInGroupsQuery
+      allow(PeopleInGroupsQuery).to receive(:new).with(team.subtree_ids).and_return(query)
       expect(query).to receive(:call)
       described_class.all_in_subtree(team)
     end
@@ -400,7 +403,7 @@ RSpec.describe Person, type: :model do
   end
 
   describe "#all_changes" do
-    subject { person.all_changes }
+    subject(:all_changes) { person.all_changes }
 
     let(:ds) { create(:group, name: "Digital Services") }
     let(:csg) { create(:group, name: "Corporate Services Group") }
@@ -443,7 +446,7 @@ RSpec.describe Person, type: :model do
       end
 
       it "stores addition of a membership" do
-        expect(subject).to include valid_membership_changes
+        expect(all_changes).to include valid_membership_changes
       end
     end
   end

@@ -14,7 +14,7 @@ RSpec.describe PeopleHelper, type: :helper do
   end
 
   describe "person_form_class" do
-    let(:person) { double(Person, new_record?: false) }
+    let(:person) { instance_double(Person, new_record?: false) }
 
     it 'includes "new_person" if person is a new record' do
       allow(person).to receive(:new_record?).and_return(true)
@@ -82,38 +82,39 @@ RSpec.describe PeopleHelper, type: :helper do
     end
 
     context "when environments using local storage" do
-      subject { profile_image_tag(person, options) }
+      subject(:tag) { profile_image_tag(person, options) }
 
       before do
         options.delete(:version)
       end
 
       it "uses local file as image src" do
-        expect(subject).to match(/.*src=".*\/uploads\/peoplefinder\/profile_photo\/image\/\d+\/medium_.*\.png".*/)
+        expect(tag).to match(/.*src=".*\/uploads\/peoplefinder\/profile_photo\/image\/\d+\/medium_.*\.png".*/)
       end
     end
 
     context "when environments using S3 storage" do
-      subject { profile_image_tag(person, options) }
+      subject(:tag) { profile_image_tag(person, options) }
 
       let(:version) do
-        double "version",
+        double "version", # rubocop:disable RSpec/VerifiedDoubles
                file:
       end
 
       let(:file) do
-        double "file",
+        double "file", # rubocop:disable RSpec/VerifiedDoubles
                authenticated_url: "https://my-prod-bucket.s3.amazonaws.com/dir1/dir2/medium_photo_1.jpg?X-Amz-Signature=XnXXX12345xxx"
       end
 
       before do
         options.delete(:version)
-        expect(person.profile_image).to receive(:medium).and_return version
-        expect(version).to receive(:file).and_return file
+        allow(person.profile_image).to receive(:medium).and_return version
+        allow(version).to receive(:file).and_return file
       end
+
       it "uses pre-signed, time-limited, url for image src" do
         expect(file).to receive(:authenticated_url)
-        expect(subject).to include file.authenticated_url
+        expect(tag).to include file.authenticated_url
       end
     end
   end

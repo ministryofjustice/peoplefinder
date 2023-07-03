@@ -51,12 +51,12 @@ RSpec.describe PersonDestroyer, type: :service do
         .to receive(:notify_of_change?)
         .with(current_user)
         .and_return(true)
-      mailing = double("mailing")
+      mailer = instance_double(ActionMailer::MessageDelivery)
       expect(class_double("UserUpdateMailer").as_stubbed_const)
         .to receive(:deleted_profile_email)
         .with(person.email, person.given_name, current_user.email)
-        .and_return(mailing)
-      expect(mailing).to receive(:deliver_later)
+        .and_return(mailer)
+      expect(mailer).to receive(:deliver_later)
       subject.destroy!
     end
   end

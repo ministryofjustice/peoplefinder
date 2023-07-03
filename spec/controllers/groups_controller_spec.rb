@@ -45,21 +45,21 @@ RSpec.describe GroupsController, type: :controller do
   let(:person) { create(:person) }
 
   describe "GET index" do
-    subject { get :index, params: {}, flash: valid_session }
+    subject(:get_index) { get :index, params: {}, flash: valid_session }
 
     it "without any groups, it redirects to the new group page" do
-      expect(subject).to redirect_to(new_group_path)
+      expect(get_index).to redirect_to(new_group_path)
     end
 
     it "with a department, it redirects to the departmental page" do
       department = create(:department)
-      expect(subject).to redirect_to(group_path(department))
+      expect(get_index).to redirect_to(group_path(department))
     end
 
     it "with a department and a team, it still redirects to the departmental page" do
       department = create(:department)
       create(:group, parent: department)
-      expect(subject).to redirect_to(group_path(department))
+      expect(get_index).to redirect_to(group_path(department))
     end
   end
 
@@ -72,25 +72,25 @@ RSpec.describe GroupsController, type: :controller do
   end
 
   describe "GET all_people" do
-    subject { get :all_people, params: { id: group.to_param, page: 2 }, flash: valid_session }
+    subject(:get_all_people) { get :all_people, params: { id: group.to_param, page: 2 }, flash: valid_session }
 
     let(:group) { create(:group, valid_attributes) }
     let!(:people) { instance_double(Person.const_get(:ActiveRecord_Relation)) }
 
     it "assigns @group to a Group instance" do
-      subject
+      get_all_people
       expect(assigns(:group)).to be_a(Group)
     end
 
     it "assigns @people_in_subtree to a Person AR relation" do
-      subject
+      get_all_people
       expect(assigns(:people_in_subtree)).to be_a(Person.const_get(:ActiveRecord_Relation))
     end
 
     it "sends all_people message to instance of group and paginates people results to 500 (to avoid server timeouts)" do
       expect_any_instance_of(Group).to receive(:all_people).and_return people
       expect(people).to receive(:paginate).with(page: "2", per_page: 500).and_return people
-      subject
+      get_all_people
     end
   end
 

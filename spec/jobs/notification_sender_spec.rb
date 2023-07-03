@@ -6,10 +6,10 @@ describe NotificationSender do
   describe "#send!" do
     let(:person) { create :person, id: 22 }
     let(:logged_in_user) { create :person, id: 333 }
-    let(:mailer) { double UserUpdateMailer }
+    let(:mailer) { instance_double(ActionMailer::MessageDelivery) }
 
     it "calls process group for each group item returned by unsent groups" do
-      expect(QueuedNotification).to receive(:unsent_groups).and_return(%i[group1 group2 group3])
+      allow(QueuedNotification).to receive(:unsent_groups).and_return(%i[group1 group2 group3])
       sender = described_class.new
       expect(sender).to receive(:process_group).with(:group1)
       expect(sender).to receive(:process_group).with(:group2)
@@ -35,7 +35,7 @@ describe NotificationSender do
         create_qn(email_template: "new_profile_email")
         create_qn(email_template: "updated_profile_email", edit_finalised: true)
         sender = described_class.new
-        expect(UserUpdateMailer).to receive(:new_profile_email).with(person, logged_in_user.email).and_return(mailer)
+        allow(UserUpdateMailer).to receive(:new_profile_email).with(person, logged_in_user.email).and_return(mailer)
         expect(mailer).to receive(:deliver_later)
         sender.send!
         expect_queued_notifications_to_be_marked_as_sent
@@ -47,12 +47,12 @@ describe NotificationSender do
         create_qn(email_template: "updated_profile_email")
         create_qn(email_template: "updated_profile_email", edit_finalised: true)
         sender = described_class.new
-        raw_changes = double "raw changes"
-        aggregator = double ProfileChangeAggregator, aggregate_raw_changes: raw_changes
-        presenter = double ProfileChangesPresenter, serialize: "serialized changes"
-        expect(ProfileChangeAggregator).to receive(:new).and_return(aggregator)
-        expect(ProfileChangesPresenter).to receive(:new).with(raw_changes).and_return(presenter)
-        expect(UserUpdateMailer).to receive(:updated_profile_email).with(person, presenter.serialize, logged_in_user.email).and_return(mailer)
+        raw_changes = instance_double(Hash)
+        aggregator = instance_double ProfileChangeAggregator, aggregate_raw_changes: raw_changes
+        presenter = instance_double ProfileChangesPresenter, serialize: "serialized changes"
+        allow(ProfileChangeAggregator).to receive(:new).and_return(aggregator)
+        allow(ProfileChangesPresenter).to receive(:new).with(raw_changes).and_return(presenter)
+        allow(UserUpdateMailer).to receive(:updated_profile_email).with(person, presenter.serialize, logged_in_user.email).and_return(mailer)
         expect(mailer).to receive(:deliver_later)
 
         sender.send!
@@ -78,8 +78,8 @@ describe NotificationSender do
         end
 
         # I would expect a mail to be sent
-        mail = double UserUpdateMailer
-        expect(UserUpdateMailer).to receive(:updated_profile_email).and_return(mail)
+        mail = instance_double(ActionMailer::MessageDelivery)
+        allow(UserUpdateMailer).to receive(:updated_profile_email).and_return(mail)
         expect(mail).to receive(:deliver_later)
         # when I run the notification sender
         sender = described_class.new

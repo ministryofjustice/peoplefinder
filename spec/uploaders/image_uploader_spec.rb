@@ -13,7 +13,7 @@ RSpec.describe ImageUploader, type: :uploader do
   end
 
   context "with a profile photo object" do
-    subject { profile_photo.image }
+    subject(:image) { profile_photo.image }
 
     let(:profile_photo) { create(:profile_photo) }
 
@@ -21,15 +21,15 @@ RSpec.describe ImageUploader, type: :uploader do
       it { is_expected.to respond_to :dimensions }
 
       it "retrieves dimensions of stored object" do
-        expect(subject.dimensions).to eq width: 648, height: 648
-        expect(subject.medium.dimensions).to eq width: 512, height: 512
+        expect(image.dimensions).to eq width: 648, height: 648
+        expect(image.medium.dimensions).to eq width: 512, height: 512
       end
     end
 
     context "when storing uploaded file dimensions" do
       it "in before cache callback" do
-        expect_any_instance_of(described_class).to receive :store_upload_dimensions
-        subject
+        expect_any_instance_of(described_class).to receive :store_upload_dimensions # rubocop:disable RSpec/AnyInstance
+        image
       end
 
       it "unpersisted" do
@@ -39,32 +39,32 @@ RSpec.describe ImageUploader, type: :uploader do
     end
 
     it "creates default image sizes" do
-      expect(subject.croppable).to have_dimensions(648, 648)
-      expect(subject.medium).to be_no_larger_than(512, 512)
+      expect(image.croppable).to have_dimensions(648, 648)
+      expect(image.medium).to be_no_larger_than(512, 512)
     end
 
     it "crops the medium image and leaves the croppable version intact" do
       profile_photo.assign_attributes(crop_x: 10, crop_y: 10, crop_w: 20, crop_h: 20)
-      subject.recreate_versions!
+      image.recreate_versions!
 
-      expect(subject.croppable).to have_dimensions(648, 648)
-      expect(subject.medium).to have_dimensions(20, 20)
+      expect(image.croppable).to have_dimensions(648, 648)
+      expect(image.medium).to have_dimensions(20, 20)
     end
 
     it "has a consistent path" do
       # If you change this, you must also consider what to do with legacy image uploads.
-      expect(subject.store_dir)
+      expect(image.store_dir)
         .to eq("#{Rails.root}/spec/support/uploads/peoplefinder/profile_photo/image/#{profile_photo.id}")
     end
   end
 
   context "with a person object" do
-    subject { person.legacy_image }
+    subject(:legacy_image) { person.legacy_image }
 
     let(:person) { create(:person, image: sample_image) }
 
     it "has a consistent path" do
-      expect(subject.store_dir)
+      expect(legacy_image.store_dir)
         .to eq("#{Rails.root}/spec/support/uploads/peoplefinder/person/image/#{person.id}")
     end
   end
