@@ -1,5 +1,6 @@
 require "rails_helper"
 
+# rubocop:disable RSpec/InstanceVariable
 RSpec.describe SearchHelper, type: :helper do
   subject { helper }
 
@@ -177,3 +178,4 @@ RSpec.describe SearchHelper, type: :helper do
     end
   end
 end
+# rubocop:enable RSpec/InstanceVariable

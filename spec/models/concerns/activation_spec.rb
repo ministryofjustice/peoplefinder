@@ -23,7 +23,7 @@ RSpec.describe Concerns::Activation do
 
   describe ".activated_percentage" do
     it "uses .completion_score_calculation for scalablility" do
-      expect(Person).to receive(:completion_score_calculation).and_return(0.81)
+      expect(Person).to receive(:completion_score_calculation)
       Person.activated_percentage
     end
 

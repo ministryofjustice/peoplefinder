@@ -19,9 +19,9 @@ describe "View person audit" do
     before do
       with_versioning do
         PaperTrail.request.whodunnit = author.id
-        person.update!(description:)
-        person.update! primary_phone_number: phone_number
-        person.update! profile_photo_id: profile_photo.id
+        person.update(description:) # rubocop:disable Rails/SaveBang
+        person.update primary_phone_number: phone_number # rubocop:disable Rails/SaveBang
+        person.update profile_photo_id: profile_photo.id # rubocop:disable Rails/SaveBang
       end
     end
 

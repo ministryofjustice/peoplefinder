@@ -23,11 +23,11 @@ RSpec.describe AuditVersionPresenter, type: :presenter do
   end
 
   let(:version) do
-    double("version",
-           created_at:,
-           whodunnit:,
-           event:,
-           object_changes:)
+    instance_double(Version,
+                    created_at:,
+                    whodunnit:,
+                    event:,
+                    object_changes:)
   end
   let(:presenter)  { described_class.new(version) }
   let(:changes)    { presenter.changes }
@@ -60,7 +60,7 @@ RSpec.describe AuditVersionPresenter, type: :presenter do
 
   describe ".wrap" do
     let(:object)           { Object.new }
-    let(:presenter)        { double("presenter") }
+    let(:presenter)        { double("presenter") }  # rubocop:disable Spec/VerifiedDoubles
     let(:object_array)     { [object, object, object] }
     let(:wrapped_array)    { described_class.wrap(object_array) }
     let(:presented_array)  { [presenter, presenter, presenter] }

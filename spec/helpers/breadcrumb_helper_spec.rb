@@ -45,7 +45,7 @@ RSpec.describe BreadcrumbHelper, type: :helper do
 
   describe "#link_to_breadcrumb_name_unless_current" do
     context "with an object that has a short name" do
-      let(:obj) { double("obj", name: "Full Name", short_name: "FN") }
+      let(:obj) { instance_double(Group, name: "Full Name", short_name: "FN") }
 
       it "links to the object" do
         expect(self).to receive(:link_to_unless_current)
@@ -73,7 +73,7 @@ RSpec.describe BreadcrumbHelper, type: :helper do
     end
 
     context "with an object that has an empty short name" do
-      let(:obj) { double("object", name: "Full Name", short_name: "") }
+      let(:obj) { instance_double(Group, name: "Full Name", short_name: "") }
 
       it "links to the object" do
         expect(self).to receive(:link_to_unless_current)
@@ -95,7 +95,7 @@ RSpec.describe BreadcrumbHelper, type: :helper do
     end
 
     context "with an object that has no short name" do
-      let(:obj) { double("object", name: "Full Name") }
+      let(:obj) { instance_double(Group, name: "Full Name") }
 
       it "links to the object" do
         expect(self).to receive(:link_to_unless_current)

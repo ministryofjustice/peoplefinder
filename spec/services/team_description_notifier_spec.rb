@@ -15,7 +15,7 @@ RSpec.describe TeamDescriptionNotifier, type: :service do
     team
   end
 
-  let(:mailer) { double(ReminderMailer) }
+  let(:mailer) { instance_double(ReminderMailer) }
   let(:mailer_params) { [person, group] }
 
   before do

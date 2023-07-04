@@ -80,19 +80,10 @@ RSpec.describe Group, type: :model do
     it "knows when it is a leaf_node (no children)" do
       expect(group).to be_leaf_node
     end
-
-    it "knows when it is not a leaf_node (no children)" do
-      expect(group).to be_leaf_node
-    end
   end
 
   describe ".deletable?" do
     let(:group) { create(:group) }
-
-    it "is only deletable when there are no memberships" do
-      group.memberships.create!(person: create(:person))
-      expect(group).not_to be_deletable
-    end
 
     it "is not deletable when there are memberships" do
       group.memberships.create!(person: create(:person))

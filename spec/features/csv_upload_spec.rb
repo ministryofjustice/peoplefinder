@@ -26,7 +26,7 @@ describe "Upload CSV" do
   end
 
   it "only super admins can access uploader" do
-    Person.find_by(email:).update!(super_admin: false)
+    Person.find_by(email:).update(super_admin: false) # rubocop:disable Rails/SaveBang
     visit new_admin_person_upload_path
     expect(page).to have_current_path(home_path)
     expect(page).to have_selector(".flash-message.warning", text: "Unauthorised")

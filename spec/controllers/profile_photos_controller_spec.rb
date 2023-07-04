@@ -19,14 +19,14 @@ RSpec.describe ProfilePhotosController, type: :controller do
 
       describe "internally" do
         let(:photo_id) { 123 }
-        let(:photo) { double("photo", to_json: { id: photo_id }.to_json) }
+        let(:photo) { instance_double(ProfilePhoto, to_json: { id: photo_id }.to_json) }
 
         before do
           allow(ProfilePhoto).to receive(:create).and_return(photo)
         end
 
         it "validates the photo" do
-          expect(photo).to receive(:valid?).and_return true
+          allow(photo).to receive(:valid?).and_return true
           post :create, params: { profile_photo: valid_params }
         end
 
@@ -48,12 +48,12 @@ RSpec.describe ProfilePhotosController, type: :controller do
   describe "with invalid params" do
     let(:invalid_params) { { image: non_allowlist_image } }
     let(:photo_id) { 123 }
-    let(:photo) { double("photo", to_json: { id: photo_id }.to_json) }
+    let(:photo) { instance_double(ProfilePhoto, to_json: { id: photo_id }.to_json) }
 
     before do
       allow(ProfilePhoto).to receive(:create).and_return(photo)
       allow(photo).to receive(:valid?).and_return false
-      allow(photo).to receive_message_chain(:errors, :full_messages).and_return ["not a real error", "nor is this"]
+      allow(photo).to receive_message_chain(:errors, :full_messages).and_return ["not a real error", "nor is this"] # rubocop:disable RSpec/MessageChain
     end
 
     it "non allowlisted extensions do not create ProfilePhoto" do

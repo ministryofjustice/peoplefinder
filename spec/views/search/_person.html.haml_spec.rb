@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe "search/person", type: :view do
   include PermittedDomainHelper
 
-  before(:all) do
+  before(:all) do # rubocop:disable RSpec/BeforeAfterAll
     clean_up_indexes_and_tables
     PermittedDomain.find_or_create_by!(domain: "digital.justice.gov.uk")
     create_list(:group, 4).each do |team|
@@ -13,7 +13,7 @@ RSpec.describe "search/person", type: :view do
     Person.__elasticsearch__.refresh_index!
   end
 
-  after(:all) do
+  after(:all) do # rubocop:disable RSpec/BeforeAfterAll
     clean_up_indexes_and_tables
   end
 

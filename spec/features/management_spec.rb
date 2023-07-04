@@ -29,10 +29,6 @@ describe "Management flow" do
   end
 
   describe "Reports" do
-    before { delete_report }
-
-    after { delete_report }
-
     before do
       click_link "Manage"
     end
@@ -41,12 +37,6 @@ describe "Management flow" do
       expect {
         click_link "generate"
       }.to have_enqueued_job(GenerateReportJob)
-    end
-
-    it "can be downloaded", skip: "until we can implement an approrpiate web driver for testing downloads" do
-      click_link "generate"
-      expect(ActionController::DataStreaming).to receive(:send_file)
-      click_link "download"
     end
 
     it "Warns user that report needs generating first if one does not exist" do

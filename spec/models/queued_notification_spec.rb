@@ -153,7 +153,7 @@ RSpec.describe QueuedNotification, type: :model do
 
     context "when called by person updater" do
       let(:person) { create :person, given_name: "Stephen", surname: "Jones", slug: "stephen-richards", email: "sr@digital.justice.gov.uk" }
-      let(:updater) { double(PersonUpdater, person:, current_user:, session_id:) }
+      let(:updater) { instance_double(PersonUpdater, person:, current_user:, session_id:) }
 
       context "with group changes" do
         before do

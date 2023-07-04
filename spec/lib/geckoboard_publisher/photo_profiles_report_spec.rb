@@ -19,7 +19,7 @@ RSpec.describe GeckoboardPublisher::PhotoProfilesReport, geckoboard: true do
   end
 
   describe "#items", versioning: true do
-    subject { described_class.new.items }
+    subject(:items) { described_class.new.items }
 
     let(:expected_items) do
       [
@@ -44,24 +44,24 @@ RSpec.describe GeckoboardPublisher::PhotoProfilesReport, geckoboard: true do
       Timecop.freeze(Date.parse("01-MAR-2015 12:55")) { create(:person, :with_photo) }
       Timecop.freeze(Date.parse("01-MAR-2015 13:01")) { create(:person, :with_photo) }
       Timecop.freeze(Date.parse("21-JUN-2016")) { create(:person, :with_photo) }
+      Timecop.freeze Date.parse("01-SEP-2016")
     end
 
-    before { Timecop.freeze Date.parse("01-SEP-2016") }
     after { Timecop.return }
 
     include_examples "returns valid items structure"
 
     it "returns dates to day precision in ISO 8601 format - YYYY-MM-DD" do
-      expect(subject.first[:photo_added_at]).to match(/^(\d{4}-(0[1-9]|1[12])-((0[1-9]|[12]\d)|3[01]))$/)
+      expect(items.first[:photo_added_at]).to match(/^(\d{4}-(0[1-9]|1[12])-((0[1-9]|[12]\d)|3[01]))$/)
     end
 
     it "returns profiles with photos added regardless of how old they are" do
-      expect(subject.size).to be 3
+      expect(items.size).to be 3
     end
 
     it "returns expected dataset items" do
       expected_items.each do |item|
-        expect(subject).to include item
+        expect(items).to include item
       end
     end
   end

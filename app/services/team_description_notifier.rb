@@ -15,7 +15,7 @@ module TeamDescriptionNotifier
       group.leaders.each do |leader|
         ReminderMailer.team_description_missing(leader, group).deliver_later
       end
-      group.update!(description_reminder_email_at: Time.zone.now)
+      group.update(description_reminder_email_at: Time.zone.now) # rubocop:disable Rails/SaveBang
     end
   end
 

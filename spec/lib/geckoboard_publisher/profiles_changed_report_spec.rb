@@ -21,7 +21,7 @@ RSpec.describe GeckoboardPublisher::ProfilesChangedReport, geckoboard: true do
   end
 
   describe "#items", versioning: true do
-    subject { described_class.new.items }
+    subject(:items) { described_class.new.items }
 
     let(:expected_items) do
       [
@@ -64,9 +64,9 @@ RSpec.describe GeckoboardPublisher::ProfilesChangedReport, geckoboard: true do
         Person.last.update!(description: "description changed")
       end
       Timecop.freeze(Date.parse("30-JUN-2016")) { Person.destroy_all }
+      Timecop.freeze Date.parse("01-SEP-2016")
     end
 
-    before { Timecop.freeze Date.parse("01-SEP-2016") }
     after { Timecop.return }
 
     it { expect(PaperTrail).to be_enabled }
@@ -74,13 +74,13 @@ RSpec.describe GeckoboardPublisher::ProfilesChangedReport, geckoboard: true do
     include_examples "returns valid items structure"
 
     it "returns dates to day precision in ISO 8601 format - YYYY-MM-DD" do
-      expect(subject.first[:date]).to match(/^(\d{4}-(0[1-9]|1[12])-((0[1-9]|[12]\d)|3[01]))$/)
+      expect(items.first[:date]).to match(/^(\d{4}-(0[1-9]|1[12])-((0[1-9]|[12]\d)|3[01]))$/)
     end
 
     it "returns expected dataset items" do
-      expect(subject.size).to be 4
+      expect(items.size).to be 4
       expected_items.each do |item|
-        expect(subject).to include item
+        expect(items).to include item
       end
     end
   end

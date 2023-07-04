@@ -3,8 +3,8 @@ shared_examples "geckoboard publishable report" do
 
   let(:client) { instance_double Geckoboard::Client }
   let(:datasets_client) { instance_double Geckoboard::DatasetsClient }
-  let(:dataset) { instance_double Geckoboard::Dataset }
-  let(:logger) { instance_double Rails.logger }
+  let(:dataset) { double Geckoboard::Dataset } # rubocop:disable RSpec/VerifiedDoubles
+  let(:logger) { double Rails.logger } # rubocop:disable RSpec/VerifiedDoubles
 
   it { expect(described_class).to have_constant name: :ITEMS_CHUNK_SIZE, value: 500 }
   it { expect(described_class).to have_constant name: :MAX_STRING_LENGTH, value: 100 }
@@ -57,8 +57,8 @@ shared_examples "geckoboard publishable report" do
   describe "#publish!" do
     it "creates (or finds) geckoboard dataset and replaces its data" do
       mock_expectations
-      allow(subject).to receive(:create_dataset!) # rubocop/disable RSpec/SubjectStub
-      allow(subject).to receive(:replace_dataset!).and_return true # rubocop/disable RSpec/SubjectStub
+      allow(subject).to receive(:create_dataset!) # rubocop:disable RSpec/SubjectStub
+      allow(subject).to receive(:replace_dataset!).and_return true # rubocop:disable RSpec/SubjectStub
       expect(subject.publish!).to be true
     end
 
@@ -71,12 +71,12 @@ shared_examples "geckoboard publishable report" do
       end
 
       it "by overwriting existing dataset when force specified" do
-        expect(subject).to receive(:overwrite!) # rubocop/disable RSpec/SubjectStub
+        expect(subject).to receive(:overwrite!) # rubocop:disable RSpec/SubjectStub
         subject.publish! force: true
       end
 
       it "by raising errors when force not specified" do
-        expect(subject).not_to receive(:overwrite!) # rubocop/disable RSpec/SubjectStub
+        expect(subject).not_to receive(:overwrite!) # rubocop:disable RSpec/SubjectStub
         expect { subject.publish! }.to raise_error Geckoboard::ConflictError
       end
     end

@@ -72,7 +72,7 @@ RSpec.describe PersonFormBuilder, type: :form_builder do
       allow(object).to receive(:class).and_return Person
     end
 
-    let(:object) { double("person") }
+    let(:object) { double("person") } # rubocop:disable RSpec/VerifiedDoubles
 
     let(:translations) do
       {

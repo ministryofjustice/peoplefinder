@@ -1,8 +1,7 @@
 require "rails_helper"
 
 describe DistinctMembershipQuery do
-  before(:all) do
-    clean_up_indexes_and_tables
+  before do
     PermittedDomain.find_or_create_by!(domain: "digital.justice.gov.uk")
     pf = create :group, name: "Peoplefinder Team"
     cccd = create :group, name: "CCCD"
@@ -17,10 +16,6 @@ describe DistinctMembershipQuery do
     create :membership, group_id: pf.id, person_id: dp.id, role: "Frontend Developer", leader: false
 
     create :membership, group_id: cccd.id, person_id: lc.id, role: "Service Manager", leader: true
-  end
-
-  after(:all) do
-    clean_up_indexes_and_tables
   end
 
   let(:group) { Group.where(name: "Peoplefinder Team").first }

@@ -37,7 +37,7 @@ private
       if Person.find_by(email: person.email)
         Rails.logger.warn "Person identified by email #{person.email} already exists. Skipping!"
       else
-        PersonCreator.new(person, nil, StateManagerCookie.static_create_and_save).create!
+        PersonCreator.new(person, nil, StateManagerCookie.static_create_and_save).create # rubocop:disable Rails/SaveBang
       end
     end
 

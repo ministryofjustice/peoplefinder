@@ -84,7 +84,7 @@ RSpec.describe EmailAddress do
     end
 
     it "is from a non-permitted domain" do
-      expect(described_class.new("me-at-example.co.uk")).not_to be_valid_address
+      expect(described_class.new("me@notpermitted.co.uk")).not_to be_valid_address
     end
 
     it "does not break the mail gem address_list initialiser" do

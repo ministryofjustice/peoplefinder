@@ -18,7 +18,7 @@ RSpec.describe ImageDimensionsValidator, type: :validator do
   end
 
   before do
-    allow(image_dimensions_instance).to receive(:upload_dimensions).and_return(width:, height:)
+    allow(image_dimensions_instance).to receive(:upload_dimensions).and_return(width:, height:) # rubocop:disable RSpec/SubjectStub
   end
 
   context "when image has dimensions less than minimum" do

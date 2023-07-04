@@ -16,8 +16,8 @@ describe "View group audit" do
   before do
     with_versioning do
       PaperTrail.request.whodunnit = author.id
-      group.update!(name:)
-      group.update! description:
+      group.update(name:) # rubocop:disable Rails/SaveBang
+      group.update(description:) # rubocop:disable Rails/SaveBang
     end
   end
 

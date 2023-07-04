@@ -16,7 +16,7 @@ RSpec.describe Token, type: :model do
   include PermittedDomainHelper
 
   let(:token) { build(:token) }
-  let(:person) { double(:person, email: "text.user@digital.justice.gov.uk") }
+  let(:person) { instance_double(Person, email: "text.user@digital.justice.gov.uk") }
 
   it "generates a token" do
     expect(token.value).to match(/\A[a-z0-9-]{36}\z/)
@@ -66,7 +66,7 @@ RSpec.describe Token, type: :model do
     before do
       # Seems like a smell, but if I don't then it kills all the expired records
       # before the individual specs run.
-      allow_any_instance_of(described_class).to receive(:remove_expired_tokens)
+      allow_any_instance_of(described_class).to receive(:remove_expired_tokens) # rubocop:disable RSpec/AnyInstance
       token.save!
     end
 
@@ -114,7 +114,9 @@ RSpec.describe Token, type: :model do
   end
 
   context "when creating a new token" do
-    let!(:expiring_tokens) { create_list(:token, 3) }
+    before do
+      create_list(:token, 3)
+    end
 
     it "enqueues delayed job for destroying expired tokens" do
       expect { token.save }.to have_delayed_job 1

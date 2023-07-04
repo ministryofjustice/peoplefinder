@@ -4,10 +4,8 @@ require_relative "shared_examples_for_notifiers"
 RSpec.describe NeverLoggedInNotifier, type: :service do
   include PermittedDomainHelper
 
-  subject { described_class }
-
   let(:person) { create(:person) }
-  let(:mailer) { double(ReminderMailer) }
+  let(:mailer) { instance_double(ReminderMailer) }
   let(:mailer_params) { [person] }
   let(:more_than_30_days_ago) { Time.zone.now - 31.days }
   let(:less_than_30_days_ago) { Time.zone.now - 30.days }
@@ -31,7 +29,7 @@ RSpec.describe NeverLoggedInNotifier, type: :service do
 
       it "does not send email to person" do
         expect(ReminderMailer).not_to receive(:never_logged_in)
-        subject.send_reminders
+        described_class.send_reminders
       end
     end
   end

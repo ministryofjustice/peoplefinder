@@ -1,7 +1,8 @@
 require "rails_helper"
 
+# rubocop:disable RSpec/InstanceVariable
 describe RailsHost do
-  context "staging" do
+  context "when staging" do
     before do
       @initial_env = ENV["ENV"]
       ENV["ENV"] = "staging"
@@ -28,7 +29,7 @@ describe RailsHost do
     end
   end
 
-  context "dev" do
+  context "when dev" do
     before do
       @initial_env = ENV["ENV"]
       ENV["ENV"] = "dev"
@@ -55,3 +56,4 @@ describe RailsHost do
     end
   end
 end
+# rubocop:enable RSpec/InstanceVariable

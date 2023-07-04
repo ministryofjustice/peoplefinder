@@ -4,7 +4,6 @@ describe "Login flow" do
   include PermittedDomainHelper
 
   let(:email) { "test.user@digital.justice.gov.uk" }
-  let!(:department) { create(:department) }
   let(:current_time) { Time.zone.now }
 
   let(:new_profile_page) { Pages::NewProfile.new }
@@ -188,7 +187,7 @@ describe "Login flow" do
 
         def with_alternative_email_scenario
           person = Person.find_by(email: "john.doe@digital.justice.gov.uk")
-          person.update!(secondary_email: "john.doe+1@digital.justice.gov.uk")
+          person.update(secondary_email: "john.doe+1@digital.justice.gov.uk") # rubocop:disable Rails/SaveBang
 
           then_the_confirmation_list_is_displayed_with count: 2
           and_i_select_first_namesake

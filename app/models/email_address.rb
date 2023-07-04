@@ -14,7 +14,7 @@ class EmailAddress
   end
 
   def permitted_domain?
-    valid_login_domains.any? { |pattern| pattern == domain }
+    valid_login_domains.any? { |pattern| pattern === domain } # rubocop:disable Style/CaseEquality
   end
 
   def valid_format?

@@ -25,14 +25,14 @@ describe "Searching feature", elastic: true do
     )
   end
 
-  before(:all) do
+  before(:all) do # rubocop:disable RSpec/BeforeAfterAll
     clean_up_indexes_and_tables
     create_test_data
     Person.import force: true
     Person.__elasticsearch__.refresh_index!
   end
 
-  after(:all) do
+  after(:all) do # rubocop:disable RSpec/BeforeAfterAll
     clean_up_indexes_and_tables
   end
 

@@ -287,9 +287,9 @@ describe "Person maintenance" do
       end
 
       it "Recording audit details" do
-        allow_any_instance_of(ActionDispatch::Request)
+        allow_any_instance_of(ActionDispatch::Request) # rubocop:disable RSpec/AnyInstance
           .to receive(:remote_ip).and_return("1.2.3.4")
-        allow_any_instance_of(ActionDispatch::Request)
+        allow_any_instance_of(ActionDispatch::Request) # rubocop:disable RSpec/AnyInstance
           .to receive(:user_agent).and_return("NCSA Mosaic/3.0 (Windows 95)")
 
         with_versioning do

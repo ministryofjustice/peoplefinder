@@ -88,8 +88,8 @@ RSpec.describe GroupsController, type: :controller do
     end
 
     it "sends all_people message to instance of group and paginates people results to 500 (to avoid server timeouts)" do
-      expect_any_instance_of(Group).to receive(:all_people).and_return people
-      expect(people).to receive(:paginate).with(page: "2", per_page: 500).and_return people
+      allow_any_instance_of(Group).to receive(:all_people).and_return people # rubocop:disable RSpec/AnyInstance
+      expect(people).to receive(:paginate).with(page: "2", per_page: 500)
       get_all_people
     end
   end

@@ -4,13 +4,11 @@ describe "Report a problem", js: true do
   include ActiveJobHelper
   include PermittedDomainHelper
 
-  before(:all) { Timecop.travel(Time.zone.at(1_410_298_020)) }
-
-  after(:all) { Timecop.return }
-
   before do
-    ActionMailer::Base.deliveries.clear
+    Timecop.travel(Time.zone.at(1_410_298_020))
   end
+
+  after { Timecop.return }
 
   context "when logged in" do
     let(:me) { create(:person) }

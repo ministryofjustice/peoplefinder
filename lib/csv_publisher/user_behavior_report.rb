@@ -58,7 +58,7 @@ module CsvPublisher
     def save!(file)
       content = File.read(file)
       Report.where(name: self.class.report_name).delete_all
-      Report.create!(name: self.class.report_name, content:, extension: FILE_EXTENSION, mime_type: "text/csv")
+      Report.create(name: self.class.report_name, content:, extension: FILE_EXTENSION, mime_type: "text/csv") # rubocop:disable Rails/SaveBang
     end
 
     def write!

@@ -212,7 +212,7 @@ RSpec.describe PersonCsvImporter, type: :service do
       end
 
       before do
-        allow_any_instance_of(described_class).to receive(:max_row_upload).and_return 1
+        allow_any_instance_of(described_class).to receive(:max_row_upload).and_return 1 # rubocop:disable RSpec/AnyInstance
       end
 
       it "errors include too many rows" do

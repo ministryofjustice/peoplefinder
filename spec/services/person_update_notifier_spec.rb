@@ -8,7 +8,7 @@ RSpec.describe PersonUpdateNotifier, type: :service do
 
   let(:person) { create(:person, login_count: 1) }
   let(:person_two) { create(:person, surname: "test_last_update", login_count: 1) }
-  let(:mailer) { double(ReminderMailer) }
+  let(:mailer) { instance_double(ReminderMailer) }
   let(:mailer_params) { [person] }
   let(:more_than_six_months_ago) { Time.zone.now - (6.months + 1.day) }
   let(:less_than_six_months_ago) { Time.zone.now - (6.months - 1.day) }

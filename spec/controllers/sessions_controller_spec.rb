@@ -10,7 +10,7 @@ RSpec.describe SessionsController, type: :controller do
   describe "GET new" do
     context "with supported browser" do
       before do
-        allow_any_instance_of(described_class).to receive(:supported_browser?).and_return true
+        allow_any_instance_of(described_class).to receive(:supported_browser?).and_return true # rubocop:disable RSpec/AnyInstance
         get :new
       end
 
@@ -21,7 +21,7 @@ RSpec.describe SessionsController, type: :controller do
 
     context "with unsupported browser" do
       before do
-        allow_any_instance_of(described_class).to receive(:supported_browser?).and_return false
+        allow_any_instance_of(described_class).to receive(:supported_browser?).and_return false # rubocop:disable RSpec/AnyInstance
         get :new
       end
 

@@ -93,10 +93,8 @@ describe UserUpdateMailer do
     end
 
     it "deserializes changes to create presenter objects" do
-      profile_changes_presenter = double(ProfileChangesPresenter).as_null_object
       expect(ProfileChangesPresenter).to receive(:deserialize)
-        .with(serialized_changes)
-        .and_return(profile_changes_presenter)
+        .with(serialized_changes).and_call_original
       mail
     end
 

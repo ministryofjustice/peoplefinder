@@ -5,7 +5,7 @@ class GroupUpdateService
   end
 
   def update(params)
-    @group.update!(params).tap { |ok| inform_subscribers if ok }
+    @group.update(params).tap { |ok| inform_subscribers if ok } # rubocop:disable Rails/SaveBang
   end
 
 private

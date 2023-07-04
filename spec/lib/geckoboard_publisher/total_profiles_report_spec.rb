@@ -19,7 +19,7 @@ RSpec.describe GeckoboardPublisher::TotalProfilesReport, geckoboard: true do
   end
 
   describe "#items" do
-    subject { described_class.new.items }
+    subject(:items) { described_class.new.items }
 
     let(:expected_items) do
       [
@@ -43,21 +43,21 @@ RSpec.describe GeckoboardPublisher::TotalProfilesReport, geckoboard: true do
       create(:person, created_at: Date.parse("01-MAR-2015 13:32"))
       create(:person, created_at: Date.parse("21-JUNE-2016"))
       create(:person, created_at: Date.parse("21-AUG-2016"))
+      Timecop.freeze Date.parse("01-SEP-2016")
     end
 
-    before { Timecop.freeze Date.parse("01-SEP-2016") }
     after { Timecop.return }
 
     include_examples "returns valid items structure"
 
     it "returns dates to day precision in ISO 8601 format - YYYY-MM-DD" do
-      expect(subject.first[:created_at]).to match(/^(\d{4}-(0[1-9]|1[12])-((0[1-9]|[12]\d)|3[01]))$/)
+      expect(items.first[:created_at]).to match(/^(\d{4}-(0[1-9]|1[12])-((0[1-9]|[12]\d)|3[01]))$/)
     end
 
     it "returns expected dataset items" do
-      expect(subject.size).to be 3
+      expect(items.size).to be 3
       expected_items.each do |item|
-        expect(subject).to include item
+        expect(items).to include item
       end
     end
   end

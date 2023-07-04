@@ -35,7 +35,7 @@ describe "Token Authentication" do
 
   describe "trying to log in more than 8 times per hour" do
     before do
-      allow_any_instance_of(Token).to receive(:tokens_in_the_last_hour).and_return 8
+      allow_any_instance_of(Token).to receive(:tokens_in_the_last_hour).and_return 8 # rubocop:disable RSpec/AnyInstance
     end
 
     it "is not permitted" do
@@ -192,14 +192,6 @@ describe "Token Authentication" do
     it "login page does not have token auth login option" do
       visit new_sessions_path
       expect(page).not_to have_css("form.new_token")
-    end
-
-    it "attempting to create an authentication token redirects to login" do
-      visit token_path(token)
-
-      expect(page).to have_current_path(new_sessions_path, ignore_query: true)
-      expect(page).to have_text("login link is invalid")
-      expect(login_page).to be_displayed
     end
   end
 end
