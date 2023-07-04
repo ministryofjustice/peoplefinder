@@ -82,7 +82,7 @@ class GroupsController < ApplicationController
     authorize @group
 
     next_page = @group.parent ? group_path(@group.parent) : groups_path
-    @group.destroy!
+    @group.destroy # rubocop:disable Rails/SaveBang
     notice :group_deleted, group: @group
     redirect_to next_page
   end

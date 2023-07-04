@@ -36,7 +36,7 @@ private
   def current_user
     @current_user ||= load_user
   rescue ActiveRecord::RecordNotFound
-    session.destroy!
+    session.destroy # rubocop:disable Rails/SaveBang
   end
   helper_method :current_user
 
