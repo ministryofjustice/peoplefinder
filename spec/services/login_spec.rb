@@ -3,29 +3,29 @@ require "rails_helper"
 RSpec.describe Login, type: :service do
   include PermittedDomainHelper
 
-  subject(:service) { described_class.new(session, person) }
+  let(:service) { described_class.new(session, person) }
 
   let(:session) { {} }
   let(:person) { create(:person) }
 
   describe "#login" do
-    subject { service.login }
+    subject(:login) { service.login }
 
     let(:current_time) { Time.zone.now }
 
     it "increments login count" do
-      expect { service }.to change(person, :login_count).by(1)
+      expect { login }.to change(person, :login_count).by(1)
     end
 
     it "stores the current time of login" do
       Timecop.freeze(current_time) do
-        expect { service }.to change(person, :last_login_at)
+        expect { login }.to change(person, :last_login_at)
         expect(person.last_login_at.change(usec: 0)).to eq(current_time.change(usec: 0))
       end
     end
 
     it "stores the person id in the session" do
-      expect { service }.to change { session[Login::SESSION_KEY] }.from(nil).to(person.id)
+      expect { login }.to change { session[Login::SESSION_KEY] }.from(nil).to(person.id)
     end
   end
 

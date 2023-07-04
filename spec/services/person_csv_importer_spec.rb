@@ -28,13 +28,11 @@ RSpec.describe PersonCsvImporter, type: :service do
   end
 
   describe "#valid?" do
-    subject(:valid) { importer.valid? }
-
     let(:csv_object) { CSV.new(csv, headers: true).read }
     let(:csv_headers) { csv_object.headers.map(&:strip).map(&:to_sym) }
     let(:all_headers) { described_class::REQUIRED_COLUMNS + described_class::OPTIONAL_COLUMNS }
 
-    before { valid }
+    before { importer.valid? }
 
     context "when csv has valid format" do
       context "when all required and optional columns provided" do
@@ -49,7 +47,7 @@ RSpec.describe PersonCsvImporter, type: :service do
           expect(csv_headers).to match_array all_headers
         end
 
-        it { is_expected.to be true }
+        it { is_expected.to be_valid }
 
         it "errors are empty" do
           expect(importer.errors).to be_empty
@@ -65,7 +63,7 @@ RSpec.describe PersonCsvImporter, type: :service do
           CSV
         end
 
-        it { is_expected.to be true }
+        it { is_expected.to be_valid }
 
         it "errors are empty" do
           expect(importer.errors).to be_empty
@@ -82,7 +80,7 @@ RSpec.describe PersonCsvImporter, type: :service do
           CSV
         end
 
-        it { is_expected.to be false }
+        it { is_expected.not_to be_valid }
 
         it "errors contain missing columns" do
           expect(importer.errors).to match_array([
@@ -117,7 +115,7 @@ RSpec.describe PersonCsvImporter, type: :service do
         ]
       end
 
-      it { is_expected.to be false }
+      it { is_expected.not_to be_valid }
 
       it "errors contain missing columns" do
         expect(importer.errors).to match_array errors
@@ -142,7 +140,7 @@ RSpec.describe PersonCsvImporter, type: :service do
           ]
         end
 
-        it { is_expected.to be false }
+        it { is_expected.not_to be_valid }
 
         it "errors contain missing columns" do
           expect(importer.errors).to match_array errors
@@ -164,7 +162,7 @@ RSpec.describe PersonCsvImporter, type: :service do
           ]
         end
 
-        it { is_expected.to be false }
+        it { is_expected.not_to be_valid }
 
         it "errors contain unrecognized columns" do
           expect(importer.errors).to match_array errors
@@ -187,7 +185,7 @@ RSpec.describe PersonCsvImporter, type: :service do
         ]
       end
 
-      it { is_expected.to be false }
+      it { is_expected.not_to be_valid }
 
       it "errors contain too many columns" do
         expect(importer.errors).to match_array errors
@@ -195,7 +193,7 @@ RSpec.describe PersonCsvImporter, type: :service do
     end
 
     context "when the CSV has too many rows" do
-      subject(:importer) { described_class.new(csv, creation_options) }
+      subject(:importer_2) { described_class.new(csv, creation_options) }
 
       let(:csv) do
         <<-CSV.strip_heredoc
@@ -213,11 +211,13 @@ RSpec.describe PersonCsvImporter, type: :service do
 
       before do
         allow_any_instance_of(described_class).to receive(:max_row_upload).and_return 1 # rubocop:disable RSpec/AnyInstance
+        importer_2.valid?
       end
 
-      it "errors include too many rows" do
-        expect(importer.valid?).to be false
-        expect(importer.errors).to match_array errors
+      it { is_expected.not_to be_valid }
+
+      it "errors contain missing columns" do
+        expect(importer_2.errors).to match_array errors
       end
     end
   end

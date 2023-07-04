@@ -19,15 +19,15 @@ RSpec.describe MailHelper, type: :helper do
   end
 
   describe "#easy_copy_link_to" do
-    subject(:link_to) { easy_copy_link_to url: "www.example.com" }
+    subject(:method) { easy_copy_link_to url: "www.example.com" }
 
     it "returns link" do
-      expect(link_to).to have_link "www.example.com", href: "www.example.com"
+      expect(method).to have_link "www.example.com", href: "www.example.com"
     end
 
     it "wraps link with padded div to ensure easy copy and paste in email clients (including lotus notes)" do
-      expect(link_to).to have_selector "div"
-      expect(link_to).to have_selector('div[style*="padding: 10px 25px"]')
+      expect(method).to have_selector "div"
+      expect(method).to have_selector('div[style*="padding: 10px 25px"]')
     end
   end
 

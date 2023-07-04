@@ -63,12 +63,12 @@ module SpecSupport
       end
     end
 
-    def click_edit_profile(matcher = :first)
-      click_link("Edit this profile", match: matcher)
+    def click_edit_profile
+      click_link("Edit this profile", match: :first)
     end
 
-    def click_delete_profile(matcher = :first)
-      click_link("Delete this profile", match: matcher)
+    def click_delete_profile
+      click_link("Delete this profile", match: :first)
     end
 
     def fill_in_membership_details(team_name)

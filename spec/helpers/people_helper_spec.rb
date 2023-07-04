@@ -82,20 +82,16 @@ RSpec.describe PeopleHelper, type: :helper do
     end
 
     context "when environments using local storage" do
-      subject(:tag) { profile_image_tag(person, options) }
-
       before do
         options.delete(:version)
       end
 
       it "uses local file as image src" do
-        expect(tag).to match(/.*src=".*\/uploads\/peoplefinder\/profile_photo\/image\/\d+\/medium_.*\.png".*/)
+        expect(profile_image_tag(person, options)).to match(/.*src=".*\/uploads\/peoplefinder\/profile_photo\/image\/\d+\/medium_.*\.png".*/)
       end
     end
 
     context "when environments using S3 storage" do
-      subject(:tag) { profile_image_tag(person, options) }
-
       let(:version) do
         double "version", # rubocop:disable RSpec/VerifiedDoubles
                file:
@@ -114,7 +110,7 @@ RSpec.describe PeopleHelper, type: :helper do
 
       it "uses pre-signed, time-limited, url for image src" do
         expect(file).to receive(:authenticated_url)
-        expect(tag).to include file.authenticated_url
+        expect(profile_image_tag(person, options)).to include file.authenticated_url
       end
     end
   end
