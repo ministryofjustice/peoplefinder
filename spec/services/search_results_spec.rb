@@ -11,7 +11,7 @@ RSpec.describe SearchResults, type: :service do
   it { is_expected.to delegate_method(:present?).to(:set) }
 
   it "defaults to empty set and false" do
-    expect(subject.set).to be_empty
-    expect(subject.contains_exact_match).to eq false
+    expect(described_class.new.set).to be_empty
+    expect(described_class.new.contains_exact_match).to eq false
   end
 end

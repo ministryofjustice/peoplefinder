@@ -125,18 +125,18 @@ RSpec.describe PeopleController, type: :controller do
     end
 
     describe "when trying to create a super admin" do
-      subject { assigns(:person) }
+      subject(:person) { assigns(:person) }
 
       before do
         post :create, params: { person: attributes_for(:super_admin).merge(default_membership_attributes) }
       end
 
       it "creates the person" do
-        expect(subject).to be_persisted
+        expect(person).to be_persisted
       end
 
       it "creates person, but not as super admin" do
-        expect(subject).not_to be_super_admin
+        expect(person).not_to be_super_admin
       end
     end
   end

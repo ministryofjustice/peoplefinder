@@ -28,13 +28,13 @@ RSpec.describe PersonCsvImporter, type: :service do
   end
 
   describe "#valid?" do
-    subject { importer.valid? }
+    subject(:valid) { importer.valid? }
 
     let(:csv_object) { CSV.new(csv, headers: true).read }
     let(:csv_headers) { csv_object.headers.map(&:strip).map(&:to_sym) }
     let(:all_headers) { described_class::REQUIRED_COLUMNS + described_class::OPTIONAL_COLUMNS }
 
-    before { subject }
+    before { valid }
 
     context "when csv has valid format" do
       context "when all required and optional columns provided" do
@@ -241,11 +241,11 @@ RSpec.describe PersonCsvImporter, type: :service do
           .to receive(:perform_later)
           .with(csv, serialized_group_ids)
           .once
-        subject.import
+        importer.import
       end
 
       it "enqueues the person import job" do
-        subject.import
+        importer.import
         expect(PersonImportJob).to have_been_enqueued.once
       end
     end
@@ -264,7 +264,7 @@ RSpec.describe PersonCsvImporter, type: :service do
       end
 
       it "returns nil on import" do
-        expect(subject.import).to be_nil
+        expect(importer.import).to be_nil
       end
     end
   end

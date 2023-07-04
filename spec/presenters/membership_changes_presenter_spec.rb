@@ -41,7 +41,7 @@ RSpec.describe MembershipChangesPresenter, type: :presenter do
   it_behaves_like "a changes_presenter"
 
   describe "#raw" do
-    subject { described_class.new(person.membership_changes).raw }
+    subject(:raw) { described_class.new(person.membership_changes).raw }
 
     let(:membership_changes) do
       [
@@ -64,14 +64,14 @@ RSpec.describe MembershipChangesPresenter, type: :presenter do
     end
 
     it "returns all original changes" do
-      expect(subject).to be_a Hash
-      expect(subject.size).to eq 3
-      expect(subject.values).to include(*membership_changes)
+      expect(raw).to be_a Hash
+      expect(raw.size).to eq 3
+      expect(raw.values).to include(*membership_changes)
     end
   end
 
   describe "#changes" do
-    subject { described_class.new(person.membership_changes).changes }
+    subject(:changes) { described_class.new(person.membership_changes).changes }
 
     let(:membership_changes_for_ds) do
       {
@@ -106,15 +106,15 @@ RSpec.describe MembershipChangesPresenter, type: :presenter do
     it_behaves_like "#changes on changes_presenter"
 
     it "returns expected format of data for additions" do
-      expect(subject).to include membership_changes_for_ds
+      expect(changes).to include membership_changes_for_ds
     end
 
     it "returns expected format of data for removals" do
-      expect(subject).to include membership_changes_for_moj
+      expect(changes).to include membership_changes_for_moj
     end
 
     it "returns a set for each membership" do
-      expect(subject.size).to be 3
+      expect(changes.size).to be 3
     end
   end
 

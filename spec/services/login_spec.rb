@@ -14,35 +14,33 @@ RSpec.describe Login, type: :service do
     let(:current_time) { Time.zone.now }
 
     it "increments login count" do
-      expect { subject }.to change(person, :login_count).by(1)
+      expect { service }.to change(person, :login_count).by(1)
     end
 
     it "stores the current time of login" do
       Timecop.freeze(current_time) do
-        expect { subject }.to change(person, :last_login_at)
+        expect { service }.to change(person, :last_login_at)
         expect(person.last_login_at.change(usec: 0)).to eq(current_time.change(usec: 0))
       end
     end
 
     it "stores the person id in the session" do
-      expect { subject }.to change { session[Login::SESSION_KEY] }.from(nil).to(person.id)
+      expect { service }.to change { session[Login::SESSION_KEY] }.from(nil).to(person.id)
     end
   end
 
   describe "#logout" do
-    subject { service.logout }
-
     before do
       session[Login::SESSION_KEY] = person.id
     end
 
     it "removes the person id from the session" do
-      expect { subject }.to change { session[Login::SESSION_KEY] }.to(nil)
+      expect { service.logout }.to change { session[Login::SESSION_KEY] }.to(nil)
     end
   end
 
   describe ".current_user" do
-    subject { described_class.current_user(session) }
+    subject(:current_user) { described_class.current_user(session) }
 
     before do
       session[Login::SESSION_KEY] = person_id
@@ -52,7 +50,7 @@ RSpec.describe Login, type: :service do
       let(:person_id) { person.id }
 
       it "returns the currently logged in person" do
-        expect(subject).to eql(person)
+        expect(current_user).to eql(person)
       end
     end
 
@@ -66,7 +64,7 @@ RSpec.describe Login, type: :service do
       let(:person_id) { "invalid" }
 
       it "raises ActiveRecord::RecordNotFound error" do
-        expect { subject }.to raise_error(ActiveRecord::RecordNotFound)
+        expect { current_user }.to raise_error(ActiveRecord::RecordNotFound)
       end
     end
   end

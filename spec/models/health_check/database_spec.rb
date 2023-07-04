@@ -20,7 +20,7 @@ describe HealthCheck::Database do
     end
 
     it "returns false if the database is not accessible with our credentials" do
-      allow(subject).to receive(:execute_simple_select_on_database) # rubocop:disable RSpec/SubjectStub
+      allow(database).to receive(:execute_simple_select_on_database) # rubocop:disable RSpec/SubjectStub
         .and_raise(PG::ConnectionBad.new("Database has gone away"))
       result = database.accessible?
       expect(result).to be false

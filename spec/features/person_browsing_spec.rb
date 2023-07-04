@@ -10,20 +10,6 @@ describe "Person browsing" do
     token_log_in_as "test.user@digital.justice.gov.uk"
   end
 
-  it "Using breadcrumbs on a profile page", skip: "HELP REQUIRED" do
-    group_a = create_group_hierarchy("Ministry of Justice", "Apple", "Biwa")
-    group_b = create_group_hierarchy("Ministry of Justice", "Cherry", "Durian")
-    person = create(:person)
-    create(:membership, person:, group: group_a)
-    create(:membership, person:, group: group_b)
-
-    visit group_path(group_b)
-    click_link person.name
-
-    expect(page).to have_selector("dd.breadcrumbs ol li a", text: "Biwa")
-    expect(page).to have_selector("dd.breadcrumbs ol li a", text: "Durian")
-  end
-
   describe "Days worked" do
     let(:weekday_person) { create(:person, works_monday: true, works_friday: true) }
     let(:weekend_person) { create(:person, works_saturday: true, works_sunday: true) }

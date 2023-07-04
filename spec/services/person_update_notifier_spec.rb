@@ -4,8 +4,6 @@ require_relative "shared_examples_for_notifiers"
 RSpec.describe PersonUpdateNotifier, type: :service do
   include PermittedDomainHelper
 
-  subject { described_class }
-
   let(:person) { create(:person, login_count: 1) }
   let(:person_two) { create(:person, surname: "test_last_update", login_count: 1) }
   let(:mailer) { instance_double(ReminderMailer) }
@@ -32,7 +30,7 @@ RSpec.describe PersonUpdateNotifier, type: :service do
 
       it "does not send email to person" do
         expect(ReminderMailer).not_to receive(:person_profile_update)
-        subject.send_reminders
+        described_class.send_reminders
       end
     end
   end

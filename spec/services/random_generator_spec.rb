@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe RandomGenerator do
   include PermittedDomainHelper
 
-  subject { described_class.new(group) }
+  subject(:random_generator) { described_class.new(group) }
 
   let(:group) { create(:group) }
 
@@ -13,7 +13,7 @@ RSpec.describe RandomGenerator do
     let!(:grand_child_group) { create(:group, parent: child_group) }
 
     before do
-      subject.clear
+      random_generator.clear
     end
 
     it "deletes all ancestors" do
@@ -33,7 +33,7 @@ RSpec.describe RandomGenerator do
     let(:domain) { "digital.justice.gov.uk" }
 
     before do
-      subject.generate(groups_levels, groups_per_level, people_per_group, domain)
+      random_generator.generate(groups_levels, groups_per_level, people_per_group, domain)
     end
 
     it "adds permitted domain" do
@@ -51,7 +51,7 @@ RSpec.describe RandomGenerator do
 
   describe "#generate_members" do
     it "generates people for the specified leaf group" do
-      expect { subject.generate_members(3) }.to change(group.people, :count).by 3
+      expect { random_generator.generate_members(3) }.to change(group.people, :count).by 3
     end
   end
 end

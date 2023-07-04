@@ -157,37 +157,35 @@ RSpec.describe "Completion" do
   end
 
   describe ".inadequate_profiles" do
-    subject { Person.inadequate_profiles }
-
     let!(:person) { create(:person, completed_attributes) }
 
     it "is empty when all attributes are populated" do
-      expect(subject).to be_empty
+      expect(Person.inadequate_profiles).to be_empty
     end
 
     it "returns the person when there is no primary phone number" do
       Person.update_all "primary_phone_number = ''"
-      expect(subject).to include(person)
+      expect(Person.inadequate_profiles).to include(person)
     end
 
     it "returns the person when there is no location in building" do
       Person.update_all "location_in_building = ''"
-      expect(subject).to include(person)
+      expect(Person.inadequate_profiles).to include(person)
     end
 
     it "returns the person when there is no building" do
       Person.update_all "building = ''"
-      expect(subject).to include(person)
+      expect(Person.inadequate_profiles).to include(person)
     end
 
     it "returns the person when there is no city" do
       Person.update_all "city = ''"
-      expect(subject).to include(person)
+      expect(Person.inadequate_profiles).to include(person)
     end
 
     it "returns the person when there is no image" do
       Person.update_all "profile_photo_id = null"
-      expect(subject).to include(person)
+      expect(Person.inadequate_profiles).to include(person)
     end
   end
 end

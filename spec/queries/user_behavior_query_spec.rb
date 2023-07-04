@@ -32,7 +32,7 @@ describe UserBehaviorQuery, versioning: true do
   end
 
   describe "#call" do
-    subject { described_class.new.call }
+    subject(:call) { described_class.new.call }
 
     let(:expected_sql) do
       <<~SQL
@@ -59,31 +59,31 @@ describe UserBehaviorQuery, versioning: true do
     end
 
     it "generates the expected sql" do
-      expect(subject.to_sql).to match_sql expected_sql
+      expect(call.to_sql).to match_sql expected_sql
     end
 
     it "returns an arel relation" do
-      expect(subject).to be_an_instance_of(Person.const_get(:ActiveRecord_Relation))
+      expect(call).to be_an_instance_of(Person.const_get(:ActiveRecord_Relation))
     end
 
     it "returns expected columns" do
       expected_attributes.each do |attribute|
-        expect(subject.first).to respond_to attribute
+        expect(call.first).to respond_to attribute
       end
     end
 
     it "returns expected people records" do
-      expect(subject).to include(person1, person2, person3)
+      expect(call).to include(person1, person2, person3)
     end
 
     it "returns person record for each persons membership" do
-      counts = subject.each_with_object(Hash.new(0)) { |rec, count| count[rec.full_name] += 1 }
+      counts = call.each_with_object(Hash.new(0)) { |rec, count| count[rec.full_name] += 1 }
       expect(counts[person1.name]).to be 3
     end
   end
 
   describe "#data" do
-    subject { described_class.new.data }
+    subject(:data) { described_class.new.data }
 
     let(:expected_collections) do
       [
@@ -151,19 +151,19 @@ describe UserBehaviorQuery, versioning: true do
     end
 
     it "returns an array of hashes" do
-      expect(subject).to be_an_instance_of(Array)
-      expect(subject.first).to be_an_instance_of(Hash)
+      expect(data).to be_an_instance_of(Array)
+      expect(data.first).to be_an_instance_of(Hash)
     end
 
     it "returns expected attributes" do
       expected_attributes.each do |attribute|
-        expect(subject.first).to have_key attribute
+        expect(data.first).to have_key attribute
       end
     end
 
     it "returns expected collections and format" do
       # binding.pry
-      expect(subject).to match_array expected_collections
+      expect(data).to match_array expected_collections
     end
   end
 end

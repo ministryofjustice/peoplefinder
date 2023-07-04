@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe PersonChangesPresenter, type: :presenter do
   include PermittedDomainHelper
 
-  subject { described_class.new(person.changes) }
+  subject(:presenter) { described_class.new(person.changes) }
 
   let(:old_email) { "test.user@digital.justice.gov.uk" }
   let(:new_email) { "changed.user@digital.justice.gov.uk" }
@@ -22,23 +22,23 @@ RSpec.describe PersonChangesPresenter, type: :presenter do
     before { person.email = new_email }
 
     it "delegates [] to #changes" do
-      expect(subject[:email]).to eq subject.changes[:email]
+      expect(presenter[:email]).to eq presenter.changes[:email]
     end
   end
 
   describe "#raw" do
-    subject { described_class.new(person.changes).raw }
+    subject(:raw) { described_class.new(person.changes).raw }
 
     before { person.email = new_email }
 
     it "returns orginal changes" do
-      expect(subject).to be_a Hash
-      expect(subject[:email].first).to eql old_email
+      expect(raw).to be_a Hash
+      expect(raw[:email].first).to eql old_email
     end
   end
 
   describe "#changes" do
-    subject { described_class.new(person.changes).changes }
+    subject(:changes) { described_class.new(person.changes).changes }
 
     let(:valid_format) do
       {
@@ -68,22 +68,22 @@ RSpec.describe PersonChangesPresenter, type: :presenter do
     it_behaves_like "#changes on changes_presenter"
 
     it "returns expected format of data" do
-      expect(subject).to eql valid_format
+      expect(changes).to eql valid_format
     end
 
     it "ignores empty strings as changes" do
-      expect(subject).not_to have_key :description
+      expect(changes).not_to have_key :description
     end
 
     it "returns single message for work days" do
       person.works_saturday = true
       person.works_monday = false
-      expect(subject).to include valid_workdays
+      expect(changes).to include valid_workdays
     end
   end
 
   describe "#serialize" do
-    subject { described_class.new(person.changes).serialize }
+    subject(:serialized) { described_class.new(person.changes).serialize }
 
     let(:valid_json_hash) do
       {
@@ -105,8 +105,8 @@ RSpec.describe PersonChangesPresenter, type: :presenter do
     include_examples "serializability"
 
     it "returns JSON of raw changes only" do
-      expect(subject).to include_json(valid_json_hash)
-      expect(subject).not_to include_json(message: "Changed email from #{old_email} to #{new_email}")
+      expect(serialized).to include_json(valid_json_hash)
+      expect(serialized).not_to include_json(message: "Changed email from #{old_email} to #{new_email}")
     end
   end
 end

@@ -4,8 +4,6 @@ require_relative "shared_examples_for_notifiers"
 RSpec.describe TeamDescriptionNotifier, type: :service do
   include PermittedDomainHelper
 
-  subject { described_class }
-
   let(:person) { create(:person) }
   let(:group)  do
     team = create(:group)
@@ -42,7 +40,7 @@ RSpec.describe TeamDescriptionNotifier, type: :service do
         it "does not send email" do
           allow(Rails.configuration).to receive(:send_reminder_emails).and_return true
           expect(ReminderMailer).not_to receive(:team_description_missing)
-          subject.send_reminders
+          described_class.send_reminders
         end
       end
     end

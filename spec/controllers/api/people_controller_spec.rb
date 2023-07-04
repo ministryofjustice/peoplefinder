@@ -24,7 +24,7 @@ RSpec.describe Api::PeopleController, type: :controller do
 
       before do
         request.headers["AUTHORIZATION"] = token.value
-        get :show, params: { id: subject.to_param }
+        get :show, params: { id: person.to_param }
       end
 
       it "assigns the requested person as @person" do

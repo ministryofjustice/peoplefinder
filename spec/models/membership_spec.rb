@@ -16,20 +16,14 @@ require "rails_helper"
 
 RSpec.describe Membership, type: :model do
   include PermittedDomainHelper
-  subject { described_class.new }
 
   let(:moj) { create :department, name: "Ministry of Justice" }
 
   it { is_expected.to validate_presence_of(:person).on(:update) }
   it { is_expected.to validate_presence_of(:group).on(:update) }
 
-  it "is not a leader by default" do
-    expect(subject).not_to be_leader
-  end
-
-  it "is subscribed by default" do
-    expect(subject).to be_subscribed
-  end
+  it { is_expected.not_to be_leader }
+  it { is_expected.to be_subscribed }
 
   # The Permanent Secretary is whomever has a membership indicating
   # that they are the leader of the top-most team (a.k.a department,

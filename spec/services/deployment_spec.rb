@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe Deployment, type: :service do
-  subject(:environment) { described_class.new(environment) }
+  subject(:deployment) { described_class.new(environment) }
 
   context "when all environment variables are available" do
     let(:environment) do
@@ -20,7 +20,7 @@ RSpec.describe Deployment, type: :service do
         commit_id: "7cb26ffe8a2ead47837e28606743e4d31a31512d",
         build_tag: "0.5.25",
       }
-      expect(environment.info).to eq(expected)
+      expect(deployment.info).to eq(expected)
     end
   end
 
@@ -34,7 +34,7 @@ RSpec.describe Deployment, type: :service do
         commit_id: "unknown",
         build_tag: "unknown",
       }
-      expect(environment.info).to eq(expected)
+      expect(deployment.info).to eq(expected)
     end
   end
 

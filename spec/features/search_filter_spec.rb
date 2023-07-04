@@ -26,25 +26,25 @@ describe "Search results page" do
     it { is_expected.to be_displayed }
 
     it "has search bar" do
-      expect(subject).to have_search_form
+      expect(search_page).to have_search_form
       expect(search_page.search_form).to be_all_there
     end
 
     it "has search result summary" do
-      expect(subject).to have_search_result_summary
+      expect(search_page).to have_search_result_summary
     end
 
     it "has search filter sidebar" do
-      expect(subject).to have_search_filters_form
+      expect(search_page).to have_search_filters_form
       expect(search_page.search_filters_form).to be_all_there
     end
 
     it "has search results" do
-      expect(subject).to have_search_results
+      expect(search_page).to have_search_results
     end
 
     it "has search footer" do
-      expect(subject).to have_search_footer
+      expect(search_page).to have_search_footer
       expect(search_page.search_footer).to be_all_there
     end
   end

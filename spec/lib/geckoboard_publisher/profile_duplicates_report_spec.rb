@@ -20,7 +20,7 @@ RSpec.describe GeckoboardPublisher::ProfileDuplicatesReport, geckoboard: true do
   end
 
   describe "#items" do
-    subject { described_class.new.items }
+    subject(:items) { described_class.new.items }
 
     let(:expected_items) do
       [
@@ -48,9 +48,9 @@ RSpec.describe GeckoboardPublisher::ProfileDuplicatesReport, geckoboard: true do
     include_examples "returns valid items structure"
 
     it "returns expected dataset items" do
-      expect(subject.size).to be 2
+      expect(items.size).to be 2
       expected_items.each do |item|
-        expect(subject).to include item
+        expect(items).to include item
       end
     end
 
@@ -64,7 +64,7 @@ RSpec.describe GeckoboardPublisher::ProfileDuplicatesReport, geckoboard: true do
       end
 
       it "truncates email list to geckoboard max string length" do
-        expect(subject.first[:emails]).to eq subject.first[:emails][0..9]
+        expect(items.first[:emails]).to eq items.first[:emails][0..9]
       end
     end
   end

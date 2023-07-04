@@ -4,6 +4,12 @@ describe "Make a suggestion about a profile", js: true do
   include ActiveJobHelper
   include PermittedDomainHelper
 
+  subject(:person) do
+    create(:person).tap do |subject|
+      create(:membership, person: subject, group:)
+    end
+  end
+
   let(:me) { create(:person) }
   let(:leader) { create(:person) }
   let(:group) do
@@ -11,21 +17,16 @@ describe "Make a suggestion about a profile", js: true do
       create(:membership, person: leader, group:, leader: true)
     end
   end
-  let(:subject) do
-    create(:person).tap do |subject|
-      create(:membership, person: subject, group:)
-    end
-  end
 
   before(:each, user: :regular) do
     token_log_in_as(me.email)
-    visit person_path(subject)
+    visit person_path(person)
     click_link "Help improve this profile", match: :first
   end
 
   before(:each, user: :readonly) do
     mock_readonly_user
-    visit person_path(subject)
+    visit person_path(person)
   end
 
   it "Readonly user tries to improve profile", js: false, user: :readonly do
