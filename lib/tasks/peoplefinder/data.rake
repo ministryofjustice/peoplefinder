@@ -5,6 +5,8 @@ class DemoGroupMemberships
 
   def_delegators :group_membership, :each, :map, :[], :sample, :size
 
+  DOMAIN = "fake-moj.justice.gov.uk".freeze
+
   def initialize
     create_groups
   end
@@ -41,10 +43,6 @@ end
 namespace :peoplefinder do
   namespace :data do
     require Rails.root.join("app/services/person_csv_importer")
-
-    before do
-      stub_const(DOMAIN, "fake-moj.justice.gov.uk".freeze)
-    end
 
     # peoplefinder:data:demo
     #
