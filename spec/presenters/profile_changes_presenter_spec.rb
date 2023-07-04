@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe ProfileChangesPresenter, type: :presenter do
   include PermittedDomainHelper
 
-  subject(:presenter) { described_class.new(person.all_changes) }
+  subject { described_class.new(person.all_changes) }
 
   let(:old_email) { "test.user@digital.justice.gov.uk" }
   let(:new_email) { "changed.user@digital.justice.gov.uk" }
@@ -61,11 +61,11 @@ RSpec.describe ProfileChangesPresenter, type: :presenter do
   it_behaves_like "a changes_presenter"
 
   describe "#raw" do
-    subject { described_class.new(person.all_changes).raw }
+    subject(:raw) { described_class.new(person.all_changes).raw }
 
     it "returns orginal changes" do
-      expect(presenter).to be_a Hash
-      expect(presenter[:email].first).to eql old_email
+      expect(raw).to be_a Hash
+      expect(raw[:email].first).to eql old_email
     end
   end
 
