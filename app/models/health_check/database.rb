@@ -3,7 +3,7 @@ module HealthCheck
     def accessible?
       begin
         tuple = execute_simple_select_on_database
-        result = tuple.to_a == [{ 'result' => 1 }]
+        result = tuple.to_a == [{ "result" => 1 }]
       rescue StandardError => e
         log_unknown_error(e)
         result = false
@@ -22,10 +22,10 @@ module HealthCheck
       result
     end
 
-    private
+  private
 
     def execute_simple_select_on_database
-      ActiveRecord::Base.connection.execute('select 1 as result')
+      ActiveRecord::Base.connection.execute("select 1 as result")
     end
 
     def log_error

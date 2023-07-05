@@ -1,27 +1,27 @@
-require 'spec_helper'
+require "spec_helper"
 
 RSpec.describe HealthCheckController, type: :controller do
-  describe 'INDEX' do
-    it 'returns  200 if successful' do
-      service = double HealthCheckService
+  describe "INDEX" do
+    it "returns  200 if successful" do
+      service = instance_double HealthCheckService
       report = HealthCheckService::HealthCheckReport.new(
-        '200', 'All Components OK'
+        "200", "All Components OK"
       )
-      expect(HealthCheckService).to receive(:new).and_return(service)
-      expect(service).to receive(:report).and_return(report)
+      allow(HealthCheckService).to receive(:new).and_return(service)
+      allow(service).to receive(:report).and_return(report)
 
       get :index
       expect(response.status).to eq(200)
       expect(response.body).to eq report.to_json
     end
 
-    it 'returns 500 if unsuccessful' do
-      service = double HealthCheckService
+    it "returns 500 if unsuccessful" do
+      service = instance_double HealthCheckService
       report = HealthCheckService::HealthCheckReport.new(
-        '500', ['Error message 1', 'Error message 2']
+        "500", ["Error message 1", "Error message 2"]
       )
-      expect(HealthCheckService).to receive(:new).and_return(service)
-      expect(service).to receive(:report).and_return(report)
+      allow(HealthCheckService).to receive(:new).and_return(service)
+      allow(service).to receive(:report).and_return(report)
 
       get :index
       expect(response.status).to eq(500)

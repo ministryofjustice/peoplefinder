@@ -1,9 +1,8 @@
 class PersonEmailController < ApplicationController
-
   include PersonEmailHelper
 
-  skip_before_action :ensure_user, only: [:edit, :update]
-  before_action :set_person, :set_auth, :ensure_auth, only: [:edit, :update]
+  skip_before_action :ensure_user, only: %i[edit update]
+  before_action :set_person, :set_auth, :ensure_auth, only: %i[edit update]
   before_action :set_new_emails, only: [:edit]
 
   def edit
@@ -20,7 +19,7 @@ class PersonEmailController < ApplicationController
     end
   end
 
-  private
+private
 
   def token_value
     params[:token_value] || params.dig(:person, :token_value)
@@ -68,9 +67,9 @@ class PersonEmailController < ApplicationController
     params.require(:person).permit(:email, :secondary_email)
   end
 
-  def update_and_login person
-    updater = PersonUpdater.new(person: person,
-                                current_user: current_user,
+  def update_and_login(person)
+    updater = PersonUpdater.new(person:,
+                                current_user:,
                                 state_cookie: StateManagerCookie.new(cookies),
                                 session_id: session.id)
     updater.update!
@@ -80,7 +79,6 @@ class PersonEmailController < ApplicationController
   end
 
   def not_found
-    raise ActionController::RoutingError, 'Not Found'
+    raise ActionController::RoutingError, "Not Found"
   end
-
 end

@@ -1,6 +1,6 @@
 module VersionsHelper
   def view_template(version)
-    version.membership? ? 'membership' : 'general'
+    version.membership? ? "membership" : "general"
   end
 
   def link_to_edited_item(version)

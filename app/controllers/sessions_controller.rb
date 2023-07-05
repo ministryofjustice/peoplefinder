@@ -13,7 +13,7 @@ class SessionsController < ApplicationController
 
   def destroy
     Login.new(session, @current_user).logout
-    redirect_to '/'
+    redirect_to "/"
   end
 
   def create_person
@@ -22,14 +22,14 @@ class SessionsController < ApplicationController
     create_person_and_login @person
   end
 
-  private
+private
 
   def person_params
-    params.require(:person).
-      permit(
+    params.require(:person)
+      .permit(
         :given_name,
         :surname,
-        :email
+        :email,
       )
   end
 

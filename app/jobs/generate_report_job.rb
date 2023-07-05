@@ -1,5 +1,4 @@
 class GenerateReportJob < ApplicationJob
-
   queue_as :generate_report
 
   def perform(report)
@@ -18,5 +17,4 @@ class GenerateReportJob < ApplicationJob
   def destroy_failed_jobs?
     true
   end
-
 end

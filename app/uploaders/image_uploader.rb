@@ -1,4 +1,4 @@
-require 'fastimage'
+require "fastimage"
 
 class ImageUploader < CarrierWave::Uploader::Base
   include CarrierWave::MiniMagick
@@ -10,16 +10,11 @@ class ImageUploader < CarrierWave::Uploader::Base
   # Override the directory where uploaded files will be stored.
   # This is a sensible default for uploaders that are meant to be mounted:
   def store_dir
-    '%suploads/peoplefinder/%s/%s/%s' % [
-      base_upload_dir,
-      model.class.to_s.underscore,
-      mounted_as_without_legacy_prefix,
-      model.id
-    ]
+    sprintf("%suploads/peoplefinder/%s/%s/%s", base_upload_dir, model.class.to_s.underscore, mounted_as_without_legacy_prefix, model.id)
   end
 
   def default_url
-    [version_name, 'no_photo.png'].compact.join('_')
+    [version_name, "no_photo.png"].compact.join("_")
   end
 
   process :auto_orient # this should go before all other "process" steps
@@ -50,7 +45,7 @@ class ImageUploader < CarrierWave::Uploader::Base
     end
   end
 
-  def origin_and_dimensions model
+  def origin_and_dimensions(model)
     x = model.crop_x.to_i
     y = model.crop_y.to_i
     w = model.crop_w.to_i
@@ -59,12 +54,12 @@ class ImageUploader < CarrierWave::Uploader::Base
   end
 
   def mounted_as_without_legacy_prefix
-    mounted_as.to_s.sub(/^legacy_/, '')
+    mounted_as.to_s.sub(/^legacy_/, "")
   end
 
   # list of permissable file extensions for upload
   def extension_allowlist
-    %w( jpg jpeg gif png )
+    %w[jpg jpeg gif png]
   end
 
   def dimensions
@@ -72,7 +67,7 @@ class ImageUploader < CarrierWave::Uploader::Base
     { width: w, height: h }
   end
 
-  private
+private
 
   def url_or_file
     if file.respond_to? :file
@@ -87,10 +82,9 @@ class ImageUploader < CarrierWave::Uploader::Base
     { width: w, height: h }
   end
 
-  def store_upload_dimensions _file
+  def store_upload_dimensions(_file)
     if model.upload_dimensions.nil?
       model.upload_dimensions = uploaded_file_dimensions
     end
   end
-
 end

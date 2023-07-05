@@ -4,7 +4,6 @@
 #
 
 class NotificationSender
-
   def initialize
     @grouped_items = QueuedNotification.unsent_groups
   end
@@ -15,9 +14,9 @@ class NotificationSender
 
   # private
 
-  def process_group(gi)
-    notifications = QueuedNotification.start_processing_grouped_item(gi)
-    unless notifications.nil? || notifications.empty?
+  def process_group(grouped_item)
+    notifications = QueuedNotification.start_processing_grouped_item(grouped_item)
+    if notifications.present?
       @person = notifications.first.person
       @logged_in_user = notifications.first.current_user
       if new_profile_notification?(notifications)
@@ -30,7 +29,7 @@ class NotificationSender
   end
 
   def new_profile_notification?(notifications)
-    notifications.map(&:email_template).include?('new_profile_email')
+    notifications.map(&:email_template).include?("new_profile_email")
   end
 
   def send_new_profile_mail
@@ -44,5 +43,4 @@ class NotificationSender
                                            changes_presenter.serialize,
                                            @logged_in_user.try(:email)).deliver_later
   end
-
 end

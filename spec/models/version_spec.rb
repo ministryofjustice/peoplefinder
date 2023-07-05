@@ -14,48 +14,47 @@
 #  user_agent     :string
 #
 
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Version, type: :model do
   include PermittedDomainHelper
 
-  describe '#whodunnit' do
+  describe "#whodunnit" do
     let(:author) { create(:person) }
 
-    it 'returns a string for the user when a string was stored' do
-      subject = described_class.new(whodunnit: 'Michael Mouse')
-      expect(subject.whodunnit).to eq('Michael Mouse')
+    it "returns a string for the user when a string was stored" do
+      subject = described_class.new(whodunnit: "Michael Mouse")
+      expect(subject.whodunnit).to eq("Michael Mouse")
     end
 
-    it 'returns a user when their ID was stored' do
+    it "returns a user when their ID was stored" do
       subject = described_class.new(whodunnit: author.id.to_s)
       expect(subject.whodunnit).to eq(author)
     end
 
-    it 'returns nil when an orphaned ID was stored' do
+    it "returns nil when an orphaned ID was stored" do
       subject = described_class.new(whodunnit: author.id.to_s)
-      author.destroy
+      author.destroy!
       expect(subject.whodunnit).to be_nil
     end
   end
 
-  describe '#reify' do
-
+  describe "#reify" do
     before do
       with_versioning do
-        person = create(:person, surname: 'Necro')
-        person.destroy
+        person = create(:person, surname: "Necro")
+        person.destroy!
       end
     end
 
-    let(:version) { described_class.where(item_type: 'Person').last }
+    let(:version) { described_class.where(item_type: "Person").last }
 
-    it 'returns instance of reified object' do
+    it "returns instance of reified object" do
       expect(version.reify).to be_instance_of Person
     end
 
-    it 'skips must_have_team validation on person' do
-      expect_any_instance_of(Person).to receive(:skip_must_have_team=).with(true)
+    it "skips must_have_team validation on person" do
+      expect_any_instance_of(Person).to receive(:skip_must_have_team=).with(true) # rubocop:disable RSpec/AnyInstance
       version.reify
     end
   end

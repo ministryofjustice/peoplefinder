@@ -6,7 +6,7 @@ class ApplicationPolicy
     @record = record
   end
 
-  private
+private
 
   def admin_user?
     @user.is_a?(Person) && @user.super_admin?

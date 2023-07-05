@@ -1,5 +1,5 @@
-require 'virtus'
-require 'active_model'
+require "virtus"
+require "active_model"
 
 class ProblemReport
   include Virtus.model
@@ -16,7 +16,7 @@ class ProblemReport
 
   def initialize(*)
     super
-    self.timestamp ||= Time.now.to_i
+    self.timestamp ||= Time.zone.now.to_i
     @errors = ActiveModel::Errors.new(self)
   end
 
@@ -25,6 +25,6 @@ class ProblemReport
   end
 
   def reported_at
-    Time.at(timestamp).utc
+    Time.zone.at(timestamp).utc
   end
 end

@@ -1,12 +1,12 @@
-require 'rails_helper'
+require "rails_helper"
 
-describe 'View group audit' do
+describe "View group audit" do
   include PermittedDomainHelper
-  let(:super_admin_email) { 'test.user@digital.justice.gov.uk' }
+  let(:super_admin_email) { "test.user@digital.justice.gov.uk" }
   let!(:super_admin) { create(:super_admin, email: super_admin_email) }
 
-  let(:name) { 'The Kings of the Moon' }
-  let(:description) { 'The best group' }
+  let(:name) { "The Kings of the Moon" }
+  let(:description) { "The best group" }
   let!(:person) { create(:person) }
   let(:author) { create(:person) }
   let(:group) { create(:group) }
@@ -16,17 +16,17 @@ describe 'View group audit' do
   before do
     with_versioning do
       PaperTrail.request.whodunnit = author.id
-      group.update name: name
-      group.update description: description
+      group.update(name:) # rubocop:disable Rails/SaveBang
+      group.update(description:) # rubocop:disable Rails/SaveBang
     end
   end
 
-  context 'when an admin user' do
+  context "when an admin user" do
     before do
       token_log_in_as(super_admin.email)
     end
 
-    it 'view audit' do
+    it "view audit" do
       group_page.load(slug: group.slug)
 
       expect(group_page).to have_audit
@@ -36,7 +36,7 @@ describe 'View group audit' do
       end
     end
 
-    it 'link to author of a change' do
+    it "link to author of a change" do
       group_page.load(slug: group.slug)
 
       group_page.audit.versions.tap do |v|
@@ -45,12 +45,12 @@ describe 'View group audit' do
     end
   end
 
-  context 'when a regular user' do
+  context "when a regular user" do
     before do
       token_log_in_as(person.email)
     end
 
-    it 'hide audit' do
+    it "hide audit" do
       group_page.load(slug: group.slug)
       expect(group_page).not_to have_audit
     end

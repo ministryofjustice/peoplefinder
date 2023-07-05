@@ -1,9 +1,9 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe ProblemReport, type: :model do
-  let(:current_time) { Time.at(1_410_298_077) }
+  let(:current_time) { Time.at(1_410_298_077) } # rubocop:disable Rails/TimeZone
 
-  it 'sets timestamp on instantiation' do
+  it "sets timestamp on instantiation" do
     subject = nil
 
     Timecop.freeze(current_time) do
@@ -13,7 +13,7 @@ RSpec.describe ProblemReport, type: :model do
     expect(subject.timestamp).to eq(current_time.to_i)
   end
 
-  it 'exposes timestamp as a time' do
+  it "exposes timestamp as a time" do
     subject = nil
 
     Timecop.freeze(current_time) do
@@ -24,7 +24,7 @@ RSpec.describe ProblemReport, type: :model do
     expect(subject.reported_at).to eq(current_time)
   end
 
-  it 'preserves timestamp supplied via initialisation' do
+  it "preserves timestamp supplied via initialisation" do
     subject = nil
     previous_time = current_time - 500
 

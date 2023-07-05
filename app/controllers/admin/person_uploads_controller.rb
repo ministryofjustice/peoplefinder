@@ -1,6 +1,5 @@
 module Admin
   class PersonUploadsController < ApplicationController
-
     def new
       @upload = PersonUpload.new
       authorize @upload
@@ -17,7 +16,7 @@ module Admin
       end
     end
 
-    private
+  private
 
     def person_upload_params
       params.require(:person_upload).permit(:group_id, :file)

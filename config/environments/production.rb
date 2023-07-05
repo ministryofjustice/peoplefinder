@@ -34,7 +34,7 @@ Rails.application.configure do
   # Do not fallback to assets pipeline if a precompiled asset is missed.
   config.assets.compile = false
   config.assets.digest = true
-  config.assets.version = '1.0.4'
+  config.assets.version = "1.0.4"
 
   # Enable serving of images, stylesheets, and JavaScripts from an asset server.
   # config.asset_host = 'http://assets.example.com'
@@ -92,7 +92,7 @@ Rails.application.configure do
   # config.logger = ActiveSupport::TaggedLogging.new(Syslog::Logger.new 'app-name')
 
   if ENV["RAILS_LOG_TO_STDOUT"].present?
-    logger           = ActiveSupport::Logger.new(STDOUT)
+    logger           = ActiveSupport::Logger.new($stdout)
     logger.formatter = config.log_formatter
     config.logger    = ActiveSupport::TaggedLogging.new(logger)
   end
@@ -100,16 +100,21 @@ Rails.application.configure do
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
 
-  config.filter_parameters += [
-    :given_name, :surname, :email, :primary_phone_number,
-    :secondary_phone_number, :location, :email
+  config.filter_parameters += %i[
+    given_name
+    surname
+    email
+    primary_phone_number
+    secondary_phone_number
+    location
+    email
   ]
   config.logstasher.enabled = true
   config.logstasher.suppress_app_log = true
   config.logstasher.log_level = Logger::INFO
   config.logstasher.logger_path = Rails.root.join("log/logstash_#{Rails.env}.json")
-  config.logstasher.source = 'logstasher'
-  config.logstasher.logger = ActiveSupport::Logger.new STDOUT
+  config.logstasher.source = "logstasher"
+  config.logstasher.logger = ActiveSupport::Logger.new $stdout
 
   # Inserts middleware to perform automatic connection switching.
   # The `database_selector` hash is used to pass options to the DatabaseSelector

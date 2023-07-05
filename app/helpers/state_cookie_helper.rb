@@ -1,7 +1,6 @@
 # the state cookie is in fact a pair of cookies: state_manager_action and state_manager_destination
 #
 module StateCookieHelper
-
   def delete_state_cookie
     cookies.delete StateManagerCookie::KEY
   end
@@ -18,9 +17,9 @@ module StateCookieHelper
 
   def set_state_cookie_phase_from_button
     smc = StateManagerCookie.new(cookies)
-    if params['edit-picture-button'].present?
+    if params["edit-picture-button"].present?
       smc.phase_edit_picture!
-    elsif params['commit'].present?
+    elsif params["commit"].present?
       smc.phase_save_profile!
     end
     cookies[smc.cookie_key] = smc.to_cookie

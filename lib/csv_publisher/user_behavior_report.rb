@@ -1,4 +1,4 @@
-require 'csv'
+require "csv"
 
 module CsvPublisher
   class UserBehaviorReport
@@ -6,7 +6,7 @@ module CsvPublisher
 
     attr_reader :file, :query, :dataset
 
-    FILE_EXTENSION = 'csv'.freeze
+    FILE_EXTENSION = "csv".freeze
 
     def initialize
       @file = self.class.default_file_path
@@ -20,7 +20,6 @@ module CsvPublisher
     def_single_delegator :new, :publish!, :publish!
 
     class << self
-
       def report_name
         name.demodulize.underscore
       end
@@ -30,46 +29,40 @@ module CsvPublisher
         tmp_dir.join(default_file_name)
       end
 
-      private
+    private
 
       def tmp_dir
-        @tmp_dir ||= Rails.root.join('tmp/reports')
+        @tmp_dir ||= Rails.root.join("tmp/reports")
       end
 
       # e.g. peoplefinder_staging_user_behavior_report
       def default_file_name
-        Rails.application.class.module_parent_name.underscore +
-          '_' +
-          (ENV['ENV'] || Rails.env).downcase +
-          '_' +
-          report_name +
-          '.' +
-          FILE_EXTENSION
+        "#{Rails.application.class.module_parent_name.underscore}_#{(ENV['ENV'] || Rails.env).downcase}_#{report_name}.#{FILE_EXTENSION}"
       end
     end
 
-    private
+  private
 
     def csv_header
       dataset.first.keys
     end
 
-    def csv_record record_hash
+    def csv_record(record_hash)
       csv_record = []
-      record_hash.values.each_with_object([]) do |value|
+      record_hash.each_value do |value|
         csv_record += [value]
       end
       csv_record
     end
 
-    def save! file
+    def save!(file)
       content = File.read(file)
       Report.where(name: self.class.report_name).delete_all
-      Report.create!(name: self.class.report_name, content: content, extension: FILE_EXTENSION, mime_type: 'text/csv')
+      Report.create(name: self.class.report_name, content:, extension: FILE_EXTENSION, mime_type: "text/csv") # rubocop:disable Rails/SaveBang
     end
 
     def write!
-      CSV.open(file, 'w', write_headers: true, headers: csv_header) do |csv|
+      CSV.open(file, "w", write_headers: true, headers: csv_header) do |csv|
         dataset.each do |rec|
           csv << csv_record(rec)
         end

@@ -1,7 +1,6 @@
-require 'yaml'
+require "yaml"
 
 class PersonImportJob < ApplicationJob
-
   #
   # The creation of people as initiated by the CSV uploader
   # '/admin/person_uploads/new', may exceed server timeout
@@ -29,7 +28,7 @@ class PersonImportJob < ApplicationJob
     false
   end
 
-  private
+private
 
   # NOTE: if job fails part way through we do not want subsequent attempts
   # to create people already created as this hides the original error
@@ -56,7 +55,7 @@ class PersonImportJob < ApplicationJob
   def creation_options
     {
       groups: PersonCsvImporter.deserialize_group_ids(@serialized_group_ids),
-      skip_group_completion_score_updates: true
+      skip_group_completion_score_updates: true,
     }
   end
 
@@ -71,5 +70,4 @@ class PersonImportJob < ApplicationJob
   def records
     PersonCsvParser.new(@serialized_people).records
   end
-
 end

@@ -1,8 +1,7 @@
 class MembershipChangeSet
-
   attr_reader :raw_changes
 
-  def initialize raw_changes
+  def initialize(raw_changes)
     @raw_changes = raw_changes
   end
 
@@ -23,10 +22,10 @@ class MembershipChangeSet
     team = Group.find(group.new_val || group.old_val)
     "the #{team}"
   rescue ActiveRecord::RecordNotFound
-    'a no longer existing'
+    "a no longer existing"
   end
 
-  def team id
+  def team(id)
     Group.find(id).name
   end
 
@@ -40,7 +39,7 @@ class MembershipChangeSet
 
   def added_sentence
     role_addendum = " as #{role}" if role?
-    leader_addendum = '. You are a leader of the team' if leader?
+    leader_addendum = ". You are a leader of the team" if leader?
     "Added you to #{team_name} team#{role_addendum}#{leader_addendum}"
   end
 
@@ -48,18 +47,18 @@ class MembershipChangeSet
     "Removed you from #{team_name} team"
   end
 
-  private
+private
 
   # map undefined methods to membership attribute keys
   # to simplify value retrieval.
   # i.e. set.role, set.role?
-  def method_missing method_name, *args
+  def method_missing method_name, *args # rubocop:disable Style/MissingRespondToMissing
     @method_name = method_name
     if valid_missing_method
       if raw_changes.key?(attribute_name_from_method)
         change = change(raw_changes[attribute_name_from_method])
         val = change.new_val || change.old_val
-        return val.present? if @method_name.to_s.ends_with?('?')
+        return val.present? if @method_name.to_s.ends_with?("?")
 
         val
       end
@@ -74,10 +73,10 @@ class MembershipChangeSet
   end
 
   def attribute_name_from_method
-    @method_name.to_s.sub('?', '').to_sym
+    @method_name.to_s.sub("?", "").to_sym
   end
 
-  def change raw_change
+  def change(raw_change)
     ChangesPresenter::Change.new(raw_change)
   end
 end

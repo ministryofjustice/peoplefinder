@@ -1,4 +1,4 @@
-require 'forwardable'
+require "forwardable"
 
 class SearchResults
   extend Forwardable
@@ -6,7 +6,7 @@ class SearchResults
 
   attr_accessor :set, :contains_exact_match
 
-  def initialize(set = [], contains_exact_match = false)
+  def initialize(set: [], contains_exact_match: false)
     @set = set
     @contains_exact_match = contains_exact_match
   end
@@ -18,5 +18,4 @@ class SearchResults
       @set.each(&block)
     end
   end
-
 end

@@ -4,7 +4,7 @@ module UserAgentHelper
   Browser = Struct.new(:browser, :version)
 
   UNSUPPORTED_BROWSER = [
-    Browser.new(UserAgent::Browsers::InternetExplorer.new.browser, UserAgent::Version.new('7.0'))
+    Browser.new(UserAgent::Browsers::InternetExplorer.new.browser, UserAgent::Version.new("7.0")),
   ].freeze
 
   included do
@@ -24,5 +24,4 @@ module UserAgentHelper
       !supported_browser?
     end
   end
-
 end

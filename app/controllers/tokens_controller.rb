@@ -1,4 +1,4 @@
-require 'secure'
+require "secure"
 class TokensController < ApplicationController
   include SessionPersonCreator
   include UserAgentHelper
@@ -26,13 +26,13 @@ class TokensController < ApplicationController
     @token = params[:id]
   end
 
-  def render_new_view_with_errors token:
+  def render_new_view_with_errors(token:)
     @unauthorised_login = unauthorised_login
     @token = token
     render action: :new
   end
 
-  def render_create_view token:
+  def render_create_view(token:)
     @unauthorised_login = unauthorised_login
     @token = token
     render action: :create
@@ -47,7 +47,7 @@ class TokensController < ApplicationController
     redirect_to unsupported_browser_token_path
   end
 
-  private
+private
 
   def render_desired_path_or_profile
     path = session.delete(:desired_path) || person_path(current_user)
@@ -55,9 +55,9 @@ class TokensController < ApplicationController
   end
 
   def ensure_token_auth_enabled!
-    return if feature_enabled?('token_auth')
+    return if feature_enabled?("token_auth")
 
-    flash[:notice] = t('.token_auth_disabled')
+    flash[:notice] = t(".token_auth_disabled")
     redirect_to(new_sessions_path)
   end
 
@@ -68,5 +68,4 @@ class TokensController < ApplicationController
   def unauthorised_login
     params[:token][:unauthorised_login]
   end
-
 end

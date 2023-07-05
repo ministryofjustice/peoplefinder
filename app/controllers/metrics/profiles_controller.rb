@@ -4,11 +4,11 @@ module Metrics
 
     def index
       render json: {
-        'item' => [
+        "item" => [
           {
-            'value' => Person.count
-          }
-        ]
+            "value" => Person.count,
+          },
+        ],
       }
     end
   end

@@ -47,5 +47,5 @@ spec:
             command:
               - /bin/sh
               - "-c"
-              - "rails runner 'GeckoboardPublisher::ProfileCompletionsReport.new.publish!(true)'"
+              - "rails runner 'GeckoboardPublisher::ProfileCompletionsReport.new.publish!(force: true)'"
           restartPolicy: OnFailure

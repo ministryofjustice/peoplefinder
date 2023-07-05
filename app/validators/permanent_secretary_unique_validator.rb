@@ -1,5 +1,4 @@
 class PermanentSecretaryUniqueValidator < ActiveModel::Validator
-
   def validate(record)
     @record = record
     if perm_sec? && perm_sec_exists?
@@ -7,10 +6,10 @@ class PermanentSecretaryUniqueValidator < ActiveModel::Validator
     end
   end
 
-  private
+private
 
   def scope_t
-    [:errors, :validators, :permanent_secretary_unique_validator, :leader]
+    %i[errors validators permanent_secretary_unique_validator leader]
   end
 
   def perm_sec_unique_message
@@ -18,7 +17,7 @@ class PermanentSecretaryUniqueValidator < ActiveModel::Validator
       :unique,
       scope: scope_t,
       name: Group.department.name,
-      role: current_perm_sec.role || 'Permanent Secretary'
+      role: current_perm_sec.role || "Permanent Secretary",
     )
   end
 

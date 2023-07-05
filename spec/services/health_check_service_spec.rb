@@ -1,51 +1,53 @@
-require 'rails_helper'
+require "rails_helper"
 
 describe HealthCheckService do
-  HealthCheckReport = Struct.new(:status, :messages)
+  subject(:health_check_report) { described_class.new }
 
-  subject { described_class.new }
-
-  it 'calls accessible and available on all checks' do
-    expect_any_instance_of(HealthCheck::Database).
-      to receive(:available?).and_return(true)
-    expect_any_instance_of(HealthCheck::Elasticsearch).
-      to receive(:available?).and_return(true)
-    expect_any_instance_of(HealthCheck::Database).
-      to receive(:accessible?).and_return(true)
-    expect_any_instance_of(HealthCheck::Elasticsearch).
-      to receive(:accessible?).and_return(true)
-
-    result = subject.report
-    expect(result.status).to eq '200'
-    expect(result.messages).to eq 'All Components OK'
+  before do
+    stub_const("HealthCheckReport", Struct.new(:status, :messages))
   end
 
-  it 'collects error messages if any checks fail' do
-    expect_any_instance_of(HealthCheck::Database).
-      to receive(:available?).and_return(false)
-    expect_any_instance_of(HealthCheck::Database).
-      to receive(:accessible?).and_return(false)
-    expect_any_instance_of(HealthCheck::Database).
-      to receive(:errors).
-      and_return(['DB Message 1', 'DB Message 2'])
+  it "calls accessible and available on all checks" do
+    allow_any_instance_of(HealthCheck::Database) # rubocop:disable RSpec/AnyInstance
+      .to receive(:available?).and_return(true)
+    allow_any_instance_of(HealthCheck::Elasticsearch) # rubocop:disable RSpec/AnyInstance
+      .to receive(:available?).and_return(true)
+    allow_any_instance_of(HealthCheck::Database) # rubocop:disable RSpec/AnyInstance
+      .to receive(:accessible?).and_return(true)
+    allow_any_instance_of(HealthCheck::Elasticsearch) # rubocop:disable RSpec/AnyInstance
+      .to receive(:accessible?).and_return(true)
 
-    expect_any_instance_of(HealthCheck::Elasticsearch).
-      to receive(:available?).and_return(false)
-    expect_any_instance_of(HealthCheck::Elasticsearch).
-      to receive(:accessible?).and_return(false)
-    expect_any_instance_of(HealthCheck::Elasticsearch).
-      to receive(:errors).
-      and_return(['ES Message 1', 'ES Message 2'])
+    result = health_check_report.report
+    expect(result.status).to eq "200"
+    expect(result.messages).to eq "All Components OK"
+  end
 
-    result = subject.report
-    expect(result.status).to eq '500'
+  it "collects error messages if any checks fail" do
+    allow_any_instance_of(HealthCheck::Database) # rubocop:disable RSpec/AnyInstance
+      .to receive(:available?).and_return(false)
+    allow_any_instance_of(HealthCheck::Database) # rubocop:disable RSpec/AnyInstance
+      .to receive(:accessible?).and_return(false)
+    allow_any_instance_of(HealthCheck::Database) # rubocop:disable RSpec/AnyInstance
+      .to receive(:errors)
+      .and_return(["DB Message 1", "DB Message 2"])
+
+    allow_any_instance_of(HealthCheck::Elasticsearch) # rubocop:disable RSpec/AnyInstance
+      .to receive(:available?).and_return(false)
+    allow_any_instance_of(HealthCheck::Elasticsearch) # rubocop:disable RSpec/AnyInstance
+      .to receive(:accessible?).and_return(false)
+    allow_any_instance_of(HealthCheck::Elasticsearch) # rubocop:disable RSpec/AnyInstance
+      .to receive(:errors)
+      .and_return(["ES Message 1", "ES Message 2"])
+
+    result = health_check_report.report
+    expect(result.status).to eq "500"
     expect(result.messages).to eq(
       [
-        'DB Message 1',
-        'DB Message 2',
-        'ES Message 1',
-        'ES Message 2'
-      ]
+        "DB Message 1",
+        "DB Message 2",
+        "ES Message 1",
+        "ES Message 2",
+      ],
     )
   end
 end

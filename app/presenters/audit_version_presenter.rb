@@ -1,6 +1,6 @@
-require 'forwardable'
-require 'yaml'
-require 'user_agent'
+require "forwardable"
+require "yaml"
+require "user_agent"
 
 class AuditVersionPresenter
   extend Forwardable
@@ -13,7 +13,7 @@ class AuditVersionPresenter
 
   def changes
     YAML.unsafe_load(@version.object_changes).map do |field, (_, new)|
-      value = new.presence || '(deleted)'
+      value = new.presence || "(deleted)"
       [field, value]
     end
   end
@@ -22,7 +22,7 @@ class AuditVersionPresenter
     return nil if user_agent.blank?
 
     ua = UserAgent.parse(user_agent)
-    '%s %s' % [ua.browser, ua.version]
+    sprintf("%s %s", ua.browser, ua.version)
   end
 
   def self.wrap(versions)

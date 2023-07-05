@@ -1,5 +1,4 @@
 class ReadonlyUser
-
   class ActionDispatch::Request
     def readonly_ip_whitelist
       @readonly_ip_whitelist ||= IpAddressMatcher.new(Rails.configuration.readonly_ip_whitelist)
@@ -21,5 +20,4 @@ class ReadonlyUser
   def super_admin?
     false
   end
-
 end

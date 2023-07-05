@@ -2,7 +2,6 @@ module Concerns::PersonChangesTracker
   extend ActiveSupport::Concern
 
   included do
-
     after_initialize :initialize_changes_store
 
     before_save do
@@ -28,18 +27,17 @@ module Concerns::PersonChangesTracker
       person_changes.merge(membership_changes)
     end
 
-    private
+  private
 
     def initialize_changes_store
       @person_changes = {} if @person_changes.nil?
       @membership_changes = {} if @membership_changes.nil?
     end
 
-    def membership_key membership
+    def membership_key(membership)
       "membership_#{membership.group_id ||
       membership.changes[:group_id]&.second ||
       membership.changes[:group_id]&.first}"
     end
-
   end
 end

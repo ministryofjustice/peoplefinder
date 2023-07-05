@@ -1,19 +1,19 @@
-require 'rails_helper'
+require "rails_helper"
 
-RSpec.describe 'Completion' do
+RSpec.describe "Completion" do
   include PermittedDomainHelper
 
   let(:completed_attributes) do
     {
-      given_name: 'Bobby',
-      surname: 'Tables',
-      email: 'user.example@digital.justice.gov.uk',
-      primary_phone_number: '020 7946 0123',
-      location_in_building: '13.13',
-      building: '102 Petty France',
-      city: 'London',
-      description: 'I am a real person',
-      profile_photo_id: profile_photo.id
+      given_name: "Bobby",
+      surname: "Tables",
+      email: "user.example@digital.justice.gov.uk",
+      primary_phone_number: "020 7946 0123",
+      location_in_building: "13.13",
+      building: "102 Petty France",
+      city: "London",
+      description: "I am a real person",
+      profile_photo_id: profile_photo.id,
     }
   end
 
@@ -25,72 +25,74 @@ RSpec.describe 'Completion' do
     create(:person)
   end
 
-  describe '#completion_score' do
-    it 'returns 0 if all fields are empty' do
+  describe "#completion_score" do
+    it "returns 0 if all fields are empty" do
       person = Person.new
-      expect(person.completion_score).to eql(0)
+      expect(person.completion_score).to be(0)
       expect(person).to be_incomplete
     end
 
-    it 'returns non-zero for any persisted person' do
+    it "returns non-zero for any persisted person" do
       expect(person.completion_score).not_to eq 0
     end
 
-    it 'returns higher score if a group is assigned' do
+    it "returns higher score if a group is assigned" do
       person.memberships.destroy_all
       initial = person.completion_score
-      create(:membership, person: person)
+      create(:membership, person:)
       expect(person.completion_score).to be > initial
     end
 
-    it 'returns 55 if half the fields are completed' do
+    it "returns 55 if half the fields are completed" do
       person = create(:person, city: generate(:city), primary_phone_number: generate(:phone_number))
       person.memberships.destroy_all
       expect(person.completion_score).to be_within(1).of(55)
       expect(person).to be_incomplete
     end
 
-    context 'when all the fields are completed' do
+    context "when all the fields are completed" do
       let(:person) { create(:person, completed_attributes) }
-      before { create(:membership, person: person) }
 
-      it 'returns 100' do
-        expect(person.completion_score).to eql(100)
+      before { create(:membership, person:) }
+
+      it "returns 100" do
+        expect(person.completion_score).to be(100)
         expect(person).not_to be_incomplete
       end
     end
 
-    context 'when legacy image field exists instead of profile photo and all other fields completed' do
+    context "when legacy image field exists instead of profile photo and all other fields completed" do
       let(:person) do
         create(
           :person,
-          completed_attributes.
-            reject { |k, _v| k == :profile_photo_id }.
-            merge(image: 'profile_MoJ_small.jpg')
+          completed_attributes
+            .reject { |k, _v| k == :profile_photo_id }
+            .merge(image: "profile_MoJ_small.jpg"),
         )
       end
-      before { create(:membership, person: person) }
 
-      it 'returns 100' do
-        expect(person.completion_score).to eql(100)
+      before { create(:membership, person:) }
+
+      it "returns 100" do
+        expect(person.completion_score).to be(100)
         expect(person).not_to be_incomplete
       end
     end
   end
 
-  describe '.overall_completion' do
-    it 'calls method encapsulating contruction of raw SQL for average completion score' do
+  describe ".overall_completion" do
+    it "calls method encapsulating contruction of raw SQL for average completion score" do
       expect(Person).to receive(:average_completion_score)
       Person.overall_completion
     end
 
-    it 'returns 100 if there is only one person who is 100% complete' do
+    it "returns 100 if there is only one person who is 100% complete" do
       person = create(:person, completed_attributes)
-      create(:membership, person: person)
+      create(:membership, person:)
       expect(Person.overall_completion).to eq(100)
     end
 
-    it 'returns average of two profiles completion scores' do
+    it "returns average of two profiles completion scores" do
       2.times do
         create(
           :person,
@@ -98,13 +100,13 @@ RSpec.describe 'Completion' do
           surname: generate(:surname),
           email: generate(:email),
           city: generate(:city),
-          primary_phone_number: generate(:phone_number)
+          primary_phone_number: generate(:phone_number),
         )
       end
       expect(Person.overall_completion).to be_within(1).of(67)
     end
 
-    it 'includes membership in calculation' do
+    it "includes membership in calculation" do
       people = 2.times.map do
         person = create(
           :person,
@@ -112,7 +114,7 @@ RSpec.describe 'Completion' do
           surname: generate(:surname),
           email: generate(:email),
           city: generate(:city),
-          primary_phone_number: generate(:phone_number)
+          primary_phone_number: generate(:phone_number),
         )
         person.memberships.destroy_all
         person
@@ -128,63 +130,62 @@ RSpec.describe 'Completion' do
     end
   end
 
-  describe '.completion_score_calculation' do
-    it 'constructs sql to calculate score based on existence of values for important fields' do
-      sql_regex = /COALESCE.*CASE WHEN length\(.*\,0\)\)::float.*/mi
+  describe ".completion_score_calculation" do
+    it "constructs sql to calculate score based on existence of values for important fields" do
+      sql_regex = /COALESCE.*CASE WHEN length\(.*,0\)\)::float.*/mi
       expect(Person.completion_score_calculation).to match(sql_regex)
     end
 
-    it 'uses number of COMPLETION_FIELDS to calculate fraction part of the whole' do
+    it "uses number of COMPLETION_FIELDS to calculate fraction part of the whole" do
       expect(Person::COMPLETION_FIELDS).to receive(:size)
       Person.completion_score_calculation
     end
   end
 
-  describe '.average_completion_score' do
-    it 'executes raw SQL for scalability/performance' do
+  describe ".average_completion_score" do
+    it "executes raw SQL for scalability/performance" do
       conn = double.as_null_object
       expect(ActiveRecord::Base).to receive(:connection).at_least(:once).and_return(conn)
       expect(conn).to receive(:execute).with(/^\s*SELECT AVG\(.*$/i)
       Person.average_completion_score
     end
 
-    it 'returns a rounded float for use as a percentage' do
+    it "returns a rounded float for use as a percentage" do
       create(:person, :with_details)
-      expect(Person.average_completion_score).to eql 89
+      expect(Person.average_completion_score).to be 89
     end
   end
 
-  describe '.inadequate_profiles' do
+  describe ".inadequate_profiles" do
     let!(:person) { create(:person, completed_attributes) }
-    subject { Person.inadequate_profiles }
 
-    it 'is empty when all attributes are populated' do
-      expect(subject).to be_empty
+    it "is empty when all attributes are populated" do
+      expect(Person.inadequate_profiles).to be_empty
     end
 
-    it 'returns the person when there is no primary phone number' do
-      Person.update_all 'primary_phone_number = \'\''
-      expect(subject).to include(person)
+    it "returns the person when there is no primary phone number" do
+      Person.update_all "primary_phone_number = ''"
+      expect(Person.inadequate_profiles).to include(person)
     end
 
-    it 'returns the person when there is no location in building' do
-      Person.update_all 'location_in_building = \'\''
-      expect(subject).to include(person)
+    it "returns the person when there is no location in building" do
+      Person.update_all "location_in_building = ''"
+      expect(Person.inadequate_profiles).to include(person)
     end
 
-    it 'returns the person when there is no building' do
-      Person.update_all 'building = \'\''
-      expect(subject).to include(person)
+    it "returns the person when there is no building" do
+      Person.update_all "building = ''"
+      expect(Person.inadequate_profiles).to include(person)
     end
 
-    it 'returns the person when there is no city' do
-      Person.update_all 'city = \'\''
-      expect(subject).to include(person)
+    it "returns the person when there is no city" do
+      Person.update_all "city = ''"
+      expect(Person.inadequate_profiles).to include(person)
     end
 
-    it 'returns the person when there is no image' do
-      Person.update_all 'profile_photo_id = null'
-      expect(subject).to include(person)
+    it "returns the person when there is no image" do
+      Person.update_all "profile_photo_id = null"
+      expect(Person.inadequate_profiles).to include(person)
     end
   end
 end

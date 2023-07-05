@@ -13,14 +13,14 @@
 #
 
 class Membership < ApplicationRecord
-  has_paper_trail versions: { class_name: 'Version' },
-                  ignore: [:updated_at, :created_at, :id]
+  has_paper_trail versions: { class_name: "Version" },
+                  ignore: %i[updated_at created_at id]
 
   belongs_to :person, touch: true
   belongs_to :group, touch: true
 
   validates :person, presence: true, on: :update
-  validates :group, presence: true, on: [:create, :update]
+  validates :group, presence: true, on: %i[create update]
   validates_with PermanentSecretaryUniqueValidator
 
   delegate :name, to: :person, prefix: true
@@ -29,7 +29,7 @@ class Membership < ApplicationRecord
   delegate :path, to: :group
 
   include Concerns::ConcatenatedFields
-  concatenated_field :to_s, :group_name, :role, join_with: ', '
+  concatenated_field :to_s, :group_name, :role, join_with: ", "
 
   scope :subscribing, -> { where(subscribed: true) }
 

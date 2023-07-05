@@ -1,12 +1,12 @@
-require 'csv'
-require 'forwardable'
-require 'yaml'
+require "csv"
+require "forwardable"
+require "yaml"
 
 class PersonCsvImporter
   extend Forwardable
 
-  REQUIRED_COLUMNS = %i(given_name surname email).freeze
-  OPTIONAL_COLUMNS = %i(
+  REQUIRED_COLUMNS = %i[given_name surname email].freeze
+  OPTIONAL_COLUMNS = %i[
     primary_phone_number
     secondary_phone_number
     pager_number
@@ -15,11 +15,11 @@ class PersonCsvImporter
     city
     role
     description
-  ).freeze
+  ].freeze
 
   ErrorRow = Struct.new(:line_number, :raw, :messages) do
     def to_s
-      'line %d "%s": %s' % [line_number, raw, messages.join(', ')]
+      sprintf('line %d "%s": %s', line_number, raw, messages.join(", "))
     end
   end
 
@@ -56,11 +56,11 @@ class PersonCsvImporter
   end
 
   def self.person_fields(hash)
-    hash.merge(email: EmailExtractor.new.extract(hash[:email])).
-      except(:role)
+    hash.merge(email: EmailExtractor.new.extract(hash[:email]))
+      .except(:role)
   end
 
-  private
+private
 
   def_delegators :@parser, :records, :header
 
@@ -94,7 +94,7 @@ class PersonCsvImporter
   end
 
   def too_many_columns_error
-    too_many_columns? ? [ErrorRow.new(1, header.original, ['There are more columns than expected'])] : []
+    too_many_columns? ? [ErrorRow.new(1, header.original, ["There are more columns than expected"])] : []
   end
 
   def column_errors
@@ -103,7 +103,7 @@ class PersonCsvImporter
 
   def too_many_rows_error
     if too_many_rows?
-      [ErrorRow.new('-', '-', ["Too many rows - a maximum of #{max_row_upload} rows can be processed"])]
+      [ErrorRow.new("-", "-", ["Too many rows - a maximum of #{max_row_upload} rows can be processed"])]
     else
       []
     end
@@ -122,7 +122,7 @@ class PersonCsvImporter
   end
 
   def people_record_errors
-    people.zip(records).map do |person, record|
+    people.zip(records).map { |person, record|
       person.skip_must_have_team = true
       if person.valid?
         nil
@@ -131,7 +131,6 @@ class PersonCsvImporter
           record.line_number, record.original, person.errors.full_messages
         )
       end
-    end.compact
+    }.compact
   end
-
 end

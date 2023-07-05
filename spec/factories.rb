@@ -1,28 +1,27 @@
 FactoryBot.define do
-
-  sequence(:email) { |n| 'example.user.%d@digital.justice.gov.uk' % n }
+  sequence(:email) { |n| sprintf("example.user.%d@digital.justice.gov.uk", n) }
   sequence(:given_name) { |n| "First name #{('a'.ord + (n % 25)).chr}" }
   sequence(:surname) { |n| "Surname #{('a'.ord + (n % 25)).chr}" }
-  sequence(:building) { |n| '%d High Street' % n }
+  sequence(:building) { |n| sprintf("%d High Street", n) }
   sequence(:location_in_building) { |n| "Room #{n}, #{n.ordinalize}" }
-  sequence(:city) { |n| 'Megacity %d' % n }
-  sequence(:primary_phone_number) { |n| '07708 %06d' % (900_000 + n) }
-  sequence(:pager_number) { |n| '07600 %06d' % (900_000 + n) }
-  sequence(:phone_number) { |n| '07700 %06d' % (900_000 + n) }
+  sequence(:city) { |n| sprintf("Megacity %d", n) }
+  sequence(:primary_phone_number) { |n| sprintf("07708 %06d", (900_000 + n)) }
+  sequence(:pager_number) { |n| sprintf("07600 %06d", (900_000 + n)) }
+  sequence(:phone_number) { |n| sprintf("07700 %06d", (900_000 + n)) }
 
   factory :permitted_domain do
-    domain { 'digital.justice.gov.uk' }
+    domain { "digital.justice.gov.uk" }
   end
 
-  factory :department, class: 'Group' do
+  factory :department, class: "Group" do
     initialize_with do
-      Group.where(ancestry_depth: 0).first_or_create(name: 'Ministry of Justice')
+      Group.where(ancestry_depth: 0).first_or_create(name: "Ministry of Justice")
     end
   end
 
   factory :group do
     sequence :name do |n|
-      'Group-%04d' % n
+      sprintf("Group-%04d", n)
     end
     association :parent, factory: :department
   end
@@ -60,7 +59,7 @@ FactoryBot.define do
 
     trait :with_random_dets do
       after :build do
-        PermittedDomain.create(domain: 'example.com') unless PermittedDomain.exists?(domain: 'example.com')
+        PermittedDomain.create!(domain: "example.com") unless PermittedDomain.exists?(domain: "example.com")
       end
 
       given_name { Faker::Name.unique.first_name }
@@ -73,18 +72,18 @@ FactoryBot.define do
 
     trait :for_demo_csv do
       after :build do |peep, _evaluator|
-        PermittedDomain.create(domain: 'example.com') unless PermittedDomain.exists?(domain: 'example.com')
+        PermittedDomain.create!(domain: "example.com") unless PermittedDomain.exists?(domain: "example.com")
         peep.memberships.first.role = Faker::Job.title
       end
 
       given_name { Faker::Name.first_name }
       surname { Faker::Name.last_name }
-      sequence(:email) { |n| '%{given_name}.%{surname}.%{unique}.@digital.justice.gov.uk' % [given_name: given_name, surname: surname, unique: n] }
+      sequence(:email) { |n| sprintf("%{given_name}.%{surname}.%{unique}.@digital.justice.gov.uk", given_name:, surname:, unique: n) }
       primary_phone_number { Faker::PhoneNumber.phone_number }
       secondary_phone_number { Faker::PhoneNumber.phone_number }
       login_count { Random.rand(1..20) }
       last_login_at { login_count == 0 ? nil : Random.rand(15).days.ago }
-      description { Faker::Lorem.sentences.join(' ') }
+      description { Faker::Lorem.sentences.join(" ") }
     end
 
     trait :with_photo do
@@ -135,7 +134,6 @@ FactoryBot.define do
     factory :super_admin do
       super_admin { true }
     end
-
   end
 
   factory :information_request do
@@ -147,42 +145,42 @@ FactoryBot.define do
   end
 
   factory :profile_photo do
-    image {
+    image do
       Rack::Test::UploadedFile.new(
-        Rails.root.join('spec/fixtures/profile_photo_valid.png').to_s
+        Rails.root.join("spec/fixtures/profile_photo_valid.png").to_s,
       )
-    }
+    end
 
     trait :invalid_extension do
-      image {
+      image do
         Rack::Test::UploadedFile.new(
-          Rails.root.join('spec/fixtures/placeholder.bmp').to_s
+          Rails.root.join("spec/fixtures/placeholder.bmp").to_s,
         )
-      }
+      end
     end
 
     trait :non_image do
-      image {
+      image do
         Rack::Test::UploadedFile.new(
-          Rails.root.join('spec/fixtures/invalid_rows.csv').to_s
+          Rails.root.join("spec/fixtures/invalid_rows.csv").to_s,
         )
-      }
+      end
     end
 
     trait :too_small_dimensions do
-      image {
+      image do
         Rack::Test::UploadedFile.new(
-          Rails.root.join('spec/fixtures/profile_photo_too_small_dimensions.png').to_s
+          Rails.root.join("spec/fixtures/profile_photo_too_small_dimensions.png").to_s,
         )
-      }
+      end
     end
 
     trait :large_dimensions do
-      image {
+      image do
         Rack::Test::UploadedFile.new(
-          Rails.root.join('spec/fixtures/profile_photo_large.png').to_s
+          Rails.root.join("spec/fixtures/profile_photo_large.png").to_s,
         )
-      }
+      end
     end
   end
 
@@ -191,16 +189,16 @@ FactoryBot.define do
 
   factory :report do
     content { "id,full_name,login_count\n1,John Smith,5\n" }
-    name { 'factory_test_report' }
-    extension { 'csv' }
-    mime_type { 'text/csv' }
+    name { "factory_test_report" }
+    extension { "csv" }
+    mime_type { "text/csv" }
   end
 
   factory :queued_notification do
     session_id { "MyString" }
     person_id { 1 }
     current_user_id { 1 }
-    changes_json { '{}' }
+    changes_json { "{}" }
     edit_finalised { false }
     sent { false }
   end

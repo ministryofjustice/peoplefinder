@@ -1,14 +1,13 @@
 module SpecSupport
   module ElasticSearchHelper
-
     def total_document_count
-      Person.search('*').results.total
+      Person.search("*").results.total
     end
 
     def all_es_rails_documents(limit: 100)
       response = Person.search(match_all(size: limit))
       response.records.map_with_hit do |rec, hit|
-        { name: rec.name, hit: hit }
+        { name: rec.name, hit: }
       end
     end
 
@@ -35,14 +34,14 @@ module SpecSupport
       end
     end
 
-    private
+  private
 
     def match_all(size: 100)
       {
-        size: size,
+        size:,
         query: {
-          match_all: {}
-        }
+          match_all: {},
+        },
       }
     end
   end

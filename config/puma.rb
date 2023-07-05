@@ -4,17 +4,17 @@
 # the maximum value specified for Puma. Default is set to 5 threads for minimum
 # and maximum, this matches the default thread size of Active Record.
 #
-max_threads_count = ENV.fetch("RAILS_MAX_THREADS") { 5 }
+max_threads_count = ENV.fetch("RAILS_MAX_THREADS", 5)
 min_threads_count = ENV.fetch("RAILS_MIN_THREADS") { max_threads_count }
 threads min_threads_count, max_threads_count
 
 # Specifies the `port` that Puma will listen on to receive requests, default is 3000.
 #
-port        ENV.fetch('PORT') { 3000 }
+port        ENV.fetch("PORT", 3000)
 
 # Specifies the `environment` that Puma will run in.
 #
-environment ENV.fetch('RAILS_ENV') { 'development' }
+environment ENV.fetch("RAILS_ENV") { "development" }
 
 # Specifies the number of `workers` to boot in clustered mode.
 # Workers are forked webserver processes. If using threads and workers together
@@ -22,7 +22,7 @@ environment ENV.fetch('RAILS_ENV') { 'development' }
 # Workers do not work on JRuby or Windows (both of which do not support
 # processes).
 #
-workers ENV.fetch('WEB_CONCURRENCY') { 2 }
+workers ENV.fetch("WEB_CONCURRENCY", 2)
 
 # Use the `preload_app!` method when specifying a `workers` number.
 # This directive tells Puma to first boot the application and load code
@@ -50,14 +50,14 @@ plugin :tmp_restart
 # Activerecord Connection Pool Metrics
 after_worker_boot do
   if Rails.env.production?
-    require 'prometheus_exporter/instrumentation'
-    require 'prometheus_exporter/client'
+    require "prometheus_exporter/instrumentation"
+    require "prometheus_exporter/client"
     PrometheusExporter::Instrumentation::Puma.start
-    PrometheusExporter::Instrumentation::Process.start(type: 'web')
+    PrometheusExporter::Instrumentation::Process.start(type: "web")
 
     PrometheusExporter::Instrumentation::ActiveRecord.start(
-      custom_labels: { type: 'puma_worker' },
-      config_labels: [:database, :host]
+      custom_labels: { type: "puma_worker" },
+      config_labels: %i[database host],
     )
   end
 end

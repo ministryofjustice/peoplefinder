@@ -1,9 +1,10 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe PersonImportJob, type: :job do
+  subject(:job) { described_class.new }
 
-  before(:each) do
-    allow(PermittedDomain).to receive(:pluck).with(:domain).and_return(['valid.gov.uk'])
+  before do
+    allow(PermittedDomain).to receive(:pluck).with(:domain).and_return(["valid.gov.uk"])
   end
 
   let!(:group) do
@@ -25,82 +26,79 @@ RSpec.describe PersonImportJob, type: :job do
 
   let(:perform_later) { described_class.perform_later(serialized_people, serialized_group_ids) }
   let(:perform_now)   { described_class.perform_now(serialized_people, serialized_group_ids) }
-  subject(:job) { described_class.new }
 
   it "enqueues with appropriate config settings" do
-    expect(job.queue_name).to eq 'person_import'
+    expect(job.queue_name).to eq "person_import"
     expect(job.max_run_time).to eq 10.minutes
     expect(job.max_attempts).to eq 3
     expect(job.destroy_failed_jobs?).to eq false
   end
 
-  it 'enqueues job with expected arguments' do
-    expect do
+  it "enqueues job with expected arguments" do
+    expect {
       perform_later
-    end.to have_enqueued_job(described_class).with(serialized_people, serialized_group_ids)
+    }.to have_enqueued_job(described_class).with(serialized_people, serialized_group_ids)
   end
 
-  it 'enqueues on named queue' do
-    expect do
+  it "enqueues on named queue" do
+    expect {
       perform_later
-    end.to have_enqueued_job(described_class).on_queue('person_import')
+    }.to have_enqueued_job(described_class).on_queue("person_import")
   end
 
-  context 'when performed' do
-
-    context 'when now' do
-
-      it 'uses the PersonCreator' do
-        expect(PersonCreator).to receive(:new).
-          with(instance_of(Person), nil, instance_of(StateManagerCookie)).thrice.and_call_original
+  context "when performed" do
+    context "when now" do
+      it "uses the PersonCreator" do
+        expect(PersonCreator).to receive(:new)
+          .with(instance_of(Person), nil, instance_of(StateManagerCookie)).thrice.and_call_original
         perform_now
       end
 
       # to avoid job retry and multi-worker instance errors
-      it 'double-checks person does not already exist' do
+      it "double-checks person does not already exist" do
         expect(Person).to receive(:find_by).thrice
         perform_now
       end
 
-      it 'creates new people from the serialized data' do
+      it "creates new people from the serialized data" do
         perform_now
-        expect(Person.pluck(:email)).to include('peter.bly@valid.gov.uk', 'jon.o.carey@valid.gov.uk')
+        expect(Person.pluck(:email)).to include("peter.bly@valid.gov.uk", "jon.o.carey@valid.gov.uk")
       end
 
-      it 'cleans people\'s email addresses' do
+      it "cleans people's email addresses" do
         perform_now
-        expect(Person.pluck(:given_name, :surname, :email)).to include ['Lelah', 'Jerde', 'lelah.jerde@valid.gov.uk']
+        expect(Person.pluck(:given_name, :surname, :email)).to include ["Lelah", "Jerde", "lelah.jerde@valid.gov.uk"]
       end
 
-      it 'creates people as members of a group' do
+      it "creates people as members of a group" do
         perform_now
         expect(Person.first.groups.map(&:slug)).to include group.slug
       end
 
-      it 'returns the number of imported records' do
-        expect(perform_now).to eql 3
+      it "returns the number of imported records" do
+        expect(perform_now).to be 3
       end
 
-      it 'enqeues group completion score updates job for the group, not for the individual people' do
+      it "enqeues group completion score updates job for the group, not for the individual people" do
         expect { perform_now }.to have_enqueued_job(UpdateGroupMembersCompletionScoreJob)
       end
 
-      context 'with optional headers' do
+      context "with optional headers" do
         let(:serialized_people) do
-          <<-END.strip_heredoc
+          <<-CSV.strip_heredoc
             given_name,surname,email,primary_phone_number,secondary_phone_number,pager_number,building,location_in_building,city,role,description
             Tom,O'Carey,tom.o.carey@valid.gov.uk
             Tom,Mason-Buggs,tom.mason-buggs@valid.gov.uk,020 7947 6743,07701 234 567,07600 000 001,"102, Petty France","Room 5.02, 5th Floor, Orange Core","London, England",Cool Job Title,"I work around here"
-          END
+          CSV
         end
-        it 'creates records with and without optional fields' do
+
+        it "creates records with and without optional fields" do
           expect { perform_now }.to change(Person, :count).by 2
-          expect(Person.pluck(:email)).to match_array ['tom.o.carey@valid.gov.uk', 'tom.mason-buggs@valid.gov.uk']
-          expect(Person.pluck(:location_in_building)).to include 'Room 5.02, 5th Floor, Orange Core'
-          expect(Person.find_by(email: 'tom.mason-buggs@valid.gov.uk').memberships.first.role).to eq 'Cool Job Title'
+          expect(Person.pluck(:email)).to match_array ["tom.o.carey@valid.gov.uk", "tom.mason-buggs@valid.gov.uk"]
+          expect(Person.pluck(:location_in_building)).to include "Room 5.02, 5th Floor, Orange Core"
+          expect(Person.find_by(email: "tom.mason-buggs@valid.gov.uk").memberships.first.role).to eq "Cool Job Title"
         end
       end
     end
   end
-
 end

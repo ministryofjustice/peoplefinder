@@ -1,5 +1,4 @@
 class HomeController < ApplicationController
-
   include UserAgentHelper
 
   before_action :set_department_or_redirect, only: [:show]
@@ -10,10 +9,10 @@ class HomeController < ApplicationController
   end
 
   def can_add_person_here?
-    params['action'] == 'show'
+    params["action"] == "show"
   end
 
-  private
+private
 
   def set_department_or_redirect
     @department = Group.department
@@ -22,5 +21,4 @@ class HomeController < ApplicationController
       redirect_to(new_group_path) && return
     end
   end
-
 end

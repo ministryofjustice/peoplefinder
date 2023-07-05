@@ -1,4 +1,4 @@
-require 'virtus'
+require "virtus"
 
 class PersonUpload
   include Virtus.model
@@ -26,28 +26,28 @@ class PersonUpload
     return nil unless valid?
 
     groups = Group.where(id: group_id)
-    importer = PersonCsvImporter.new(file.read, groups: groups)
+    importer = PersonCsvImporter.new(file.read, groups:)
     @import_count = importer.import || 0
     @csv_errors = importer.errors
-    @import_count > 0
+    @import_count.positive?
   end
 
   def persisted?
     false
   end
 
-  private
+private
 
   def file_type
-    errors.add(:file, 'is an invalid type') unless csv_mime_type?(file)
+    errors.add(:file, "is an invalid type") unless csv_mime_type?(file)
   end
 
-  def csv_mime_type? file
+  def csv_mime_type?(file)
     if file
-      mime_parts = file.content_type.split('/')
+      mime_parts = file.content_type.split("/")
       [
-        %w(text application).include?(mime_parts.first),
-        %w(csv x-csv comma-separated-values x-comma-separated-values plain).include?(mime_parts.last)
+        %w[text application].include?(mime_parts.first),
+        %w[csv x-csv comma-separated-values x-comma-separated-values plain].include?(mime_parts.last),
       ].all?
     end
   end

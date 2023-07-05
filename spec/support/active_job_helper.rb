@@ -12,5 +12,4 @@ module ActiveJobHelper
       end
     end
   end
-
 end

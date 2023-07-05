@@ -1,4 +1,4 @@
-require 'singleton'
+require "singleton"
 
 class Home
   include Singleton
@@ -10,7 +10,7 @@ class Home
   end
 
   def name
-    'Home'
+    "Home"
   end
 
   def self.path

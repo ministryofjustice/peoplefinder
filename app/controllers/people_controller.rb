@@ -1,15 +1,14 @@
 # FIXME: Refactor this controller - it's too long
 class PeopleController < ApplicationController
-
   include StateCookieHelper
 
-  before_action :set_person, only: [:show, :edit, :update, :destroy]
-  before_action :set_org_structure, only: [:new, :edit, :create, :update, :add_membership]
+  before_action :set_person, only: %i[show edit update destroy]
+  before_action :set_org_structure, only: %i[new edit create update add_membership]
   before_action :load_versions, only: [:show]
 
   # GET /people
   def index
-    redirect_to '/'
+    redirect_to "/"
   end
 
   # GET /people/1
@@ -79,10 +78,10 @@ class PeopleController < ApplicationController
     @person ||= Person.new
     authorize @person
 
-    render 'add_membership', layout: false
+    render "add_membership", layout: false
   end
 
-  private
+private
 
   # Use callbacks to share common setup or constraints between actions.
   def set_person
@@ -95,13 +94,26 @@ class PeopleController < ApplicationController
 
   def person_params_list
     [
-      :given_name, :surname, :location_in_building, :building, :city,
-      :primary_phone_number, :secondary_phone_number, :pager_number,
-      :email, :secondary_email, :swap_email_display,
-      :profile_photo_id, :crop_x, :crop_y, :crop_w, :crop_h,
-      :description, :current_project,
+      :given_name,
+      :surname,
+      :location_in_building,
+      :building,
+      :city,
+      :primary_phone_number,
+      :secondary_phone_number,
+      :pager_number,
+      :email,
+      :secondary_email,
+      :swap_email_display,
+      :profile_photo_id,
+      :crop_x,
+      :crop_y,
+      :crop_w,
+      :crop_h,
+      :description,
+      :current_project,
       *Person::DAYS_WORKED,
-      memberships_attributes: [:id, :role, :group_id, :leader, :subscribed, :_destroy]
+      { memberships_attributes: %i[id role group_id leader subscribed _destroy] },
     ]
   end
 
@@ -109,19 +121,19 @@ class PeopleController < ApplicationController
     @org_structure = Group.hierarchy_hash
   end
 
-  def build_membership person
-    person.memberships.build unless person.memberships.present?
+  def build_membership(person)
+    person.memberships.build if person.memberships.blank?
   end
 
   def namesakes?
-    return false if params['continue_from_duplication'].present?
+    return false if params["continue_from_duplication"].present?
 
     @people = Person.namesakes(@person)
     @people.present?
   end
 
   def namesakes_check_required_and_found?
-    namesakes? if @person.changes.keys.any? { |key| %w(email surname given_name).include? key }
+    namesakes? if @person.changes.keys.any? { |key| %w[email surname given_name].include? key }
   end
 
   def confirm_or_create
@@ -141,7 +153,7 @@ class PeopleController < ApplicationController
     else
 
       updater = PersonUpdater.new(person: @person,
-                                  current_user: current_user,
+                                  current_user:,
                                   state_cookie: StateManagerCookie.new(cookies),
                                   session_id: session.id)
       updater.update!

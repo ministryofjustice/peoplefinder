@@ -1,16 +1,16 @@
-require 'mail'
+require "mail"
 
 class EmailExtractor
   def extract(source)
     return nil unless source
 
-    candidates = [:full, :angled, :parenthesized].flat_map do |method|
+    candidates = %i[full angled parenthesized].flat_map { |method|
       send(method, source)
-    end.map(&:strip)
+    }.map(&:strip)
     candidates.find { |c| valid?(c) } || source
   end
 
-  private
+private
 
   def full(str)
     str
@@ -21,7 +21,7 @@ class EmailExtractor
   end
 
   def parenthesized(str)
-    str.scan(/\(([^\)]+)\)/).map(&:first)
+    str.scan(/\(([^)]+)\)/).map(&:first)
   end
 
   def valid?(addr)

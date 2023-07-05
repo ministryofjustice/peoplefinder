@@ -9,5 +9,5 @@
 #
 
 class PermittedDomain < ApplicationRecord
-  validates :domain, presence: true, uniqueness: true
+  validates :domain, presence: true, uniqueness: true # rubocop:disable Rails/UniqueValidationWithoutIndex
 end

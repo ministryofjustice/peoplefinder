@@ -1,33 +1,38 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Concerns::Placeholder do
+  subject(:test_model_instance) { test_model.new }
 
-  class TestModel
-    extend ActiveModel::Naming
-    include Concerns::Placeholder
-    attr_accessor :field
-  end
+  let(:test_model) do
+    Class.new do
+      extend ActiveModel::Naming
+      include Concerns::Placeholder
+      attr_accessor :field
 
-  subject { TestModel.new }
-
-  describe '#placeholder' do
-    it 'looks up placeholder text via I18n' do
-      expect(subject.placeholder(:field)).
-        to eq('Translation missing: en.placeholders.test_model.field')
+      def self.name
+        "TestModel"
+      end
     end
   end
 
-  describe '#with_placeholder_default' do
-    it 'returns the value of a field if present' do
-      subject.field = 'EXAMPLE TEXT'
-      expect(subject.with_placeholder_default(:field)).
-        to eq('EXAMPLE TEXT')
+  describe "#placeholder" do
+    it "looks up placeholder text via I18n" do
+      expect(test_model_instance.placeholder(:field))
+        .to eq("Translation missing: en.placeholders.test_model.field")
+    end
+  end
+
+  describe "#with_placeholder_default" do
+    it "returns the value of a field if present" do
+      test_model_instance.field = "EXAMPLE TEXT"
+      expect(test_model_instance.with_placeholder_default(:field))
+        .to eq("EXAMPLE TEXT")
     end
 
-    it 'returns the placeholder text if field is blank' do
-      subject.field = ''
-      expect(subject.with_placeholder_default(:field)).
-        to eq('Translation missing: en.placeholders.test_model.field')
+    it "returns the placeholder text if field is blank" do
+      test_model_instance.field = ""
+      expect(test_model_instance.with_placeholder_default(:field))
+        .to eq("Translation missing: en.placeholders.test_model.field")
     end
   end
 end

@@ -17,23 +17,23 @@ module Concerns::Sanitizable
     end
   end
 
-  private
+private
 
-  def sanitize_value! value, options
+  def sanitize_value!(value, options)
     value.strip! if strip?(value, options)
     value.downcase! if downcase?(value, options)
-    value.gsub!(/\d/, '') if remove_digits?(value, options)
+    value.gsub!(/\d/, "") if remove_digits?(value, options)
   end
 
-  def strip? value, options
+  def strip?(value, options)
     value.respond_to?(:strip!) && options[:strip]
   end
 
-  def downcase? value, options
+  def downcase?(value, options)
     value.respond_to?(:downcase!) && options[:downcase]
   end
 
-  def remove_digits? value, options
+  def remove_digits?(value, options)
     value.respond_to?(:gsub!) && options[:remove_digits]
   end
 

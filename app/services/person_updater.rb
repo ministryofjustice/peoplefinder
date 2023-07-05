@@ -1,4 +1,4 @@
-require 'forwardable'
+require "forwardable"
 
 class PersonUpdater
   extend Forwardable
@@ -10,7 +10,7 @@ class PersonUpdater
 
   def initialize(person:, current_user:, state_cookie:, session_id: nil)
     if person.new_record?
-      raise NewRecordError, 'cannot update a new Person record'
+      raise NewRecordError, "cannot update a new Person record"
     end
 
     @person = person

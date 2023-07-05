@@ -1,5 +1,4 @@
 class SuggestionsController < ApplicationController
-
   def new
     @person = Person.friendly.find(person_params)
     authorize @person
@@ -19,7 +18,7 @@ class SuggestionsController < ApplicationController
     end
   end
 
-  private
+private
 
   def suggestion_params
     params.require(:suggestion).permit(

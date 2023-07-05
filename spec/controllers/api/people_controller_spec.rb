@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Api::PeopleController, type: :controller do
   include PermittedDomainHelper
@@ -11,42 +11,42 @@ RSpec.describe Api::PeopleController, type: :controller do
   end
 
   let(:invalid_attributes) do
-    { surname: '' }
+    { surname: "" }
   end
 
-  let!(:group) { create(:group) }
+  before { create(:group) }
 
-  describe 'GET show' do
-    subject { create(:person, valid_attributes) }
+  describe "GET show" do
+    subject(:person) { create(:person, valid_attributes) }
 
-    context 'with valid auth token' do
+    context "with valid auth token" do
       let(:token) { create(:token) }
 
       before do
-        request.headers['AUTHORIZATION'] = token.value
-        get :show, params: { id: subject.to_param }
+        request.headers["AUTHORIZATION"] = token.value
+        get :show, params: { id: person.to_param }
       end
 
-      it 'assigns the requested person as @person' do
-        expect(assigns(:person)).to eq(subject)
+      it "assigns the requested person as @person" do
+        expect(assigns(:person)).to eq(person)
       end
 
-      it 'returns a JSON representation of the person' do
-        expect(JSON.parse(response.body)).to eq(JSON.parse(subject.to_json))
+      it "returns a JSON representation of the person" do
+        expect(JSON.parse(response.body)).to eq(JSON.parse(person.to_json))
       end
     end
 
-    context 'without valid auth token' do
+    context "without valid auth token" do
       before do
-        request.headers['AUTHORIZATION'] = 'xxxxxxxx'
-        get :show, params: { id: subject.to_param }
+        request.headers["AUTHORIZATION"] = "xxxxxxxx"
+        get :show, params: { id: person.to_param }
       end
 
-      it 'returns status 401' do
+      it "returns status 401" do
         expect(response.status).to eq(401)
       end
 
-      it 'returns a JSON error' do
+      it "returns a JSON error" do
         expect(response.body).to match(/unauthorized/i)
       end
     end

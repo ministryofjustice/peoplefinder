@@ -8,7 +8,7 @@ module FeatureFlagSpecHelper
   end
 
   def feature_flag(name, value)
-    around(:each) do |example|
+    around do |example|
       original = Rails.application.config.try(:"disable_#{name}") || false
       Rails.application.config.send :"disable_#{name}=", value
 

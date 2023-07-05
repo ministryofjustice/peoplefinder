@@ -1,4 +1,4 @@
-require 'webmock/rspec'
+require "webmock/rspec"
 
 RSpec.configure do |config|
   config.expect_with :rspec do |expectations|
@@ -15,13 +15,13 @@ RSpec.configure do |config|
 
   Kernel.srand config.seed
 
-  WebMock.disable_net_connect!(allow_localhost: true, allow: 'chromedriver.storage.googleapis.com')
+  WebMock.disable_net_connect!(allow_localhost: true, allow: "chromedriver.storage.googleapis.com")
   WebMock.allow_net_connect!(net_http_connect_on_start: true)
 
   config.before :each, geckoboard: true do
-    stub_request(:get, "https://api.geckoboard.com/").
-      with(headers: { 'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'User-Agent'=> /Geckoboard-Ruby\/0\.[\d]+(\.[\d])*/ }).
-      to_return(status: 200, body: "", headers: {})
+    stub_request(:get, "https://api.geckoboard.com/")
+      .with(headers: { "Accept" => "*/*", "Accept-Encoding" => "gzip;q=1.0,deflate;q=0.6,identity;q=0.3", "User-Agent" => /Geckoboard-Ruby\/0\.\d+(\.\d)*/ })
+      .to_return(status: 200, body: "", headers: {})
   end
 
   config.before :each, csv_report: true do
@@ -33,7 +33,7 @@ RSpec.configure do |config|
   end
 
   def delete_csv_reports
-    Dir[Report.new.__send__(:tmp_dir).join('**', '*')].each do |file|
+    Dir[Report.new.__send__(:tmp_dir).join("**", "*")].each do |file|
       File.delete(file)
     end
   end

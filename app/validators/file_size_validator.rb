@@ -6,7 +6,6 @@
 #   - validates :file, file_size: { range: 1.kilobyte..3.megabytes, message: 'not in 1KB to 3MB range' }
 #
 class FileSizeValidator < ActiveModel::EachValidator
-
   attr_reader :size
 
   def validate_each(record, attribute, value)
@@ -17,14 +16,14 @@ class FileSizeValidator < ActiveModel::EachValidator
     add_error(record, attribute, range_message) if options[:range].present? && !options[:range].include?(size)
   end
 
-  private
+private
 
   def add_error(record, attribute, message)
     record.errors.add(attribute, message)
   end
 
   def scope_t
-    [:errors, :validators, :file_size_validator]
+    %i[errors validators file_size_validator]
   end
 
   def max_message
@@ -32,7 +31,7 @@ class FileSizeValidator < ActiveModel::EachValidator
       I18n.t(
         :too_big,
         scope: scope_t,
-        size: human_size
+        size: human_size,
       )
   end
 
@@ -41,12 +40,11 @@ class FileSizeValidator < ActiveModel::EachValidator
       I18n.t(
         :not_in_range,
         scope: scope_t,
-        size: human_size
+        size: human_size,
       )
   end
 
   def human_size
     ActionController::Base.helpers.number_to_human_size(size)
   end
-
 end

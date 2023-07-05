@@ -1,14 +1,13 @@
-require 'secure'
+require "secure"
 
 class TokenSender
-
-  REPORT_EMAIL_ERROR_REGEXP = %r{(not formatted correctly|reached the limit|access People)}.freeze
+  REPORT_EMAIL_ERROR_REGEXP = %r{(not formatted correctly|reached the limit|access People)}
 
   def initialize(user_email)
     @user_email = user_email
   end
 
-  def call view
+  def call(view)
     obtain_token
     if @token.valid?
       TokenMailer.new_token_email(@token).deliver_later queue: :high_priority
@@ -22,10 +21,10 @@ class TokenSender
 
   def obtain_token
     @token = build_token
-    @token.save
+    @token.save # rubocop:disable Rails/SaveBang
   end
 
-  private
+private
 
   def user_email_error?
     @token.errors[:user_email].first[REPORT_EMAIL_ERROR_REGEXP]
@@ -40,10 +39,9 @@ class TokenSender
     end
   end
 
-  def rebuild_token original_token
+  def rebuild_token(original_token)
     new_token = Token.new(user_email: @user_email, value: original_token.value)
-    original_token.update_attribute(:value, SecureRandom.uuid) if new_token.valid?
+    original_token.update_attribute(:value, SecureRandom.uuid) if new_token.valid? # rubocop:disable Rails/SkipsModelValidations
     new_token
   end
-
 end

@@ -14,7 +14,7 @@ class ApplicationController < ActionController::Base
     redirect_to desired_path(person)
   end
 
-  private
+private
 
   def user_for_paper_trail
     logged_in_regular? ? current_user.id : nil
@@ -36,7 +36,7 @@ class ApplicationController < ActionController::Base
   def current_user
     @current_user ||= load_user
   rescue ActiveRecord::RecordNotFound
-    session.destroy
+    session.destroy # rubocop:disable Rails/SaveBang
   end
   helper_method :current_user
 
@@ -67,14 +67,14 @@ class ApplicationController < ActionController::Base
     redirect_to new_sessions_path
   end
 
-  def desired_path person
+  def desired_path(person)
     session.delete(:desired_path) || person_path(person, prompt: :profile)
   end
 
   def i18n_flash(type, *partial_key, **options)
     full_key = [
-      :controllers, controller_path.tr('/', '.'), *partial_key
-    ].join('.')
+      :controllers, controller_path.tr("/", "."), *partial_key
+    ].join(".")
     flash[type] = I18n.t(full_key, **options)
   end
 

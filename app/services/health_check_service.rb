@@ -14,9 +14,9 @@ class HealthCheckService
     errors = @components.flat_map(&:errors)
 
     if errors.empty?
-      HealthCheckReport.new('200', 'All Components OK')
+      HealthCheckReport.new("200", "All Components OK")
     else
-      HealthCheckReport.new('500', errors)
+      HealthCheckReport.new("500", errors)
     end
   end
 

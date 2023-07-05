@@ -9,12 +9,14 @@ module Concerns::BucketedCompletion
       parse_bucketed_results results
     end
 
-    private
+  private
 
     def bucket_case_statement(alias_name = avg_alias)
-      BUCKETS.inject('CASE') do |memo, range|
+      # rubocop:disable Style/StringConcatenation
+      BUCKETS.inject("CASE") { |memo, range|
         memo + "\nWHEN #{alias_name} BETWEEN #{range.begin} AND #{range.end} THEN \'[#{range.begin},#{range.end}]\'"
-      end + "\nEND AS bucket\n"
+      } + "\nEND AS bucket\n"
+      # rubocop:enable Style/StringConcatenation
     end
 
     def bucketed_completion_score_sql
@@ -29,8 +31,8 @@ module Concerns::BucketedCompletion
       SQL
     end
 
-    def parse_bucketed_results results
-      results = results.inject({}) { |memo, tuple| memo.merge(tuple['bucket'] => tuple['people_count'].to_i) }
+    def parse_bucketed_results(results)
+      results = results.inject({}) { |memo, tuple| memo.merge(tuple["bucket"] => tuple["people_count"].to_i) }
       default_bucket_scores.merge results
     end
 
@@ -38,5 +40,4 @@ module Concerns::BucketedCompletion
       Hash[BUCKETS.map { |r| ["[#{r.begin},#{r.end}]", 0] }]
     end
   end
-
 end

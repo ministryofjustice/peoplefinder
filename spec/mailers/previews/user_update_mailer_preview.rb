@@ -1,5 +1,4 @@
 class UserUpdateMailerPreview < ActionMailer::Preview
-
   include PreviewHelper
 
   def new_profile_email
@@ -11,7 +10,7 @@ class UserUpdateMailerPreview < ActionMailer::Preview
     UserUpdateMailer.updated_profile_email(
       @dirty,
       ProfileChangesPresenter.new(@dirty.all_changes).serialize,
-      instigator.email
+      instigator.email,
     )
   end
 

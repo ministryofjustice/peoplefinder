@@ -1,16 +1,15 @@
-require 'rails_helper'
+require "rails_helper"
 
 describe NotificationSender do
   include PermittedDomainHelper
 
-  describe '#send!' do
-
+  describe "#send!" do
     let(:person) { create :person, id: 22 }
     let(:logged_in_user) { create :person, id: 333 }
-    let(:mailer) { double UserUpdateMailer }
+    let(:mailer) { instance_double(ActionMailer::MessageDelivery) }
 
-    it 'calls process group for each group item returned by unsent groups' do
-      expect(QueuedNotification).to receive(:unsent_groups).and_return([:group1, :group2, :group3])
+    it "calls process group for each group item returned by unsent groups" do
+      allow(QueuedNotification).to receive(:unsent_groups).and_return(%i[group1 group2 group3])
       sender = described_class.new
       expect(sender).to receive(:process_group).with(:group1)
       expect(sender).to receive(:process_group).with(:group2)
@@ -18,10 +17,10 @@ describe NotificationSender do
       sender.send!
     end
 
-    context 'when processing started by another process after this job started' do
-      it 'does not send any mails' do
+    context "when processing started by another process after this job started" do
+      it "does not send any mails" do
         Timecop.freeze 1.hour.ago do
-          create_list :queued_notification, 2, session_id: 'abc', person_id: 22, current_user_id: 333
+          create_list :queued_notification, 2, session_id: "abc", person_id: 22, current_user_id: 333
         end
         sender = described_class.new
         QueuedNotification.update_all(processing_started_at: 1.minute.ago)
@@ -31,56 +30,56 @@ describe NotificationSender do
       end
     end
 
-    context 'when first queued notification is new email template' do
-      it 'sends a new_profile_email' do
-        create_qn(email_template: 'new_profile_email')
-        create_qn(email_template: 'updated_profile_email', edit_finalised: true)
+    context "when first queued notification is new email template" do
+      it "sends a new_profile_email" do
+        create_qn(email_template: "new_profile_email")
+        create_qn(email_template: "updated_profile_email", edit_finalised: true)
         sender = described_class.new
-        expect(UserUpdateMailer).to receive(:new_profile_email).with(person, logged_in_user.email).and_return(mailer)
+        allow(UserUpdateMailer).to receive(:new_profile_email).with(person, logged_in_user.email).and_return(mailer)
         expect(mailer).to receive(:deliver_later)
         sender.send!
         expect_queued_notifications_to_be_marked_as_sent
       end
     end
 
-    context 'when all queued notifications email templates are updated_email_template' do
-      it 'sends an updated profile email' do
-        create_qn(email_template: 'updated_profile_email')
-        create_qn(email_template: 'updated_profile_email', edit_finalised: true)
+    context "when all queued notifications email templates are updated_email_template" do
+      it "sends an updated profile email" do
+        create_qn(email_template: "updated_profile_email")
+        create_qn(email_template: "updated_profile_email", edit_finalised: true)
         sender = described_class.new
-        raw_changes = double 'raw changes'
-        aggregator = double ProfileChangeAggregator, aggregate_raw_changes: raw_changes
-        presenter = double ProfileChangesPresenter, serialize: 'serialized changes'
-        expect(ProfileChangeAggregator).to receive(:new).and_return(aggregator)
-        expect(ProfileChangesPresenter).to receive(:new).with(raw_changes).and_return(presenter)
-        expect(UserUpdateMailer).to receive(:updated_profile_email).with(person, presenter.serialize, logged_in_user.email).and_return(mailer)
+        raw_changes = instance_double(Hash)
+        aggregator = instance_double ProfileChangeAggregator, aggregate_raw_changes: raw_changes
+        presenter = instance_double ProfileChangesPresenter, serialize: "serialized changes"
+        allow(ProfileChangeAggregator).to receive(:new).and_return(aggregator)
+        allow(ProfileChangesPresenter).to receive(:new).with(raw_changes).and_return(presenter)
+        allow(UserUpdateMailer).to receive(:updated_profile_email).with(person, presenter.serialize, logged_in_user.email).and_return(mailer)
         expect(mailer).to receive(:deliver_later)
 
         sender.send!
       end
     end
 
-    context 'when one grouped session sent and a second group with same ids unsent' do
-      it 'sends and email for the second group' do
+    context "when one grouped session sent and a second group with same ids unsent" do
+      it "sends and email for the second group" do
         # This tests the edge case where a group of queued notifications has been processed, and there is another
         # unprocessed group with the same session id, current user and person.  We have to be sure that the first
         # processed group does not inhibit sending a mail relating to the second group
 
         # given a group which has been processed
         Timecop.freeze 30.minutes.ago do
-          changes = jsonify('name' => %w(Steve Stephen))
-          create_qn(email_template: 'updated_profile_email', processing_started_at: Time.now, sent: true, changes_json: changes)
+          changes = jsonify("name" => %w[Steve Stephen])
+          create_qn(email_template: "updated_profile_email", processing_started_at: Time.zone.now, sent: true, changes_json: changes)
         end
 
         # and another unprocessed group for the same session id, current_user and person
         Timecop.freeze 16.minutes.ago do
-          changes = jsonify('profile_photo_id' => [23, 33])
-          create_qn(email_template: 'updated_profile_email', processing_started_at: nil, sent: false, changes_json: changes)
+          changes = jsonify("profile_photo_id" => [23, 33])
+          create_qn(email_template: "updated_profile_email", processing_started_at: nil, sent: false, changes_json: changes)
         end
 
         # I would expect a mail to be sent
-        mail = double UserUpdateMailer
-        expect(UserUpdateMailer).to receive(:updated_profile_email).and_return(mail)
+        mail = instance_double(ActionMailer::MessageDelivery)
+        allow(UserUpdateMailer).to receive(:updated_profile_email).and_return(mail)
         expect(mail).to receive(:deliver_later)
         # when I run the notification sender
         sender = described_class.new
@@ -89,12 +88,12 @@ describe NotificationSender do
     end
 
     def create_qn(options)
-      merged_options = { session_id: 'def', person_id: 22, current_user_id: 333 }.merge(options)
+      merged_options = { session_id: "def", person_id: 22, current_user_id: 333 }.merge(options)
       create :queued_notification, merged_options
     end
 
     def jsonify(hash)
-      { 'json_class' => 'ProfileChangesPresenter', 'data' => { 'raw' => hash } }.to_json
+      { "json_class" => "ProfileChangesPresenter", "data" => { "raw" => hash } }.to_json
     end
 
     def expect_queued_notifications_to_be_marked_as_sent

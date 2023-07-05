@@ -5,7 +5,6 @@
 #
 
 class ImageDimensionsValidator < ActiveModel::EachValidator
-
   attr_reader :record, :attribute, :message
 
   def validate_each(record, attribute, _value)
@@ -17,7 +16,7 @@ class ImageDimensionsValidator < ActiveModel::EachValidator
     validate_maximum_dimensions
   end
 
-  private
+private
 
   def add_error(record, attribute, message)
     record.errors.add(attribute, message)
@@ -39,7 +38,7 @@ class ImageDimensionsValidator < ActiveModel::EachValidator
     if minimum_dimensions_required? && record.upload_dimensions.present?
       [
         record.upload_dimensions[:width] >= options[:min_width],
-        record.upload_dimensions[:height] >= options[:min_height]
+        record.upload_dimensions[:height] >= options[:min_height],
       ].all?
     else
       true
@@ -54,7 +53,7 @@ class ImageDimensionsValidator < ActiveModel::EachValidator
     if maximum_dimensions_required? && record.upload_dimensions.present?
       [
         record.upload_dimensions[:width] <= options[:max_width],
-        record.upload_dimensions[:height] <= options[:max_height]
+        record.upload_dimensions[:height] <= options[:max_height],
       ].all?
     else
       true
@@ -77,9 +76,9 @@ class ImageDimensionsValidator < ActiveModel::EachValidator
     message ||
       I18n.t(
         :too_small,
-        scope: [:errors, :validators, :image_dimensions_validator],
+        scope: %i[errors validators image_dimensions_validator],
         actual_dimensions: humanize_dimensions,
-        expected_dimensions: humanize_minimum_dimensions
+        expected_dimensions: humanize_minimum_dimensions,
       )
   end
 
@@ -87,10 +86,9 @@ class ImageDimensionsValidator < ActiveModel::EachValidator
     message ||
       I18n.t(
         :too_big,
-        scope: [:errors, :validators, :image_dimensions_validator],
+        scope: %i[errors validators image_dimensions_validator],
         actual_dimensions: humanize_dimensions,
-        expected_dimensions: humanize_maximum_dimensions
+        expected_dimensions: humanize_maximum_dimensions,
       )
   end
-
 end
