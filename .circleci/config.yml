@@ -163,7 +163,7 @@ references:
       name: Check ECR scan results
       command: |
         build_tag=`cat /tmp/workspace/build_tag`
-        python3 config/pipeline/aws_ecr_scan_results.py --search contact-moj-ecr --tag $build_tag --slack_webhook $SLACK_WEBHOOK || true
+        python3 config/pipeline/aws_ecr_scan_results.py --search peoplefinder-ecr --tag $build_tag --slack_webhook $SLACK_WEBHOOK || true
 
   deploy_to_dev: &deploy_to_dev
     run:
