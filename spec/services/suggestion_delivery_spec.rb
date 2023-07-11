@@ -36,7 +36,7 @@ RSpec.describe SuggestionDelivery do
     describe "for team admin" do
       let(:admins)     { [instance_double(Person), instance_double(Person), instance_double(Person)] }
 
-      let(:groups)     { double("groups") } # rubocop:disable RSpec/VerifiedDoublesRSpec/VerifiedDoubles
+      let(:groups)     { double("groups") } # rubocop:disable RSpec/VerifiedDoubles
       let(:person)     { instance_double(Person) }
       let(:suggester)  { instance_double(Person) }
       let(:suggestion) do
