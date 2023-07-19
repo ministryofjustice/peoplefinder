@@ -17,6 +17,7 @@ spec:
       labels:
         app: peoplefinder
     spec:
+      serviceAccountName: peoplefinder
       containers:
         - name: webapp
           imagePullPolicy: Always
