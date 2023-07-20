@@ -17,6 +17,7 @@ spec:
       labels:
         app: peoplefinder
     spec:
+      serviceAccountName: peoplefinder
       containers:
         - name: webapp
           imagePullPolicy: Always
@@ -40,16 +41,6 @@ spec:
                 secretKeyRef:
                   name: peoplefinder-s3-output
                   key: bucket_name
-            - name: S3_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: peoplefinder-s3-output
-                  key: access_key_id
-            - name: S3_SECRET
-              valueFrom:
-                secretKeyRef:
-                  name: peoplefinder-s3-output
-                  key: secret_access_key
           envFrom:
             - configMapRef:
                 name: environment-variables
@@ -98,16 +89,6 @@ spec:
                 secretKeyRef:
                   name: peoplefinder-s3-output
                   key: bucket_name
-            - name: S3_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: peoplefinder-s3-output
-                  key: access_key_id
-            - name: S3_SECRET
-              valueFrom:
-                secretKeyRef:
-                  name: peoplefinder-s3-output
-                  key: secret_access_key
           envFrom:
             - configMapRef:
                 name: environment-variables
