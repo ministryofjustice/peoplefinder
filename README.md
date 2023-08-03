@@ -103,11 +103,15 @@ defined on a per environment basis.
 
 The system allows logging in for emails which have domains from the whitelist. The whitelist is in the database, managed by `PermittedDomain` model. At least one domain has to be whitelisted before anyone can log in (that applies to development too).
 
-In rails console:
-
-```ruby
-PermittedDomain.create(domain: 'some.domain.gov.uk')
-```
+Adding a new domain to the production database from bash/zsh etc:
+1. Log into the pod `kubectl get pods -n <NAMESPACE>`
+2. Access the live pod shell `kubectl exec -it <POD> -n <NAMESPACE> ash`
+3. Access rails console from within the shell - `rails c`
+4. Use the following command to create the new domain. 
+   - Example: `PermittedDomain.create(domain: '<DOMAIN_NAME>')`
+5. To test the domain has worked, visit the live app url. Attempt to sign in with the new domain:
+   - Example: `email@<DOMAIN_NAME>`
+6. If successful, you should be navigated to a page which states 'Link sent - check your email'
 
 ## Authentication
 
