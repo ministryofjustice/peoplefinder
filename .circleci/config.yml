@@ -104,6 +104,11 @@ references:
       name: Run rubocop
       command: bundle exec rubocop
 
+  brakeman: &brakeman
+    run:
+      name: Run Brakeman
+      command: bundle exec brakeman
+
   setup_test_reporter: &setup_test_reporter
     run:
       name: Setup Code Climate test-reporter
@@ -204,6 +209,7 @@ jobs:
       - *wait_for_db
       - *set_up_the_database
       - *rubocop
+      - *brakeman
       - *setup_test_reporter
       - *run_unit_and_feature_tests
       - *upload_test_coverage
