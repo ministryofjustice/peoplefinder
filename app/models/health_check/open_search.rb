@@ -25,7 +25,7 @@ module HealthCheck
     end
 
     def hosts
-      client.transport.hosts.map { |h|
+      client.transport.transport.hosts.map { |h|
         "port #{h[:port]} on #{h[:host]} via #{h[:protocol]}"
       }.join("; ")
     end
