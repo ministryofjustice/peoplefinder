@@ -1,7 +1,7 @@
 require "rails_helper"
 require_relative "shared_examples_for_search"
 
-RSpec.describe GroupSearch, elastic: true do
+RSpec.describe GroupSearch, opensearch: true do
   let!(:department) { create(:department, name: "Department name") }
   let!(:team) { create(:group, name: "Team name", parent: department) }
   let!(:civil_families_tribunal) { create(:group, name: "Civil, Families & Tribunal", acronym: "CFT", parent: department) }

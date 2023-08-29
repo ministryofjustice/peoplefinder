@@ -70,7 +70,7 @@ module Peoplefinder
 
     config.active_record.schema_format = :ruby
 
-    config.elastic_search_url = ENV["MOJ_PF_ES_URL"]
+    config.open_search_url = ENV["MOJ_PF_ES_URL"]
 
     config.rack_timeout = (ENV["RACK_TIMEOUT"] || 14)
 

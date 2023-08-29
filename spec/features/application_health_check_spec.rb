@@ -3,7 +3,7 @@ require "rails_helper"
 describe "healthcheck.json" do
   before do
     allow(Net::SMTP).to receive(:start).and_return("OK")
-    allow(::Elasticsearch::Model.client.cluster).to receive(:health).and_return("status" => "green")
+    allow(::OpenSearch::Model.client.cluster).to receive(:health).and_return("status" => "green")
   end
 
   it "when there are no errors it should return a 200 code" do

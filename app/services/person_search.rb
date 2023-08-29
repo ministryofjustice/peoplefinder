@@ -12,14 +12,14 @@ class PersonSearch
     @max = 100
   end
 
-  # Returns a structure consisting of, Elasticsearch::Model::Response::Records
+  # Returns a structure consisting of, OpenSearch::Model::Response::Records
   # and a boolan denoting whether an "exact" match is included based on the
   # supplied query term and false otherwise.
   #
   # Example:
   #
   # PersonSearch.new('John Smith', SearchResults.new).perform_search
-  # #=> [ @set=[#<Elasticsearch::Model::Response::Records], true ]
+  # #=> [ @set=[#<OpenSearch::Model::Response::Records], true ]
   #
   def perform_search
     if query.present? && !email_found

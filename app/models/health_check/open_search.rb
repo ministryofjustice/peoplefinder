@@ -1,5 +1,5 @@
 module HealthCheck
-  class Elasticsearch < Component
+  class OpenSearch < Component
     def available?
       client.ping.tap { |ok| log_error("Could not connect to #{hosts}") unless ok }
     rescue StandardError => e
@@ -21,7 +21,7 @@ module HealthCheck
     end
 
     def log_error(message)
-      @errors = ["Elasticsearch Error: #{message}"]
+      @errors = ["OpenSearch Error: #{message}"]
     end
 
     def hosts
@@ -31,7 +31,7 @@ module HealthCheck
     end
 
     def client
-      ::Elasticsearch::Model.client
+      ::OpenSearch::Model.client
     end
   end
 end

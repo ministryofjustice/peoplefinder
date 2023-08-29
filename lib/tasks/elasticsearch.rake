@@ -1,1 +1,1 @@
-require "elasticsearch/rails/tasks/import"
+require "opensearch/rails/tasks/import"

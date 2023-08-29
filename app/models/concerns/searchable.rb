@@ -2,13 +2,13 @@ module Concerns::Searchable
   extend ActiveSupport::Concern
 
   included do
-    include Elasticsearch::Model
-    include Elasticsearch::Model::Callbacks
+    include OpenSearch::Model
+    include OpenSearch::Model::Callbacks
 
     index_name [Rails.env, model_name.collection.tr("/", "-")].join("_")
 
     def self.delete_indexes
-      __elasticsearch__.delete_index! index: index_name
+      __opensearch__.delete_index! index: index_name
     end
 
     def self.search_results(query)

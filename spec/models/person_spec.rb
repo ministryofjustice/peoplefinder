@@ -331,13 +331,13 @@ RSpec.describe Person, type: :model do
 
   context "with search" do
     it "deletes indexes" do
-      expect(described_class.__elasticsearch__).to receive(:delete_index!)
+      expect(described_class.__opensearch__).to receive(:delete_index!)
         .with(index: "test_people")
       described_class.delete_indexes
     end
   end
 
-  context "with elasticsearch indexing helpers" do
+  context "with opensearch indexing helpers" do
     before do
       person.save!
       digital_services = create(:group, name: "Digital Services")

@@ -81,7 +81,7 @@ RSpec.configure do |config|
   config.include SpecSupport::Email
   config.include SpecSupport::Profile
   config.include SpecSupport::DbHelper
-  config.include SpecSupport::ElasticSearchHelper
+  config.include SpecSupport::OpenSearchHelper
   config.include SpecSupport::FeatureFlags
   config.include SpecSupport::AppConfig
 end

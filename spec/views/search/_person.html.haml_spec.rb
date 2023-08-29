@@ -10,7 +10,7 @@ RSpec.describe "search/person", type: :view do
       create(:person, :member_of, team:, sole_membership: true)
     end
     Person.import force: true
-    Person.__elasticsearch__.refresh_index!
+    Person.__opensearch__.refresh_index!
   end
 
   after(:all) do # rubocop:disable RSpec/BeforeAfterAll

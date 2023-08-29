@@ -10,11 +10,11 @@ describe HealthCheckService do
   it "calls accessible and available on all checks" do
     allow_any_instance_of(HealthCheck::Database) # rubocop:disable RSpec/AnyInstance
       .to receive(:available?).and_return(true)
-    allow_any_instance_of(HealthCheck::Elasticsearch) # rubocop:disable RSpec/AnyInstance
+    allow_any_instance_of(HealthCheck::OpenSearch) # rubocop:disable RSpec/AnyInstance
       .to receive(:available?).and_return(true)
     allow_any_instance_of(HealthCheck::Database) # rubocop:disable RSpec/AnyInstance
       .to receive(:accessible?).and_return(true)
-    allow_any_instance_of(HealthCheck::Elasticsearch) # rubocop:disable RSpec/AnyInstance
+    allow_any_instance_of(HealthCheck::OpenSearch) # rubocop:disable RSpec/AnyInstance
       .to receive(:accessible?).and_return(true)
 
     result = health_check_report.report
@@ -31,11 +31,11 @@ describe HealthCheckService do
       .to receive(:errors)
       .and_return(["DB Message 1", "DB Message 2"])
 
-    allow_any_instance_of(HealthCheck::Elasticsearch) # rubocop:disable RSpec/AnyInstance
+    allow_any_instance_of(HealthCheck::OpenSearch) # rubocop:disable RSpec/AnyInstance
       .to receive(:available?).and_return(false)
-    allow_any_instance_of(HealthCheck::Elasticsearch) # rubocop:disable RSpec/AnyInstance
+    allow_any_instance_of(HealthCheck::OpenSearch) # rubocop:disable RSpec/AnyInstance
       .to receive(:accessible?).and_return(false)
-    allow_any_instance_of(HealthCheck::Elasticsearch) # rubocop:disable RSpec/AnyInstance
+    allow_any_instance_of(HealthCheck::OpenSearch) # rubocop:disable RSpec/AnyInstance
       .to receive(:errors)
       .and_return(["ES Message 1", "ES Message 2"])
 
