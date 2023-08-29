@@ -83,7 +83,7 @@ end
 
 group :development, :test do
   gem "annotate"
-  gem "brakeman", require: false
+  gem "brakeman"
   gem "capybara"
   gem "debug"
   gem "factory_bot_rails"
