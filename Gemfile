@@ -76,7 +76,6 @@ group :test do
   gem "rspec-json_expectations"
   gem "simplecov", "~> 0.22", require: false
   gem "site_prism"
-  gem "webdrivers"
   gem "webmock"
 end
 

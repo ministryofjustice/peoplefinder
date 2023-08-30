@@ -9,7 +9,6 @@ require "shoulda-matchers"
 require "capybara/rspec"
 require "site_prism"
 require "awesome_print"
-require "webdrivers"
 
 if ENV["SKIP_SIMPLECOV"].to_s.downcase == "false"
   require "simplecov"
