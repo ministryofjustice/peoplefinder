@@ -1,5 +1,5 @@
-es:
-  image: elasticsearch
+os:
+  image: opensearch
   ports:
     - "9200"
 pg:
@@ -19,7 +19,7 @@ app:
     DOCKER_STATE: migrate
     RAILS_ENV: production
     DATABASE_URL: postgres://postgres:@pg:5432/postgres
-    MOJ_PF_ES_URL: http://es:9200/
+    MOJ_PF_ES_URL: http://os:9200/
     SUPPORT_EMAIL:
     SECRET_KEY_BASE:
 
