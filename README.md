@@ -184,7 +184,7 @@ Cron jobs are handled using Kubernetes Cron jobs. The files are located in confi
 To run the engine in production mode, `config.open_search_url` must be set in, for example, config/application.rb. The environment variable used to set it is `MOJ_PF_ES_URL`
 See 'Configurable elements' above.
 
-replace `aws-es-proxy-service:9200` with `localhost:9200` when calling OpenSearch search locally.
+Use `localhost:9200` when calling OpenSearch search locally.
 
 The following commands on kubernetes environments will call the open search proxy pod, which will then call open search on AWS to read or update data.
 
