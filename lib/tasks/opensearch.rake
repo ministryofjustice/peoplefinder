@@ -1,25 +1,4 @@
-# Licensed to Elasticsearch B.V. under one or more contributor
-# license agreements. See the NOTICE file distributed with
-# this work for additional information regarding copyright
-# ownership. Elasticsearch B.V. licenses this file to you under
-# the Apache License, Version 2.0 (the "License"); you may
-# not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#   http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing,
-# software distributed under the License is distributed on an
-# "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-# KIND, either express or implied.  See the License for the
-# specific language governing permissions and limitations
-# under the License.
-
 # A collection of Rake tasks to facilitate importing data from your models into OpenSearch.
-#
-# Add this e.g. into the `lib/tasks/opensearch.rake` file in your Rails application:
-#
-#     require 'opensearch/rails/tasks/import'
 #
 # To import the records from your `Article` model, run:
 #
@@ -29,17 +8,17 @@
 #
 #     $ bundle exec rake -D opensearch
 #
-STDOUT.sync = true
-STDERR.sync = true
+$stdout.sync = true
+$stderr.sync = true
 
-begin; require 'ansi/progressbar'; rescue LoadError; end
+begin; require "ansi/progressbar"; rescue LoadError; end # rubocop:disable Lint/SuppressedException
 
 namespace :opensearch do
-
-  task :import => 'import:model'
+  desc "import"
+  task import: "import:model"
 
   namespace :import do
-    import_model_desc = <<-DESC.gsub(/    /, '')
+    import_model_desc = <<-DESC.gsub(/    /, "")
       Import data from your model (pass name as CLASS environment variable).
 
         $ rake environment opensearch:import:model CLASS='MyModel'
@@ -57,58 +36,67 @@ namespace :opensearch do
         $ rake environment opensearch:import:model CLASS='Article' SCOPE='published'
     DESC
     desc import_model_desc
-    task :model do
-      if ENV['CLASS'].to_s == ''
-        puts '='*90, 'USAGE', '='*90, import_model_desc, ""
+    task model: :environment do
+      if ENV["CLASS"].to_s == ""
+        puts "=" * 90, "USAGE", "=" * 90, import_model_desc, ""
         exit(1)
       end
 
-      klass  = eval(ENV['CLASS'].to_s)
-      total  = klass.count rescue nil
-      pbar   = ANSI::Progressbar.new(klass.to_s, total) rescue nil
-      pbar.__send__ :show if pbar
-
-      unless ENV['DEBUG']
-        begin
-          klass.__opensearch__.client.transport.logger.level = Logger::WARN
-        rescue NoMethodError; end
-        begin
-          klass.__opensearch__.client.transport.tracer.level = Logger::WARN
-        rescue NoMethodError; end
+      klass = eval(ENV["CLASS"].to_s) # rubocop:disable Security/Eval
+      begin
+        total = klass.count
+      rescue StandardError
+        nil
       end
 
-      total_errors = klass.__opensearch__.import force:      ENV.fetch('FORCE', false),
-                                  batch_size: ENV.fetch('BATCH', 1000).to_i,
-                                  index:      ENV.fetch('INDEX', nil),
-                                  scope:      ENV.fetch('SCOPE', nil) do |response|
-        pbar.inc response['items'].size if pbar
-        STDERR.flush
-        STDOUT.flush
+      begin
+        pbar = ANSI::Progressbar.new(klass.to_s, total)
+      rescue StandardError
+        nil
+      end
+      pbar.__send__ :show if pbar
+
+      unless ENV["DEBUG"]
+        begin
+          klass.__opensearch__.client.transport.logger.level = Logger::WARN
+        rescue NoMethodError; end # rubocop:disable Lint/SuppressedException
+        begin
+          klass.__opensearch__.client.transport.tracer.level = Logger::WARN
+        rescue NoMethodError; end # rubocop:disable Lint/SuppressedException
+      end
+
+      total_errors = klass.__opensearch__.import force: ENV.fetch("FORCE", false),
+                                                 batch_size: ENV.fetch("BATCH", 1000).to_i,
+                                                 index: ENV.fetch("INDEX", nil),
+                                                 scope: ENV.fetch("SCOPE", nil) do |response|
+        pbar.inc response["items"].size if pbar
+        $stderr.flush
+        $stdout.flush
       end
       pbar.finish if pbar
 
       puts "[IMPORT] #{total_errors} errors occurred" unless total_errors.zero?
-      puts '[IMPORT] Done'
+      puts "[IMPORT] Done"
     end
 
-    desc <<-DESC.gsub(/    /, '')
+    desc <<-DESC.gsub(/    /, "")
       Import all indices from `app/models` (or use DIR environment variable).
 
         $ rake environment opensearch:import:all DIR=app/models
     DESC
-    task :all do
-      dir    = ENV['DIR'].to_s != '' ? ENV['DIR'] : Rails.root.join("app/models")
+    task all: :environment do
+      dir = ENV["DIR"].to_s != "" ? ENV["DIR"] : Rails.root.join("app/models")
 
       puts "[IMPORT] Loading models from: #{dir}"
       Dir.glob(File.join("#{dir}/**/*.rb")).each do |path|
-        model_filename = path[/#{Regexp.escape(dir.to_s)}\/([^\.]+).rb/, 1]
+        model_filename = path[/#{Regexp.escape(dir.to_s)}\/([^.]+).rb/, 1]
 
         next if model_filename.match(/^concerns\//i) # Skip concerns/ folder
 
         begin
           klass = model_filename.camelize.constantize
         rescue NameError
-          require(path) ? retry : raise(RuntimeError, "Cannot load class '#{klass}'")
+          require(path) ? retry : raise("Cannot load class '#{klass}'")
         end
 
         # Skip if the class doesn't have OpenSearch integration
@@ -116,13 +104,11 @@ namespace :opensearch do
 
         puts "[IMPORT] Processing model: #{klass}..."
 
-        ENV['CLASS'] = klass.to_s
+        ENV["CLASS"] = klass.to_s
         Rake::Task["opensearch:import:model"].invoke
         Rake::Task["opensearch:import:model"].reenable
         puts
       end
     end
-
   end
-
 end
