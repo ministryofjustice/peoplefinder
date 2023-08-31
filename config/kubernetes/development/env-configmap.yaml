@@ -12,4 +12,3 @@ data:
   S3_REGION: 'eu-west-2'
   GOVUK_APP_DOMAIN: 'peoplefinder.service.gov.uk'
   GOVUK_WEBSITE_ROOT: 'development'
-  MOJ_PF_ES_URL: 'opensearch-proxy-service-cloud-platform-80d17ced.peoplefinder-development.svc.cluster.local:8080'
