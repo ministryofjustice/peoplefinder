@@ -31,7 +31,7 @@ references:
           POSTGRES_USER: postgres
           PGUSER: postgres
 
-      - image: bitnami/elasticsearch:7.10.2-debian-10-r303
+      - image: bitnami/opensearch:latest
         environment:
           - cluster.name: es-test-cluster
           - xpack.security.enabled: false

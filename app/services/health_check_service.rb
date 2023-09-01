@@ -2,7 +2,7 @@ class HealthCheckService
   def initialize
     @components = []
     @components << HealthCheck::Database.new
-    @components << HealthCheck::Elasticsearch.new
+    @components << HealthCheck::OpenSearch.new
   end
 
   def report

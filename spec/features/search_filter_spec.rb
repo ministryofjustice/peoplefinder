@@ -11,7 +11,7 @@ describe "Search results page" do
     create(:person, given_name: "Jim", surname: "Browne")
     create(:person, given_name: "Jon", surname: "Browne")
     Person.import force: true
-    Person.__elasticsearch__.refresh_index!
+    Person.__opensearch__.refresh_index!
   end
 
   before do

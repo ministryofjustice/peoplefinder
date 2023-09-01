@@ -42,15 +42,12 @@ Install Ruby 3.2.2 using rbenv or rvm then install bundler using
 
 [Install Homebrew](http://brew.sh/) if it is not on your machine.
 
-Install elasticsearch through brew, find the right version of elasticsearch you want install by using following command
-```
-brew search elasticsearch
-```
-The version of elasticsearch we use is 7.9
+Install opensearch through brew (opensearch is an open source version of elasticsearch)
 
-```cmd
-docker run --name elasticsearch  --publish 9200:9200 bitnami/elasticsearch:7.9.0
 ```
+brew install opensearch
+```
+
 
 Install remaining dependencies on Mac OSX:
 
@@ -71,7 +68,7 @@ gem install eventmachine -v 1.0.5 -- --with-cppflags=-I/usr/local/opt/openssl/in
 bundle
 bundle exec rake db:setup
 bundle exec rake peoplefinder:db:reload # includes demo data
-bundle exec rake # runs tests - make sure Elasticsearch is running
+bundle exec rake # runs tests - make sure Opensearch is running
 bundle exec rails s -b 0.0.0.0
 ```
 
@@ -93,7 +90,7 @@ defined on a per environment basis.
 
 `config.disable_token_auth` Disable the 'token-based authentication' feature
 
-`config.elastic_search_url` Required for production (see Search section below)
+`config.open_search_url` Required for production (see Search section below)
 
 `config.support_email` e.g. 'peoplefinder-support@example.com'
 
@@ -107,7 +104,7 @@ Adding a new domain to the production database from bash/zsh etc:
 1. Log into the pod `kubectl get pods -n <NAMESPACE>`
 2. Access the live pod shell `kubectl exec -it <POD> -n <NAMESPACE> ash`
 3. Access rails console from within the shell - `rails c`
-4. Use the following command to create the new domain. 
+4. Use the following command to create the new domain.
    - Example: `PermittedDomain.create(domain: '<DOMAIN_NAME>')`
 5. To test the domain has worked, visit the live app url. Attempt to sign in with the new domain:
    - Example: `email@<DOMAIN_NAME>`
@@ -184,14 +181,14 @@ Cron jobs are handled using Kubernetes Cron jobs. The files are located in confi
 
 ## Search
 
-To run the engine in production mode, `config.elastic_search_url` must be set in, for example, config/application.rb. The environment variable used to set it is `MOJ_PF_ES_URL`
+To run the engine in production mode, `config.open_search_url` must be set in, for example, config/application.rb. The environment variable used to set it is `MOJ_PF_ES_URL`
 See 'Configurable elements' above.
 
-replace `aws-es-proxy-service:9200` with `localhost:9200` when calling Elastic search locally.
+Use `localhost:9200` when calling OpenSearch search locally.
 
-The following commands on kubernetes environments will call the elastic search proxy pod, which will then call elastic search on AWS to read or update data.
+The following commands on kubernetes environments will call the open search proxy pod, which will then call open search on AWS to read or update data.
 
-To check the health of the elasticsearch (ES) stack you can use the following, from either host instance. `wget` will download the information onto the pods so you can read the files using `cat`. Locally you can just use `curl`.
+To check the health of the opensearch stack you can use the following, from either host instance. `wget` will download the information onto the pods so you can read the files using `cat`. Locally you can just use `curl`.
 
 ```
 wget 'aws-es-proxy-service:9200/_cat/health?v'
@@ -208,7 +205,7 @@ wget 'aws-es-proxy-service:9200/_cat/nodes?v'
 If you get an IndexMissingException, you will need to index the Person model:
 
 ```
-bundle exec rake environment elasticsearch:import:model CLASS='Person' FORCE=y
+bundle exec rake environment opensearch:import:model CLASS='Person' FORCE=y
 ```
 
 Or, alternatively:
@@ -220,8 +217,8 @@ rake peoplefinder:es:index_people
 Or you can create the index from the console if the above rake commands fail:
 
 ```ruby
-Elasticsearch::Model.client = Elasticsearch::Client.new(url: Rails.configuration.elastic_search_url).index(index: Person.index_name, body: {})
-Person.__elasticsearch__.create_index! index: Person.index_name, force: true
+OpenSearch::Model.client = OpenSearch::Client.new(url: Rails.configuration.open_search_url).index(index: Person.index_name, body: {})
+Person.__opensearch__.create_index! index: Person.index_name, force: true
 ```
 
 And populate it:
@@ -232,9 +229,9 @@ You can also delete the index:
 
 `Person.delete_indexes`
 
-To run specs without Elasticsearch:
+To run specs without OpenSearch:
 
-`bundle exec rspec . --tag ~elastic`
+`bundle exec rspec . --tag ~opensearch`
 
 If your shell is Zsh, you have to escape `~` by using `\~`.
 

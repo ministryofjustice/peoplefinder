@@ -1,4 +1,4 @@
-module ElasticsearchHelper
+module OpenSearchHelper
   HIGHLIGHTER_TAGS = (PersonSearch::PRE_TAGS + PersonSearch::POST_TAGS).freeze
 
   def es_highlighter(hit, person, attribute)

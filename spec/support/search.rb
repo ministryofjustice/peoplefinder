@@ -10,11 +10,11 @@ module SpecSupport
       # => paper trail is behaving inappropriately and versions are still created
       # => PaperTrail.enabled? should be 'false' unless implicitly set.
       # => This appears to be due to the before(:all) blocks needed by the specs
-      # => that use elasticsearch.
+      # => that use opensearch.
       PaperTrail::Version.delete_all
 
       # delete old and create new person index
-      Person.__elasticsearch__.create_index! index: Person.index_name, force: true
+      Person.__opensearch__.create_index! index: Person.index_name, force: true
     end
   end
 end
