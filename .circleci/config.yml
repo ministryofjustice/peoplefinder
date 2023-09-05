@@ -59,7 +59,7 @@ references:
     run:
       name: Install bundler
       command: |
-        gem install bundler -v 2.2.14
+        gem install bundler -v 2.4.19
 
   check_bundler_version: &check_bundler_version
     run:
@@ -79,7 +79,8 @@ references:
       name: Install dependencies
       command: |
         if [ "${CIRCLE_NODE_INDEX}" == "0" ]; then
-          bundle check --path vendor/bundle || bundle install --path vendor/bundle && bundle clean
+          bundle config deployment true
+          bundle check || bundle install && bundle clean
         fi
 
   save_cache: &save_cache
