@@ -16,11 +16,10 @@ ENV APPUSER moj
 ENV PUMA_PORT 3000
 
 COPY Gemfile* .ruby-version ./
-RUN gem install bundler -v 2.2.14
-RUN bundle config --global frozen 1 && \
-    bundle config --path=vendor/bundle && \
-    bundle config --global without test:development && \
-    bundle install
+RUN gem install bundler -v 2.4.19
+RUN bundle config deployment true && \
+    bundle config without development test && \
+    bundle install --jobs 4 --retry 3
 
 RUN addgroup --gid 1000 --system appgroup && \
     adduser --uid 1000 --system appuser --ingroup appgroup
