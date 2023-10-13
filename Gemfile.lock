@@ -416,8 +416,6 @@ GEM
     rb-fsevent (0.11.1)
     rb-inotify (0.10.1)
       ffi (~> 1.0)
-    recipient_interceptor (0.3.1)
-      mail
     regexp_parser (2.8.0)
     reline (0.3.3)
       io-console (~> 0.5)
@@ -631,7 +629,6 @@ DEPENDENCIES
   rails (~> 6.1)
   rails-controller-testing
   rb-fsevent
-  recipient_interceptor (~> 0.3.1)
   rspec-json_expectations
   rspec-rails
   rubocop-govuk
