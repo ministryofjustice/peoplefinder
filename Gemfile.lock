@@ -346,7 +346,7 @@ GEM
       timeout
     net-smtp (0.3.3)
       net-protocol
-    netaddr (2.0.5)
+    netaddr (2.0.6)
     nio4r (2.5.9)
     nokogiri (1.15.4)
       mini_portile2 (~> 2.8.2)
@@ -814,7 +814,7 @@ DEPENDENCIES
   mail (>= 2.8)
   meta_request
   mini_magick (>= 4.9.4)
-  netaddr (~> 2.0.4)
+  netaddr (~> 2.0.6)
   opensearch-model!
   opensearch-rails!
   paper_trail
