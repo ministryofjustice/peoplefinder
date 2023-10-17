@@ -65,7 +65,6 @@ group :development do
   gem "daemon"
   gem "meta_request"
   gem "rb-fsevent", require: RUBY_PLATFORM[/darwin/i].to_s.size.positive?
-  gem "spring-commands-rspec"
 end
 
 group :test do

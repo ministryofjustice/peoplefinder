@@ -720,9 +720,6 @@ GEM
       capybara (~> 3.27)
       site_prism-all_there (~> 2.0)
     site_prism-all_there (2.0.2)
-    spring (4.0.0)
-    spring-commands-rspec (1.0.4)
-      spring (>= 0.9.1)
     sprockets (4.2.1)
       concurrent-ruby (~> 1.0)
       rack (>= 2.2.4, < 4)
@@ -836,7 +833,6 @@ DEPENDENCIES
   shoulda-matchers
   simplecov (~> 0.22)
   site_prism
-  spring-commands-rspec
   sprockets (~> 4.2.1)
   text
   timecop
