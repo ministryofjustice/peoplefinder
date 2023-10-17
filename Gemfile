@@ -45,15 +45,10 @@ gem "sprockets", "~> 4.2.1"
 gem "text"
 gem "tzinfo-data"
 gem "uglifier", ">= 2.7.2"
-gem "unf"
 gem "useragent", "~> 0.10"
 gem "virtus"
 gem "will_paginate", "~> 3.0", ">=3.0.3"
 gem "will_paginate-bootstrap", "~> 1.0", ">= 1.0.1"
-
-group :assets do
-  gem "coffee-rails"
-end
 
 group :production do
   gem "logstasher", "~> 2.1.5"
@@ -62,9 +57,6 @@ end
 group :development do
   gem "better_errors"
   gem "binding_of_caller"
-  gem "daemon"
-  gem "meta_request"
-  gem "rb-fsevent", require: RUBY_PLATFORM[/darwin/i].to_s.size.positive?
 end
 
 group :test do
@@ -82,7 +74,6 @@ group :development, :test do
   gem "capybara"
   gem "debug"
   gem "factory_bot_rails"
-  gem "launchy"
   gem "listen"
   gem "rspec-rails"
   gem "rubocop-govuk"
