@@ -841,7 +841,7 @@ DEPENDENCIES
   shoulda-matchers
   simplecov (~> 0.22)
   site_prism
-  sprockets (~> 4.2.1)
+  sprockets-rails
   text
   timecop
   tzinfo-data
