@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "BucketedCompletion" do
+RSpec.describe BucketedCompletion do
   include PermittedDomainHelper
 
   describe ".bucketed_completion" do

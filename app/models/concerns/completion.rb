@@ -1,9 +1,9 @@
 # Queries must respond quickly so aggregation
 # needs to be done on the DB for efficiency
 #
-module Concerns::Completion
+module Completion
   extend ActiveSupport::Concern
-  include Concerns::BucketedCompletion
+  include BucketedCompletion
 
   ADEQUATE_FIELDS = %i[
     building

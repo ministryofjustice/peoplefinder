@@ -1,12 +1,12 @@
 require "rails_helper"
 
-RSpec.describe Concerns::Placeholder do
+RSpec.describe Placeholder do
   subject(:test_model_instance) { test_model.new }
 
   let(:test_model) do
     Class.new do
       extend ActiveModel::Naming
-      include Concerns::Placeholder
+      include Placeholder
       attr_accessor :field
 
       def self.name

@@ -1,13 +1,13 @@
 require "rails_helper"
 
-RSpec.describe Concerns::ConcatenatedFields do
+RSpec.describe ConcatenatedFields do
   subject(:test_model_instance) { test_model.new }
 
   let(:test_model) do
     Class.new do
       attr_accessor :field_a, :field_b
 
-      include Concerns::ConcatenatedFields
+      include ConcatenatedFields
       concatenated_field :concatenated, :field_a, :field_b, join_with: ", "
     end
   end

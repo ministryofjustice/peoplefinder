@@ -16,8 +16,8 @@
 #
 
 class Group < ApplicationRecord
-  include Concerns::Hierarchical
-  include Concerns::Placeholder
+  include Hierarchical
+  include Placeholder
 
   MAX_DESCRIPTION = 2000
 

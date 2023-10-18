@@ -1,4 +1,4 @@
-module Concerns::Sanitizable
+module Sanitizable
   extend ActiveSupport::Concern
 
   included do

@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe Concerns::Sanitizable do
+RSpec.describe Sanitizable do
   subject(:sanitizable_instance) do
     sanitizable_test_model.new(
       color: " Orange3 ",
@@ -21,7 +21,7 @@ RSpec.describe Concerns::Sanitizable do
 
       attr_accessor :color, :shape, :flavor, :smell
 
-      include Concerns::Sanitizable
+      include Sanitizable
       sanitize_fields :color, strip: true
       sanitize_fields :shape, downcase: true
       sanitize_fields :flavor, downcase: true, strip: true, remove_digits: true

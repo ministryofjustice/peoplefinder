@@ -1,4 +1,4 @@
-module Concerns::Placeholder
+module Placeholder
   extend ActiveSupport::Concern
 
   def placeholder(field)

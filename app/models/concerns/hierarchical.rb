@@ -1,4 +1,4 @@
-module Concerns::Hierarchical
+module Hierarchical
   extend ActiveSupport::Concern
 
   included do
