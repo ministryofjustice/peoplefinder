@@ -1,4 +1,4 @@
-module Concerns::Searchable
+module Searchable
   extend ActiveSupport::Concern
 
   included do

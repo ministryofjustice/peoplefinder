@@ -28,7 +28,7 @@ class Membership < ApplicationRecord
   delegate :name, to: :group, prefix: true, allow_nil: true
   delegate :path, to: :group
 
-  include Concerns::ConcatenatedFields
+  include ConcatenatedFields
   concatenated_field :to_s, :group_name, :role, join_with: ", "
 
   scope :subscribing, -> { where(subscribed: true) }

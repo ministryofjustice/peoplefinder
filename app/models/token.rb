@@ -14,7 +14,7 @@ require "secure"
 class Token < ApplicationRecord
   class TTLRaceCondition < StandardError; end
 
-  include Concerns::Sanitizable
+  include Sanitizable
 
   sanitize_fields :user_email, strip: true, downcase: true
   after_create :deactivate_tokens, :remove_expired_tokens

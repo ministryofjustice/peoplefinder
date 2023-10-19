@@ -1,4 +1,4 @@
-module Concerns::WorkDays
+module WorkDays
   extend ActiveSupport::Concern
 
   WEEK_DAYS = %i[

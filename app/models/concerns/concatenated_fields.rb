@@ -1,4 +1,4 @@
-module Concerns::ConcatenatedFields
+module ConcatenatedFields
   extend ActiveSupport::Concern
 
   included do

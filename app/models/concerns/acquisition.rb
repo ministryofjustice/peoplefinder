@@ -1,4 +1,4 @@
-module Concerns::Acquisition
+module Acquisition
   extend ActiveSupport::Concern
 
   class_methods do

@@ -1,4 +1,4 @@
-module Concerns::DataMigrationUtils
+module DataMigrationUtils
   extend ActiveSupport::Concern
 
   included do

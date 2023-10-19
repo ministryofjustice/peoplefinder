@@ -36,14 +36,14 @@
 class Person < ApplicationRecord
   attr_accessor :working_days, :crop_x, :crop_y, :crop_w, :crop_h, :skip_group_completion_score_updates, :skip_must_have_team
 
-  include Concerns::Acquisition
-  include Concerns::Activation
-  include Concerns::Completion
-  include Concerns::WorkDays
-  include Concerns::ExposeMandatoryFields
-  include Concerns::GeckoboardDatasets
-  include Concerns::PersonChangesTracker
-  include Concerns::DataMigrationUtils
+  include Acquisition
+  include Activation
+  include Completion
+  include WorkDays
+  include ExposeMandatoryFields
+  include GeckoboardDatasets
+  include PersonChangesTracker
+  include DataMigrationUtils
 
   belongs_to :profile_photo
 
@@ -54,7 +54,7 @@ class Person < ApplicationRecord
     email.present? ? email.split(/@/).first : name
   end
 
-  include Concerns::Searchable
+  include Searchable
 
   def as_indexed_json(_options = {})
     as_json(
@@ -79,7 +79,7 @@ class Person < ApplicationRecord
     end
   end
 
-  include Concerns::Sanitizable
+  include Sanitizable
   sanitize_fields :given_name, :surname, strip: true, remove_digits: true
   sanitize_fields :email, strip: true, downcase: true
 
@@ -198,7 +198,7 @@ class Person < ApplicationRecord
     [primary_phone_number, secondary_phone_number].find(&:present?)
   end
 
-  include Concerns::ConcatenatedFields
+  include ConcatenatedFields
   concatenated_field :location, :location_in_building, :building, :city, join_with: ", "
   concatenated_field :name, :given_name, :surname, join_with: " "
 

@@ -25,6 +25,6 @@
             %td= version.whodunnit
             %td
               - unless version.membership?
-                = button_to 'undo', "/audit_trail/undo/#{version.id}", data: { confirm: 'Are you sure you want to undo this change?' }
+                = button_to 'undo', "/audit_trail/undo/#{version.id}", method: :post, data: { confirm: 'Are you sure you want to undo this change?' }
 
 = render partial: "pagination"

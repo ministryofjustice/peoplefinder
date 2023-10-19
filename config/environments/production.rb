@@ -26,7 +26,7 @@ Rails.application.configure do
   config.public_file_server.enabled = true
 
   # Compress CSS using a preprocessor.
-  config.assets.js_compressor = :uglifier
+  config.assets.js_compressor = Uglifier.new(harmony: true)
   config.sass.style = :compressed
   config.sass.line_comments = false
   config.assets.css_compressor = nil

@@ -1,4 +1,4 @@
-module Concerns::ExposeMandatoryFields
+module ExposeMandatoryFields
   extend ActiveSupport::Concern
 
   included do

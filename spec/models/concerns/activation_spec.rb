@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe Concerns::Activation do
+RSpec.describe Activation do
   include PermittedDomainHelper
 
   let(:completed_attributes) do
