@@ -1,4 +1,4 @@
-module GeckoboardDatasets
+module boardDatasets
   extend ActiveSupport::Concern
 
   class_methods do

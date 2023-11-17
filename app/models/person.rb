@@ -41,7 +41,6 @@ class Person < ApplicationRecord
   include Completion
   include WorkDays
   include ExposeMandatoryFields
-  include GeckoboardDatasets
   include PersonChangesTracker
   include DataMigrationUtils
 

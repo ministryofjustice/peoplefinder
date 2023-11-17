@@ -211,7 +211,6 @@ GEM
     formatador (1.1.0)
     friendly_id (5.4.2)
       activerecord (>= 4.0.0)
-    geckoboard-ruby (0.4.0)
     globalid (1.2.1)
       activesupport (>= 6.1)
     google-protobuf (3.24.4)
@@ -780,7 +779,6 @@ DEPENDENCIES
   ffi (>= 1.9.24)
   fog-aws
   friendly_id
-  geckoboard-ruby (~> 0.4.0)
   govspeak
   govuk_elements_form_builder (= 0.1.1)
   govuk_elements_rails (= 2.2.1)

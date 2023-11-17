@@ -43,5 +43,4 @@ spec:
             command:
               - /bin/sh
               - "-c"
-              - "rails runner 'GeckoboardPublisher::PhotoProfilesReport.new.publish!(force: true)'"
           restartPolicy: OnFailure

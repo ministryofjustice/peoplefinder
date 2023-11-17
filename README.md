@@ -333,29 +333,6 @@ rake peoplefinder:import:csv_import[path]      # Import valid CSV file
 
 Mail previews can be found at `http://localhost:3000/rails/mailers`, assuming the server is running locally on port 3000.
 
-### Geckoboard
-
-A <a href="https://app.geckoboard.com/edit/dashboards/116571" target="_blank">Geckboard dashboard</a> is used for the visualization of various metrics from Peoplefinder. These metrics take the form of either pollable endpoints locate under `app/metrics/..` OR pushable/publishable geckboard datasets located under `lib/geckoboardpublisher/..`
-
-The datasets are scheduled for pushing in Kubernetes Cron Jobs and cron installed on the worker instances (production environment only).
-
-Once published, datasets are wired up on Geckboard by adding a widget, specifying "Datasets" for the connection type and selecting the published dataset from the list available.
-
-For testing purposes you can manually publish reports as below:
-
-```
-GeckboardPublisher::ProfilePercentagesReport.new.publish!
-```
-
-which will, on staging, create a dataset called `peoplefinder-staging.profile_percentages_report`
-
-and to remove the report...
-
-```
-GeckboardPublisher::ProfilePercentagesReport.new.unpublish!
-```
-
-NOTE: there is a limit of 100 datasets per geckboard account and a limit of 5000 records per dataset. Further, you can only push a maximum of 500 records per request.
 
 ### Front end development
 
@@ -386,8 +363,6 @@ Windows XP for their OS and IE7 for their browser. Consequently considerable sty
 ### Development tools
 
 CI by [Travis](https://travis-ci.org/ministryofjustice/peoplefinder).
-
-Software metrics by [Code Climate](https://codeclimate.com/github/ministryofjustice/peoplefinder)
 
 ## Reminders
 
