@@ -21,7 +21,6 @@ describe "Home page" do
     end
 
     context "when using a supported browser" do
-
       it "is all there" do
         expect(home_page).to be_displayed
         expect(home_page).to have_page_title
