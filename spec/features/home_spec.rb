@@ -21,6 +21,8 @@ describe "Home page" do
     end
 
     context "when using a supported browser" do
+      let(:user_agent) { ff31 }
+
       it "is all there" do
         expect(home_page).to be_displayed
         expect(home_page).to have_page_title

@@ -126,6 +126,7 @@ describe "Token Authentication" do
     # https://github.com/thoughtbot/capybara-webkit#non-standard-driver-methods
     context "when on supported browser" do
       before do
+        page.driver.header "User-Agent", ff31
         visit token_path(token)
       end
 
