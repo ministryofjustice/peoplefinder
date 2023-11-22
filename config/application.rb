@@ -92,6 +92,10 @@ module Peoplefinder
 
     # Adds classes that can be used with YAML.safe_load for the versions table used by paper_trail
     # See https://github.com/paper-trail-gem/paper_trail/blob/master/doc/pt_13_yaml_safe_load.md
+    config.autoload_paths << Rails.root.join("lib")
+
+    require Rails.root.join("lib/csv_publisher/user_behavior_report.rb")
+
     config.active_record.yaml_column_permitted_classes = [
       ::ActiveRecord::Type::Time::Value,
       ::ActiveSupport::TimeWithZone,

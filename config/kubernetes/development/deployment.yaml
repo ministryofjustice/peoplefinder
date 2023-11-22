@@ -104,3 +104,4 @@ spec:
                 name: environment-variables
             - secretRef:
                 name: app-secrets
+            - name: metrics
