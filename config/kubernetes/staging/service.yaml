@@ -11,5 +11,6 @@ spec:
     targetPort: 3000
   - port: 9394
     name: metrics
+    targetPort: 9394
   selector:
     app: peoplefinder
