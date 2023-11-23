@@ -154,6 +154,24 @@ function _deploy() {
     -f config/kubernetes/${environment}/service.yaml \
     -f config/kubernetes/${environment}/ingress-live.yaml \
     -n $namespace
+
+  #Add cron jobs if production
+  if [[ $environment == "production" ]]
+  then
+    kubectl set image -f config/kubernetes/${environment}/cron-person-notifier.yaml \
+            jobs=${docker_image_tag} --local --output yaml | kubectl apply -n $namespace -f -
+
+    kubectl set image -f config/kubernetes/${environment}/cron-team-description-notifier.yaml \
+            jobs=${docker_image_tag} --local --output yaml | kubectl apply -n $namespace -f -
+
+    kubectl set image -f config/kubernetes/${environment}/cron-person-update-reminder.yaml \
+            jobs=${docker_image_tag} --local --output yaml | kubectl apply -n $namespace -f -
+
+    kubectl set image -f config/kubernetes/${environment}/cron-user-behaviour-report.yaml \
+            jobs=${docker_image_tag} --local --output yaml | kubectl apply -n $namespace -f -
+
+  fi
+
 }
 
 _deploy $@
