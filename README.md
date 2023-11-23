@@ -177,8 +177,6 @@ In production, periodic emails are sent to users that have:
 - not updated their profile for a period of time; and
 - not added a team description when they are a team leader.
 
-Cron jobs are handled using Kubernetes Cron jobs. The files are located in config/kubernetes. These are responsible for Emails like the one that you received when someone updates your profile.
-
 ## Search
 
 To run the engine in production mode, `config.open_search_url` must be set in, for example, config/application.rb. The environment variable used to set it is `MOJ_PF_ES_URL`
