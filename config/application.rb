@@ -90,8 +90,6 @@ module Peoplefinder
     config.phase = "live"
     config.feedback_url = "https://docs.google.com/a/digital.justice.gov.uk/forms/d/1dJ9xQ66QFvk8K7raf60W4ZXfK4yTQ1U3EeO4OLLlq88/viewform"
 
-    # Adds classes that can be used with YAML.safe_load for the versions table used by paper_trail
-    # See https://github.com/paper-trail-gem/paper_trail/blob/master/doc/pt_13_yaml_safe_load.md
     config.autoload_paths << Rails.root.join("lib")
 
     require Rails.root.join("lib/csv_publisher/user_behavior_report.rb")
@@ -106,6 +104,8 @@ module Peoplefinder
       ::Time,
     ]
 
+    # Adds classes that can be used with YAML.safe_load for the versions table used by paper_trail
+    # See https://github.com/paper-trail-gem/paper_trail/blob/master/doc/pt_13_yaml_safe_load.md
     config.active_record.legacy_connection_handling = false
   end
 end
