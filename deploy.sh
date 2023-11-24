@@ -170,9 +170,6 @@ function _deploy() {
     kubectl set image -f config/kubernetes/${environment}/cron-person-update-reminder.yaml \
             jobs=${docker_image_tag} --local --output yaml | kubectl apply -n $namespace -f -
 
-    kubectl set image -f config/kubernetes/${environment}/cron-never-logged-in-notifier.yaml \
-            jobs=${docker_image_tag} --local --output yaml | kubectl apply -n $namespace -f -
-
     kubectl set image -f config/kubernetes/${environment}/cron-user-behaviour-report.yaml \
             jobs=${docker_image_tag} --local --output yaml | kubectl apply -n $namespace -f -
 
