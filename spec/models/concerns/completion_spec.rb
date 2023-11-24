@@ -80,56 +80,6 @@ RSpec.describe "Completion" do
     end
   end
 
-  describe ".overall_completion" do
-    it "calls method encapsulating contruction of raw SQL for average completion score" do
-      expect(Person).to receive(:average_completion_score)
-      Person.overall_completion
-    end
-
-    it "returns 100 if there is only one person who is 100% complete" do
-      person = create(:person, completed_attributes)
-      create(:membership, person:)
-      expect(Person.overall_completion).to eq(100)
-    end
-
-    it "returns average of two profiles completion scores" do
-      2.times do
-        create(
-          :person,
-          given_name: generate(:given_name),
-          surname: generate(:surname),
-          email: generate(:email),
-          city: generate(:city),
-          primary_phone_number: generate(:phone_number),
-        )
-      end
-      expect(Person.overall_completion).to be_within(1).of(67)
-    end
-
-    it "includes membership in calculation" do
-      people = 2.times.map do
-        person = create(
-          :person,
-          given_name: generate(:given_name),
-          surname: generate(:surname),
-          email: generate(:email),
-          city: generate(:city),
-          primary_phone_number: generate(:phone_number),
-        )
-        person.memberships.destroy_all
-        person
-      end
-      expect(UpdateGroupMembersCompletionScoreJob).to receive(:perform_later).at_least(:once)
-      2.times do
-        create(:membership, person: people[0])
-      end
-      people.each(&:reload)
-      expect(people[0].completion_score).to be_within(1).of(66)
-      expect(people[1].completion_score).to be_within(1).of(55)
-      expect(Person.overall_completion).to be_within(1).of(61)
-    end
-  end
-
   describe ".completion_score_calculation" do
     it "constructs sql to calculate score based on existence of values for important fields" do
       sql_regex = /COALESCE.*CASE WHEN length\(.*,0\)\)::float.*/mi
