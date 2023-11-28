@@ -36,7 +36,6 @@
 class Person < ApplicationRecord
   attr_accessor :working_days, :crop_x, :crop_y, :crop_w, :crop_h, :skip_group_completion_score_updates, :skip_must_have_team
 
-  include Acquisition
   include Activation
   include Completion
   include WorkDays
