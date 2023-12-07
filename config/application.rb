@@ -90,16 +90,9 @@ module Peoplefinder
     config.phase = "live"
     config.feedback_url = "https://docs.google.com/a/digital.justice.gov.uk/forms/d/1dJ9xQ66QFvk8K7raf60W4ZXfK4yTQ1U3EeO4OLLlq88/viewform"
 
-    # make the geckoboard publisher available generally
-    # NOTE: may need to eager load paths instead if lib code is commonly called
     config.autoload_paths << Rails.root.join("lib")
 
     require Rails.root.join("lib/csv_publisher/user_behavior_report.rb")
-
-    require Rails.root.join("lib/geckoboard_publisher/report.rb")
-    Dir[config.root.join("lib", "geckoboard_publisher", "**", "*.rb")].sort.each do |file|
-      require file
-    end
 
     # Adds classes that can be used with YAML.safe_load for the versions table used by paper_trail
     # See https://github.com/paper-trail-gem/paper_trail/blob/master/doc/pt_13_yaml_safe_load.md

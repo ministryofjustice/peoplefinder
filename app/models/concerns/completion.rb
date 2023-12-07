@@ -56,10 +56,6 @@ module Completion
       "(\nCOALESCE(#{completion_score_sum},0))::float/#{COMPLETION_FIELDS.size}"
     end
 
-    def overall_completion
-      average_completion_score
-    end
-
     def average_completion_score(id = nil)
       results = ActiveRecord::Base.connection.execute(average_completion_sql(id))
       results.first[avg_alias].to_f.round

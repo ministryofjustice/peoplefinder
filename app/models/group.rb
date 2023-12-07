@@ -76,14 +76,6 @@ class Group < ApplicationRecord
     arrange(order: :name)
   end
 
-  def self.percentage_with_description
-    if count.zero?
-      0
-    else
-      100 - (without_description.count / count.to_f * 100).round(0)
-    end
-  end
-
   def to_s
     name
   end

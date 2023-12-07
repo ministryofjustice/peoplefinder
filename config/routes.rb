@@ -46,13 +46,6 @@ Rails.application.routes.draw do
   get "/groups/:id/edit", to: redirect("/teams/%{id}/edit")
   get "/groups/:id/people", to: redirect("/teams/%{id}/people")
 
-  namespace :metrics do
-    resources :activations, only: [:index]
-    resources :completions, only: [:index]
-    resources :profiles, only: [:index]
-    resources :team_descriptions, only: [:index]
-  end
-
   resources :problem_reports, only: [:create]
 
   admin_ip_matcher = IpAddressMatcher.new(Rails.configuration.admin_ip_ranges)

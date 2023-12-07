@@ -174,20 +174,6 @@ function _deploy() {
     kubectl set image -f config/kubernetes/${environment}/cron-user-behaviour-report.yaml \
             jobs=${docker_image_tag} --local --output yaml | kubectl apply -n $namespace -f -
 
-    kubectl set image -f config/kubernetes/${environment}/cron-profile-completions-report.yaml \
-            jobs=${docker_image_tag} --local --output yaml | kubectl apply -n $namespace -f -
-
-    kubectl set image -f config/kubernetes/${environment}/cron-profile-changed-report.yaml \
-            jobs=${docker_image_tag} --local --output yaml | kubectl apply -n $namespace -f -
-
-    kubectl set image -f config/kubernetes/${environment}/cron-total-profiles-report.yaml \
-            jobs=${docker_image_tag} --local --output yaml | kubectl apply -n $namespace -f -
-
-    kubectl set image -f config/kubernetes/${environment}/cron-profile-percentage-report.yaml \
-              jobs=${docker_image_tag} --local --output yaml | kubectl apply -n $namespace -f -
-
-    kubectl set image -f config/kubernetes/${environment}/cron-photo-profiles-report.yaml \
-            jobs=${docker_image_tag} --local --output yaml | kubectl apply -n $namespace -f -
   fi
 
 }

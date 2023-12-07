@@ -380,19 +380,6 @@ RSpec.describe Group, type: :model do
     end
   end
 
-  describe ".percentage_with_description" do
-    it "is correct" do
-      expect(described_class.percentage_with_description).to eq 0
-
-      parent = create(:department)
-      create(:group, parent:)
-      expect(described_class.percentage_with_description).to eq 0
-
-      create(:group, parent:, description: "We do this")
-      expect(described_class.percentage_with_description).to eq 33
-    end
-  end
-
   describe "#average_completion_score" do
     let(:team) { create(:group) }
     let(:subteam) { create(:group, parent: team) }
