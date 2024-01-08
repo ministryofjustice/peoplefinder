@@ -43,5 +43,5 @@ spec:
             command:
               - /bin/sh
               - "-c"
-              - "rails runner 'NotificationSender.new.send!'"
+              - "bundle exec rails runner 'NotificationSender.new.send!'"
           restartPolicy: OnFailure
