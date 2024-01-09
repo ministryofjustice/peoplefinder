@@ -43,5 +43,5 @@ spec:
             command:
               - /bin/sh
               - "-c"
-              - "rails runner 'TeamDescriptionNotifier.send_reminders'"
+              - "bundle exec rails runner 'TeamDescriptionNotifier.send_reminders'"
           restartPolicy: OnFailure
