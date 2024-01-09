@@ -43,5 +43,5 @@ spec:
             command:
               - /bin/sh
               - "-c"
-              - "rails runner 'NeverLoggedInNotifier.send_reminders'"
+              - "bundle exec rails runner 'NeverLoggedInNotifier.send_reminders'"
           restartPolicy: OnFailure

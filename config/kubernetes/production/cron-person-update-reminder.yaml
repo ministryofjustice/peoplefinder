@@ -43,5 +43,5 @@ spec:
             command:
               - /bin/sh
               - "-c"
-              - "rails runner 'PersonUpdateNotifier.send_reminders'"
+              - "bundle exec rails runner 'PersonUpdateNotifier.send_reminders'"
           restartPolicy: OnFailure
