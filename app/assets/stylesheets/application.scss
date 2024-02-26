@@ -121,6 +121,7 @@ $border-color: #bfc1c3;
 @import "elements/shame";                         // Hacks and workarounds that will go away eventually
 
 @import "Jcrop/css/jquery.Jcrop.min";
+@import "govuk-frontend/dist/govuk/all";
 
 @import "elements-local/*";
 @import "modules/*";
@@ -241,4 +242,8 @@ $border-color: #bfc1c3;
   @include desktop(){
     width: auto;
   }
+}
+
+.govuk-header__service-name{
+  font-size: 24px;
 }

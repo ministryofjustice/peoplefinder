@@ -21,6 +21,10 @@ RUN bundle config deployment true && \
     bundle config without development test && \
     bundle install --jobs 4 --retry 3
 
+# Install node packages defined in package.json
+COPY package.json yarn.lock ./
+RUN yarn install --frozen-lockfile --check-files
+
 RUN addgroup --gid 1000 --system appgroup && \
     adduser --uid 1000 --system appuser --ingroup appgroup
 
