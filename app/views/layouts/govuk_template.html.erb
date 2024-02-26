@@ -75,24 +75,7 @@
       </div>
     </header>
 
-    <%
-=begin%>
- <%= govuk_header(homepage_url: "https://www.gov.uk", service_name: "Ministry of Justice People Finder") do |header| %>
-      <% if logged_in_regular? %>
-        <%= header.with_navigation_item(text: "Signed in as #{current_user}", href: person_path(current_user)) %>
-        <% if super_admin? %>
-          <%= header.with_navigation_item(text: "Manage", href: admin_home_path) %>
-        <% end %>
-
-        <%= header.with_navigation_item(text: "Sign out", href: sessions_path) %>
-      <% elsif logged_in_readonly? && !@login_screen %>
-        <%= header.with_navigation_item(text: "To update People Finder, Sign in now", href: new_sessions_path) %>
-      <% end %>
-    <% end %>
-<%
-=end%>
-
-    <%= yield :after_header %>
+    <div id="global-header-bar"></div>
 
     <%= content_for?(:content) ? yield(:content) : yield %>
 

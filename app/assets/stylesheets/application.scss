@@ -247,3 +247,16 @@ $border-color: #bfc1c3;
 .govuk-header__service-name{
   font-size: 24px;
 }
+
+.govuk-header{
+  border-bottom: none;
+}
+
+.govuk-header__container{
+  border-bottom: none;
+}
+
+#global-header .header-wrapper {
+  padding-top: 0;
+  padding-bottom: 0;
+}
