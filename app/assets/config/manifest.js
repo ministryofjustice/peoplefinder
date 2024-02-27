@@ -7,4 +7,3 @@
 //= link govuk-template-ie8.css
 //= link govuk-template-print.css
 //= link fonts.css
-//= link_tree ../../../node_modules/govuk-frontend/dist/govuk/assets/images

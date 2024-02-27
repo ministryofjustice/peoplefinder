@@ -7,6 +7,3 @@ Rails.application.config.assets.precompile += %w[
   application-ie7.css
   application-ie8.css
 ]
-
-Rails.application.config.assets.paths << Rails.root.join("node_modules")
-Rails.application.config.assets.paths << Rails.root.join("node_modules/govuk-frontend/dist/govuk/assets")
