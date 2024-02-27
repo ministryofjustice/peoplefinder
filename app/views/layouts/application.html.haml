@@ -39,15 +39,6 @@
   %noscript
     %iframe{src:"https://www.googletagmanager.com/ns.html?id=GTM-MRLL6W5", height:"0", width:"0", style:"display:none;visibility:hidden"}
 
-- content_for :proposition_header do
-  .header-proposition
-    .content
-      %a.js-header-toggle.menu{:href => "#proposition-links"}
-        = "Menu"
-      %nav#proposition-menu
-        =link_to "MoJ People Finder", home_path, id: "proposition-name"
-        = render "shared/loginout"
-
 - content_for :footer_top do
   = render 'shared/feedback_form'
 

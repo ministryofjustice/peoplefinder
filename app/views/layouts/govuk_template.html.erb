@@ -70,7 +70,14 @@
               </svg>
             </a>
           </div>
-          <%= yield :proposition_header %>
+          <div class="header-proposition">
+            <div class="content">
+              <a class="js-header-toggle menu" href="#proposition-links">Menu</a>
+              <nav id="proposition-menu">
+                <a href="/" id="proposition-name">MoJ People Finder</a>
+                <%= render "shared/loginout" %>
+              </nav>
+            </div>
         </div>
       </div>
     </header>
