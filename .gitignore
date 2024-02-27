@@ -18,9 +18,6 @@
 # Ignore environment variable configuration
 /.env.local
 
-node_modules
-
-# /public/assets/
 /public/uploads/
 /coverage
 # ignore osx .DS_Store
