@@ -18,6 +18,7 @@
   :javascript
     (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-MRLL6W5');
 
+  = stylesheet_link_tag "/assets/govuk-frontend.min.css"
   = stylesheet_link_tag "application", media: "all"
   = csrf_meta_tag
   %meta{name: "format-detection", content: "telephone=no"}
@@ -38,18 +39,6 @@
 - content_for :body_start do
   %noscript
     %iframe{src:"https://www.googletagmanager.com/ns.html?id=GTM-MRLL6W5", height:"0", width:"0", style:"display:none;visibility:hidden"}
-
-- content_for :header_class do
-  = "with-proposition"
-
-- content_for :proposition_header do
-  .header-proposition
-    .content
-      %a.js-header-toggle.menu{:href => "#proposition-links"}
-        = "Menu"
-      %nav#proposition-menu
-        =link_to app_title, home_path, id: "proposition-name"
-        = render "shared/loginout"
 
 - content_for :footer_top do
   = render 'shared/feedback_form'
