@@ -5,6 +5,11 @@ orbs:
   aws-cli: circleci/aws-cli@4.0.0
   aws-ecr: circleci/aws-ecr@8.2.1 # this orb doesn't support OIDC v2, so we use aws-cli to authenticate
 
+executors:
+  machine_executor:
+    machine:
+      image: default
+
 references:
   defaults: &defaults
     working_directory: ~/peoplefinder
@@ -216,7 +221,7 @@ jobs:
       - *upload_test_coverage
 
   build_branch_and_push_to_ecr:
-    executor: aws-ecr/default # use the aws-ecr/default executor to start the docker daemon
+    executor: machine_executor
     <<: *defaults
     steps:
       - checkout
@@ -232,7 +237,7 @@ jobs:
             - build_tag
 
   build_main_and_push_to_ecr:
-    executor: aws-ecr/default # use the aws-ecr/default executor to start the docker daemon
+    executor: machine_executor
     <<: *defaults
     steps:
       - checkout
