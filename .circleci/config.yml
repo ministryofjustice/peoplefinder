@@ -5,6 +5,11 @@ orbs:
   aws-cli: circleci/aws-cli@4.0.0
   aws-ecr: circleci/aws-ecr@8.2.1 # this orb doesn't support OIDC v2, so we use aws-cli to authenticate
 
+executors:
+  machine_executor:
+    machine:
+      image: default
+
 references:
   defaults: &defaults
     working_directory: ~/peoplefinder
@@ -148,8 +153,9 @@ references:
       name: Create build tag
       command: |
         prefix="pf"
-        short_version=$(git rev-parse --short ${CIRCLE_BRANCH})
-        build_tag=$prefix-$CIRCLE_BRANCH-$short_version
+        short_version=$(git rev-parse --short $CIRCLE_BRANCH)
+        branch=$(echo $CIRCLE_BRANCH | sed -r 's/[\/]+/-/g') # replace / with -
+        build_tag=$prefix-$branch-$short_version
 
         echo "export BUILD_TAG=$build_tag" >> $BASH_ENV
         source $BASH_ENV
@@ -216,7 +222,7 @@ jobs:
       - *upload_test_coverage
 
   build_branch_and_push_to_ecr:
-    executor: aws-ecr/default # use the aws-ecr/default executor to start the docker daemon
+    executor: machine_executor
     <<: *defaults
     steps:
       - checkout
@@ -232,7 +238,7 @@ jobs:
             - build_tag
 
   build_main_and_push_to_ecr:
-    executor: aws-ecr/default # use the aws-ecr/default executor to start the docker daemon
+    executor: machine_executor
     <<: *defaults
     steps:
       - checkout
