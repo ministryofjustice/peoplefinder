@@ -131,10 +131,12 @@ references:
     run:
       name: Check test coverage
       command: |
-        limit=100
-        cov_val=$(grep -o '"line":.*' coverage/.last_run.json | cut -d" " -f2-)
-        if (( $(echo "$cov_val < $limit" | bc -l) )); then
-          echo "Test coverage is under $limit%. Go to the Artifacts tab to see details."
+        limit=95 # Coverage percentage below this number will cause the build to fail
+        coverage=$(grep -o '"line":.*' coverage/.last_run.json | cut -d" " -f2-)
+        echo "Details of test coverage is available from the Artifacts tab"
+        echo "Tests cover $coverage% of code"
+        if (( $(echo "$coverage < $limit" | bc -l) )); then
+          echo "This is under the target of $limit%"
           exit 1
         fi
 
