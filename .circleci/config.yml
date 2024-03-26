@@ -134,6 +134,7 @@ references:
         limit=100
         cov_val=$(grep -o '"line":.*' coverage/.last_run.json | cut -d" " -f2-)
         if (( $(echo "$cov_val < $limit" | bc -l) )); then
+          echo "Test coverage is under $limit%. Go to the Artifacts tab to see details."
           exit 1
         fi
 
