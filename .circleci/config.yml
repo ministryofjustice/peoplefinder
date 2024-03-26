@@ -83,7 +83,7 @@ references:
     run:
       name: Install dependencies
       command: |
-        sudo apt install bc
+        sudo apt-get install bc
         if [ "${CIRCLE_NODE_INDEX}" == "0" ]; then
           bundle config deployment true
           bundle check || bundle install && bundle clean
