@@ -218,6 +218,7 @@ jobs:
       - *brakeman
       - *run_unit_and_feature_tests
       - *store_coverage
+      - *check_coverage
 
   build_branch_and_push_to_ecr:
     executor: machine_executor
