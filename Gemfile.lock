@@ -811,7 +811,7 @@ DEPENDENCIES
   sentry-rails
   sentry-ruby
   shoulda-matchers
-  simplecov (~> 0.22)
+  simplecov
   site_prism
   sprockets-rails
   text

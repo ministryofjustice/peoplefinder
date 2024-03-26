@@ -115,26 +115,15 @@ references:
       name: Run Brakeman
       command: bundle exec brakeman
 
-  setup_test_reporter: &setup_test_reporter
-    run:
-      name: Setup Code Climate test-reporter
-      command: |
-        curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
-        chmod +x ./cc-test-reporter
-        ./cc-test-reporter before-build
-
   run_unit_and_feature_tests: &run_unit_and_feature_tests
     run:
       name: Run unit and feature tests
       command: |
-        SKIP_SIMPLECOV=false bundle exec rspec
+        bundle exec rspec
 
-  upload_test_coverage: &upload_test_coverage
-    run:
-      name: Upload the test coverage into codeclimate
-      command: |
-        ./cc-test-reporter format-coverage -t simplecov -o "coverage/codeclimate.$CIRCLE_NODE_INDEX.json"
-        ./cc-test-reporter sum-coverage --output - coverage/codeclimate.*.json | ./cc-test-reporter upload-coverage --debug --input -
+  store_coverage: &store_coverage
+    store_artifacts:
+      path: coverage
 
   aws_setup: &aws_setup
     # Authenticate to AWS using OIDC v2 with the AWS CLI
@@ -217,9 +206,8 @@ jobs:
       - *set_up_the_database
       - *rubocop
       - *brakeman
-      - *setup_test_reporter
       - *run_unit_and_feature_tests
-      - *upload_test_coverage
+      - *store_coverage
 
   build_branch_and_push_to_ecr:
     executor: machine_executor
