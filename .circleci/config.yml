@@ -131,7 +131,7 @@ references:
       command: |
         limit=100
         cov_val=$(grep -o '"line":.*' coverage/.last_run.json | cut -d" " -f2-)
-        if (( $cov_val < $limit )); then
+        if [ "$cov_val" -lt "$limit" ]; then
           exit 1
         fi
 
