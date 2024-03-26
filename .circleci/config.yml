@@ -114,7 +114,7 @@ references:
 
   brakeman: &brakeman
     run:
-      name: Run Brakeman
+      name: Run brakeman
       command: bundle exec brakeman
 
   run_unit_and_feature_tests: &run_unit_and_feature_tests
@@ -129,7 +129,7 @@ references:
 
   check_coverage: &check_coverage
     run:
-      name: Check coverage
+      name: Check test coverage
       command: |
         limit=100
         cov_val=$(grep -o '"line":.*' coverage/.last_run.json | cut -d" " -f2-)
