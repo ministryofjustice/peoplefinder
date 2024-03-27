@@ -39,6 +39,8 @@ module Peoplefinder
     # instead of AES-256-CBC, when use_authenticated_message_encryption is set to true.
     config.active_support.use_authenticated_message_encryption = true
 
+    config.active_support.cache_format_version = 7.0
+
     # Add default protection from forgery to ActionController::Base instead of in
     # ApplicationController.
     config.action_controller.default_protect_from_forgery = true
