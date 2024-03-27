@@ -67,7 +67,7 @@ RSpec.describe BreadcrumbHelper, type: :helper do
 
       it "uses full name for the link title" do
         expect(self).to receive(:link_to_unless_current)
-          .with(anything, anything, title: "Full Name")
+          .with(anything, anything, { title: "Full Name" })
         link_to_breadcrumb_name_unless_current(obj, 1)
       end
     end
