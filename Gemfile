@@ -62,7 +62,7 @@ group :test do
   gem "database_cleaner", "~> 1.8.5"
   gem "rails-controller-testing"
   gem "rspec-json_expectations"
-  gem "simplecov", "~> 0.22", require: false
+  gem "simplecov", require: false
   gem "site_prism"
   gem "webmock"
 end
