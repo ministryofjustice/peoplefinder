@@ -35,7 +35,7 @@ gem "prometheus_exporter"
 gem "puma"
 gem "pundit", "~> 2.3"
 gem "rack-protection"
-gem "rails", "~> 7.0.8"
+gem "rails", "~> 7.1.3"
 gem "sanitize"
 gem "sass-rails"
 gem "sentry-rails"
@@ -59,7 +59,7 @@ group :development do
 end
 
 group :test do
-  gem "database_cleaner", "~> 1.8.5"
+  gem "database_cleaner"
   gem "rails-controller-testing"
   gem "rspec-json_expectations"
   gem "simplecov", require: false
