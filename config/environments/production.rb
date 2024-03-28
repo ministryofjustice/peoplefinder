@@ -25,8 +25,9 @@ Rails.application.configure do
   # Apache or NGINX already handles this.
   config.public_file_server.enabled = true
 
-  # Compress CSS using a preprocessor.
-  config.assets.js_compressor = Uglifier.new(harmony: true)
+  # Compress JS using a preprocessor.
+  config.assets.js_compressor = :terser
+
   config.sass.style = :compressed
   config.sass.line_comments = false
   config.assets.css_compressor = nil
