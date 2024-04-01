@@ -208,7 +208,7 @@ GEM
     faraday-rack (1.0.0)
     faraday-retry (1.0.3)
     fastimage (2.2.7)
-    ffi (1.15.5)
+    ffi (1.16.3)
     fog-aws (3.22.0)
       fog-core (~> 2.1)
       fog-json (~> 1.1)
