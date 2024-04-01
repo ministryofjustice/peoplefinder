@@ -46,7 +46,7 @@ gem "text"
 gem "tzinfo-data"
 gem "useragent", "~> 0.10"
 gem "virtus"
-gem "will_paginate", "~> 3.0", ">= 3.0.3"
+gem "will_paginate", "~> 4.0"
 gem "will_paginate-bootstrap", "~> 1.0", ">= 1.0.1"
 
 group :production do
