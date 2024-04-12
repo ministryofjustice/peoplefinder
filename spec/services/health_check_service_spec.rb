@@ -50,4 +50,21 @@ describe HealthCheckService do
       ],
     )
   end
+
+  it "sends error details to Sentry" do
+    allow_any_instance_of(HealthCheck::Database) # rubocop:disable RSpec/AnyInstance
+      .to receive(:available?).and_return(false)
+    allow_any_instance_of(HealthCheck::OpenSearch) # rubocop:disable RSpec/AnyInstance
+      .to receive(:available?).and_return(true)
+    allow_any_instance_of(HealthCheck::Database) # rubocop:disable RSpec/AnyInstance
+      .to receive(:accessible?).and_return(true)
+    allow_any_instance_of(HealthCheck::OpenSearch) # rubocop:disable RSpec/AnyInstance
+      .to receive(:accessible?).and_return(true)
+    allow_any_instance_of(HealthCheck::Database) # rubocop:disable RSpec/AnyInstance
+      .to receive(:errors)
+      .and_return(["DB Message 1"])
+
+    expect(Sentry).to receive(:capture_message).with(["DB Message 1"])
+    health_check_report.report
+  end
 end

@@ -16,6 +16,7 @@ class HealthCheckService
     if errors.empty?
       HealthCheckReport.new("200", "All Components OK")
     else
+      Sentry.capture_message(errors)
       HealthCheckReport.new("500", errors)
     end
   end
