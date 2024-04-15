@@ -67,4 +67,12 @@ describe HealthCheckService do
     expect(Sentry).to receive(:capture_message).with(["DB Message 1"])
     health_check_report.report
   end
+
+  it "sends error details to Sentry when there is an exception" do
+    allow_any_instance_of(HealthCheck::Database) # rubocop:disable RSpec/AnyInstance
+      .to receive(:available?).and_raise(StandardError, "custom error message")
+
+    expect(Sentry).to receive(:capture_message)
+    health_check_report.report
+  end
 end
