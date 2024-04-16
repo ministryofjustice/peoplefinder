@@ -19,6 +19,9 @@ class HealthCheckService
       Sentry.capture_message(errors)
       HealthCheckReport.new("500", errors)
     end
+  rescue StandardError => e
+    Sentry.capture_message(e)
+    HealthCheckReport.new("500", e)
   end
 
   HealthCheckReport = Struct.new(:status, :messages)
