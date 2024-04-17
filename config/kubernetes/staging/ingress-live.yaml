@@ -6,6 +6,8 @@ metadata:
   annotations:
     nginx.ingress.kubernetes.io/auth-type: basic
     nginx.ingress.kubernetes.io/auth-secret: app-secrets
+    # This forces all error pages to be server from the application
+    nginx.ingress.kubernetes.io/custom-http-errors: "418"
     external-dns.alpha.kubernetes.io/set-identifier: peoplefinder-ingress-peoplefinder-staging-green
     external-dns.alpha.kubernetes.io/aws-weight: "100"
 spec:
