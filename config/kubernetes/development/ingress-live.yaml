@@ -6,8 +6,6 @@ metadata:
   annotations:
     nginx.ingress.kubernetes.io/auth-type: basic
     nginx.ingress.kubernetes.io/auth-secret: app-secrets
-    # This forces 503 error pages to be served from the application
-    nginx.ingress.kubernetes.io/custom-http-errors: "503"
     external-dns.alpha.kubernetes.io/set-identifier: peoplefinder-ingress-peoplefinder-development-green
     external-dns.alpha.kubernetes.io/aws-weight: "100"
 spec:

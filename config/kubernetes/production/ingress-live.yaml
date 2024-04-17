@@ -4,8 +4,6 @@ metadata:
   name: peoplefinder-ingress
   namespace: peoplefinder-production
   annotations:
-    # This forces 503 error pages to be served from the application
-    nginx.ingress.kubernetes.io/custom-http-errors: "503"
     external-dns.alpha.kubernetes.io/set-identifier: peoplefinder-ingress-peoplefinder-production-green
     external-dns.alpha.kubernetes.io/aws-weight: "100"
 spec:
