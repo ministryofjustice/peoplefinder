@@ -10,6 +10,7 @@ metadata:
     nginx.ingress.kubernetes.io/custom-http-errors: "418"
     external-dns.alpha.kubernetes.io/set-identifier: peoplefinder-ingress-peoplefinder-development-green
     external-dns.alpha.kubernetes.io/aws-weight: "100"
+
 spec:
   ingressClassName: default
   tls:
