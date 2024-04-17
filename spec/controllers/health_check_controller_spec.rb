@@ -23,7 +23,7 @@ RSpec.describe HealthCheckController, type: :controller do
       end
 
       it "sends report to Sentry" do
-        expect(Sentry).to receive(:capture_message)
+        expect(Sentry).to receive(:capture_message).with(String)
         get :index
       end
     end

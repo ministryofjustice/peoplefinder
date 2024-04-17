@@ -9,7 +9,7 @@ class HealthCheckController < ActionController::Base # rubocop:disable Rails/App
 
     unless checks.values.all?
       status = :service_unavailable
-      Sentry.capture_message(checks)
+      Sentry.capture_message(checks.to_s)
     end
     render status:, json: {
       checks:,
