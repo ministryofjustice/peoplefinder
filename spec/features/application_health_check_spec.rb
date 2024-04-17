@@ -18,7 +18,7 @@ describe "healthcheck.json" do
 
     visit "/healthcheck.json"
 
-    expect(page.status_code).to eq 503
+    expect(page.status_code).to eq 500
     expect(page).to have_content({ "checks": { "database": false, "search": true } }.to_json)
   end
 end

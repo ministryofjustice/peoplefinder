@@ -2,14 +2,22 @@ class HealthCheckController < ActionController::Base # rubocop:disable Rails/App
   protect_from_forgery with: :exception
 
   def index
+    database = HealthCheck::Database.new
+    search = HealthCheck::OpenSearch.new
+
     checks = {
-      database: alive?(HealthCheck::Database.new),
-      search: alive?(HealthCheck::OpenSearch.new),
+      database: alive?(database),
+      search: alive?(search),
     }
 
     unless checks.values.all?
-      status = :service_unavailable
-      Sentry.capture_message(checks.to_s)
+      status = :internal_server_error
+
+      errors = {
+        database: database.errors,
+        search: search.errors,
+      }
+      Sentry.capture_message("Healthcheck failed: #{errors}")
     end
     render status:, json: {
       checks:,
