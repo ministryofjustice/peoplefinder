@@ -2,14 +2,25 @@ class HealthCheckController < ActionController::Base # rubocop:disable Rails/App
   protect_from_forgery with: :exception
 
   def index
-    Rails.logger.silence do
-      report = HealthCheckService.new.report
+    checks = {
+      database: alive?(HealthCheck::Database.new),
+      search: alive?(HealthCheck::OpenSearch.new),
+    }
 
-      if report.status == "200"
-        render json: report
-      else
-        render json: report, status: "500"
-      end
+    unless checks.values.all?
+      status = :service_unavailable
+      Sentry.capture_message(checks)
     end
+    render status:, json: {
+      checks:,
+    }
+  end
+
+private
+
+  def alive?(check)
+    check.available? && check.accessible?
+  rescue StandardError
+    false
   end
 end

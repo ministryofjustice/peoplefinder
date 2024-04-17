@@ -4,6 +4,8 @@ metadata:
   name: peoplefinder-ingress
   namespace: peoplefinder-production
   annotations:
+    # This forces all error pages to be server from the application
+    nginx.ingress.kubernetes.io/custom-http-errors: "418"
     external-dns.alpha.kubernetes.io/set-identifier: peoplefinder-ingress-peoplefinder-production-green
     external-dns.alpha.kubernetes.io/aws-weight: "100"
 spec:
@@ -21,5 +23,5 @@ spec:
           backend:
             service:
               name: peoplefinder-service
-              port: 
+              port:
                 number: 3000

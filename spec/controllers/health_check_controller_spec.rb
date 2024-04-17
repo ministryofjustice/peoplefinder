@@ -1,31 +1,49 @@
-require "spec_helper"
+require "rails_helper"
 
 RSpec.describe HealthCheckController, type: :controller do
-  describe "INDEX" do
-    it "returns  200 if successful" do
-      service = instance_double HealthCheckService
-      report = HealthCheckService::HealthCheckReport.new(
-        "200", "All Components OK"
-      )
-      allow(HealthCheckService).to receive(:new).and_return(service)
-      allow(service).to receive(:report).and_return(report)
+  describe "#index" do
+    let(:passing) { double(available?: true, accessible?: true) } # rubocop:disable RSpec/VerifiedDoubles
+    let(:failing) { double(available?: false, accessible?: false) } # rubocop:disable RSpec/VerifiedDoubles
 
-      get :index
-      expect(response.status).to eq(200)
-      expect(response.body).to eq report.to_json
+    context "when a problem exists" do
+      before do
+        allow(HealthCheck::Database).to receive(:new).and_return(failing)
+        allow(HealthCheck::OpenSearch).to receive(:new).and_return(failing)
+
+        get :index
+      end
+
+      it "returns status bad gateway" do
+        expect(response.status).to eq(503)
+      end
+
+      it "returns the expected response report" do
+        expect(response.body).to eq({ checks: { database: false,
+                                                search: false } }.to_json)
+      end
+
+      it "sends report to Sentry" do
+        expect(Sentry).to receive(:capture_message)
+        get :index
+      end
     end
 
-    it "returns 500 if unsuccessful" do
-      service = instance_double HealthCheckService
-      report = HealthCheckService::HealthCheckReport.new(
-        "500", ["Error message 1", "Error message 2"]
-      )
-      allow(HealthCheckService).to receive(:new).and_return(service)
-      allow(service).to receive(:report).and_return(report)
+    context "when everything is ok" do
+      before do
+        allow(HealthCheck::Database).to receive(:new).and_return(passing)
+        allow(HealthCheck::OpenSearch).to receive(:new).and_return(passing)
 
-      get :index
-      expect(response.status).to eq(500)
-      expect(response.body).to eq report.to_json
+        get :index
+      end
+
+      it "returns HTTP success" do
+        expect(response.status).to eq(200)
+      end
+
+      it "returns the expected response report" do
+        expect(response.body).to eq({ checks: { database: true,
+                                                search: true } }.to_json)
+      end
     end
   end
 end
