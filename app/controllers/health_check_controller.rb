@@ -7,7 +7,7 @@ class HealthCheckController < ActionController::Base # rubocop:disable Rails/App
     if report.status == "200"
       render json: report
     else
-      render json: report, status: "500"
+      render json: report, status: :service_unavailable
     end
   end
 end
