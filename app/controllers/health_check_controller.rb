@@ -2,14 +2,12 @@ class HealthCheckController < ActionController::Base # rubocop:disable Rails/App
   protect_from_forgery with: :exception
 
   def index
-    Rails.logger.silence do
-      report = HealthCheckService.new.report
+    report = HealthCheckService.new.report
 
-      if report.status == "200"
-        render json: report
-      else
-        render json: report, status: "500"
-      end
+    if report.status == "200"
+      render json: report
+    else
+      render json: report, status: "500"
     end
   end
 end
