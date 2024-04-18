@@ -14,7 +14,7 @@ describe "healthcheck.json" do
   end
 
   it "when there are component errors" do
-    allow(ActiveRecord::Base.connection).to receive(:active?).and_return(false)
+    allow(ActiveRecord::Base.connection).to receive(:execute).and_return(nil)
 
     visit "/healthcheck.json"
 
