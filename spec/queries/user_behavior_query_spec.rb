@@ -39,6 +39,10 @@ describe UserBehaviorQuery, versioning: true do
         SELECT people.id,
           people.given_name || ' ' || people.surname AS full_name,
           people.location_in_building || ', ' || people.building || ', ' || people.city AS address,
+          people.email,
+          people.secondary_email,
+          people.primary_phone_number,
+          people.secondary_phone_number,
           people.login_count,
           people.last_login_at,
           groups.name AS team_name,
@@ -93,6 +97,10 @@ describe UserBehaviorQuery, versioning: true do
           address: nil,
           team_name: ds.name,
           team_role: "Developer",
+          main_email_address: person1.email,
+          main_phone_number: nil,
+          alternative_phone_number: nil,
+          alternative_email_address: nil,
           ancestors: [moj.name, csg.name].join(" > "),
           login_count: 0,
           last_login_at: nil,
@@ -105,6 +113,10 @@ describe UserBehaviorQuery, versioning: true do
           address: nil,
           team_name: ds.name,
           team_role: "Tester",
+          main_email_address: person1.email,
+          main_phone_number: nil,
+          alternative_phone_number: nil,
+          alternative_email_address: nil,
           ancestors: [moj.name, csg.name].join(" > "),
           login_count: 0,
           last_login_at: nil,
@@ -117,6 +129,10 @@ describe UserBehaviorQuery, versioning: true do
           address: nil,
           team_name: csg.name,
           team_role: "Business Analyst",
+          main_email_address: person1.email,
+          main_phone_number: nil,
+          alternative_phone_number: nil,
+          alternative_email_address: nil,
           ancestors: moj.name,
           login_count: 0,
           last_login_at: nil,
@@ -129,6 +145,10 @@ describe UserBehaviorQuery, versioning: true do
           address: nil,
           team_name: nil,
           team_role: nil,
+          main_email_address: person2.email,
+          main_phone_number: nil,
+          alternative_phone_number: nil,
+          alternative_email_address: nil,
           ancestors: nil,
           login_count: 2,
           last_login_at: "22-05-2017",
@@ -141,6 +161,10 @@ describe UserBehaviorQuery, versioning: true do
           address: person3.location,
           team_name: nil,
           team_role: nil,
+          main_email_address: person3.email,
+          main_phone_number: nil,
+          alternative_phone_number: nil,
+          alternative_email_address: nil,
           ancestors: nil,
           login_count: 3,
           last_login_at: "21-05-2016",
@@ -162,7 +186,6 @@ describe UserBehaviorQuery, versioning: true do
     end
 
     it "returns expected collections and format" do
-      # binding.pry
       expect(data).to match_array expected_collections
     end
   end
