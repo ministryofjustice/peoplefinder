@@ -138,6 +138,10 @@ class Person < ApplicationRecord
     email.split("@").first.gsub(/\W|\d/, "")
   end
 
+  def email_suffix
+    Mail::Address.new(email).domain.downcase
+  end
+
   scope :all_in_groups_scope, ->(groups) { PeopleInGroupsQuery.new(groups).call }
 
   scope :all_in_subtree, ->(group) { PeopleInGroupsQuery.new(group.subtree_ids).call }
