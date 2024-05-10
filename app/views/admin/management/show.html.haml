@@ -1,5 +1,5 @@
 - content_for :body_classes do
-  = 'admin-page '
+  = 'admin-page'
 
 .grid-row.mod-heading
   .column-full
@@ -22,7 +22,9 @@
       = t('management.tools_header')
 
     %ul
+      %li#audit-trail
+      = link_to 'Audit trail', audit_trail_path
       %li#bulk-uploader
         = link_to 'Bulk uploader', new_admin_person_upload_path
-      %li#audit-trail
-        = link_to 'Audit trail', audit_trail_path
+      %li#sscl-users
+        = link_to 'SSCL Users', group_path('shared-services-connected-ltd')
