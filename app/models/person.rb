@@ -31,7 +31,9 @@
 #  last_reminder_email_at :datetime
 #  current_project        :string
 #  pager_number           :text
-#
+#  swap_email_display     :boolean
+#  third_party_user       :boolean
+#  
 
 class Person < ApplicationRecord
   attr_accessor :working_days, :crop_x, :crop_y, :crop_w, :crop_h, :skip_group_completion_score_updates, :skip_must_have_team
