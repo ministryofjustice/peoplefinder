@@ -14,7 +14,7 @@
 #  description_reminder_email_at :datetime
 #  members_completion_score      :integer
 #  third_party_supplier          :boolean
-# 
+#
 
 class Group < ApplicationRecord
   include Hierarchical

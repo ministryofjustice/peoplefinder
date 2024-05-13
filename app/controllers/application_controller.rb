@@ -50,6 +50,11 @@ private
   end
   helper_method :logged_in_regular?
 
+  def third_party_person?
+    logged_in? && current_user.third_party_user?
+  end
+  helper_method :third_party_person?
+
   def logged_in_readonly?
     logged_in? && current_user.is_a?(ReadonlyUser)
   end

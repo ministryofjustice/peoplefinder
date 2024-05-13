@@ -125,6 +125,7 @@ en:
       group_deleted: "Deleted %{group}"
       create_error: "The record was not created. Please check the errors below"
       update_error: "The details were not updated. Please check the errors below"
+      unauthorised: "You only have permission to view teams in this application."
     home:
       top_level_group_needed: "To use the People Finder, first create a top-level group (without a parent)"
     information_requests:
@@ -148,6 +149,7 @@ en:
           We have let %{person} know that you’ve made changes
       profile_deleted: "Deleted %{person}’s profile"
       create_error: "The profile was not created. Please check the errors below"
+      unauthorised: "You only have permission to view people in this application."
     person_image:
       no_image_uploaded: "No image has been uploaded for %{person}"
       image_cropped: "Cropped %{person}’s image"

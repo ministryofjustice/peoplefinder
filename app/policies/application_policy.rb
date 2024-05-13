@@ -13,10 +13,10 @@ private
   end
 
   def regular_user?
-    @user.is_a?(Person)
+    @user.is_a?(Person) && @user.third_party_user? == false
   end
 
   def readonly_user?
-    @user.is_a?(ReadonlyUser)
+    @user.is_a?(ReadonlyUser) or @user.third_party_user?
   end
 end
