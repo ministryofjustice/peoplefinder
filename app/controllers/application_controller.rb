@@ -50,11 +50,6 @@ private
   end
   helper_method :logged_in_regular?
 
-  def third_party_person?
-    logged_in? && current_user.third_party_user?
-  end
-  helper_method :third_party_person?
-
   def logged_in_readonly?
     logged_in? && current_user.is_a?(ReadonlyUser)
   end
@@ -64,6 +59,11 @@ private
     logged_in? && current_user.super_admin?
   end
   helper_method :super_admin?
+
+  def third_party_admin?
+    logged_in? && current_user.super_admin? && current_user.third_party_user?
+  end
+  helper_method :third_party_admin?
 
   def ensure_user
     return true if logged_in?

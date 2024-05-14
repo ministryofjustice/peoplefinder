@@ -4,11 +4,11 @@ class PersonPolicy < ApplicationPolicy
   end
 
   def edit?
-    regular_user?
+    regular_user? || third_party_admin_user?
   end
 
   def update?
-    regular_user?
+    regular_user? || third_party_admin_user?
   end
 
   def update_email?
@@ -16,18 +16,18 @@ class PersonPolicy < ApplicationPolicy
   end
 
   def new?
-    regular_user?
+    regular_user? || third_party_admin_user?
   end
 
   def create?
-    regular_user?
+    regular_user? || third_party_admin_user?
   end
 
   def destroy?
-    regular_user?
+    regular_user? || third_party_admin_user?
   end
 
   def add_membership?
-    regular_user?
+    regular_user? || third_party_admin_user?
   end
 end
