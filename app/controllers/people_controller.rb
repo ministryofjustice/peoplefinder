@@ -112,6 +112,7 @@ private
       :crop_h,
       :description,
       :current_project,
+      :third_party_user,
       *Person::DAYS_WORKED,
       { memberships_attributes: %i[id role group_id leader subscribed _destroy] },
     ]
