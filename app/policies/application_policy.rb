@@ -17,7 +17,7 @@ private
   end
 
   def readonly_user?
-    @user.is_a?(ReadonlyUser) or @user.third_party_user?
+    @user.is_a?(ReadonlyUser) or @user.third_party_user? && @user.super_admin? == false
   end
 
   def third_party_admin_user?
