@@ -22,4 +22,8 @@ class ExternalUser < ApplicationRecord
   validates :slug, presence: true
   validates :email, presence: true, uniqueness: { case_sensitive: false }, email: true
 
+  include Sanitizable
+  sanitize_fields :given_name, :surname, :company, strip: true, remove_digits: true
+  sanitize_fields :email, strip: true, downcase: true
+
 end
