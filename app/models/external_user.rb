@@ -25,5 +25,4 @@ class ExternalUser < ApplicationRecord
   include Sanitizable
   sanitize_fields :given_name, :surname, :company, strip: true, remove_digits: true
   sanitize_fields :email, strip: true, downcase: true
-
 end
