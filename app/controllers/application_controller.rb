@@ -40,6 +40,14 @@ private
   end
   helper_method :current_user
 
+  def external_user?
+    logged_in? && current_user.is_a?(ExternalUser)
+  end
+
+  def external_admin?
+    logged_in? && current_user.is_a?(ExternalUser) && current_user.admin?
+  end
+
   def logged_in?
     current_user.present?
   end
