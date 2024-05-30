@@ -4,7 +4,7 @@
 #
 # Table name: external_users
 #
-#  id           :integer not null, primary key
+#  id           :integer  not null, primary key
 #  given_name   :text
 #  surname      :text
 #  slug         :string
@@ -25,4 +25,15 @@ class ExternalUser < ApplicationRecord
   include Sanitizable
   sanitize_fields :given_name, :surname, :company, strip: true, remove_digits: true
   sanitize_fields :email, strip: true, downcase: true
+
+  extend FriendlyId
+  friendly_id :slug_source, use: :slugged
+
+  def slug_source
+    email.present? ? email.split(/@/).first : name
+  end
+
+  def at_permitted_domain?
+    EmailAddress.new(email).permitted_domain?
+  end
 end
