@@ -21,6 +21,10 @@ class Login
   end
 
   def self.current_user(session)
-    Person.find(session[SESSION_KEY]) if session[SESSION_KEY].present?
+    if @person.is_a?(Person)
+      Person.find(session[SESSION_KEY]) if session[SESSION_KEY].present?
+    else
+      ExternalUser.find(session[SESSION_KEY]) if session[SESSION_KEY].present?
+    end
   end
 end
