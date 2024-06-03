@@ -11,7 +11,11 @@ class ApplicationController < ActionController::Base
   def login_person(person)
     login_service = Login.new(session, person)
     login_service.login
-    redirect_to desired_path(person)
+    if person.is_a?(ExternalUser)
+      redirect_to "/"
+    else
+      redirect_to desired_path(person)
+    end
   end
 
 private
