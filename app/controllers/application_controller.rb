@@ -59,11 +59,6 @@ private
   end
   helper_method :logged_in_readonly?
 
-  def logged_in_external?
-    logged_in? && current_user.is_a?(ExternalUser)
-  end
-  helper_method :logged_in_external?
-
   def super_admin?
     logged_in? && current_user.is_a?(Person) && current_user.super_admin?
   end

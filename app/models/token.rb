@@ -50,6 +50,8 @@ class Token < ApplicationRecord
   end
 
   def valid_email_address
+    return if ExternalUser.exists?(email: user_email)
+
     if !EmailAddress.new(user_email).valid_format?
       errors.add(:user_email, :invalid_address)
     elsif !EmailAddress.new(user_email).permitted_domain?
