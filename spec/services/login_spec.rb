@@ -9,6 +9,10 @@ RSpec.describe Login, type: :service do
   let(:person) { create(:person) }
 
   describe "#login" do
+    before do
+      session[Login::KEY_TYPE] = "person"
+    end
+
     subject(:login) { service.login }
 
     let(:current_time) { Time.zone.now }
@@ -31,6 +35,7 @@ RSpec.describe Login, type: :service do
 
   describe "#logout" do
     before do
+      session[Login::KEY_TYPE] = "person"
       session[Login::SESSION_KEY] = person.id
     end
 
@@ -43,6 +48,7 @@ RSpec.describe Login, type: :service do
     subject(:current_user) { described_class.current_user(session) }
 
     before do
+      session[Login::KEY_TYPE] = "person"
       session[Login::SESSION_KEY] = person_id
     end
 
