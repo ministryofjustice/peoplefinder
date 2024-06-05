@@ -9,11 +9,11 @@ RSpec.describe Login, type: :service do
   let(:person) { create(:person) }
 
   describe "#login" do
+    subject(:login) { service.login }
+
     before do
       session[Login::KEY_TYPE] = "person"
     end
-
-    subject(:login) { service.login }
 
     let(:current_time) { Time.zone.now }
 
