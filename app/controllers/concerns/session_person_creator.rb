@@ -32,16 +32,28 @@ module SessionPersonCreator
 
   private
 
-    def person_found(person_type, email)
-      person_type.where(email: email.to_s).count.positive?
-    end
+    # def person_found(person_type, email)
+    #   person_type.where(email: email.to_s).count.positive?
+    # end
+    #
+    # def find_or_create_person(email, &_on_create)
+    #   if person_found(Person, email)
+    #     puts ">>> USER OF PERSON TYPE <<<"
+    #     person = Person.where(email: email.to_s).first_or_initialize
+    #     yield(person) if person.new_record?
+    #   elsif person_found(ExternalUser, email)
+    #     puts "<<< USER OF EXTERNAL_USER TYPE >>>"
+    #     person = ExternalUser.where(email: email.to_s).first
+    #   end
+    #   person
+    # end
 
     def find_or_create_person(email, &_on_create)
-      if person_found(Person, email)
+      if ExternalUser.where(email: email.to_s).count.positive?
+        person = ExternalUser.where(email: email.to_s).first
+      else
         person = Person.where(email: email.to_s).first_or_initialize
         yield(person) if person.new_record?
-      elsif person_found(ExternalUser, email)
-        person = ExternalUser.where(email: email.to_s).first_or_initialize
       end
       person
     end
