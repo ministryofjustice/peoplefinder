@@ -12,7 +12,7 @@ class ApplicationController < ActionController::Base
     login_service = Login.new(session, person)
     login_service.login
     if person.is_a?(ExternalUser)
-      redirect_to "/"
+      redirect_to home_path
     else
       redirect_to desired_path(person)
     end
