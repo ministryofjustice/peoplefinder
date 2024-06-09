@@ -1,6 +1,6 @@
 class Login
   SESSION_KEY = "current_user_id".freeze
-  KEY_TYPE = "user_type".freeze
+  TYPE_KEY = "user_type".freeze
 
   def initialize(session, person)
     @session = session
@@ -8,14 +8,20 @@ class Login
   end
 
   def login
-    if @person.is_a?(Person)
-      @session[KEY_TYPE] = "person"
+    @session[TYPE_KEY] = nil
+
+    case @person
+    when Person
+      @session[TYPE_KEY] = "person"
       @person.login_count += 1
       @person.last_login_at = Time.zone.now
       @person.save # rubocop:disable Rails/SaveBang
+    when ExternalUser
+      @session[TYPE_KEY] = "external_user"
     else
-      @session[KEY_TYPE] = "external_user"
+      return if @session[TYPE_KEY].nil?
     end
+
     @session[SESSION_KEY] = @person.id
   end
 
@@ -25,7 +31,7 @@ class Login
 
   def self.current_user(session)
     if session[SESSION_KEY].present?
-      if session[KEY_TYPE] == "person"
+      if session[TYPE_KEY] == "person"
         Person.find(session[SESSION_KEY])
       elsif ExternalUser.find(session[SESSION_KEY])
         ReadonlyUser.new

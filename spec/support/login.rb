@@ -5,7 +5,7 @@ module SpecSupport
     end
 
     def mock_logged_in_user(super_admin: false)
-      controller.session[::Login::KEY_TYPE] = "person"
+      controller.session[::Login::TYPE_KEY] = "person"
       controller.session[::Login::SESSION_KEY] =
         create(:person, email: "test.user@digital.justice.gov.uk", super_admin:).id
     end
