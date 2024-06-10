@@ -21,6 +21,12 @@ describe "Home page" do
       visit "/"
     end
 
+    before(:each, user: :external_user) do
+      page.driver.header "User-Agent", user_agent
+      token_log_in_as create(:external_user).email
+      visit "/"
+    end
+
     context "when using a supported browser" do
       let(:user_agent) { ff31 }
 
@@ -103,6 +109,17 @@ describe "Home page" do
   context "with a readonly user" do
     before do
       mock_readonly_user
+      visit "/"
+    end
+
+    it "can view the page" do
+      expect(home_page).to be_displayed
+    end
+  end
+
+  context "with an external user" do
+    before do
+      token_log_in_as create(:external_user).email
       visit "/"
     end
 

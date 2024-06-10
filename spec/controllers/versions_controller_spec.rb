@@ -13,6 +13,16 @@ RSpec.describe VersionsController, type: :controller do
       it "redirects to login" do
         expect(response).to redirect_to new_sessions_path
       end
+
+      context "when an external user" do
+        before(:each, user: :external_user) do
+          token_log_in_as create(:external_user).email
+        end
+
+        it "redirects to login" do
+          expect(response).to redirect_to new_sessions_path
+        end
+      end
     end
 
     context "when a regular user" do
