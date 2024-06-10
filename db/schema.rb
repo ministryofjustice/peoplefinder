@@ -30,12 +30,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_23_135243) do
   end
 
   create_table "external_users", force: :cascade do |t|
-    t.text "given_name"
-    t.text "surname"
-    t.text "slug"
     t.text "email"
-    t.text "company"
-    t.boolean "admin"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index "lower(email)", name: "index_external_users_on_lowercase_email", unique: true
