@@ -33,8 +33,8 @@ module SessionPersonCreator
   private
 
     def find_or_create_person(email, &_on_create)
-      if ExternalUser.where(email: email.to_s).count.positive?
-        person = ExternalUser.where(email: email.to_s).first
+      if ExternalUser.exists?(email: email.to_s)
+        person = ExternalUser.find_by(email: email.to_s)
       else
         person = Person.where(email: email.to_s).first_or_initialize
         yield(person) if person.new_record?

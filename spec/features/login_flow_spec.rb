@@ -4,6 +4,7 @@ describe "Login flow" do
   include PermittedDomainHelper
 
   let(:email) { "test.user@digital.justice.gov.uk" }
+  let(:external_user) { create :external_user }
   let(:current_time) { Time.zone.now }
 
   let(:new_profile_page) { Pages::NewProfile.new }
@@ -15,12 +16,20 @@ describe "Login flow" do
   let(:confirm_page) { Pages::PersonConfirm.new }
   let(:email_confirm_page) { Pages::PersonEmailConfirm.new }
   let(:base_page) { Pages::Base.new }
+  let(:home_page) { Pages::Home.new }
 
   let(:profile_created_from_login_html) { "Your profile did not exist so we created it for you." }
 
   def token_login_step_with_expectation
     expect(login_page).to be_displayed
     token_log_in_as(email)
+  end
+
+  describe "Logging in as an external user" do
+    it "When an external user logs in, they are directed to the homepage" do
+      token_log_in_as(external_user.email)
+      expect(home_page).to be_displayed
+    end
   end
 
   describe "Choosing to login" do

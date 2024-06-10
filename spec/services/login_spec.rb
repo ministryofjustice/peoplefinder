@@ -8,7 +8,6 @@ RSpec.describe Login, type: :service do
   let(:session) { {} }
 
   describe "#login" do
-
     subject(:login) { service.login }
 
     context "when an Moj user logs in" do
@@ -40,6 +39,7 @@ RSpec.describe Login, type: :service do
       it "the session key changes" do
         expect { login }.to change { session[Login::SESSION_KEY] }.from(nil).to(person.id)
       end
+
       it "the key type changes" do
         expect { login }.to change { session[Login::TYPE_KEY] }.from(nil).to("external_user")
       end
@@ -51,6 +51,7 @@ RSpec.describe Login, type: :service do
       it "session key does not change" do
         expect { login }.not_to change { session[Login::SESSION_KEY] }.from(nil)
       end
+
       it "key type does not change" do
         expect { login }.not_to change { session[Login::TYPE_KEY] }.from(nil)
       end

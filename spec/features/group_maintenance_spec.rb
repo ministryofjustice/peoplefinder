@@ -16,6 +16,10 @@ describe "Group maintenance" do
     mock_readonly_user
   end
 
+  before(:each, user: :external_user) do
+    token_log_in_as create(:external_user).email
+  end
+
   def visit_edit_view(group)
     visit group_path(group)
     click_link "Edit"
@@ -292,6 +296,20 @@ describe "Group maintenance" do
 
     it "Is not allowed to edit a team" do
       group = create(:group, name: "Digital Services", parent: dept)
+      visit edit_group_path(group)
+      expect(login_page).to be_displayed
+    end
+  end
+
+  context "when a external user", user: :external_user do
+    it "Is not allowed to create a new team" do
+      visit group_path(dept)
+      click_link "Add new sub-team"
+      expect(login_page).to be_displayed
+    end
+
+    it "Is not allowed to edit a team" do
+      group = create(:group, name: "Central Digital Product Team", parent: dept)
       visit edit_group_path(group)
       expect(login_page).to be_displayed
     end

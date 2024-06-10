@@ -11,11 +11,7 @@ class ApplicationController < ActionController::Base
   def login_person(person)
     login_service = Login.new(session, person)
     login_service.login
-    if person.is_a?(ExternalUser)
-      redirect_to home_path
-    else
-      redirect_to desired_path(person)
-    end
+    redirect_to desired_path(person)
   end
 
 private
@@ -60,7 +56,7 @@ private
   helper_method :logged_in_readonly?
 
   def super_admin?
-    logged_in? && current_user.is_a?(Person) && current_user.super_admin?
+    logged_in? && current_user.super_admin?
   end
   helper_method :super_admin?
 
@@ -72,7 +68,11 @@ private
   end
 
   def desired_path(person)
-    session.delete(:desired_path) || person_path(person, prompt: :profile)
+    if person.is_a?(Person)
+      session.delete(:desired_path) || person_path(person, prompt: :profile)
+    else
+      home_path
+    end
   end
 
   def i18n_flash(type, *partial_key, **options)
