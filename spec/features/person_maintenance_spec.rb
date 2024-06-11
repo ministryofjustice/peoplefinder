@@ -417,7 +417,7 @@ describe "Person maintenance" do
       end
     end
 
-    context "with an external user", user: :readonly do
+    context "with an external user", user: :external_user do
       it "when complete" do
         complete_profile!(another_person)
         visit person_path(another_person)
