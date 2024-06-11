@@ -10,6 +10,11 @@ module SpecSupport
         create(:person, email: "test.user@digital.justice.gov.uk", super_admin:).id
     end
 
+    def mock_logged_in_external_user
+      controller.session[::Login::TYPE_KEY] = "external_user"
+      controller.session[::Login::SESSION_KEY] = create(:external_user, email: "test.user@gov.sscl.com").id
+    end
+
     def current_user
       Person.where(email: "test.user@digital.justice.gov.uk").first
     end
