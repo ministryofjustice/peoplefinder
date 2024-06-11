@@ -192,7 +192,7 @@ describe "Person maintenance" do
     end
 
     context "with an external user", user: :external_user do
-      it "action is not allowed without login" do
+      it "profile editing is not allowed" do
         visit person_path(create(:person, person_attributes))
         click_edit_profile
         expect(login_page).to be_displayed
