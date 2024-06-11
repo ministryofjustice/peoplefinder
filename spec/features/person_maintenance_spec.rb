@@ -41,7 +41,7 @@ describe "Person maintenance" do
     end
 
     context "with a external user", user: :external_user do
-      it "action is not allowed without login" do
+      it "profile creation is not allowed" do
         new_profile_page.load
         expect(login_page).to be_displayed
       end
