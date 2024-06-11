@@ -28,9 +28,20 @@ describe "Person maintenance" do
     mock_readonly_user
   end
 
+  before(:each, user: :external_user) do
+    token_log_in_as create(:external_user).email
+  end
+
   context "when Creating a person" do
     context "with a read only user", user: :readonly do
       it "is not allowed without login" do
+        new_profile_page.load
+        expect(login_page).to be_displayed
+      end
+    end
+
+    context "with a external user", user: :external_user do
+      it "is not allow to create a profile" do
         new_profile_page.load
         expect(login_page).to be_displayed
       end
@@ -174,6 +185,14 @@ describe "Person maintenance" do
   context "when Editing a person" do
     context "with a read only user", user: :readonly do
       it "is not allowed without login" do
+        visit person_path(create(:person, person_attributes))
+        click_edit_profile
+        expect(login_page).to be_displayed
+      end
+    end
+
+    context "with an external user", user: :external_user do
+      it "is not allowed to edit a profile" do
         visit person_path(create(:person, person_attributes))
         click_edit_profile
         expect(login_page).to be_displayed
@@ -391,6 +410,21 @@ describe "Person maintenance" do
       end
 
       it "when it is not complete" do
+        visit person_path(another_person)
+        expect(page).to have_text("Profile completeness")
+        click_link "complete this profile", match: :first
+        expect(login_page).to be_displayed
+      end
+    end
+
+    context "with an external user", user: :external_user do
+      it "when complete" do
+        complete_profile!(another_person)
+        visit person_path(another_person)
+        expect(page).not_to have_text("Profile completeness")
+      end
+
+      it "when in complete" do
         visit person_path(another_person)
         expect(page).to have_text("Profile completeness")
         click_link "complete this profile", match: :first

@@ -110,4 +110,15 @@ describe "Home page" do
       expect(home_page).to be_displayed
     end
   end
+
+  context "with an external user" do
+    before do
+      token_log_in_as create(:external_user).email
+      visit "/"
+    end
+
+    it "can view the page" do
+      expect(home_page).to be_displayed
+    end
+  end
 end

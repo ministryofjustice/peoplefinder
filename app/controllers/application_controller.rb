@@ -68,7 +68,11 @@ private
   end
 
   def desired_path(person)
-    session.delete(:desired_path) || person_path(person, prompt: :profile)
+    if person.is_a?(Person)
+      session.delete(:desired_path) || person_path(person, prompt: :profile)
+    else
+      home_path
+    end
   end
 
   def i18n_flash(type, *partial_key, **options)

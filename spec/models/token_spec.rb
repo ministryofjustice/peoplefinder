@@ -17,6 +17,7 @@ RSpec.describe Token, type: :model do
 
   let(:token) { build(:token) }
   let(:person) { instance_double(Person, email: "text.user@digital.justice.gov.uk") }
+  let(:external_user) { create :external_user }
 
   it "generates a token" do
     expect(token.value).to match(/\A[a-z0-9-]{36}\z/)
@@ -27,6 +28,11 @@ RSpec.describe Token, type: :model do
       2.times { token.save }
       token.reload
     }.not_to change(token, :value)
+  end
+
+  it "will be valid with external user email" do
+    token.user_email = external_user.email
+    expect(token).to be_valid
   end
 
   it "will be valid with valid email address" do

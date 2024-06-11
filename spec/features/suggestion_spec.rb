@@ -29,7 +29,18 @@ describe "Make a suggestion about a profile", js: true do
     visit person_path(person)
   end
 
+  before(:each, user: :external_user) do
+    token_log_in_as create(:external_user).email
+    visit person_path(person)
+  end
+
   it "Readonly user tries to improve profile", js: false, user: :readonly do
+    click_link "Help improve this profile", match: :first
+    expect(Pages::Login.new).to be_displayed
+    expect(page).to have_text("Log in to edit People Finder")
+  end
+
+  it "an external user tries to improve profile", js: false, user: :external_user do
     click_link "Help improve this profile", match: :first
     expect(Pages::Login.new).to be_displayed
     expect(page).to have_text("Log in to edit People Finder")

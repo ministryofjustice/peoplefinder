@@ -15,6 +15,17 @@ RSpec.describe VersionsController, type: :controller do
       end
     end
 
+    context "when an external user" do
+      before do
+        mock_logged_in_external_user
+        get :index
+      end
+
+      it "redirects to login" do
+        expect(response).to redirect_to new_sessions_path
+      end
+    end
+
     context "when a regular user" do
       before do
         mock_logged_in_user

@@ -26,6 +26,17 @@ RSpec.describe TokenLogin, type: :service do
           service.call view
         end
 
+        context "when external user" do
+          let(:person) { create :external_user }
+
+          it "spends the token" do
+            allow(view).to receive(:person_from_token).with(token).and_return person
+            allow(view).to receive(:render_or_redirect_login).with(person).and_return nil
+            expect_any_instance_of(Token).to receive(:spend!) # rubocop:disable RSpec/AnyInstance
+            service.call view
+          end
+        end
+
         it "spends the token" do
           allow(view).to receive(:person_from_token).with(token).and_return person
           allow(view).to receive(:render_or_redirect_login).with(person).and_return nil

@@ -202,4 +202,8 @@ FactoryBot.define do
     edit_finalised { false }
     sent { false }
   end
+
+  factory :external_user, class: "ExternalUser" do
+    sequence(:email) { |n| sprintf("example.user.%d@gov.sscl.uk", n) }
+  end
 end
