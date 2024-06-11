@@ -24,11 +24,11 @@ RSpec.describe Login, type: :service do
         end
       end
 
-      it "the session key changes" do
+      it "changes the session key" do
         expect { login }.to change { session[Login::SESSION_KEY] }.from(nil).to(person.id)
       end
 
-      it "the key type changes" do
+      it "changes the type key" do
         expect { login }.to change { session[Login::TYPE_KEY] }.from(nil).to("person")
       end
     end
@@ -36,11 +36,11 @@ RSpec.describe Login, type: :service do
     context "when an External user logs in" do
       let(:person) { create(:external_user) }
 
-      it "the session key changes" do
+      it "changes the session key changes" do
         expect { login }.to change { session[Login::SESSION_KEY] }.from(nil).to(person.id)
       end
 
-      it "the key type changes" do
+      it "changes the session type key" do
         expect { login }.to change { session[Login::TYPE_KEY] }.from(nil).to("external_user")
       end
     end
@@ -48,11 +48,11 @@ RSpec.describe Login, type: :service do
     context "when the user is invalid" do
       let(:person) { create(:token) }
 
-      it "session key does not change" do
+      it "leaves the session key unchanged" do
         expect { login }.not_to change { session[Login::SESSION_KEY] }.from(nil)
       end
 
-      it "key type does not change" do
+      it "leaves the type key unchanged" do
         expect { login }.not_to change { session[Login::TYPE_KEY] }.from(nil)
       end
     end

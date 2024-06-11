@@ -41,7 +41,7 @@ describe "Person maintenance" do
     end
 
     context "with a external user", user: :external_user do
-      it "profile creation is not allowed" do
+      it "is not allow to create a profile" do
         new_profile_page.load
         expect(login_page).to be_displayed
       end
@@ -192,7 +192,7 @@ describe "Person maintenance" do
     end
 
     context "with an external user", user: :external_user do
-      it "profile editing is not allowed" do
+      it "is not allowed to edit a profile" do
         visit person_path(create(:person, person_attributes))
         click_edit_profile
         expect(login_page).to be_displayed
