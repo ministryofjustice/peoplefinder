@@ -21,12 +21,6 @@ describe "Home page" do
       visit "/"
     end
 
-    before(:each, user: :external_user) do
-      page.driver.header "User-Agent", user_agent
-      token_log_in_as create(:external_user).email
-      visit "/"
-    end
-
     context "when using a supported browser" do
       let(:user_agent) { ff31 }
 
