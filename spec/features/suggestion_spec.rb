@@ -34,19 +34,17 @@ describe "Make a suggestion about a profile", js: true do
     visit person_path(person)
   end
 
-  # rubocop:disable RSpec/RepeatedExample.rb
   it "Readonly user tries to improve profile", js: false, user: :readonly do
     click_link "Help improve this profile", match: :first
     expect(Pages::Login.new).to be_displayed
     expect(page).to have_text("Log in to edit People Finder")
   end
 
-  it "an external user tries to improve profile", js: false, user: :readonly do
+  it "an external user tries to improve profile", js: false, user: :external_user do
     click_link "Help improve this profile", match: :first
     expect(Pages::Login.new).to be_displayed
     expect(page).to have_text("Log in to edit People Finder")
   end
-  # rubocop:enable RSpec/RepeatedExample.rb
 
   it "Ask a person to complete missing fields", user: :regular do
     govuk_label_click "Fill missing fields"
