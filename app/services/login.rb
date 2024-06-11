@@ -19,7 +19,7 @@ class Login
     when ExternalUser
       @session[TYPE_KEY] = "external_user"
     else
-      return if @session[TYPE_KEY].nil?
+      return
     end
 
     @session[SESSION_KEY] = @person.id
