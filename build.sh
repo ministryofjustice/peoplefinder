@@ -11,7 +11,7 @@ function _build() {
 
   # 1. Define variables for use in the script
   team_name=peoplefinder
-  ecr_repo_name=peoplefinder-ecr
+  ecr_repo_name=peoplefinder
   component=peoplefinder
 
   region='eu-west-2'

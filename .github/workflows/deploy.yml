@@ -113,7 +113,9 @@ jobs:
         run: |
           kubectl set image -n ${KUBE_NAMESPACE} \
           deployment/peoplefinder \
-          webapp="${{ vars.ECR_URL }}:$SHA"
+          webapp="${{ vars.ECR_URL }}:$SHA" \
+          metrics="${{ vars.ECR_URL }}:$SHA" \
+          jobs="${{ vars.ECR_URL }}:$SHA"
 
       - name: Send deploy notification to product Slack channel
         uses: slackapi/slack-github-action@v1.25.0
@@ -201,7 +203,9 @@ jobs:
         run: |
           kubectl set image -n ${KUBE_NAMESPACE} \
           deployment/peoplefinder \
-          webapp="${{ vars.ECR_URL }}:$SHA"
+          webapp="${{ vars.ECR_URL }}:$SHA" \
+          metrics="${{ vars.ECR_URL }}:$SHA" \
+          jobs="${{ vars.ECR_URL }}:$SHA"
 
       - name: Send deploy notification to product Slack channel
         uses: slackapi/slack-github-action@v1.25.0
@@ -290,7 +294,9 @@ jobs:
         run: |
           kubectl set image -n ${KUBE_NAMESPACE} \
           deployment/peoplefinder \
-          webapp="${{ vars.ECR_URL }}:$SHA"
+          webapp="${{ vars.ECR_URL }}:$SHA" \
+          metrics="${{ vars.ECR_URL }}:$SHA" \
+          jobs="${{ vars.ECR_URL }}:$SHA"
 
       - name: Send deploy notification to product Slack channel
         uses: slackapi/slack-github-action@v1.25.0

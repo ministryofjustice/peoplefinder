@@ -21,7 +21,7 @@ spec:
       containers:
         - name: webapp
           imagePullPolicy: Always
-          image: 754256621582.dkr.ecr.eu-west-2.amazonaws.com/peoplefinder/peoplefinder-ecr:latest
+          image: 754256621582.dkr.ecr.eu-west-2.amazonaws.com/peoplefinder/peoplefinder:production.latest
           ports:
             - containerPort: 3000
           command: ["./config/docker/entrypoint-webapp.sh"]
@@ -74,7 +74,7 @@ spec:
             initialDelaySeconds: 40
             periodSeconds: 60
         - name: jobs
-          image: 754256621582.dkr.ecr.eu-west-2.amazonaws.com/peoplefinder/peoplefinder-ecr:latest
+          image: 754256621582.dkr.ecr.eu-west-2.amazonaws.com/peoplefinder/peoplefinder:production.latest
           ports:
             - containerPort: 3000
           command: ["./config/docker/entrypoint-jobs.sh"]
@@ -105,7 +105,7 @@ spec:
             - secretRef:
                 name: app-secrets
         - name: metrics
-          image: 754256621582.dkr.ecr.eu-west-2.amazonaws.com/peoplefinder/peoplefinder-ecr:latest
+          image: 754256621582.dkr.ecr.eu-west-2.amazonaws.com/peoplefinder/peoplefinder:production.latest
           imagePullPolicy: Always
           ports:
             - containerPort: 9394
