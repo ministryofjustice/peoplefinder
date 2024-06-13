@@ -32,6 +32,8 @@ jobs:
 
       opensearch:
         image: bitnami/opensearch:latest
+        ports:
+          - 9200:9200
 
     steps:
       - name: Checkout code
