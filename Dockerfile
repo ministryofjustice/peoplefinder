@@ -26,7 +26,7 @@ RUN addgroup --gid 1000 --system appgroup && \
 
 COPY . .
 
-RUN RAILS_ENV=production GOVUK_APP_DOMAIN=not_real GOVUK_WEBSITE_ROOT=not_real SUPPORT_EMAIL=not_real POSTGRES_PASSWORD=postgres bundle exec rake assets:clean assets:precompile SECRET_KEY_BASE=required_but_does_not_matter_for_assets 2> /dev/null
+RUN RAILS_ENV=production GOVUK_APP_DOMAIN=not_real GOVUK_WEBSITE_ROOT=not_real SUPPORT_EMAIL=not_real bundle exec rake assets:clean assets:precompile SECRET_KEY_BASE=required_but_does_not_matter_for_assets 2> /dev/null
 
 # RUN mkdir log tmp
 RUN chown -R appuser:appgroup /usr/src/app/
