@@ -112,7 +112,7 @@ jobs:
       - name: Rollout restart deployment
         run: |
           kubectl set image -n ${KUBE_NAMESPACE} \
-          deployment/people-finder-development \
+          deployment/peoplefinder \
           webapp="${{ vars.ECR_URL }}:$SHA"
 
       - name: Send deploy notification to product Slack channel
@@ -200,7 +200,7 @@ jobs:
       - name: Rollout restart deployment
         run: |
           kubectl set image -n ${KUBE_NAMESPACE} \
-          deployment/people-finder-staging \
+          deployment/peoplefinder \
           webapp="${{ vars.ECR_URL }}:$SHA"
 
       - name: Send deploy notification to product Slack channel
@@ -289,7 +289,7 @@ jobs:
       - name: Rollout restart deployment
         run: |
           kubectl set image -n ${KUBE_NAMESPACE} \
-          deployment/people-finder-production \
+          deployment/peoplefinder \
           webapp="${{ vars.ECR_URL }}:$SHA"
 
       - name: Send deploy notification to product Slack channel
