@@ -19,6 +19,7 @@ jobs:
       RAILS_ENV: test
       DATABASE_URL: "postgresql://postgres:postgres@127.0.0.1/peoplefinder_test"
       PQ_REST_API_HOST: http://localhost:8888
+      POSTGRES_PASSWORD: postgres
 
     services:
       postgres:
@@ -26,7 +27,7 @@ jobs:
         env:
           POSTGRES_DB: peoplefinder_test
           POSTGRES_USER: postgres
-          PG_PASSWORD: ""
+          POSTGRES_PASSWORD: postgres
         ports:
           - 5432:5432
         options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
