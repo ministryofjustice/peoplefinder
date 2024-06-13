@@ -20,7 +20,6 @@ default: &default
   adapter: postgresql
   encoding: unicode
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 50 } %>
-  password: postgres
 
 development:
   <<: *default
@@ -58,7 +57,6 @@ development:
 # Do not set this db to the same as development or production.
 test:
   <<: *default
-  database: peoplefinder_test
   url: <%= ENV["DATABASE_URL"] %>
 
 # As with config/secrets.yml, you never want to store sensitive information,
