@@ -21,7 +21,7 @@ spec:
       containers:
         - name: webapp
           imagePullPolicy: Always
-          image: 754256621582.dkr.ecr.eu-west-2.amazonaws.com/peoplefinder/peoplefinder:latest
+          image: 754256621582.dkr.ecr.eu-west-2.amazonaws.com/peoplefinder/peoplefinder:development.latest
           ports:
             - containerPort: 3000
           command: ["./config/docker/entrypoint-webapp.sh"]
