@@ -19,7 +19,6 @@ jobs:
       RAILS_ENV: test
       DATABASE_URL: "postgresql://postgres:postgres@127.0.0.1/peoplefinder_test"
       PQ_REST_API_HOST: http://localhost:8888
-      POSTGRES_PASSWORD: postgres
 
     services:
       postgres:
@@ -50,6 +49,10 @@ jobs:
         run: bin/rails assets:precompile
 
       - name: Setup test database
+        env:
+          POSTGRES_DB: peoplefinder_test
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
         run: bin/rails db:setup
 
       - name: Lint Ruby files
