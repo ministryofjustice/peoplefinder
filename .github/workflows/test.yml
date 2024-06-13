@@ -1,0 +1,74 @@
+name: Test Workflow
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+concurrency:
+  group: test-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    permissions:
+      checks: write
+
+    env:
+      RAILS_ENV: test
+      DATABASE_URL: "postgresql://postgres:postgres@127.0.0.1/peoplefinder_test"
+      PQ_REST_API_HOST: http://localhost:8888
+
+    services:
+      postgres:
+        image: postgres:12.15
+        env:
+          POSTGRES_DB: peoplefinder_test
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+        ports:
+          - 5432:5432
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Ruby and install gems
+        uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 14.17.5
+
+      - name: Precompile assets
+        run: bin/rails assets:precompile
+
+      - name: Setup test database
+        run: bin/rails db:setup
+
+      - name: Lint Ruby files
+        run: bundle exec rubocop
+
+      - name: Security audit application code
+        run: bundle exec brakeman -q
+
+      - name: Run tests
+        run: bundle exec rspec
+
+      - name: Code coverage
+        uses: joshmfrankel/simplecov-check-action@main
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          minimum_suite_coverage: 95
+          minimum_file_coverage: 100
+
+  build-and-deploy:
+    if: ${{ github.ref == 'refs/heads/main' }}
+    needs: test
+    uses: ./.github/workflows/deploy.yml
+    secrets: inherit
