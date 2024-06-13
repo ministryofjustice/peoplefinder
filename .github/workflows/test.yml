@@ -48,10 +48,6 @@ jobs:
         run: bin/rails assets:precompile
 
       - name: Setup test database
-        env:
-          POSTGRES_DB: peoplefinder_test
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: postgres
         run: bin/rails db:setup
 
       - name: Lint Ruby files
