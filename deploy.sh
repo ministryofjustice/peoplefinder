@@ -11,7 +11,7 @@ function _deploy() {
 
   # Define variables for use in the script
   team_name=peoplefinder
-  ecr_repo_name=peoplefinder-ecr
+  ecr_repo_name=peoplefinder
   component=peoplefinder
   docker_endpoint=754256621582.dkr.ecr.eu-west-2.amazonaws.com
   docker_registry=${docker_endpoint}/${team_name}/${ecr_repo_name}
