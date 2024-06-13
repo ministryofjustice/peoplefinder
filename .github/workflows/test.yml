@@ -17,7 +17,7 @@ jobs:
 
     env:
       RAILS_ENV: test
-      DATABASE_URL: "postgresql://postgres@127.0.0.1/peoplefinder_test"
+      DATABASE_URL: "postgresql://postgres:postgres@127.0.0.1/peoplefinder_test"
 
     services:
       postgres:
