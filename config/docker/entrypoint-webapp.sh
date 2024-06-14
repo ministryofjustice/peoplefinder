@@ -7,7 +7,7 @@ export SETTINGS__BUILD_DATE="$APP_BUILD_DATE"
 export SETTINGS__GIT_SOURCE="$APP_BUILD_TAG"
 
 
-rails db:migrate
+bundle exec rails db:migrate
 
 set -ex
 
