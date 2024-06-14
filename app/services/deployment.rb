@@ -9,7 +9,6 @@ class Deployment
 
   def info
     {
-      version_number:,
       build_date:,
       commit_id:,
       build_tag:,
@@ -17,10 +16,6 @@ class Deployment
   end
 
 private
-
-  def version_number
-    lookup("VERSION_NUMBER")
-  end
 
   def build_date
     lookup("BUILD_DATE")
