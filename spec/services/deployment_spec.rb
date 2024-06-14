@@ -7,7 +7,7 @@ RSpec.describe Deployment, type: :service do
     let(:environment) do
       {
         "APP_BUILD_DATE" => "2013-04-03",
-        "APP_APP_GIT_COMMIT" => "7cb26ffe8a2ead47837e28606743e4d31a31512d",
+        "APP_GIT_COMMIT" => "7cb26ffe8a2ead47837e28606743e4d31a31512d",
         "APP_BUILD_TAG" => "0.5.25",
       }
     end
