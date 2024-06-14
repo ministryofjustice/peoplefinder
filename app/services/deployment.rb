@@ -18,15 +18,15 @@ class Deployment
 private
 
   def build_date
-    lookup("BUILD_DATE")
+    lookup("APP_BUILD_DATE")
   end
 
   def commit_id
-    lookup("COMMIT_ID")
+    lookup("APP_GIT_COMMIT")
   end
 
   def build_tag
-    lookup("BUILD_TAG")
+    lookup("APP_BUILD_TAG")
   end
 
   def lookup(key)
