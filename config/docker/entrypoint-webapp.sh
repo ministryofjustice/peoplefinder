@@ -1,13 +1,7 @@
 #!/bin/sh
 set +ex
 
-# Make these available via Settings in the app
-export SETTINGS__GIT_COMMIT="$APP_GIT_COMMIT"
-export SETTINGS__BUILD_DATE="$APP_BUILD_DATE"
-export SETTINGS__GIT_SOURCE="$APP_BUILD_TAG"
-
-
-rails db:migrate
+bundle exec rails db:migrate
 
 set -ex
 
