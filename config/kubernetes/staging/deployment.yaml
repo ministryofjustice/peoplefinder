@@ -60,8 +60,8 @@ spec:
                   value: https
                 - name: X-Forwarded-Ssl
                   value: "on"
-              initialDelaySeconds: 40
-              periodSeconds: 60
+            initialDelaySeconds: 40
+            periodSeconds: 60
           livenessProbe:
             httpGet:
               path: /ping
