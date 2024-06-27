@@ -72,7 +72,6 @@ jobs:
           minimum_file_coverage: 100
 
   build-and-deploy:
-    if: ${{ github.ref == 'refs/heads/main' }}
     needs: test
     uses: ./.github/workflows/deploy.yml
     secrets: inherit
