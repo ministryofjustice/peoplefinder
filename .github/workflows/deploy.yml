@@ -289,6 +289,7 @@ jobs:
           kubectl config set-credentials deploy-user --token=${KUBE_TOKEN}
           kubectl config set-context ${KUBE_CLUSTER} --cluster=${KUBE_CLUSTER} --user=deploy-user --namespace=${KUBE_NAMESPACE}
           kubectl config use-context ${KUBE_CLUSTER}
+          kubectl get pods    
 
       - name: Rollout restart deployment
         run: |
