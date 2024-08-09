@@ -16,7 +16,8 @@ RUN apk add --no-cache \
 
 COPY Gemfile* .ruby-version ./
 
-RUN bundle config deployment true && \
+RUN gem update --system && \
+    bundle config deployment true && \
     bundle config without development test && \
     bundle install --jobs 4 --retry 3
 
