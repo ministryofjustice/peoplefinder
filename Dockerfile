@@ -7,6 +7,9 @@ RUN apk add --no-cache \
     nodejs \
     git
 
+# Ensure latest rubygems is installed
+RUN gem update --system
+
 FROM base as builder
 
 RUN apk add --no-cache \
@@ -16,8 +19,7 @@ RUN apk add --no-cache \
 
 COPY Gemfile* .ruby-version ./
 
-RUN gem update --system && \
-    bundle config deployment true && \
+RUN bundle config deployment true && \
     bundle config without development test && \
     bundle install --jobs 4 --retry 3
 
