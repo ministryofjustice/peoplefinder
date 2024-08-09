@@ -802,6 +802,7 @@ GEM
 PLATFORMS
   aarch64-linux-musl
   arm64-darwin-21
+  arm64-darwin-23
   x86_64-darwin-22
   x86_64-linux
   x86_64-linux-musl
@@ -878,4 +879,4 @@ RUBY VERSION
    ruby 3.2.2p53
 
 BUNDLED WITH
-   2.4.19
+   2.5.17
