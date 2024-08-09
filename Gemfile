@@ -59,8 +59,10 @@ group :test do
   gem "database_cleaner"
   gem "rails-controller-testing"
   gem "rspec-json_expectations"
+  gem "selenium-webdriver"
   gem "simplecov", require: false
   gem "site_prism"
+  gem "timecop"
   gem "webmock"
 end
 
@@ -69,15 +71,10 @@ group :development, :test do
   gem "brakeman"
   gem "capybara"
   gem "debug"
+  gem "dotenv-rails"
   gem "factory_bot_rails"
   gem "listen"
   gem "rspec-rails"
   gem "rubocop-govuk"
-  gem "selenium-webdriver"
   gem "shoulda-matchers"
-  gem "timecop"
-end
-
-group :development, :test, :assets do
-  gem "dotenv-rails"
 end
