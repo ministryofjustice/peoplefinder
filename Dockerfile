@@ -15,7 +15,10 @@ FROM base as builder
 RUN apk add --no-cache \
     build-base \
     ruby-dev \
-    postgresql-dev
+    postgresql-dev \
+    imagemagick \
+    ffmpeg \
+    graphicsmagick
 
 COPY Gemfile* .ruby-version ./
 
