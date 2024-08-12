@@ -62,7 +62,7 @@ namespace :peoplefinder do
     desc "create basic demonstration data"
     task demo: :environment do
       DemoGroupMemberships.new.each do |group, member_count|
-        RandomGenerator.new(group).generate_members(member_count, ENV['DOMAIN'])
+        RandomGenerator.new(group).generate_members(member_count, ENV["DOMAIN"])
       end
       puts "Generated random basic demonstration data"
       Rake::Task["peoplefinder:data:search_scenario_1"].invoke
