@@ -62,7 +62,7 @@ namespace :peoplefinder do
     desc "create basic demonstration data"
     task demo: :environment do
       DemoGroupMemberships.new.each do |group, member_count|
-        RandomGenerator.new(group).generate_members(member_count, DOMAIN)
+        RandomGenerator.new(group).generate_members(member_count, ENV['DOMAIN'])
       end
       puts "Generated random basic demonstration data"
       Rake::Task["peoplefinder:data:search_scenario_1"].invoke
@@ -93,10 +93,10 @@ namespace :peoplefinder do
       names.each do |name|
         given_name = name.split.first
         surname = name.split.second
-        email = "#{given_name.downcase}.#{surname.downcase}@#{DOMAIN}"
+        email = "#{given_name.downcase}.#{surname.downcase}@#{ENV['DOMAIN']}"
         Person.find_or_initialize_by(given_name:, surname:, email:).tap do |person|
           person.memberships << Membership.new(person_id: person.id, group_id: demo_groups.sample.first.id) if person.memberships.empty?
-          person.description = "PA to Steve Richards" if email == "personal.assistant@#{DOMAIN}"
+          person.description = "PA to Steve Richards" if email == "personal.assistant@#{ENV['DOMAIN']}"
           person.save!
         end
       end

@@ -58,12 +58,26 @@ Postgresql
 $ brew install postgresql
 ```
 
+Opensearch
+
+```
+$ brew install opensearch
+```
+
 #### Setup
 
 Use the following commands to install gems and javascript packages then create the database
 
 ```
 $ bin/setup
+```
+
+#### Seeds
+
+Create some demo teams
+
+```
+$ DOMAIN=fake.gov.uk be rake peoplefinder:data:demo
 ```
 
 #### Running locally:
@@ -126,7 +140,7 @@ http://localhost:3000/tokens/<token>
 1. you can view the server logs and copy the token from there, then paste it into the URL. See the image below:
 ![image](https://user-images.githubusercontent.com/22935203/114713734-4e6e3f00-9d29-11eb-86f2-a7a18a4f9eb7.png)
 
-Then use the token on this URL: http://localhost:3000/tokens/3da4f4e2-8001-4437-b3ab-7e2b3f6e768c <-- replace with your token.3
+Then use the token on this URL: http://localhost:3000/tokens/3da4f4e2-8001-4437-b3ab-7e2b3f6e768c <-- replace with your token.
 
 
 ## E-mails
