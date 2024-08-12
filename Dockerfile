@@ -1,42 +1,55 @@
-FROM ruby:3.2.2-alpine
+FROM ruby:3.2.2-alpine as base
 
-# Note: .ruby-gemdeps libc-dev gcc libxml2-dev libxslt-dev make postgresql-dev build-base curl-dev with bundle install issues.
-RUN apk add --no-cache --virtual .ruby-gemdeps libc-dev gcc libxml2-dev libxslt-dev make postgresql-dev build-base curl-dev git nodejs zip postgresql-client runit imagemagick ffmpeg graphicsmagick
+WORKDIR /app
 
-# set WORKDIR
-RUN mkdir -p /usr/src/app && mkdir -p /usr/src/app/tmp
-WORKDIR /usr/src/app
+RUN apk add --no-cache \
+    postgresql-client \
+    nodejs \
+    git \
+    imagemagick
 
-RUN apk -U upgrade
+# Ensure latest rubygems is installed
+RUN gem update --system
 
-# https://github.com/ministryofjustice/docker-templates/issues/37
-# UTF 8 issue during bundle install
-ENV LC_ALL C.UTF-8
-ENV APPUSER moj
-ENV PUMA_PORT 3000
+FROM base as builder
+
+RUN apk add --no-cache \
+    build-base \
+    ruby-dev \
+    postgresql-dev
 
 COPY Gemfile* .ruby-version ./
-RUN gem install bundler -v 2.4.19
+
 RUN bundle config deployment true && \
     bundle config without development test && \
     bundle install --jobs 4 --retry 3
 
-RUN addgroup --gid 1000 --system appgroup && \
-    adduser --uid 1000 --system appuser --ingroup appgroup
-
 COPY . .
 
-RUN RAILS_ENV=production GOVUK_APP_DOMAIN=not_real GOVUK_WEBSITE_ROOT=not_real SUPPORT_EMAIL=not_real bundle exec rake assets:clean assets:precompile SECRET_KEY_BASE=required_but_does_not_matter_for_assets 2> /dev/null
+RUN RAILS_ENV=production SECRET_KEY_BASE_DUMMY=1 GOVUK_APP_DOMAIN=not_real \
+    GOVUK_WEBSITE_ROOT=not_real SUPPORT_EMAIL=not_real \
+    bundle exec rake assets:precompile
 
-# RUN mkdir log tmp
-RUN chown -R appuser:appgroup /usr/src/app/
-USER appuser
-USER 1000
+# Cleanup to save space in the production image
+RUN rm -rf node_modules log/* tmp/* /tmp && \
+    rm -rf /usr/local/bundle/cache
 
+FROM base
+
+# Add non-root user and group with alpine first available uid, 1000
+RUN addgroup -g 1000 -S appgroup && \
+    adduser -u 1000 -S appuser -G appgroup
+
+# Copy files generated in the builder image
+COPY --from=builder /app /app
+COPY --from=builder /usr/local/bundle/ /usr/local/bundle/
+
+# Create log and tmp
+RUN mkdir -p log tmp
 RUN chown -R appuser:appgroup ./*
-RUN chmod +x /usr/src/app/config/docker/*
 
-EXPOSE $PUMA_PORT
+# Set user
+USER 1000
 
 # expect/add ping environment variables
 ARG APP_GIT_COMMIT
