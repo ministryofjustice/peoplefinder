@@ -13,6 +13,5 @@ README.md
 bower.json
 circle.yml
 log/*
-smoke_test
 spec
 tmp/*
