@@ -5,7 +5,8 @@ WORKDIR /app
 RUN apk add --no-cache \
     postgresql-client \
     nodejs \
-    git
+    git \
+    imagemagick
 
 # Ensure latest rubygems is installed
 RUN gem update --system
@@ -15,10 +16,7 @@ FROM base as builder
 RUN apk add --no-cache \
     build-base \
     ruby-dev \
-    postgresql-dev \
-    imagemagick \
-    ffmpeg \
-    graphicsmagick
+    postgresql-dev
 
 COPY Gemfile* .ruby-version ./
 
