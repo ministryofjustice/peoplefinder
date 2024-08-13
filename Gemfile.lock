@@ -825,6 +825,7 @@ DEPENDENCIES
   fog-aws
   friendly_id
   govspeak
+  govuk_app_config
   govuk_elements_form_builder (= 0.1.1)
   govuk_elements_rails (= 2.2.1)
   govuk_frontend_toolkit (= 9.0.1)
