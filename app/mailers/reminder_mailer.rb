@@ -32,10 +32,10 @@ class ReminderMailer < ApplicationMailer
       days_worked: days_worked(person),
       teams_and_roles: teams_and_roles(person),
       location: person.location.presence || "-",
-      secondary_email: person.secondary_email,
+      secondary_email: person.secondary_email.presence || "-",
       primary_phone_number: person.primary_phone_number.presence || "-",
       current_projects: person.current_project.presence || "-",
-      description: person.description,
+      description: person.description.presence || "-",
       token_url: token_url_for(person),
     )
 
