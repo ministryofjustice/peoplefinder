@@ -119,6 +119,12 @@ Adding a new domain to the production database from bash/zsh etc:
    - Example: `email@<DOMAIN_NAME>`
 6. If successful, you should be navigated to a page which states 'Link sent - check your email'
 
+## Read only access
+
+The site can be accessed in readonly mode from MOJ IP addresses.
+The list of IPs is stored in an environment variable called `IP_ALLOWLIST` which is in a kubernetes secret.
+The same list of IPs is also used to restrict access to the management section for admin users.
+
 ## Token-based authentication
 
 The token authentication method relies upon the users access to their email
