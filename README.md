@@ -77,7 +77,7 @@ $ bin/setup
 Create some demo teams
 
 ```
-$ DOMAIN=fake.gov.uk be rake peoplefinder:data:demo
+$ DOMAIN=fake.gov.uk bin/rake peoplefinder:data:demo
 ```
 
 #### Running locally:
