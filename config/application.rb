@@ -54,9 +54,9 @@ module Peoplefinder
     # app title appears in the header bar
     config.app_title = "People Finder"
 
-    config.admin_ip_ranges = ENV.fetch("ADMIN_IP_RANGES", "127.0.0.1")
-
-    config.readonly_ip_whitelist = ENV.fetch("READONLY_IP_WHITELIST", "127.0.0.1")
+    # We use the same list for readonly access and admin access (also need admin account)
+    config.admin_ip_ranges = ENV.fetch("IP_ALLOWLIST", "127.0.0.1")
+    config.ip_whitelist = ENV.fetch("IP_ALLOWLIST", "127.0.0.1")
 
     config.assets.paths << Rails.root.join("vendor/assets/components")
 
