@@ -91,13 +91,13 @@ RSpec.describe SuggestionMailer do
 
     describe "when duplicate profile suggested" do
       it "contains duplicate_profile as true" do
-        expect(mail.govuk_notify_personalisation[:duplicate_profile]).to eq true
+        expect(mail.govuk_notify_personalisation[:duplicate_profile]).to be true
       end
     end
 
     describe "when inappropriate content suggested" do
       it "contains inappropriate_content as true" do
-        expect(mail.govuk_notify_personalisation[:inappropriate_content]).to eq true
+        expect(mail.govuk_notify_personalisation[:inappropriate_content]).to be true
       end
 
       it "contains inappropriate content info" do
@@ -117,7 +117,7 @@ RSpec.describe SuggestionMailer do
 
     describe "when suggested that person left" do
       it "contains person_left as true" do
-        expect(mail.govuk_notify_personalisation[:person_left]).to eq true
+        expect(mail.govuk_notify_personalisation[:person_left]).to be true
       end
 
       it "contains person left info" do

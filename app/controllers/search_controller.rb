@@ -29,6 +29,6 @@ private
 
   def set_search_args
     @query = query
-    @search_filters = (params[:search_filters] || [])
+    @search_filters = params[:search_filters] || []
   end
 end

@@ -16,7 +16,7 @@ describe PeopleLoggedInAtLeastOnceQuery do
       _p3 = create :person, :with_random_dets, login_count: 0
       p4 = create :person, :with_random_dets
 
-      expect(described_class.new.call).to match_array([p1, p4])
+      expect(described_class.new.call).to contain_exactly(p1, p4)
     end
 
     def expected_sql

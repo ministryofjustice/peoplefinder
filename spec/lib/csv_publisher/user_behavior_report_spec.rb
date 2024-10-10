@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe CsvPublisher::UserBehaviorReport, versioning: true, csv_report: true do
+RSpec.describe CsvPublisher::UserBehaviorReport, :csv_report, :versioning do
   include PermittedDomainHelper
 
   let(:file) { described_class.default_file_path }

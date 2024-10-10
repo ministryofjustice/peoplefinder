@@ -110,7 +110,7 @@ RSpec.describe PersonUpdateNotifier, type: :service do
           described_class.send(:send_reminder, person_two, 6.months)
           person_two.reload
 
-          expect(person_two.last_reminder_email_at).not_to be(nil)
+          expect(person_two.last_reminder_email_at).not_to be_nil
           expect(person_two.last_reminder_email_at.class).to be(ActiveSupport::TimeWithZone)
         end
       end

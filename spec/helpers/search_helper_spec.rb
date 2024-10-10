@@ -42,8 +42,7 @@ RSpec.describe SearchHelper, type: :helper do
     end
 
     it "delegates to people and team result set sizes" do
-      allow(helper).to receive(:people_count).and_return 4
-      allow(helper).to receive(:team_count).and_return 1
+      allow(helper).to receive_messages(people_count: 4, team_count: 1)
       expect(helper.result_count).to eq 5
     end
   end
@@ -51,8 +50,7 @@ RSpec.describe SearchHelper, type: :helper do
   describe "#result_summary" do
     before do
       @search_filters = %w[people teams]
-      allow(helper).to receive(:people_count).and_return 3
-      allow(helper).to receive(:team_count).and_return 1
+      allow(helper).to receive_messages(people_count: 3, team_count: 1)
     end
 
     context "when matches exist" do
@@ -135,8 +133,7 @@ RSpec.describe SearchHelper, type: :helper do
 
       context "with no results found" do
         before do
-          allow(helper).to receive(:people_count).and_return 0
-          allow(helper).to receive(:team_count).and_return 0
+          allow(helper).to receive_messages(people_count: 0, team_count: 0)
         end
 
         context "when unfiltered" do
