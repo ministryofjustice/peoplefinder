@@ -12,6 +12,6 @@ RSpec.describe SearchResults, type: :service do
 
   it "defaults to empty set and false" do
     expect(described_class.new.set).to be_empty
-    expect(described_class.new.contains_exact_match).to eq false
+    expect(described_class.new.contains_exact_match).to be false
   end
 end

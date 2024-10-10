@@ -20,7 +20,7 @@ RSpec.describe ProblemReport, type: :model do
       subject = described_class.new
     end
 
-    expect(subject.reported_at).to be_kind_of(Time)
+    expect(subject.reported_at).to be_a(Time)
     expect(subject.reported_at).to eq(current_time)
   end
 

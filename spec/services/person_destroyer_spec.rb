@@ -39,7 +39,7 @@ RSpec.describe PersonDestroyer, type: :service do
         .to receive(:notify_of_change?)
         .with(current_user)
         .and_return(false)
-      expect(class_double("UserUpdateMailer").as_stubbed_const)
+      expect(class_double(UserUpdateMailer).as_stubbed_const)
         .not_to receive(:deleted_profile_email)
       destroyer.destroy!
     end
@@ -50,7 +50,7 @@ RSpec.describe PersonDestroyer, type: :service do
         .with(current_user)
         .and_return(true)
       mailer = instance_double(ActionMailer::MessageDelivery)
-      allow(class_double("UserUpdateMailer").as_stubbed_const)
+      allow(class_double(UserUpdateMailer).as_stubbed_const)
         .to receive(:deleted_profile_email)
         .with(person.email, person.given_name, current_user.email)
         .and_return(mailer)

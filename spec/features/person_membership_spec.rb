@@ -9,7 +9,7 @@ describe "Person maintenance" do
 
   let(:edit_profile_page) { Pages::EditProfile.new }
 
-  it "Creating a person and making them the leader of a group", js: true do
+  it "Creating a person and making them the leader of a group", :js do
     group = create(:group, name: "Digital Justice")
 
     visit new_person_path
@@ -38,7 +38,7 @@ describe "Person maintenance" do
     end
   end
 
-  it "Confirming an identical person with membership details", js: true do
+  it "Confirming an identical person with membership details", :js do
     create(:group, name: "Digital Justice")
     create(:person, given_name: person_attributes[:given_name], surname: person_attributes[:surname])
 
@@ -54,7 +54,7 @@ describe "Person maintenance" do
     expect(duplicate.memberships.last).to have_attributes membership_attributes
   end
 
-  it "Editing a job title", js: true do
+  it "Editing a job title", :js do
     person = create_person_in_digital_justice
 
     visit edit_person_path(person)
@@ -68,7 +68,7 @@ describe "Person maintenance" do
     expect(page).to have_selector(".cb-job-title", text: "Head Honcho in\nDigital Justice")
   end
 
-  it "Leaving the job title blank", js: true do
+  it "Leaving the job title blank", :js do
     person = create_person_in_digital_justice
 
     visit edit_person_path(person)
@@ -81,7 +81,7 @@ describe "Person maintenance" do
     within(".profile") { expect(page).not_to have_selector(".cb-job-title") }
   end
 
-  it 'Changing team membership via clicking "Back"', js: true do
+  it 'Changing team membership via clicking "Back"', :js do
     group = setup_three_level_team
     person = setup_team_member group
 
@@ -104,7 +104,7 @@ describe "Person maintenance" do
     expect(person.memberships.last.group).to eql(Group.find_by(name: "CSG"))
   end
 
-  it "Adding a new team", js: true do
+  it "Adding a new team", :js do
     group = setup_three_level_team
     person = setup_team_member group
 
@@ -122,7 +122,7 @@ describe "Person maintenance" do
     end
   end
 
-  it "Joining another team with a role", js: true do
+  it "Joining another team with a role", :js do
     person = create_person_in_digital_justice
     create(:group, name: "Communications", parent: Group.department)
 
@@ -146,7 +146,7 @@ describe "Person maintenance" do
     end
   end
 
-  it "Adding a permanent secretary", js: true do
+  it "Adding a permanent secretary", :js do
     person = create_person_in_digital_justice
     visit edit_person_path(person)
     fill_in "First name", with: "Samantha"
@@ -174,7 +174,7 @@ describe "Person maintenance" do
     expect(page.find("img.media-object")[:alt]).to have_content "Current photo of Samantha Taylor"
   end
 
-  it "Adding an additional leadership role in same team", js: true do
+  it "Adding an additional leadership role in same team", :js do
     person = create_person_in_digital_justice
     visit edit_person_path(person)
     fill_in "First name", with: "Samantha"
@@ -205,7 +205,7 @@ describe "Person maintenance" do
     expect(page).to have_selector("h3", text: "Head Honcho, Master of None")
   end
 
-  it "Unsubscribing from notifications", js: true do
+  it "Unsubscribing from notifications", :js do
     person = create_person_in_digital_justice
 
     visit edit_person_path(person)
@@ -218,7 +218,7 @@ describe "Person maintenance" do
     expect(membership).not_to be_subscribed
   end
 
-  it "Clicking Join another team", js: true do
+  it "Clicking Join another team", :js do
     create(:group)
 
     visit new_person_path
@@ -227,7 +227,7 @@ describe "Person maintenance" do
     expect(page).to have_selector("#memberships .membership", count: 2)
   end
 
-  it "Clicking Leave team", js: true do
+  it "Clicking Leave team", :js do
     create(:group)
 
     visit new_person_path
@@ -236,7 +236,7 @@ describe "Person maintenance" do
     expect(page).to have_selector("#memberships .membership", count: 0)
   end
 
-  it "Leaving a team", js: true do
+  it "Leaving a team", :js do
     ds = create(:group, name: "Digital Justice")
     person = create(:person, :member_of, team: ds, role: "tester", sole_membership: false)
 
@@ -253,7 +253,7 @@ describe "Person maintenance" do
     expect(person.reload.memberships.count).to be 1
   end
 
-  it "Leaving all teams", js: true do
+  it "Leaving all teams", :js do
     person = create_person_in_digital_justice
     visit edit_person_path(person)
     click_link("Leave team")

@@ -105,7 +105,7 @@ describe "Audit trail" do
     end
   end
 
-  it "Auditing the creation of a membership", js: true do
+  it "Auditing the creation of a membership", :js do
     create(:group, name: "Digital Justice")
     person = create(:person, given_name: "Bob", surname: "Smith")
     person.memberships.destroy_all

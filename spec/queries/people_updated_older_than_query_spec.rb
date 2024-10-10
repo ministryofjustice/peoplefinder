@@ -16,7 +16,7 @@ describe PeopleUpdatedOlderThanQuery do
       create :person, :with_random_dets
       p1 = Timecop.freeze(5.days.ago) { create :person, :with_random_dets }
       p2 = Timecop.freeze(7.days.ago) { create :person, :with_random_dets }
-      expect(described_class.new(2.days.ago).call).to match_array([p1, p2])
+      expect(described_class.new(2.days.ago).call).to contain_exactly(p1, p2)
     end
 
     def expected_sql

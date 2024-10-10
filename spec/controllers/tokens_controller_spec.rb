@@ -12,8 +12,7 @@ describe TokensController, type: :controller do
 
     context "when a user is logged in" do
       before do
-        allow(controller).to receive(:current_user).and_return person
-        allow(controller).to receive(:logged_in_regular?).and_return true
+        allow(controller).to receive_messages(current_user: person, logged_in_regular?: true)
       end
 
       it "redirects to person profile" do
@@ -33,8 +32,7 @@ describe TokensController, type: :controller do
 
     context "when a user is not logged in" do
       before do
-        allow(controller).to receive(:current_user).and_return nil
-        allow(controller).to receive(:logged_in_regular?).and_return false
+        allow(controller).to receive_messages(current_user: nil, logged_in_regular?: false)
       end
 
       it "redirects to person profile" do

@@ -192,8 +192,8 @@ RSpec.describe Person, type: :model do
     end
 
     it "returns AssociationRelation of memberships" do
-      expect(memberships).to be_kind_of ActiveRecord::AssociationRelation
-      expect(memberships.first).to be_kind_of Membership
+      expect(memberships).to be_a ActiveRecord::AssociationRelation
+      expect(memberships.first).to be_a Membership
     end
 
     it "returns department memberships only" do
@@ -596,7 +596,7 @@ RSpec.describe Person, type: :model do
     context "when there is a legacy image but no profile photo" do
       it "returns the mounted uploader" do
         person.assign_attributes image: "cats.gif"
-        expect(person.profile_image).to be_kind_of(ImageUploader)
+        expect(person.profile_image).to be_a(ImageUploader)
       end
     end
 

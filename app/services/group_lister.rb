@@ -38,7 +38,7 @@ class GroupLister
 
   def list
     index = {}
-    @scope.all.each do |group|
+    @scope.all.find_each do |group|
       index[group.id] = ListedGroup.new(index, group)
     end
     index.values

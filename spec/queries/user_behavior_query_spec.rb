@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe UserBehaviorQuery, versioning: true do
+describe UserBehaviorQuery, :versioning do
   include PermittedDomainHelper
 
   let(:expected_attributes) { %w[id full_name address login_count last_login_at team_name team_role ancestors updates_count].map(&:to_sym) }

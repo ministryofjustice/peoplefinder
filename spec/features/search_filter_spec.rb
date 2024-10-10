@@ -64,7 +64,7 @@ describe "Search results page" do
       expect(search_page.search_results.team_result_names).to include "HMP Browne", "SMT Browne"
     end
 
-    it "on people", js: true do
+    it "on people", :js do
       uncheck "Teams"
       expect(search_page.search_result_summary).to have_text("2 results from people")
       expect(search_page.search_results).to have_people_results count: 2
@@ -72,7 +72,7 @@ describe "Search results page" do
       expect(search_page.search_results.people_result_names).to include "Jon Browne", "Jim Browne"
     end
 
-    it "on teams", js: true do
+    it "on teams", :js do
       uncheck "People"
       expect(search_page.search_result_summary).to have_text("browne not found - 2 similar results from teams")
       expect(search_page.search_results).to have_people_results count: 0
@@ -80,7 +80,7 @@ describe "Search results page" do
       expect(search_page.search_results.team_result_names).to include "HMP Browne", "SMT Browne"
     end
 
-    it "on none", js: true do
+    it "on none", :js do
       uncheck "People"
       uncheck "Teams"
       expect(search_page.search_result_summary).to have_text("browne not found - 0 similar results")

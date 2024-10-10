@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe "Make a suggestion about a profile", js: true do
+describe "Make a suggestion about a profile", :js do
   include ActiveJobHelper
   include PermittedDomainHelper
 

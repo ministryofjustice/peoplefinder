@@ -16,7 +16,7 @@ describe PeopleNeverLoggedInQuery do
       p3 = create :person, :with_random_dets, login_count: 0
       _p4 = create :person, :with_random_dets
 
-      expect(described_class.new.call).to match_array([p2, p3])
+      expect(described_class.new.call).to contain_exactly(p2, p3)
     end
 
     def expected_sql

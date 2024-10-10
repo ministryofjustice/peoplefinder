@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe "Report a problem", js: true do
+describe "Report a problem", :js do
   include ActiveJobHelper
   include PermittedDomainHelper
 
@@ -18,7 +18,7 @@ describe "Report a problem", js: true do
       token_log_in_as(me.email)
     end
 
-    it "Reporting a problem", js: true do
+    it "Reporting a problem", :js do
       visit group_path(group)
 
       click_link "Report a problem" # includes a wait, which is required for the slideToggle jquery behaviour

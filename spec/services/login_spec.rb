@@ -88,7 +88,7 @@ RSpec.describe Login, type: :service do
     context "when user is not logged in" do
       let(:person_id) { nil }
 
-      it { is_expected.to be nil }
+      it { is_expected.to be_nil }
     end
 
     context "when user seem to be logged in, but does not exist" do

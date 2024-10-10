@@ -32,7 +32,7 @@ RSpec.describe Group, type: :model do
   it "only allows creation of one group with no parent" do
     create(:department)
     group = build(:group, parent: nil)
-    expect(group.valid?).to eq false
+    expect(group.valid?).to be false
     expect(group.errors[:parent_id]).to eq ["is required"]
     expect { group.save! }.to raise_error(Exception)
   end
@@ -357,7 +357,7 @@ RSpec.describe Group, type: :model do
       create :membership, person: subscriber_b, group:, subscribed: true
       create :membership, person: non_subscriber, group:, subscribed: false
 
-      expect(group.subscribers).to match_array([subscriber_a, subscriber_b])
+      expect(group.subscribers).to contain_exactly(subscriber_a, subscriber_b)
     end
   end
 

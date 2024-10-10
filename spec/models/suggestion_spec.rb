@@ -5,14 +5,14 @@ RSpec.describe Suggestion, type: :model do
 
   describe "for_person?" do
     it "returns false by default" do
-      expect(default_suggestion.for_person?).to eq false
+      expect(default_suggestion.for_person?).to be false
     end
 
     describe "missing_fields true" do
       let(:missing_fields_suggested) { described_class.new(missing_fields: true) }
 
       it "returns true" do
-        expect(missing_fields_suggested.for_person?).to eq true
+        expect(missing_fields_suggested.for_person?).to be true
       end
     end
 
@@ -20,21 +20,21 @@ RSpec.describe Suggestion, type: :model do
       let(:incorrect_fields_suggested) { described_class.new(incorrect_fields: true) }
 
       it "returns true" do
-        expect(incorrect_fields_suggested.for_person?).to eq true
+        expect(incorrect_fields_suggested.for_person?).to be true
       end
     end
   end
 
   describe "for_admin?" do
     it "returns false by default" do
-      expect(default_suggestion.for_admin?).to eq false
+      expect(default_suggestion.for_admin?).to be false
     end
 
     describe "duplicate_profile true" do
       let(:duplicate_profile_suggested) { described_class.new(duplicate_profile: true) }
 
       it "returns true" do
-        expect(duplicate_profile_suggested.for_admin?).to eq true
+        expect(duplicate_profile_suggested.for_admin?).to be true
       end
     end
 
@@ -42,7 +42,7 @@ RSpec.describe Suggestion, type: :model do
       let(:inappropriate_content_suggested) { described_class.new(inappropriate_content: true) }
 
       it "returns true" do
-        expect(inappropriate_content_suggested.for_admin?).to eq true
+        expect(inappropriate_content_suggested.for_admin?).to be true
       end
     end
 
@@ -50,7 +50,7 @@ RSpec.describe Suggestion, type: :model do
       let(:person_left_suggested) { described_class.new(person_left: true) }
 
       it "returns true" do
-        expect(person_left_suggested.for_admin?).to eq true
+        expect(person_left_suggested.for_admin?).to be true
       end
     end
   end
@@ -82,7 +82,7 @@ RSpec.describe Suggestion, type: :model do
 
   describe "#persisted?" do
     it "returns false" do
-      expect(default_suggestion.persisted?).to eq false
+      expect(default_suggestion.persisted?).to be false
     end
   end
 
@@ -95,7 +95,7 @@ RSpec.describe Suggestion, type: :model do
       let(:messages) { default_suggestion.errors.full_messages }
 
       it "returns false" do
-        expect(default_suggestion.valid?).to eq false
+        expect(default_suggestion.valid?).to be false
       end
 
       it "sets expected error message" do
@@ -108,7 +108,7 @@ RSpec.describe Suggestion, type: :model do
         let(:suggestion) { described_class.new(missing_fields: true) }
 
         it "returns false" do
-          expect(suggestion.valid?).to eq false
+          expect(suggestion.valid?).to be false
         end
       end
 
@@ -117,7 +117,7 @@ RSpec.describe Suggestion, type: :model do
         let(:suggestion) { described_class.new(missing_fields: true, missing_fields_info:) }
 
         it "returns true" do
-          expect(suggestion.valid?).to eq true
+          expect(suggestion.valid?).to be true
         end
       end
     end
@@ -131,7 +131,7 @@ RSpec.describe Suggestion, type: :model do
         before { suggestion.valid? }
 
         it "returns false" do
-          expect(suggestion.valid?).to eq false
+          expect(suggestion.valid?).to be false
         end
 
         it "sets expected error message" do
@@ -149,7 +149,7 @@ RSpec.describe Suggestion, type: :model do
         end
 
         it "returns true" do
-          expect(suggestion.valid?).to eq true
+          expect(suggestion.valid?).to be true
         end
       end
     end
@@ -158,7 +158,7 @@ RSpec.describe Suggestion, type: :model do
       let(:suggestion) { described_class.new(duplicate_profile: true) }
 
       it "returns true" do
-        expect(suggestion.valid?).to eq true
+        expect(suggestion.valid?).to be true
       end
     end
 
@@ -167,7 +167,7 @@ RSpec.describe Suggestion, type: :model do
         let(:suggestion) { described_class.new(inappropriate_content: true) }
 
         it "returns false" do
-          expect(suggestion.valid?).to eq false
+          expect(suggestion.valid?).to be false
         end
       end
 
@@ -176,7 +176,7 @@ RSpec.describe Suggestion, type: :model do
         let(:suggestion) { described_class.new(inappropriate_content: true, inappropriate_content_info:) }
 
         it "returns true" do
-          expect(suggestion.valid?).to eq true
+          expect(suggestion.valid?).to be true
         end
       end
     end
@@ -185,7 +185,7 @@ RSpec.describe Suggestion, type: :model do
       let(:suggestion) { described_class.new(person_left: true) }
 
       it "returns true" do
-        expect(suggestion.valid?).to eq true
+        expect(suggestion.valid?).to be true
       end
     end
   end

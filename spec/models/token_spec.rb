@@ -30,21 +30,21 @@ RSpec.describe Token, type: :model do
     }.not_to change(token, :value)
   end
 
-  it "will be valid with external user email" do
+  it "is valid with external user email" do
     token.user_email = external_user.email
     expect(token).to be_valid
   end
 
-  it "will be valid with valid email address" do
+  it "is valid with valid email address" do
     expect(token).to be_valid
   end
 
-  it "will be invalid with invalid email address" do
+  it "is invalid with invalid email address" do
     token.user_email = "bob"
     expect(token).not_to be_valid
   end
 
-  it "will be invalid with email address from wrong domain" do
+  it "is invalid with email address from wrong domain" do
     token.user_email = "bob@example.com"
     expect(token).not_to be_valid
   end
@@ -60,7 +60,7 @@ RSpec.describe Token, type: :model do
     end
 
     it "sets spent true on previous token" do
-      expect(token.reload.spent?).to eq true
+      expect(token.reload.spent?).to be true
     end
 
     it "allows new token to have the same value as original token" do
@@ -81,23 +81,23 @@ RSpec.describe Token, type: :model do
     let!(:expired) { create(:token, created_at: 1.month.ago) }
 
     it ".spent" do
-      expect(described_class.spent).to match_array([spent])
+      expect(described_class.spent).to contain_exactly(spent)
     end
 
     it ".unspent" do
-      expect(described_class.unspent).to match_array([token, expired, half_hour_ago])
+      expect(described_class.unspent).to contain_exactly(token, expired, half_hour_ago)
     end
 
     it ".unexpired" do
-      expect(described_class.unexpired).to match_array([token, spent, half_hour_ago])
+      expect(described_class.unexpired).to contain_exactly(token, spent, half_hour_ago)
     end
 
     it ".expired" do
-      expect(described_class.expired).to match_array([expired])
+      expect(described_class.expired).to contain_exactly(expired)
     end
 
     it ".in_the_last_hour" do
-      expect(described_class.in_the_last_hour).to match_array([token, spent, half_hour_ago])
+      expect(described_class.in_the_last_hour).to contain_exactly(token, spent, half_hour_ago)
     end
 
     it ".find_unspent_by_user_email" do

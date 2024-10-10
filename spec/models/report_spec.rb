@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe Report, type: :model, csv_report: true do
+RSpec.describe Report, :csv_report, type: :model do
   let(:report) { create(:report) }
 
   it { is_expected.to respond_to :to_csv_file }

@@ -68,8 +68,7 @@ RSpec.describe PersonFormBuilder, type: :form_builder do
     before do
       I18n.backend.store_translations(:en, translations)
       allow(object).to receive(:test_field)
-      allow(object).to receive(:needed_for_completion?).and_return true
-      allow(object).to receive(:class).and_return Person
+      allow(object).to receive_messages(needed_for_completion?: true, class: Person)
     end
 
     let(:object) { double("person") } # rubocop:disable RSpec/VerifiedDoubles

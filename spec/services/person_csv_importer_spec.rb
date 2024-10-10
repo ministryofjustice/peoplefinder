@@ -83,19 +83,16 @@ RSpec.describe PersonCsvImporter, type: :service do
         it { is_expected.not_to be_valid }
 
         it "errors contain missing columns" do
-          expect(importer.errors).to match_array([
-            PersonCsvImporter::ErrorRow.new(
-              3, "jon.o. carey@valid.gov.uk,Jon,O'Carey",
-              ["Main email isn’t valid"]
-            ),
-            PersonCsvImporter::ErrorRow.new(
-              4, "jack@invalid.gov.uk,Jack,",
-              [
-                "Surname is required",
-                "Main email you have entered can’t be used to access People Finder",
-              ]
-            ),
-          ])
+          expect(importer.errors).to contain_exactly(PersonCsvImporter::ErrorRow.new(
+                                                       3, "jon.o. carey@valid.gov.uk,Jon,O'Carey",
+                                                       ["Main email isn’t valid"]
+                                                     ), PersonCsvImporter::ErrorRow.new(
+                                                          4, "jack@invalid.gov.uk,Jack,",
+                                                          [
+                                                            "Surname is required",
+                                                            "Main email you have entered can’t be used to access People Finder",
+                                                          ]
+                                                        ))
         end
       end
     end
@@ -237,7 +234,7 @@ RSpec.describe PersonCsvImporter, type: :service do
       let(:serialized_group_ids) { YAML.dump([group.id]) }
 
       it "calls PersonImportJob" do
-        expect(class_double("PersonImportJob").as_stubbed_const)
+        expect(class_double(PersonImportJob).as_stubbed_const)
           .to receive(:perform_later)
           .with(csv, serialized_group_ids)
           .once

@@ -32,27 +32,27 @@ describe PeopleInGroupsQuery do
       end
 
       it "finds all employees in the moj" do
-        expect(described_class.new([moj]).call).to match_array([moj_emp_0])
+        expect(described_class.new([moj]).call).to contain_exactly(moj_emp_0)
       end
 
       it "finds all employees in DS dev" do
-        expect(described_class.new([ds_dev]).call).to match_array([ds_dev_content_emp_1, ds_dev_emp2])
+        expect(described_class.new([ds_dev]).call).to contain_exactly(ds_dev_content_emp_1, ds_dev_emp2)
       end
 
       it "finds all employees in DS Dev And Content" do
-        expect(described_class.new([ds_dev, ds_content]).call).to match_array([ds_dev_content_emp_1, ds_dev_emp2, ds_content_emp3])
+        expect(described_class.new([ds_dev, ds_content]).call).to contain_exactly(ds_dev_content_emp_1, ds_dev_emp2, ds_content_emp3)
       end
 
       it "finds all employees if one group not given as an array" do
-        expect(described_class.new(laa_tech).call).to match_array([laa_tech_emp4])
+        expect(described_class.new(laa_tech).call).to contain_exactly(laa_tech_emp4)
       end
 
       it "finds all employees if just the id of the group is given" do
-        expect(described_class.new(ds_dev.id).call).to match_array([ds_dev_content_emp_1, ds_dev_emp2])
+        expect(described_class.new(ds_dev.id).call).to contain_exactly(ds_dev_content_emp_1, ds_dev_emp2)
       end
 
       it "finds all employees if multipls ids are given in an array" do
-        expect(described_class.new([ds_dev.id, ds_content.id]).call).to match_array([ds_dev_content_emp_1, ds_dev_emp2, ds_content_emp3])
+        expect(described_class.new([ds_dev.id, ds_content.id]).call).to contain_exactly(ds_dev_content_emp_1, ds_dev_emp2, ds_content_emp3)
       end
     end
 

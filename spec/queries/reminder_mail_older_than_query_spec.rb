@@ -15,7 +15,7 @@ describe ReminderMailOlderThanQuery do
     it "returns expected records" do
       _p1 = create :person, :with_random_dets, last_reminder_email_at: 5.days.ago
       p2 = create :person, :with_random_dets, last_reminder_email_at: 7.days.ago
-      expect(described_class.new(6.days.ago).call).to match_array([p2])
+      expect(described_class.new(6.days.ago).call).to contain_exactly(p2)
     end
 
     def expected_sql
