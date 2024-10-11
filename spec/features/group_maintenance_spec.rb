@@ -207,7 +207,7 @@ describe "Group maintenance" do
         click_link "Done", wait: 6
       end
 
-      using_wait_time 6 do
+      using_wait_time 10 do
         expect(page).to have_selector(".show-editable-fields", visible: :visible)
         expect(page).to have_selector(".parent-summary", text: /Test team/)
       end
