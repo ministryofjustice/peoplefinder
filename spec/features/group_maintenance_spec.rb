@@ -25,7 +25,7 @@ describe "Group maintenance" do
     click_link "Edit"
   end
 
-  context "when a regular user", user: :regular, js: true do
+  context "when a regular user", :js, user: :regular do
     before do
       dept
     end

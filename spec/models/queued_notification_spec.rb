@@ -181,9 +181,9 @@ RSpec.describe QueuedNotification, type: :model do
   end
 
   context "when grouped items" do
-    let(:qn1) { create_notification("def", 1, 200, false, nil, false) }
-    let(:qn2) { create_notification("def", 1, 200, false, nil, false) }
-    let(:qn3) { create_notification("def", 1, 200, true, nil, false) }
+    let(:qn_one) { create_notification("def", 1, 200, false, nil, false) }
+    let(:qn_two) { create_notification("def", 1, 200, false, nil, false) }
+    let(:qn_three) { create_notification("def", 1, 200, true, nil, false) }
 
     before do
       Timecop.freeze(30.minutes.ago) do
@@ -193,9 +193,9 @@ RSpec.describe QueuedNotification, type: :model do
         create_notification("abc", 1, 100, true, Time.zone.now, true)
 
         # old session def for person 1, current user 200 - not sent, but finalised
-        qn1
-        qn2
-        qn3
+        qn_one
+        qn_two
+        qn_three
 
         # old session efg for person 2, current user 200 - not sent, not finalised
         create_notification("efg", 2, 200, false, nil, false)

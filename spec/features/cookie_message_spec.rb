@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe "Cookie message", js: true do
+describe "Cookie message", :js do
   let(:message_text) { "GOV.UK uses cookies to make the site simpler" }
 
   it "first visit" do

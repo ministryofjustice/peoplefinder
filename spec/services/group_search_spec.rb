@@ -1,7 +1,7 @@
 require "rails_helper"
 require_relative "shared_examples_for_search"
 
-RSpec.describe GroupSearch, opensearch: true do
+RSpec.describe GroupSearch, :opensearch do
   let!(:department) { create(:department, name: "Department name") }
   let!(:team) { create(:group, name: "Team name", parent: department) }
   let!(:civil_families_tribunal) { create(:group, name: "Civil, Families & Tribunal", acronym: "CFT", parent: department) }
@@ -15,7 +15,7 @@ RSpec.describe GroupSearch, opensearch: true do
     context "with an exact match flag" do
       it "is case-insensitive" do
         results = search("team name")
-        expect(results.contains_exact_match).to eq true
+        expect(results.contains_exact_match).to be true
       end
 
       it "true if there is a group with exact name or acronym" do
@@ -52,7 +52,7 @@ RSpec.describe GroupSearch, opensearch: true do
 
       it "ignores non-word characters" do
         expect { result_set("*") }.not_to raise_error
-        expect(result_set('\Team/name?')).to match_array([team, another_team])
+        expect(result_set('\Team/name?')).to contain_exactly(team, another_team)
       end
     end
   end

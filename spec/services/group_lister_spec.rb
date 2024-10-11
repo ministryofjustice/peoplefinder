@@ -13,7 +13,7 @@ RSpec.describe GroupLister, type: :service do
 
     it "returns an array of group-like objects" do
       expect(list.length).to eq(4)
-      expect(list.first).to be_kind_of(described_class::ListedGroup)
+      expect(list.first).to be_a(described_class::ListedGroup)
     end
   end
 
@@ -40,7 +40,7 @@ RSpec.describe GroupLister, type: :service do
     end
 
     it "has a parent" do
-      expect(group_lister.parent).to be_kind_of(described_class::ListedGroup)
+      expect(group_lister.parent).to be_a(described_class::ListedGroup)
       expect(group_lister.parent.id).to eq(subteam.id)
     end
 
@@ -53,14 +53,14 @@ RSpec.describe GroupLister, type: :service do
       expect(group_lister.ancestors.map(&:id))
         .to eq([department.id, team.id, subteam.id])
       expect(group_lister.ancestors.first)
-        .to be_kind_of(described_class::ListedGroup)
+        .to be_a(described_class::ListedGroup)
     end
 
     it "returns the path of each node" do
       expect(group_lister.path.map(&:id))
         .to eq([department.id, team.id, subteam.id, leaf_node.id])
       expect(group_lister.path.first)
-        .to be_kind_of(described_class::ListedGroup)
+        .to be_a(described_class::ListedGroup)
     end
   end
 

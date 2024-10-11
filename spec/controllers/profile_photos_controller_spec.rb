@@ -25,10 +25,12 @@ RSpec.describe ProfilePhotosController, type: :controller do
           allow(ProfilePhoto).to receive(:create).and_return(photo)
         end
 
+        # rubocop:disable RSpec/NoExpectationExample
         it "validates the photo" do
           allow(photo).to receive(:valid?).and_return true
           post :create, params: { profile_photo: valid_params }
         end
+        # rubocop:enable RSpec/NoExpectationExample
 
         it "renders json containing id of the new ProfilePhoto" do
           allow(photo).to receive(:valid?).and_return true

@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe "Searching feature", opensearch: true do
+describe "Searching feature", :opensearch do
   extend FeatureFlagSpecHelper
 
   def create_test_data

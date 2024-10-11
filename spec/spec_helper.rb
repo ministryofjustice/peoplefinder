@@ -21,11 +21,11 @@ RSpec.configure do |config|
   WebMock.disable_net_connect!(allow_localhost: true, allow: "chromedriver.storage.googleapis.com")
   WebMock.allow_net_connect!(net_http_connect_on_start: true)
 
-  config.before :each, csv_report: true do
+  config.before :each, :csv_report do
     delete_csv_reports
   end
 
-  config.after :all, csv_report: true do
+  config.after :all, :csv_report do
     delete_csv_reports
   end
 

@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe CsvPublisher::UserBehaviorReport, versioning: true, csv_report: true do
+RSpec.describe CsvPublisher::UserBehaviorReport, :csv_report, :versioning do
   include PermittedDomainHelper
 
   let(:file) { described_class.default_file_path }
@@ -25,18 +25,18 @@ RSpec.describe CsvPublisher::UserBehaviorReport, versioning: true, csv_report: t
     let(:csg) { create(:group, name: "Corporate Service Group", parent: moj) }
     let(:ds) { create(:group, name: "Digital Services", parent: csg) }
 
-    let(:person1) do
+    let(:person_one) do
       person = create :person, given_name: "Joel", surname: "Sugarman", email: "joel.sugarman@digital.justice.gov.uk"
       person.memberships.create!(group: ds, role: "Developer")
       person.memberships.create!(group: ds, role: "Tester")
       person.memberships.create!(group: csg, role: "Business Analyst")
       person
     end
-    let(:person2) do
+    let(:person_two) do
       create :person, given_name: "John", surname: "Smith", email: "john.smith@digital.justice.gov.uk",
                       login_count: 2, last_login_at: Time.new(2017, 0o5, 21, 2, 2, 2, "+00:00")
     end
-    let(:person3) do
+    let(:person_three) do
       adrian = create :person, given_name: "Adrian", surname: "Smith", email: "adrian.smith@digital.justice.gov.uk", login_count: 3, last_login_at: Time.new(2016, 0o5, 21, 3, 3, 3, "+00:00")
       adrian.update! location_in_building: "10.51", building: "Fleet Street", city: "Vancouver"
       adrian.update! location_in_building: "10.52", building: "Fleet Street", city: "Vancouver"
@@ -44,9 +44,9 @@ RSpec.describe CsvPublisher::UserBehaviorReport, versioning: true, csv_report: t
     end
 
     before do
-      person1
-      person2
-      person3
+      person_one
+      person_two
+      person_three
     end
 
     it "returns Report record instance" do

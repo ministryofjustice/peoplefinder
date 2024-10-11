@@ -22,7 +22,7 @@ describe NamesakesQuery do
       create(:person, given_name: "Joan", surname: "Mulholland", email: "joan.nulholland@person2.com")
       create(:person, given_name: "Stephen", surname: "Mulholland", email: "stephen.nulholland@person2.com")
 
-      expect(described_class.new(person).call).to match_array([person2, person3, person4])
+      expect(described_class.new(person).call).to contain_exactly(person2, person3, person4)
     end
 
     def expected_sql
