@@ -5,8 +5,8 @@ WORKDIR /app
 RUN apk add --no-cache \
     postgresql-client \
     nodejs \
-    graphicsmagick \
-    git
+    git \
+    graphicsmagick
 
 # Ensure latest rubygems is installed
 RUN gem update --system
