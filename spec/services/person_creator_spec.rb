@@ -67,9 +67,9 @@ RSpec.describe PersonCreator, type: :service do
   context "when not saving a profile" do
     let(:smc) { instance_double StateManagerCookie, save_profile?: false }
 
-    it "does not a notification" do
-      allow(person).to receive(:notify_of_change?).with(current_user).and_return(true)
-      expect(QueuedNotification).to receive(:queue!)
+    it "does not queue a notification" do
+      allow(person).to receive(:notify_of_change?).with(current_user).and_return(false)
+      expect(QueuedNotification).not_to receive(:queue!)
       created_person.create!
     end
   end
