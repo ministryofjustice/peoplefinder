@@ -49,7 +49,7 @@ RSpec.describe TokenSender, type: :service do
       it "returns true" do
         allow(Token).to receive(:new).with(user_email: email, value: "xyz").and_return new_token
         allow(token).to receive(:update_attribute).with(:value, "abc")
-        expect(token_sender.obtain_token).to eq true
+        expect(token_sender.obtain_token).to be true
       end
     end
 
@@ -80,7 +80,7 @@ RSpec.describe TokenSender, type: :service do
         end
 
         it "returns false" do
-          expect(token_sender.obtain_token).to eq false
+          expect(token_sender.obtain_token).to be false
         end
 
         it "assigns token with errors" do

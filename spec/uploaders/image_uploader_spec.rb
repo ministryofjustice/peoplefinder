@@ -34,7 +34,7 @@ RSpec.describe ImageUploader, type: :uploader do
 
       it "unpersisted" do
         expect(profile_photo.upload_dimensions).to eq width: 648, height: 648
-        expect(ProfilePhoto.find(profile_photo.id).upload_dimensions).to eq nil
+        expect(ProfilePhoto.find(profile_photo.id).upload_dimensions).to be_nil
       end
     end
 
@@ -54,7 +54,7 @@ RSpec.describe ImageUploader, type: :uploader do
     it "has a consistent path" do
       # If you change this, you must also consider what to do with legacy image uploads.
       expect(image.store_dir)
-        .to eq("#{Rails.root}/spec/support/uploads/peoplefinder/profile_photo/image/#{profile_photo.id}")
+        .to eq(Rails.root.join("spec/support/uploads/peoplefinder/profile_photo/image/#{profile_photo.id}").to_s)
     end
   end
 
@@ -65,7 +65,7 @@ RSpec.describe ImageUploader, type: :uploader do
 
     it "has a consistent path" do
       expect(legacy_image.store_dir)
-        .to eq("#{Rails.root}/spec/support/uploads/peoplefinder/person/image/#{person.id}")
+        .to eq(Rails.root.join("spec/support/uploads/peoplefinder/person/image/#{person.id}").to_s)
     end
   end
 end

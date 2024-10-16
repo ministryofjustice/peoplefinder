@@ -48,21 +48,17 @@ RSpec.describe PersonUpdateNotifier, type: :service do
         allow(person).to receive(:login_count).and_return 1
       end
 
-      def check_send_update_reminder(expected)
-        expect(described_class.send_update_reminder?(person, 6.months)).to be expected
-      end
-
       context "when no last reminder sent" do
         before { person.update(last_reminder_email_at: nil) }
 
         it "returns true when last update more than 6 months ago" do
           person.update!(updated_at: more_than_six_months_ago)
-          check_send_update_reminder true
+          expect(described_class.send_update_reminder?(person, 6.months)).to be true
         end
 
         it "returns false when last update less than 6 months ago" do
           person.update!(updated_at: less_than_six_months_ago)
-          check_send_update_reminder false
+          expect(described_class.send_update_reminder?(person, 6.months)).to be false
         end
       end
 
@@ -71,12 +67,12 @@ RSpec.describe PersonUpdateNotifier, type: :service do
 
         it "returns true when last update more than 6 months ago" do
           person.update!(updated_at: more_than_six_months_ago)
-          check_send_update_reminder true
+          expect(described_class.send_update_reminder?(person, 6.months)).to be true
         end
 
         it "returns false when last update less than 6 months ago" do
           person.update!(updated_at: less_than_six_months_ago)
-          check_send_update_reminder false
+          expect(described_class.send_update_reminder?(person, 6.months)).to be false
         end
       end
 
@@ -85,12 +81,12 @@ RSpec.describe PersonUpdateNotifier, type: :service do
 
         it "returns false when last update more than 6 months ago" do
           person.update!(updated_at: more_than_six_months_ago)
-          check_send_update_reminder false
+          expect(described_class.send_update_reminder?(person, 6.months)).to be false
         end
 
         it "returns false when last update less than 6 months ago" do
           person.update!(updated_at: less_than_six_months_ago)
-          check_send_update_reminder false
+          expect(described_class.send_update_reminder?(person, 6.months)).to be false
         end
       end
     end
@@ -110,7 +106,7 @@ RSpec.describe PersonUpdateNotifier, type: :service do
           described_class.send(:send_reminder, person_two, 6.months)
           person_two.reload
 
-          expect(person_two.last_reminder_email_at).not_to be(nil)
+          expect(person_two.last_reminder_email_at).not_to be_nil
           expect(person_two.last_reminder_email_at.class).to be(ActiveSupport::TimeWithZone)
         end
       end

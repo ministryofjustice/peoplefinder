@@ -60,7 +60,7 @@ RSpec.describe AuditVersionPresenter, type: :presenter do
 
   describe ".wrap" do
     let(:object)           { Object.new }
-    let(:presenter)        { double("presenter") }  # rubocop:disable RSpec/VerifiedDoubles
+    let(:presenter)        { double("presenter") } # rubocop:disable RSpec/VerifiedDoubles
     let(:object_array)     { [object, object, object] }
     let(:wrapped_array)    { described_class.wrap(object_array) }
     let(:presented_array)  { [presenter, presenter, presenter] }

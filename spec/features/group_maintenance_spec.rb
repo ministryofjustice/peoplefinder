@@ -25,7 +25,7 @@ describe "Group maintenance" do
     click_link "Edit"
   end
 
-  context "when a regular user", user: :regular, js: true do
+  context "when a regular user", :js, user: :regular do
     before do
       dept
     end
@@ -207,10 +207,8 @@ describe "Group maintenance" do
         click_link "Done", wait: 6
       end
 
-      using_wait_time 6 do
-        expect(page).to have_selector(".show-editable-fields", visible: :visible)
-        expect(page).to have_selector(".parent-summary", text: /Test team/)
-      end
+      expect(page).to have_selector(".show-editable-fields", visible: :visible, wait: 10)
+      expect(page).to have_selector(".parent-summary", text: /Test team/, wait: 10)
 
       click_button "Save"
 

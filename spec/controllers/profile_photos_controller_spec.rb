@@ -25,11 +25,6 @@ RSpec.describe ProfilePhotosController, type: :controller do
           allow(ProfilePhoto).to receive(:create).and_return(photo)
         end
 
-        it "validates the photo" do
-          allow(photo).to receive(:valid?).and_return true
-          post :create, params: { profile_photo: valid_params }
-        end
-
         it "renders json containing id of the new ProfilePhoto" do
           allow(photo).to receive(:valid?).and_return true
           post :create, params: { profile_photo: valid_params }

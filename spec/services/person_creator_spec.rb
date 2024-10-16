@@ -51,7 +51,7 @@ RSpec.describe PersonCreator, type: :service do
           .to receive(:notify_of_change?)
           .with(current_user)
           .and_return(false)
-        expect(class_double("UserUpdateMailer").as_stubbed_const)
+        expect(class_double(UserUpdateMailer).as_stubbed_const)
           .not_to receive(:new_profile_email)
         created_person.create!
       end
@@ -67,9 +67,9 @@ RSpec.describe PersonCreator, type: :service do
   context "when not saving a profile" do
     let(:smc) { instance_double StateManagerCookie, save_profile?: false }
 
-    it "does not  a notification" do
-      allow(person).to receive(:notify_of_change?).with(current_user).and_return(true)
-      expect(QueuedNotification).to receive(:queue!)
+    it "does not queue a notification" do
+      allow(person).to receive(:notify_of_change?).with(current_user).and_return(false)
+      expect(QueuedNotification).not_to receive(:queue!)
       created_person.create!
     end
   end

@@ -66,7 +66,7 @@ describe "Person maintenance" do
         expect(page).to have_current_path(new_person_path, ignore_query: true)
       end
 
-      it "Creating a person with a complete profile", js: true do
+      it "Creating a person with a complete profile", :js do
         create(:group, name: "Digital")
 
         visit new_person_path
@@ -112,7 +112,7 @@ describe "Person maintenance" do
         expect(new_profile_page.error_summary).to have_email_error
       end
 
-      it "Creating a person with no team membership raises a membership required error and builds empty membership", js: true do
+      it "Creating a person with no team membership raises a membership required error and builds empty membership", :js do
         visit new_person_path
         expect(new_profile_page).to be_displayed
         fill_in "First name", with: person_attributes[:given_name]
@@ -128,7 +128,7 @@ describe "Person maintenance" do
         expect(new_profile_page.error_summary).to have_team_membership_required_error
       end
 
-      it "Creating a person with a team membership but no team chosen raises a team required error", js: true do
+      it "Creating a person with a team membership but no team chosen raises a team required error", :js do
         visit new_person_path
         expect(new_profile_page).to be_displayed
         fill_in "First name", with: person_attributes[:given_name]
@@ -141,7 +141,7 @@ describe "Person maintenance" do
         expect(new_profile_page.error_summary).to have_team_required_error
       end
 
-      it "Creating a person with an identical name", js: true do
+      it "Creating a person with an identical name", :js do
         create(:group, name: "Digital")
         create(:person, given_name: person_attributes[:given_name], surname: person_attributes[:surname])
 
@@ -200,7 +200,7 @@ describe "Person maintenance" do
     end
 
     context "with a regular user", user: :regular do
-      it "Editing a person", js: true do
+      it "Editing a person", :js do
         visit person_path(create(:person, person_attributes))
         click_edit_profile
 
@@ -250,7 +250,7 @@ describe "Person maintenance" do
         expect(edit_profile_page.error_summary).to have_email_error
       end
 
-      it "Validates required fields on team memberships", js: true do
+      it "Validates required fields on team memberships", :js do
         visit person_path(another_person)
         click_edit_profile
         click_link "Join another team"
@@ -260,7 +260,7 @@ describe "Person maintenance" do
         expect(edit_profile_page.form).to have_team_required_field_errors text: "Team is required", count: 1
       end
 
-      it "Validates existence of at least one team membership", js: true do
+      it "Validates existence of at least one team membership", :js do
         visit person_path(another_person)
         expect(another_person.memberships.count).to be 1
         click_edit_profile
@@ -273,7 +273,7 @@ describe "Person maintenance" do
         expect(another_person.reload.memberships.count).to be 1
       end
 
-      it "Validates uniqueness of leader in department", js: true do
+      it "Validates uniqueness of leader in department", :js do
         role = "Boss"
         create(:person, :member_of, team: department, role:, leader: true)
 
@@ -359,7 +359,7 @@ describe "Person maintenance" do
     end
   end
 
-  context "when Deleting a person", with_csrf_protection: true, js: true do
+  context "when Deleting a person", :js, :with_csrf_protection do
     context "with a regular user", user: :regular do
       it "Deleting a person" do
         person = create :person

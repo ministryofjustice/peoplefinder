@@ -3,11 +3,9 @@ class ProfileChangesPresenter < ChangesPresenter
     split_presenters raw_changes
   end
 
-  def each
+  def each(&block)
     @changes.each do |presenter|
-      presenter.each do |_field, change|
-        yield change
-      end
+      presenter.each_value(&block)
     end
   end
 

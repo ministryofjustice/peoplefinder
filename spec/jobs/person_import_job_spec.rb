@@ -31,7 +31,7 @@ RSpec.describe PersonImportJob, type: :job do
     expect(job.queue_name).to eq "person_import"
     expect(job.max_run_time).to eq 10.minutes
     expect(job.max_attempts).to eq 3
-    expect(job.destroy_failed_jobs?).to eq false
+    expect(job.destroy_failed_jobs?).to be false
   end
 
   it "enqueues job with expected arguments" do
@@ -94,7 +94,7 @@ RSpec.describe PersonImportJob, type: :job do
 
         it "creates records with and without optional fields" do
           expect { perform_now }.to change(Person, :count).by 2
-          expect(Person.pluck(:email)).to match_array ["tom.o.carey@valid.gov.uk", "tom.mason-buggs@valid.gov.uk"]
+          expect(Person.pluck(:email)).to contain_exactly("tom.o.carey@valid.gov.uk", "tom.mason-buggs@valid.gov.uk")
           expect(Person.pluck(:location_in_building)).to include "Room 5.02, 5th Floor, Orange Core"
           expect(Person.find_by(email: "tom.mason-buggs@valid.gov.uk").memberships.first.role).to eq "Cool Job Title"
         end

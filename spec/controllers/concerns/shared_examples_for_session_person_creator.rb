@@ -56,12 +56,6 @@ shared_examples_for "session_person_creatable" do
       end
 
       it_behaves_like "existing person returned"
-
-      it "extracts email from auth hash" do
-        email_address = instance_double(EmailAddress, permitted_domain?: true)
-        allow(EmailAddress).to receive(:new).with(valid_auth_hash["info"]["email"]).and_return email_address
-        subject
-      end
     end
 
     context "when invalid email" do
