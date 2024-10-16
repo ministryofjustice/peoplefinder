@@ -48,56 +48,46 @@ RSpec.describe PersonUpdateNotifier, type: :service do
         allow(person).to receive(:login_count).and_return 1
       end
 
-      def check_send_update_reminder(expected)
-        expect(described_class.send_update_reminder?(person, 6.months)).to be expected
-      end
-
       context "when no last reminder sent" do
         before { person.update(last_reminder_email_at: nil) }
 
-        # rubocop:disable RSpec/NoExpectationExample
         it "returns true when last update more than 6 months ago" do
           person.update!(updated_at: more_than_six_months_ago)
-          check_send_update_reminder true
+          expect(described_class.send_update_reminder?(person, 6.months)).to be true
         end
 
         it "returns false when last update less than 6 months ago" do
           person.update!(updated_at: less_than_six_months_ago)
-          check_send_update_reminder false
+          expect(described_class.send_update_reminder?(person, 6.months)).to be false
         end
-        # rubocop:enable RSpec/NoExpectationExample
       end
 
       context "when last reminder sent more than 6 months ago" do
         before { person.update(last_reminder_email_at: more_than_six_months_ago) }
 
-        # rubocop:disable RSpec/NoExpectationExample
         it "returns true when last update more than 6 months ago" do
           person.update!(updated_at: more_than_six_months_ago)
-          check_send_update_reminder true
+          expect(described_class.send_update_reminder?(person, 6.months)).to be true
         end
 
         it "returns false when last update less than 6 months ago" do
           person.update!(updated_at: less_than_six_months_ago)
-          check_send_update_reminder false
+          expect(described_class.send_update_reminder?(person, 6.months)).to be false
         end
-        # rubocop:enable RSpec/NoExpectationExample
       end
 
       context "when last reminder sent less than 6 months ago" do
         before { person.update(last_reminder_email_at: less_than_six_months_ago) }
 
-        # rubocop:disable RSpec/NoExpectationExample
         it "returns false when last update more than 6 months ago" do
           person.update!(updated_at: more_than_six_months_ago)
-          check_send_update_reminder false
+          expect(described_class.send_update_reminder?(person, 6.months)).to be false
         end
 
         it "returns false when last update less than 6 months ago" do
           person.update!(updated_at: less_than_six_months_ago)
-          check_send_update_reminder false
+          expect(described_class.send_update_reminder?(person, 6.months)).to be false
         end
-        # rubocop:enable RSpec/NoExpectationExample
       end
     end
 
