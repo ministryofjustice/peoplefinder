@@ -829,6 +829,7 @@ DEPENDENCIES
   carrierwave
   daemons
   database_cleaner
+  database_cleaner-active_record
   debug
   delayed_job_active_record (~> 4.1.7)
   dotenv-rails
