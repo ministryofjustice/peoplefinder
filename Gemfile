@@ -58,7 +58,7 @@ end
 
 group :test do
   gem "database_cleaner"
-  gem "database_cleaner-active_record"
+  gem "database_cleaner-active_record", ">= 2.2.0"
   gem "rails-controller-testing"
   gem "rspec-json_expectations"
   gem "selenium-webdriver"
