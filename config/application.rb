@@ -107,5 +107,7 @@ module Peoplefinder
       ::Symbol,
       ::Time,
     ]
+
+    config.exceptions_app = routes
   end
 end
