@@ -60,4 +60,9 @@ Rails.application.routes.draw do
   end
 
   get "/cookies", to: "pages#show", id: "cookies", as: :cookies
+
+  match "*unmatched", to: "errors#not_found", via: :all
+
+  get "/404", to: "errors#not_found"
+  get "/500", to: "errors#internal_error"
 end
