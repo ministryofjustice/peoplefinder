@@ -12,7 +12,6 @@ class TokensController < ApplicationController
   end
 
   def show
-    session[:desired_path] = params[:desired_path] if params[:desired_path]
     if logged_in_regular?
       render_desired_path_or_profile
     else
