@@ -24,6 +24,7 @@ module SessionPersonCreator
       if person&.new_record?
         confirm_or_create person
       elsif person
+        incomplete_profile(person) unless person.valid?
         login_person(person)
       else
         render :failed
@@ -60,8 +61,7 @@ module SessionPersonCreator
     def create_person_and_login(person)
       person_creator = PersonCreator.new(person, current_user, StateManagerCookie.new(cookies))
       person_creator.create!
-      warning :complete_profile
-      session[:desired_path] = edit_person_path(@person, page_title: "Create profile")
+      incomplete_profile(@person)
       login_person(@person)
     end
 
@@ -70,6 +70,11 @@ module SessionPersonCreator
 
       @people = Person.namesakes(@person)
       @people.present?
+    end
+
+    def incomplete_profile(person)
+      warning :complete_profile
+      session[:desired_path] = edit_person_path(person, page_title: "Create profile")
     end
   end
 end
