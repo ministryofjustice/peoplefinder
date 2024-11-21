@@ -23,6 +23,37 @@ RSpec.describe Group, type: :model do
   it { is_expected.to have_many(:leaders) }
   it { is_expected.to validate_length_of(:description).is_at_most(2000) }
 
+  describe ".without_description scope" do
+    it "only returns groups without a description" do
+      group_with_empty_description = create(:group, description: "")
+      group_with_nil_description = create(:group, description: nil)
+      group_with_description = create(:group, description: "this exists")
+      another_group_with_description = create(:group, description: "this is another description")
+
+      expect(described_class.without_description).to include(group_with_empty_description)
+      expect(described_class.without_description).to include(group_with_nil_description)
+      expect(described_class.without_description).not_to include(group_with_description)
+      expect(described_class.without_description).not_to include(another_group_with_description)
+    end
+  end
+
+  describe ".with_leader scope" do
+    it "only returns groups with a leader" do
+      group_with_leader = create(:group)
+      group_with_leaders = create(:group)
+      group_without_leader = create(:group)
+
+      create(:membership, group: group_with_leader, leader: true)
+      create(:membership, group: group_with_leaders, leader: true)
+      create(:membership, group: group_with_leaders, leader: true)
+      create(:membership, group: group_without_leader, leader: false)
+
+      expect(described_class.with_leader).to include(group_with_leader)
+      expect(described_class.with_leader).to include(group_with_leaders)
+      expect(described_class.with_leader).not_to include(group_without_leader)
+    end
+  end
+
   it "gives first orphaned groups as department" do
     parent = create(:department)
     create(:group, parent:)

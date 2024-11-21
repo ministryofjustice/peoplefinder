@@ -2,20 +2,18 @@ module TeamDescriptionNotifier
   def self.send_reminders
     return unless Rails.configuration.send_reminder_emails
 
-    Group.without_description.each do |group|
-      group.with_lock do # use db lock to allow cronjob to run on more than one instance
-        send_reminder group
-      end
+    Group.without_description.with_leader.find_each do |group|
+      send_reminder(group)
     end
   end
 
   def self.send_reminder(group)
     group.reload
-    if send_description_reminder? group
+    if send_description_reminder?(group)
       group.leaders.each do |leader|
         ReminderMailer.team_description_missing(leader, group).deliver_later
       end
-      group.update(description_reminder_email_at: Time.zone.now) # rubocop:disable Rails/SaveBang
+      group.update!(description_reminder_email_at: Time.zone.now)
     end
   end
 
