@@ -36,17 +36,19 @@ RSpec.describe NeverLoggedInNotifier, type: :service do
 
   describe ".people_to_remind" do
     let(:within) { 30.days }
-    let(:person_logged_in) { create(:person, login_count: 1) }
-    let(:person_never_logged_in_reminded_recently) { create(:person, login_count: 0) }
-    let(:person_logged_in_created_recently) { create(:person, login_count: 0, created_at: 1.day.ago) }
-    let(:person_logged_in_reminded_recently_created_long_ago) { create(:person, login_count: 0, created_at: 60.days.ago, last_reminder_email_at: 1.day.ago) }
-    let(:person_logged_in_reminded_long_ago_created_long_ago) { create(:person, login_count: 0, created_at: 60.days.ago, last_reminder_email_at: 50.days.ago) }
-    let(:person_logged_in_never_reminded_created_long_ago) { create(:person, login_count: 0, created_at: 60.days.ago) }
+    # rubocop:disable RSpec/LetSetup
+    let!(:person_logged_in_never_reminded_created_long_ago) { create(:person, login_count: 1, created_at: 60.days.ago) }
+    let!(:person_never_logged_in_reminded_recently) { create(:person, login_count: 0) }
+    let!(:person_never_logged_in_created_recently) { create(:person, login_count: 0, created_at: 1.day.ago) }
+    let!(:person_never_logged_in_reminded_recently_created_long_ago) { create(:person, login_count: 0, created_at: 60.days.ago, last_reminder_email_at: 1.day.ago) }
+    let!(:person_never_logged_in_reminded_long_ago_created_long_ago) { create(:person, login_count: 0, created_at: 60.days.ago, last_reminder_email_at: 50.days.ago) }
+    let!(:person_never_logged_in_never_reminded_created_long_ago) { create(:person, login_count: 0, created_at: 60.days.ago) }
+    # rubocop:enable RSpec/LetSetup
 
     it "returns expected people" do
       expect(described_class.people_to_remind(within)).to contain_exactly(
-        person_logged_in_reminded_long_ago_created_long_ago,
-        person_logged_in_never_reminded_created_long_ago,
+        person_never_logged_in_reminded_long_ago_created_long_ago,
+        person_never_logged_in_never_reminded_created_long_ago,
       )
     end
   end
