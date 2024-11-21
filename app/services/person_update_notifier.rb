@@ -2,10 +2,8 @@ module PersonUpdateNotifier
   def self.send_reminders(within: 6.months)
     return unless Rails.configuration.send_reminder_emails
 
-    people_to_remind(within).each do |person|
-      person.with_lock do # use db lock to allow cronjob to run on more than one instance
-        send_reminder person, within
-      end
+    people_to_remind(within).find_each do |person|
+      send_reminder(person, within)
     end
   end
 
@@ -29,7 +27,6 @@ module PersonUpdateNotifier
     if person.login_count.zero?
       false
     else
-
       !person.reminder_email_sent?(within:) &&
         person.updated_at.end_of_day < within.ago
     end
