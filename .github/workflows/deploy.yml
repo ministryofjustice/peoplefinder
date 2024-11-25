@@ -292,11 +292,22 @@ jobs:
 
       - name: Rollout restart deployment
         run: |
-          kubectl set image -n ${KUBE_NAMESPACE} \
-          deployment/peoplefinder \
-          webapp="${{ vars.ECR_URL }}:$SHA" \
-          metrics="${{ vars.ECR_URL }}:$SHA" \
-          jobs="${{ vars.ECR_URL }}:$SHA"
+          kubectl set image -n ${KUBE_NAMESPACE} deployment/peoplefinder \
+            webapp="${{ vars.ECR_URL }}:$SHA" \
+            metrics="${{ vars.ECR_URL }}:$SHA" \
+            jobs="${{ vars.ECR_URL }}:$SHA"
+
+          kubectl set image -n ${KUBE_NAMESPACE} cronjobs/cron-never-logged-in-notifier.yaml \
+            jobs="${{ vars.ECR_URL }}:$SHA"
+
+          kubectl set image -n ${KUBE_NAMESPACE} cronjobs/cron-person-notifier.yaml \
+            jobs="${{ vars.ECR_URL }}:$SHA"
+
+          kubectl set image -n ${KUBE_NAMESPACE} cronjobs/cron-person-update-reminder.yaml \
+            jobs="${{ vars.ECR_URL }}:$SHA"
+
+          kubectl set image -n ${KUBE_NAMESPACE} cronjobs/cron-team-description-notifier.yaml \
+            jobs="${{ vars.ECR_URL }}:$SHA"
 
       - name: Send deploy notification to product Slack channel
         uses: slackapi/slack-github-action@v1.25.0

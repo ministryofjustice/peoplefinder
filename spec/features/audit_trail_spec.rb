@@ -41,9 +41,7 @@ describe "Audit trail" do
       expect(page).to have_text("Surname set to: Smith")
 
       expect {
-        within("table > tbody > tr:nth-child(2)") do
-          click_button "undo", match: :first
-        end
+        click_button "undo", match: :first
       }.to change(Person, :count).by(-1)
     end
   end
@@ -61,9 +59,7 @@ describe "Audit trail" do
       expect(page).to have_text("Name: Greg Dan")
 
       expect {
-        within("table > tbody > tr:nth-child(2)") do
-          click_button "undo", match: :first
-        end
+        click_button "undo", match: :first
       }.to change(Person, :count).by(1)
     end
   end

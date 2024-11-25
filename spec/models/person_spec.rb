@@ -63,6 +63,113 @@ RSpec.describe Person, type: :model do
     end
   end
 
+  describe ".never_logged_in scope" do
+    let(:expected_sql) do
+      '
+        SELECT "people".*
+        FROM "people"
+        WHERE "people"."login_count" = 0
+      '
+    end
+
+    it "generates the expected sql" do
+      expect(described_class.never_logged_in.to_sql).to match_sql expected_sql
+    end
+
+    it "returns an arel relation" do
+      expect(described_class.never_logged_in).to be_an_instance_of(described_class.const_get(:ActiveRecord_Relation))
+    end
+
+    it "returns only those people who have never logged in" do
+      _p1 = create :person, :with_random_dets
+      p2 = create :person, :with_random_dets, login_count: 0
+      p3 = create :person, :with_random_dets, login_count: 0
+      _p4 = create :person, :with_random_dets
+
+      expect(described_class.never_logged_in).to contain_exactly(p2, p3)
+    end
+  end
+
+  describe ".logged_in_at_least_once scope" do
+    let(:expected_sql) do
+      '
+        SELECT "people".*
+        FROM "people"
+        WHERE (login_count > 0)
+      '
+    end
+
+    it "generates the expected sql" do
+      expect(described_class.logged_in_at_least_once.to_sql).to match_sql expected_sql
+    end
+
+    it "returns an arel relation" do
+      expect(described_class.logged_in_at_least_once).to be_an_instance_of(described_class.const_get(:ActiveRecord_Relation))
+    end
+
+    it "returns only those people who have logged in" do
+      p1 = create :person, :with_random_dets
+      _p2 = create :person, :with_random_dets, login_count: 0
+      _p3 = create :person, :with_random_dets, login_count: 0
+      p4 = create :person, :with_random_dets
+
+      expect(described_class.logged_in_at_least_once).to contain_exactly(p1, p4)
+    end
+  end
+
+  describe ".updated_at_older_than scope" do
+    let(:expected_sql) do
+      "
+        SELECT \"people\".*
+        FROM \"people\"
+        WHERE (updated_at < '2016-11-19 04:03:06')
+      "
+    end
+
+    it "generates the expected sql" do
+      Timecop.freeze(Time.utc(2016, 11, 22, 4, 3, 6)) do
+        expect(described_class.updated_at_older_than(3.days.ago).to_sql).to match_sql expected_sql
+      end
+    end
+
+    it "returns an arel relation" do
+      expect(described_class.updated_at_older_than(2.days.ago)).to be_an_instance_of(described_class.const_get(:ActiveRecord_Relation))
+    end
+
+    it "returns expected records" do
+      create :person, :with_random_dets
+      p1 = Timecop.freeze(5.days.ago) { create :person, :with_random_dets }
+      p2 = Timecop.freeze(7.days.ago) { create :person, :with_random_dets }
+      expect(described_class.updated_at_older_than(2.days.ago)).to contain_exactly(p1, p2)
+    end
+  end
+
+  describe ".last_reminder_email_older_than scope" do
+    let(:expected_sql) do
+      %q{
+        SELECT "people".*
+        FROM "people"
+        WHERE (last_reminder_email_at IS NULL OR last_reminder_email_at < '2017-01-14 12:26:01')
+      }
+    end
+
+    it "generates the expected sql" do
+      Timecop.freeze(Time.utc(2017, 1, 19, 12, 26, 1)) do
+        expect(described_class.last_reminder_email_older_than(5.days.ago).to_sql).to match_sql expected_sql
+      end
+    end
+
+    it "returns an arel relation" do
+      expect(described_class.last_reminder_email_older_than(3.days.ago)).to be_an_instance_of(described_class.const_get(:ActiveRecord_Relation))
+    end
+
+    it "returns expected records" do
+      _p1 = create :person, :with_random_dets, last_reminder_email_at: 5.days.ago
+      p2 = create :person, :with_random_dets, last_reminder_email_at: 7.days.ago
+      expect(described_class.last_reminder_email_older_than(6.days.ago)).to contain_exactly(p2)
+    end
+  end
+
   describe "#email" do
     it "does not raise an invalid format error if blank" do
       person = build :person, email: ""

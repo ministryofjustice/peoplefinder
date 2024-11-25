@@ -65,6 +65,7 @@ class Group < ApplicationRecord
   default_scope { order(name: :asc) }
 
   scope :without_description, -> { unscoped.where(description: ["", nil]) }
+  scope :with_leader, -> { includes(:leaderships).where.not(leaderships: { id: nil }) }
 
   after_save { |group| UpdateGroupMembersCompletionScoreJob.perform_later(group) }
 

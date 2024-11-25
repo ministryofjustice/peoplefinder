@@ -10,7 +10,7 @@ RSpec.describe NeverLoggedInNotifier, type: :service do
   let(:more_than_30_days_ago) { Time.zone.now - 31.days }
   let(:less_than_30_days_ago) { Time.zone.now - 30.days }
 
-  describe "send_reminders" do
+  describe ".send_reminders" do
     before do
       person.update!(last_reminder_email_at: nil)
       person.update!(created_at: more_than_30_days_ago)
@@ -31,6 +31,25 @@ RSpec.describe NeverLoggedInNotifier, type: :service do
         expect(ReminderMailer).not_to receive(:never_logged_in)
         described_class.send_reminders
       end
+    end
+  end
+
+  describe ".people_to_remind" do
+    let(:within) { 30.days }
+    # rubocop:disable RSpec/LetSetup
+    let!(:person_logged_in_never_reminded_created_long_ago) { create(:person, login_count: 1, created_at: 60.days.ago) }
+    let!(:person_never_logged_in_reminded_recently) { create(:person, login_count: 0) }
+    let!(:person_never_logged_in_created_recently) { create(:person, login_count: 0, created_at: 1.day.ago) }
+    let!(:person_never_logged_in_reminded_recently_created_long_ago) { create(:person, login_count: 0, created_at: 60.days.ago, last_reminder_email_at: 1.day.ago) }
+    let!(:person_never_logged_in_reminded_long_ago_created_long_ago) { create(:person, login_count: 0, created_at: 60.days.ago, last_reminder_email_at: 50.days.ago) }
+    let!(:person_never_logged_in_never_reminded_created_long_ago) { create(:person, login_count: 0, created_at: 60.days.ago) }
+    # rubocop:enable RSpec/LetSetup
+
+    it "returns expected people" do
+      expect(described_class.people_to_remind(within)).to contain_exactly(
+        person_never_logged_in_reminded_long_ago_created_long_ago,
+        person_never_logged_in_never_reminded_created_long_ago,
+      )
     end
   end
 

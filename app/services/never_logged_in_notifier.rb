@@ -2,10 +2,8 @@ module NeverLoggedInNotifier
   def self.send_reminders(within: 30.days)
     return unless Rails.configuration.send_reminder_emails
 
-    people_to_remind(within).each do |person|
-      person.with_lock do # use db lock to allow cronjob to run on more than one instance
-        send_reminder person, within
-      end
+    people_to_remind(within).find_each do |person|
+      send_reminder(person, within)
     end
   end
 
@@ -20,7 +18,7 @@ module NeverLoggedInNotifier
     person.reload
     if NeverLoggedInNotifier.send_never_logged_in_reminder? person, within
       ReminderMailer.never_logged_in(person).deliver_later
-      person.update(last_reminder_email_at: Time.zone.now) # rubocop:disable Rails/SaveBang
+      person.update!(last_reminder_email_at: Time.zone.now)
     end
   end
 
