@@ -357,7 +357,7 @@ GEM
     mime-types-data (3.2024.0305)
     mini_magick (4.13.2)
     mini_mime (1.1.5)
-    minitest (5.25.1)
+    minitest (5.25.2)
     multi_json (1.15.0)
     multipart-post (2.1.1)
     net-imap (0.5.1)
@@ -606,7 +606,7 @@ GEM
     public_suffix (6.0.1)
     puma (6.4.3)
       nio4r (~> 2.0)
-    pundit (2.3.0)
+    pundit (2.4.0)
       activesupport (>= 3.0.0)
     racc (1.8.1)
     rack (3.1.8)
@@ -861,7 +861,7 @@ DEPENDENCIES
   paper_trail
   pg
   puma
-  pundit (~> 2.3)
+  pundit (~> 2.4)
   rails (>= 7.2)
   rails-controller-testing
   rspec-json_expectations
