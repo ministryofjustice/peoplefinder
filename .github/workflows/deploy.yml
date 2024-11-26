@@ -297,16 +297,16 @@ jobs:
             metrics="${{ vars.ECR_URL }}:$SHA" \
             jobs="${{ vars.ECR_URL }}:$SHA"
 
-          kubectl set image -n ${KUBE_NAMESPACE} cronjobs/cron-never-logged-in-notifier.yaml \
+          kubectl set image -n ${KUBE_NAMESPACE} cronjobs/never-logged-in-notifier \
             jobs="${{ vars.ECR_URL }}:$SHA"
 
-          kubectl set image -n ${KUBE_NAMESPACE} cronjobs/cron-person-notifier.yaml \
+          kubectl set image -n ${KUBE_NAMESPACE} cronjobs/person-notifier \
             jobs="${{ vars.ECR_URL }}:$SHA"
 
-          kubectl set image -n ${KUBE_NAMESPACE} cronjobs/cron-person-update-reminder.yaml \
+          kubectl set image -n ${KUBE_NAMESPACE} cronjobs/person-update-reminder \
             jobs="${{ vars.ECR_URL }}:$SHA"
 
-          kubectl set image -n ${KUBE_NAMESPACE} cronjobs/cron-team-description-notifier.yaml \
+          kubectl set image -n ${KUBE_NAMESPACE} cronjobs/team-description-notifier \
             jobs="${{ vars.ECR_URL }}:$SHA"
 
       - name: Send deploy notification to product Slack channel
