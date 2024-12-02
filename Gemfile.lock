@@ -338,7 +338,7 @@ GEM
     listen (3.8.0)
       rb-fsevent (~> 0.10, >= 0.10.3)
       rb-inotify (~> 0.9, >= 0.9.10)
-    logger (1.6.1)
+    logger (1.6.2)
     logstasher (2.1.5)
       activesupport (>= 5.2)
       request_store
@@ -740,7 +740,7 @@ GEM
       sprockets-rails
       tilt
     securerandom (0.3.2)
-    selenium-webdriver (4.26.0)
+    selenium-webdriver (4.27.0)
       base64 (~> 0.2)
       logger (~> 1.4)
       rexml (~> 3.2, >= 3.2.5)
