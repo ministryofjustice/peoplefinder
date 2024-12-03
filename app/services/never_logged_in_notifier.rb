@@ -18,7 +18,7 @@ module NeverLoggedInNotifier
     person.reload
     if NeverLoggedInNotifier.send_never_logged_in_reminder? person, within
       ReminderMailer.never_logged_in(person).deliver_later
-      person.update!(last_reminder_email_at: Time.zone.now)
+      person.update_attribute!(:last_reminder_email_at, Time.zone.now)
     end
   end
 
