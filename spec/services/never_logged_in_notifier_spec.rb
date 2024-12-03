@@ -19,9 +19,18 @@ RSpec.describe NeverLoggedInNotifier, type: :service do
     end
 
     context "when send_never_logged_in_reminder? is true" do
+      let(:person) { Person.create!(skip_must_have_team: true, given_name: "Peter", surname: "Piper", email: "peter.piper@digital.justice.gov.uk") }
       let(:can_send) { true }
 
       include_examples "sends reminder email", :never_logged_in
+
+      it "updates the reminder sent date" do
+        allow(Rails.configuration).to receive(:send_reminder_emails).and_return true
+
+        expect {
+          described_class.send_reminders
+        }.to(change { person.reload.last_reminder_email_at })
+      end
     end
 
     context "when send_never_logged_in_reminder? is false" do
