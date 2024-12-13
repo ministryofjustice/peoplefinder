@@ -1,0 +1,43 @@
+name: Notification Workflow
+
+on:
+  workflow_call:
+    secrets:
+      webhook_url:
+        required: true
+    inputs:
+      build_tag:
+        required: true
+        type: string
+      environment:
+        required: true
+        type: string
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    name: "notify-${{ inputs.environment }}"
+
+    steps:
+      - name: Slack notification
+        uses: slackapi/slack-github-action@v2.0.0
+        with:
+          webhook: ${{ secrets.webhook_url }}
+          webhook-type: incoming-webhook
+          payload: |
+            {
+              "attachments": [
+                {
+                  "color": "#1d990c",
+                  "text": "${{ github.actor }} deployed *${{ inputs.build_tag }}* to *${{ inputs.environment }}*",
+                  "fields": [
+                    {
+                      "title": "Project",
+                      "value": "People Finder",
+                      "short": true
+                    }
+                  ],
+                  "footer": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+                }
+              ]
+            }

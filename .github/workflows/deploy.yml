@@ -1,7 +1,6 @@
 name: Deploy Workflow
 
 on:
-  workflow_dispatch:
   workflow_call:
 
 env:
@@ -15,6 +14,9 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+
+    outputs:
+      build_tag: ${{ steps.vars.outputs.build_tag }}
 
     permissions:
       id-token: write # This is required for requesting the JWT
@@ -56,7 +58,6 @@ jobs:
       - name: Push to ECR
         run: docker push ${{ vars.ECR_URL }}:$SHA
 
-
   deploy-development:
     runs-on: ubuntu-latest
     needs: build
@@ -65,9 +66,6 @@ jobs:
     permissions:
       id-token: write # This is required for requesting the JWT
       contents: read  # This is required for actions/checkout
-
-    env:
-      KUBE_NAMESPACE: ${{ secrets.KUBE_NAMESPACE }}
 
     steps:
       - name: Checkout
@@ -83,14 +81,6 @@ jobs:
         uses: aws-actions/amazon-ecr-login@v2
         id: login-ec
 
-      - name: Store build tag
-        id: vars
-        run: |
-          branch=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}
-          short_sha=$(git rev-parse --short $SHA)
-          build_tag=$PREFIX-$branch-$short_sha
-          echo "build_tag=$build_tag" >> $GITHUB_OUTPUT
-
       - name: Tag build and push to ECR
         run: |
           docker pull ${{ vars.ECR_URL }}:$SHA
@@ -98,10 +88,6 @@ jobs:
           docker push ${{ vars.ECR_URL }}:development.latest
 
       - name: Authenticate to the cluster
-        env:
-          KUBE_CERT: ${{ secrets.KUBE_CERT }}
-          KUBE_TOKEN: ${{ secrets.KUBE_TOKEN }}
-          KUBE_CLUSTER: ${{ secrets.KUBE_CLUSTER }}
         run: |
           echo "${KUBE_CERT}" > ca.crt
           kubectl config set-cluster ${KUBE_CLUSTER} --certificate-authority=./ca.crt --server=https://${KUBE_CLUSTER}
@@ -117,35 +103,14 @@ jobs:
           metrics="${{ vars.ECR_URL }}:$SHA" \
           jobs="${{ vars.ECR_URL }}:$SHA"
 
-      - name: Send deploy notification to product Slack channel
-        uses: slackapi/slack-github-action@v1.25.0
-        with:
-          payload: |
-            {
-              "attachments": [
-                {
-                  "color": "#1d990c",
-                  "text": "${{ github.actor }} deployed *${{ steps.vars.outputs.build_tag }}* to *Development*",
-                  "fields": [
-                    {
-                      "title": "Project",
-                      "value": "Peoplefinder",
-                      "short": true
-                    }
-                  ],
-                  "actions": [
-                    {
-                      "text": "Visit Job",
-                      "type": "button",
-                      "url": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
-                    }
-                  ]
-                }
-              ]
-            }
-        env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-          SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
+  notify-development:
+    needs: [build, deploy-development]
+    uses: ./.github/workflows/notification.yml
+    secrets:
+      webhook_url: ${{ secrets.SLACK_WEBHOOK_URL }}
+    with:
+      build_tag: ${{ needs.build.outputs.build_tag }}
+      environment: Development
 
   deploy-staging:
     runs-on: ubuntu-latest
@@ -156,9 +121,6 @@ jobs:
       id-token: write # This is required for requesting the JWT
       contents: read  # This is required for actions/checkout
 
-    env:
-      KUBE_NAMESPACE: ${{ secrets.KUBE_NAMESPACE }}
-
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -173,14 +135,6 @@ jobs:
         uses: aws-actions/amazon-ecr-login@v2
         id: login-ec
 
-      - name: Store build tag
-        id: vars
-        run: |
-          branch=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}
-          short_sha=$(git rev-parse --short $SHA)
-          build_tag=$PREFIX-$branch-$short_sha
-          echo "build_tag=$build_tag" >> $GITHUB_OUTPUT
-
       - name: Tag build and push to ECR
         run: |
           docker pull ${{ vars.ECR_URL }}:$SHA
@@ -188,10 +142,6 @@ jobs:
           docker push ${{ vars.ECR_URL }}:staging.latest
 
       - name: Authenticate to the cluster
-        env:
-          KUBE_CERT: ${{ secrets.KUBE_CERT }}
-          KUBE_TOKEN: ${{ secrets.KUBE_TOKEN }}
-          KUBE_CLUSTER: ${{ secrets.KUBE_CLUSTER }}
         run: |
           echo "${KUBE_CERT}" > ca.crt
           kubectl config set-cluster ${KUBE_CLUSTER} --certificate-authority=./ca.crt --server=https://${KUBE_CLUSTER}
@@ -207,35 +157,14 @@ jobs:
           metrics="${{ vars.ECR_URL }}:$SHA" \
           jobs="${{ vars.ECR_URL }}:$SHA"
 
-      - name: Send deploy notification to product Slack channel
-        uses: slackapi/slack-github-action@v1.25.0
-        with:
-          payload: |
-            {
-              "attachments": [
-                {
-                  "color": "#1d990c",
-                  "text": "${{ github.actor }} deployed *${{ steps.vars.outputs.build_tag }}* to *Staging*",
-                  "fields": [
-                    {
-                      "title": "Project",
-                      "value": "Peoplefinder",
-                      "short": true
-                    }
-                  ],
-                  "actions": [
-                    {
-                      "text": "Visit Job",
-                      "type": "button",
-                      "url": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
-                    }
-                  ]
-                }
-              ]
-            }
-        env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-          SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
+  notify-staging:
+    needs: [build, deploy-staging]
+    uses: ./.github/workflows/notification.yml
+    secrets:
+      webhook_url: ${{ secrets.SLACK_WEBHOOK_URL }}
+    with:
+      build_tag: ${{ needs.build.outputs.build_tag }}
+      environment: Staging
 
   deploy-production:
     runs-on: ubuntu-latest
@@ -247,9 +176,6 @@ jobs:
       id-token: write # This is required for requesting the JWT
       contents: read  # This is required for actions/checkout
 
-    env:
-      KUBE_NAMESPACE: ${{ secrets.KUBE_NAMESPACE }}
-
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -264,14 +190,6 @@ jobs:
         uses: aws-actions/amazon-ecr-login@v2
         id: login-ec
 
-      - name: Store build tag
-        id: vars
-        run: |
-          branch=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}
-          short_sha=$(git rev-parse --short $SHA)
-          build_tag=$PREFIX-$branch-$short_sha
-          echo "build_tag=$build_tag" >> $GITHUB_OUTPUT
-
       - name: Tag build and push to ECR
         run: |
           docker pull ${{ vars.ECR_URL }}:$SHA
@@ -279,10 +197,6 @@ jobs:
           docker push ${{ vars.ECR_URL }}:production.latest
 
       - name: Authenticate to the cluster
-        env:
-          KUBE_CERT: ${{ secrets.KUBE_CERT }}
-          KUBE_TOKEN: ${{ secrets.KUBE_TOKEN }}
-          KUBE_CLUSTER: ${{ secrets.KUBE_CLUSTER }}
         run: |
           echo "${KUBE_CERT}" > ca.crt
           kubectl config set-cluster ${KUBE_CLUSTER} --certificate-authority=./ca.crt --server=https://${KUBE_CLUSTER}
@@ -309,62 +223,20 @@ jobs:
           kubectl set image -n ${KUBE_NAMESPACE} cronjobs/team-description-notifier \
             jobs="${{ vars.ECR_URL }}:$SHA"
 
-      - name: Send deploy notification to product Slack channel
-        uses: slackapi/slack-github-action@v1.25.0
-        with:
-          payload: |
-            {
-              "attachments": [
-                {
-                  "color": "#1d990c",
-                  "text": "${{ github.actor }} deployed *${{ steps.vars.outputs.build_tag }}* to *Production*",
-                  "fields": [
-                    {
-                      "title": "Project",
-                      "value": "Peoplefinder",
-                      "short": true
-                    }
-                  ],
-                  "actions": [
-                    {
-                      "text": "Visit Job",
-                      "type": "button",
-                      "url": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
-                    }
-                  ]
-                }
-              ]
-            }
-        env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-          SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
+  notify-production:
+    needs: [build, deploy-production]
+    uses: ./.github/workflows/notification.yml
+    secrets:
+      webhook_url: ${{ secrets.SLACK_WEBHOOK_URL }}
+    with:
+      build_tag: ${{ needs.build.outputs.build_tag }}
+      environment: Production
 
-      - name: Send deploy notification to cdpt production Slack channel
-        uses: slackapi/slack-github-action@v1.25.0
-        with:
-          payload: |
-            {
-              "attachments": [
-                {
-                  "color": "#1d990c",
-                  "text": "${{ github.actor }} deployed *${{ steps.vars.outputs.build_tag }}* to *Production*",
-                  "fields": [
-                    {
-                      "title": "Project",
-                      "value": "Peoplefinder",
-                      "short": true
-                    }
-                  ],
-                  "actions": [
-                    {
-                      "text": "Visit Job",
-                      "type": "button",
-                      "url": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
-                    }
-                  ]
-                }
-              ]
-            }
-        env:
-          SLACK_WEBHOOK_URL: ${{ secrets.PROD_SLACK_WEBHOOK_URL }}
-          SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
+  notify-production-2:
+    needs: [build, deploy-production]
+    uses: ./.github/workflows/notification.yml
+    secrets:
+      webhook_url: ${{ secrets.PROD_SLACK_WEBHOOK_URL }}
+    with:
+      build_tag: ${{ needs.build.outputs.build_tag }}
+      environment: Production
