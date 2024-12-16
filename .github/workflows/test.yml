@@ -1,4 +1,4 @@
-name: Test Workflow
+name: CI Workflow
 on:
   pull_request:
   push:
@@ -70,7 +70,6 @@ jobs:
           minimum_file_coverage: 100
 
   build-and-deploy:
-    if: ${{ github.ref == 'refs/heads/main' }}
     needs: test
     uses: ./.github/workflows/deploy.yml
     secrets: inherit
