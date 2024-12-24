@@ -76,6 +76,7 @@ group :development, :test do
   gem "dotenv-rails"
   gem "factory_bot_rails"
   gem "listen"
+  gem "parallel_tests"
   gem "rspec-rails"
   gem "rubocop-govuk"
   gem "shoulda-matchers"
