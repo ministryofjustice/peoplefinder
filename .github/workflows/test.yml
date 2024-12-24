@@ -15,9 +15,19 @@ jobs:
     permissions:
       checks: write
 
+    strategy:
+      fail-fast: false
+      matrix:
+        ci_total_jobs: [4]
+        ci_job_index:
+          ["1, 2, 3, 4"]
+
     env:
       RAILS_ENV: test
       DATABASE_URL: "postgresql://postgres:postgres@127.0.0.1/peoplefinder_test"
+      CI: true
+      CI_TOTAL_JOBS: ${{ matrix.ci_total_jobs }}
+      CI_JOB_INDEX: ${{ matrix.ci_job_index }}
 
     services:
       postgres:
