@@ -10,6 +10,28 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  linting:
+    runs-on: ubuntu-latest
+    env:
+      RAILS_ENV: test
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install GraphicsMagick
+        run: sudo apt-get update && sudo apt-get install -y graphicsmagick
+
+      - name: Setup Ruby and install gems
+        uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+
+      - name: Lint Ruby files
+        run: bundle exec rubocop
+
+      - name: Security audit application code
+        run: bundle exec brakeman -q
+
   test:
     runs-on: ubuntu-latest
     permissions:
@@ -61,12 +83,6 @@ jobs:
 
       - name: Setup test database
         run: bin/rails db:setup
-
-      - name: Lint Ruby files
-        run: bundle exec rubocop
-
-      - name: Security audit application code
-        run: bundle exec brakeman -q
 
       - name: Run tests
         run: bundle exec parallel_rspec -n "${CI_TOTAL_JOBS}" --only-group $"{CI_JOB_INDEX}" --group-by "runtime"
