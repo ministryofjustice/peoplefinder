@@ -20,7 +20,10 @@ jobs:
       matrix:
         ci_total_jobs: [4]
         ci_job_index:
-          ["1", "2", "3", "4",]
+          [
+           "0, 1",
+           "2, 3",
+          ]
 
     env:
       RAILS_ENV: test
@@ -68,7 +71,7 @@ jobs:
 
       - name: Run tests
         run: |
-          bin/rake parallel:setup[1]
+          bin/rake parallel:setup[2]
           bundle exec parallel_rspec -n "${CI_TOTAL_JOBS" --only-group $"{CI_JOB_INDEX}" --group-by "runtime"
 
       - name: Code coverage
