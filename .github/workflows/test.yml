@@ -94,34 +94,34 @@ jobs:
           path: coverage/.resultset.json
 
   coverage:
-    - needs: test
-      runs-on: ubuntu-latest
-      permissions: write-all
-      env:
-        RAILS_ENV: test
-      steps:
-        - name: Checkout code
-          uses: actions/checkout@v4
+    needs: test
+    runs-on: ubuntu-latest
+    permissions: write-all
+    env:
+      RAILS_ENV: test
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-        - name: Setup Ruby and install gems
-          uses: ruby/setup-ruby@v1
-          with:
-            bundler-cache: true
+      - name: Setup Ruby and install gems
+        uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
 
-        - name: Download coverage
-          uses: actions/download-artifact@v4
-          with:
-            path: coverage
+      - name: Download coverage
+        uses: actions/download-artifact@v4
+        with:
+          path: coverage
 
-        - name: Collate coverage
-          run: bundle exec rake coverage:report
+      - name: Collate coverage
+        run: bundle exec rake coverage:report
 
-        - name: Code coverage
-          uses: joshmfrankel/simplecov-check-action@main
-          with:
-            github_token: ${{ secrets.GITHUB_TOKEN }}
-            minimum_suite_coverage: 95
-            minimum_file_coverage: 100
+      - name: Code coverage
+        uses: joshmfrankel/simplecov-check-action@main
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          minimum_suite_coverage: 95
+          minimum_file_coverage: 100
 
   build-and-deploy:
     needs: [linting, coverage]
