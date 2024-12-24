@@ -19,11 +19,7 @@ jobs:
       fail-fast: false
       matrix:
         ci_total_jobs: [4]
-        ci_job_index:
-          [
-           "0, 1",
-           "2, 3",
-          ]
+        ci_job_index: ["0", "1", "2", "3"]
 
     env:
       RAILS_ENV: test
@@ -63,6 +59,9 @@ jobs:
       - name: Precompile assets
         run: bin/rails assets:precompile
 
+      - name: Setup test database
+        run: bin/rails db:setup
+
       - name: Lint Ruby files
         run: bundle exec rubocop
 
@@ -70,9 +69,7 @@ jobs:
         run: bundle exec brakeman -q
 
       - name: Run tests
-        run: |
-          bin/rake parallel:setup[2]
-          bundle exec parallel_rspec -n "${CI_TOTAL_JOBS" --only-group $"{CI_JOB_INDEX}" --group-by "runtime"
+        run: bundle exec parallel_rspec -n "${CI_TOTAL_JOBS" --only-group $"{CI_JOB_INDEX}" --group-by "runtime"
 
       - name: Code coverage
         uses: joshmfrankel/simplecov-check-action@main
