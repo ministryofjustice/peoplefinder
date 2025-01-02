@@ -113,6 +113,10 @@ jobs:
         with:
           path: coverage
 
+      - name: List downloaded artifacts # list everything
+        run: ls -R
+
+
       - name: Debug coverage files # temporary
         run: ls -R coverage
 
