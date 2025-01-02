@@ -108,14 +108,13 @@ jobs:
         with:
           bundler-cache: true
 
+      - name: Create coverage directory
+        run: mkdir -p coverage
+
       - name: Download coverage
         uses: actions/download-artifact@v4
         with:
           path: coverage
-
-      - name: List downloaded artifacts # list everything
-        run: ls -R
-
 
       - name: Debug coverage files # temporary
         run: ls -R coverage
