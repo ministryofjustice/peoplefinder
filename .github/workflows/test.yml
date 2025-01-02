@@ -90,6 +90,7 @@ jobs:
       - name: Upload coverage
         uses: actions/upload-artifact@v4
         with:
+          include-hidden-files: true
           name: coverage-${{env.CI_JOB_INDEX}}
           path: coverage/.resultset.json
 
@@ -108,16 +109,10 @@ jobs:
         with:
           bundler-cache: true
 
-      - name: Create coverage directory
-        run: mkdir -p coverage
-
       - name: Download coverage
         uses: actions/download-artifact@v4
         with:
           path: coverage
-
-      - name: Debug coverage files # temporary
-        run: ls -R coverage
 
       - name: Collate coverage
         run: bundle exec rake coverage:report
