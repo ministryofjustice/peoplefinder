@@ -113,6 +113,9 @@ jobs:
         with:
           path: coverage
 
+      - name: Debug coverage files # temporary
+        run: ls -R coverage
+
       - name: Collate coverage
         run: bundle exec rake coverage:report
 
