@@ -159,12 +159,7 @@ jobs:
         with:
           bundler-cache: true
 
-      - name: Download coverage for non-feature and non-upload tests
-        uses: actions/download-artifact@v4
-        with:
-          path: coverage
-
-      - name: Download coverage for features and uploads
+      - name: Download coverage
         uses: actions/download-artifact@v4
         with:
           path: coverage
