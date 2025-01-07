@@ -93,8 +93,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        ci_total_jobs: [2]
-        ci_job_index: ["0", "1"]
+        ci_total_jobs: [4]
+        ci_job_index: ["0", "1", "2", "3"]
 
     env:
       RAILS_ENV: test
