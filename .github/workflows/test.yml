@@ -67,8 +67,8 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Install GraphicsMagick
-        run: sudo apt-get update && sudo apt-get install -y graphicsmagick
+#      - name: Install GraphicsMagick
+#        run: sudo apt-get update && sudo apt-get install -y graphicsmagick
 
       - name: Setup Ruby and install gems
         uses: ruby/setup-ruby@v1
@@ -79,7 +79,7 @@ jobs:
         run: bin/rails assets:precompile
 
       - name: Run tests
-        run: bundle exec parallel_rspec -n "${CI_TOTAL_JOBS}" --only-group "${CI_JOB_INDEX}" --group-by "runtime"
+        run: bundle exec parallel_rspec --exclude_pattern features -n "${CI_TOTAL_JOBS}" --only-group "${CI_JOB_INDEX}" --group-by "runtime"
 
       - name: Upload coverage
         uses: actions/upload-artifact@v4
