@@ -76,7 +76,7 @@ jobs:
         run: bin/rails assets:precompile
 
       - name: Run tests
-        run: bundle exec parallel_rspec --tag ~graphicsmagick -n "${CI_TOTAL_JOBS}" --only-group "${CI_JOB_INDEX}" --group-by "runtime"
+        run: bundle exec parallel_rspec --exclude-pattern spec/uploaders -n "${CI_TOTAL_JOBS}" --only-group "${CI_JOB_INDEX}" --group-by "runtime"
 
       - name: Upload coverage
         uses: actions/upload-artifact@v4
@@ -126,7 +126,7 @@ jobs:
         run: bin/rails assets:precompile
 
       - name: Run graphicsmagick tagged tests
-        run: bundle exec rspec --tag graphics_magick
+        run: bundle exec rspec spec/uploaders
 
       - name: Upload coverage
         uses: actions/upload-artifact@v4
