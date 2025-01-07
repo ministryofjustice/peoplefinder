@@ -10,7 +10,82 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  linting:
+    runs-on: ubuntu-latest
+    env:
+      RAILS_ENV: test
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Ruby and install gems
+        uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+
+      - name: Lint Ruby files
+        run: bundle exec rubocop
+
+      - name: Security audit application code
+        run: bundle exec brakeman -q
+
   test:
+    runs-on: ubuntu-latest
+    permissions:
+      checks: write
+
+    strategy:
+      fail-fast: false
+      matrix:
+        ci_total_jobs: [4]
+        ci_job_index: ["0", "1", "2", "3"]
+
+    env:
+      RAILS_ENV: test
+      DATABASE_URL: "postgresql://postgres:postgres@127.0.0.1/peoplefinder_test"
+      CI: true
+      CI_TOTAL_JOBS: ${{ matrix.ci_total_jobs }}
+      CI_JOB_INDEX: ${{ matrix.ci_job_index }}
+
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_DB: peoplefinder_test
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+        ports:
+          - 5432:5432
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+
+      opensearch:
+        image: bitnami/opensearch:latest
+        ports:
+          - 9200:9200
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Ruby and install gems
+        uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+
+      - name: Precompile assets
+        run: bin/rails assets:precompile
+
+      - name: Run tests
+        run: bundle exec parallel_rspec --exclude-pattern spec/uploaders -n "${CI_TOTAL_JOBS}" --only-group "${CI_JOB_INDEX}" --group-by "runtime"
+
+      - name: Upload coverage
+        uses: actions/upload-artifact@v4
+        with:
+          include-hidden-files: true
+          name: coverage-${{env.CI_JOB_INDEX}}
+          path: coverage/.resultset.json
+
+  graphics-magick-tests:
     runs-on: ubuntu-latest
     permissions:
       checks: write
@@ -50,17 +125,38 @@ jobs:
       - name: Precompile assets
         run: bin/rails assets:precompile
 
-      - name: Setup test database
-        run: bin/rails db:setup
+      - name: Run graphicsmagick tests
+        run: bundle exec rspec spec/uploaders
 
-      - name: Lint Ruby files
-        run: bundle exec rubocop
+      - name: Upload coverage
+        uses: actions/upload-artifact@v4
+        with:
+          include-hidden-files: true
+          name: coverage-graphics-magick
+          path: coverage/.resultset.json
 
-      - name: Security audit application code
-        run: bundle exec brakeman -q
+  coverage:
+    needs: [test, graphics-magick-tests]
+    runs-on: ubuntu-latest
+    permissions: write-all
+    env:
+      RAILS_ENV: test
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-      - name: Run tests
-        run: bundle exec rspec
+      - name: Setup Ruby and install gems
+        uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+
+      - name: Download coverage
+        uses: actions/download-artifact@v4
+        with:
+          path: coverage
+
+      - name: Collate coverage
+        run: bundle exec rake coverage:report
 
       - name: Code coverage
         uses: joshmfrankel/simplecov-check-action@main
@@ -70,6 +166,6 @@ jobs:
           minimum_file_coverage: 100
 
   build-and-deploy:
-    needs: test
+    needs: [linting, coverage]
     uses: ./.github/workflows/deploy.yml
     secrets: inherit

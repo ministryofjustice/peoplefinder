@@ -31,7 +31,7 @@ end
 
 Capybara.javascript_driver = :headless_chrome
 
-Capybara.default_max_wait_time = 3
+Capybara.default_max_wait_time = 1
 Capybara.server = :puma, { Silent: true }
 
 # Fix load order issue on Circle CI 2.0
