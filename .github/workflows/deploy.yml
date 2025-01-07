@@ -31,6 +31,7 @@ jobs:
         with:
           role-to-assume: ${{ secrets.ECR_ROLE_TO_ASSUME }}
           aws-region: ${{ vars.ECR_REGION }}
+          unset-current-credentials: true
 
       - name: Login to container repository
         uses: aws-actions/amazon-ecr-login@v2
