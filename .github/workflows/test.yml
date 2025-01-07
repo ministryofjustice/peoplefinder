@@ -126,7 +126,7 @@ jobs:
         run: bin/rails assets:precompile
 
       - name: Run feature and uploader tests
-        run: bundle exec rspec --pattern features --pattern uploaders
+        run: bundle exec rspec spec/features spec/uploaders
 
       - name: Upload coverage
         uses: actions/upload-artifact@v4
