@@ -13,7 +13,10 @@
 
 # Ignore all logfiles and tempfiles.
 /log/*.log
-/tmp
+
+# Allow one tmp file
+/tmp/*
+!tmp/parallel_runtime_rspec.log
 
 # Ignore environment variable configuration
 /.env.local
