@@ -90,9 +90,18 @@ jobs:
     permissions:
       checks: write
 
+    strategy:
+      fail-fast: false
+      matrix:
+        ci_total_jobs: [2]
+        ci_job_index: ["0", "1"]
+
     env:
       RAILS_ENV: test
       DATABASE_URL: "postgresql://postgres:postgres@127.0.0.1/peoplefinder_test"
+      CI: true
+      CI_TOTAL_JOBS: ${{ matrix.ci_total_jobs }}
+      CI_JOB_INDEX: ${{ matrix.ci_job_index }}
 
     services:
       postgres:
@@ -126,13 +135,13 @@ jobs:
         run: bin/rails assets:precompile
 
       - name: Run feature and uploader tests
-        run: bundle exec rspec spec/features spec/uploaders
+        run: bundle exec parallel_rspec spec/features spec/uploaders -n "${CI_TOTAL_JOBS}" --only-group "${CI_JOB_INDEX}" --group-by "runtime"
 
       - name: Upload coverage
         uses: actions/upload-artifact@v4
         with:
           include-hidden-files: true
-          name: coverage-features-and-uploads
+          name: coverage-features-and-uploads-${{env.CI_JOB_INDEX}}
           path: coverage/.resultset.json
 
   coverage:
@@ -150,7 +159,7 @@ jobs:
         with:
           bundler-cache: true
 
-      - name: Download coverage for non feature tests
+      - name: Download coverage
         uses: actions/download-artifact@v4
         with:
           path: coverage
