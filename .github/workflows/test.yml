@@ -125,7 +125,7 @@ jobs:
       - name: Precompile assets
         run: bin/rails assets:precompile
 
-      - name: Run graphicsmagick tagged tests
+      - name: Run graphicsmagick tests
         run: bundle exec rspec spec/uploaders
 
       - name: Upload coverage
