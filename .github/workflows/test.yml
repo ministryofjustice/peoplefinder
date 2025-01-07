@@ -67,9 +67,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-#      - name: Install GraphicsMagick
-#        run: sudo apt-get update && sudo apt-get install -y graphicsmagick
-
       - name: Setup Ruby and install gems
         uses: ruby/setup-ruby@v1
         with:
@@ -88,8 +85,58 @@ jobs:
           name: coverage-${{env.CI_JOB_INDEX}}
           path: coverage/.resultset.json
 
+  features-and-uploads:
+    runs-on: ubuntu-latest
+    permissions:
+      checks: write
+
+    env:
+      RAILS_ENV: test
+      DATABASE_URL: "postgresql://postgres:postgres@127.0.0.1/peoplefinder_test"
+
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_DB: peoplefinder_test
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+        ports:
+          - 5432:5432
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+
+      opensearch:
+        image: bitnami/opensearch:latest
+        ports:
+          - 9200:9200
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Ruby and install gems
+        uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+
+      - name: Install GraphicsMagick
+        run: sudo apt-get update && sudo apt-get install -y graphicsmagick
+
+      - name: Precompile assets
+        run: bin/rails assets:precompile
+
+      - name: Run feature and uploader tests
+        run: bundle exec rspec --pattern features --pattern uploaders
+
+      - name: Upload coverage
+        uses: actions/upload-artifact@v4
+        with:
+          include-hidden-files: true
+          name: coverage-features-and-uploads
+          path: coverage/.resultset.json
+
   coverage:
-    needs: test
+    needs: [test, features-and-uploads]
     runs-on: ubuntu-latest
     permissions: write-all
     env:
@@ -103,9 +150,15 @@ jobs:
         with:
           bundler-cache: true
 
-      - name: Download coverage
+      - name: Download coverage for non feature tests
         uses: actions/download-artifact@v4
         with:
+          path: coverage
+
+      - name: Download coverage for features and uploads
+        uses: actions/download-artifact@v4
+        with:
+          name: coverage-features-and-uploads
           path: coverage
 
       - name: Collate coverage
