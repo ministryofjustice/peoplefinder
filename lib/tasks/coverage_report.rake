@@ -3,6 +3,6 @@ namespace :coverage do
   task report: :environment do
     require "simplecov"
 
-    SimpleCov.collate Dir["coverage/coverage*/.resultset.json"]
+    SimpleCov.collate Dir["coverage/**/*.resultset.json"]
   end
 end
