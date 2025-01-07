@@ -76,7 +76,7 @@ jobs:
         run: bin/rails assets:precompile
 
       - name: Run tests
-        run: bundle exec parallel_rspec --exclude_pattern features --exclude_pattern uploaders -n "${CI_TOTAL_JOBS}" --only-group "${CI_JOB_INDEX}" --group-by "runtime"
+        run: bundle exec parallel_rspec --tag ~graphicsmagick -n "${CI_TOTAL_JOBS}" --only-group "${CI_JOB_INDEX}" --group-by "runtime"
 
       - name: Upload coverage
         uses: actions/upload-artifact@v4
@@ -85,23 +85,14 @@ jobs:
           name: coverage-${{env.CI_JOB_INDEX}}
           path: coverage/.resultset.json
 
-  features-and-uploads:
+  graphics-magick-tests:
     runs-on: ubuntu-latest
     permissions:
       checks: write
 
-    strategy:
-      fail-fast: false
-      matrix:
-        ci_total_jobs: [4]
-        ci_job_index: ["0", "1", "2", "3"]
-
     env:
       RAILS_ENV: test
       DATABASE_URL: "postgresql://postgres:postgres@127.0.0.1/peoplefinder_test"
-      CI: true
-      CI_TOTAL_JOBS: ${{ matrix.ci_total_jobs }}
-      CI_JOB_INDEX: ${{ matrix.ci_job_index }}
 
     services:
       postgres:
@@ -134,18 +125,18 @@ jobs:
       - name: Precompile assets
         run: bin/rails assets:precompile
 
-      - name: Run feature and uploader tests
-        run: bundle exec parallel_rspec spec/features spec/uploaders -n "${CI_TOTAL_JOBS}" --only-group "${CI_JOB_INDEX}" --group-by "runtime"
+      - name: Run graphicsmagick tagged tests
+        run: bundle exec rspec --tag graphics_magick
 
       - name: Upload coverage
         uses: actions/upload-artifact@v4
         with:
           include-hidden-files: true
-          name: coverage-features-and-uploads-${{env.CI_JOB_INDEX}}
+          name: coverage-graphics-magick
           path: coverage/.resultset.json
 
   coverage:
-    needs: [test, features-and-uploads]
+    needs: [test, graphics-magick-tests]
     runs-on: ubuntu-latest
     permissions: write-all
     env:

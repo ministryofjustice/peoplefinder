@@ -12,7 +12,7 @@ RSpec.describe ImageUploader, type: :uploader do
     described_class.enable_processing = false
   end
 
-  context "with a profile photo object" do
+  context "with a profile photo object", :graphicsmagick do
     subject(:image) { profile_photo.image }
 
     let(:profile_photo) { create(:profile_photo) }
