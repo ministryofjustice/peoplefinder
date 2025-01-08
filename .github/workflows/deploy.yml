@@ -6,6 +6,10 @@ on:
 env:
   PREFIX: "pf"
   SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+  KUBE_NAMESPACE: ${{ secrets.KUBE_NAMESPACE }}
+  KUBE_CERT: ${{ secrets.KUBE_CERT }}
+  KUBE_TOKEN: ${{ secrets.KUBE_TOKEN }}
+  KUBE_CLUSTER: ${{ secrets.KUBE_CLUSTER }}
 
 concurrency:
   group: deploy-${{ github.ref }}
