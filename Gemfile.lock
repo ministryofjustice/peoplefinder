@@ -615,7 +615,7 @@ GEM
     pundit (2.4.0)
       activesupport (>= 3.0.0)
     racc (1.8.1)
-    rack (3.1.8)
+    rack (3.1.10)
     rack-proxy (0.7.7)
       rack
     rack-session (2.1.0)
