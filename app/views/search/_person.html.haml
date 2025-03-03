@@ -3,11 +3,6 @@
     .media
       .media-left
         = profile_image_tag person
-        - if Rails.env.development? || current_user.super_admin?
-          %div.core-16
-            Score:
-            = hit._score
-            = hit.name
 
       .media-body
         %h4.media-heading.cb-person-name
