@@ -62,4 +62,6 @@ Rails.application.configure do
 
   # mock the fact we are NOT on an IP whitelist for test runs
   config.readonly_ip_whitelist = nil
+
+  config.middleware.insert_before 0, Capybara::Lockstep::Middleware
 end

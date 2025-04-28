@@ -30,6 +30,7 @@
 
     <%# The default og:image is added below :head so that scrapers see any custom metatags first, and this is just a fallback %>
     <meta property="og:image" content="<%= asset_path "opengraph-image.png" %>">
+    <%= capybara_lockstep if defined?(Capybara::Lockstep) %>
   </head>
 
   <body<%= content_for?(:body_classes) ? raw(" class=\"#{yield(:body_classes)}\"") : '' %>>
