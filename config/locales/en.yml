@@ -28,7 +28,6 @@ en:
     finish_profile_request: &finish_profile_request "You need to create or update a People Finder account to finish signing in"
     unauthorised: &unauthorised Unauthorised, insufficient privileges
     about_usage: &about_usage People Finder relies on contributions from everyone to help keep it up-to-date.
-    survey_message: Help us make this service better. Give us your <a href="https://www.smartsurvey.co.uk/s/6PTD3D/">feedback</a>
   time:
     formats:
       default: "%d %b %Y %H:%M"
