@@ -263,3 +263,20 @@ $border-color: #bfc1c3;
 .govuk-footer {
   font-size: 100%
 }
+
+
+.survey-banner {
+  border-bottom: 1px solid #b2b4b6;
+  margin: 0 auto;
+  max-width: 960px;
+  p {
+    font-size: 19px;
+    margin: 10px 0;
+  }
+}
+
+@media (max-width: 1019px) {
+  .survey-banner {
+    margin: 0 30px;
+  }
+}

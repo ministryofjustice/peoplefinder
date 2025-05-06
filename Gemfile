@@ -72,6 +72,7 @@ group :development, :test do
   gem "annotate"
   gem "brakeman"
   gem "capybara"
+  gem "capybara-lockstep"
   gem "debug"
   gem "dotenv-rails"
   gem "factory_bot_rails"
