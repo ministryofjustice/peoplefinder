@@ -159,7 +159,7 @@ GEM
       activerecord (>= 5.a)
       database_cleaner-core (~> 2.0.0)
     database_cleaner-core (2.0.1)
-    date (3.4.0)
+    date (3.4.1)
     debug (1.9.2)
       irb (~> 1.10)
       reline (>= 0.3.8)
@@ -365,7 +365,7 @@ GEM
     minitest (5.25.4)
     multi_json (1.15.0)
     multipart-post (2.1.1)
-    net-imap (0.5.1)
+    net-imap (0.5.7)
       date
       net-protocol
     net-pop (0.1.2)
