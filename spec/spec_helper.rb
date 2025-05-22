@@ -1,3 +1,4 @@
+require "capybara-lockstep"
 require "simplecov"
 SimpleCov.start "rails"
 
