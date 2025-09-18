@@ -54,7 +54,7 @@ en:
       log_in_google: Log in
       log_in_email: Request link
       contact_support_html: |
-        Contact us at <a href="mailto:people-finder-support@digital.justice.gov.uk">people-finder-support@digital.justice.gov.uk</a>
+        Contact us at <a href="mailto:PeopleFinderSupport-gg@justice.gov.uk">PeopleFinderSupport-gg@justice.gov.uk</a>
         if you experience a problem with People Finder.
     unsupported_browser:
       unsupported_browser_warning_html: |
@@ -103,7 +103,7 @@ en:
       title: Link sent — check your email
       body_intro: We’re just emailing you a link to access People Finder. This can take up to 5 minutes.
       body_ttl_warning: "When it arrives, click on the link (which is active for %{ttl}). This will log you in to People Finder and enable you to make any changes."
-      body_informative_html: Please check your inbox for this email from <a href="mailto:people-finder-support@digital.justice.gov.uk">people-finder-support@digital.justice.gov.uk</a>.
+      body_informative_html: Please check your inbox for this email from <a href="mailto:PeopleFinderSupport-gg@justice.gov.uk">PeopleFinderSupport-gg@justice.gov.uk</a>.
       body_dont_panic: If you can’t find it, check your junk folder and add our address to your safe list.
       token_auth_disabled: "Sorry, the alternate login method is not availabe. Please login using your Google account."
   controllers:
