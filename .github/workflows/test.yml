@@ -60,7 +60,7 @@ jobs:
 
       opensearch:
         env:
-          OPENSEARCH_INITIAL_ADMIN_PASSWORD: "admin"
+          OPENSEARCH_INITIAL_ADMIN_PASSWORD: admin
         image: opensearchproject/opensearch:latest
         ports:
           - 9200:9200
@@ -109,7 +109,7 @@ jobs:
 
       opensearch:
         env:
-          OPENSEARCH_INITIAL_ADMIN_PASSWORD: "admin"
+          OPENSEARCH_INITIAL_ADMIN_PASSWORD: admin
         image: opensearchproject/opensearch:latest
         ports:
           - 9200:9200
