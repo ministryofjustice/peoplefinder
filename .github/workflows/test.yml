@@ -59,6 +59,8 @@ jobs:
         options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
 
       opensearch:
+        env:
+          OPENSEARCH_INITIAL_ADMIN_PASSWORD: "admin"
         image: opensearchproject/opensearch:latest
         ports:
           - 9200:9200
@@ -106,6 +108,8 @@ jobs:
         options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
 
       opensearch:
+        env:
+          OPENSEARCH_INITIAL_ADMIN_PASSWORD: "admin"
         image: opensearchproject/opensearch:latest
         ports:
           - 9200:9200
