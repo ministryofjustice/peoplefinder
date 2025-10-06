@@ -673,9 +673,10 @@ GEM
     rb-fsevent (0.11.2)
     rb-inotify (0.10.1)
       ffi (~> 1.0)
-    rdoc (6.14.2)
+    rdoc (6.15.0)
       erb
       psych (>= 4.0.0)
+      tsort
     regexp_parser (2.11.3)
     reline (0.6.2)
       io-console (~> 0.5)
@@ -765,10 +766,10 @@ GEM
       rexml (~> 3.2, >= 3.2.5)
       rubyzip (>= 1.2.2, < 3.0)
       websocket (~> 1.0)
-    sentry-rails (5.23.0)
+    sentry-rails (5.28.0)
       railties (>= 5.0)
-      sentry-ruby (~> 5.23.0)
-    sentry-ruby (5.23.0)
+      sentry-ruby (~> 5.28.0)
+    sentry-ruby (5.28.0)
       bigdecimal
       concurrent-ruby (~> 1.0, >= 1.0.2)
     sexp_processor (4.16.1)
@@ -805,6 +806,7 @@ GEM
     tilt (2.0.10)
     timecop (0.9.10)
     timeout (0.4.3)
+    tsort (0.2.0)
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
     tzinfo-data (1.2024.2)
