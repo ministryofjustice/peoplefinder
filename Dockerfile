@@ -6,7 +6,7 @@ RUN apk add --no-cache \
     postgresql-client \
     nodejs \
     git \
-    graphicsmagick
+    imagemagick
 
 # Ensure latest rubygems is installed
 RUN gem update --system

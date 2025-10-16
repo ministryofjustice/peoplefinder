@@ -114,8 +114,8 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Install GraphicsMagick
-        run: sudo apt-get update && sudo apt-get install -y graphicsmagick
+      - name: Install ImageMagick
+        run: sudo apt-get update && sudo apt-get install -y ImageMagick
 
       - name: Setup Ruby and install gems
         uses: ruby/setup-ruby@v1
@@ -125,7 +125,7 @@ jobs:
       - name: Precompile assets
         run: bin/rails assets:precompile
 
-      - name: Run graphicsmagick tests
+      - name: Run imagemagick tests
         run: bundle exec rspec spec/uploaders
 
       - name: Upload coverage
