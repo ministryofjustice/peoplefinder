@@ -18,8 +18,9 @@
     - if @group.leaderships.count > 0
       %h3.heading-medium
         = "Team #{'leader'.pluralize(@group.leaderships.count)}"
-      - @group.leaderships_by_person.each do |person, leaderships|
-        = render partial: 'leaderships', object: leaderships, locals: { person: person, counter: @group.leaderships.count }
+      .flex-container
+        - @group.leaderships_by_person.each do |person, leaderships|
+          = render partial: 'leaderships', object: leaderships, locals: { person: person, counter: @group.leaderships.count }
 
   .column-two-thirds
     %h3.heading-medium
