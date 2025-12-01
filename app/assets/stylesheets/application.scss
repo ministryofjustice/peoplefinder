@@ -178,6 +178,11 @@ $border-color: #bfc1c3;
 }
 }
 
+.flex-container{
+  display: flex;
+  flex-wrap: wrap;
+}
+
 .formatted-text {
   word-wrap: break-word;
   ul li {
