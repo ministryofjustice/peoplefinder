@@ -4,7 +4,7 @@ module AnalyticsHelper
     {
       'virtual-pageview': "/search-result,#{pageview_path}",
       'event-category': "Search result click",
-      'event-action': "Click result #{sprintf('%03d', (index + 1))}",
+      'event-action': "Click result #{sprintf('%03d', index + 1)}",
     }
   end
 

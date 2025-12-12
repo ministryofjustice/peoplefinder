@@ -14,7 +14,7 @@ module BreadcrumbHelper
   def crumb_to(crumb, options = {})
     options = crumb_options(options)
 
-    if crumb.is_a?(String) || !(options[:show_links])
+    if crumb.is_a?(String) || !options[:show_links]
       content_tag(:li, options) do
         crumb.to_s
       end

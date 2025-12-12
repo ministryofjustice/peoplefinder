@@ -35,6 +35,9 @@ class Token < ApplicationRecord
   scope :active,           -> { unspent.unexpired }
   scope :in_the_last_hour, -> { where(created_at: 1.hour.ago..Time.zone.now) }
 
+  delegate :ttl, to: :class
+  delegate :max_tokens_per_hour, to: :class
+
   def self.find_unspent_by_user_email(user_email)
     unspent.find_by_user_email(user_email)
   end
@@ -72,20 +75,12 @@ class Token < ApplicationRecord
     Rails.configuration.try(:token_ttl) || DEFAULT_TTL
   end
 
-  def ttl
-    self.class.ttl
-  end
-
   def spend!
     update!(spent: true)
   end
 
   def self.max_tokens_per_hour
     Integer(Rails.configuration.try(:max_tokens_per_hour) || DEFAULT_MAX_TOKENS_PER_HOUR)
-  end
-
-  def max_tokens_per_hour
-    self.class.max_tokens_per_hour
   end
 
   def within_throttle_limit
