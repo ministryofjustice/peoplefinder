@@ -5,9 +5,9 @@ FactoryBot.define do
   sequence(:building) { |n| sprintf("%d High Street", n) }
   sequence(:location_in_building) { |n| "Room #{n}, #{n.ordinalize}" }
   sequence(:city) { |n| sprintf("Megacity %d", n) }
-  sequence(:primary_phone_number) { |n| sprintf("07708 %06d", (900_000 + n)) }
-  sequence(:pager_number) { |n| sprintf("07600 %06d", (900_000 + n)) }
-  sequence(:phone_number) { |n| sprintf("07700 %06d", (900_000 + n)) }
+  sequence(:primary_phone_number) { |n| sprintf("07708 %06d", 900_000 + n) }
+  sequence(:pager_number) { |n| sprintf("07600 %06d", 900_000 + n) }
+  sequence(:phone_number) { |n| sprintf("07700 %06d", 900_000 + n) }
 
   factory :permitted_domain do
     domain { "digital.justice.gov.uk" }
