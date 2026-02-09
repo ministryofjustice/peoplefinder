@@ -48,7 +48,7 @@ gem "will_paginate", "~> 4.0"
 gem "will_paginate-bootstrap", "~> 1.0", ">= 1.0.1"
 
 group :production do
-  gem "logstasher", "~> 2.1.5"
+  gem "logstasher", "~> 3.0.0"
 end
 
 group :development do
