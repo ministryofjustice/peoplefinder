@@ -194,7 +194,7 @@ GEM
     factory_bot_rails (6.5.1)
       factory_bot (~> 6.5)
       railties (>= 6.1.0)
-    faker (3.2.2)
+    faker (3.6.0)
       i18n (>= 1.8.11, < 2)
     faraday (1.10.0)
       faraday-em_http (~> 1.0)
@@ -852,7 +852,7 @@ DEPENDENCIES
   delayed_job_active_record (>= 4.1.10)
   dotenv-rails
   factory_bot_rails
-  faker (~> 3.2)
+  faker (~> 3.6)
   fastimage (~> 2.2)
   ffi (>= 1.9.24)
   fog-aws
