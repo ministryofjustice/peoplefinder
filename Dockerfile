@@ -17,8 +17,12 @@ RUN apk add --no-cache \
     build-base \
     ruby-dev \
     postgresql-dev \
+<<<<<<< HEAD
     yaml-dev \
     yarn
+=======
+    yaml-dev
+>>>>>>> faa93070 (CDPTKAN-982 People Finder: Upgrade Ruby version to 3.3.11)
 
 COPY Gemfile* .ruby-version ./
 
