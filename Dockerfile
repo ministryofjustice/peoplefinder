@@ -1,4 +1,4 @@
-FROM ruby:3.3.5-alpine as base
+FROM ruby:3.3.11-alpine as base
 
 WORKDIR /app
 
@@ -16,7 +16,8 @@ FROM base as builder
 RUN apk add --no-cache \
     build-base \
     ruby-dev \
-    postgresql-dev
+    postgresql-dev \
+    yaml-dev
 
 COPY Gemfile* .ruby-version ./
 
