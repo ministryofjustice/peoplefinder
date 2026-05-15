@@ -1,36 +1,40 @@
-os:
-  image: opensearch
-  ports:
-    - "9200"
-pg:
-  image: postgres:9.4
-  ports:
-    - "5432"
+services:
+  os:
+    image: opensearchproject/opensearch:2.11.0
+    environment:
+      - "discovery.type=single-node"
+      - "DISABLE_INSTALL_DEMO_CONFIG=true"
+      - "DISABLE_SECURITY_PLUGIN=true"
+    ports:
+      - "9200:9200"
 
-app:
-  build: .
-  links:
-    - "es"
-    - "pg"
-  ports:
-    - "3000:3000"
-  command: app
-  environment:
-    DOCKER_STATE: migrate
-    RAILS_ENV: production
-    DATABASE_URL: postgres://postgres:@pg:5432/postgres
-    MOJ_PF_ES_URL: http://os:9200/
-    SUPPORT_EMAIL:
-    SECRET_KEY_BASE:
+  pg:
+    image: postgres:9.4
+    environment:
+      - POSTGRES_HOST_AUTH_METHOD=trust
+    ports:
+      - "5432:5432"
 
-worker:
-  build: .
-  links:
-    - "pg"
-  command: worker
-  environment:
-    RAILS_ENV: production
-    DATABASE_URL: postgres://postgres:@pg:5432/postgres
-    SUPPORT_EMAIL:
-    SECRET_KEY_BASE:
-    ACTION_MAILER_DEFAULT_URL:
+  app:
+    build: .
+    depends_on:
+      - os
+      - pg
+    ports:
+      - "3000:3000"
+    command: bundle exec rails s -b '0.0.0.0' # Ensure it binds to all interfaces
+    environment:
+      DOCKER_STATE: migrate
+      RAILS_ENV: production
+      DATABASE_URL: postgres://postgres:@pg:5432/postgres
+      MOJ_PF_ES_URL: http://os:9200/
+      SECRET_KEY_BASE: development_key_here
+
+  worker:
+    build: .
+    depends_on:
+      - pg
+    command: bundle exec sidekiq # or whatever your worker command is
+    environment:
+      RAILS_ENV: production
+      DATABASE_URL: postgres://postgres:@pg:5432/postgres
