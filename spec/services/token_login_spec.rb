@@ -19,7 +19,7 @@ RSpec.describe TokenLogin, type: :service do
 
     context "with active tokens" do
       context "when used in supported browsers" do
-        let(:view) { double(supported_browser?: true) } # rubocop:disable RSpec/VerifiedDoubles
+        let(:view) { double(supported_browser?: true) }
 
         it "logs in and renders view" do
           expect_any_instance_of(described_class).to receive(:login_and_render).with(view) # rubocop:disable RSpec/AnyInstance
@@ -46,7 +46,7 @@ RSpec.describe TokenLogin, type: :service do
       end
 
       context "when used in unsupported browsers" do
-        let(:view) { double(supported_browser?: false) } # rubocop:disable RSpec/VerifiedDoubles
+        let(:view) { double(supported_browser?: false) }
 
         it "redirects to unsupported browser page" do
           expect(view).to receive(:redirect_to_unsupported_browser_warning)

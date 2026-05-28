@@ -27,11 +27,10 @@ module Peoplefinder
 
     ActionView::Base.default_form_builder = GovukElementsFormBuilder::FormBuilder
 
-    # Use AES-256-GCM authenticated encryption for encrypted cookies.
-    # Also, embed cookie expiry in signed or encrypted cookies for increased security.
+    # Configuration for the application, engines, and railties goes here.
     #
-    # This option is not backwards compatible with earlier Rails versions.
-    # It's best enabled when your entire app is migrated and stable on 5.2.
+    # These settings can be overridden in specific environments using the files
+    # in config/environments, which are processed later.
     #
     # Existing cookies will be converted on read then written with the new scheme.
     config.action_dispatch.use_authenticated_cookie_encryption = true

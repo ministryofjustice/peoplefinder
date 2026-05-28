@@ -2,8 +2,8 @@ require "rails_helper"
 
 RSpec.describe HealthCheckController, type: :controller do
   describe "#index" do
-    let(:passing) { double(available?: true, accessible?: true, errors: nil) } # rubocop:disable RSpec/VerifiedDoubles
-    let(:failing) { double(available?: false, accessible?: false, errors: "error reason") } # rubocop:disable RSpec/VerifiedDoubles
+    let(:passing) { double(available?: true, accessible?: true, errors: nil) }
+    let(:failing) { double(available?: false, accessible?: false, errors: "error reason") }
 
     context "when a problem exists" do
       before do
