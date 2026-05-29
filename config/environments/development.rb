@@ -2,6 +2,12 @@ require "active_support/core_ext/integer/time"
 
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
+  #
+  # Used primarily to set Google+ API client ID and secret to
+  # allow log in authentication for local development.
+  config.before_configuration do
+    Dotenv.load Rails.root.join(".env.local")
+  end
 
   # Make code changes take effect immediately without server restart.
   config.enable_reloading = true
