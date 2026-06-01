@@ -103,11 +103,29 @@ describe "Audit trail" do
 
   it "Auditing the creation of a membership", :js do
     create(:group, name: "Digital Justice")
-    person = create(:person, given_name: "Bob", surname: "Smith")
+
+    # Force all string fields to start as "" instead of nil
+    person = create(
+      :person,
+      :with_details,
+      given_name: "Bob",
+      surname: "Smith",
+      current_project: "",
+      description: "",
+      secondary_email: "",
+      secondary_phone_number: "",
+      swap_email_display: false,
+    )
+
     person.memberships.destroy_all
+    person.reload
 
     with_versioning do
       visit edit_person_path(person)
+
+      fill_in "First name", with: "Bob"
+      fill_in "Last name", with: "Smith"
+
       select_in_team_select "Digital Justice"
       within last_membership do
         fill_in "Job title", with: "Jefe"

@@ -4,8 +4,8 @@ describe NotificationSender do
   include PermittedDomainHelper
 
   describe "#send!" do
-    let(:person) { create :person, id: 22 }
-    let(:logged_in_user) { create :person, id: 333 }
+    let(:person) { create :person }
+    let(:logged_in_user) { create :person }
     let(:mailer) { instance_double(ActionMailer::MessageDelivery) }
 
     it "calls process group for each group item returned by unsent groups" do
@@ -20,7 +20,7 @@ describe NotificationSender do
     context "when processing started by another process after this job started" do
       it "does not send any mails" do
         Timecop.freeze 1.hour.ago do
-          create_list :queued_notification, 2, session_id: "abc", person_id: 22, current_user_id: 333
+          create_list :queued_notification, 2, session_id: "abc", person: person, current_user: logged_in_user
         end
         sender = described_class.new
         QueuedNotification.update_all(processing_started_at: 1.minute.ago)
@@ -88,7 +88,7 @@ describe NotificationSender do
     end
 
     def create_qn(options)
-      merged_options = { session_id: "def", person_id: 22, current_user_id: 333 }.merge(options)
+      merged_options = { session_id: "def", person: person, current_user: logged_in_user }.merge(options)
       create :queued_notification, merged_options
     end
 

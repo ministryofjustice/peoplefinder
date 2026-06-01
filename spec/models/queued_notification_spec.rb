@@ -181,16 +181,24 @@ RSpec.describe QueuedNotification, type: :model do
   end
 
   context "when grouped items" do
-    let(:qn_one) { create_notification("def", 1, 200, false, nil, false) }
-    let(:qn_two) { create_notification("def", 1, 200, false, nil, false) }
-    let(:qn_three) { create_notification("def", 1, 200, true, nil, false) }
+    # Instantiate actual objects so standard validations pass smoothly in Rails 8
+    let(:person_one)   { create(:person) }
+    let(:person_two)   { create(:person) }
+    let(:person_three) { create(:person) }
+
+    let(:user_one)     { create(:person) }
+    let(:user_two)     { create(:person) }
+
+    let(:qn_one) { create_notification("def", person_one, user_two, false, nil, false) }
+    let(:qn_two) { create_notification("def", person_one, user_two, false, nil, false) }
+    let(:qn_three) { create_notification("def", person_one, user_two, true, nil, false) }
 
     before do
       Timecop.freeze(30.minutes.ago) do
         # old session abc for person 1 current user 100 - sent
-        create_notification("abc", 1, 100, false, Time.zone.now, true)
-        create_notification("abc", 1, 100, false, Time.zone.now, true)
-        create_notification("abc", 1, 100, true, Time.zone.now, true)
+        create_notification("abc", person_one, user_one, false, Time.zone.now, true)
+        create_notification("abc", person_one, user_one, false, Time.zone.now, true)
+        create_notification("abc", person_one, user_one, true, Time.zone.now, true)
 
         # old session def for person 1, current user 200 - not sent, but finalised
         qn_one
@@ -198,32 +206,32 @@ RSpec.describe QueuedNotification, type: :model do
         qn_three
 
         # old session efg for person 2, current user 200 - not sent, not finalised
-        create_notification("efg", 2, 200, false, nil, false)
-        create_notification("efg", 2, 200, false, nil, false)
+        create_notification("efg", person_two, user_two, false, nil, false)
+        create_notification("efg", person_two, user_two, false, nil, false)
       end
 
       # recent session jkl for person 3 current user 100 - not sent, but finalised
-      create_notification("jkl", 3, 100, false, nil, false)
-      create_notification("jkl", 3, 100, true, nil, false)
+      create_notification("jkl", person_three, user_one, false, nil, false)
+      create_notification("jkl", person_three, user_one, true, nil, false)
 
       # recent session mno for person 3 current user 100 - not sent, not finalised
-      create_notification("mno", 3, 100, false, nil, false)
-      create_notification("mno", 3, 100, false, nil, false)
+      create_notification("mno", person_three, user_one, false, nil, false)
+      create_notification("mno", person_three, user_one, false, nil, false)
 
       # recent_session pqr for person 4 current user 200 - sent, finalised
-      create_notification("pqr", 3, 100, false, 10.minutes.ago, true)
-      create_notification("pqr", 3, 100, true, 10.minutes.ago, true)
+      create_notification("pqr", person_three, user_one, false, 10.minutes.ago, true)
+      create_notification("pqr", person_three, user_one, true, 10.minutes.ago, true)
 
       # recent session stu started but not yet sent
-      create_notification("stu", 3, 100, false, 10.minutes.ago, false)
-      create_notification("stu", 3, 100, true, 10.minutes.ago, false)
+      create_notification("stu", person_three, user_one, false, 10.minutes.ago, false)
+      create_notification("stu", person_three, user_one, true, 10.minutes.ago, false)
     end
 
-    def create_notification(session_id, person_id, user_id, finalised, processing_started_at, sent)
+    def create_notification(session_id, person, current_user, finalised, processing_started_at, sent)
       create(:queued_notification,
              session_id:,
-             person_id:,
-             current_user_id: user_id,
+             person:,             # Pass the relation object directly instead of raw ID integer
+             current_user:,       # Pass the relation object directly instead of raw ID integer
              processing_started_at:,
              edit_finalised: finalised,
              sent:)

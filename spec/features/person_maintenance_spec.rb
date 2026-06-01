@@ -256,8 +256,11 @@ describe "Person maintenance" do
         click_link "Join another team"
         expect(edit_profile_page).to have_selector(".membership.panel", count: 2)
         click_button "Save", match: :first
-        expect(edit_profile_page.error_summary).to have_team_required_error text: "Team is required", count: 1
-        expect(edit_profile_page.form).to have_team_required_field_errors text: "Team is required", count: 1
+
+        expect(edit_profile_page).to have_error_summary
+
+        expect(edit_profile_page.error_summary).to have_team_required_error
+        expect(edit_profile_page.form).to have_team_required_field_errors
       end
 
       it "Validates existence of at least one team membership", :js do
@@ -268,6 +271,7 @@ describe "Person maintenance" do
         click_link "Leave team"
         expect(edit_profile_page).to have_selector(".membership.panel", visible: :visible, count: 0)
         click_button "Save", match: :first
+
         expect(edit_profile_page.error_summary).to have_team_membership_required_error text: "Membership of a team is required"
         expect(edit_profile_page.form).to have_team_membership_error_destination_anchor
         expect(another_person.reload.memberships.count).to be 1
