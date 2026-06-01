@@ -59,10 +59,12 @@ namespace :opensearch do
       unless ENV["DEBUG"]
         begin
           klass.__opensearch__.client.transport.logger.level = Logger::WARN
-        rescue NoMethodError; end # rubocop:disable Lint/SuppressedException
+        rescue NoMethodError # rubocop:disable Lint/SuppressedException
+        end
         begin
           klass.__opensearch__.client.transport.tracer.level = Logger::WARN
-        rescue NoMethodError; end # rubocop:disable Lint/SuppressedException
+        rescue NoMethodError # rubocop:disable Lint/SuppressedException
+        end
       end
 
       total_errors = klass.__opensearch__.import force: ENV.fetch("FORCE", false),
