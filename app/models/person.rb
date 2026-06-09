@@ -51,7 +51,7 @@ class Person < ApplicationRecord
   extend FriendlyId
   friendly_id :slug_source, use: :slugged
 
-  belongs_to :profile_photo
+  belongs_to :profile_photo, optional: true
   has_many :memberships, -> { includes(:group).order("groups.name") }, dependent: :destroy
   has_many :groups, through: :memberships
 

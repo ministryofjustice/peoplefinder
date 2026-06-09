@@ -43,7 +43,7 @@ class PeopleController < ApplicationController
       confirm_or_create
     else
       build_membership @person
-      render :new
+      render :new, status: :unprocessable_entity
     end
   end
 
@@ -57,7 +57,7 @@ class PeopleController < ApplicationController
     if @person.valid?
       confirm_or_update
     else
-      render :edit
+      render :edit, status: :unprocessable_entity
     end
   end
 

@@ -95,9 +95,11 @@ RSpec.describe PersonUpdateNotifier, type: :service do
       context "when last_reminder_email_at is nil" do
         it "last_reminder_email_at is updated" do
           person_two.skip_must_have_team = true
-          person_two.update!(
+
+          person_two.memberships.destroy_all
+
+          person_two.update_columns(
             last_reminder_email_at: nil,
-            memberships: [],
             updated_at: more_than_six_months_ago,
           )
           person_two.skip_must_have_team = false
@@ -114,9 +116,10 @@ RSpec.describe PersonUpdateNotifier, type: :service do
       context "when last_reminder_email_at is > six months ago" do
         it "last_reminder_email_at is updated" do
           person_two.skip_must_have_team = true
-          person_two.update!(
+          person_two.memberships.destroy_all
+
+          person_two.update_columns(
             last_reminder_email_at: more_than_six_months_ago,
-            memberships: [],
             updated_at: more_than_six_months_ago,
           )
           person_two.skip_must_have_team = false

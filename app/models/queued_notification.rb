@@ -22,7 +22,7 @@ class QueuedNotification < ApplicationRecord
   scope :unprocessed, -> { where(processing_started_at: nil) }
 
   belongs_to :person
-  belongs_to :current_user, class_name: "Person"
+  belongs_to :current_user, class_name: "Person", optional: true
 
   # expects an instance of PersonUpdater or PersonCreator to be passed as a parameter
   def self.queue!(updater)
