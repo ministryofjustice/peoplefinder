@@ -41,7 +41,6 @@ class Person < ApplicationRecord
   include ExposeMandatoryFields
   include PersonChangesTracker
   include DataMigrationUtils
-  include Searchable
   include Sanitizable
 
   include ConcatenatedFields
@@ -136,13 +135,6 @@ class Person < ApplicationRecord
 
   def slug_source
     email.present? ? email.split(/@/).first : name
-  end
-
-  def as_indexed_json(_options = {})
-    as_json(
-      only: %i[surname current_project email],
-      methods: %i[name role_and_group location],
-    )
   end
 
   def enqueue_group_completion_score_updates

@@ -3,7 +3,7 @@ class HealthCheckController < ActionController::Base # rubocop:disable Rails/App
 
   def index
     database = HealthCheck::Database.new
-    search = HealthCheck::OpenSearch.new
+    search = HealthCheck::Search.new
 
     checks = {
       database: alive?(database),

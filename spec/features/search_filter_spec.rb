@@ -10,8 +10,6 @@ describe "Search results page" do
     create(:group, name: "SMT Browne")
     create(:person, given_name: "Jim", surname: "Browne")
     create(:person, given_name: "Jon", surname: "Browne")
-    Person.import force: true
-    Person.__opensearch__.refresh_index!
   end
 
   before do

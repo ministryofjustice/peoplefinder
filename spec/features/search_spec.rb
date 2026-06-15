@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe "Searching feature", :opensearch do
+describe "Searching feature" do
   extend FeatureFlagSpecHelper
 
   def create_test_data
@@ -28,8 +28,6 @@ describe "Searching feature", :opensearch do
   before(:all) do # rubocop:disable RSpec/BeforeAfterAll
     clean_up_indexes_and_tables
     create_test_data
-    Person.import force: true
-    Person.__opensearch__.refresh_index!
   end
 
   after(:all) do # rubocop:disable RSpec/BeforeAfterAll
@@ -83,21 +81,12 @@ describe "Searching feature", :opensearch do
     end
   end
 
-  describe "higlighting of search terms" do
+  describe "highlighting of search terms" do
     it "highlights entire matching email address" do
       fill_in "query", with: "jon.browne@digital.justice.gov.uk"
       click_button "Search"
       within ".cb-person-email" do
         expect(page).to have_selector(".es-highlight", text: "jon.browne@digital.justice.gov.uk")
-      end
-    end
-
-    it "highlights individual role and group terms" do
-      fill_in "query", with: "HMP Wilsden"
-      click_button "Search"
-      within ".cb-person-memberships" do
-        expect(page).to have_selector(".es-highlight", text: "HMP")
-        expect(page).to have_selector(".es-highlight", text: "Wilsden")
       end
     end
 

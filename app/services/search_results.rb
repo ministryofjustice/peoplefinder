@@ -4,18 +4,19 @@ class SearchResults
   extend Forwardable
   def_delegators :set, :size, :each, :present?, :empty?
 
-  attr_accessor :set, :contains_exact_match
+  attr_accessor :set, :contains_exact_match, :hit_builder
 
   def initialize(set: [], contains_exact_match: false)
     @set = set
     @contains_exact_match = contains_exact_match
   end
 
-  def each_with_hit(&block)
-    if @set.is_a? OpenSearch::Model::Response::Records
-      @set.each_with_hit(&block)
-    else
-      @set.each(&block)
+  def each_with_hit
+    return to_enum(:each_with_hit) unless block_given?
+
+    set.each do |person|
+      hit = hit_builder&.call(person)
+      yield person, hit
     end
   end
 end

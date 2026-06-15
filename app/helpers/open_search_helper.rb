@@ -1,5 +1,7 @@
 module OpenSearchHelper
-  HIGHLIGHTER_TAGS = (PersonSearch::PRE_TAGS + PersonSearch::POST_TAGS).freeze
+  HIGHLIGHT_OPEN = '<span class="es-highlight">'.freeze
+  HIGHLIGHT_CLOSE = "</span>".freeze
+  HIGHLIGHTER_TAGS = [HIGHLIGHT_OPEN, HIGHLIGHT_CLOSE].freeze
 
   def es_highlighter(hit, person, attribute)
     hit.try(:highlight).try(attribute) ? sanitize_highlighter(hit, person, attribute) : person.__send__(attribute)

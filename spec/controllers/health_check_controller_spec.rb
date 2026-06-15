@@ -8,7 +8,7 @@ RSpec.describe HealthCheckController, type: :controller do
     context "when a problem exists" do
       before do
         allow(HealthCheck::Database).to receive(:new).and_return(failing)
-        allow(HealthCheck::OpenSearch).to receive(:new).and_return(failing)
+        allow(HealthCheck::Search).to receive(:new).and_return(failing)
 
         get :index
       end
@@ -31,7 +31,7 @@ RSpec.describe HealthCheckController, type: :controller do
     context "when everything is ok" do
       before do
         allow(HealthCheck::Database).to receive(:new).and_return(passing)
-        allow(HealthCheck::OpenSearch).to receive(:new).and_return(passing)
+        allow(HealthCheck::Search).to receive(:new).and_return(passing)
 
         get :index
       end

@@ -10,9 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_05_27_161243) do
+ActiveRecord::Schema[8.1].define(version: 2026_06_15_094102) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
+  enable_extension "pg_trgm"
 
   create_table "delayed_jobs", id: :serial, force: :cascade do |t|
     t.integer "attempts", default: 0, null: false
@@ -47,6 +48,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_27_161243) do
     t.text "name"
     t.string "slug"
     t.datetime "updated_at", precision: nil
+    t.index "lower(name) gin_trgm_ops", name: "index_groups_on_name_trgm", using: :gin
     t.index ["ancestry"], name: "index_groups_on_ancestry"
     t.index ["slug"], name: "index_groups_on_slug"
   end
@@ -93,7 +95,10 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_27_161243) do
     t.boolean "works_thursday", default: true
     t.boolean "works_tuesday", default: true
     t.boolean "works_wednesday", default: true
+    t.index "lower((current_project)::text) gin_trgm_ops", name: "index_people_on_current_project_trgm", where: "(current_project IS NOT NULL)", using: :gin
     t.index "lower(email)", name: "index_people_on_lowercase_email", unique: true
+    t.index "lower(given_name) gin_trgm_ops", name: "index_people_on_given_name_trgm", using: :gin
+    t.index "lower(surname) gin_trgm_ops", name: "index_people_on_surname_trgm", using: :gin
     t.index ["slug"], name: "index_people_on_slug", unique: true
   end
 

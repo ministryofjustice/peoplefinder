@@ -9,17 +9,13 @@ RSpec.describe "search/person", type: :view do
     create_list(:group, 4).each do |team|
       create(:person, :member_of, team:, sole_membership: true)
     end
-    Person.import force: true
-    Person.__opensearch__.refresh_index!
   end
 
   after(:all) do # rubocop:disable RSpec/BeforeAfterAll
     clean_up_indexes_and_tables
   end
 
-  let(:people_results) do
-    Person.search(match_all).records
-  end
+  let(:people) { Person.includes(:memberships).all.to_a }
 
   before do
     controller.singleton_class.class_eval do
@@ -29,8 +25,8 @@ RSpec.describe "search/person", type: :view do
       helper_method :current_user
     end
 
-    people_results.each_with_hit.with_index do |(person, hit), idx|
-      render partial: "search/person", locals: { person:, hit:, index: idx, current_user: controller.current_user }
+    people.each_with_index do |person, idx|
+      render partial: "search/person", locals: { person:, hit: nil, index: idx, current_user: controller.current_user }
     end
   end
 
@@ -54,7 +50,7 @@ RSpec.describe "search/person", type: :view do
   end
 
   describe "people links" do
-    let(:list) { people_results.map(&:name) }
+    let(:list) { people.map(&:name) }
     let(:div) { "cb-person-name" }
 
     include_examples "sets analytics attributes"
@@ -63,11 +59,7 @@ RSpec.describe "search/person", type: :view do
   describe "team links" do
     let(:div) { "cb-person-memberships" }
     let(:list) do
-      people_results.map { |person|
-        person.memberships.map do |membership|
-          membership.group.name
-        end
-      }.flatten
+      people.flat_map { |person| person.memberships.map { |m| m.group.name } }
     end
 
     include_examples "sets analytics attributes"
@@ -75,7 +67,7 @@ RSpec.describe "search/person", type: :view do
 
   describe "email links" do
     let(:div) { "cb-person-email" }
-    let(:list) { people_results.map(&:email) }
+    let(:list) { people.map(&:email) }
 
     include_examples "sets analytics attributes"
   end
