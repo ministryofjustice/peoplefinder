@@ -7,7 +7,7 @@
 //= require moj
 //= require_tree ./modules
 //= require_tree ./peoplefinder
-//= require Jcrop/js/jquery.Jcrop.min
+//= require jquery-jcrop/js/jquery.Jcrop.min
 
 
 $(function() {

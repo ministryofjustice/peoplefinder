@@ -72,6 +72,15 @@ jobs:
         with:
           bundler-cache: true
 
+      - name: Install JS dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Copy govuk-frontend CSS
+        run: |
+          mkdir -p public/assets
+          GEM_DIR=$(bundle exec ruby -e "puts Gem.loaded_specs['govuk_publishing_components'].gem_dir")
+          cp "$GEM_DIR/node_modules/govuk-frontend/dist/govuk/govuk-frontend.min.css" public/assets/govuk-frontend.min.css
+
       - name: Precompile assets
         run: bin/rails assets:precompile
 
@@ -121,6 +130,15 @@ jobs:
         uses: ruby/setup-ruby@v1
         with:
           bundler-cache: true
+
+      - name: Install JS dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Copy govuk-frontend CSS
+        run: |
+          mkdir -p public/assets
+          GEM_DIR=$(bundle exec ruby -e "puts Gem.loaded_specs['govuk_publishing_components'].gem_dir")
+          cp "$GEM_DIR/node_modules/govuk-frontend/dist/govuk/govuk-frontend.min.css" public/assets/govuk-frontend.min.css
 
       - name: Precompile assets
         run: bin/rails assets:precompile
