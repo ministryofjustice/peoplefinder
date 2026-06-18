@@ -1,4 +1,3 @@
-.bowerrc
 .env
 .env.example
 .env.local
@@ -10,8 +9,8 @@
 LICENCE.txt
 Procfile
 README.md
-bower.json
 circle.yml
 log/*
+node_modules
 spec
 tmp/*

@@ -17,7 +17,8 @@ RUN apk add --no-cache \
     build-base \
     ruby-dev \
     postgresql-dev \
-    yaml-dev
+    yaml-dev \
+    yarn
 
 COPY Gemfile* .ruby-version ./
 
@@ -25,7 +26,15 @@ RUN bundle config deployment true && \
     bundle config without development test && \
     bundle install --jobs 4 --retry 3
 
+COPY package.json yarn.lock ./
+
+RUN yarn install --frozen-lockfile
+
 COPY . .
+
+RUN mkdir -p public/assets && \
+    GEM_DIR=$(bundle exec ruby -e "puts Gem.loaded_specs['govuk_publishing_components'].gem_dir") && \
+    cp "$GEM_DIR/node_modules/govuk-frontend/dist/govuk/govuk-frontend.min.css" public/assets/govuk-frontend.min.css
 
 RUN RAILS_ENV=production SECRET_KEY_BASE_DUMMY=1 GOVUK_APP_DOMAIN=not_real \
     GOVUK_WEBSITE_ROOT=not_real SUPPORT_EMAIL=not_real \

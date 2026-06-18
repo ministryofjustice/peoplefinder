@@ -120,7 +120,7 @@ $border-color: #bfc1c3;
 @import "elements/components";                    // GOV.UK prefixed styles - blue highlighted box
 @import "elements/shame";                         // Hacks and workarounds that will go away eventually
 
-@import "Jcrop/css/jquery.Jcrop.min";
+@import "jquery-jcrop/css/jquery.Jcrop.min";
 
 @import "elements-local/*";
 @import "modules/*";

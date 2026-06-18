@@ -2,6 +2,6 @@
   "name": "peoplefinder",
   "private": true,
   "dependencies": {
-    "Jcrop": "~0.9.12"
+    "jquery-jcrop": "~0.9.15"
   }
 }
