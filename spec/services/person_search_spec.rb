@@ -2,6 +2,7 @@ require "rails_helper"
 require_relative "shared_examples_for_search"
 
 RSpec.describe PersonSearch do
+
   let!(:group) { create(:group, name: "Digital Services") }
 
   before do
