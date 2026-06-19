@@ -88,7 +88,7 @@ jobs:
         run: bundle exec parallel_rspec --exclude-pattern spec/uploaders -n "${CI_TOTAL_JOBS}" --only-group "${CI_JOB_INDEX}" --group-by "runtime"
 
       - name: Upload coverage
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           include-hidden-files: true
           name: coverage-${{env.CI_JOB_INDEX}}
@@ -147,7 +147,7 @@ jobs:
         run: bundle exec rspec spec/uploaders
 
       - name: Upload coverage
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           include-hidden-files: true
           name: coverage-graphics-magick
