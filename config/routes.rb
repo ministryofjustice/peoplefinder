@@ -41,6 +41,8 @@ Rails.application.routes.draw do
   match "/audit_trail", to: "versions#index", via: [:get]
   match "/audit_trail/undo/:id", to: "versions#undo", via: [:post]
   match "/search", to: "search#index", via: [:get]
+  get  "/search/settings", to: "search#settings", as: :search_settings
+  post "/search/toggle_pg_search", to: "search#toggle_pg_search", as: :toggle_pg_search
 
   get "/groups/:id", to: redirect("/teams/%{id}")
   get "/groups/:id/edit", to: redirect("/teams/%{id}/edit")

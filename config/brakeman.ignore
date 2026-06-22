@@ -99,6 +99,28 @@
       "user_input": "self.class",
       "confidence": "Weak",
       "note": "Injection is class constant not based on user input - therefore no issue."
+    },
+    {
+      "warning_type": "SQL Injection",
+      "warning_code": 0,
+      "fingerprint": "b0596bd79c2bc394e18e1446cabc0db957b68878ff598cdf1f15fc33c818ff60",
+      "check_name": "SQL",
+      "message": "Possible SQL injection",
+      "file": "app/services/person_pg_search.rb",
+      "line": 218,
+      "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
+      "code": "Person.find_by_sql([\"SELECT p.*,\\n  (\\n    CASE WHEN lower(p.given_name) = ANY(ARRAY[#{placeholders(terms.size)}]) THEN 20\\n         WHEN lower(p.given_name) LIKE ANY(ARRAY[#{placeholders(terms.size)}]) THEN 12\\n         ELSE 0 END +\\n    CASE WHEN lower(p.surname) = ANY(ARRAY[#{placeholders(terms.size)}]) THEN 20\\n         WHEN lower(p.surname) LIKE ANY(ARRAY[#{placeholders(terms.size)}]) THEN 12\\n         ELSE 0 END +\\n    similarity(\\n      lower(COALESCE(p.given_name, '') || ' ' || COALESCE(p.surname, '')),\\n      lower(?)\\n    ) * 8 +\\n    CASE WHEN EXISTS (\\n      SELECT 1 FROM memberships m JOIN groups g ON g.id = m.group_id\\n      WHERE m.person_id = p.id AND (\\n        lower(g.name) LIKE ANY(ARRAY[#{placeholders(terms.size)}])\\n        OR lower(COALESCE(m.role, '')) LIKE ANY(ARRAY[#{placeholders(terms.size)}])\\n      )\\n    ) THEN 6 ELSE 0 END +\\n    CASE WHEN lower(COALESCE(p.current_project, '')) LIKE ANY(ARRAY[#{placeholders(terms.size)}]) THEN 4 ELSE 0 END +\\n    CASE WHEN lower(\\n      COALESCE(p.location_in_building, '') || ' ' ||\\n      COALESCE(p.building, '') || ' ' ||\\n      COALESCE(p.city, '')\\n    ) LIKE ANY(ARRAY[#{placeholders(terms.size)}]) THEN 4 ELSE 0 END +\\n    CASE WHEN lower(COALESCE(p.description, '')) LIKE ANY(ARRAY[#{placeholders(terms.size)}]) THEN 2 ELSE 0 END\\n  ) AS search_rank\\nFROM people p\\nWHERE (\\n  lower(p.given_name) = ANY(ARRAY[#{placeholders(terms.size)}])\\n  OR lower(p.surname) = ANY(ARRAY[#{placeholders(terms.size)}])\\n  OR lower(p.given_name) LIKE ANY(ARRAY[#{placeholders(terms.size)}])\\n  OR lower(p.surname) LIKE ANY(ARRAY[#{placeholders(terms.size)}])\\n  OR similarity(lower(COALESCE(p.given_name, '')), lower(?)) > ?\\n  OR similarity(lower(COALESCE(p.surname, '')), lower(?)) > ?\\n  OR similarity(\\n    lower(COALESCE(p.given_name, '') || ' ' || COALESCE(p.surname, '')),\\n    lower(?)\\n  ) > ?\\n  OR EXISTS (\\n    SELECT 1 FROM memberships m JOIN groups g ON g.id = m.group_id\\n    WHERE m.person_id = p.id AND (\\n      lower(g.name) LIKE ANY(ARRAY[#{placeholders(terms.size)}])\\n      OR lower(COALESCE(m.role, '')) LIKE ANY(ARRAY[#{placeholders(terms.size)}])\\n    )\\n  )\\n  OR lower(COALESCE(p.current_project, '')) LIKE ANY(ARRAY[#{placeholders(terms.size)}])\\n  OR lower(\\n    COALESCE(p.location_in_building, '') || ' ' ||\\n    COALESCE(p.building, '') || ' ' ||\\n    COALESCE(p.city, '')\\n  ) LIKE ANY(ARRAY[#{placeholders(terms.size)}])\\n  OR lower(COALESCE(p.description, '')) LIKE ANY(ARRAY[#{placeholders(terms.size)}])\\n)\\nORDER BY search_rank DESC, p.surname ASC, p.given_name ASC\\nLIMIT 100 /* MAX_RESULTS */\\n\", *[*terms, *terms.map do\n \"%#{escape_like(term)}%\"\n end, *terms, *terms.map do\n \"%#{escape_like(term)}%\"\n end, @query, *terms.map do\n \"%#{escape_like(term)}%\"\n end, *terms.map do\n \"%#{escape_like(term)}%\"\n end, *terms.map do\n \"%#{escape_like(term)}%\"\n end, *terms.map do\n \"%#{escape_like(term)}%\"\n end, *terms.map do\n \"%#{escape_like(term)}%\"\n end, *terms, *terms, *terms.map do\n \"%#{escape_like(term)}%\"\n end, *terms.map do\n \"%#{escape_like(term)}%\"\n end, @query, 0.25.to_f, @query, 0.25.to_f, @query, 0.25.to_f, *terms.map do\n \"%#{escape_like(term)}%\"\n end, *terms.map do\n \"%#{escape_like(term)}%\"\n end, *terms.map do\n \"%#{escape_like(term)}%\"\n end, *terms.map do\n \"%#{escape_like(term)}%\"\n end, *terms.map do\n \"%#{escape_like(term)}%\"\n end]])",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "PersonPgSearch",
+        "method": "pg_search"
+      },
+      "user_input": "placeholders(terms.size)",
+      "confidence": "Medium",
+      "cwe_id": [
+        89
+      ]
     }
   ],
   "updated": "2023-10-18 09:49:42 +0100",

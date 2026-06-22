@@ -1,0 +1,22 @@
+- content_for :breadcrumbs do
+  = breadcrumbs(Home.path + ['Search settings'])
+
+.grid-row
+  .column-two-thirds
+    %h1.heading-xlarge Search settings
+
+    .govuk-summary-card
+      .govuk-summary-card__title-wrapper
+        %h2.govuk-summary-card__title Set Search backend
+      .govuk-summary-card__content
+        %dl.govuk-summary-list
+          .govuk-summary-list__row
+            %dt.govuk-summary-list__key Search backend
+            %dd.govuk-summary-list__value
+              - if pg_search?
+                %strong PostgreSQL
+              - else
+                %strong OpenSearch
+            %dd.govuk-summary-list__actions
+              = form_with url: toggle_pg_search_path, method: :post do |f|
+                = f.submit pg_search? ? "Switch to OpenSearch" : "Switch to PostgreSQL", class: "govuk-button govuk-button--secondary"
