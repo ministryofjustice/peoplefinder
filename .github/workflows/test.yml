@@ -16,7 +16,7 @@ jobs:
       RAILS_ENV: test
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Setup Ruby and install gems
         uses: ruby/setup-ruby@v1
@@ -65,7 +65,7 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Setup Ruby and install gems
         uses: ruby/setup-ruby@v1
@@ -121,7 +121,7 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Install GraphicsMagick
         run: sudo apt-get update && sudo apt-get install -y graphicsmagick
@@ -161,7 +161,7 @@ jobs:
       RAILS_ENV: test
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Setup Ruby and install gems
         uses: ruby/setup-ruby@v1
