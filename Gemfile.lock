@@ -157,6 +157,7 @@ GEM
       bigdecimal
       rexml
     crass (1.0.6)
+    csv (3.3.5)
     daemons (1.4.1)
     database_cleaner (2.1.0)
       database_cleaner-active_record (>= 2, < 3)
@@ -843,6 +844,7 @@ DEPENDENCIES
   capybara
   capybara-lockstep
   carrierwave
+  csv
   daemons
   database_cleaner
   database_cleaner-active_record (>= 2.2.0)
@@ -902,7 +904,7 @@ DEPENDENCIES
   will_paginate-bootstrap (~> 1.0, >= 1.0.1)
 
 RUBY VERSION
-   ruby 3.3.11p205
+   ruby 3.4.9p82
 
 BUNDLED WITH
    2.4.19
