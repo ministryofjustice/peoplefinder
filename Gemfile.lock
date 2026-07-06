@@ -361,7 +361,8 @@ GEM
       logger
       mime-types-data (~> 3.2025, >= 3.2025.0507)
     mime-types-data (3.2026.0414)
-    mini_magick (4.13.2)
+    mini_magick (5.3.1)
+      logger
     mini_mime (1.1.5)
     minitest (6.0.6)
       drb (~> 2.0)
@@ -870,7 +871,7 @@ DEPENDENCIES
   listen
   logstasher (~> 2.1.5)
   mail (>= 2.8)
-  mini_magick (= 4.13.2)
+  mini_magick (~> 5.0)
   netaddr (~> 2.0.6)
   opensearch-model!
   opensearch-rails!

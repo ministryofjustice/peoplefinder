@@ -19,10 +19,9 @@ end
 module CarrierWave
   module MiniMagick
     def quality(percentage)
-      manipulate! do |img|
-        img.quality(percentage.to_s)
-        img = yield(img) if block_given?
-        img
+      minimagick! do |builder|
+        builder = yield(builder) if block_given?
+        builder.quality percentage.to_s
       end
     end
   end
