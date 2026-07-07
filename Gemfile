@@ -26,7 +26,7 @@ gem "haml-rails"
 gem "jbuilder", "~> 2.13"
 gem "jquery-rails"
 gem "mail", ">= 2.8"
-gem "mini_magick", "= 4.13.2" # v5 has breaking changes
+gem "mini_magick", "~> 5.0"
 gem "netaddr", "~> 2.0.6"
 gem "opensearch-model", github: "compliance-innovations/opensearch-rails"
 gem "opensearch-rails", github: "compliance-innovations/opensearch-rails"

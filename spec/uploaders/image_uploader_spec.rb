@@ -58,6 +58,21 @@ RSpec.describe ImageUploader, type: :uploader do
     end
   end
 
+  context "when ImageMagick cannot decode the uploaded file" do
+    before do
+      allow_any_instance_of(described_class).to receive(:minimagick!).and_raise( # rubocop:disable RSpec/AnyInstance
+        CarrierWave::ProcessingError, I18n.t(:"errors.messages.processing_error")
+      )
+    end
+
+    let(:profile_photo) { build(:profile_photo, image: sample_image) }
+
+    it "adds a helpful validation error instead of the generic processing error" do
+      expect(profile_photo).not_to be_valid
+      expect(profile_photo.errors[:image]).to include("is not in a supported format. Please upload a JPEG, PNG, or GIF.")
+    end
+  end
+
   context "with a person object" do
     subject(:legacy_image) { person.legacy_image }
 

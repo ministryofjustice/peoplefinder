@@ -94,7 +94,7 @@ jobs:
           name: coverage-${{env.CI_JOB_INDEX}}
           path: coverage/.resultset.json
 
-  graphics-magick-tests:
+  uploader-tests:
     runs-on: ubuntu-latest
     permissions:
       checks: write
@@ -123,8 +123,8 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Install GraphicsMagick
-        run: sudo apt-get update && sudo apt-get install -y graphicsmagick
+      - name: Install ImageMagick
+        run: sudo apt-get update && sudo apt-get install -y imagemagick
 
       - name: Setup Ruby and install gems
         uses: ruby/setup-ruby@v1
@@ -143,18 +143,18 @@ jobs:
       - name: Precompile assets
         run: bin/rails assets:precompile
 
-      - name: Run graphicsmagick tests
+      - name: Run uploader tests
         run: bundle exec rspec spec/uploaders
 
       - name: Upload coverage
         uses: actions/upload-artifact@v4
         with:
           include-hidden-files: true
-          name: coverage-graphics-magick
+          name: coverage-uploader
           path: coverage/.resultset.json
 
   coverage:
-    needs: [test, graphics-magick-tests]
+    needs: [test, uploader-tests]
     runs-on: ubuntu-latest
     permissions: write-all
     env:

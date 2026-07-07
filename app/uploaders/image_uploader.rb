@@ -17,12 +17,12 @@ class ImageUploader < CarrierWave::Uploader::Base
     [version_name, "no_photo.png"].compact.join("_")
   end
 
-  process :auto_orient # this should go before all other "process" steps
+  process :auto_orient
 
   def auto_orient
-    manipulate! do |image|
-      image.tap(&:auto_orient)
-    end
+    minimagick!(&:auto_orient)
+  rescue CarrierWave::ProcessingError
+    raise CarrierWave::IntegrityError, "is not in a supported format. Please upload a JPEG, PNG, or GIF."
   end
 
   version :croppable do
@@ -37,10 +37,9 @@ class ImageUploader < CarrierWave::Uploader::Base
 
   def crop
     if model.crop_x.present?
-      manipulate! do |img|
+      minimagick! do |builder|
         x, y, w, h = origin_and_dimensions model
-        img.crop "#{w}x#{h}+#{x}+#{y}"
-        img
+        builder.crop "#{w}x#{h}+#{x}+#{y}"
       end
     end
   end
@@ -63,8 +62,8 @@ class ImageUploader < CarrierWave::Uploader::Base
   end
 
   def dimensions
-    w, h = ::MiniMagick::Image.open(url_or_file)[:dimensions]
-    { width: w, height: h }
+    image = ::MiniMagick::Image.open(url_or_file)
+    { width: image.width, height: image.height }
   end
 
 private
