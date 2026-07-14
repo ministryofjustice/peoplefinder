@@ -87,7 +87,7 @@ private
     words = query_words
     expanded = expand_with_synonyms(words)
 
-    @results.set = pg_search(expanded)
+    @results.set = pg_search(words, expanded)
     @results.hit_builder = build_hit_builder(expanded)
     @results.contains_exact_match = exact_match_exists?
   end
@@ -122,20 +122,23 @@ private
     ->(person) { Hit.new(person, pattern) }
   end
 
-  def pg_search(terms)
-    return [] if terms.empty?
+  # words        — original query terms, used for LIKE (substring) + exact matching
+  # all_terms    — words + synonyms, synonyms used for exact matching only
+  def pg_search(words, all_terms = words)
+    return [] if words.empty?
 
-    like_terms = terms.map { |term| "%#{escape_like(term)}%" }
-    ph = placeholders(terms.size)
+    like_terms = words.map { |term| "%#{escape_like(term)}%" }
+    ph_all  = placeholders(all_terms.size)
+    ph_like = placeholders(words.size)
 
     sql = <<~SQL
       SELECT p.*,
         (
-          CASE WHEN lower(p.given_name) = ANY(ARRAY[#{ph}]) THEN 20
-               WHEN lower(p.given_name) LIKE ANY(ARRAY[#{ph}]) THEN 12
+          CASE WHEN lower(p.given_name) = ANY(ARRAY[#{ph_all}]) THEN 20
+               WHEN lower(p.given_name) LIKE ANY(ARRAY[#{ph_like}]) THEN 12
                ELSE 0 END +
-          CASE WHEN lower(p.surname) = ANY(ARRAY[#{ph}]) THEN 20
-               WHEN lower(p.surname) LIKE ANY(ARRAY[#{ph}]) THEN 12
+          CASE WHEN lower(p.surname) = ANY(ARRAY[#{ph_all}]) THEN 20
+               WHEN lower(p.surname) LIKE ANY(ARRAY[#{ph_like}]) THEN 12
                ELSE 0 END +
           similarity(
             lower(COALESCE(p.given_name, '') || ' ' || COALESCE(p.surname, '')),
@@ -144,24 +147,24 @@ private
           CASE WHEN EXISTS (
             SELECT 1 FROM memberships m JOIN groups g ON g.id = m.group_id
             WHERE m.person_id = p.id AND (
-              lower(g.name) LIKE ANY(ARRAY[#{ph}])
-              OR lower(COALESCE(m.role, '')) LIKE ANY(ARRAY[#{ph}])
+              lower(g.name) LIKE ANY(ARRAY[#{ph_like}])
+              OR lower(COALESCE(m.role, '')) LIKE ANY(ARRAY[#{ph_like}])
             )
           ) THEN 6 ELSE 0 END +
-          CASE WHEN lower(COALESCE(p.current_project, '')) LIKE ANY(ARRAY[#{ph}]) THEN 4 ELSE 0 END +
+          CASE WHEN lower(COALESCE(p.current_project, '')) LIKE ANY(ARRAY[#{ph_like}]) THEN 4 ELSE 0 END +
           CASE WHEN lower(
             COALESCE(p.location_in_building, '') || ' ' ||
             COALESCE(p.building, '') || ' ' ||
             COALESCE(p.city, '')
-          ) LIKE ANY(ARRAY[#{ph}]) THEN 4 ELSE 0 END +
-          CASE WHEN lower(COALESCE(p.description, '')) LIKE ANY(ARRAY[#{ph}]) THEN 2 ELSE 0 END
+          ) LIKE ANY(ARRAY[#{ph_like}]) THEN 4 ELSE 0 END +
+          CASE WHEN lower(COALESCE(p.description, '')) LIKE ANY(ARRAY[#{ph_like}]) THEN 2 ELSE 0 END
         ) AS search_rank
       FROM people p
       WHERE (
-        lower(p.given_name) = ANY(ARRAY[#{ph}])
-        OR lower(p.surname) = ANY(ARRAY[#{ph}])
-        OR lower(p.given_name) LIKE ANY(ARRAY[#{ph}])
-        OR lower(p.surname) LIKE ANY(ARRAY[#{ph}])
+        lower(p.given_name) = ANY(ARRAY[#{ph_all}])
+        OR lower(p.surname) = ANY(ARRAY[#{ph_all}])
+        OR lower(p.given_name) LIKE ANY(ARRAY[#{ph_like}])
+        OR lower(p.surname) LIKE ANY(ARRAY[#{ph_like}])
         OR similarity(lower(COALESCE(p.given_name, '')), lower(?)) > ?
         OR similarity(lower(COALESCE(p.surname, '')), lower(?)) > ?
         OR similarity(
@@ -171,17 +174,17 @@ private
         OR EXISTS (
           SELECT 1 FROM memberships m JOIN groups g ON g.id = m.group_id
           WHERE m.person_id = p.id AND (
-            lower(g.name) LIKE ANY(ARRAY[#{ph}])
-            OR lower(COALESCE(m.role, '')) LIKE ANY(ARRAY[#{ph}])
+            lower(g.name) LIKE ANY(ARRAY[#{ph_like}])
+            OR lower(COALESCE(m.role, '')) LIKE ANY(ARRAY[#{ph_like}])
           )
         )
-        OR lower(COALESCE(p.current_project, '')) LIKE ANY(ARRAY[#{ph}])
+        OR lower(COALESCE(p.current_project, '')) LIKE ANY(ARRAY[#{ph_like}])
         OR lower(
           COALESCE(p.location_in_building, '') || ' ' ||
           COALESCE(p.building, '') || ' ' ||
           COALESCE(p.city, '')
-        ) LIKE ANY(ARRAY[#{ph}])
-        OR lower(COALESCE(p.description, '')) LIKE ANY(ARRAY[#{ph}])
+        ) LIKE ANY(ARRAY[#{ph_like}])
+        OR lower(COALESCE(p.description, '')) LIKE ANY(ARRAY[#{ph_like}])
       )
       ORDER BY search_rank DESC, p.surname ASC, p.given_name ASC
       LIMIT 100 /* MAX_RESULTS */
@@ -190,9 +193,9 @@ private
     thresh = SIMILARITY_THRESHOLD.to_f
     binds = [
       # SELECT scoring
-      *terms,       # given_name =
+      *all_terms,   # given_name =
       *like_terms,  # given_name LIKE
-      *terms,       # surname =
+      *all_terms,   # surname =
       *like_terms,  # surname LIKE
       @query,       # full-name similarity * 8
       *like_terms,  # EXISTS: group name
@@ -201,21 +204,21 @@ private
       *like_terms,  # location
       *like_terms,  # description
       # WHERE clause
-      *terms,       # given_name =
-      *terms,       # surname =
+      *all_terms,   # given_name =
+      *all_terms,   # surname =
       *like_terms,  # given_name LIKE
       *like_terms,  # surname LIKE
       @query,
-      thresh, # given_name similarity
+      thresh,       # given_name similarity
       @query,
-      thresh, # surname similarity
+      thresh,       # surname similarity
       @query,
-      thresh, # full-name similarity
+      thresh,       # full-name similarity
       *like_terms,  # EXISTS: group name
       *like_terms,  # EXISTS: role
       *like_terms,  # current_project
       *like_terms,  # location
-      *like_terms, # description
+      *like_terms,  # description
     ]
 
     Person.find_by_sql([sql, *binds])
