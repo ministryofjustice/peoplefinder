@@ -87,8 +87,8 @@ RSpec.describe SearchController, type: :controller do
   describe "GET #index using postgres" do
     let(:group) { create(:group) }
     let(:person) { create(:person) }
-    let(:person_search) { instance_double(PersonSearch, perform_search: people_results) }
-    let(:group_search)  { instance_double(GroupSearch,  perform_search: team_results) }
+    let(:person_search) { instance_double(PersonPgSearch, perform_search: people_results) }
+    let(:group_search)  { instance_double(GroupSearch, perform_search: team_results) }
     let(:people_results) { PgSearchResults.new }
     let(:team_results)   { PgSearchResults.new }
     let(:search_filters) { %w[people teams] }
@@ -96,7 +96,7 @@ RSpec.describe SearchController, type: :controller do
     before do
       mock_logged_in_user
       allow(controller).to receive(:pg_search?).and_return(true)
-      allow(PersonSearch).to receive(:new).and_return(person_search)
+      allow(PersonPgSearch).to receive(:new).and_return(person_search)
       allow(GroupSearch).to receive(:new).and_return(group_search)
     end
 
@@ -105,7 +105,7 @@ RSpec.describe SearchController, type: :controller do
 
       it "searches for the query using PgSearchResults" do
         allow(GroupSearch).to receive(:new).with(query, an_instance_of(PgSearchResults)).and_return(group_search)
-        allow(PersonSearch).to receive(:new).with(query, an_instance_of(PgSearchResults)).and_return(person_search)
+        allow(PersonPgSearch).to receive(:new).with(query, an_instance_of(PgSearchResults)).and_return(person_search)
         expect(group_search).to receive(:perform_search)
         expect(person_search).to receive(:perform_search)
         get_index

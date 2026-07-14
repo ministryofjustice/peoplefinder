@@ -6,7 +6,7 @@ class SearchController < ApplicationController
   def index
     @team_results = search(GroupSearch) if teams_filter?
 
-    @people_results = search(PersonSearch) if people_filter?
+    @people_results = people_results
   end
 
   def settings; end
@@ -54,7 +54,7 @@ private
   end
 
   def people_results
-    return pg_search(PersonPgSearch) if pg_search?
+    return pg_search(PersonPgSearch) if pg_search? && people_filter?
 
     search(PersonSearch) if people_filter?
   end

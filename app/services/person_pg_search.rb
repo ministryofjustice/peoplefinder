@@ -88,7 +88,7 @@ private
     expanded = expand_with_synonyms(words)
 
     @results.set = pg_search(expanded)
-    @results.hit_builder = build_hit_builder(words)
+    @results.hit_builder = build_hit_builder(expanded)
     @results.contains_exact_match = exact_match_exists?
   end
 
