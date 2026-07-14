@@ -118,7 +118,7 @@ private
   def build_hit_builder(words)
     return nil if words.empty?
 
-    pattern = Regexp.new(words.map { |w| Regexp.escape(w) }.join("|"), Regexp::IGNORECASE)
+    pattern = Regexp.new(words.map { |w| "\\b#{Regexp.escape(w)}\\b" }.join("|"), Regexp::IGNORECASE)
     ->(person) { Hit.new(person, pattern) }
   end
 
