@@ -7,14 +7,12 @@
 
   .grid-row
     .column-two-thirds
-      = check_box_tag 'search_filters[]', :people, people_filter?, id: :people, :onclick => "javascript: submit_search();"
+      = check_box_tag 'search_filters[]', :people, people_filter?, id: :people
       = label_tag :people, t('.people_checkbox_label')
   .grid-row
     .column-two-thirds
-      = check_box_tag 'search_filters[]', :teams, teams_filter?, id: :teams, :onclick => "javascript: submit_search();"
+      = check_box_tag 'search_filters[]', :teams, teams_filter?, id: :teams
       = label_tag :teams, t('.teams_checkbox_label')
 
-:javascript
-  function submit_search(){
-    document.getElementById('mod-search-filter-form').submit();
-  }
+- filter_js = "function submit_search(){document.getElementById('mod-search-filter-form').submit();}document.addEventListener('DOMContentLoaded',function(){['people','teams'].forEach(function(id){var cb=document.getElementById(id);if(cb)cb.addEventListener('change',submit_search);});});"
+= javascript_tag filter_js, nonce: content_security_policy_nonce
