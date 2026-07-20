@@ -94,7 +94,7 @@ describe "Person maintenance" do
 
     within(".team.selected") { click_link "Back" }
     expect(page).to have_selector("a.subteam-link", text: /CSG/, visible: :visible)
-    within(".team.selected") { click_link "CSG" }
+    find("a.subteam-link", text: "CSG").click
     click_link "Done"
     expect(page).to have_selector(".editable-fields", visible: :hidden)
 

@@ -43,46 +43,6 @@
     {
       "warning_type": "SQL Injection",
       "warning_code": 0,
-      "fingerprint": "9608d3e02792389ffc5f224e8071444cab8db4bf6b1d4a1a51f4b296faf1ff1c",
-      "check_name": "SQL",
-      "message": "Possible SQL injection",
-      "file": "app/models/concerns/activation.rb",
-      "line": 8,
-      "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
-      "code": "acquired_people(:from => from, :before => before).where(\"#{completion_score_calculation} > ?\", 0.8)",
-      "render_path": null,
-      "location": {
-        "type": "method",
-        "class": "Concerns::Activation",
-        "method": "activated_percentage"
-      },
-      "user_input": "completion_score_calculation",
-      "confidence": "Weak",
-      "note": ""
-    },
-    {
-      "warning_type": "SQL Injection",
-      "warning_code": 0,
-      "fingerprint": "b7fe57815e2a8a9290f71394b1f4c6c799ed8e9b96c0f6f1dcde04a0a406caf5",
-      "check_name": "SQL",
-      "message": "Possible SQL injection",
-      "file": "app/models/concerns/activation.rb",
-      "line": 8,
-      "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
-      "code": "acquired_people(:from => from, :before => before).where(\"#{completion_score_calculation} > ?\", 0.8)",
-      "render_path": null,
-      "location": {
-        "type": "method",
-        "class": "Activation",
-        "method": "activated_percentage"
-      },
-      "user_input": "completion_score_calculation",
-      "confidence": "Weak",
-      "note": ""
-    },
-    {
-      "warning_type": "SQL Injection",
-      "warning_code": 0,
       "fingerprint": "cbc7ef3a54f9d006a9d1fd593bed3d4af8776a2103e8463ea145c9efd6a71055",
       "check_name": "SQL",
       "message": "Possible SQL injection",
@@ -99,8 +59,31 @@
       "user_input": "self.class",
       "confidence": "Weak",
       "note": "Injection is class constant not based on user input - therefore no issue."
+    },
+    {
+      "warning_type": "SQL Injection",
+      "warning_code": 0,
+      "fingerprint": "566dbd496ac8eab3625d60165b4a8a68cc39d1f5694cba93abdec66d835f5c69",
+      "check_name": "SQL",
+      "message": "Possible SQL injection",
+      "file": "app/services/person_pg_search.rb",
+      "line": 224,
+      "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
+      "code": "Person.find_by_sql([sql, *binds])",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "PersonPgSearch",
+        "method": "pg_search"
+      },
+      "user_input": "placeholders(all_terms.size)",
+      "confidence": "Medium",
+      "cwe_id": [
+        89
+      ],
+      "note": "False positive — interpolation only generates '?, ?, ?' placeholder strings; all user input is passed as parameterised binds."
     }
   ],
-  "updated": "2023-10-18 09:49:42 +0100",
-  "brakeman_version": "5.2.3"
+  "updated": "2026-07-14 15:36:03 +0100",
+  "brakeman_version": "8.0.4"
 }
