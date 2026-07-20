@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe "Searching feature", :opensearch do
+describe "Searching feature" do
   extend FeatureFlagSpecHelper
 
   def create_test_data
@@ -28,8 +28,6 @@ describe "Searching feature", :opensearch do
   before(:all) do # rubocop:disable RSpec/BeforeAfterAll
     clean_up_indexes_and_tables
     create_test_data
-    Person.import force: true
-    Person.__opensearch__.refresh_index!
   end
 
   after(:all) do # rubocop:disable RSpec/BeforeAfterAll

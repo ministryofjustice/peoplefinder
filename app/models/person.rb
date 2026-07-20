@@ -41,7 +41,6 @@ class Person < ApplicationRecord
   include ExposeMandatoryFields
   include PersonChangesTracker
   include DataMigrationUtils
-  include Searchable
   include Sanitizable
 
   include ConcatenatedFields

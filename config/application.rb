@@ -73,8 +73,6 @@ module Peoplefinder
 
     config.active_record.schema_format = :ruby
 
-    config.open_search_url = ENV["MOJ_PF_ES_URL"]
-
     config.rack_timeout = (ENV["RACK_TIMEOUT"] || 14)
 
     config.max_tokens_per_hour = ENV["MAX_TOKENS_PER_HOUR"]

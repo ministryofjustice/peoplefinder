@@ -3,11 +3,9 @@ class HealthCheckController < ActionController::Base # rubocop:disable Rails/App
 
   def index
     database = HealthCheck::Database.new
-    search = HealthCheck::OpenSearch.new
 
     checks = {
       database: alive?(database),
-      search: alive?(search),
     }
 
     unless checks.values.all?
@@ -15,7 +13,6 @@ class HealthCheckController < ActionController::Base # rubocop:disable Rails/App
 
       errors = {
         database: database.errors,
-        search: search.errors,
       }
       Sentry.capture_message("Healthcheck failed: #{errors}")
     end
