@@ -14,9 +14,8 @@
   = 'Go to the People Finder homepage'
 
 - content_for :head do
-
-  :javascript
-    (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-MRLL6W5');
+  - gtm_snippet = "(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-MRLL6W5');"
+  = javascript_tag gtm_snippet, nonce: content_security_policy_nonce
 
   = stylesheet_link_tag "/assets/govuk-frontend.min.css"
   = stylesheet_link_tag "application", media: "all"
