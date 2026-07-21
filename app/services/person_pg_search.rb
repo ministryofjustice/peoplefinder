@@ -17,7 +17,7 @@ class PersonPgSearch
     results
   end
 
-  # Lightweight struct that mimics the OpenSearch hit interface used by es_highlighter.
+  # Lightweight struct that provides hit/highlight data for es_highlighter.
   class Hit
     attr_reader :highlight
 

@@ -76,9 +76,5 @@ private
     array.unshift preposition
     safe_join(array, sep)
   end
-
-  def pg_search?
-    session[:pg_search] == true
-  end
 end
 # rubocop:enable Rails/HelperInstanceVariable

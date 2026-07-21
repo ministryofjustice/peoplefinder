@@ -1,13 +1,4 @@
 services:
-  os:
-    image: opensearchproject/opensearch:2.11.0
-    environment:
-      - "discovery.type=single-node"
-      - "DISABLE_INSTALL_DEMO_CONFIG=true"
-      - "DISABLE_SECURITY_PLUGIN=true"
-    ports:
-      - "9200:9200"
-
   pg:
     image: postgres:9.4
     environment:
@@ -18,7 +9,6 @@ services:
   app:
     build: .
     depends_on:
-      - os
       - pg
     ports:
       - "3000:3000"
@@ -27,7 +17,6 @@ services:
       DOCKER_STATE: migrate
       RAILS_ENV: production
       DATABASE_URL: postgres://postgres:@pg:5432/postgres
-      MOJ_PF_ES_URL: http://os:9200/
       SECRET_KEY_BASE: development_key_here
 
   worker:

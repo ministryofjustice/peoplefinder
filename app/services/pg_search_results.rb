@@ -2,7 +2,7 @@ require "forwardable"
 
 class PgSearchResults
   extend Forwardable
-  def_delegators :set, :size, :each, :present?, :empty?
+  def_delegators :set, :size, :each, :map, :present?, :empty?
 
   attr_accessor :set, :contains_exact_match, :hit_builder
 

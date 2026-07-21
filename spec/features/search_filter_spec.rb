@@ -4,14 +4,11 @@ describe "Search results page" do
   subject(:search_page) { Pages::Search.new }
 
   def create_test_data
-    clean_up_indexes_and_tables
     create(:permitted_domain)
     create(:group, name: "HMP Browne")
     create(:group, name: "SMT Browne")
     create(:person, given_name: "Jim", surname: "Browne")
     create(:person, given_name: "Jon", surname: "Browne")
-    Person.import force: true
-    Person.__opensearch__.refresh_index!
   end
 
   before do

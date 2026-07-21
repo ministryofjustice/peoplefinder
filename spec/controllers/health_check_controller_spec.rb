@@ -8,7 +8,6 @@ RSpec.describe HealthCheckController, type: :controller do
     context "when a problem exists" do
       before do
         allow(HealthCheck::Database).to receive(:new).and_return(failing)
-        allow(HealthCheck::OpenSearch).to receive(:new).and_return(failing)
 
         get :index
       end
@@ -18,8 +17,7 @@ RSpec.describe HealthCheckController, type: :controller do
       end
 
       it "returns the expected response report" do
-        expect(response.body).to eq({ checks: { database: false,
-                                                search: false } }.to_json)
+        expect(response.body).to eq({ checks: { database: false } }.to_json)
       end
 
       it "sends report to Sentry" do
@@ -31,7 +29,6 @@ RSpec.describe HealthCheckController, type: :controller do
     context "when everything is ok" do
       before do
         allow(HealthCheck::Database).to receive(:new).and_return(passing)
-        allow(HealthCheck::OpenSearch).to receive(:new).and_return(passing)
 
         get :index
       end
@@ -41,8 +38,7 @@ RSpec.describe HealthCheckController, type: :controller do
       end
 
       it "returns the expected response report" do
-        expect(response.body).to eq({ checks: { database: true,
-                                                search: true } }.to_json)
+        expect(response.body).to eq({ checks: { database: true } }.to_json)
       end
     end
   end

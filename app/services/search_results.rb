@@ -12,10 +12,6 @@ class SearchResults
   end
 
   def each_with_hit(&block)
-    if @set.is_a? OpenSearch::Model::Response::Records
-      @set.each_with_hit(&block)
-    else
-      @set.each(&block)
-    end
+    @set.each(&block)
   end
 end

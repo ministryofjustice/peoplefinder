@@ -9,8 +9,6 @@ RSpec.describe "search/person", type: :view do
     create_list(:group, 4).each do |team|
       create(:person, :member_of, team:, sole_membership: true)
     end
-    Person.import force: true
-    Person.__opensearch__.refresh_index!
   end
 
   after(:all) do # rubocop:disable RSpec/BeforeAfterAll
@@ -18,7 +16,7 @@ RSpec.describe "search/person", type: :view do
   end
 
   let(:people_results) do
-    Person.search(match_all).records
+    PgSearchResults.new(set: Person.all.to_a)
   end
 
   before do
